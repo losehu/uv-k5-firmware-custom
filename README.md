@@ -1,18 +1,15 @@
-# 全新的中文固件
 
-这个仓库是 OneOfEleven、fagci、egzumer三个版本的合并，并加入了我的修改
-
-[https://github.com/egzumer/uv-k5-firmware-custom](https://github.com/egzumer/uv-k5-firmware-custom)  
-[https://github.com/OneOfEleven/uv-k5-firmware-custom](https://github.com/OneOfEleven/uv-k5-firmware-custom)  
-[https://github.com/fagci/uv-k5-firmware-fagci-mod/tree/refactor](https://github.com/fagci/uv-k5-firmware-fagci-mod/tree/refactor)
-
-所有这些都是 DualTachyon 的开源固件的克隆和定制版本，可以在以下位置找到：
-
-[https://github.com/DualTachyon/uv-k5-firmware](https://github.com/DualTachyon/uv-k5-firmware) .. 一个很酷的成果！
-
-在使用此固件时，请自担风险（全部）。绝对不能保证它在任何情况下都能在你的电台上正常工作，它甚至可能会使你的电台变砖，如果出现这种情况，你可能需要购买另一台电台。
-
-总之，玩得开心。
+#快捷键操作
+* 按**侧键1后开机**打开隐藏菜单
+* **长按M**切换调制模式
+* **F+M**按键音开关切换
+* **F+5频谱**
+* **短按侧键1**监听
+* **长按侧键1**DTMF解码开关
+* **短按侧键2**设置宽窄带
+* **长按侧键2**手电筒
+* **长按6**切换发射功率
+* **长按5**切换搜索列表
 
 # 主要功能：
 * **1o11 MDC信令**（实现中）
@@ -113,6 +110,22 @@ ENABLE_BLMIN_TMP_OFF          := 0       可配置按钮的附加功能，可打
 打赏码：
 
 [![打赏码](https://github.com/wu58430/uv-k5-firmware-chinese/blob/main/payment/show.png)](https://github.com/wu58430/uv-k5-firmware-chinese/blob/main/payment/payment-codes.md)
+
+# 全新的中文固件
+
+这个仓库是 OneOfEleven、fagci、egzumer三个版本的合并，并加入了我的修改
+
+[https://github.com/egzumer/uv-k5-firmware-custom](https://github.com/egzumer/uv-k5-firmware-custom)  
+[https://github.com/OneOfEleven/uv-k5-firmware-custom](https://github.com/OneOfEleven/uv-k5-firmware-custom)  
+[https://github.com/fagci/uv-k5-firmware-fagci-mod/tree/refactor](https://github.com/fagci/uv-k5-firmware-fagci-mod/tree/refactor)
+
+所有这些都是 DualTachyon 的开源固件的克隆和定制版本，可以在以下位置找到：
+
+[https://github.com/DualTachyon/uv-k5-firmware](https://github.com/DualTachyon/uv-k5-firmware) .. 一个很酷的成果！
+
+在使用此固件时，请自担风险（全部）。绝对不能保证它在任何情况下都能在你的电台上正常工作，它甚至可能会使你的电台变砖，如果出现这种情况，你可能需要购买另一台电台。
+
+总之，玩得开心。
 
 # 免责声明：
 * **如若需要验机，完全不建议刷写自定义固件！！！！！！！！！！！！！！**
