@@ -7,8 +7,7 @@
 #include <map>
 #include "bits/stdc++.h"
 #include "font.h"
-#define SUM_BYTE 2090
-#define CHAR_NUM 152
+
 using namespace std;
 #define IS_BIT_SET(byte, bit) ((byte>>bit) & (1))
 
@@ -266,12 +265,12 @@ int main() {
                 tmp[1] = names[i][j + 1];
                outFile << "\\x" << hex << setw(2) << setfill('0') << uppercase << (int) all_code[tmp];
              //   outFile << "\\x" << hex << setw(2) << setfill('0') << uppercase << static_cast<unsigned int>(all_code[tmp]);
-
+j++;
             } else {
                 array<unsigned char, 2> tmp = {0};
                 tmp[0] = 5;
                 tmp[1] = names[i][j];
-               outFile << "\\x" << hex << setw(2) << setfill('0') << uppercase << (int) all_code[tmp];
+               outFile << "\\x" << hex << setw(2) << setfill('0') << uppercase << (int) tmp[1];
               //  outFile << "\\x" << hex << setw(2) << setfill('0') << uppercase << static_cast<unsigned int>(all_code[tmp]);
 
             }
@@ -285,7 +284,6 @@ int main() {
 
     std::string inputFile = "../name_tmp.txt"; // Replace with your input file name
     std::string outputFile = "../name_out.txt"; // Replace with your output file name
-
     removeNullStrings(inputFile, outputFile);
 
 
@@ -323,10 +321,10 @@ int main() {
             }
         }
     }
-
+    cout<<"ok"<<endl;
 
     {
-        int num_in=248;
+        int num_in=50;
            //int num_in = 2;
            int num = 0;
            if (num_in >= 1 && num_in < 10)num = num_in - 1;

@@ -55,7 +55,7 @@ enum
 #endif
     MENU_ABR,
     //MENU_ABR_ON_TX_RX,
-    MENU_ABR_MIN,
+    //MENU_ABR_MIN,
     MENU_ABR_MAX,
     MENU_TDR,
     //MENU_BEEP,
@@ -137,7 +137,7 @@ extern const t_menu_item MenuList[];
 
 //extern const char        gSubMenu_TXP[3][2];//5
 extern const char        gSubMenu_SFT_D[3][10];//3
-extern const char        gSubMenu_W_N[2][3];//7
+//extern const char        gSubMenu_W_N[2][3];//7
 extern const char        gSubMenu_OFF_ON[2][3];//4
 extern const char        gSubMenu_SAVE[5][4];//4
 extern const char        gSubMenu_TOT[11][5];//7
@@ -156,7 +156,6 @@ extern const char        gSubMenu_D_RSP[4][10];//11
 #endif
 
 extern const char*       gSubMenu_PTT_ID[5];
-extern const char        gSubMenu_PONMSG[2][4];//8
 extern const char        gSubMenu_ROGER[3][9];
 extern const char        gSubMenu_RESET[2][6];//4
 extern const char*       gSubMenu_F_LOCK[F_LOCK_LEN];

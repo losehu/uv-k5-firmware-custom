@@ -13,7 +13,7 @@
  *     See the License for the specific language governing permissions and
  *     limitations under the License.
  */
-
+#include "chinese.h"
 #include <string.h>
 #include "driver/keyboard.h"
 #include "driver/eeprom.h"
@@ -32,9 +32,9 @@ void UI_DisplayReleaseKeys(BOOT_Mode_t BootMode) {
     memset(gFrameBuffer, 0, sizeof(gFrameBuffer));
 
     if (BootMode == BOOT_MODE_F_LOCK) {
-        //½âËø£¬È«²¿°´¼ü
-        UI_PrintStringSmall("\xC9\x9A", 0, 127, 1);
-        UI_PrintStringSmall("\xEC\xED\xF3\x88", 0, 127, 3);
+        //è§£é”ï¼Œå…¨éƒ¨æŒ‰é”®
+        UI_PrintStringSmall(è§£é”, 0, 127, 1);
+        UI_PrintStringSmall(å…¨éƒ¨æŒ‰é”®, 0, 127, 3);
         ST7565_BlitStatusLine();  // blank status line
         ST7565_BlitFullScreen();
     }
@@ -73,9 +73,7 @@ void UI_DisplayWelcome(void) {
                 BATTERY_VoltsToPercent(gBatteryVoltageAverage));
         UI_PrintStringSmall(WelcomeString1, 0, 127, 4);
 
-        //  UI_PrintStringSmall("egcn173 BY BG2FZV", 4, 0, 6);
-
-     UI_PrintStringSmall(Version, 40, 0, 6);
+     UI_PrintStringSmall(Version, 0, 127, 6);
 
         ST7565_BlitStatusLine();  // blank status line
         ST7565_BlitFullScreen();

@@ -96,7 +96,7 @@ void SETTINGS_SaveSettings(void)
     State[7] = gEeprom.MIC_SENSITIVITY;
     EEPROM_WriteBuffer(0x0E70, State);
 
-    State[0] = (gEeprom.BACKLIGHT_MIN << 4) + gEeprom.BACKLIGHT_MAX;
+    State[0] =  gEeprom.BACKLIGHT_MAX;
     State[1] = gEeprom.CHANNEL_DISPLAY_MODE;
     State[2] = gEeprom.CROSS_BAND_RX_TX;
     State[3] = gEeprom.BATTERY_SAVE;

@@ -22,7 +22,7 @@
 #include "ui/helper.h"
 #include "ui/inputbox.h"
 #include "misc.h"
-
+#include "chinese.h"
 #ifndef ARRAY_SIZE
 #define ARRAY_SIZE(arr) (sizeof(arr)/sizeof((arr)[0]))
 #endif
@@ -41,7 +41,7 @@ uint8_t is_chn(uint8_t num) {
 
     if (num >= 1 && num < 10)return num - 1;
     else if (num > 10 && num < 32)return num - 2;
-    else if (num > 126 && num <= 248)return num - 97;
+    else if (num > 126 && num <= 230)return num - 97;
     else return 255;
 }
 
@@ -270,5 +270,5 @@ void UI_DisplayPopup(const char *string) {
 
     UI_PrintStringSmall(string, 9, 118, 2);
     //按EXIT键
-    UI_PrintStringSmall("\x94 EXIT \x96", 9, 118, 6);
+    UI_PrintStringSmall(按EXIT键, 9, 118, 6);
 }

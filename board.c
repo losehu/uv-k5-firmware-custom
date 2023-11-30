@@ -536,7 +536,7 @@ void BOARD_EEPROM_Init(void)
     // 0E78..0E7F
     EEPROM_ReadBuffer(0x0E78, Data, 8);
     gEeprom.BACKLIGHT_MAX 		  = (Data[0] & 0xF) <= 10 ? (Data[0] & 0xF) : 10;
-    gEeprom.BACKLIGHT_MIN 		  = (Data[0] >> 4) < gEeprom.BACKLIGHT_MAX ? (Data[0] >> 4) : 0;
+  //  gEeprom.BACKLIGHT_MIN 		  = 0;//(Data[0] >> 4) < gEeprom.BACKLIGHT_MAX ? (Data[0] >> 4) : 0;
 #ifdef ENABLE_BLMIN_TMP_OFF
     gEeprom.BACKLIGHT_MIN_STAT	  = BLMIN_STAT_ON;
 #endif

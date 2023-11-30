@@ -26,9 +26,9 @@
 #include <driver/backlight.h>
 
 enum POWER_OnDisplayMode_t {
-    POWER_ON_DISPLAY_MODE_MESSAGE=0,
+     POWER_ON_DISPLAY_MODE_NONE=0,
+    POWER_ON_DISPLAY_MODE_MESSAGE
 
-    POWER_ON_DISPLAY_MODE_NONE
 };
 typedef enum POWER_OnDisplayMode_t POWER_OnDisplayMode_t;
 
@@ -243,7 +243,7 @@ typedef struct {
     uint8_t               field79_0x97;
 
     uint8_t 			  KEY_M_LONG_PRESS_ACTION;
-    uint8_t               BACKLIGHT_MIN;
+  //  uint8_t               BACKLIGHT_MIN;
 #ifdef ENABLE_BLMIN_TMP_OFF
     BLMIN_STAT_t		  BACKLIGHT_MIN_STAT;
 #endif

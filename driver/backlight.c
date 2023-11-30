@@ -97,14 +97,12 @@ void BACKLIGHT_TurnOff()
 #ifdef ENABLE_BLMIN_TMP_OFF
 	register uint8_t tmp;
 
-	if (gEeprom.BACKLIGHT_MIN_STAT == BLMIN_STAT_ON)
-		tmp = gEeprom.BACKLIGHT_MIN;
-	else
+
 		tmp = 0;
 
 	BACKLIGHT_SetBrightness(tmp);
 #else
-	BACKLIGHT_SetBrightness(gEeprom.BACKLIGHT_MIN);
+	BACKLIGHT_SetBrightness(0);
 #endif
 	gBacklightCountdown = 0;
 	backlightOn = false;

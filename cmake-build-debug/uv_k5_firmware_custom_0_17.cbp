@@ -451,6 +451,9 @@
 		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/bsp/dp32g030/uart.h">
 			<Option target="uv_k5_firmware_custom_0_17"/>
 		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/chinese.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
 		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/dcs.c">
 			<Option target="uv_k5_firmware_custom_0_17"/>
 		</Unit>

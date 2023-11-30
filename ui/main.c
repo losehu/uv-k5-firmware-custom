@@ -13,7 +13,7 @@
  *     See the License for the specific language governing permissions and
  *     limitations under the License.
  */
-
+#include "chinese.h"
 #include <string.h>
 #include <stdlib.h>  // abs()
 #include "driver/uart.h"
@@ -262,7 +262,7 @@ void UI_DisplayMain(void)
 
 	if(gLowBattery && !gLowBatteryConfirmed) {
 		 //低电压
-        UI_DisplayPopup("\xD5\x9F\x1F");
+        UI_DisplayPopup(低电压);
 		ST7565_BlitFullScreen();
 		return;
 	}
@@ -280,7 +280,7 @@ void UI_DisplayMain(void)
         UI_PrintStringSmall("to unlock",    0, LCD_WIDTH, 3);
 #else
 //长按 # 键解锁
-        UI_PrintStringSmall("\x97\x94 # \x96\xC9\x9A", 0, LCD_WIDTH, 1);
+        UI_PrintStringSmall(长按井键解锁, 0, LCD_WIDTH, 1);
 
 #endif
 
@@ -463,7 +463,7 @@ void UI_DisplayMain(void)
 		{
             //遇忙，低电压，禁止发射，发送超时，高电压
 //const char *state_list[] = {"", "BUSY", "BAT LOW", "TX DISABLE", "TIMEOUT", "ALARM", "VOLT HIGH"};
-            const char *state_list[] = {"", "\x1C\x1D", "\xD5\x9F\x1F", "\x1E\xE2\x05\x06", "\x05\x11\x9C\x9D", "ALARM", "\xD6\x9F\x1F"};
+            const char *state_list[] = {"", 遇忙, 低电压, 禁止发射,发送超时 , "ALARM", 高电压};
 			if (state < ARRAY_SIZE(state_list))
                 UI_PrintStringSmall(state_list[state], 31, 0, line);
 		}

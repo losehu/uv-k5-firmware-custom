@@ -516,6 +516,7 @@ void APP_StartListening(FUNCTION_Type_t Function, const bool reset_am_fix)
 			BK4819_WriteRegister(BK4819_REG_13, (orig_lna_short << 8) | (orig_lna << 5) | (orig_mixer << 3) | (orig_pga << 0));
 		}
 #else
+        (void)reset_am_fix;
         BK4819_WriteRegister(BK4819_REG_13, (orig_lna_short << 8) | (orig_lna << 5) | (orig_mixer << 3) | (orig_pga << 0));
 #endif
     }
@@ -1699,12 +1700,12 @@ static void ProcessKey(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld)
     }
     else // key pressed or held
     {
-        const uint8_t s = BACKLIGHT_ON_TR_TXRX;
+      //  const uint8_t s = BACKLIGHT_ON_TR_TXRX;
         const int m = UI_MENU_GetCurrentMenuId();
         if 	(	//not when PTT and the backlight shouldn't turn on on TX
-                !(Key == KEY_PTT && s != BACKLIGHT_ON_TR_TX && s != BACKLIGHT_ON_TR_TXRX)
+            /*    !(Key == KEY_PTT && s != BACKLIGHT_ON_TR_TX && s != BACKLIGHT_ON_TR_TXRX)
                 // not in the backlight menu
-                && !(gScreenToDisplay == DISPLAY_MENU && ( m == MENU_ABR || m == MENU_ABR_MAX || m == MENU_ABR_MIN))
+                &&*/ !(gScreenToDisplay == DISPLAY_MENU && ( m == MENU_ABR || m == MENU_ABR_MAX ))
                 )
         {
             BACKLIGHT_TurnOn();

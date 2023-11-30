@@ -131,10 +131,10 @@ int MENU_GetLimits(uint8_t menu_id, int32_t *pMin, int32_t *pMax)
 			*pMax = ARRAY_SIZE(gSubMenu_BACKLIGHT) - 1;
 			break;
 
-		case MENU_ABR_MIN:
-			*pMin = 0;
-			*pMax = 9;
-			break;				
+//		case MENU_ABR_MIN:
+//			*pMin = 0;
+//			*pMax = 9;
+//			break;
 
 		case MENU_ABR_MAX:
 			*pMin = 1;
@@ -185,7 +185,7 @@ int MENU_GetLimits(uint8_t menu_id, int32_t *pMin, int32_t *pMax)
 
 		case MENU_PONMSG:
 			*pMin = 0;
-			*pMax = ARRAY_SIZE(gSubMenu_PONMSG) - 1;
+			*pMax = ARRAY_SIZE(gSubMenu_OFF_ON) - 1;
 			break;
 
 		case MENU_R_DCS:
@@ -557,15 +557,14 @@ void MENU_AcceptSetting(void)
 			gEeprom.BACKLIGHT_TIME = gSubMenuSelection;
 			break;
 
-		case MENU_ABR_MIN:
-			gEeprom.BACKLIGHT_MIN = gSubMenuSelection;
-			gEeprom.BACKLIGHT_MAX = MAX(gSubMenuSelection + 1 , gEeprom.BACKLIGHT_MAX);
-			break;
+//		case MENU_ABR_MIN:
+//			gEeprom.BACKLIGHT_MIN = gSubMenuSelection;
+//			gEeprom.BACKLIGHT_MAX = MAX(gSubMenuSelection + 1 , gEeprom.BACKLIGHT_MAX);
+//			break;
 
 		case MENU_ABR_MAX:
 			gEeprom.BACKLIGHT_MAX = gSubMenuSelection;
-			gEeprom.BACKLIGHT_MIN = MIN(gSubMenuSelection - 1, gEeprom.BACKLIGHT_MIN);
-			break;			
+			break;
 
 //		case MENU_ABR_ON_TX_RX:
 //			gSetting_backlight_on_tx_rx = gSubMenuSelection;
@@ -972,9 +971,9 @@ void MENU_ShowCurrentSetting(void)
 			gSubMenuSelection = gEeprom.BACKLIGHT_TIME;
 			break;
 
-		case MENU_ABR_MIN:
-			gSubMenuSelection = gEeprom.BACKLIGHT_MIN;
-			break;
+//		case MENU_ABR_MIN:
+//			gSubMenuSelection = gEeprom.BACKLIGHT_MIN;
+//			break;
 
 		case MENU_ABR_MAX:
 			gSubMenuSelection = gEeprom.BACKLIGHT_MAX;

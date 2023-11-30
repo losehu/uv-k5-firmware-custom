@@ -816,4 +816,4 @@ add_executable(uv_k5_firmware_custom_0_17
         sram-overlay.c
         sram-overlay.h
         version.c
-        version.h)
+        version.h chinese.h)

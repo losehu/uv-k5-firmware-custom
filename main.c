@@ -107,8 +107,8 @@ void Main(void)
 	if (BootMode == BOOT_MODE_F_LOCK)
 	{
 		gF_LOCK = true;            // flag to say include the hidden menu items
-        gMenuListCount = 50;
-    }else gMenuListCount=42;
+        gMenuListCount = 49;
+    }else gMenuListCount=41;
 
 	// wait for user to release all butts before moving on
 	if (/*!GPIO_CheckBit(&GPIOC->DATA, GPIOC_PIN_PTT) ||*/
