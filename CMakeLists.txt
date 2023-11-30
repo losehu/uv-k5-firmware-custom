@@ -1,0 +1,819 @@
+cmake_minimum_required(VERSION 3.25)
+project(uv_k5_firmware_custom_0_17)
+
+set(CMAKE_CXX_STANDARD 14)
+
+include_directories(.)
+include_directories(app)
+include_directories(bsp)
+include_directories(bsp/dp32g030)
+include_directories(driver)
+include_directories(external/CMSIS_5/CMSIS/Core/Include)
+include_directories(external/CMSIS_5/CMSIS/Core_A/Include)
+include_directories(external/CMSIS_5/CMSIS/CoreValidation/Include)
+include_directories(external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CA5/RTE/Device/ARMCA5)
+include_directories(external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CA7/RTE/Device/ARMCA7)
+include_directories(external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CA9/RTE/Device/ARMCA9)
+include_directories(external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM23S/RTE/Device/ARMCM23_TZ)
+include_directories(external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM23S_BL/RTE/Device/ARMCM23_TZ)
+include_directories(external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM33S/RTE/Device/ARMCM33_DSP_FP_TZ)
+include_directories(external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM33S_BL/RTE/Device/ARMCM33_DSP_FP_TZ)
+include_directories(external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM35PS/RTE/Device/ARMCM35P_DSP_FP_TZ)
+include_directories(external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM35PS_BL/RTE/Device/ARMCM35P_DSP_FP_TZ)
+include_directories(external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM55S/RTE/Device/ARMCM55)
+include_directories(external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM55S_BL/RTE/Device/ARMCM55)
+include_directories(external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM85S/RTE/Device/ARMCM85)
+include_directories(external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM85S_BL/RTE/Device/ARMCM85)
+include_directories(external/CMSIS_5/CMSIS/CoreValidation/Source/Config)
+include_directories(external/CMSIS_5/CMSIS/CoreValidation/Source/ConfigA)
+include_directories(external/CMSIS_5/CMSIS/DAP/Firmware/Config)
+include_directories(external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2)
+include_directories(external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/RTE/CMSIS)
+include_directories(external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/RTE/Device/LPC4322_Cortex-M4)
+include_directories(external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/RTE/Device/LPC4370_Cortex-M4)
+include_directories(external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/RTE/USB)
+include_directories(external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK)
+include_directories(external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/board)
+include_directories(external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/RTE/CMSIS)
+include_directories(external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/RTE/Device)
+include_directories(external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/RTE/Device/LPC55S69JBD64_cm33_core0)
+include_directories(external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/RTE/USB)
+include_directories(external/CMSIS_5/CMSIS/DAP/Firmware/Include)
+include_directories(external/CMSIS_5/CMSIS/DAP/Firmware/Template/MDK5)
+include_directories(external/CMSIS_5/CMSIS/DAP/Firmware/Validation/MDK5/RTE/_CMSIS_DAP)
+include_directories(external/CMSIS_5/CMSIS/DoxyGen/RTOS)
+include_directories(external/CMSIS_5/CMSIS/DoxyGen/RTOS/src)
+include_directories(external/CMSIS_5/CMSIS/DoxyGen/RTOS/src/RTX)
+include_directories(external/CMSIS_5/CMSIS/DoxyGen/SVD)
+include_directories(external/CMSIS_5/CMSIS/DoxyGen/SVD/src)
+include_directories(external/CMSIS_5/CMSIS/Driver/Include)
+include_directories(external/CMSIS_5/CMSIS/Driver/VIO/Include)
+include_directories(external/CMSIS_5/CMSIS/Pack/Bash/Include)
+include_directories(external/CMSIS_5/CMSIS/RTOS/RTX/INC)
+include_directories(external/CMSIS_5/CMSIS/RTOS/RTX/SRC)
+include_directories(external/CMSIS_5/CMSIS/RTOS/RTX/UserCodeTemplates)
+include_directories(external/CMSIS_5/CMSIS/RTOS/Template)
+include_directories(external/CMSIS_5/CMSIS/RTOS/Template/CPP)
+include_directories(external/CMSIS_5/CMSIS/RTOS2/Include)
+include_directories(external/CMSIS_5/CMSIS/RTOS2/RTX/Config)
+include_directories(external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/Blinky/RTE/CMSIS)
+include_directories(external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/Blinky/RTE/Compiler)
+include_directories(external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/MemPool/RTE/CMSIS)
+include_directories(external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/MemPool/RTE/Compiler)
+include_directories(external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/Migration/RTE/CMSIS)
+include_directories(external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/Migration/RTE/Compiler)
+include_directories(external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/MsgQueue/RTE/CMSIS)
+include_directories(external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/MsgQueue/RTE/Compiler)
+include_directories(external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/NoRTOS/CM33_s)
+include_directories(external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/NoRTOS/CM33_s/RTE/Device/ARMCM33_DSP_FP_TZ)
+include_directories(external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS/CM33_ns/RTE/CMSIS)
+include_directories(external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS/CM33_s)
+include_directories(external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS/CM33_s/RTE/Device/ARMCM33_DSP_FP_TZ)
+include_directories(external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_ns/RTE/CMSIS)
+include_directories(external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_s)
+include_directories(external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_s/RTE/Device/ARMCM33_DSP_FP_TZ)
+include_directories(external/CMSIS_5/CMSIS/RTOS2/RTX/Include)
+include_directories(external/CMSIS_5/CMSIS/RTOS2/RTX/Include1)
+include_directories(external/CMSIS_5/CMSIS/RTOS2/RTX/Library)
+include_directories(external/CMSIS_5/CMSIS/RTOS2/RTX/Library/IAR)
+include_directories(external/CMSIS_5/CMSIS/RTOS2/RTX/Library/IAR/IDE)
+include_directories(external/CMSIS_5/CMSIS/RTOS2/RTX/Source)
+include_directories(external/CMSIS_5/CMSIS/RTOS2/Template)
+include_directories(external/CMSIS_5/CMSIS/Utilities)
+include_directories(external/CMSIS_5/Device/_Template_Flash)
+include_directories(external/CMSIS_5/Device/_Template_Vendor/Vendor/Device/Include)
+include_directories(external/CMSIS_5/Device/_Template_Vendor/Vendor/Device/Include/Template)
+include_directories(external/CMSIS_5/Device/_Template_Vendor/Vendor/Device_A/Include)
+include_directories(external/CMSIS_5/Device/ARM/ARMCA5/Config)
+include_directories(external/CMSIS_5/Device/ARM/ARMCA5/Include)
+include_directories(external/CMSIS_5/Device/ARM/ARMCA7/Config)
+include_directories(external/CMSIS_5/Device/ARM/ARMCA7/Include)
+include_directories(external/CMSIS_5/Device/ARM/ARMCA9/Config)
+include_directories(external/CMSIS_5/Device/ARM/ARMCA9/Include)
+include_directories(external/CMSIS_5/Device/ARM/ARMCM0/Include)
+include_directories(external/CMSIS_5/Device/ARM/ARMCM0plus/Include)
+include_directories(external/CMSIS_5/Device/ARM/ARMCM1/Include)
+include_directories(external/CMSIS_5/Device/ARM/ARMCM23/Include)
+include_directories(external/CMSIS_5/Device/ARM/ARMCM23/Include/Template)
+include_directories(external/CMSIS_5/Device/ARM/ARMCM3/Include)
+include_directories(external/CMSIS_5/Device/ARM/ARMCM33/Include)
+include_directories(external/CMSIS_5/Device/ARM/ARMCM33/Include/Template)
+include_directories(external/CMSIS_5/Device/ARM/ARMCM35P/Include)
+include_directories(external/CMSIS_5/Device/ARM/ARMCM35P/Include/Template)
+include_directories(external/CMSIS_5/Device/ARM/ARMCM4/Include)
+include_directories(external/CMSIS_5/Device/ARM/ARMCM55/Include)
+include_directories(external/CMSIS_5/Device/ARM/ARMCM55/Include/Template)
+include_directories(external/CMSIS_5/Device/ARM/ARMCM7/Include)
+include_directories(external/CMSIS_5/Device/ARM/ARMCM85/Include)
+include_directories(external/CMSIS_5/Device/ARM/ARMCM85/Include/Template)
+include_directories(external/CMSIS_5/Device/ARM/ARMSC000/Include)
+include_directories(external/CMSIS_5/Device/ARM/ARMSC300/Include)
+include_directories(external/CMSIS_5/Device/ARM/ARMv81MML/Include)
+include_directories(external/CMSIS_5/Device/ARM/ARMv81MML/Include/Template)
+include_directories(external/CMSIS_5/Device/ARM/ARMv8MBL/Include)
+include_directories(external/CMSIS_5/Device/ARM/ARMv8MBL/Include/Template)
+include_directories(external/CMSIS_5/Device/ARM/ARMv8MML/Include)
+include_directories(external/CMSIS_5/Device/ARM/ARMv8MML/Include/Template)
+include_directories(external/printf)
+include_directories(external/printf/test)
+include_directories(helper)
+include_directories(ui)
+
+add_executable(uv_k5_firmware_custom_0_17
+        app/action.c
+        app/action.h
+        app/aircopy.c
+        app/aircopy.h
+        app/app.c
+        app/app.h
+        app/chFrScanner.c
+        app/chFrScanner.h
+        app/common.c
+        app/common.h
+        app/dtmf.c
+        app/dtmf.h
+        app/fm.c
+        app/fm.h
+        app/generic.c
+        app/generic.h
+        app/main.c
+        app/main.h
+        app/menu.c
+        app/menu.h
+        app/scanner.c
+        app/scanner.h
+        app/spectrum.c
+        app/spectrum.h
+        app/uart.c
+        app/uart.h
+        bsp/dp32g030/aes.h
+        bsp/dp32g030/crc.h
+        bsp/dp32g030/dma.h
+        bsp/dp32g030/flash.h
+        bsp/dp32g030/gpio.h
+        bsp/dp32g030/irq.h
+        bsp/dp32g030/pmu.h
+        bsp/dp32g030/portcon.h
+        bsp/dp32g030/pwmplus.h
+        bsp/dp32g030/saradc.h
+        bsp/dp32g030/spi.h
+        bsp/dp32g030/syscon.h
+        bsp/dp32g030/uart.h
+        driver/adc.c
+        driver/adc.h
+        driver/aes.c
+        driver/aes.h
+        driver/backlight.c
+        driver/backlight.h
+        driver/bk1080-regs.h
+        driver/bk1080.c
+        driver/bk1080.h
+        driver/bk4819-regs.h
+        driver/bk4819.c
+        driver/bk4819.h
+        driver/crc.c
+        driver/crc.h
+        driver/eeprom.c
+        driver/eeprom.h
+        driver/flash.c
+        driver/flash.h
+        driver/gpio.c
+        driver/gpio.h
+        driver/i2c.c
+        driver/i2c.h
+        driver/keyboard.c
+        driver/keyboard.h
+        driver/spi.c
+        driver/spi.h
+        driver/st7565.c
+        driver/st7565.h
+        driver/system.c
+        driver/system.h
+        driver/systick.c
+        driver/systick.h
+        driver/uart.c
+        driver/uart.h
+        external/CMSIS_5/CMSIS/Core/Include/cachel1_armv7.h
+        external/CMSIS_5/CMSIS/Core/Include/cmsis_armcc.h
+        external/CMSIS_5/CMSIS/Core/Include/cmsis_armclang.h
+        external/CMSIS_5/CMSIS/Core/Include/cmsis_armclang_ltm.h
+        external/CMSIS_5/CMSIS/Core/Include/cmsis_compiler.h
+        external/CMSIS_5/CMSIS/Core/Include/cmsis_gcc.h
+        external/CMSIS_5/CMSIS/Core/Include/cmsis_iccarm.h
+        external/CMSIS_5/CMSIS/Core/Include/cmsis_tiarmclang.h
+        external/CMSIS_5/CMSIS/Core/Include/cmsis_version.h
+        external/CMSIS_5/CMSIS/Core/Include/core_armv81mml.h
+        external/CMSIS_5/CMSIS/Core/Include/core_armv8mbl.h
+        external/CMSIS_5/CMSIS/Core/Include/core_armv8mml.h
+        external/CMSIS_5/CMSIS/Core/Include/core_cm0.h
+        external/CMSIS_5/CMSIS/Core/Include/core_cm0plus.h
+        external/CMSIS_5/CMSIS/Core/Include/core_cm1.h
+        external/CMSIS_5/CMSIS/Core/Include/core_cm23.h
+        external/CMSIS_5/CMSIS/Core/Include/core_cm3.h
+        external/CMSIS_5/CMSIS/Core/Include/core_cm33.h
+        external/CMSIS_5/CMSIS/Core/Include/core_cm35p.h
+        external/CMSIS_5/CMSIS/Core/Include/core_cm4.h
+        external/CMSIS_5/CMSIS/Core/Include/core_cm55.h
+        external/CMSIS_5/CMSIS/Core/Include/core_cm7.h
+        external/CMSIS_5/CMSIS/Core/Include/core_cm85.h
+        external/CMSIS_5/CMSIS/Core/Include/core_sc000.h
+        external/CMSIS_5/CMSIS/Core/Include/core_sc300.h
+        external/CMSIS_5/CMSIS/Core/Include/core_starmc1.h
+        external/CMSIS_5/CMSIS/Core/Include/mpu_armv7.h
+        external/CMSIS_5/CMSIS/Core/Include/mpu_armv8.h
+        external/CMSIS_5/CMSIS/Core/Include/pac_armv81.h
+        external/CMSIS_5/CMSIS/Core/Include/pmu_armv8.h
+        external/CMSIS_5/CMSIS/Core/Include/tz_context.h
+        external/CMSIS_5/CMSIS/Core/Template/ARMv8-M/main_s.c
+        external/CMSIS_5/CMSIS/Core/Template/ARMv8-M/tz_context.c
+        external/CMSIS_5/CMSIS/Core_A/Include/cmsis_armcc.h
+        external/CMSIS_5/CMSIS/Core_A/Include/cmsis_armclang.h
+        external/CMSIS_5/CMSIS/Core_A/Include/cmsis_compiler.h
+        external/CMSIS_5/CMSIS/Core_A/Include/cmsis_cp15.h
+        external/CMSIS_5/CMSIS/Core_A/Include/cmsis_gcc.h
+        external/CMSIS_5/CMSIS/Core_A/Include/cmsis_iccarm.h
+        external/CMSIS_5/CMSIS/Core_A/Include/core_ca.h
+        external/CMSIS_5/CMSIS/Core_A/Include/irq_ctrl.h
+        external/CMSIS_5/CMSIS/Core_A/Source/irq_ctrl_gic.c
+        external/CMSIS_5/CMSIS/CoreValidation/Include/cmsis_cv.h
+        external/CMSIS_5/CMSIS/CoreValidation/Include/CV_Framework.h
+        external/CMSIS_5/CMSIS/CoreValidation/Include/CV_Report.h
+        external/CMSIS_5/CMSIS/CoreValidation/Include/CV_Typedefs.h
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/App/Bootloader_Cortex-M/bootloader.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/App/Validation_Cortex-A/main.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/App/Validation_Cortex-M/main.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CA5/RTE/Device/ARMCA5/mem_ARMCA5.h
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CA5/RTE/Device/ARMCA5/mmu_ARMCA5.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CA5/RTE/Device/ARMCA5/startup_ARMCA5.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CA5/RTE/Device/ARMCA5/system_ARMCA5.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CA5/RTE/Device/ARMCA5/system_ARMCA5.h
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CA7/RTE/Device/ARMCA7/mem_ARMCA7.h
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CA7/RTE/Device/ARMCA7/mmu_ARMCA7.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CA7/RTE/Device/ARMCA7/startup_ARMCA7.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CA7/RTE/Device/ARMCA7/system_ARMCA7.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CA7/RTE/Device/ARMCA7/system_ARMCA7.h
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CA9/RTE/Device/ARMCA9/mem_ARMCA9.h
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CA9/RTE/Device/ARMCA9/mmu_ARMCA9.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CA9/RTE/Device/ARMCA9/startup_ARMCA9.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CA9/RTE/Device/ARMCA9/system_ARMCA9.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CA9/RTE/Device/ARMCA9/system_ARMCA9.h
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM0/RTE/Device/ARMCM0/startup_ARMCM0.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM0/RTE/Device/ARMCM0/system_ARMCM0.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM0plus/RTE/Device/ARMCM0P/startup_ARMCM0plus.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM0plus/RTE/Device/ARMCM0P/system_ARMCM0plus.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM23/RTE/Device/ARMCM23/startup_ARMCM23.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM23/RTE/Device/ARMCM23/system_ARMCM23.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM23NS/RTE/Device/ARMCM23_TZ/startup_ARMCM23.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM23NS/RTE/Device/ARMCM23_TZ/system_ARMCM23.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM23S/RTE/Device/ARMCM23_TZ/partition_ARMCM23.h
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM23S/RTE/Device/ARMCM23_TZ/startup_ARMCM23.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM23S/RTE/Device/ARMCM23_TZ/system_ARMCM23.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM23S_BL/RTE/Device/ARMCM23_TZ/partition_ARMCM23.h
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM23S_BL/RTE/Device/ARMCM23_TZ/startup_ARMCM23.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM23S_BL/RTE/Device/ARMCM23_TZ/system_ARMCM23.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM3/RTE/Device/ARMCM3/startup_ARMCM3.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM3/RTE/Device/ARMCM3/system_ARMCM3.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM33/RTE/Device/ARMCM33_DSP_FP/startup_ARMCM33.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM33/RTE/Device/ARMCM33_DSP_FP/system_ARMCM33.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM33NS/RTE/Device/ARMCM33_DSP_FP_TZ/startup_ARMCM33.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM33NS/RTE/Device/ARMCM33_DSP_FP_TZ/system_ARMCM33.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM33S/RTE/Device/ARMCM33_DSP_FP_TZ/partition_ARMCM33.h
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM33S/RTE/Device/ARMCM33_DSP_FP_TZ/startup_ARMCM33.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM33S/RTE/Device/ARMCM33_DSP_FP_TZ/system_ARMCM33.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM33S_BL/RTE/Device/ARMCM33_DSP_FP_TZ/partition_ARMCM33.h
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM33S_BL/RTE/Device/ARMCM33_DSP_FP_TZ/startup_ARMCM33.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM33S_BL/RTE/Device/ARMCM33_DSP_FP_TZ/system_ARMCM33.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM35P/RTE/Device/ARMCM35P_DSP_FP/startup_ARMCM35P.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM35P/RTE/Device/ARMCM35P_DSP_FP/system_ARMCM35P.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM35PNS/RTE/Device/ARMCM35P_DSP_FP_TZ/startup_ARMCM35P.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM35PNS/RTE/Device/ARMCM35P_DSP_FP_TZ/system_ARMCM35P.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM35PS/RTE/Device/ARMCM35P_DSP_FP_TZ/partition_ARMCM35P.h
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM35PS/RTE/Device/ARMCM35P_DSP_FP_TZ/startup_ARMCM35P.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM35PS/RTE/Device/ARMCM35P_DSP_FP_TZ/system_ARMCM35P.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM35PS_BL/RTE/Device/ARMCM35P_DSP_FP_TZ/partition_ARMCM35P.h
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM35PS_BL/RTE/Device/ARMCM35P_DSP_FP_TZ/startup_ARMCM35P.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM35PS_BL/RTE/Device/ARMCM35P_DSP_FP_TZ/system_ARMCM35P.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM4/RTE/Device/ARMCM4/startup_ARMCM4.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM4/RTE/Device/ARMCM4/system_ARMCM4.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM4FP/RTE/Device/ARMCM4_FP/startup_ARMCM4.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM4FP/RTE/Device/ARMCM4_FP/system_ARMCM4.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM55NS/RTE/Device/ARMCM55/startup_ARMCM55.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM55NS/RTE/Device/ARMCM55/system_ARMCM55.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM55S/RTE/Device/ARMCM55/partition_ARMCM55.h
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM55S/RTE/Device/ARMCM55/startup_ARMCM55.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM55S/RTE/Device/ARMCM55/system_ARMCM55.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM55S_BL/RTE/Device/ARMCM55/partition_ARMCM55.h
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM55S_BL/RTE/Device/ARMCM55/startup_ARMCM55.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM55S_BL/RTE/Device/ARMCM55/system_ARMCM55.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM7/RTE/Device/ARMCM7/startup_ARMCM7.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM7/RTE/Device/ARMCM7/system_ARMCM7.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM7DP/RTE/Device/ARMCM7_DP/startup_ARMCM7.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM7DP/RTE/Device/ARMCM7_DP/system_ARMCM7.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM7SP/RTE/Device/ARMCM7_SP/startup_ARMCM7.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM7SP/RTE/Device/ARMCM7_SP/system_ARMCM7.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM85NS/RTE/Device/ARMCM85/startup_ARMCM85.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM85NS/RTE/Device/ARMCM85/system_ARMCM85.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM85S/RTE/Device/ARMCM85/partition_ARMCM85.h
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM85S/RTE/Device/ARMCM85/startup_ARMCM85.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM85S/RTE/Device/ARMCM85/system_ARMCM85.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM85S_BL/RTE/Device/ARMCM85/partition_ARMCM85.h
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM85S_BL/RTE/Device/ARMCM85/startup_ARMCM85.c
+        external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM85S_BL/RTE/Device/ARMCM85/system_ARMCM85.c
+        external/CMSIS_5/CMSIS/CoreValidation/Source/Config/CV_Config.h
+        external/CMSIS_5/CMSIS/CoreValidation/Source/Config/CV_Config_template.h
+        external/CMSIS_5/CMSIS/CoreValidation/Source/Config/partition_ARMCM23.h
+        external/CMSIS_5/CMSIS/CoreValidation/Source/Config/partition_ARMCM33.h
+        external/CMSIS_5/CMSIS/CoreValidation/Source/Config/partition_ARMCM35P.h
+        external/CMSIS_5/CMSIS/CoreValidation/Source/Config/partition_ARMCM55.h
+        external/CMSIS_5/CMSIS/CoreValidation/Source/ConfigA/CV_Config.h
+        external/CMSIS_5/CMSIS/CoreValidation/Source/ConfigA/CV_Config_template.h
+        external/CMSIS_5/CMSIS/CoreValidation/Source/cmsis_cv.c
+        external/CMSIS_5/CMSIS/CoreValidation/Source/CV_CAL1Cache.c
+        external/CMSIS_5/CMSIS/CoreValidation/Source/CV_CML1Cache.c
+        external/CMSIS_5/CMSIS/CoreValidation/Source/CV_CoreAFunc.c
+        external/CMSIS_5/CMSIS/CoreValidation/Source/CV_CoreFunc.c
+        external/CMSIS_5/CMSIS/CoreValidation/Source/CV_CoreInstr.c
+        external/CMSIS_5/CMSIS/CoreValidation/Source/CV_CoreSimd.c
+        external/CMSIS_5/CMSIS/CoreValidation/Source/CV_Framework.c
+        external/CMSIS_5/CMSIS/CoreValidation/Source/CV_GenTimer.c
+        external/CMSIS_5/CMSIS/CoreValidation/Source/CV_MPU_ARMv7.c
+        external/CMSIS_5/CMSIS/CoreValidation/Source/CV_MPU_ARMv8.c
+        external/CMSIS_5/CMSIS/CoreValidation/Source/CV_Report.c
+        external/CMSIS_5/CMSIS/DAP/Firmware/Config/DAP_config.h
+        external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/RTE/CMSIS/RTX_Config.c
+        external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/RTE/CMSIS/RTX_Config.h
+        external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/RTE/Device/LPC4322_Cortex-M4/RTE_Device.h
+        external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/RTE/Device/LPC4322_Cortex-M4/system_LPC43xx.c
+        external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/RTE/Device/LPC4370_Cortex-M4/RTE_Device.h
+        external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/RTE/Device/LPC4370_Cortex-M4/system_LPC43xx.c
+        external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/RTE/USB/USBD_Config_0.c
+        external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/RTE/USB/USBD_Config_CDC_0.h
+        external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/RTE/USB/USBD_Config_CustomClass_0.h
+        external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/DAP_config.h
+        external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/main.c
+        external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/osObjects.h
+        external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/ser_num.c
+        external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/ser_num.h
+        external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/target.c
+        external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/USBD_User_CDC_ACM_UART_0.c
+        external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/USBD_User_CustomClass_0.c
+        external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/board/clock_config.c
+        external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/board/clock_config.h
+        external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/board/peripherals.c
+        external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/board/peripherals.h
+        external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/board/pin_mux.c
+        external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/board/pin_mux.h
+        external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/RTE/CMSIS/RTX_Config.c
+        external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/RTE/CMSIS/RTX_Config.h
+        external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/RTE/Device/LPC55S69JBD64_cm33_core0/RTE_Device.h
+        external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/RTE/USB/USBD_Config_0.c
+        external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/RTE/USB/USBD_Config_CDC_0.h
+        external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/RTE/USB/USBD_Config_CustomClass_0.h
+        external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/DAP_config.h
+        external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/fsl_usart.c
+        external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/main.c
+        external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/osObjects.h
+        external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/ser_num.c
+        external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/ser_num.h
+        external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/USB_LPC55xxx.h
+        external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/USBD1_LPC55xxx.c
+        external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/USBD_User_CDC_ACM_UART_0.c
+        external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/USBD_User_CustomClass_0.c
+        external/CMSIS_5/CMSIS/DAP/Firmware/Include/DAP.h
+        external/CMSIS_5/CMSIS/DAP/Firmware/Source/DAP.c
+        external/CMSIS_5/CMSIS/DAP/Firmware/Source/DAP_vendor.c
+        external/CMSIS_5/CMSIS/DAP/Firmware/Source/JTAG_DP.c
+        external/CMSIS_5/CMSIS/DAP/Firmware/Source/SW_DP.c
+        external/CMSIS_5/CMSIS/DAP/Firmware/Source/SWO.c
+        external/CMSIS_5/CMSIS/DAP/Firmware/Source/UART.c
+        external/CMSIS_5/CMSIS/DAP/Firmware/Template/MDK5/main.c
+        external/CMSIS_5/CMSIS/DAP/Firmware/Template/MDK5/osObjects.h
+        external/CMSIS_5/CMSIS/DAP/Firmware/Template/MDK5/USBD_User_CDC_ACM_UART_0.c
+        external/CMSIS_5/CMSIS/DAP/Firmware/Template/MDK5/USBD_User_CustomClass_0.c
+        external/CMSIS_5/CMSIS/DAP/Firmware/Template/MDK5/USBD_User_HID_0.c
+        external/CMSIS_5/CMSIS/DAP/Firmware/Validation/MDK5/RTE/_CMSIS_DAP/RTE_Components.h
+        external/CMSIS_5/CMSIS/DAP/Firmware/Validation/MDK5/RTE/Device/ARMCM3/system_ARMCM3.c
+        external/CMSIS_5/CMSIS/DAP/Firmware/Validation/MDK5/test.c
+        external/CMSIS_5/CMSIS/DoxyGen/Driver/src/Driver_CAN.c
+        external/CMSIS_5/CMSIS/DoxyGen/Driver/src/Driver_Common.c
+        external/CMSIS_5/CMSIS/DoxyGen/Driver/src/Driver_ETH.c
+        external/CMSIS_5/CMSIS/DoxyGen/Driver/src/Driver_ETH_MAC.c
+        external/CMSIS_5/CMSIS/DoxyGen/Driver/src/Driver_ETH_PHY.c
+        external/CMSIS_5/CMSIS/DoxyGen/Driver/src/Driver_Flash.c
+        external/CMSIS_5/CMSIS/DoxyGen/Driver/src/Driver_I2C.c
+        external/CMSIS_5/CMSIS/DoxyGen/Driver/src/Driver_MCI.c
+        external/CMSIS_5/CMSIS/DoxyGen/Driver/src/Driver_NAND.c
+        external/CMSIS_5/CMSIS/DoxyGen/Driver/src/Driver_SAI.c
+        external/CMSIS_5/CMSIS/DoxyGen/Driver/src/Driver_SPI.c
+        external/CMSIS_5/CMSIS/DoxyGen/Driver/src/Driver_Storage.c
+        external/CMSIS_5/CMSIS/DoxyGen/Driver/src/Driver_USART.c
+        external/CMSIS_5/CMSIS/DoxyGen/Driver/src/Driver_USB.c
+        external/CMSIS_5/CMSIS/DoxyGen/Driver/src/Driver_USBD.c
+        external/CMSIS_5/CMSIS/DoxyGen/Driver/src/Driver_USBH.c
+        external/CMSIS_5/CMSIS/DoxyGen/Driver/src/Driver_WiFi.c
+        external/CMSIS_5/CMSIS/DoxyGen/Driver/src/Flash_Demo.c
+        external/CMSIS_5/CMSIS/DoxyGen/Driver/src/I2C_Demo.c
+        external/CMSIS_5/CMSIS/DoxyGen/Driver/src/I2C_SlaveDemo.c
+        external/CMSIS_5/CMSIS/DoxyGen/Driver/src/MCI_Demo.c
+        external/CMSIS_5/CMSIS/DoxyGen/Driver/src/NAND_Demo.c
+        external/CMSIS_5/CMSIS/DoxyGen/Driver/src/SPI_Demo.c
+        external/CMSIS_5/CMSIS/DoxyGen/Driver/src/USART_Demo.c
+        external/CMSIS_5/CMSIS/DoxyGen/RTOS/src/RTX/cmsis_os_rtx_extensions.h
+        external/CMSIS_5/CMSIS/DoxyGen/SVD/src/ARM_ExampleT0.h
+        external/CMSIS_5/CMSIS/DoxyGen/SVD/src/ARM_ExampleT0Struct.h
+        external/CMSIS_5/CMSIS/Driver/DriverTemplates/Driver_CAN.c
+        external/CMSIS_5/CMSIS/Driver/DriverTemplates/Driver_ETH_MAC.c
+        external/CMSIS_5/CMSIS/Driver/DriverTemplates/Driver_ETH_PHY.c
+        external/CMSIS_5/CMSIS/Driver/DriverTemplates/Driver_Flash.c
+        external/CMSIS_5/CMSIS/Driver/DriverTemplates/Driver_I2C.c
+        external/CMSIS_5/CMSIS/Driver/DriverTemplates/Driver_MCI.c
+        external/CMSIS_5/CMSIS/Driver/DriverTemplates/Driver_NAND.c
+        external/CMSIS_5/CMSIS/Driver/DriverTemplates/Driver_SAI.c
+        external/CMSIS_5/CMSIS/Driver/DriverTemplates/Driver_SPI.c
+        external/CMSIS_5/CMSIS/Driver/DriverTemplates/Driver_Storage.c
+        external/CMSIS_5/CMSIS/Driver/DriverTemplates/Driver_USART.c
+        external/CMSIS_5/CMSIS/Driver/DriverTemplates/Driver_USBD.c
+        external/CMSIS_5/CMSIS/Driver/DriverTemplates/Driver_USBH.c
+        external/CMSIS_5/CMSIS/Driver/DriverTemplates/Driver_WiFi.c
+        external/CMSIS_5/CMSIS/Driver/Include/Driver_CAN.h
+        external/CMSIS_5/CMSIS/Driver/Include/Driver_Common.h
+        external/CMSIS_5/CMSIS/Driver/Include/Driver_ETH.h
+        external/CMSIS_5/CMSIS/Driver/Include/Driver_ETH_MAC.h
+        external/CMSIS_5/CMSIS/Driver/Include/Driver_ETH_PHY.h
+        external/CMSIS_5/CMSIS/Driver/Include/Driver_Flash.h
+        external/CMSIS_5/CMSIS/Driver/Include/Driver_I2C.h
+        external/CMSIS_5/CMSIS/Driver/Include/Driver_MCI.h
+        external/CMSIS_5/CMSIS/Driver/Include/Driver_NAND.h
+        external/CMSIS_5/CMSIS/Driver/Include/Driver_SAI.h
+        external/CMSIS_5/CMSIS/Driver/Include/Driver_SPI.h
+        external/CMSIS_5/CMSIS/Driver/Include/Driver_Storage.h
+        external/CMSIS_5/CMSIS/Driver/Include/Driver_USART.h
+        external/CMSIS_5/CMSIS/Driver/Include/Driver_USB.h
+        external/CMSIS_5/CMSIS/Driver/Include/Driver_USBD.h
+        external/CMSIS_5/CMSIS/Driver/Include/Driver_USBH.h
+        external/CMSIS_5/CMSIS/Driver/Include/Driver_WiFi.h
+        external/CMSIS_5/CMSIS/Driver/VIO/Include/cmsis_vio.h
+        external/CMSIS_5/CMSIS/Driver/VIO/Source/vio.c
+        external/CMSIS_5/CMSIS/Driver/VIO/Source/vio_memory.c
+        external/CMSIS_5/CMSIS/Pack/Bash/Include/component.h
+        external/CMSIS_5/CMSIS/Pack/Bash/Source/component.c
+        external/CMSIS_5/CMSIS/RTOS/RTX/INC/cmsis_os.h
+        external/CMSIS_5/CMSIS/RTOS/RTX/INC/RTX_CM_lib.h
+        external/CMSIS_5/CMSIS/RTOS/RTX/SRC/ARM/HAL_CM0.c
+        external/CMSIS_5/CMSIS/RTOS/RTX/SRC/ARM/HAL_CM3.c
+        external/CMSIS_5/CMSIS/RTOS/RTX/SRC/ARM/HAL_CM4.c
+        external/CMSIS_5/CMSIS/RTOS/RTX/SRC/HAL_CM.c
+        external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_CMSIS.c
+        external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_Event.c
+        external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_Event.h
+        external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_HAL_CM.h
+        external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_List.c
+        external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_List.h
+        external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_Mailbox.c
+        external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_Mailbox.h
+        external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_MemBox.c
+        external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_MemBox.h
+        external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_Memory.c
+        external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_Memory.h
+        external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_Mutex.c
+        external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_Mutex.h
+        external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_Robin.c
+        external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_Robin.h
+        external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_Semaphore.c
+        external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_Semaphore.h
+        external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_System.c
+        external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_System.h
+        external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_Task.c
+        external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_Task.h
+        external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_Time.c
+        external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_Time.h
+        external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_Timer.c
+        external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_Timer.h
+        external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_TypeDef.h
+        external/CMSIS_5/CMSIS/RTOS/RTX/SRC/RTX_Config.h
+        external/CMSIS_5/CMSIS/RTOS/RTX/Templates/RTX_Conf_CM.c
+        external/CMSIS_5/CMSIS/RTOS/RTX/UserCodeTemplates/MailQueue.c
+        external/CMSIS_5/CMSIS/RTOS/RTX/UserCodeTemplates/main.c
+        external/CMSIS_5/CMSIS/RTOS/RTX/UserCodeTemplates/MemPool.c
+        external/CMSIS_5/CMSIS/RTOS/RTX/UserCodeTemplates/MsgQueue.c
+        external/CMSIS_5/CMSIS/RTOS/RTX/UserCodeTemplates/Mutex.c
+        external/CMSIS_5/CMSIS/RTOS/RTX/UserCodeTemplates/osObjects.h
+        external/CMSIS_5/CMSIS/RTOS/RTX/UserCodeTemplates/Semaphore.c
+        external/CMSIS_5/CMSIS/RTOS/RTX/UserCodeTemplates/Thread.c
+        external/CMSIS_5/CMSIS/RTOS/RTX/UserCodeTemplates/Timer.c
+        external/CMSIS_5/CMSIS/RTOS/Template/CPP/Mail.h
+        external/CMSIS_5/CMSIS/RTOS/Template/CPP/MemoryPool.h
+        external/CMSIS_5/CMSIS/RTOS/Template/CPP/Mutex.cpp
+        external/CMSIS_5/CMSIS/RTOS/Template/CPP/Mutex.h
+        external/CMSIS_5/CMSIS/RTOS/Template/CPP/Queue.h
+        external/CMSIS_5/CMSIS/RTOS/Template/CPP/rtos.h
+        external/CMSIS_5/CMSIS/RTOS/Template/CPP/RtosTimer.cpp
+        external/CMSIS_5/CMSIS/RTOS/Template/CPP/RtosTimer.h
+        external/CMSIS_5/CMSIS/RTOS/Template/CPP/Semaphore.cpp
+        external/CMSIS_5/CMSIS/RTOS/Template/CPP/Semaphore.h
+        external/CMSIS_5/CMSIS/RTOS/Template/CPP/Thread.cpp
+        external/CMSIS_5/CMSIS/RTOS/Template/CPP/Thread.h
+        external/CMSIS_5/CMSIS/RTOS/Template/cmsis_os.h
+        external/CMSIS_5/CMSIS/RTOS/Template/my_objects.h
+        external/CMSIS_5/CMSIS/RTOS/Template/os_sample.c
+        external/CMSIS_5/CMSIS/RTOS/Template/os_sample1.c
+        external/CMSIS_5/CMSIS/RTOS/Template/system_LPC177x_8x.c
+        external/CMSIS_5/CMSIS/RTOS2/Include/cmsis_os2.h
+        external/CMSIS_5/CMSIS/RTOS2/Include/os_tick.h
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Config/handlers.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Config/RTX_Config.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Config/RTX_Config.h
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/Blinky/RTE/CMSIS/RTX_Config.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/Blinky/RTE/CMSIS/RTX_Config.h
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/Blinky/RTE/Compiler/EventRecorderConf.h
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/Blinky/RTE/Device/ARMCM3/startup_ARMCM3.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/Blinky/RTE/Device/ARMCM3/system_ARMCM3.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/Blinky/Blinky.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/MemPool/RTE/CMSIS/RTX_Config.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/MemPool/RTE/CMSIS/RTX_Config.h
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/MemPool/RTE/Compiler/EventRecorderConf.h
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/MemPool/RTE/Device/ARMCM3/startup_ARMCM3.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/MemPool/RTE/Device/ARMCM3/system_ARMCM3.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/MemPool/main.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/Migration/RTE/CMSIS/RTX_Config.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/Migration/RTE/CMSIS/RTX_Config.h
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/Migration/RTE/Compiler/EventRecorderConf.h
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/Migration/RTE/Device/ARMCM3/startup_ARMCM3.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/Migration/RTE/Device/ARMCM3/system_ARMCM3.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/Migration/Blinky.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/MsgQueue/RTE/CMSIS/RTX_Config.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/MsgQueue/RTE/CMSIS/RTX_Config.h
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/MsgQueue/RTE/Compiler/EventRecorderConf.h
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/MsgQueue/RTE/Device/ARMCM3/startup_ARMCM3.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/MsgQueue/RTE/Device/ARMCM3/system_ARMCM3.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/MsgQueue/main.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/NoRTOS/CM33_ns/RTE/Device/ARMCM33_DSP_FP_TZ/startup_ARMCM33.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/NoRTOS/CM33_ns/RTE/Device/ARMCM33_DSP_FP_TZ/system_ARMCM33.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/NoRTOS/CM33_ns/main_ns.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/NoRTOS/CM33_s/RTE/Device/ARMCM33_DSP_FP_TZ/partition_ARMCM33.h
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/NoRTOS/CM33_s/RTE/Device/ARMCM33_DSP_FP_TZ/startup_ARMCM33.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/NoRTOS/CM33_s/RTE/Device/ARMCM33_DSP_FP_TZ/system_ARMCM33.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/NoRTOS/CM33_s/interface.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/NoRTOS/CM33_s/interface.h
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/NoRTOS/CM33_s/main_s.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS/CM33_ns/RTE/CMSIS/RTX_Config.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS/CM33_ns/RTE/CMSIS/RTX_Config.h
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS/CM33_ns/RTE/Device/ARMCM33_DSP_FP_TZ/startup_ARMCM33.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS/CM33_ns/RTE/Device/ARMCM33_DSP_FP_TZ/system_ARMCM33.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS/CM33_ns/main_ns.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS/CM33_s/RTE/Device/ARMCM33_DSP_FP_TZ/partition_ARMCM33.h
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS/CM33_s/RTE/Device/ARMCM33_DSP_FP_TZ/startup_ARMCM33.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS/CM33_s/RTE/Device/ARMCM33_DSP_FP_TZ/system_ARMCM33.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS/CM33_s/interface.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS/CM33_s/interface.h
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS/CM33_s/main_s.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS/CM33_s/tz_context.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_ns/RTE/CMSIS/RTX_Config.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_ns/RTE/CMSIS/RTX_Config.h
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_ns/RTE/Device/ARMCM33_DSP_FP_TZ/startup_ARMCM33.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_ns/RTE/Device/ARMCM33_DSP_FP_TZ/system_ARMCM33.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_ns/main_ns.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_s/RTE/Device/ARMCM33_DSP_FP_TZ/partition_ARMCM33.h
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_s/RTE/Device/ARMCM33_DSP_FP_TZ/startup_ARMCM33.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_s/RTE/Device/ARMCM33_DSP_FP_TZ/system_ARMCM33.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_s/Hardfault.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_s/Hardfault.h
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_s/IncidentLog_s.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_s/IncidentLog_s.h
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_s/interface.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_s/interface.h
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_s/main_s.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_s/SysTick_s.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_s/SysTick_s.h
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_s/tz_context.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples_IAR/Blinky/Blinky.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Examples_IAR/MsgQueue/main.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Include/rtx_def.h
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Include/rtx_evr.h
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Include/rtx_os.h
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Include1/cmsis_os.h
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Library/IAR/IDE/RTE_Components.h
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Library/cmsis_os1.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Library/RTX_Config.h
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Source/rtx_core_c.h
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Source/rtx_core_ca.h
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Source/rtx_core_cm.h
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Source/rtx_delay.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Source/rtx_evflags.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Source/rtx_evr.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Source/rtx_kernel.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Source/rtx_lib.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Source/rtx_lib.h
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Source/rtx_memory.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Source/rtx_mempool.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Source/rtx_msgqueue.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Source/rtx_mutex.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Source/rtx_semaphore.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Source/rtx_system.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Source/rtx_thread.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Source/rtx_timer.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Template/Events.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Template/main.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Template/MemPool.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Template/MsgQueue.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Template/Mutex.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Template/Semaphore.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Template/svc_user.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Template/Thread.c
+        external/CMSIS_5/CMSIS/RTOS2/RTX/Template/Timer.c
+        external/CMSIS_5/CMSIS/RTOS2/Source/os_systick.c
+        external/CMSIS_5/CMSIS/RTOS2/Source/os_tick_gtim.c
+        external/CMSIS_5/CMSIS/RTOS2/Source/os_tick_ptim.c
+        external/CMSIS_5/CMSIS/RTOS2/Template/cmsis_os.h
+        external/CMSIS_5/CMSIS/RTOS2/Template/cmsis_os1.c
+        external/CMSIS_5/CMSIS/Utilities/ARM_Example.h
+        external/CMSIS_5/Device/_Template_Flash/FlashDev.c
+        external/CMSIS_5/Device/_Template_Flash/FlashOS.h
+        external/CMSIS_5/Device/_Template_Flash/FlashPrg.c
+        external/CMSIS_5/Device/_Template_Vendor/Vendor/Device/Include/Template/partition_Device.h
+        external/CMSIS_5/Device/_Template_Vendor/Vendor/Device/Include/Device.h
+        external/CMSIS_5/Device/_Template_Vendor/Vendor/Device/Include/system_Device.h
+        external/CMSIS_5/Device/_Template_Vendor/Vendor/Device/Source/startup_Device.c
+        external/CMSIS_5/Device/_Template_Vendor/Vendor/Device/Source/system_Device.c
+        external/CMSIS_5/Device/_Template_Vendor/Vendor/Device_A/Include/Device.h
+        external/CMSIS_5/Device/_Template_Vendor/Vendor/Device_A/Include/mem_Device.h
+        external/CMSIS_5/Device/_Template_Vendor/Vendor/Device_A/Include/system_Device.h
+        external/CMSIS_5/Device/_Template_Vendor/Vendor/Device_A/Source/ARM/startup_Device.c
+        external/CMSIS_5/Device/_Template_Vendor/Vendor/Device_A/Source/mmu_Device.c
+        external/CMSIS_5/Device/_Template_Vendor/Vendor/Device_A/Source/system_Device.c
+        external/CMSIS_5/Device/ARM/ARMCA5/Config/mem_ARMCA5.h
+        external/CMSIS_5/Device/ARM/ARMCA5/Config/system_ARMCA5.h
+        external/CMSIS_5/Device/ARM/ARMCA5/Include/ARMCA5.h
+        external/CMSIS_5/Device/ARM/ARMCA5/Source/AC5/startup_ARMCA5.c
+        external/CMSIS_5/Device/ARM/ARMCA5/Source/AC6/startup_ARMCA5.c
+        external/CMSIS_5/Device/ARM/ARMCA5/Source/GCC/startup_ARMCA5.c
+        external/CMSIS_5/Device/ARM/ARMCA5/Source/mmu_ARMCA5.c
+        external/CMSIS_5/Device/ARM/ARMCA5/Source/system_ARMCA5.c
+        external/CMSIS_5/Device/ARM/ARMCA7/Config/mem_ARMCA7.h
+        external/CMSIS_5/Device/ARM/ARMCA7/Config/system_ARMCA7.h
+        external/CMSIS_5/Device/ARM/ARMCA7/Include/ARMCA7.h
+        external/CMSIS_5/Device/ARM/ARMCA7/Source/AC5/startup_ARMCA7.c
+        external/CMSIS_5/Device/ARM/ARMCA7/Source/AC6/startup_ARMCA7.c
+        external/CMSIS_5/Device/ARM/ARMCA7/Source/GCC/startup_ARMCA7.c
+        external/CMSIS_5/Device/ARM/ARMCA7/Source/mmu_ARMCA7.c
+        external/CMSIS_5/Device/ARM/ARMCA7/Source/system_ARMCA7.c
+        external/CMSIS_5/Device/ARM/ARMCA9/Config/mem_ARMCA9.h
+        external/CMSIS_5/Device/ARM/ARMCA9/Config/system_ARMCA9.h
+        external/CMSIS_5/Device/ARM/ARMCA9/Include/ARMCA9.h
+        external/CMSIS_5/Device/ARM/ARMCA9/Source/AC5/startup_ARMCA9.c
+        external/CMSIS_5/Device/ARM/ARMCA9/Source/AC6/startup_ARMCA9.c
+        external/CMSIS_5/Device/ARM/ARMCA9/Source/GCC/startup_ARMCA9.c
+        external/CMSIS_5/Device/ARM/ARMCA9/Source/mmu_ARMCA9.c
+        external/CMSIS_5/Device/ARM/ARMCA9/Source/system_ARMCA9.c
+        external/CMSIS_5/Device/ARM/ARMCM0/Include/ARMCM0.h
+        external/CMSIS_5/Device/ARM/ARMCM0/Include/system_ARMCM0.h
+        external/CMSIS_5/Device/ARM/ARMCM0/Source/startup_ARMCM0.c
+        external/CMSIS_5/Device/ARM/ARMCM0/Source/system_ARMCM0.c
+        external/CMSIS_5/Device/ARM/ARMCM0plus/Include/ARMCM0plus.h
+        external/CMSIS_5/Device/ARM/ARMCM0plus/Include/ARMCM0plus_MPU.h
+        external/CMSIS_5/Device/ARM/ARMCM0plus/Include/system_ARMCM0plus.h
+        external/CMSIS_5/Device/ARM/ARMCM0plus/Source/startup_ARMCM0plus.c
+        external/CMSIS_5/Device/ARM/ARMCM0plus/Source/system_ARMCM0plus.c
+        external/CMSIS_5/Device/ARM/ARMCM1/Include/ARMCM1.h
+        external/CMSIS_5/Device/ARM/ARMCM1/Include/system_ARMCM1.h
+        external/CMSIS_5/Device/ARM/ARMCM1/Source/startup_ARMCM1.c
+        external/CMSIS_5/Device/ARM/ARMCM1/Source/system_ARMCM1.c
+        external/CMSIS_5/Device/ARM/ARMCM23/Include/Template/partition_ARMCM23.h
+        external/CMSIS_5/Device/ARM/ARMCM23/Include/ARMCM23.h
+        external/CMSIS_5/Device/ARM/ARMCM23/Include/ARMCM23_TZ.h
+        external/CMSIS_5/Device/ARM/ARMCM23/Include/system_ARMCM23.h
+        external/CMSIS_5/Device/ARM/ARMCM23/Source/startup_ARMCM23.c
+        external/CMSIS_5/Device/ARM/ARMCM23/Source/system_ARMCM23.c
+        external/CMSIS_5/Device/ARM/ARMCM3/Include/ARMCM3.h
+        external/CMSIS_5/Device/ARM/ARMCM3/Include/system_ARMCM3.h
+        external/CMSIS_5/Device/ARM/ARMCM3/Source/startup_ARMCM3.c
+        external/CMSIS_5/Device/ARM/ARMCM3/Source/system_ARMCM3.c
+        external/CMSIS_5/Device/ARM/ARMCM33/Include/Template/partition_ARMCM33.h
+        external/CMSIS_5/Device/ARM/ARMCM33/Include/ARMCM33.h
+        external/CMSIS_5/Device/ARM/ARMCM33/Include/ARMCM33_DSP_FP.h
+        external/CMSIS_5/Device/ARM/ARMCM33/Include/ARMCM33_DSP_FP_TZ.h
+        external/CMSIS_5/Device/ARM/ARMCM33/Include/ARMCM33_TZ.h
+        external/CMSIS_5/Device/ARM/ARMCM33/Include/system_ARMCM33.h
+        external/CMSIS_5/Device/ARM/ARMCM33/Source/startup_ARMCM33.c
+        external/CMSIS_5/Device/ARM/ARMCM33/Source/system_ARMCM33.c
+        external/CMSIS_5/Device/ARM/ARMCM35P/Include/Template/partition_ARMCM35P.h
+        external/CMSIS_5/Device/ARM/ARMCM35P/Include/ARMCM35P.h
+        external/CMSIS_5/Device/ARM/ARMCM35P/Include/ARMCM35P_DSP_FP.h
+        external/CMSIS_5/Device/ARM/ARMCM35P/Include/ARMCM35P_DSP_FP_TZ.h
+        external/CMSIS_5/Device/ARM/ARMCM35P/Include/ARMCM35P_TZ.h
+        external/CMSIS_5/Device/ARM/ARMCM35P/Include/system_ARMCM35P.h
+        external/CMSIS_5/Device/ARM/ARMCM35P/Source/startup_ARMCM35P.c
+        external/CMSIS_5/Device/ARM/ARMCM35P/Source/system_ARMCM35P.c
+        external/CMSIS_5/Device/ARM/ARMCM4/Include/ARMCM4.h
+        external/CMSIS_5/Device/ARM/ARMCM4/Include/ARMCM4_FP.h
+        external/CMSIS_5/Device/ARM/ARMCM4/Include/system_ARMCM4.h
+        external/CMSIS_5/Device/ARM/ARMCM4/Source/startup_ARMCM4.c
+        external/CMSIS_5/Device/ARM/ARMCM4/Source/system_ARMCM4.c
+        external/CMSIS_5/Device/ARM/ARMCM55/Include/Template/partition_ARMCM55.h
+        external/CMSIS_5/Device/ARM/ARMCM55/Include/ARMCM55.h
+        external/CMSIS_5/Device/ARM/ARMCM55/Include/system_ARMCM55.h
+        external/CMSIS_5/Device/ARM/ARMCM55/Source/startup_ARMCM55.c
+        external/CMSIS_5/Device/ARM/ARMCM55/Source/system_ARMCM55.c
+        external/CMSIS_5/Device/ARM/ARMCM7/Include/ARMCM7.h
+        external/CMSIS_5/Device/ARM/ARMCM7/Include/ARMCM7_DP.h
+        external/CMSIS_5/Device/ARM/ARMCM7/Include/ARMCM7_SP.h
+        external/CMSIS_5/Device/ARM/ARMCM7/Include/system_ARMCM7.h
+        external/CMSIS_5/Device/ARM/ARMCM7/Source/startup_ARMCM7.c
+        external/CMSIS_5/Device/ARM/ARMCM7/Source/system_ARMCM7.c
+        external/CMSIS_5/Device/ARM/ARMCM85/Include/Template/partition_ARMCM85.h
+        external/CMSIS_5/Device/ARM/ARMCM85/Include/ARMCM85.h
+        external/CMSIS_5/Device/ARM/ARMCM85/Include/system_ARMCM85.h
+        external/CMSIS_5/Device/ARM/ARMCM85/Source/startup_ARMCM85.c
+        external/CMSIS_5/Device/ARM/ARMCM85/Source/system_ARMCM85.c
+        external/CMSIS_5/Device/ARM/ARMSC000/Include/ARMSC000.h
+        external/CMSIS_5/Device/ARM/ARMSC000/Include/system_ARMSC000.h
+        external/CMSIS_5/Device/ARM/ARMSC000/Source/startup_ARMSC000.c
+        external/CMSIS_5/Device/ARM/ARMSC000/Source/system_ARMSC000.c
+        external/CMSIS_5/Device/ARM/ARMSC300/Include/ARMSC300.h
+        external/CMSIS_5/Device/ARM/ARMSC300/Include/system_ARMSC300.h
+        external/CMSIS_5/Device/ARM/ARMSC300/Source/startup_ARMSC300.c
+        external/CMSIS_5/Device/ARM/ARMSC300/Source/system_ARMSC300.c
+        external/CMSIS_5/Device/ARM/ARMv81MML/Include/Template/partition_ARMv81MML.h
+        external/CMSIS_5/Device/ARM/ARMv81MML/Include/ARMv81MML_DSP_DP_MVE_FP.h
+        external/CMSIS_5/Device/ARM/ARMv81MML/Include/system_ARMv81MML.h
+        external/CMSIS_5/Device/ARM/ARMv81MML/Source/startup_ARMv81MML.c
+        external/CMSIS_5/Device/ARM/ARMv81MML/Source/system_ARMv81MML.c
+        external/CMSIS_5/Device/ARM/ARMv8MBL/Include/Template/partition_ARMv8MBL.h
+        external/CMSIS_5/Device/ARM/ARMv8MBL/Include/ARMv8MBL.h
+        external/CMSIS_5/Device/ARM/ARMv8MBL/Include/system_ARMv8MBL.h
+        external/CMSIS_5/Device/ARM/ARMv8MBL/Source/startup_ARMv8MBL.c
+        external/CMSIS_5/Device/ARM/ARMv8MBL/Source/system_ARMv8MBL.c
+        external/CMSIS_5/Device/ARM/ARMv8MML/Include/Template/partition_ARMv8MML.h
+        external/CMSIS_5/Device/ARM/ARMv8MML/Include/ARMv8MML.h
+        external/CMSIS_5/Device/ARM/ARMv8MML/Include/ARMv8MML_DP.h
+        external/CMSIS_5/Device/ARM/ARMv8MML/Include/ARMv8MML_DSP.h
+        external/CMSIS_5/Device/ARM/ARMv8MML/Include/ARMv8MML_DSP_DP.h
+        external/CMSIS_5/Device/ARM/ARMv8MML/Include/ARMv8MML_DSP_SP.h
+        external/CMSIS_5/Device/ARM/ARMv8MML/Include/ARMv8MML_SP.h
+        external/CMSIS_5/Device/ARM/ARMv8MML/Include/system_ARMv8MML.h
+        external/CMSIS_5/Device/ARM/ARMv8MML/Source/startup_ARMv8MML.c
+        external/CMSIS_5/Device/ARM/ARMv8MML/Source/system_ARMv8MML.c
+        external/printf/test/catch.hpp
+        external/printf/test/test_suite.cpp
+        external/printf/printf.c
+        external/printf/printf.h
+        helper/battery.c
+        helper/battery.h
+        helper/boot.c
+        helper/boot.h
+        ui/aircopy.c
+        ui/aircopy.h
+        ui/battery.c
+        ui/battery.h
+        ui/fmradio.c
+        ui/fmradio.h
+        ui/helper.c
+        ui/helper.h
+        ui/inputbox.c
+        ui/inputbox.h
+        ui/lock.c
+        ui/lock.h
+        ui/main.c
+        ui/main.h
+        ui/menu.c
+        ui/menu.h
+        ui/scanner.c
+        ui/scanner.h
+        ui/status.c
+        ui/status.h
+        ui/ui.c
+        ui/ui.h
+        ui/welcome.c
+        ui/welcome.h
+        utils/main.cpp
+        am_fix.c
+        am_fix.h
+        audio.c
+        audio.h
+        bitmaps.c
+        bitmaps.h
+        board.c
+        board.h
+        dcs.c
+        dcs.h
+        debugging.h
+        font.c
+        font.h
+        frequencies.c
+        frequencies.h
+        functions.c
+        functions.h
+        init.c
+        main.c
+        misc.c
+        misc.h
+        printf_config.h
+        radio.c
+        radio.h
+        scheduler.c
+        settings.c
+        settings.h
+        sram-overlay.c
+        sram-overlay.h
+        version.c
+        version.h)

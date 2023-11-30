@@ -1,0 +1,217 @@
+[1mdiff --git a/.idea/.gitignore b/.idea/.gitignore[m
+[1mdeleted file mode 100644[m
+[1mindex 35410ca..0000000[m
+[1m--- a/.idea/.gitignore[m
+[1m+++ /dev/null[m
+[36m@@ -1,8 +0,0 @@[m
+[31m-# 默认忽略的文件[m
+[31m-/shelf/[m
+[31m-/workspace.xml[m
+[31m-# 基于编辑器的 HTTP 客户端请求[m
+[31m-/httpRequests/[m
+[31m-# Datasource local storage ignored files[m
+[31m-/dataSources/[m
+[31m-/dataSources.local.xml[m
+[1mdiff --git a/.idea/.name b/.idea/.name[m
+[1mdeleted file mode 100644[m
+[1mindex 8829405..0000000[m
+[1m--- a/.idea/.name[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-uv_k5_firmware_custom_0_17[m
+\ No newline at end of file[m
+[1mdiff --git a/.idea/deployment.xml b/.idea/deployment.xml[m
+[1mdeleted file mode 100644[m
+[1mindex 508379c..0000000[m
+[1m--- a/.idea/deployment.xml[m
+[1m+++ /dev/null[m
+[36m@@ -1,14 +0,0 @@[m
+[31m-<?xml version="1.0" encoding="UTF-8"?>[m
+[31m-<project version="4">[m
+[31m-  <component name="PublishConfigData" remoteFilesAllowedToDisappearOnAutoupload="false">[m
+[31m-    <serverData>[m
+[31m-      <paths name="远程主机 (4b031f9e-4161-4ac3-8eed-b4f57092613d)">[m
+[31m-        <serverdata>[m
+[31m-          <mappings>[m
+[31m-            <mapping local="$PROJECT_DIR$" web="/" />[m
+[31m-          </mappings>[m
+[31m-        </serverdata>[m
+[31m-      </paths>[m
+[31m-    </serverData>[m
+[31m-  </component>[m
+[31m-</project>[m
+\ No newline at end of file[m
+[1mdiff --git a/.idea/misc.xml b/.idea/misc.xml[m
+[1mdeleted file mode 100644[m
+[1mindex 79b3c94..0000000[m
+[1m--- a/.idea/misc.xml[m
+[1m+++ /dev/null[m
+[36m@@ -1,4 +0,0 @@[m
+[31m-<?xml version="1.0" encoding="UTF-8"?>[m
+[31m-<project version="4">[m
+[31m-  <component name="CMakeWorkspace" PROJECT_DIR="$PROJECT_DIR$" />[m
+[31m-</project>[m
+\ No newline at end of file[m
+[1mdiff --git a/.idea/modules.xml b/.idea/modules.xml[m
+[1mdeleted file mode 100644[m
+[1mindex 49c64ec..0000000[m
+[1m--- a/.idea/modules.xml[m
+[1m+++ /dev/null[m
+[36m@@ -1,8 +0,0 @@[m
+[31m-<?xml version="1.0" encoding="UTF-8"?>[m
+[31m-<project version="4">[m
+[31m-  <component name="ProjectModuleManager">[m
+[31m-    <modules>[m
+[31m-      <module fileurl="file://$PROJECT_DIR$/.idea/uv-k5-firmware-chinese.iml" filepath="$PROJECT_DIR$/.idea/uv-k5-firmware-chinese.iml" />[m
+[31m-    </modules>[m
+[31m-  </component>[m
+[31m-</project>[m
+\ No newline at end of file[m
+[1mdiff --git a/.idea/uv-k5-firmware-chinese.iml b/.idea/uv-k5-firmware-chinese.iml[m
+[1mdeleted file mode 100644[m
+[1mindex f08604b..0000000[m
+[1m--- a/.idea/uv-k5-firmware-chinese.iml[m
+[1m+++ /dev/null[m
+[36m@@ -1,2 +0,0 @@[m
+[31m-<?xml version="1.0" encoding="UTF-8"?>[m
+[31m-<module classpath="CMake" type="CPP_MODULE" version="4" />[m
+\ No newline at end of file[m
+[1mdiff --git a/.idea/vcs.xml b/.idea/vcs.xml[m
+[1mdeleted file mode 100644[m
+[1mindex 35eb1dd..0000000[m
+[1m--- a/.idea/vcs.xml[m
+[1m+++ /dev/null[m
+[36m@@ -1,6 +0,0 @@[m
+[31m-<?xml version="1.0" encoding="UTF-8"?>[m
+[31m-<project version="4">[m
+[31m-  <component name="VcsDirectoryMappings">[m
+[31m-    <mapping directory="" vcs="Git" />[m
+[31m-  </component>[m
+[31m-</project>[m
+\ No newline at end of file[m
+[1mdiff --git a/firmware.packed.cn_all.bin b/firmware.packed.cn_all.bin[m
+[1mnew file mode 100644[m
+[1mindex 0000000..5077f87[m
+Binary files /dev/null and b/firmware.packed.cn_all.bin differ
+[1mdiff --git a/firmware.packed_antikay.bin b/firmware.packed_antikay.bin[m
+[1mnew file mode 100644[m
+[1mindex 0000000..298c688[m
+Binary files /dev/null and b/firmware.packed_antikay.bin differ
+[1mdiff --git a/ui/menu.c b/ui/menu.c[m
+[1mindex c696266..fbcaef5 100644[m
+[1m--- a/ui/menu.c[m
+[1m+++ b/ui/menu.c[m
+[36m@@ -318,14 +318,10 @@[m [mconst char gSubMenu_PONMSG[][5] =//8[m
+                 "\xE9\xA6\xA7"[m
+         };[m
+ [m
+[31m-const char gSubMenu_ROGER[][9] =[m
+[32m+[m[32mconst char gSubMenu_ROGER[][6] =[m
+         {[m
+[31m-//                "OFF",[m
+[31m-//                "ROGER",[m
+[31m-//                "MDC"[m
+[31m-[m
+                 "\xD9\xDF\xB5\xB6\x0E",[m
+[31m-                "ROGER\xB5\xB6\x0E",[m
+[32m+[m[32m                "\xA9\xB4\xB5\xB6\x0E",[m
+                 "\x4D\x44\x43\xEF\xF0"[m
+         };[m
+ [m
+[1mdiff --git a/ui/menu.h b/ui/menu.h[m
+[1mindex 535c3c7..7215ff0 100644[m
+[1m--- a/ui/menu.h[m
+[1m+++ b/ui/menu.h[m
+[36m@@ -146,7 +146,7 @@[m [mextern const char    gSubMenu_AL_MOD[2][5];[m
+ extern const char        gSubMenu_D_RSP[4][10];//11[m
+ extern const char*       gSubMenu_PTT_ID[5];[m
+ extern const char        gSubMenu_PONMSG[4][5];//8[m
+[31m-extern const char        gSubMenu_ROGER[3][9];[m
+[32m+[m[32mextern const char        gSubMenu_ROGER[3][6];[m
+ extern const char        gSubMenu_RESET[2][6];//4[m
+ extern const char*       gSubMenu_F_LOCK[F_LOCK_LEN];[m
+ extern const char        gSubMenu_BACKLIGHT[8][5];//7[m
+[1mdiff --git a/ui/scanner.c b/ui/scanner.c[m
+[1mindex 431cd09..d5584bb 100644[m
+[1m--- a/ui/scanner.c[m
+[1m+++ b/ui/scanner.c[m
+[36m@@ -34,65 +34,44 @@[m [mvoid UI_DisplayScanner(void)[m
+ [m
+ 	memset(String, 0, sizeof(String));[m
+ 	if (gScanSingleFrequency || (gScanCssState != SCAN_CSS_STATE_OFF && gScanCssState != SCAN_CSS_STATE_FAILED))[m
+[31m-//[m
+[31m-[m
+[31m-    sprintf(String, "\x03\x04:%u.%05u", gScanFrequency / 100000, gScanFrequency % 100000);[m
+[31m-    else[m
+[31m-[m
+[31m-//		strcpy(String, "FREQ:**.*****");[m
+[31m-[m
+[31m-        strcpy(String, "\x03\x04:**.*****");[m
+[32m+[m		[32msprintf(String, "FREQ:%u.%05u", gScanFrequency / 100000, gScanFrequency % 100000);[m
+[32m+[m	[32melse[m
+[32m+[m		[32mstrcpy(String, "FREQ:**.*****");[m
+     UI_PrintStringSmall(String, 2, 0, 1);[m
+ [m
+ 	memset(String, 0, sizeof(String));[m
+ 	if (gScanCssState < SCAN_CSS_STATE_FOUND || !gScanUseCssResult)[m
+[31m-//		strcpy(String, "CTC:******");[m
+[31m-[m
+[31m-    strcpy(String, "\x0F\x10\x0D\x0E:******");[m
+[31m-[m
+[32m+[m		[32mstrcpy(String, "CTC:******");[m
+ 	else[m
+ 	if (gScanCssResultType == CODE_TYPE_CONTINUOUS_TONE)[m
+[31m-//		sprintf(String, "CTC:%u.%uHz", CTCSS_Options[gScanCssResultCode] / 10, CTCSS_Options[gScanCssResultCode] % 10);[m
+[31m-        sprintf(String, "\x0F\x10\x0D\x0E:%u.%uHz", CTCSS_Options[gScanCssResultCode] / 10, CTCSS_Options[gScanCssResultCode] % 10);[m
+[32m+[m		[32msprintf(String, "CTC:%u.%uHz", CTCSS_Options[gScanCssResultCode] / 10, CTCSS_Options[gScanCssResultCode] % 10);[m
+ 	else[m
+[31m-//		sprintf(String, "DCS:D%03oN", DCS_Options[gScanCssResultCode]);[m
+[31m-[m
+[31m-    sprintf(String, "\x0B\x0C\x0D\x0E:D%03oN", DCS_Options[gScanCssResultCode]);[m
+[32m+[m		[32msprintf(String, "DCS:D%03oN", DCS_Options[gScanCssResultCode]);[m
+     UI_PrintStringSmall(String, 2, 0, 3);[m
+ [m
+ 	memset(String, 0, sizeof(String));[m
+ 	if (gScannerSaveState == SCAN_SAVE_CHANNEL)[m
+ 	{[m
+[31m-//		strcpy(String, "SAVE?");[m
+[32m+[m		[32mstrcpy(String, "SAVE?");[m
+ [m
+[31m-        strcpy(String, "\x19\x88?");[m
+ 		Start     = 0;[m
+ 		bCentered = 1;[m
+ 	}[m
+ 	else[m
+ 	{[m
+ 		if (gScannerSaveState == SCAN_SAVE_CHAN_SEL) {[m
+[31m-//			strcpy(String, "SAVE:");[m
+[31m-//            \x88\x19[m
+[31m-//			UI_GenerateChannelStringEx(String + 5, gShowChPrefix, gScanChannel);[m
+[31m-            strcpy(String, "\x19\x88:");[m
+[31m-[m
+[31m-			UI_GenerateChannelStringEx(String + 3, gShowChPrefix, gScanChannel);[m
+[32m+[m			[32mstrcpy(String, "SAVE:");[m
+[32m+[m			[32mUI_GenerateChannelStringEx(String + 5, gShowChPrefix, gScanChannel);[m
+ 		}[m
+ 		else if (gScanCssState < SCAN_CSS_STATE_FOUND) {[m
+[31m-			//strcpy(String, "SCAN");[m
+[31m-			//memset(String + 4, '.', (gScanProgressIndicator & 7) + 1);[m
+[31m-            strcpy(String, "\x8F\x90");[m
+[31m-            memset(String + 2, '.', (gScanProgressIndicator & 7) + 1);[m
+[32m+[m			[32mstrcpy(String, "SCAN");[m
+[32m+[m			[32mmemset(String + 4, '.', (gScanProgressIndicator & 7) + 1);[m
+ 		}[m
+ 		else if (gScanCssState == SCAN_CSS_STATE_FOUND)[m
+[31m-			//strcpy(String, "SCAN CMP.");[m
+[31m-        strcpy(String, "\x8F\x90 OK.");[m
+[31m-[m
+[32m+[m			[32mstrcpy(String, "SCAN CMP.");[m
+[32m+[m		[32melse[m
+[32m+[m			[32mstrcpy(String, "SCAN FAIL.");[m
+ [m
+[31m-        else[m
+[31m-//			strcpy(String, "SCAN FAIL.");[m
+[31m-            strcpy(String, "\x8F\x90 FAIL.");[m
+ 		Start     = 2;[m
+ 		bCentered = 0;[m
+ 	}[m

@@ -1,0 +1,2408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="uv_k5_firmware_custom_0_17"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/Qt/Qt5.13.1/Tools/mingw730_64/bin/mingw32-make.exe -f &quot;C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="C:/Qt/Qt5.13.1/Tools/mingw730_64/bin/mingw32-make.exe -f &quot;C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/Qt/Qt5.13.1/Tools/mingw730_64/bin/mingw32-make.exe -f &quot;C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/Qt/Qt5.13.1/Tools/mingw730_64/bin/mingw32-make.exe -f &quot;C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="uv_k5_firmware_custom_0_17">
+				<Option output="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/uv_k5_firmware_custom_0_17.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/."/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/app"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/bsp"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/bsp/dp32g030"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core_A/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CA5/RTE/Device/ARMCA5"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CA7/RTE/Device/ARMCA7"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CA9/RTE/Device/ARMCA9"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM23S/RTE/Device/ARMCM23_TZ"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM23S_BL/RTE/Device/ARMCM23_TZ"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM33S/RTE/Device/ARMCM33_DSP_FP_TZ"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM33S_BL/RTE/Device/ARMCM33_DSP_FP_TZ"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM35PS/RTE/Device/ARMCM35P_DSP_FP_TZ"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM35PS_BL/RTE/Device/ARMCM35P_DSP_FP_TZ"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM55S/RTE/Device/ARMCM55"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM55S_BL/RTE/Device/ARMCM55"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM85S/RTE/Device/ARMCM85"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM85S_BL/RTE/Device/ARMCM85"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Source/Config"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Source/ConfigA"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Config"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/RTE/CMSIS"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/RTE/Device/LPC4322_Cortex-M4"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/RTE/Device/LPC4370_Cortex-M4"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/RTE/USB"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/board"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/RTE/CMSIS"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/RTE/Device"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/RTE/Device/LPC55S69JBD64_cm33_core0"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/RTE/USB"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Template/MDK5"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Validation/MDK5/RTE/_CMSIS_DAP"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DoxyGen/RTOS"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DoxyGen/RTOS/src"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DoxyGen/RTOS/src/RTX"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DoxyGen/SVD"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DoxyGen/SVD/src"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Driver/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Driver/VIO/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Pack/Bash/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/INC"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/SRC"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/UserCodeTemplates"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/Template"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/Template/CPP"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Config"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/Blinky/RTE/CMSIS"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/Blinky/RTE/Compiler"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/MemPool/RTE/CMSIS"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/MemPool/RTE/Compiler"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/Migration/RTE/CMSIS"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/Migration/RTE/Compiler"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/MsgQueue/RTE/CMSIS"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/MsgQueue/RTE/Compiler"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/NoRTOS/CM33_s"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/NoRTOS/CM33_s/RTE/Device/ARMCM33_DSP_FP_TZ"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS/CM33_ns/RTE/CMSIS"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS/CM33_s"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS/CM33_s/RTE/Device/ARMCM33_DSP_FP_TZ"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_ns/RTE/CMSIS"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_s"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_s/RTE/Device/ARMCM33_DSP_FP_TZ"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Include1"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Library"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Library/IAR"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Library/IAR/IDE"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Source"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/Template"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Utilities"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/_Template_Flash"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/_Template_Vendor/Vendor/Device/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/_Template_Vendor/Vendor/Device/Include/Template"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/_Template_Vendor/Vendor/Device_A/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCA5/Config"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCA5/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCA7/Config"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCA7/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCA9/Config"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCA9/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM0/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM0plus/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM1/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM23/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM23/Include/Template"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM3/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM33/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM33/Include/Template"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM35P/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM35P/Include/Template"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM4/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM55/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM55/Include/Template"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM7/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM85/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM85/Include/Template"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMSC000/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMSC300/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMv81MML/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMv81MML/Include/Template"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMv8MBL/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMv8MBL/Include/Template"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMv8MML/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMv8MML/Include/Template"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/printf"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/printf/test"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/helper"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui"/>
+					<Add directory="C:/Qt/Qt5.13.1/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++"/>
+					<Add directory="C:/Qt/Qt5.13.1/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/x86_64-w64-mingw32"/>
+					<Add directory="C:/Qt/Qt5.13.1/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/backward"/>
+					<Add directory="C:/Qt/Qt5.13.1/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include"/>
+					<Add directory="C:/Qt/Qt5.13.1/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include-fixed"/>
+					<Add directory="C:/Qt/Qt5.13.1/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/Qt/Qt5.13.1/Tools/mingw730_64/bin/mingw32-make.exe -f &quot;C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/Makefile&quot;  VERBOSE=1 uv_k5_firmware_custom_0_17"/>
+					<CompileFile command="C:/Qt/Qt5.13.1/Tools/mingw730_64/bin/mingw32-make.exe -f &quot;C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/Qt/Qt5.13.1/Tools/mingw730_64/bin/mingw32-make.exe -f &quot;C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/Qt/Qt5.13.1/Tools/mingw730_64/bin/mingw32-make.exe -f &quot;C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="uv_k5_firmware_custom_0_17/fast">
+				<Option output="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/uv_k5_firmware_custom_0_17.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/."/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/app"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/bsp"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/bsp/dp32g030"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core_A/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CA5/RTE/Device/ARMCA5"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CA7/RTE/Device/ARMCA7"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CA9/RTE/Device/ARMCA9"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM23S/RTE/Device/ARMCM23_TZ"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM23S_BL/RTE/Device/ARMCM23_TZ"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM33S/RTE/Device/ARMCM33_DSP_FP_TZ"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM33S_BL/RTE/Device/ARMCM33_DSP_FP_TZ"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM35PS/RTE/Device/ARMCM35P_DSP_FP_TZ"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM35PS_BL/RTE/Device/ARMCM35P_DSP_FP_TZ"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM55S/RTE/Device/ARMCM55"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM55S_BL/RTE/Device/ARMCM55"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM85S/RTE/Device/ARMCM85"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM85S_BL/RTE/Device/ARMCM85"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Source/Config"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Source/ConfigA"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Config"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/RTE/CMSIS"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/RTE/Device/LPC4322_Cortex-M4"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/RTE/Device/LPC4370_Cortex-M4"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/RTE/USB"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/board"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/RTE/CMSIS"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/RTE/Device"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/RTE/Device/LPC55S69JBD64_cm33_core0"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/RTE/USB"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Template/MDK5"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Validation/MDK5/RTE/_CMSIS_DAP"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DoxyGen/RTOS"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DoxyGen/RTOS/src"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DoxyGen/RTOS/src/RTX"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DoxyGen/SVD"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DoxyGen/SVD/src"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Driver/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Driver/VIO/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Pack/Bash/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/INC"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/SRC"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/UserCodeTemplates"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/Template"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/Template/CPP"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Config"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/Blinky/RTE/CMSIS"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/Blinky/RTE/Compiler"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/MemPool/RTE/CMSIS"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/MemPool/RTE/Compiler"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/Migration/RTE/CMSIS"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/Migration/RTE/Compiler"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/MsgQueue/RTE/CMSIS"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/MsgQueue/RTE/Compiler"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/NoRTOS/CM33_s"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/NoRTOS/CM33_s/RTE/Device/ARMCM33_DSP_FP_TZ"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS/CM33_ns/RTE/CMSIS"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS/CM33_s"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS/CM33_s/RTE/Device/ARMCM33_DSP_FP_TZ"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_ns/RTE/CMSIS"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_s"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_s/RTE/Device/ARMCM33_DSP_FP_TZ"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Include1"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Library"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Library/IAR"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Library/IAR/IDE"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Source"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/Template"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Utilities"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/_Template_Flash"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/_Template_Vendor/Vendor/Device/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/_Template_Vendor/Vendor/Device/Include/Template"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/_Template_Vendor/Vendor/Device_A/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCA5/Config"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCA5/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCA7/Config"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCA7/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCA9/Config"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCA9/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM0/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM0plus/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM1/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM23/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM23/Include/Template"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM3/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM33/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM33/Include/Template"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM35P/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM35P/Include/Template"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM4/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM55/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM55/Include/Template"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM7/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM85/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM85/Include/Template"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMSC000/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMSC300/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMv81MML/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMv81MML/Include/Template"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMv8MBL/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMv8MBL/Include/Template"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMv8MML/Include"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMv8MML/Include/Template"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/printf"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/printf/test"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/helper"/>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui"/>
+					<Add directory="C:/Qt/Qt5.13.1/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++"/>
+					<Add directory="C:/Qt/Qt5.13.1/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/x86_64-w64-mingw32"/>
+					<Add directory="C:/Qt/Qt5.13.1/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/backward"/>
+					<Add directory="C:/Qt/Qt5.13.1/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include"/>
+					<Add directory="C:/Qt/Qt5.13.1/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include-fixed"/>
+					<Add directory="C:/Qt/Qt5.13.1/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/Qt/Qt5.13.1/Tools/mingw730_64/bin/mingw32-make.exe -f &quot;C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/Makefile&quot;  VERBOSE=1 uv_k5_firmware_custom_0_17/fast"/>
+					<CompileFile command="C:/Qt/Qt5.13.1/Tools/mingw730_64/bin/mingw32-make.exe -f &quot;C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/Qt/Qt5.13.1/Tools/mingw730_64/bin/mingw32-make.exe -f &quot;C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/Qt/Qt5.13.1/Tools/mingw730_64/bin/mingw32-make.exe -f &quot;C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/Qt/Qt5.13.1/Tools/mingw730_64/bin/mingw32-make.exe -f &quot;C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="C:/Qt/Qt5.13.1/Tools/mingw730_64/bin/mingw32-make.exe -f &quot;C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/Qt/Qt5.13.1/Tools/mingw730_64/bin/mingw32-make.exe -f &quot;C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/Qt/Qt5.13.1/Tools/mingw730_64/bin/mingw32-make.exe -f &quot;C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/Qt/Qt5.13.1/Tools/mingw730_64/bin/mingw32-make.exe -f &quot;C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="C:/Qt/Qt5.13.1/Tools/mingw730_64/bin/mingw32-make.exe -f &quot;C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/Qt/Qt5.13.1/Tools/mingw730_64/bin/mingw32-make.exe -f &quot;C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/Qt/Qt5.13.1/Tools/mingw730_64/bin/mingw32-make.exe -f &quot;C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/am_fix.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/am_fix.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/app/action.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/app/action.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/app/aircopy.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/app/aircopy.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/app/app.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/app/app.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/app/chFrScanner.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/app/chFrScanner.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/app/common.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/app/common.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/app/dtmf.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/app/dtmf.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/app/fm.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/app/fm.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/app/generic.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/app/generic.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/app/main.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/app/main.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/app/menu.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/app/menu.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/app/scanner.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/app/scanner.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/app/spectrum.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/app/spectrum.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/app/uart.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/app/uart.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/audio.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/audio.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/bitmaps.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/bitmaps.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/board.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/board.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/bsp/dp32g030/aes.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/bsp/dp32g030/crc.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/bsp/dp32g030/dma.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/bsp/dp32g030/flash.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/bsp/dp32g030/gpio.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/bsp/dp32g030/irq.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/bsp/dp32g030/pmu.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/bsp/dp32g030/portcon.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/bsp/dp32g030/pwmplus.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/bsp/dp32g030/saradc.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/bsp/dp32g030/spi.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/bsp/dp32g030/syscon.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/bsp/dp32g030/uart.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/dcs.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/dcs.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/debugging.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/adc.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/adc.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/aes.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/aes.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/backlight.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/backlight.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/bk1080-regs.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/bk1080.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/bk1080.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/bk4819-regs.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/bk4819.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/bk4819.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/crc.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/crc.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/eeprom.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/eeprom.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/flash.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/flash.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/gpio.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/gpio.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/i2c.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/i2c.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/keyboard.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/keyboard.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/spi.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/spi.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/st7565.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/st7565.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/system.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/system.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/systick.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/systick.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/uart.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/uart.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core/Include/cachel1_armv7.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core/Include/cmsis_armcc.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core/Include/cmsis_armclang.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core/Include/cmsis_armclang_ltm.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core/Include/cmsis_compiler.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core/Include/cmsis_gcc.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core/Include/cmsis_iccarm.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core/Include/cmsis_tiarmclang.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core/Include/cmsis_version.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core/Include/core_armv81mml.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core/Include/core_armv8mbl.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core/Include/core_armv8mml.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core/Include/core_cm0.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core/Include/core_cm0plus.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core/Include/core_cm1.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core/Include/core_cm23.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core/Include/core_cm3.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core/Include/core_cm33.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core/Include/core_cm35p.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core/Include/core_cm4.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core/Include/core_cm55.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core/Include/core_cm7.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core/Include/core_cm85.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core/Include/core_sc000.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core/Include/core_sc300.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core/Include/core_starmc1.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core/Include/mpu_armv7.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core/Include/mpu_armv8.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core/Include/pac_armv81.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core/Include/pmu_armv8.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core/Include/tz_context.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core/Template/ARMv8-M/main_s.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core/Template/ARMv8-M/tz_context.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Include/CV_Framework.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Include/CV_Report.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Include/CV_Typedefs.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Include/cmsis_cv.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/App/Bootloader_Cortex-M/bootloader.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/App/Validation_Cortex-A/main.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/App/Validation_Cortex-M/main.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CA5/RTE/Device/ARMCA5/mem_ARMCA5.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CA5/RTE/Device/ARMCA5/mmu_ARMCA5.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CA5/RTE/Device/ARMCA5/startup_ARMCA5.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CA5/RTE/Device/ARMCA5/system_ARMCA5.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CA5/RTE/Device/ARMCA5/system_ARMCA5.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CA7/RTE/Device/ARMCA7/mem_ARMCA7.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CA7/RTE/Device/ARMCA7/mmu_ARMCA7.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CA7/RTE/Device/ARMCA7/startup_ARMCA7.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CA7/RTE/Device/ARMCA7/system_ARMCA7.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CA7/RTE/Device/ARMCA7/system_ARMCA7.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CA9/RTE/Device/ARMCA9/mem_ARMCA9.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CA9/RTE/Device/ARMCA9/mmu_ARMCA9.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CA9/RTE/Device/ARMCA9/startup_ARMCA9.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CA9/RTE/Device/ARMCA9/system_ARMCA9.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CA9/RTE/Device/ARMCA9/system_ARMCA9.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM0/RTE/Device/ARMCM0/startup_ARMCM0.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM0/RTE/Device/ARMCM0/system_ARMCM0.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM0plus/RTE/Device/ARMCM0P/startup_ARMCM0plus.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM0plus/RTE/Device/ARMCM0P/system_ARMCM0plus.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM23/RTE/Device/ARMCM23/startup_ARMCM23.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM23/RTE/Device/ARMCM23/system_ARMCM23.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM23NS/RTE/Device/ARMCM23_TZ/startup_ARMCM23.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM23NS/RTE/Device/ARMCM23_TZ/system_ARMCM23.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM23S/RTE/Device/ARMCM23_TZ/partition_ARMCM23.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM23S/RTE/Device/ARMCM23_TZ/startup_ARMCM23.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM23S/RTE/Device/ARMCM23_TZ/system_ARMCM23.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM23S_BL/RTE/Device/ARMCM23_TZ/partition_ARMCM23.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM23S_BL/RTE/Device/ARMCM23_TZ/startup_ARMCM23.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM23S_BL/RTE/Device/ARMCM23_TZ/system_ARMCM23.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM3/RTE/Device/ARMCM3/startup_ARMCM3.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM3/RTE/Device/ARMCM3/system_ARMCM3.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM33/RTE/Device/ARMCM33_DSP_FP/startup_ARMCM33.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM33/RTE/Device/ARMCM33_DSP_FP/system_ARMCM33.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM33NS/RTE/Device/ARMCM33_DSP_FP_TZ/startup_ARMCM33.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM33NS/RTE/Device/ARMCM33_DSP_FP_TZ/system_ARMCM33.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM33S/RTE/Device/ARMCM33_DSP_FP_TZ/partition_ARMCM33.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM33S/RTE/Device/ARMCM33_DSP_FP_TZ/startup_ARMCM33.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM33S/RTE/Device/ARMCM33_DSP_FP_TZ/system_ARMCM33.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM33S_BL/RTE/Device/ARMCM33_DSP_FP_TZ/partition_ARMCM33.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM33S_BL/RTE/Device/ARMCM33_DSP_FP_TZ/startup_ARMCM33.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM33S_BL/RTE/Device/ARMCM33_DSP_FP_TZ/system_ARMCM33.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM35P/RTE/Device/ARMCM35P_DSP_FP/startup_ARMCM35P.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM35P/RTE/Device/ARMCM35P_DSP_FP/system_ARMCM35P.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM35PNS/RTE/Device/ARMCM35P_DSP_FP_TZ/startup_ARMCM35P.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM35PNS/RTE/Device/ARMCM35P_DSP_FP_TZ/system_ARMCM35P.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM35PS/RTE/Device/ARMCM35P_DSP_FP_TZ/partition_ARMCM35P.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM35PS/RTE/Device/ARMCM35P_DSP_FP_TZ/startup_ARMCM35P.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM35PS/RTE/Device/ARMCM35P_DSP_FP_TZ/system_ARMCM35P.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM35PS_BL/RTE/Device/ARMCM35P_DSP_FP_TZ/partition_ARMCM35P.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM35PS_BL/RTE/Device/ARMCM35P_DSP_FP_TZ/startup_ARMCM35P.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM35PS_BL/RTE/Device/ARMCM35P_DSP_FP_TZ/system_ARMCM35P.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM4/RTE/Device/ARMCM4/startup_ARMCM4.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM4/RTE/Device/ARMCM4/system_ARMCM4.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM4FP/RTE/Device/ARMCM4_FP/startup_ARMCM4.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM4FP/RTE/Device/ARMCM4_FP/system_ARMCM4.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM55NS/RTE/Device/ARMCM55/startup_ARMCM55.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM55NS/RTE/Device/ARMCM55/system_ARMCM55.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM55S/RTE/Device/ARMCM55/partition_ARMCM55.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM55S/RTE/Device/ARMCM55/startup_ARMCM55.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM55S/RTE/Device/ARMCM55/system_ARMCM55.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM55S_BL/RTE/Device/ARMCM55/partition_ARMCM55.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM55S_BL/RTE/Device/ARMCM55/startup_ARMCM55.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM55S_BL/RTE/Device/ARMCM55/system_ARMCM55.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM7/RTE/Device/ARMCM7/startup_ARMCM7.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM7/RTE/Device/ARMCM7/system_ARMCM7.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM7DP/RTE/Device/ARMCM7_DP/startup_ARMCM7.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM7DP/RTE/Device/ARMCM7_DP/system_ARMCM7.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM7SP/RTE/Device/ARMCM7_SP/startup_ARMCM7.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM7SP/RTE/Device/ARMCM7_SP/system_ARMCM7.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM85NS/RTE/Device/ARMCM85/startup_ARMCM85.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM85NS/RTE/Device/ARMCM85/system_ARMCM85.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM85S/RTE/Device/ARMCM85/partition_ARMCM85.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM85S/RTE/Device/ARMCM85/startup_ARMCM85.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM85S/RTE/Device/ARMCM85/system_ARMCM85.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM85S_BL/RTE/Device/ARMCM85/partition_ARMCM85.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM85S_BL/RTE/Device/ARMCM85/startup_ARMCM85.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Layer/Target/CM85S_BL/RTE/Device/ARMCM85/system_ARMCM85.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Source/CV_CAL1Cache.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Source/CV_CML1Cache.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Source/CV_CoreAFunc.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Source/CV_CoreFunc.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Source/CV_CoreInstr.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Source/CV_CoreSimd.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Source/CV_Framework.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Source/CV_GenTimer.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Source/CV_MPU_ARMv7.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Source/CV_MPU_ARMv8.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Source/CV_Report.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Source/Config/CV_Config.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Source/Config/CV_Config_template.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Source/Config/partition_ARMCM23.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Source/Config/partition_ARMCM33.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Source/Config/partition_ARMCM35P.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Source/Config/partition_ARMCM55.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Source/ConfigA/CV_Config.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Source/ConfigA/CV_Config_template.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/CoreValidation/Source/cmsis_cv.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core_A/Include/cmsis_armcc.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core_A/Include/cmsis_armclang.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core_A/Include/cmsis_compiler.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core_A/Include/cmsis_cp15.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core_A/Include/cmsis_gcc.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core_A/Include/cmsis_iccarm.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core_A/Include/core_ca.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core_A/Include/irq_ctrl.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Core_A/Source/irq_ctrl_gic.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Config/DAP_config.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/DAP_config.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/RTE/CMSIS/RTX_Config.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/RTE/CMSIS/RTX_Config.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/RTE/Device/LPC4322_Cortex-M4/RTE_Device.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/RTE/Device/LPC4322_Cortex-M4/system_LPC43xx.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/RTE/Device/LPC4370_Cortex-M4/RTE_Device.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/RTE/Device/LPC4370_Cortex-M4/system_LPC43xx.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/RTE/USB/USBD_Config_0.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/RTE/USB/USBD_Config_CDC_0.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/RTE/USB/USBD_Config_CustomClass_0.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/USBD_User_CDC_ACM_UART_0.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/USBD_User_CustomClass_0.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/main.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/osObjects.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/ser_num.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/ser_num.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/LPC-Link2/target.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/DAP_config.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/RTE/CMSIS/RTX_Config.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/RTE/CMSIS/RTX_Config.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/RTE/Device/LPC55S69JBD64_cm33_core0/RTE_Device.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/RTE/USB/USBD_Config_0.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/RTE/USB/USBD_Config_CDC_0.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/RTE/USB/USBD_Config_CustomClass_0.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/USBD1_LPC55xxx.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/USBD_User_CDC_ACM_UART_0.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/USBD_User_CustomClass_0.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/USB_LPC55xxx.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/board/clock_config.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/board/clock_config.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/board/peripherals.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/board/peripherals.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/board/pin_mux.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/board/pin_mux.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/fsl_usart.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/main.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/osObjects.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/ser_num.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Examples/MCU-LINK/ser_num.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Include/DAP.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Source/DAP.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Source/DAP_vendor.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Source/JTAG_DP.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Source/SWO.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Source/SW_DP.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Source/UART.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Template/MDK5/USBD_User_CDC_ACM_UART_0.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Template/MDK5/USBD_User_CustomClass_0.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Template/MDK5/USBD_User_HID_0.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Template/MDK5/main.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Template/MDK5/osObjects.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Validation/MDK5/RTE/Device/ARMCM3/system_ARMCM3.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Validation/MDK5/RTE/_CMSIS_DAP/RTE_Components.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DAP/Firmware/Validation/MDK5/test.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DoxyGen/Driver/src/Driver_CAN.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DoxyGen/Driver/src/Driver_Common.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DoxyGen/Driver/src/Driver_ETH.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DoxyGen/Driver/src/Driver_ETH_MAC.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DoxyGen/Driver/src/Driver_ETH_PHY.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DoxyGen/Driver/src/Driver_Flash.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DoxyGen/Driver/src/Driver_I2C.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DoxyGen/Driver/src/Driver_MCI.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DoxyGen/Driver/src/Driver_NAND.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DoxyGen/Driver/src/Driver_SAI.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DoxyGen/Driver/src/Driver_SPI.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DoxyGen/Driver/src/Driver_Storage.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DoxyGen/Driver/src/Driver_USART.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DoxyGen/Driver/src/Driver_USB.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DoxyGen/Driver/src/Driver_USBD.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DoxyGen/Driver/src/Driver_USBH.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DoxyGen/Driver/src/Driver_WiFi.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DoxyGen/Driver/src/Flash_Demo.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DoxyGen/Driver/src/I2C_Demo.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DoxyGen/Driver/src/I2C_SlaveDemo.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DoxyGen/Driver/src/MCI_Demo.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DoxyGen/Driver/src/NAND_Demo.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DoxyGen/Driver/src/SPI_Demo.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DoxyGen/Driver/src/USART_Demo.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DoxyGen/RTOS/src/RTX/cmsis_os_rtx_extensions.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DoxyGen/SVD/src/ARM_ExampleT0.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/DoxyGen/SVD/src/ARM_ExampleT0Struct.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Driver/DriverTemplates/Driver_CAN.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Driver/DriverTemplates/Driver_ETH_MAC.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Driver/DriverTemplates/Driver_ETH_PHY.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Driver/DriverTemplates/Driver_Flash.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Driver/DriverTemplates/Driver_I2C.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Driver/DriverTemplates/Driver_MCI.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Driver/DriverTemplates/Driver_NAND.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Driver/DriverTemplates/Driver_SAI.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Driver/DriverTemplates/Driver_SPI.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Driver/DriverTemplates/Driver_Storage.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Driver/DriverTemplates/Driver_USART.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Driver/DriverTemplates/Driver_USBD.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Driver/DriverTemplates/Driver_USBH.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Driver/DriverTemplates/Driver_WiFi.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Driver/Include/Driver_CAN.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Driver/Include/Driver_Common.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Driver/Include/Driver_ETH.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Driver/Include/Driver_ETH_MAC.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Driver/Include/Driver_ETH_PHY.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Driver/Include/Driver_Flash.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Driver/Include/Driver_I2C.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Driver/Include/Driver_MCI.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Driver/Include/Driver_NAND.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Driver/Include/Driver_SAI.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Driver/Include/Driver_SPI.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Driver/Include/Driver_Storage.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Driver/Include/Driver_USART.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Driver/Include/Driver_USB.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Driver/Include/Driver_USBD.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Driver/Include/Driver_USBH.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Driver/Include/Driver_WiFi.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Driver/VIO/Include/cmsis_vio.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Driver/VIO/Source/vio.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Driver/VIO/Source/vio_memory.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Pack/Bash/Include/component.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Pack/Bash/Source/component.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/INC/RTX_CM_lib.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/INC/cmsis_os.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/SRC/ARM/HAL_CM0.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/SRC/ARM/HAL_CM3.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/SRC/ARM/HAL_CM4.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/SRC/HAL_CM.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/SRC/RTX_Config.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_CMSIS.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_Event.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_Event.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_HAL_CM.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_List.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_List.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_Mailbox.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_Mailbox.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_MemBox.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_MemBox.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_Memory.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_Memory.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_Mutex.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_Mutex.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_Robin.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_Robin.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_Semaphore.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_Semaphore.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_System.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_System.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_Task.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_Task.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_Time.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_Time.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_Timer.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_Timer.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/SRC/rt_TypeDef.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/Templates/RTX_Conf_CM.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/UserCodeTemplates/MailQueue.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/UserCodeTemplates/MemPool.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/UserCodeTemplates/MsgQueue.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/UserCodeTemplates/Mutex.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/UserCodeTemplates/Semaphore.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/UserCodeTemplates/Thread.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/UserCodeTemplates/Timer.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/UserCodeTemplates/main.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/RTX/UserCodeTemplates/osObjects.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/Template/CPP/Mail.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/Template/CPP/MemoryPool.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/Template/CPP/Mutex.cpp">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/Template/CPP/Mutex.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/Template/CPP/Queue.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/Template/CPP/RtosTimer.cpp">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/Template/CPP/RtosTimer.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/Template/CPP/Semaphore.cpp">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/Template/CPP/Semaphore.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/Template/CPP/Thread.cpp">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/Template/CPP/Thread.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/Template/CPP/rtos.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/Template/cmsis_os.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/Template/my_objects.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/Template/os_sample.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/Template/os_sample1.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS/Template/system_LPC177x_8x.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/Include/cmsis_os2.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/Include/os_tick.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Config/RTX_Config.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Config/RTX_Config.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Config/handlers.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/Blinky/Blinky.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/Blinky/RTE/CMSIS/RTX_Config.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/Blinky/RTE/CMSIS/RTX_Config.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/Blinky/RTE/Compiler/EventRecorderConf.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/Blinky/RTE/Device/ARMCM3/startup_ARMCM3.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/Blinky/RTE/Device/ARMCM3/system_ARMCM3.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/MemPool/RTE/CMSIS/RTX_Config.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/MemPool/RTE/CMSIS/RTX_Config.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/MemPool/RTE/Compiler/EventRecorderConf.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/MemPool/RTE/Device/ARMCM3/startup_ARMCM3.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/MemPool/RTE/Device/ARMCM3/system_ARMCM3.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/MemPool/main.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/Migration/Blinky.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/Migration/RTE/CMSIS/RTX_Config.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/Migration/RTE/CMSIS/RTX_Config.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/Migration/RTE/Compiler/EventRecorderConf.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/Migration/RTE/Device/ARMCM3/startup_ARMCM3.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/Migration/RTE/Device/ARMCM3/system_ARMCM3.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/MsgQueue/RTE/CMSIS/RTX_Config.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/MsgQueue/RTE/CMSIS/RTX_Config.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/MsgQueue/RTE/Compiler/EventRecorderConf.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/MsgQueue/RTE/Device/ARMCM3/startup_ARMCM3.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/MsgQueue/RTE/Device/ARMCM3/system_ARMCM3.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/MsgQueue/main.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/NoRTOS/CM33_ns/RTE/Device/ARMCM33_DSP_FP_TZ/startup_ARMCM33.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/NoRTOS/CM33_ns/RTE/Device/ARMCM33_DSP_FP_TZ/system_ARMCM33.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/NoRTOS/CM33_ns/main_ns.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/NoRTOS/CM33_s/RTE/Device/ARMCM33_DSP_FP_TZ/partition_ARMCM33.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/NoRTOS/CM33_s/RTE/Device/ARMCM33_DSP_FP_TZ/startup_ARMCM33.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/NoRTOS/CM33_s/RTE/Device/ARMCM33_DSP_FP_TZ/system_ARMCM33.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/NoRTOS/CM33_s/interface.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/NoRTOS/CM33_s/interface.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/NoRTOS/CM33_s/main_s.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS/CM33_ns/RTE/CMSIS/RTX_Config.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS/CM33_ns/RTE/CMSIS/RTX_Config.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS/CM33_ns/RTE/Device/ARMCM33_DSP_FP_TZ/startup_ARMCM33.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS/CM33_ns/RTE/Device/ARMCM33_DSP_FP_TZ/system_ARMCM33.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS/CM33_ns/main_ns.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS/CM33_s/RTE/Device/ARMCM33_DSP_FP_TZ/partition_ARMCM33.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS/CM33_s/RTE/Device/ARMCM33_DSP_FP_TZ/startup_ARMCM33.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS/CM33_s/RTE/Device/ARMCM33_DSP_FP_TZ/system_ARMCM33.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS/CM33_s/interface.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS/CM33_s/interface.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS/CM33_s/main_s.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS/CM33_s/tz_context.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_ns/RTE/CMSIS/RTX_Config.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_ns/RTE/CMSIS/RTX_Config.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_ns/RTE/Device/ARMCM33_DSP_FP_TZ/startup_ARMCM33.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_ns/RTE/Device/ARMCM33_DSP_FP_TZ/system_ARMCM33.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_ns/main_ns.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_s/Hardfault.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_s/Hardfault.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_s/IncidentLog_s.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_s/IncidentLog_s.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_s/RTE/Device/ARMCM33_DSP_FP_TZ/partition_ARMCM33.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_s/RTE/Device/ARMCM33_DSP_FP_TZ/startup_ARMCM33.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_s/RTE/Device/ARMCM33_DSP_FP_TZ/system_ARMCM33.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_s/SysTick_s.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_s/SysTick_s.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_s/interface.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_s/interface.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_s/main_s.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults/CM33_s/tz_context.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples_IAR/Blinky/Blinky.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Examples_IAR/MsgQueue/main.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Include/rtx_def.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Include/rtx_evr.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Include/rtx_os.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Include1/cmsis_os.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Library/IAR/IDE/RTE_Components.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Library/RTX_Config.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Library/cmsis_os1.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Source/rtx_core_c.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Source/rtx_core_ca.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Source/rtx_core_cm.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Source/rtx_delay.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Source/rtx_evflags.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Source/rtx_evr.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Source/rtx_kernel.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Source/rtx_lib.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Source/rtx_lib.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Source/rtx_memory.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Source/rtx_mempool.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Source/rtx_msgqueue.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Source/rtx_mutex.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Source/rtx_semaphore.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Source/rtx_system.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Source/rtx_thread.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Source/rtx_timer.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Template/Events.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Template/MemPool.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Template/MsgQueue.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Template/Mutex.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Template/Semaphore.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Template/Thread.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Template/Timer.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Template/main.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/RTX/Template/svc_user.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/Source/os_systick.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/Source/os_tick_gtim.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/Source/os_tick_ptim.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/Template/cmsis_os.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/RTOS2/Template/cmsis_os1.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/CMSIS/Utilities/ARM_Example.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCA5/Config/mem_ARMCA5.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCA5/Config/system_ARMCA5.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCA5/Include/ARMCA5.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCA5/Source/AC5/startup_ARMCA5.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCA5/Source/AC6/startup_ARMCA5.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCA5/Source/GCC/startup_ARMCA5.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCA5/Source/mmu_ARMCA5.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCA5/Source/system_ARMCA5.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCA7/Config/mem_ARMCA7.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCA7/Config/system_ARMCA7.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCA7/Include/ARMCA7.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCA7/Source/AC5/startup_ARMCA7.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCA7/Source/AC6/startup_ARMCA7.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCA7/Source/GCC/startup_ARMCA7.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCA7/Source/mmu_ARMCA7.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCA7/Source/system_ARMCA7.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCA9/Config/mem_ARMCA9.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCA9/Config/system_ARMCA9.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCA9/Include/ARMCA9.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCA9/Source/AC5/startup_ARMCA9.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCA9/Source/AC6/startup_ARMCA9.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCA9/Source/GCC/startup_ARMCA9.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCA9/Source/mmu_ARMCA9.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCA9/Source/system_ARMCA9.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM0/Include/ARMCM0.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM0/Include/system_ARMCM0.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM0/Source/startup_ARMCM0.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM0/Source/system_ARMCM0.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM0plus/Include/ARMCM0plus.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM0plus/Include/ARMCM0plus_MPU.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM0plus/Include/system_ARMCM0plus.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM0plus/Source/startup_ARMCM0plus.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM0plus/Source/system_ARMCM0plus.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM1/Include/ARMCM1.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM1/Include/system_ARMCM1.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM1/Source/startup_ARMCM1.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM1/Source/system_ARMCM1.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM23/Include/ARMCM23.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM23/Include/ARMCM23_TZ.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM23/Include/Template/partition_ARMCM23.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM23/Include/system_ARMCM23.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM23/Source/startup_ARMCM23.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM23/Source/system_ARMCM23.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM3/Include/ARMCM3.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM3/Include/system_ARMCM3.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM3/Source/startup_ARMCM3.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM3/Source/system_ARMCM3.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM33/Include/ARMCM33.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM33/Include/ARMCM33_DSP_FP.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM33/Include/ARMCM33_DSP_FP_TZ.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM33/Include/ARMCM33_TZ.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM33/Include/Template/partition_ARMCM33.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM33/Include/system_ARMCM33.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM33/Source/startup_ARMCM33.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM33/Source/system_ARMCM33.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM35P/Include/ARMCM35P.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM35P/Include/ARMCM35P_DSP_FP.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM35P/Include/ARMCM35P_DSP_FP_TZ.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM35P/Include/ARMCM35P_TZ.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM35P/Include/Template/partition_ARMCM35P.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM35P/Include/system_ARMCM35P.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM35P/Source/startup_ARMCM35P.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM35P/Source/system_ARMCM35P.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM4/Include/ARMCM4.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM4/Include/ARMCM4_FP.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM4/Include/system_ARMCM4.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM4/Source/startup_ARMCM4.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM4/Source/system_ARMCM4.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM55/Include/ARMCM55.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM55/Include/Template/partition_ARMCM55.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM55/Include/system_ARMCM55.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM55/Source/startup_ARMCM55.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM55/Source/system_ARMCM55.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM7/Include/ARMCM7.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM7/Include/ARMCM7_DP.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM7/Include/ARMCM7_SP.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM7/Include/system_ARMCM7.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM7/Source/startup_ARMCM7.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM7/Source/system_ARMCM7.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM85/Include/ARMCM85.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM85/Include/Template/partition_ARMCM85.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM85/Include/system_ARMCM85.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM85/Source/startup_ARMCM85.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMCM85/Source/system_ARMCM85.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMSC000/Include/ARMSC000.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMSC000/Include/system_ARMSC000.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMSC000/Source/startup_ARMSC000.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMSC000/Source/system_ARMSC000.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMSC300/Include/ARMSC300.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMSC300/Include/system_ARMSC300.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMSC300/Source/startup_ARMSC300.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMSC300/Source/system_ARMSC300.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMv81MML/Include/ARMv81MML_DSP_DP_MVE_FP.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMv81MML/Include/Template/partition_ARMv81MML.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMv81MML/Include/system_ARMv81MML.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMv81MML/Source/startup_ARMv81MML.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMv81MML/Source/system_ARMv81MML.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMv8MBL/Include/ARMv8MBL.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMv8MBL/Include/Template/partition_ARMv8MBL.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMv8MBL/Include/system_ARMv8MBL.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMv8MBL/Source/startup_ARMv8MBL.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMv8MBL/Source/system_ARMv8MBL.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMv8MML/Include/ARMv8MML.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMv8MML/Include/ARMv8MML_DP.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMv8MML/Include/ARMv8MML_DSP.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMv8MML/Include/ARMv8MML_DSP_DP.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMv8MML/Include/ARMv8MML_DSP_SP.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMv8MML/Include/ARMv8MML_SP.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMv8MML/Include/Template/partition_ARMv8MML.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMv8MML/Include/system_ARMv8MML.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMv8MML/Source/startup_ARMv8MML.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/ARM/ARMv8MML/Source/system_ARMv8MML.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/_Template_Flash/FlashDev.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/_Template_Flash/FlashOS.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/_Template_Flash/FlashPrg.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/_Template_Vendor/Vendor/Device/Include/Device.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/_Template_Vendor/Vendor/Device/Include/Template/partition_Device.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/_Template_Vendor/Vendor/Device/Include/system_Device.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/_Template_Vendor/Vendor/Device/Source/startup_Device.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/_Template_Vendor/Vendor/Device/Source/system_Device.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/_Template_Vendor/Vendor/Device_A/Include/Device.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/_Template_Vendor/Vendor/Device_A/Include/mem_Device.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/_Template_Vendor/Vendor/Device_A/Include/system_Device.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/_Template_Vendor/Vendor/Device_A/Source/ARM/startup_Device.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/_Template_Vendor/Vendor/Device_A/Source/mmu_Device.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/CMSIS_5/Device/_Template_Vendor/Vendor/Device_A/Source/system_Device.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/printf/printf.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/printf/printf.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/printf/test/catch.hpp">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/external/printf/test/test_suite.cpp">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/font.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/font.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/frequencies.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/frequencies.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/functions.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/functions.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/helper/battery.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/helper/battery.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/helper/boot.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/helper/boot.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/init.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/main.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/misc.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/misc.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/printf_config.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/radio.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/radio.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/scheduler.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/settings.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/settings.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/sram-overlay.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/sram-overlay.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/aircopy.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/aircopy.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/battery.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/battery.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/fmradio.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/fmradio.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/helper.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/helper.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/inputbox.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/inputbox.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/lock.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/lock.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/main.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/main.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/menu.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/menu.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/scanner.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/scanner.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/status.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/status.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/ui.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/ui.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/welcome.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/welcome.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/utils/main.cpp">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/version.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/version.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
