@@ -1,17 +1,18 @@
-**lite分支是main分支的精简版，功能不变，增加MDC1200信令**
-# 相对main分支更改：
-* 删除开启背光菜单，发射/接收时将自动开启背光
-* 删除按键自动功能，要锁自己长按F锁定键盘
-* 麦克风条默认开启
-* 删除长按M键菜单、长短、按侧键1、2按键菜单、调制模式菜单、按键音菜单、发射功率菜单、搜索列表
-  * **长按M切换调制模式**
-  * **F+M ，按键音开关切换**
-  * **短按侧键1是监听**
-  * **长按侧键1是DTMF解码开关**
-  * **短按侧键2是设置宽窄带**
-  * **长按侧键2是手电筒**
-  * **长按6切换发射功率**
-  * **长按5切换搜索列表**
+# 全新的中文固件
+
+这个仓库是 OneOfEleven、fagci、egzumer三个版本的合并，并加入了我的修改
+
+[https://github.com/egzumer/uv-k5-firmware-custom](https://github.com/egzumer/uv-k5-firmware-custom)  
+[https://github.com/OneOfEleven/uv-k5-firmware-custom](https://github.com/OneOfEleven/uv-k5-firmware-custom)  
+[https://github.com/fagci/uv-k5-firmware-fagci-mod/tree/refactor](https://github.com/fagci/uv-k5-firmware-fagci-mod/tree/refactor)
+
+所有这些都是 DualTachyon 的开源固件的克隆和定制版本，可以在以下位置找到：
+
+[https://github.com/DualTachyon/uv-k5-firmware](https://github.com/DualTachyon/uv-k5-firmware) .. 一个很酷的成果！
+
+在使用此固件时，请自担风险（全部）。绝对不能保证它在任何情况下都能在你的电台上正常工作，它甚至可能会使你的电台变砖，如果出现这种情况，你可能需要购买另一台电台。
+
+总之，玩得开心。
 
 # 主要功能：
 * **1o11 MDC信令**（实现中）
@@ -48,33 +49,6 @@
    * 修复 LCD 干扰崩溃问题
 
 
-
-
-# 与最新版egzumer功能完全相同的中文固件
-
-这个仓库是 OneOfEleven 定制固件与 fagci 频谱分析仪合并，并加入了egzumer的一些修改。
-并在egzumer修改的基础上汉化菜单
-
-[https://github.com/egzumer/uv-k5-firmware-custom](https://github.com/egzumer/uv-k5-firmware-custom)  
-[https://github.com/OneOfEleven/uv-k5-firmware-custom](https://github.com/OneOfEleven/uv-k5-firmware-custom)  
-[https://github.com/fagci/uv-k5-firmware-fagci-mod/tree/refactor](https://github.com/fagci/uv-k5-firmware-fagci-mod/tree/refactor)
-
-所有这些都是 DualTachyon 的开源固件的克隆和定制版本，可以在以下位置找到：
-
-[https://github.com/DualTachyon/uv-k5-firmware](https://github.com/DualTachyon/uv-k5-firmware) .. 一个很酷的成果！
-
-在使用此固件时，请自担风险（全部）。绝对不能保证它在任何情况下都能在你的电台上正常工作，它甚至可能会使你的电台砖化，如果出现这种情况，你可能需要购买另一台电台。
-
-总之，玩得开心。
-
-# 收音机性能
-
-请注意，泉胜 UV-Kx 收音机不是专业品质的收发器，它们的性能受到严格限制。RX 前端根本没有跟踪调谐的带通滤波，因此对大范围的频率信号都是宽带/全开放的。
-
-在高强度射频环境中使用收音机很可能会使接收变得非常困难（AM 模式的影响远远大于 FM），接收机的动态范围并不大，这导致强信号的 AM 音频出现失真。在固件/软件中没有更多的操作可以改善这一点，一旦我所做的 RX 增益调整（AM 修复）达到硬件极限，你的 AM RX 音频几乎就不存在了（就像全胜的固件一样）。
-另一方面，FM RX 音频应该是正常的。
-
-但是，它们是价格不错的玩具，很有趣。
 
 # 示例
 
