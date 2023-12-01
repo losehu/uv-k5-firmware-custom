@@ -17,6 +17,8 @@ void COMMON_KeypadLockToggle()
         #endif
 
         gEeprom.KEY_LOCK = !gEeprom.KEY_LOCK;
+        //按键锁定禁止发射 取消
+       // RADIO_SetVfoState(VFO_STATE_NORMAL);
 
         gRequestSaveSettings = true;
     }

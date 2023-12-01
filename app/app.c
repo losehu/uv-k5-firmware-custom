@@ -507,6 +507,9 @@ void APP_StartListening(FUNCTION_Type_t Function, const bool reset_am_fix)
         const uint8_t orig_pga       = 6;   //  -3dB
 
 #ifdef ENABLE_AM_FIX
+        BK4819_SetAGC(gRxVfo->Modulation != MODULATION_AM || !gSetting_AM_fix);
+
+
         if (gRxVfo->Modulation == MODULATION_AM && gSetting_AM_fix) {	// AM RX mode
 			if (reset_am_fix)
 				AM_fix_reset(chan);      // TODO: only reset it when moving channel/frequency
@@ -1781,11 +1784,18 @@ static void ProcessKey(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld)
             // KEY_MENU has a special treatment here, because we want to pass hold event to ACTION_Handle
             // but we don't want it to complain when initial press happens
             // we want to react on realese instead
-        else if (Key != KEY_SIDE1 && Key != KEY_SIDE2 &&        // pass side buttons
-                 !(Key == KEY_MENU && bKeyHeld)) // pass KEY_MENU held
+            // KEY_MENU has a special treatment here, because we want to pass hold event to ACTION_Handle
+            // but we don't want it to complain when initial press happens
+            // we want to react on realese instead
+        else if (        // pass side buttons
+                 !(Key == KEY_SIDE1 && !bKeyHeld)) // pass KEY_MENU held
         {
-            if ((!bKeyPressed || bKeyHeld || (Key == KEY_MENU && bKeyPressed)) && // prevent released or held, prevent KEY_MENU pressed
-                !(Key == KEY_MENU && !bKeyPressed))  // pass KEY_MENU released
+//            if (!(Key == KEY_SIDE1&&bKeyHeld)&&(!bKeyPressed  || (Key == KEY_SIDE1 && bKeyPressed)) && // prevent released or held, prevent KEY_MENU pressed
+//                !(Key == KEY_SIDE1 && !bKeyPressed))  // pass KEY_MENU released
+//                return;
+            if (!(Key == KEY_SIDE1)  && !(bKeyPressed != 0))
+
+          //  if (Key == KEY_SIDE1 == 0 && !bKeyPressed != 0)  // pass KEY_MENU released
                 return;
 
             // keypad is locked, tell the user
@@ -1809,6 +1819,11 @@ static void ProcessKey(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld)
     bool bFlag = false;
     if (Key == KEY_PTT)
     {
+//        if(gEeprom.KEY_LOCK)
+//        {
+//            gKeypadLocked  = 4;          // 2 seconds
+//            return;
+//        }
         if (gPttWasPressed)
         {
             bFlag = bKeyHeld;
@@ -1816,6 +1831,9 @@ static void ProcessKey(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld)
             {
                 bFlag          = true;
                 gPttWasPressed = false;
+
+
+
             }
         }
     }

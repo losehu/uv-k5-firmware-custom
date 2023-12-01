@@ -154,9 +154,13 @@ void UI_DisplayStatus()
     // KEY-LOCK indicator
     if (gEeprom.KEY_LOCK)
     {
+
         memmove(line + x, BITMAP_KeyLock, sizeof(BITMAP_KeyLock));
         x += sizeof(BITMAP_KeyLock);
         x1 = x;
+        //按键锁定禁止发射
+     //   RADIO_SetVfoState(VFO_STATE_TX_DISABLE);
+
     }
     else
     if (gWasFKeyPressed)
