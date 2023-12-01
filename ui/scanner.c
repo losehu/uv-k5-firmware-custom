@@ -44,12 +44,12 @@ void UI_DisplayScanner(void)
 	memset(String, 0, sizeof(String));
 	if (gScanCssState < SCAN_CSS_STATE_FOUND || !gScanUseCssResult)
 //模拟亚音
-    strcpy(String, "\x05\x06\x0C\x0D\x09\x0B:******");
+    strcpy(String, "\x0C\x0D\x09\x0B:******");
 
 	else
 	if (gScanCssResultType == CODE_TYPE_CONTINUOUS_TONE)
    //模拟亚音
-        sprintf(String, "\x05\x06\x0C\x0D\x09\x0B:%u.%uHz", CTCSS_Options[gScanCssResultCode] / 10, CTCSS_Options[gScanCssResultCode] % 10);
+        sprintf(String, "\x0C\x0D\x09\x0B:%u.%uHz", CTCSS_Options[gScanCssResultCode] / 10, CTCSS_Options[gScanCssResultCode] % 10);
 	else
 //数字亚音
     sprintf(String, "\x07\x08\x09\x0B:D%03oN", DCS_Options[gScanCssResultCode]);
