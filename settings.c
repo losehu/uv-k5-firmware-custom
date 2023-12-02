@@ -207,11 +207,12 @@ void SETTINGS_SaveChannel(uint8_t Channel, uint8_t VFO, const VFO_Info_t *pVFO, 
             OffsetVFO  = (VFO == 0) ? 0x0C80 : 0x0C90;
             OffsetVFO += (Channel - FREQ_CHANNEL_FIRST) * 32;
         }
+//bug #4
+        uint8_t State[8];
 
-        if (Mode >= 2 || !IS_MR_CHANNEL(Channel))
+        if (Mode != 3 || !IS_MR_CHANNEL(Channel))
         {	// copy VFO to a channel
 
-            uint8_t State[8];
 
             ((uint32_t *)State)[0] = pVFO->freq_config_RX.Frequency;
             ((uint32_t *)State)[1] = pVFO->TX_OFFSET_FREQUENCY;
@@ -237,27 +238,35 @@ void SETTINGS_SaveChannel(uint8_t Channel, uint8_t VFO, const VFO_Info_t *pVFO, 
 
             SETTINGS_UpdateChannel(Channel, pVFO, true);
 
-            if (IS_MR_CHANNEL(Channel))
-            {	// it's a memory channel
-
-#ifndef ENABLE_KEEP_MEM_NAME
-                // clear/reset the channel name
-                //memset(&State, 0xFF, sizeof(State));
-                memset(&State, 0x00, sizeof(State));     // follow the QS way
-                EEPROM_WriteBuffer(0x0F50 + OffsetMR, State);
-                EEPROM_WriteBuffer(0x0F58 + OffsetMR, State);
-#else
-                if (Mode >= 3)
-					{	// save the channel name
-						memmove(State, pVFO->Name + 0, 8);
-						EEPROM_WriteBuffer(0x0F50 + OffsetMR, State);
-						//memset(State, 0xFF, sizeof(State));
-						memset(State, 0x00, sizeof(State));  // follow the QS way
-						memmove(State, pVFO->Name + 8, 2);
-						EEPROM_WriteBuffer(0x0F58 + OffsetMR, State);
-					}
-#endif
-            }
+//            if (IS_MR_CHANNEL(Channel))
+//            {	// it's a memory channel
+//
+//#ifndef ENABLE_KEEP_MEM_NAME
+//                // clear/reset the channel name
+//                //memset(&State, 0xFF, sizeof(State));
+//                memset(&State, 0x00, sizeof(State));     // follow the QS way
+//                EEPROM_WriteBuffer(0x0F50 + OffsetMR, State);
+//                EEPROM_WriteBuffer(0x0F58 + OffsetMR, State);
+//#else
+//                if (Mode >= 3)
+//					{	// save the channel name
+//						memmove(State, pVFO->Name + 0, 8);
+//						EEPROM_WriteBuffer(0x0F50 + OffsetMR, State);
+//						//memset(State, 0xFF, sizeof(State));
+//						memset(State, 0x00, sizeof(State));  // follow the QS way
+//						memmove(State, pVFO->Name + 8, 2);
+//						EEPROM_WriteBuffer(0x0F58 + OffsetMR, State);
+//					}
+//#endif
+//            }
+        }else if(IS_MR_CHANNEL(Channel)&&Mode == 3)
+        {
+            memmove(State, pVFO->Name + 0, 8);
+            EEPROM_WriteBuffer(0x0F50 + OffsetMR, State);
+            //memset(State, 0xFF, sizeof(State));
+            memset(State, 0x00, sizeof(State));  // follow the QS way
+            memmove(State, pVFO->Name + 8, 2);
+            EEPROM_WriteBuffer(0x0F58 + OffsetMR, State);
         }
     }
 }

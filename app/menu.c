@@ -534,6 +534,7 @@ void MENU_AcceptSetting(void)
 			// save the channel name
 			memset(gTxVfo->Name, 0, sizeof(gTxVfo->Name));
 			memmove(gTxVfo->Name, edit, 10);
+//bug
 			SETTINGS_SaveChannel(gSubMenuSelection, gEeprom.TX_VFO, gTxVfo, 3);
 			gFlagReconfigureVfos = true;
 			return;

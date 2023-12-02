@@ -679,7 +679,7 @@ void UI_DisplayMenu(void) {
 
             if (valid) {
                 const uint32_t frequency = BOARD_fetchChannelFrequency(gSubMenuSelection);
-
+//bug way
                 if (!gIsInSubMenu || edit_index < 0) {    // show the channel name
                     BOARD_fetchChannelName(String, gSubMenuSelection);
                     if (String[0] == 0)
