@@ -13,7 +13,9 @@
  *     See the License for the specific language governing permissions and
  *     limitations under the License.
  */
+#include "driver/bk4819.h"
 
+#include "app/mdc1200.h"
 #include <string.h>
 
 #include "app/dtmf.h"
@@ -904,6 +906,7 @@ void RADIO_SetTxParameters(void)
 
 void RADIO_SetModulation(ModulationMode_t modulation)
 {
+    static ModulationMode_t m = MODULATION_UKNOWN;
     BK4819_AF_Type_t mod;
     switch(modulation) {
         default:
@@ -928,9 +931,16 @@ void RADIO_SetModulation(ModulationMode_t modulation)
     }
 
     BK4819_SetAF(mod);
-    BK4819_SetRegValue(afDacGainRegSpec, 0xF);
-    BK4819_WriteRegister(BK4819_REG_3D, modulation == MODULATION_USB ? 0 : 0x2AAB);
-    BK4819_SetRegValue(afcDisableRegSpec, modulation != MODULATION_FM);
+    if(m != modulation) {
+        m = modulation;
+        BK4819_SetRegValue(afDacGainRegSpec, 0xF);
+        BK4819_WriteRegister(BK4819_REG_3D, modulation == MODULATION_USB ? 0 : 0x2AAB);
+        BK4819_SetRegValue(afcDisableRegSpec, modulation != MODULATION_FM);
+#ifdef ENABLE_AM_FIX
+        BK4819_SetAGC(gRxVfo->Modulation != MODULATION_AM || !gSetting_AM_fix);
+		BK4819_InitAGC();
+#endif
+    }
 }
 
 void RADIO_SetVfoState(VfoState_t State)
@@ -1113,12 +1123,19 @@ void RADIO_SendEndOfTransmission(void)
     if (gEeprom.ROGER == ROGER_MODE_ROGER)
         BK4819_PlayRoger();
     else
-    if (gEeprom.ROGER == ROGER_MODE_MDC)
-        BK4819_PlayRogerMDC();
+    if (gEeprom.ROGER == ROGER_MODE_MDC) {
+        BK4819_send_MDC1200(MDC1200_OP_CODE_POST_ID, 0x00, 12, false);
 
+#ifdef ENABLE_MDC1200_SIDE_BEEP
+        BK4819_start_tone(880, 10, true, true);
+			SYSTEM_DelayMs(120);
+			BK4819_stop_tones(true);
+#endif
+    }
     if (gCurrentVfo->DTMF_PTT_ID_TX_MODE == PTT_ID_APOLLO)
-        BK4819_PlaySingleTone(2475, 250, 28, gEeprom.DTMF_SIDE_TONE);
+    {  BK4819_PlaySingleTone(2475, 250, 28, gEeprom.DTMF_SIDE_TONE);
 
+    }
     if (
 #ifdef ENABLE_DTMF_CALLING
             gDTMF_CallState == DTMF_CALL_STATE_NONE &&

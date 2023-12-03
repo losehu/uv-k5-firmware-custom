@@ -45,6 +45,10 @@ ENABLE_REDUCE_LOW_MID_TX_POWER:= 0
 ENABLE_BYP_RAW_DEMODULATORS   := 0
 ENABLE_BLMIN_TMP_OFF          := 0
 ENABLE_SCAN_RANGES            := 1
+ENABLE_MDC1200                   := 1
+ENABLE_MDC1200_SHOW_OP_ARG       := 1
+ENABLE_MDC1200_SIDE_BEEP         := 1
+
 
 #############################################################
 
@@ -72,7 +76,9 @@ ifeq ($(ENABLE_OVERLAY),1)
 	OBJS += sram-overlay.o
 endif
 OBJS += external/printf/printf.o
-
+ifeq ($(ENABLE_MDC1200),1)
+	OBJS += app/mdc1200.o
+endif
 # Drivers
 OBJS += driver/adc.o
 ifeq ($(ENABLE_UART),1)
@@ -233,7 +239,15 @@ else
 	# We get most of the space savings if LTO creates problems
 	CFLAGS += -ffunction-sections -fdata-sections
 endif
-
+ifeq ($(ENABLE_MDC1200),1)
+	CFLAGS  += -DENABLE_MDC1200
+endif
+ifeq ($(ENABLE_MDC1200_SHOW_OP_ARG),1)
+	CFLAGS  += -DENABLE_MDC1200_SHOW_OP_ARG
+endif
+ifeq ($(ENABLE_MDC1200_SIDE_BEEP),1)
+	CFLAGS  += -DENABLE_MDC1200_SIDE_BEEP
+endif
 # May cause unhelpful build failures
 #CFLAGS += -Wpadded
 

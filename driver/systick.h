@@ -21,6 +21,7 @@
 
 void SYSTICK_Init(void);
 void SYSTICK_DelayUs(uint32_t Delay);
+void SYSTICK_Delay250ns(const uint32_t Delay);
 
 #endif
 

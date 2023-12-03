@@ -192,7 +192,9 @@ void AUDIO_PlayBeep(BEEP_Type_t Beep)
 	#endif
 
 	SYSTEM_DelayMs(5);
-	BK4819_TurnsOffTones_TurnsOnRX();
+    //stop tone
+	//BK4819_TurnsOffTones_TurnsOnRX();
+    BK4819_stop_tones(false);
 	SYSTEM_DelayMs(5);
 	BK4819_WriteRegister(BK4819_REG_71, ToneConfig);
 

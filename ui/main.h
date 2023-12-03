@@ -33,6 +33,6 @@ extern center_line_t center_line;
 void UI_DisplayAudioBar(void);
 void UI_UpdateRSSI(const int16_t rssi, const int vfo);
 void UI_DisplayMain(void);
-
+extern const int8_t dBmCorrTable[7];
 #endif
 

@@ -66,6 +66,7 @@ typedef enum BK4819_CssScanResult_t BK4819_CssScanResult_t;
 extern bool gRxIdleMode;
 
 void     BK4819_Init(void);
+
 uint16_t BK4819_ReadRegister(BK4819_REGISTER_t Register);
 void     BK4819_WriteRegister(BK4819_REGISTER_t Register, uint16_t Data);
 void     BK4819_SetRegValue(RegisterSpec s, uint16_t v);
@@ -168,6 +169,10 @@ void     BK4819_Enable_AfDac_DiscMode_TxDsp(void);
 void     BK4819_GetVoxAmp(uint16_t *pResult);
 void     BK4819_SetScrambleFrequencyControlWord(uint32_t Frequency);
 void     BK4819_PlayDTMFEx(bool bLocalLoopback, char Code);
+void BK4819_send_MDC1200(const uint8_t op, const uint8_t arg, const uint16_t id, const bool long_preamble);
+
+void BK4819_stop_tones(const bool tx);
+void BK4819_start_tone(const uint16_t frequency, const unsigned int level, const bool tx, const bool tx_mute);
 
 #endif
 
