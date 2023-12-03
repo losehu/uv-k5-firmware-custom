@@ -1786,15 +1786,11 @@ static void ProcessKey(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld)
             // KEY_MENU has a special treatment here, because we want to pass hold event to ACTION_Handle
             // but we don't want it to complain when initial press happens
             // we want to react on realese instead
-        else if (        // pass side buttons
-                 !(Key == KEY_SIDE1 && !bKeyHeld)) // pass KEY_MENU held
+        else if (Key != KEY_SIDE1 && Key != KEY_SIDE2 &&        // pass side buttons
+                 !(Key == KEY_MENU && bKeyHeld)) // pass KEY_MENU held
         {
-//            if (!(Key == KEY_SIDE1&&bKeyHeld)&&(!bKeyPressed  || (Key == KEY_SIDE1 && bKeyPressed)) && // prevent released or held, prevent KEY_MENU pressed
-//                !(Key == KEY_SIDE1 && !bKeyPressed))  // pass KEY_MENU released
-//                return;
-            if (!(Key == KEY_SIDE1)  && !(bKeyPressed != 0))
-
-          //  if (Key == KEY_SIDE1 == 0 && !bKeyPressed != 0)  // pass KEY_MENU released
+            if ((!bKeyPressed || bKeyHeld || (Key == KEY_MENU && bKeyPressed)) && // prevent released or held, prevent KEY_MENU pressed
+                !(Key == KEY_MENU && !bKeyPressed))  // pass KEY_MENU released
                 return;
 
             // keypad is locked, tell the user
