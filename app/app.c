@@ -1190,7 +1190,6 @@ void APP_TimeSlice10ms(void)
 #endif
 
 #ifdef ENABLE_AM_FIX
-    //		if (gEeprom.VfoInfo[gEeprom.RX_VFO].Modulation != MODULATION_FM && gSetting_AM_fix)
 		if (gRxVfo->Modulation == MODULATION_AM && gSetting_AM_fix)
 			AM_fix_10ms(gEeprom.RX_VFO);
 #endif
@@ -2025,7 +2024,7 @@ static void ProcessKey(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld)
 
     if (gRequestSaveChannel > 0)
     {
-        if (!bKeyHeld)
+        if (!bKeyHeld)// TODO: remove the gRequestSaveChannel, why use global variable for that??
         {
             SETTINGS_SaveChannel(gTxVfo->CHANNEL_SAVE, gEeprom.TX_VFO, gTxVfo, gRequestSaveChannel);
 

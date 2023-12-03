@@ -26,9 +26,10 @@
 #include <driver/backlight.h>
 
 enum POWER_OnDisplayMode_t {
-     POWER_ON_DISPLAY_MODE_NONE=0,
-    POWER_ON_DISPLAY_MODE_MESSAGE
-
+    POWER_ON_DISPLAY_MODE_FULL_SCREEN = 0,
+    POWER_ON_DISPLAY_MODE_MESSAGE,
+    POWER_ON_DISPLAY_MODE_VOLTAGE,
+    POWER_ON_DISPLAY_MODE_NONE
 };
 typedef enum POWER_OnDisplayMode_t POWER_OnDisplayMode_t;
 
@@ -92,8 +93,8 @@ enum {
     ACTION_OPT_BLMIN_TMP_OFF, //BackLight Minimum Temporay OFF
 #endif
     ACTION_OPT_LEN,
-    ACTION_OPT_WIDTH,
-    ACTION_OPT_D_DCD
+    ACTION_OPT_D_DCD,
+    ACTION_OPT_WIDTH
 };
 
 #ifdef ENABLE_VOICE
@@ -183,6 +184,7 @@ typedef struct {
     uint8_t               field37_0x32;
     uint8_t               field38_0x33;
 
+    bool                  AUTO_KEYPAD_LOCK;
 #if defined(ENABLE_ALARM) || defined(ENABLE_TX1750)
     ALARM_Mode_t      ALARM_MODE;
 #endif
@@ -243,7 +245,7 @@ typedef struct {
     uint8_t               field79_0x97;
 
     uint8_t 			  KEY_M_LONG_PRESS_ACTION;
-  //  uint8_t               BACKLIGHT_MIN;
+    uint8_t               BACKLIGHT_MIN;
 #ifdef ENABLE_BLMIN_TMP_OFF
     BLMIN_STAT_t		  BACKLIGHT_MIN_STAT;
 #endif
@@ -253,11 +255,17 @@ typedef struct {
 
 extern EEPROM_Config_t gEeprom;
 
+void     SETTINGS_InitEEPROM(void);
+void     SETTINGS_LoadCalibration(void);
+uint32_t SETTINGS_FetchChannelFrequency(const int channel);
+void     SETTINGS_FetchChannelName(char *s, const int channel);
+void     SETTINGS_FactoryReset(bool bIsAll);
 #ifdef ENABLE_FMRADIO
 void SETTINGS_SaveFM(void);
 #endif
 void SETTINGS_SaveVfoIndices(void);
 void SETTINGS_SaveSettings(void);
+void SETTINGS_SaveChannelName(uint8_t channel, const char * name);
 void SETTINGS_SaveChannel(uint8_t Channel, uint8_t VFO, const VFO_Info_t *pVFO, uint8_t Mode);
 void SETTINGS_SaveBatteryCalibration(const uint16_t * batteryCalibration);
 void SETTINGS_UpdateChannel(uint8_t channel, const VFO_Info_t *pVFO, bool keep);

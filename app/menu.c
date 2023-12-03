@@ -381,7 +381,6 @@ void MENU_AcceptSetting(void)
 {
 	int32_t        Min;
 	int32_t        Max;
-	uint8_t        Code;
 	FREQ_Config_t *pConfig = &gTxVfo->freq_config_RX;
 
 	if (!MENU_GetLimits(UI_MENU_GetCurrentMenuId(), &Min, &Max))
@@ -393,90 +392,74 @@ void MENU_AcceptSetting(void)
     char a=gSubMenuSelection;//UART_Send(a,1);
     UART_Send((uint8_t *)&a, 1);
 
-    switch (UI_MENU_GetCurrentMenuId())
-	{
-		default:
-			return;
+    switch (UI_MENU_GetCurrentMenuId()) {
+        default:
+            return;
 
-		case MENU_SQL:
-			gEeprom.SQUELCH_LEVEL = gSubMenuSelection;
-			gVfoConfigureMode     = VFO_CONFIGURE;
-			break;
+        case MENU_SQL:
+            gEeprom.SQUELCH_LEVEL = gSubMenuSelection;
+            gVfoConfigureMode = VFO_CONFIGURE;
+            break;
 
-		case MENU_STEP:
-			gTxVfo->STEP_SETTING = FREQUENCY_GetStepIdxFromSortedIdx(gSubMenuSelection);
-			if (IS_FREQ_CHANNEL(gTxVfo->CHANNEL_SAVE))
-			{
-				gRequestSaveChannel = 1;
-				return;
-			}
-			return;
+        case MENU_STEP:
+            gTxVfo->STEP_SETTING = FREQUENCY_GetStepIdxFromSortedIdx(gSubMenuSelection);
+            if (IS_FREQ_CHANNEL(gTxVfo->CHANNEL_SAVE)) {
+                gRequestSaveChannel = 1;
+                return;
+            }
+            return;
 
 //		case MENU_TXP:
 //			gTxVfo->OUTPUT_POWER = gSubMenuSelection;
 //			gRequestSaveChannel = 1;
 //			return;
 
-		case MENU_T_DCS:
-			pConfig = &gTxVfo->freq_config_TX;
+        case MENU_T_DCS:
+            pConfig = &gTxVfo->freq_config_TX;
 
-			// Fallthrough
+            // Fallthrough
 
-		case MENU_R_DCS:
-			if (gSubMenuSelection == 0)
-			{
-				if (pConfig->CodeType != CODE_TYPE_DIGITAL && pConfig->CodeType != CODE_TYPE_REVERSE_DIGITAL)
-				{
-					gRequestSaveChannel = 1;
-					return;
-				}
-				Code              = 0;
-				pConfig->CodeType = CODE_TYPE_OFF;
-			}
-			else
-			if (gSubMenuSelection < 105)
-			{
-				pConfig->CodeType = CODE_TYPE_DIGITAL;
-				Code              = gSubMenuSelection - 1;
-			}
-			else
-			{
-				pConfig->CodeType = CODE_TYPE_REVERSE_DIGITAL;
-				Code              = gSubMenuSelection - 105;
-			}
+        case MENU_R_DCS:{
+            if (gSubMenuSelection == 0) {
+                if (pConfig->CodeType == CODE_TYPE_CONTINUOUS_TONE) {
+                    return;
+                }
+                pConfig->Code = 0;
+                pConfig->CodeType = CODE_TYPE_OFF;
+            } else if (gSubMenuSelection < 105) {
+                pConfig->CodeType = CODE_TYPE_DIGITAL;
+                pConfig->Code = gSubMenuSelection - 1;
+            } else {
+                pConfig->CodeType = CODE_TYPE_REVERSE_DIGITAL;
+                pConfig->Code = gSubMenuSelection - 105;
+            }
 
-			pConfig->Code       = Code;
-			gRequestSaveChannel = 1;
-			return;
-
+            gRequestSaveChannel = 1;
+            return;
+    }
 		case MENU_T_CTCS:
 			pConfig = &gTxVfo->freq_config_TX;
 			[[fallthrough]];
-		case MENU_R_CTCS:
+		case MENU_R_CTCS:{
 			if (gSubMenuSelection == 0)
 			{
 				if (pConfig->CodeType != CODE_TYPE_CONTINUOUS_TONE)
 				{
-					gRequestSaveChannel = 1;
 					return;
 				}
-				Code              = 0;
-				pConfig->Code     = Code;
+                pConfig->Code = 0;
 				pConfig->CodeType = CODE_TYPE_OFF;
 
-				BK4819_ExitSubAu();
 			}
-			else
-			{
-				pConfig->CodeType = CODE_TYPE_CONTINUOUS_TONE;
-				Code              = gSubMenuSelection - 1;
-				pConfig->Code     = Code;
+            else {
+                pConfig->Code     = gSubMenuSelection - 1;
+                pConfig->CodeType = CODE_TYPE_CONTINUOUS_TONE;
 
-				BK4819_SetCTCSSFrequency(CTCSS_Options[Code]);
-			}
+            }
 
-			gRequestSaveChannel = 1;
-			return;
+            gRequestSaveChannel = 1;
+            return;
+    }
 
 		case MENU_SFT_D:
 			gTxVfo->TX_OFFSET_FREQUENCY_DIRECTION = gSubMenuSelection;
@@ -522,21 +505,14 @@ void MENU_AcceptSetting(void)
 			return;
 
 		case MENU_MEM_NAME:
-			{	// trailing trim
-				for (int i = 9; i >= 0; i--)
-				{
-					if (edit[i] != ' ' && edit[i] != '_' && edit[i] != 0x00 && edit[i] != 0xff)
-						break;
-					edit[i] = ' ';
-				}
+				// trailing trim
+                for (int i = 9; i >= 0; i--) {
+                    if (edit[i] != ' ' && edit[i] != '_' && edit[i] != 0x00 && edit[i] != 0xff)
+                        break;
+                    edit[i] = ' ';
 			}
 
-			// save the channel name
-			memset(gTxVfo->Name, 0, sizeof(gTxVfo->Name));
-			memmove(gTxVfo->Name, edit, 10);
-//bug
-			SETTINGS_SaveChannel(gSubMenuSelection, gEeprom.TX_VFO, gTxVfo, 3);
-			gFlagReconfigureVfos = true;
+            SETTINGS_SaveChannelName(gSubMenuSelection, edit);
 			return;
 
 		case MENU_SAVE:
@@ -548,7 +524,7 @@ void MENU_AcceptSetting(void)
 //				gEeprom.VOX_SWITCH = gSubMenuSelection != 0;
 //				if (gEeprom.VOX_SWITCH)
 //					gEeprom.VOX_LEVEL = gSubMenuSelection - 1;
-//				BOARD_EEPROM_LoadCalibration();
+//				SETTINGS_LoadCalibration();
 //				gFlagReconfigureVfos = true;
 //				gUpdateStatus        = true;
 //				break;
@@ -631,7 +607,7 @@ void MENU_AcceptSetting(void)
 
 		case MENU_MIC:
 			gEeprom.MIC_SENSITIVITY = gSubMenuSelection;
-			BOARD_EEPROM_LoadCalibration();
+            SETTINGS_LoadCalibration();
 			gFlagReconfigureVfos = true;
 			break;
 
@@ -759,8 +735,8 @@ void MENU_AcceptSetting(void)
 			return;
 
 		case MENU_RESET:
-			BOARD_FactoryReset(gSubMenuSelection);
-			return;
+            SETTINGS_FactoryReset(gSubMenuSelection);
+            return;
 
 		case MENU_350TX:
 			gSetting_350TX = gSubMenuSelection;
@@ -1469,8 +1445,7 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld)
 			if (!RADIO_CheckValidChannel(gSubMenuSelection, false, 0))
 				return;
 
-			BOARD_fetchChannelName(edit, gSubMenuSelection);
-
+            SETTINGS_FetchChannelName(edit, gSubMenuSelection);
 			// pad the channel name out with '_'
 			edit_index = strlen(edit);
 			while (edit_index < 10)

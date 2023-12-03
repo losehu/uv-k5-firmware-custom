@@ -379,11 +379,11 @@ void RADIO_ConfigureChannel(const unsigned int VFO, const unsigned int configure
 
     RADIO_ApplyOffset(pVfo);
 
-    memset(pVfo->Name, 0, sizeof(pVfo->Name));
     if (IS_MR_CHANNEL(channel))
     {	// 16 bytes allocated to the channel name but only 10 used, the rest are 0's
-        EEPROM_ReadBuffer(0x0F50 + (channel * 16), pVfo->Name + 0, 8);
-        EEPROM_ReadBuffer(0x0F58 + (channel * 16), pVfo->Name + 8, 2);
+
+
+        SETTINGS_FetchChannelName(pVfo->Name, channel);
     }
 
     if (!pVfo->FrequencyReverse)
@@ -404,13 +404,7 @@ void RADIO_ConfigureChannel(const unsigned int VFO, const unsigned int configure
             pConfig->Frequency = 43300000;
     }
 
-    if (pVfo->Modulation != MODULATION_FM)
-    {	// freq/chan is in AM mode
-        pVfo->SCRAMBLING_TYPE         = 0;
-//		pVfo->DTMF_DECODING_ENABLE    = false;  // no reason to disable DTMF decoding, aircraft use it on SSB
-        pVfo->freq_config_RX.CodeType = CODE_TYPE_OFF;
-        pVfo->freq_config_TX.CodeType = CODE_TYPE_OFF;
-    }
+
 //    else{
 //
 //         FREQ_Config_t *pConfig =  gEeprom.VfoInfo[1].pRX;
