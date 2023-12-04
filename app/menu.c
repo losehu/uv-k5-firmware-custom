@@ -1664,8 +1664,7 @@ if( gIsInSubMenu && edit_index >= 0){
             if (bKeyPressed && edit_index < 4 ) {
                 char c = edit[edit_index] + Direction;
                     if(c<'0')c='F';
-                    else if(c>'9')c='A';
-                    else if(c<'A')c='9';
+                    else if(c>'9'&&c<'A')c='A';
                     else if(c>'F')c='0';
                 edit[edit_index]=c;
                 gRequestDisplayScreen = DISPLAY_MENU;
