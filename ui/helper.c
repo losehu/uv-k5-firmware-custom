@@ -41,7 +41,7 @@ uint8_t is_chn(uint8_t num) {
 
     if (num >= 1 && num < 10)return num - 1;
     else if (num > 10 && num < 32)return num - 2;
-    else if (num > 126 && num <= 230)return num - 97;
+    else if (num > 126 && num <= 218)return num - 97;
     else return 255;
 }
 

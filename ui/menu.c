@@ -46,7 +46,7 @@ const t_menu_item MenuList[] =
                 {/*"TxCTCS",*/ VOICE_ID_CTCSS,                         MENU_T_CTCS        ,发送模拟亚音}, // was "T_CTCS"
                 {/*"TxODir",*/ VOICE_ID_TX_OFFSET_FREQUENCY_DIRECTION, MENU_SFT_D         ,频差方向}, // was "SFT_D"
                 {/*"TxOffs",*/ VOICE_ID_TX_OFFSET_FREQUENCY,           MENU_OFFSET        ,频差频率}, // was "OFFSET"
-                {/*"Scramb",*/ VOICE_ID_SCRAMBLER_ON,                  MENU_SCR           ,加密通话}, // was "SCR"
+                {/*"Scramb",*/ VOICE_ID_SCRAMBLER_ON,                  MENU_SCR           ,加密}, // was "SCR"
                 {/*"BusyCL",*/ VOICE_ID_BUSY_LOCKOUT,                  MENU_BCL           ,遇忙禁发}, // was "BCL"
                 {/*"Compnd",*/ VOICE_ID_INVALID,                       MENU_COMPAND       ,压扩},
                 {/*"ChSave",*/ VOICE_ID_MEMORY_CHANNEL,                MENU_MEM_CH        ,存置信道}, // was "MEM-CH"
@@ -69,7 +69,7 @@ const t_menu_item MenuList[] =
                 {/*"1 Call",*/ VOICE_ID_INVALID,                       MENU_1_CALL        ,按键即呼},
 
 #ifdef ENABLE_DTMF_CALLING
-                {/*"ANI ID",*/ VOICE_ID_ANI_CODE,                      MENU_ANI_ID        ,身份码},
+                {/*"ANI ID",*/ VOICE_ID_ANI_CODE,                      MENU_ANI_ID        ,DTMF_ID},
 #endif
                 {/*"UPCode",*/ VOICE_ID_INVALID,                       MENU_UPCODE        ,DTMF上线码},
                 {/*"DWCode",*/ VOICE_ID_INVALID,                       MENU_DWCODE        ,DTMF下线码},
@@ -261,15 +261,18 @@ const char *gSubMenu_PTT_ID[] =
 
 
 
-const char gSubMenu_ROGER[][9] =
+const char gSubMenu_ROGER[][13] =
         {
 //                "OFF",
 //                "ROGER",
 //                "MDC"
 
-                关闭结束音,
-                ROGER结束音,
-                MDC蛙叫
+                关闭,
+                ROGER尾音,
+                MDC尾音,
+                MDC首音,
+        MDC首尾音,
+                MDC首音加ROGER
         };
 
 const char gSubMenu_RESET[][6] =//4
@@ -771,7 +774,7 @@ void UI_DisplayMenu(void) {
                    sprintf(String, "list %u", 1 + gSubMenuSelection);
 
 #else  //！！列表
-                sprintf(String, "\x85\x86 %u", 1 + gSubMenuSelection);
+                sprintf(String, "\x83\x84 %u", 1 + gSubMenuSelection);
 
 #endif
 

@@ -80,12 +80,12 @@ void UI_DisplayScanner(void)
 		}
 		else if (gScanCssState == SCAN_CSS_STATE_FOUND)
             //扫描ok
-        strcpy(String, "\x83\x84 OK.");
+        strcpy(String, "\x81\x82 OK.");
 
 
         else
             //扫描fail
-            strcpy(String, "\x83\x84 FAIL.");
+            strcpy(String, "\x81\x82 FAIL.");
 		Start     = 2;
 		bCentered = 0;
 	}
