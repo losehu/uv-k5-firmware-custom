@@ -687,6 +687,7 @@ void UI_DisplayMenu(void) {
         {
 //            gIsInSubMenu
             if (!gIsInSubMenu||edit_index<0) {    // show the channel name
+                                    sprintf(edit, "%04lX", gEeprom.MDC1200_ID); // %04X确保输出是4个字符长度的十六进制数
 
                     sprintf(String, "%04X", gEeprom.MDC1200_ID); // %04X确保输出是4个字符长度的十六进制数
                 UI_PrintStringSmall(String, menu_item_x1, menu_item_x2, 3);//4
