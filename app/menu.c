@@ -1454,7 +1454,7 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld)
         	if (edit_index < 0)
 		{
 //                edit_index = 0;
-                  sprintf(edit, "%04X", gEeprom.MDC1200_ID); // %04X确保输出是4个字符长度的十六进制数
+                  sprintf(edit, " %04lX", gEeprom.MDC1200_ID); // %04X确保输出是4个字符长度的十六进制数
 
 //			while (edit_index < 4)
 //				edit[edit_index++] = '_';
