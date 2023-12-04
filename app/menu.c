@@ -1434,16 +1434,16 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld) {
         // exit
         if (memcmp(edit_original, edit, sizeof(edit_original)) == 0)
         {	// no change - drop it
-//            gFlagAcceptSetting  = false;
+            gFlagAcceptSetting  = false;
             gIsInSubMenu        = false;
-//            gAskForConfirmation = 0;
-        }
-//        else
-//        {
-//
-//        }
-         gFlagAcceptSetting  = false;
             gAskForConfirmation = 0;
+        }
+        else
+        {
+            gFlagAcceptSetting  = false;
+            gAskForConfirmation = 0;
+        }
+
     }
     if (UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME) {
         if (edit_index < 0) {    // enter channel name edit mode
