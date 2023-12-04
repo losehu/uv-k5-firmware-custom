@@ -1642,29 +1642,36 @@ static void MENU_Key_UP_DOWN(bool bKeyPressed, bool bKeyHeld, int8_t Direction)
 	uint8_t VFO;
 	uint8_t Channel;
 	bool    bCheckScanList;
+if(&& gIsInSubMenu && edit_index >= 0){
+        if (UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME) {    // change the character
+            if (bKeyPressed && edit_index < 10 && Direction != 0) {
+                const char unwanted[] = "$%&!\"':;?^`|{}";
+                char c = edit[edit_index] + Direction;
+                unsigned int i = 0;
+                while (i < sizeof(unwanted) && c >= 32 && c <= 126) {
+                    if (c == unwanted[i++]) {    // choose next character
+                        c += Direction;
+                        i = 0;
+                    }
+                }
+                edit[edit_index] = (c < 32) ? 126 : (c > 126) ? 32 : c;
 
-	if (UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME && gIsInSubMenu && edit_index >= 0)
-	{	// change the character
-		if (bKeyPressed && edit_index < 10 && Direction != 0)
-		{
-			const char   unwanted[] = "$%&!\"':;?^`|{}";
-			char         c          = edit[edit_index] + Direction;
-			unsigned int i          = 0;
-			while (i < sizeof(unwanted) && c >= 32 && c <= 126)
-			{
-				if (c == unwanted[i++])
-				{	// choose next character
-					c += Direction;
-					i = 0;
-				}
-			}
-			edit[edit_index] = (c < 32) ? 126 : (c > 126) ? 32 : c;
-
-			gRequestDisplayScreen = DISPLAY_MENU;
-		}
-		return;
-	}
-
+                gRequestDisplayScreen = DISPLAY_MENU;
+            }
+            return;
+        } else if (UI_MENU_GetCurrentMenuId() == MENU_MDC_ID)
+        {
+            if (bKeyPressed && edit_index < 4 && Direction != 0) {
+                char c = edit[edit_index] + Direction;
+                    if(c<'0')c='F';
+                    else if(c>'9')c='A';
+                    else if(c<'A')c='9';
+                    else if(c>'F')c='0';
+                gRequestDisplayScreen = DISPLAY_MENU;
+            }
+            return;
+        }
+    }
 	if (!bKeyHeld)
 	{
 		if (!bKeyPressed)
