@@ -1667,7 +1667,7 @@ if( gIsInSubMenu && edit_index >= 0){
                     else if(c>'F')c='0';
                     else if(c>'9'&&c<'A'){
                         if(Direction==1)c='A';
-                    else c='9';
+                        else c='9';
                     }
 
                 edit[edit_index]=c;
