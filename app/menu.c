@@ -1430,26 +1430,8 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld)
 			if (UI_MENU_GetCurrentMenuId() != MENU_SCR)
 				gAnotherVoiceID = MenuList[gMenuCursor].voice_id;
 		#endif
-
-		#if 1
-			if (UI_MENU_GetCurrentMenuId() == MENU_DEL_CH || UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME)
-				if (!RADIO_CheckValidChannel(gSubMenuSelection, false, 0))
-					return;  // invalid channel
-		#endif
-
-		gAskForConfirmation = 0;
-		gIsInSubMenu        = true;
-
-//		if (UI_MENU_GetCurrentMenuId() != MENU_D_LIST)
-		{
-			gInputBoxIndex      = 0;
-			edit_index          = -1;
-		}
-
-		return;
-	}
 #ifdef ENABLE_MDC1200
-    if (UI_MENU_GetCurrentMenuId() == MENU_MDC_ID)
+        if (UI_MENU_GetCurrentMenuId() == MENU_MDC_ID)
     {
         	if (edit_index < 0)
 		{
@@ -1488,6 +1470,24 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld)
 
 else
 #endif
+		#if 1
+			if (UI_MENU_GetCurrentMenuId() == MENU_DEL_CH || UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME)
+				if (!RADIO_CheckValidChannel(gSubMenuSelection, false, 0))
+					return;  // invalid channel
+		#endif
+
+		gAskForConfirmation = 0;
+		gIsInSubMenu        = true;
+
+//		if (UI_MENU_GetCurrentMenuId() != MENU_D_LIST)
+		{
+			gInputBoxIndex      = 0;
+			edit_index          = -1;
+		}
+
+		return;
+	}
+
     if (UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME)
 	{
 		if (edit_index < 0)
