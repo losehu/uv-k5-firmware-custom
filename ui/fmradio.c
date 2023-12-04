@@ -27,7 +27,7 @@
 #include "ui/helper.h"
 #include "ui/inputbox.h"
 #include "ui/ui.h"
-
+#include "chinese.h"
 void UI_DisplayFM(void)
 {
 	unsigned int i;
@@ -42,12 +42,12 @@ void UI_DisplayFM(void)
 	memset(String, 0, sizeof(String));
 	if (gAskToSave)
 	{
-		strcpy(String, "SAVE?");
+		strcpy(String, 存置问);
 	}
 	else
 	if (gAskToDelete)
 	{
-		strcpy(String, "DEL?");
+		strcpy(String, 删除问);
 	}
 	else
 	{

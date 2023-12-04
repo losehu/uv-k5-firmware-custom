@@ -144,8 +144,8 @@
 
 //!! 扫描ok
 //!! 扫描fail
-
-
+//ui/fmradio.c
+#define 删除问 "\x1E\x1F?"
 
 
 #endif //UV_K5_FIRMWARE_CUSTOM_0_17_CHINESE_H
