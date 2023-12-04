@@ -506,11 +506,11 @@ void MENU_AcceptSetting(void)
 			return;
 #ifdef ENABLE_MDC1200
             case MENU_MDC_ID:
-                for (int i = 4; i >= 0; i--) {
-                    if (edit[i] != ' ' && edit[i] != '_' && edit[i] != 0x00 && edit[i] != 0xff)
-                        break;
-                    edit[i] = ' ';
-			}
+//                for (int i = 3; i >= 0; i--) {
+//                    if (edit[i] != ' ' && edit[i] != '_' && edit[i] != 0x00 && edit[i] != 0xff)
+//                        break;
+//                    edit[i] = ' ';
+//			}
         gEeprom.MDC1200_ID=extractHex(edit);
 			return;
 #endif
