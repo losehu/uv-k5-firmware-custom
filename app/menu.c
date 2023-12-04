@@ -1443,10 +1443,8 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld)
 //			edit_index = 0;  // 'edit_index' is going to be used as the cursor position
 			// make a copy so we can test for change when exiting the menu item
 			memmove(edit_original, edit, sizeof(edit_original));
-			return;
 		}
-		else
-		if (edit_index >= 0 && edit_index < 4)
+		else if (edit_index >= 0 && edit_index < 4)
 		{	// editing the channel name characters
 
 			if (++edit_index >= 4)
