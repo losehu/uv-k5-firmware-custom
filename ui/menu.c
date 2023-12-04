@@ -700,6 +700,7 @@ void UI_DisplayMenu(void) {
             //}
 //            else
                 if(gIsInSubMenu){    // show the channel name being edited
+                    edit_index=0;
                 UI_PrintStringSmall(edit, menu_item_x1, menu_item_x2, 3);
                 if (edit_index < 4)
                     UI_PrintStringSmall("^", menu_item_x1+(((menu_item_x2 - menu_item_x1) - (28)) + 1) / 2 + (7 * edit_index), 0, 4);  // show the cursor
