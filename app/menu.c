@@ -1203,17 +1203,18 @@ static void MENU_Key_0_to_9(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld)
 		return;
 
 	gBeepToPlay = BEEP_1KHZ_60MS_OPTIONAL;
-
-	if (UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME && edit_index >= 0)
+uint8_t now_menu=UI_MENU_GetCurrentMenuId();
+        uint8_t end_index=now_menu==MENU_MEM_NAME?10:4;
+	if (( now_menu== MENU_MEM_NAME||now_menu==MENU_MDC_ID) && edit_index >= 0)
 	{	// currently editing the channel name
 
-		if (edit_index < 10)
+		if (edit_index < end_index)
 		{
 			if (Key <= KEY_9)
 			{
 				edit[edit_index] = '0' + Key - KEY_0;
 
-				if (++edit_index >= 10)
+				if (++edit_index >= end_index)
 				{	// exit edit
 					gFlagAcceptSetting  = false;
 					gAskForConfirmation = 1;
@@ -1533,7 +1534,8 @@ else
 		if (UI_MENU_GetCurrentMenuId() == MENU_RESET  ||
 			UI_MENU_GetCurrentMenuId() == MENU_MEM_CH ||
 			UI_MENU_GetCurrentMenuId() == MENU_DEL_CH ||
-			UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME)
+			UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME||
+                UI_MENU_GetCurrentMenuId() == MENU_MDC_ID)
 		{
 			switch (gAskForConfirmation)
 			{
