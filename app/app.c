@@ -1399,7 +1399,17 @@ void APP_TimeSlice500ms(void)
 		if (--gDTMF_RX_timeout == 0)
 			DTMF_clear_RX();
 #endif
-
+#ifdef ENABLE_MDC1200
+    if (mdc1200_rx_ready_tick_500ms > 0)
+		{
+			if (--mdc1200_rx_ready_tick_500ms == 0)
+			{
+				if (center_line == CENTER_LINE_MDC1200)
+					center_line = CENTER_LINE_NONE;
+				gUpdateDisplay = true;
+			}
+		}
+#endif
     // Skipped authentic device check
 
 #ifdef ENABLE_FMRADIO

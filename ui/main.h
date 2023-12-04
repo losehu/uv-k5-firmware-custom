@@ -24,7 +24,8 @@ enum center_line_t {
 	CENTER_LINE_RSSI,
 	CENTER_LINE_AM_FIX_DATA,
 	CENTER_LINE_DTMF_DEC,
-	CENTER_LINE_CHARGE_DATA
+	CENTER_LINE_CHARGE_DATA,
+    CENTER_LINE_MDC1200
 };
 typedef enum center_line_t center_line_t;
 

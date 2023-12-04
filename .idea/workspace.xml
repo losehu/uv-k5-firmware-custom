@@ -20,10 +20,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="reduce flash">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chinese.h" beforeDir="false" afterPath="$PROJECT_DIR$/chinese.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/版本说明.txt" beforeDir="false" afterPath="$PROJECT_DIR$/版本说明.txt" afterDir="false" />
+    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="rebuild chinese">
+      <change beforePath="$PROJECT_DIR$/app/app.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/main.h" beforeDir="false" afterPath="$PROJECT_DIR$/ui/main.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,7 +134,7 @@
       <workItem from="1701325367312" duration="22657000" />
       <workItem from="1701413653518" duration="3544000" />
       <workItem from="1701430185864" duration="10115000" />
-      <workItem from="1701559895523" duration="19045000" />
+      <workItem from="1701559895523" duration="21426000" />
     </task>
     <task id="LOCAL-00001" summary="bug fix">
       <created>1701136012311</created>
@@ -304,7 +304,14 @@
       <option name="project" value="LOCAL" />
       <updated>1701670725835</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="rebuild chinese">
+      <created>1701674241852</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1701674241852</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -323,7 +330,6 @@
     <MESSAGE value="lite create" />
     <MESSAGE value="lite aim" />
     <MESSAGE value="create" />
-    <MESSAGE value="rebuild chinese" />
     <MESSAGE value="fix bug" />
     <MESSAGE value="掃描下翻譯" />
     <MESSAGE value="fix https://github.com/losehu/uv-k5-firmware-chinese/issues/4" />
@@ -332,6 +338,7 @@
     <MESSAGE value="mdc tx end test" />
     <MESSAGE value="test create" />
     <MESSAGE value="reduce flash" />
-    <option name="LAST_COMMIT_MESSAGE" value="reduce flash" />
+    <MESSAGE value="rebuild chinese" />
+    <option name="LAST_COMMIT_MESSAGE" value="rebuild chinese" />
   </component>
 </project>

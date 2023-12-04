@@ -13,6 +13,7 @@
  *     See the License for the specific language governing permissions and
  *     limitations under the License.
  */
+#include "app/mdc1200.h"
 #include "chinese.h"
 #include <string.h>
 #include <stdlib.h>  // abs()
@@ -708,7 +709,23 @@ void UI_DisplayMain(void)
 		const bool rx = (gCurrentFunction == FUNCTION_RECEIVE ||
 		                 gCurrentFunction == FUNCTION_MONITOR ||
 		                 gCurrentFunction == FUNCTION_INCOMING);
-
+#ifdef ENABLE_MDC1200
+        if (mdc1200_rx_ready_tick_500ms > 0)
+		{
+			center_line = CENTER_LINE_MDC1200;
+			#ifdef ENABLE_MDC1200_SHOW_OP_ARG
+				sprintf(String, "MDC1200 %02X %02X %04X", mdc1200_op, mdc1200_arg, mdc1200_unit_id);
+			#else
+				sprintf(String, "MDC1200 ID %04X", mdc1200_unit_id);
+			#endif
+			#ifdef ENABLE_SMALL_BOLD
+				UI_PrintStringSmallBold(String, 2, 0, 3);
+			#else
+				UI_PrintStringSmall(String, 2, 0, 3);
+			#endif
+		}
+		else
+#endif
 #ifdef ENABLE_AUDIO_BAR
 		if (gCurrentFunction == FUNCTION_TRANSMIT) {
 			center_line = CENTER_LINE_AUDIO_BAR;
