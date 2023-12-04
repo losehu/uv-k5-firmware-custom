@@ -63,7 +63,10 @@ const t_menu_item MenuList[] =
              //   {/*"POnMsg",*/ VOICE_ID_INVALID,                       MENU_PONMSG        ,开机显示},
                 {/*"BackLt",*/ VOICE_ID_INVALID,                       MENU_ABR           ,自动背光}, // was "ABR"
                 {/*"BLMax",*/  VOICE_ID_INVALID,                       MENU_ABR_MAX       ,背光亮度},
-                {/*"Roger",*/  VOICE_ID_INVALID,                       MENU_ROGER         ,发送结束音},
+                {/*"MDCID",*/  VOICE_ID_INVALID,                       MENU_MDC_ID         ,MDC_ID},
+
+                {/*"Roger",*/  VOICE_ID_INVALID,                       MENU_ROGER         ,首尾音},
+
                 {/*"STE",*/    VOICE_ID_INVALID,                       MENU_STE           ,尾音消除},
                 {/*"RP STE",*/ VOICE_ID_INVALID,                       MENU_RP_STE        ,过中继尾音消除},
                 {/*"1 Call",*/ VOICE_ID_INVALID,                       MENU_1_CALL        ,按键即呼},
@@ -797,10 +800,17 @@ void UI_DisplayMenu(void) {
 #endif
 #ifdef ENABLE_DTMF_CALLING
         case MENU_ANI_ID:
+
             strcpy(String, gEeprom.ANI_DTMF_ID);
             break;
 #endif
-
+#ifdef ENABLE_MDC1200
+            case MENU_MDC_ID:
+            ///    char mdc_id_str[4];
+    sprintf(String, "%04X", gEeprom.MDC1200_ID); // %04X确保输出是4个字符长度的十六进制数
+          //  strcpy(String, id);
+            break;
+#endif
         case MENU_UPCODE:
             strcpy(String, gEeprom.DTMF_UP_CODE);
             break;

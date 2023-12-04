@@ -118,8 +118,8 @@ void SETTINGS_InitEEPROM(void)
     // 0E90..0E97
     EEPROM_ReadBuffer(0x0E90, Data, 8);
     gEeprom.BEEP_CONTROL                 = Data[0] & 1;
-//    gEeprom.KEY_M_LONG_PRESS_ACTION      = ((Data[0] >> 1) < ACTION_OPT_LEN) ? (Data[0] >> 1) : ACTION_OPT_NONE;
-//    gEeprom.KEY_1_SHORT_PRESS_ACTION     = (Data[1] < ACTION_OPT_LEN) ? Data[1] : ACTION_OPT_MONITOR;
+
+    gEeprom.MDC1200_ID     =((uint16_t) (Data[2] << 8))|((uint16_t)(Data[1] ));
 //    gEeprom.KEY_1_LONG_PRESS_ACTION      = (Data[2] < ACTION_OPT_LEN) ? Data[2] : ACTION_OPT_FLASHLIGHT;
 //    gEeprom.KEY_2_SHORT_PRESS_ACTION     = (Data[3] < ACTION_OPT_LEN) ? Data[3] : ACTION_OPT_SCAN;
 //    gEeprom.KEY_2_LONG_PRESS_ACTION      = (Data[4] < ACTION_OPT_LEN) ? Data[4] : ACTION_OPT_NONE;
@@ -505,9 +505,16 @@ void SETTINGS_SaveSettings(void)
     EEPROM_WriteBuffer(0x0E78, State);
 
     State[0] = gEeprom.BEEP_CONTROL;
-    State[0] |= 0;//gEeprom.KEY_M_LONG_PRESS_ACTION << 1;
-    State[1] = 0;//gEeprom.KEY_1_SHORT_PRESS_ACTION;
-    State[2] = 0;//gEeprom.KEY_1_LONG_PRESS_ACTION;
+   // State[0] |= 0;//gEeprom.KEY_M_LONG_PRESS_ACTION << 1;
+//    State[1]=(uint8_t)(gEeprom.MDC1200_ID&(0x000000ff));
+//    State[2]=(uint8_t)((gEeprom.MDC1200_ID&0x0000ff00)>>8);
+//    State[3]=(uint8_t)((gEeprom.MDC1200_ID&0x00ff0000)>>16);
+//    State[4]=(uint8_t)((gEeprom.MDC1200_ID&0xff000000)>>24);
+    State[1]=(uint8_t)(gEeprom.MDC1200_ID&(0x00ff));
+    State[2]=(uint8_t)((gEeprom.MDC1200_ID&(0xff00))>>8);
+
+    // State[1] = 0;//gEeprom.KEY_1_SHORT_PRESS_ACTION;
+   // State[2] = 0;//gEeprom.KEY_1_LONG_PRESS_ACTION;
     State[3] = 0;//gEeprom.KEY_2_SHORT_PRESS_ACTION;
     State[4] = 0;//gEeprom.KEY_2_LONG_PRESS_ACTION;
     State[5] = //gEeprom.SCAN_RESUME_MODE;
