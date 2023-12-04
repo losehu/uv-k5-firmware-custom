@@ -1425,7 +1425,7 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld) {
 #endif
         return;
     }
-     if (UI_MENU_GetCurrentMenuId() == MENU_MDC_ID&&edit_index >= 0 && edit_index < 4)
+     if (UI_MENU_GetCurrentMenuId() == MENU_MDC_IDedit_index < 4)
     {	// editing the channel name characters
 
         if (++edit_index < 4)
