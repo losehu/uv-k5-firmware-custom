@@ -139,7 +139,7 @@ void Main(void)
 //	}
 //	else
 //	{
-		UI_DisplayWelcome();
+		//UI_DisplayWelcome();
 
 
 //		if (gEeprom.POWER_ON_DISPLAY_MODE != POWER_ON_DISPLAY_MODE_NONE)
