@@ -1418,26 +1418,7 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld) {
             memmove(edit_original, edit, sizeof(edit_original));
 
         }
-        else if (edit_index >= 0 && edit_index < 4)
-        {	// editing the channel name characters
 
-            if (++edit_index < 4)
-        return;
-
-            // exit
-            if (memcmp(edit_original, edit, sizeof(edit_original)) == 0)
-            {	// no change - drop it
-                gFlagAcceptSetting  = false;
-                gIsInSubMenu        = false;
-                gAskForConfirmation = 0;
-            }
-            else
-            {
-                gFlagAcceptSetting  = false;
-                gAskForConfirmation = 0;
-            }
-
-        }
     }
 
 
@@ -1445,7 +1426,26 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld) {
 #endif
         return;
     }
+     if (UI_MENU_GetCurrentMenuId() == MENU_MDC_ID&&edit_index >= 0 && edit_index < 4)
+    {	// editing the channel name characters
 
+        if (++edit_index < 4)
+            return;
+
+        // exit
+        if (memcmp(edit_original, edit, sizeof(edit_original)) == 0)
+        {	// no change - drop it
+            gFlagAcceptSetting  = false;
+            gIsInSubMenu        = false;
+            gAskForConfirmation = 0;
+        }
+        else
+        {
+            gFlagAcceptSetting  = false;
+            gAskForConfirmation = 0;
+        }
+
+    }
     if (UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME) {
         if (edit_index < 0) {    // enter channel name edit mode
             if (!RADIO_CheckValidChannel(gSubMenuSelection, false, 0))
