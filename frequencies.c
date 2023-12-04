@@ -145,17 +145,17 @@ int TX_freq_check(const uint32_t Frequency)
 		case F_LOCK_DEF:
 			if (Frequency >= frequencyBandTable[BAND3_137MHz].lower && Frequency < frequencyBandTable[BAND3_137MHz].upper)
 				return 0;
-			if (Frequency >= frequencyBandTable[BAND4_174MHz].lower && Frequency < frequencyBandTable[BAND4_174MHz].upper)
-				if (gSetting_200TX)
-					return 0;
-			if (Frequency >= frequencyBandTable[BAND5_350MHz].lower && Frequency < frequencyBandTable[BAND5_350MHz].upper)
-				if (gSetting_350TX && gSetting_350EN)
-					return 0;
+//			if (Frequency >= frequencyBandTable[BAND4_174MHz].lower && Frequency < frequencyBandTable[BAND4_174MHz].upper)
+//				if (gSetting_F_LOCK==F_LOCK_ALL)
+//					return 0;
+//			if (Frequency >= frequencyBandTable[BAND5_350MHz].lower && Frequency < frequencyBandTable[BAND5_350MHz].upper)
+//				if (gSetting_F_LOCK==F_LOCK_ALL)
+//					return 0;
 			if (Frequency >= frequencyBandTable[BAND6_400MHz].lower && Frequency < frequencyBandTable[BAND6_400MHz].upper)
 				return 0;
-			if (Frequency >= frequencyBandTable[BAND7_470MHz].lower && Frequency <= 60000000)
-				if (gSetting_500TX)
-					return 0;
+//			if (Frequency >= frequencyBandTable[BAND7_470MHz].lower && Frequency <= 60000000)
+//				if (gSetting_F_LOCK==F_LOCK_ALL)
+//					return 0;
 			break;
 
 		case F_LOCK_FCC:

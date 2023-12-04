@@ -119,10 +119,10 @@ enum
 #endif
     MENU_RESET,
     MENU_F_LOCK,
-    MENU_200TX,
-    MENU_350TX,
-    MENU_500TX,
-    MENU_350EN,
+//    MENU_200TX,
+//    MENU_350TX,
+//    MENU_500TX,
+//    MENU_350EN,
   //  MENU_SCREN,
 #ifdef ENABLE_F_CAL_MENU
     MENU_F_CALI,  // reference xtal calibration

@@ -100,10 +100,10 @@ const t_menu_item MenuList[] =
                 // hidden menu items from here on
                 // enabled if pressing both the PTT and upper side button at power-on
                 {/*"F Lock",*/ VOICE_ID_INVALID,                       MENU_F_LOCK        ,频段解锁},
-                {/*"Tx 200",*/ VOICE_ID_INVALID,                       MENU_200TX         ,两百M发射}, // was "200TX"
-                {/*"Tx 350",*/ VOICE_ID_INVALID,                       MENU_350TX         ,三百五十M发射}, // was "350TX"
-                {/*"Tx 500",*/ VOICE_ID_INVALID,                       MENU_500TX         ,五百M发射}, // was "500TX"
-                {/*"350 En",*/ VOICE_ID_INVALID,                       MENU_350EN         ,三百五十M接收}, // was "350EN"
+//                {/*"Tx 200",*/ VOICE_ID_INVALID,                       MENU_200TX         ,两百M发射}, // was "200TX"
+//                {/*"Tx 350",*/ VOICE_ID_INVALID,                       MENU_350TX         ,三百五十M发射}, // was "350TX"
+//                {/*"Tx 500",*/ VOICE_ID_INVALID,                       MENU_500TX         ,五百M发射}, // was "500TX"
+//                {/*"350 En",*/ VOICE_ID_INVALID,                       MENU_350EN         ,三百五十M接收}, // was "350EN"
 #ifdef ENABLE_F_CAL_MENU//0
                 {/*"FrCali",*/ VOICE_ID_INVALID,                       MENU_F_CALI        ,""}, // reference xtal calibration
 #endif
@@ -646,10 +646,10 @@ void UI_DisplayMenu(void) {
 #ifdef ENABLE_NOAA
             case MENU_NOAA_S:
 #endif
-        case MENU_350TX:
-        case MENU_200TX:
-        case MENU_500TX:
-        case MENU_350EN:
+//        case MENU_350TX:
+//        case MENU_200TX:
+//        case MENU_500TX:
+//        case MENU_350EN:
                        strcpy(String, gSubMenu_OFF_ON[gSubMenuSelection]);
 
             break;

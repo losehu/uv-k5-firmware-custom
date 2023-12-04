@@ -108,7 +108,7 @@ void Main(void)
 	//BootMode = BOOT_GetMode();
 	
 //	if (BootMode == BOOT_MODE_F_LOCK)
-        gMenuListCount = 48;
+        gMenuListCount = 45;
 
 
 	// wait for user to release all butts before moving on

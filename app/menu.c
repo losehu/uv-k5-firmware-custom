@@ -251,10 +251,10 @@ int MENU_GetLimits(uint8_t menu_id, int32_t *pMin, int32_t *pMax)
 		#ifdef ENABLE_NOAA
 			case MENU_NOAA_S:
 		#endif
-		case MENU_350TX:
-		case MENU_200TX:
-		case MENU_500TX:
-		case MENU_350EN:
+//		case MENU_350TX:
+//		case MENU_200TX:
+//		case MENU_500TX:
+//		case MENU_350EN:
 //		case MENU_SCREN:
 //			*pMin = 0;
 //			*pMax = ARRAY_SIZE(gSubMenu_OFF_ON) - 1;
@@ -738,9 +738,9 @@ void MENU_AcceptSetting(void)
             SETTINGS_FactoryReset(gSubMenuSelection);
             return;
 
-		case MENU_350TX:
-			gSetting_350TX = gSubMenuSelection;
-			break;
+//		case MENU_350TX:
+//			gSetting_350TX = gSubMenuSelection;
+//			break;
 
 		case MENU_F_LOCK: {
 //			if(gSubMenuSelection == F_LOCK_NONE) { // select 10 times to enable
@@ -754,19 +754,19 @@ void MENU_AcceptSetting(void)
 			gSetting_F_LOCK = gSubMenuSelection;
 			break;
 		}
-		case MENU_200TX:
-			gSetting_200TX = gSubMenuSelection;
-			break;
+//		case MENU_200TX:
+//			gSetting_200TX = gSubMenuSelection;
+//			break;
+//
+//		case MENU_500TX:
+//			gSetting_500TX = gSubMenuSelection;
+//			break;
 
-		case MENU_500TX:
-			gSetting_500TX = gSubMenuSelection;
-			break;
-
-		case MENU_350EN:
-			gSetting_350EN       = gSubMenuSelection;
-			gVfoConfigureMode    = VFO_CONFIGURE_RELOAD;
-			gFlagResetVfos       = true;
-			break;
+//		case MENU_350EN:
+//			gSetting_350EN       = gSubMenuSelection;
+//			gVfoConfigureMode    = VFO_CONFIGURE_RELOAD;
+//			gFlagResetVfos       = true;
+//			break;
 
 //		case MENU_SCREN:
 //			gSetting_ScrambleEnable = gSubMenuSelection;
@@ -1116,25 +1116,25 @@ void MENU_ShowCurrentSetting(void)
 			#endif
 			break;
 
-		case MENU_350TX:
-			gSubMenuSelection = gSetting_350TX;
-			break;
+//		case MENU_350TX:
+//			gSubMenuSelection = gSetting_350TX;
+//			break;
 
 		case MENU_F_LOCK:
 			gSubMenuSelection = gSetting_F_LOCK;
 			break;
 
-		case MENU_200TX:
-			gSubMenuSelection = gSetting_200TX;
-			break;
-
-		case MENU_500TX:
-			gSubMenuSelection = gSetting_500TX;
-			break;
-
-		case MENU_350EN:
-			gSubMenuSelection = gSetting_350EN;
-			break;
+//		case MENU_200TX:
+//			gSubMenuSelection = gSetting_200TX;
+//			break;
+//
+//		case MENU_500TX:
+//			gSubMenuSelection = gSetting_500TX;
+//			break;
+//
+//		case MENU_350EN:
+//			gSubMenuSelection = gSetting_350EN;
+//			break;
 
 //		case MENU_SCREN:
 //			gSubMenuSelection = gSetting_ScrambleEnable;

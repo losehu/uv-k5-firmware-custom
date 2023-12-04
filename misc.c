@@ -78,13 +78,13 @@ const uint32_t    gDefaultAesKey[4]                = {0x4AA5CC60, 0x0312CC5F, 0x
 
 const uint8_t     gMicGain_dB2[5]                  = {3, 8, 16, 24, 31};
 
-bool              gSetting_350TX;
+//bool              gSetting_350TX;
 #ifdef ENABLE_DTMF_CALLING
 bool              gSetting_KILLED;
 #endif
-bool              gSetting_200TX;
-bool              gSetting_500TX;
-bool              gSetting_350EN;
+//bool              gSetting_200TX;
+//bool              gSetting_500TX;
+//bool              gSetting_350EN;
 uint8_t           gSetting_F_LOCK;
 bool              gSetting_ScrambleEnable;
 

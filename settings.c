@@ -236,13 +236,13 @@ void SETTINGS_InitEEPROM(void)
     // 0F40..0F47
     EEPROM_ReadBuffer(0x0F40, Data, 8);
     gSetting_F_LOCK            = (Data[0] < F_LOCK_LEN) ? Data[0] : F_LOCK_DEF;
-    gSetting_350TX             = (Data[1] < 2) ? Data[1] : false;  // was true
+//    gSetting_350TX             = (Data[1] < 2) ? Data[1] : false;  // was true
 #ifdef ENABLE_DTMF_CALLING
     gSetting_KILLED            = (Data[2] < 2) ? Data[2] : false;
 #endif
-    gSetting_200TX             = (Data[3] < 2) ? Data[3] : false;
-    gSetting_500TX             = (Data[4] < 2) ? Data[4] : false;
-    gSetting_350EN             = (Data[5] < 2) ? Data[5] : true;
+//    gSetting_200TX             = (Data[3] < 2) ? Data[3] : false;
+//    gSetting_500TX             = (Data[4] < 2) ? Data[4] : false;
+//    gSetting_350EN             = (Data[5] < 2) ? Data[5] : true;
     gSetting_ScrambleEnable    = (Data[6] < 2) ? Data[6] : true;
     //gSetting_TX_EN             = (Data[7] & (1u << 0)) ? true : false;
     gSetting_live_DTMF_decoder = (Data[7] & (1u << 1)) ? true : false;
@@ -577,13 +577,13 @@ void SETTINGS_SaveSettings(void)
 
     memset(State, 0xFF, sizeof(State));
     State[0]  = gSetting_F_LOCK;
-    State[1]  = gSetting_350TX;
+//    State[1]  = gSetting_350TX;
 #ifdef ENABLE_DTMF_CALLING
     State[2]  = gSetting_KILLED;
 #endif
-    State[3]  = gSetting_200TX;
-    State[4]  = gSetting_500TX;
-    State[5]  = gSetting_350EN;
+//    State[3]  = gSetting_200TX;
+//    State[4]  = gSetting_500TX;
+//    State[5]  = gSetting_350EN;
     State[6]  = gSetting_ScrambleEnable;
     //if (!gSetting_TX_EN)             State[7] &= ~(1u << 0);
     if (!gSetting_live_DTMF_decoder) State[7] &= ~(1u << 1);
