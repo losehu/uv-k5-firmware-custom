@@ -1074,6 +1074,7 @@ void UI_DisplayMenu(void) {
     if ((UI_MENU_GetCurrentMenuId() == MENU_RESET ||
          UI_MENU_GetCurrentMenuId() == MENU_MEM_CH ||
          UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME ||
+            UI_MENU_GetCurrentMenuId() == MENU_MDC_ID||
          UI_MENU_GetCurrentMenuId() == MENU_DEL_CH) && gAskForConfirmation) {    // display confirmation
         strcpy(String, (gAskForConfirmation == 1) ? "SURE?" : "WAIT!");
         UI_PrintStringSmall(String, menu_item_x1, menu_item_x2, 5);
