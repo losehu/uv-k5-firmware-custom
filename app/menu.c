@@ -1437,8 +1437,45 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld)
 
 		return;
 	}
+#ifdef ENABLE_MDC1200
+    if (UI_MENU_GetCurrentMenuId() == MENU_MDC_ID)
+    {
+        	if (edit_index < 0)
+		{
+                edit_index = 0;
+			while (edit_index < 4)
+				edit[edit_index++] = '_';
+			edit_index = 0;  // 'edit_index' is going to be used as the cursor position
+			// make a copy so we can test for change when exiting the menu item
+			memmove(edit_original, edit, sizeof(edit_original));
+			return;
+		}
+		else
+		if (edit_index >= 0 && edit_index < 4)
+		{	// editing the channel name characters
 
-	if (UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME)
+			if (++edit_index < 4)
+				return;	// next char
+
+			// exit
+			if (memcmp(edit_original, edit, sizeof(edit_original)) == 0)
+			{	// no change - drop it
+				gFlagAcceptSetting  = false;
+				gIsInSubMenu        = false;
+				gAskForConfirmation = 0;
+			}
+			else
+			{
+				gFlagAcceptSetting  = false;
+				gAskForConfirmation = 0;
+			}
+		}
+    }
+
+
+else
+#endif
+    if (UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME)
 	{
 		if (edit_index < 0)
 		{	// enter channel name edit mode

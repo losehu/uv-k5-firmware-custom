@@ -676,7 +676,27 @@ void UI_DisplayMenu(void) {
             already_printed = true;
             break;
         }
+#ifdef ENABLE_MDC1200
+//            case MENU_MDC_ID:
+//            ///    char mdc_id_str[4];
+//    sprintf(String, "%04X", gEeprom.MDC1200_ID); // %04X确保输出是4个字符长度的十六进制数
+//          //  strcpy(String, id);
+//            break;
 
+        case MENU_MDC_ID:
+        {
+            if (!gIsInSubMenu||edit_index<0) {    // show the channel name
+                    sprintf(String, "%04X", gEeprom.MDC1200_ID); // %04X确保输出是4个字符长度的十六进制数
+                UI_PrintStringSmall(String, menu_item_x1, menu_item_x2, 3);//4
+            } else {    // show the channel name being edited
+                UI_PrintStringSmall(edit, menu_item_x1, 0, 3);
+                if (edit_index < 4)
+                    UI_PrintStringSmall("^", menu_item_x1 + (8 * edit_index), 0, 4);  // show the cursor
+            }
+            already_printed = true;
+            break;
+        }
+#endif
         case MENU_MEM_NAME: {
             const bool valid = RADIO_CheckValidChannel(gSubMenuSelection, false, 1);
 
@@ -804,13 +824,7 @@ void UI_DisplayMenu(void) {
             strcpy(String, gEeprom.ANI_DTMF_ID);
             break;
 #endif
-#ifdef ENABLE_MDC1200
-            case MENU_MDC_ID:
-            ///    char mdc_id_str[4];
-    sprintf(String, "%04X", gEeprom.MDC1200_ID); // %04X确保输出是4个字符长度的十六进制数
-          //  strcpy(String, id);
-            break;
-#endif
+
         case MENU_UPCODE:
             strcpy(String, gEeprom.DTMF_UP_CODE);
             break;
