@@ -226,7 +226,6 @@ bool          gIsNoaaMode;
 
 bool              gUpdateDisplay;
 
-bool              gF_LOCK = false;
 
 uint8_t           gShowChPrefix;
 

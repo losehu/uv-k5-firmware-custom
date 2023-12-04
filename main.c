@@ -49,7 +49,7 @@ void _putchar(char c)
 
 void Main(void)
 {
-	BOOT_Mode_t  BootMode;
+	//BOOT_Mode_t  BootMode;
 
 	// Enable clock gating of blocks we need
 	SYSCON_DEV_CLK_GATE = 0
@@ -86,7 +86,9 @@ void Main(void)
     SETTINGS_InitEEPROM();
 
     SETTINGS_LoadCalibration();
-
+#ifdef ENABLE_MDC1200
+    MDC1200_init();
+#endif
 	RADIO_ConfigureChannel(0, VFO_CONFIGURE_RELOAD);
 	RADIO_ConfigureChannel(1, VFO_CONFIGURE_RELOAD);
 
@@ -98,27 +100,23 @@ void Main(void)
 		BOARD_ADC_GetBatteryInfo(&gBatteryVoltages[i], &gBatteryCurrent);
 
 	BATTERY_GetReadings(false);
-#ifdef ENABLE_MDC1200
-    MDC1200_init();
-#endif
+
 	#ifdef ENABLE_AM_FIX
 		AM_fix_init();
 	#endif
 
-	BootMode = BOOT_GetMode();
+	//BootMode = BOOT_GetMode();
 	
-	if (BootMode == BOOT_MODE_F_LOCK)
-	{
-		gF_LOCK = true;            // flag to say include the hidden menu items
-        gMenuListCount = 49;
-    }else gMenuListCount=41;
+//	if (BootMode == BOOT_MODE_F_LOCK)
+        gMenuListCount = 48;
+
 
 	// wait for user to release all butts before moving on
-	if (/*!GPIO_CheckBit(&GPIOC->DATA, GPIOC_PIN_PTT) ||*/
-	     KEYBOARD_Poll() != KEY_INVALID ||
-		 BootMode != BOOT_MODE_NORMAL)
-	{	// keys are pressed
-		UI_DisplayReleaseKeys(BootMode);
+//	if (/*!GPIO_CheckBit(&GPIOC->DATA, GPIOC_PIN_PTT) ||*/
+//	     KEYBOARD_Poll() != KEY_INVALID ||
+//		 BootMode != BOOT_MODE_NORMAL)
+//	{	// keys are pressed
+//		UI_DisplayReleaseKeys(BootMode);
 		BACKLIGHT_TurnOn();
 		while (KEYBOARD_Poll() != KEY_INVALID)  // 500ms
 		{
@@ -126,7 +124,7 @@ void Main(void)
 		gKeyReading0 = KEY_INVALID;
 		gKeyReading1 = KEY_INVALID;
 		gDebounceCounter = 0;
-	}
+//	}
 //close PS
 //	if (!gChargingWithTypeC && gBatteryDisplayLevel == 0)
 //	{
