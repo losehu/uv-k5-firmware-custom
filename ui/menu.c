@@ -701,7 +701,7 @@ void UI_DisplayMenu(void) {
 //            else
                 if(gIsInSubMenu){    // show the channel name being edited
                    edit_index= edit_index<0?0:edit_index;
-                    			memmove(edit_original, edit, sizeof(edit_original));
+                    //			memmove(edit_original, edit, sizeof(edit_original));
 
                 UI_PrintStringSmall(edit, menu_item_x1, menu_item_x2, 3);
                 if (edit_index < 4)
