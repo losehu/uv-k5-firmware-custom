@@ -1079,6 +1079,8 @@ void UI_DisplayMenu(void) {
          UI_MENU_GetCurrentMenuId() == MENU_DEL_CH) && gAskForConfirmation) {    // display confirmation
         strcpy(String, (gAskForConfirmation == 1) ? "SURE?" : "WAIT!");
         UI_PrintStringSmall(String, menu_item_x1, menu_item_x2, 5);
+        gRequestSaveSettings  = 1;
+
     }
 //    for (int i = 0; i < 128; i++) {
 //        // Set the 7th and 8th positions to 1, keep others unchanged
