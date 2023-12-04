@@ -686,8 +686,26 @@ void UI_DisplayMenu(void) {
         case MENU_MDC_ID:
         {
 //            gIsInSubMenu
-            if (!gIsInSubMenu||(edit_index<0&&gIsInSubMenu)) {    // show the channel name
-                               //     sprintf(edit, "%04lX", gEeprom.MDC1200_ID); // %04X确保输出是4个字符长度的十六进制数
+//            if (!gIsInSubMenu||(edit_index<0&&gIsInSubMenu)) {    // show the channel name
+//                               //     sprintf(edit, "%04lX", gEeprom.MDC1200_ID); // %04X确保输出是4个字符长度的十六进制数
+//                                      sprintf(String, "%04X", gEeprom.MDC1200_ID); // %04X确保输出是4个字符长度的十六进制数
+//
+//                        edit[0]=String[0];
+//                        edit[1]=String[1];
+//                        edit[2]=String[2];
+//                        edit[3]=String[3];
+//
+//
+//                UI_PrintStringSmall(String, menu_item_x1, menu_item_x2, 3);//4
+            //}
+            else
+                if(gIsInSubMenu){    // show the channel name being edited
+                UI_PrintStringSmall(edit, menu_item_x1, menu_item_x2, 3);
+                if (edit_index < 4)
+                    UI_PrintStringSmall("^", menu_item_x1+(((menu_item_x2 - menu_item_x1) - (28)) + 1) / 2 + (8 * edit_index), 0, 4);  // show the cursor
+            }else
+                {
+                   //     sprintf(edit, "%04lX", gEeprom.MDC1200_ID); // %04X确保输出是4个字符长度的十六进制数
                                       sprintf(String, "%04X", gEeprom.MDC1200_ID); // %04X确保输出是4个字符长度的十六进制数
 
                         edit[0]=String[0];
@@ -697,11 +715,7 @@ void UI_DisplayMenu(void) {
 
 
                 UI_PrintStringSmall(String, menu_item_x1, menu_item_x2, 3);//4
-            } else if(gIsInSubMenu){    // show the channel name being edited
-                UI_PrintStringSmall(edit, menu_item_x1, menu_item_x2, 3);
-                if (edit_index < 4)
-                    UI_PrintStringSmall("^", menu_item_x1+(((menu_item_x2 - menu_item_x1) - (32)) + 1) / 2 + (8 * edit_index)+3, 0, 4);  // show the cursor
-            }
+                }
             already_printed = true;
             break;
         }
