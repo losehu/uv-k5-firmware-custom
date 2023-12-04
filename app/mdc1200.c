@@ -569,7 +569,7 @@ uint16_t extractHex(const char *str) {
         } else if (c >= 'A' && c <= 'F') {
             result = (result << 4) | (c - 'A' + 10);
         } else {
-            break; // 遇到非十六进制字符，停止解析
+            continue; // 遇到非十六进制字符，停止解析
         }
     }
     return result;

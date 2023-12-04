@@ -13,7 +13,7 @@
  *     See the License for the specific language governing permissions and
  *     limitations under the License.
  */
-
+#include "app/mdc1200.h"
 #include <string.h>
 #include "driver/uart.h"
 #if !defined(ENABLE_OVERLAY)
@@ -503,7 +503,16 @@ void MENU_AcceptSetting(void)
 			gVfoConfigureMode   = VFO_CONFIGURE_RELOAD;
 			gFlagResetVfos      = true;
 			return;
-
+#ifdef ENABLE_MDC1200
+            case MENU_MDC_ID:
+                for (int i = 4; i >= 0; i--) {
+                    if (edit[i] != ' ' && edit[i] != '_' && edit[i] != 0x00 && edit[i] != 0xff)
+                        break;
+                    edit[i] = ' ';
+			}
+        gEeprom.MDC1200_ID=extractHex(edit);
+			return;
+#endif
 		case MENU_MEM_NAME:
 				// trailing trim
                 for (int i = 9; i >= 0; i--) {
