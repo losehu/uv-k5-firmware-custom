@@ -1421,7 +1421,7 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld)
 		return;
 
 	gBeepToPlay           = BEEP_1KHZ_60MS_OPTIONAL;
-	gRequestDisplayScreen = DISPLAY_MENU;
+	gRequestDisplayScrFeen = DISPLAY_MENU;
 
 	if (!gIsInSubMenu)
 	{

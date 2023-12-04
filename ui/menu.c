@@ -685,13 +685,16 @@ void UI_DisplayMenu(void) {
 
         case MENU_MDC_ID:
         {
+            gIsInSubMenu
             if (!gIsInSubMenu||edit_index<0) {    // show the channel name
+                                    sprintf(edit, "%04X", gEeprom.MDC1200_ID); // %04X确保输出是4个字符长度的十六进制数
+
                     sprintf(String, "%04X", gEeprom.MDC1200_ID); // %04X确保输出是4个字符长度的十六进制数
                 UI_PrintStringSmall(String, menu_item_x1, menu_item_x2, 3);//4
             } else {    // show the channel name being edited
-                UI_PrintStringSmall(edit, menu_item_x1, 0, 3);
+                UI_PrintStringSmall(edit, menu_item_x1, menu_item_x2, 3);
                 if (edit_index < 4)
-                    UI_PrintStringSmall("^", menu_item_x1 + (8 * edit_index), 0, 4);  // show the cursor
+                    UI_PrintStringSmall("^", menu_item_x1 + (8 * edit_index), menu_item_x2, 4);  // show the cursor
             }
             already_printed = true;
             break;
