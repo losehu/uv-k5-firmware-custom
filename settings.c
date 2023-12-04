@@ -63,7 +63,7 @@ void SETTINGS_InitEEPROM(void)
     // 0E78..0E7F
     EEPROM_ReadBuffer(0x0E78, Data, 8);
     gEeprom.BACKLIGHT_MAX 		  = (Data[0] & 0xF) <= 10 ? (Data[0] & 0xF) : 10;
-    gEeprom.BACKLIGHT_MIN 		  = (Data[0] >> 4) < gEeprom.BACKLIGHT_MAX ? (Data[0] >> 4) : 0;
+    //gEeprom.BACKLIGHT_MIN 		  = (Data[0] >> 4) < gEeprom.BACKLIGHT_MAX ? (Data[0] >> 4) : 0;
 #ifdef ENABLE_BLMIN_TMP_OFF
     gEeprom.BACKLIGHT_MIN_STAT	  = BLMIN_STAT_ON;
 #endif
@@ -118,14 +118,14 @@ void SETTINGS_InitEEPROM(void)
     // 0E90..0E97
     EEPROM_ReadBuffer(0x0E90, Data, 8);
     gEeprom.BEEP_CONTROL                 = Data[0] & 1;
-    gEeprom.KEY_M_LONG_PRESS_ACTION      = ((Data[0] >> 1) < ACTION_OPT_LEN) ? (Data[0] >> 1) : ACTION_OPT_NONE;
-    gEeprom.KEY_1_SHORT_PRESS_ACTION     = (Data[1] < ACTION_OPT_LEN) ? Data[1] : ACTION_OPT_MONITOR;
-    gEeprom.KEY_1_LONG_PRESS_ACTION      = (Data[2] < ACTION_OPT_LEN) ? Data[2] : ACTION_OPT_FLASHLIGHT;
-    gEeprom.KEY_2_SHORT_PRESS_ACTION     = (Data[3] < ACTION_OPT_LEN) ? Data[3] : ACTION_OPT_SCAN;
-    gEeprom.KEY_2_LONG_PRESS_ACTION      = (Data[4] < ACTION_OPT_LEN) ? Data[4] : ACTION_OPT_NONE;
+//    gEeprom.KEY_M_LONG_PRESS_ACTION      = ((Data[0] >> 1) < ACTION_OPT_LEN) ? (Data[0] >> 1) : ACTION_OPT_NONE;
+//    gEeprom.KEY_1_SHORT_PRESS_ACTION     = (Data[1] < ACTION_OPT_LEN) ? Data[1] : ACTION_OPT_MONITOR;
+//    gEeprom.KEY_1_LONG_PRESS_ACTION      = (Data[2] < ACTION_OPT_LEN) ? Data[2] : ACTION_OPT_FLASHLIGHT;
+//    gEeprom.KEY_2_SHORT_PRESS_ACTION     = (Data[3] < ACTION_OPT_LEN) ? Data[3] : ACTION_OPT_SCAN;
+//    gEeprom.KEY_2_LONG_PRESS_ACTION      = (Data[4] < ACTION_OPT_LEN) ? Data[4] : ACTION_OPT_NONE;
     gEeprom.SCAN_RESUME_MODE             = (Data[5] < 3)              ? Data[5] : SCAN_RESUME_CO;
-    gEeprom.AUTO_KEYPAD_LOCK             = (Data[6] < 2)              ? Data[6] : false;
-    gEeprom.POWER_ON_DISPLAY_MODE        = (Data[7] < 4)              ? Data[7] : POWER_ON_DISPLAY_MODE_MESSAGE;
+//    gEeprom.AUTO_KEYPAD_LOCK             = (Data[6] < 2)              ? Data[6] : false;
+//    gEeprom.POWER_ON_DISPLAY_MODE        = (Data[7] < 4)              ? Data[7] : POWER_ON_DISPLAY_MODE_MESSAGE;
 
     // 0E98..0E9F
     EEPROM_ReadBuffer(0x0E98, Data, 8);
@@ -494,7 +494,7 @@ void SETTINGS_SaveSettings(void)
     State[7] = gEeprom.MIC_SENSITIVITY;
     EEPROM_WriteBuffer(0x0E70, State);
 
-    State[0] = (gEeprom.BACKLIGHT_MIN << 4) + gEeprom.BACKLIGHT_MAX;
+    State[0] = (/*gEeprom.BACKLIGHT_MIN*/0 << 4) + gEeprom.BACKLIGHT_MAX;
     State[1] = gEeprom.CHANNEL_DISPLAY_MODE;
     State[2] = gEeprom.CROSS_BAND_RX_TX;
     State[3] = gEeprom.BATTERY_SAVE;
@@ -505,14 +505,14 @@ void SETTINGS_SaveSettings(void)
     EEPROM_WriteBuffer(0x0E78, State);
 
     State[0] = gEeprom.BEEP_CONTROL;
-    State[0] |= gEeprom.KEY_M_LONG_PRESS_ACTION << 1;
-    State[1] = gEeprom.KEY_1_SHORT_PRESS_ACTION;
-    State[2] = gEeprom.KEY_1_LONG_PRESS_ACTION;
-    State[3] = gEeprom.KEY_2_SHORT_PRESS_ACTION;
-    State[4] = gEeprom.KEY_2_LONG_PRESS_ACTION;
-    State[5] = gEeprom.SCAN_RESUME_MODE;
-    State[6] = gEeprom.AUTO_KEYPAD_LOCK;
-    State[7] = gEeprom.POWER_ON_DISPLAY_MODE;
+    State[0] |= 0;//gEeprom.KEY_M_LONG_PRESS_ACTION << 1;
+    State[1] = 0;//gEeprom.KEY_1_SHORT_PRESS_ACTION;
+    State[2] = 0;//gEeprom.KEY_1_LONG_PRESS_ACTION;
+    State[3] = 0;//gEeprom.KEY_2_SHORT_PRESS_ACTION;
+    State[4] = 0;//gEeprom.KEY_2_LONG_PRESS_ACTION;
+    State[5] = //gEeprom.SCAN_RESUME_MODE;
+    State[6] = 0;//gEeprom.AUTO_KEYPAD_LOCK;
+    State[7] = 0;//gEeprom.POWER_ON_DISPLAY_MODE;
     EEPROM_WriteBuffer(0x0E90, State);
 
     memset(Password, 0xFF, sizeof(Password));

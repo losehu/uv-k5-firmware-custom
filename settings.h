@@ -25,11 +25,11 @@
 #include "radio.h"
 #include <driver/backlight.h>
 
-enum POWER_OnDisplayMode_t {
-    POWER_ON_DISPLAY_MODE_NONE
-,
-    POWER_ON_DISPLAY_MODE_MESSAGE,
-};
+//enum POWER_OnDisplayMode_t {
+//    POWER_ON_DISPLAY_MODE_NONE
+//,
+//    POWER_ON_DISPLAY_MODE_MESSAGE,
+//};
 typedef enum POWER_OnDisplayMode_t POWER_OnDisplayMode_t;
 
 enum {
@@ -183,17 +183,17 @@ typedef struct {
     uint8_t               field37_0x32;
     uint8_t               field38_0x33;
 
-    bool                  AUTO_KEYPAD_LOCK;
+//    bool                  AUTO_KEYPAD_LOCK;
 #if defined(ENABLE_ALARM) || defined(ENABLE_TX1750)
     ALARM_Mode_t      ALARM_MODE;
 #endif
-    POWER_OnDisplayMode_t POWER_ON_DISPLAY_MODE;
+  //  POWER_OnDisplayMode_t POWER_ON_DISPLAY_MODE;
     ROGER_Mode_t          ROGER;
     uint8_t               REPEATER_TAIL_TONE_ELIMINATION;
-    uint8_t               KEY_1_SHORT_PRESS_ACTION;
-    uint8_t               KEY_1_LONG_PRESS_ACTION;
-    uint8_t               KEY_2_SHORT_PRESS_ACTION;
-    uint8_t               KEY_2_LONG_PRESS_ACTION;
+//    uint8_t               KEY_1_SHORT_PRESS_ACTION;
+//    uint8_t               KEY_1_LONG_PRESS_ACTION;
+//    uint8_t               KEY_2_SHORT_PRESS_ACTION;
+//    uint8_t               KEY_2_LONG_PRESS_ACTION;
     uint8_t               MIC_SENSITIVITY;
     uint8_t               MIC_SENSITIVITY_TUNING;
     uint8_t               CHAN_1_CALL;
@@ -243,8 +243,8 @@ typedef struct {
     uint8_t               field78_0x96;
     uint8_t               field79_0x97;
 
-    uint8_t 			  KEY_M_LONG_PRESS_ACTION;
-    uint8_t               BACKLIGHT_MIN;
+//    uint8_t 			  KEY_M_LONG_PRESS_ACTION;
+//    uint8_t               BACKLIGHT_MIN;
 #ifdef ENABLE_BLMIN_TMP_OFF
     BLMIN_STAT_t		  BACKLIGHT_MIN_STAT;
 #endif

@@ -51,12 +51,7 @@ void UI_DisplayWelcome(void) {
     memset(gStatusLine, 0, sizeof(gStatusLine));
     memset(gFrameBuffer, 0, sizeof(gFrameBuffer));
 
-    if (gEeprom.POWER_ON_DISPLAY_MODE == POWER_ON_DISPLAY_MODE_NONE) {
-        ST7565_FillScreen(0xFF);
 
-    }
-
-    else {
 
 
 #
@@ -85,6 +80,6 @@ void UI_DisplayWelcome(void) {
 
 
         }
-    }
+
 }
 
