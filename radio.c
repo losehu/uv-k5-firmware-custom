@@ -1124,7 +1124,7 @@ void RADIO_SendEndOfTransmission(void)
         BK4819_PlayRoger();
     else
     if (gEeprom.ROGER == ROGER_MODE_MDC) {
-        BK4819_send_MDC1200(MDC1200_OP_CODE_POST_ID, 0x00, 12, false);
+        BK4819_send_MDC1200(MDC1200_OP_CODE_POST_ID, 0x00, MDC_ID, false);
 
 #ifdef ENABLE_MDC1200_SIDE_BEEP
         BK4819_start_tone(880, 10, true, true);

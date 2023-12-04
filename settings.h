@@ -26,10 +26,9 @@
 #include <driver/backlight.h>
 
 enum POWER_OnDisplayMode_t {
-    POWER_ON_DISPLAY_MODE_FULL_SCREEN = 0,
-    POWER_ON_DISPLAY_MODE_MESSAGE,
-    POWER_ON_DISPLAY_MODE_VOLTAGE,
     POWER_ON_DISPLAY_MODE_NONE
+,
+    POWER_ON_DISPLAY_MODE_MESSAGE,
 };
 typedef enum POWER_OnDisplayMode_t POWER_OnDisplayMode_t;
 

@@ -173,6 +173,7 @@ void BK4819_send_MDC1200(const uint8_t op, const uint8_t arg, const uint16_t id,
 
 void BK4819_stop_tones(const bool tx);
 void BK4819_start_tone(const uint16_t frequency, const unsigned int level, const bool tx, const bool tx_mute);
+void BK4819_enable_mdc1200_rx(const bool enable);
 
 #endif
 

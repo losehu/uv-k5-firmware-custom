@@ -396,6 +396,9 @@ void ACTION_Handle(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld)
 		default:
         case   ACTION_OPT_WIDTH:
             gTxVfo->CHANNEL_BANDWIDTH=!gTxVfo->CHANNEL_BANDWIDTH;
+        gRequestSaveChannel = 1;
+           // gRequestSaveSettings  = 1;
+
             break;
 		case ACTION_OPT_NONE:
 			break;

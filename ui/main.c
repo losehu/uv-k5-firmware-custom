@@ -795,6 +795,9 @@ void UI_DisplayMain(void)
 				UI_PrintStringSmall(String, 2, 0, 3);
 			}
 #endif
+
+
+
 		}
 	}
 

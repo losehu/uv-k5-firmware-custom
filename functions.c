@@ -15,7 +15,7 @@
  */
 
 #include <string.h>
-
+#include "app/mdc1200.h"
 #include "app/dtmf.h"
 #if defined(ENABLE_FMRADIO)
 #include "app/fm.h"
@@ -160,7 +160,9 @@ void FUNCTION_Select(FUNCTION_Type_t Function)
             return;
 
         case FUNCTION_TRANSMIT:
-
+#ifdef ENABLE_MDC1200
+            BK4819_enable_mdc1200_rx(false);
+#endif
             // if DTMF is enabled when TX'ing, it changes the TX audio filtering !! .. 1of11
             BK4819_DisableDTMF();
 
@@ -213,11 +215,27 @@ void FUNCTION_Select(FUNCTION_Type_t Function)
             // turn the RED LED on
             BK4819_ToggleGpioOut(BK4819_GPIO5_PIN1_RED, true);
 
-            DTMF_Reply();
+            if(!DTMF_Reply()) {
+#ifdef ENABLE_MDC1200
+              //  if (g_current_vfo->channel.mdc1200_mode == MDC1200_MODE_BOT || g_current_vfo->channel.mdc1200_mode == MDC1200_MODE_BOTH)
+                 if(1)
+                    {
 
-            if (gCurrentVfo->DTMF_PTT_ID_TX_MODE == PTT_ID_APOLLO)
-                BK4819_PlaySingleTone(2525, 250, 0, gEeprom.DTMF_SIDE_TONE);
+                        SYSTEM_DelayMs(30);
 
+                        BK4819_send_MDC1200(1, 0x80, MDC_ID, true);
+
+#ifdef ENABLE_MDC1200_SIDE_BEEP
+                            BK4819_start_tone(880, 10, true, true);
+                            SYSTEM_DelayMs(120);
+                            BK4819_stop_tones(true);
+#endif
+                    }
+                    else
+#endif
+                if (gCurrentVfo->DTMF_PTT_ID_TX_MODE == PTT_ID_APOLLO)
+                    BK4819_PlaySingleTone(2525, 250, 0, gEeprom.DTMF_SIDE_TONE);
+            }
 #if defined(ENABLE_ALARM) || defined(ENABLE_TX1750)
             if (gAlarmState != ALARM_STATE_OFF)
 				{

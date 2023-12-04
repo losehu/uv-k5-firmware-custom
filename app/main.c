@@ -544,6 +544,8 @@ static void MAIN_Key_MENU(const bool bKeyPressed, const bool bKeyHeld) {
         {
             gWasFKeyPressed=false;
             gEeprom.BEEP_CONTROL=!gEeprom.BEEP_CONTROL;
+            gRequestSaveSettings  = 1;
+
             return;
         }
         const bool bFlag = (gInputBoxIndex == 0);

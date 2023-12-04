@@ -393,7 +393,7 @@ void DTMF_HandleRequest(void)
 }
 #endif
 
-void DTMF_Reply(void)
+bool DTMF_Reply()
 {
     uint16_t    Delay;
 #ifdef ENABLE_DTMF_CALLING
@@ -438,7 +438,7 @@ gCurrentVfo->DTMF_PTT_ID_TX_MODE == PTT_ID_OFF    ||
 gCurrentVfo->DTMF_PTT_ID_TX_MODE == PTT_ID_TX_DOWN)
             {
                 gDTMF_ReplyState = DTMF_REPLY_NONE;
-                return;
+                return false;
             }
 
             // send TX-UP DTMF
@@ -449,7 +449,7 @@ gCurrentVfo->DTMF_PTT_ID_TX_MODE == PTT_ID_TX_DOWN)
     gDTMF_ReplyState = DTMF_REPLY_NONE;
 
     if (pString == NULL)
-        return;
+        return false;
 
     Delay = (gEeprom.DTMF_PRELOAD_TIME < 200) ? 200 : gEeprom.DTMF_PRELOAD_TIME;
 
@@ -476,4 +476,6 @@ gCurrentVfo->DTMF_PTT_ID_TX_MODE == PTT_ID_TX_DOWN)
     gEnableSpeaker = false;
 
     BK4819_ExitDTMF_TX(false);
+    return true;
+
 }

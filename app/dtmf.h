@@ -104,7 +104,7 @@ bool DTMF_ValidateCodes(char *pCode, const unsigned int size);
 char DTMF_GetCharacter(const unsigned int code);
 void DTMF_clear_input_box(void);
 void DTMF_Append(const char vode);
-void DTMF_Reply(void);
+bool DTMF_Reply();
 
 #ifdef ENABLE_DTMF_CALLING
 void DTMF_clear_RX(void);

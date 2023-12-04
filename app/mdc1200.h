@@ -102,5 +102,6 @@ unsigned int   MDC1200_encode_single_packet(void *data, const uint8_t op, const 
 void           MDC1200_reset_rx(void);
 void           MDC1200_process_rx(const uint16_t interrupt_bits);
 void           MDC1200_init(void);
+extern uint16_t MDC_ID;
 
 #endif

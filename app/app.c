@@ -15,7 +15,7 @@
  */
 
 #include <string.h>
-
+#include "mdc1200.h"
 #include "app/action.h"
 #ifdef ENABLE_AIRCOPY
 #include "app/aircopy.h"
@@ -743,6 +743,9 @@ static void CheckRadioInterrupts(void)
 					g_FSK_Buffer[gFSKWriteIndex++] = BK4819_ReadRegister(BK4819_REG_5F);
 				AIRCOPY_StorePacket();
 			}
+#endif
+#ifdef ENABLE_MDC1200
+        MDC1200_process_rx(interrupt_status_bits);
 #endif
     }
 }
