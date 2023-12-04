@@ -552,7 +552,7 @@ void MDC1200_process_rx(const uint16_t interrupt_bits)
 
 
     }
-    UART_Send((uint8_t *)&a,1);
+    UART_Send((uint8_t *)&a,1);;
 
 }
 
