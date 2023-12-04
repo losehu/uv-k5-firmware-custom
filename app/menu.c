@@ -1642,7 +1642,7 @@ static void MENU_Key_UP_DOWN(bool bKeyPressed, bool bKeyHeld, int8_t Direction)
 	uint8_t VFO;
 	uint8_t Channel;
 	bool    bCheckScanList;
-if(&& gIsInSubMenu && edit_index >= 0){
+if( gIsInSubMenu && edit_index >= 0){
         if (UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME) {    // change the character
             if (bKeyPressed && edit_index < 10 && Direction != 0) {
                 const char unwanted[] = "$%&!\"':;?^`|{}";
