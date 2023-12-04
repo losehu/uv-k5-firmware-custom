@@ -17,6 +17,7 @@
 #include <string.h>
 #include <stdio.h>     // NULL
 #include "app/mdc1200.h"
+#include "app/uart.h"
 #ifdef ENABLE_AM_FIX
 	#include "am_fix.h"
 #endif

@@ -47,7 +47,7 @@ ENABLE_BLMIN_TMP_OFF          := 0
 ENABLE_SCAN_RANGES            := 1
 ENABLE_MDC1200                   := 1
 ENABLE_MDC1200_SHOW_OP_ARG       := 1
-ENABLE_MDC1200_SIDE_BEEP         := 1
+ENABLE_MDC1200_SIDE_BEEP         := 0
 
 
 #############################################################
