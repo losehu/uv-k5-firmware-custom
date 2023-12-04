@@ -468,7 +468,6 @@ uint8_t  mdc1200_rx_ready_tick_500ms;
 
 void MDC1200_process_rx(const uint16_t interrupt_bits)
 {
-    uint8_t a=0xAA;
 
     const uint16_t rx_sync_flags   = BK4819_ReadRegister(0x0B);
     const uint16_t fsk_reg59       = BK4819_ReadRegister(0x59) & ~((1u << 15) | (1u << 14) | (1u << 12) | (1u << 11));
@@ -481,7 +480,6 @@ void MDC1200_process_rx(const uint16_t interrupt_bits)
 
     if (rx_sync)
     {
-        a=0xAB;
         mdc1200_rx_buffer_index = 0;
 
         {
@@ -500,7 +498,6 @@ void MDC1200_process_rx(const uint16_t interrupt_bits)
 
     if (rx_fifo_almost_full)
     {
-        a=0xAC;
         unsigned int i;
         const unsigned int count = BK4819_ReadRegister(0x5E) & (7u << 0);  // almost full threshold
 
@@ -524,7 +521,6 @@ void MDC1200_process_rx(const uint16_t interrupt_bits)
         {
             BK4819_WriteRegister(0x59, (1u << 15) | (1u << 14) | fsk_reg59);
             BK4819_WriteRegister(0x59, (1u << 12) | fsk_reg59);
-            a=0xAD;
 
             if (MDC1200_process_rx_data(
                     mdc1200_rx_buffer,
@@ -533,7 +529,6 @@ void MDC1200_process_rx(const uint16_t interrupt_bits)
                     &mdc1200_arg,
                     &mdc1200_unit_id)) {
                 mdc1200_rx_ready_tick_500ms = 2 * 6;  // 6 second MDC display time
-                a=0xAE;
                 gUpdateDisplay = true;
 
             }
@@ -552,7 +547,6 @@ void MDC1200_process_rx(const uint16_t interrupt_bits)
 
 
     }
-    UART_Send((uint8_t *)&a,1);;
 
 }
 

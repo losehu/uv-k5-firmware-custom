@@ -1126,10 +1126,10 @@ void RADIO_PrepareCssTX(void)
 
 void RADIO_SendEndOfTransmission(void)
 {
-    if (gEeprom.ROGER == ROGER_MODE_ROGER)
+    if (gEeprom.ROGER == ROGER_MODE_ROGER||gEeprom.ROGER==ROGER_MODE_MDC_HEAD_ROGER)
         BK4819_PlayRoger();
     else
-    if (gEeprom.ROGER == ROGER_MODE_MDC) {
+    if (gEeprom.ROGER == ROGER_MODE_MDC_END||gEeprom.ROGER==ROGER_MODE_MDC_BOTH) {
         BK4819_send_MDC1200(MDC1200_OP_CODE_POST_ID, 0x00, MDC_ID, false);
 
 #ifdef ENABLE_MDC1200_SIDE_BEEP

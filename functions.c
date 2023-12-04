@@ -217,8 +217,8 @@ void FUNCTION_Select(FUNCTION_Type_t Function)
 
             if(!DTMF_Reply()) {
 #ifdef ENABLE_MDC1200
-              //  if (g_current_vfo->channel.mdc1200_mode == MDC1200_MODE_BOT || g_current_vfo->channel.mdc1200_mode == MDC1200_MODE_BOTH)
-                 if(1)
+             //   if (g_current_vfo->channel.mdc1200_mode == MDC1200_MODE_BOT || g_current_vfo->channel.mdc1200_mode == MDC1200_MODE_BOTH)
+             if(gEeprom.ROGER == ROGER_MODE_MDC_HEAD||gEeprom.ROGER==ROGER_MODE_MDC_BOTH||gEeprom.ROGER==ROGER_MODE_MDC_HEAD_ROGER)
                     {
 
                         SYSTEM_DelayMs(30);
