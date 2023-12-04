@@ -1644,7 +1644,7 @@ static void MENU_Key_UP_DOWN(bool bKeyPressed, bool bKeyHeld, int8_t Direction)
 	bool    bCheckScanList;
 if( gIsInSubMenu && edit_index >= 0){
         if (UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME) {    // change the character
-            if (bKeyPressed && edit_index < 10 && Direction != 0) {
+            if (bKeyPressed && edit_index < 10 ) {
                 const char unwanted[] = "$%&!\"':;?^`|{}";
                 char c = edit[edit_index] + Direction;
                 unsigned int i = 0;
@@ -1661,12 +1661,13 @@ if( gIsInSubMenu && edit_index >= 0){
             return;
         } else if (UI_MENU_GetCurrentMenuId() == MENU_MDC_ID)
         {
-            if (bKeyPressed && edit_index < 4 && Direction != 0) {
+            if (bKeyPressed && edit_index < 4 ) {
                 char c = edit[edit_index] + Direction;
                     if(c<'0')c='F';
                     else if(c>'9')c='A';
                     else if(c<'A')c='9';
                     else if(c>'F')c='0';
+                edit[edit_index]=c;
                 gRequestDisplayScreen = DISPLAY_MENU;
             }
             return;
