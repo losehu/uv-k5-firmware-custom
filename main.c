@@ -167,7 +167,8 @@ void Main(void)
 		}
 #endif
 
-		BOOT_ProcessMode();
+	//	BOOT_ProcessMode();
+    GUI_SelectNextDisplay(DISPLAY_MAIN);
 
 		GPIO_ClearBit(&GPIOA->DATA, GPIOA_PIN_VOICE_0);
 

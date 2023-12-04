@@ -64,7 +64,6 @@ BOOT_Mode_t BOOT_GetMode(void)
 
 void BOOT_ProcessMode(/*BOOT_Mode_t Mode*/)
 {
-	GUI_SelectNextDisplay(DISPLAY_MAIN);
 return;
 //
 //	if (Mode == BOOT_MODE_F_LOCK)
