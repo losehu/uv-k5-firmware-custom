@@ -13,7 +13,7 @@
  *     See the License for the specific language governing permissions and
  *     limitations under the License.
  */
-
+#include <stdint.h>
 #include <string.h>
 #include "app/mdc1200.h"
 #include "app/dtmf.h"
@@ -223,7 +223,7 @@ void FUNCTION_Select(FUNCTION_Type_t Function)
 
                         SYSTEM_DelayMs(30);
 
-                        BK4819_send_MDC1200(1, 0x80, MDC_ID, true);
+                        BK4819_send_MDC1200(1, 0x80, gEeprom.MDC1200_ID, true);
 
 #ifdef ENABLE_MDC1200_SIDE_BEEP
                             BK4819_start_tone(880, 10, true, true);

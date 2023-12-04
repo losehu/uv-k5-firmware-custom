@@ -559,3 +559,18 @@ void MDC1200_init(void)
 
     MDC1200_reset_rx();
 }
+uint16_t extractHex(const char *str) {
+    uint16_t result = 0;
+    while (*str) {
+        char c = *str++;
+        if (c >= '0' && c <= '9') {
+            result = (result << 4) | (c - '0');
+
+        } else if (c >= 'A' && c <= 'F') {
+            result = (result << 4) | (c - 'A' + 10);
+        } else {
+            break; // 遇到非十六进制字符，停止解析
+        }
+    }
+    return result;
+}

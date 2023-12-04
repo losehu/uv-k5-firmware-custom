@@ -14,7 +14,7 @@
  *     limitations under the License.
  */
 #include "driver/bk4819.h"
-
+#include <stdint.h>
 #include "app/mdc1200.h"
 #include <string.h>
 
@@ -1130,7 +1130,8 @@ void RADIO_SendEndOfTransmission(void)
         BK4819_PlayRoger();
     else
     if (gEeprom.ROGER == ROGER_MODE_MDC_END||gEeprom.ROGER==ROGER_MODE_MDC_BOTH) {
-        BK4819_send_MDC1200(MDC1200_OP_CODE_POST_ID, 0x00, MDC_ID, false);
+
+        BK4819_send_MDC1200(MDC1200_OP_CODE_POST_ID, 0x00, gEeprom.MDC1200_ID, false);
 
 #ifdef ENABLE_MDC1200_SIDE_BEEP
         BK4819_start_tone(880, 10, true, true);
