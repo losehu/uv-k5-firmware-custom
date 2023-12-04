@@ -1411,13 +1411,12 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld) {
 #ifdef ENABLE_MDC1200
         if (UI_MENU_GetCurrentMenuId() == MENU_MDC_ID)
     {
-            if (edit_index < 0)
-        {
+
                 edit_index = 0;
 
             memmove(edit_original, edit, sizeof(edit_original));
 
-        }
+
 
     }
 
