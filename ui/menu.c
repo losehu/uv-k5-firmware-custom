@@ -694,7 +694,7 @@ void UI_DisplayMenu(void) {
             } else {    // show the channel name being edited
                 UI_PrintStringSmall(edit, menu_item_x1, menu_item_x2, 3);
                 if (edit_index < 4)
-                    UI_PrintStringSmall("^", menu_item_x1 + (8 * edit_index), menu_item_x2, 4);  // show the cursor
+                    UI_PrintStringSmall("^", menu_item_x1 + (8 * edit_index), 0, 4);  // show the cursor
             }
             already_printed = true;
             break;
@@ -718,7 +718,7 @@ void UI_DisplayMenu(void) {
                 } else {    // show the channel name being edited
                     UI_PrintStringSmall(edit, menu_item_x1, 0, 3);
                     if (edit_index < 10)
-                        UI_PrintStringSmall("^", menu_item_x1 + (8 * edit_index)-8, 0, 4);  // show the cursor
+                        UI_PrintStringSmall("^", menu_item_x1 + (8 * edit_index), 0, 4);  // show the cursor
                 }
 
                 if (!gAskForConfirmation) {    // show the frequency so that the user knows the channels frequency
