@@ -712,6 +712,7 @@ void UI_DisplayMain(void)
 #ifdef ENABLE_MDC1200
         if (mdc1200_rx_ready_tick_500ms > 0)
 		{
+
 			center_line = CENTER_LINE_MDC1200;
 			#ifdef ENABLE_MDC1200_SHOW_OP_ARG
 				sprintf(String, "MDC1200 %02X %02X %04X", mdc1200_op, mdc1200_arg, mdc1200_unit_id);

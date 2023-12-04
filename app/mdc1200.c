@@ -1,7 +1,7 @@
 
 #include "driver/bk4819.h"
 #include "driver/crc.h"
-
+#include "driver/uart.h"
 #include "mdc1200.h"
 #include "misc.h"
 #include <string.h>
@@ -521,6 +521,8 @@ void MDC1200_process_rx(const uint16_t interrupt_bits)
         {
             BK4819_WriteRegister(0x59, (1u << 15) | (1u << 14) | fsk_reg59);
             BK4819_WriteRegister(0x59, (1u << 12) | fsk_reg59);
+//            uint8_t a=0xAB;
+//            UART_Send((uint8_t *)&a,1);
 
 
             if (MDC1200_process_rx_data(

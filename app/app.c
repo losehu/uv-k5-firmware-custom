@@ -23,6 +23,7 @@
 #include "app/app.h"
 #include "app/chFrScanner.h"
 #include "app/dtmf.h"
+#include "driver/uart.h"
 #ifdef ENABLE_FMRADIO
 #include "app/fm.h"
 #endif
@@ -745,6 +746,8 @@ static void CheckRadioInterrupts(void)
 			}
 #endif
 #ifdef ENABLE_MDC1200
+
+
         MDC1200_process_rx(interrupt_status_bits);
 #endif
     }

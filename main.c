@@ -16,7 +16,7 @@
 
 #include <string.h>
 #include <stdio.h>     // NULL
-
+#include "app/mdc1200.h"
 #ifdef ENABLE_AM_FIX
 	#include "am_fix.h"
 #endif
@@ -98,7 +98,9 @@ void Main(void)
 		BOARD_ADC_GetBatteryInfo(&gBatteryVoltages[i], &gBatteryCurrent);
 
 	BATTERY_GetReadings(false);
-
+#ifdef ENABLE_MDC1200
+    MDC1200_init();
+#endif
 	#ifdef ENABLE_AM_FIX
 		AM_fix_init();
 	#endif
@@ -125,21 +127,21 @@ void Main(void)
 		gKeyReading1 = KEY_INVALID;
 		gDebounceCounter = 0;
 	}
-
-	if (!gChargingWithTypeC && gBatteryDisplayLevel == 0)
-	{
-		FUNCTION_Select(FUNCTION_POWER_SAVE);
-
-		if (gEeprom.BACKLIGHT_TIME < (ARRAY_SIZE(gSubMenu_BACKLIGHT) - 1)) // backlight is not set to be always on
-			BACKLIGHT_TurnOff();	// turn the backlight OFF
-		else
-			BACKLIGHT_TurnOn();  	// turn the backlight ON
-
-		gReducedService = true;
-	}
-	else
-	{
-		UI_DisplayWelcome();
+//close PS
+//	if (!gChargingWithTypeC && gBatteryDisplayLevel == 0)
+//	{
+//		FUNCTION_Select(FUNCTION_POWER_SAVE);
+//
+//		if (gEeprom.BACKLIGHT_TIME < (ARRAY_SIZE(gSubMenu_BACKLIGHT) - 1)) // backlight is not set to be always on
+//			BACKLIGHT_TurnOff();	// turn the backlight OFF
+//		else
+//			BACKLIGHT_TurnOn();  	// turn the backlight ON
+//
+//		gReducedService = true;
+//	}
+//	else
+//	{
+	//	UI_DisplayWelcome();
 
 
 //		if (gEeprom.POWER_ON_DISPLAY_MODE != POWER_ON_DISPLAY_MODE_NONE)
@@ -197,7 +199,7 @@ void Main(void)
 #endif
 
 		// ******************
-	}
+//	}
 
 	while (1)
 	{
