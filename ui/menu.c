@@ -685,7 +685,7 @@ void UI_DisplayMenu(void) {
 
         case MENU_MDC_ID:
         {
-            gIsInSubMenu
+//            gIsInSubMenu
             if (!gIsInSubMenu||edit_index<0) {    // show the channel name
                                     sprintf(edit, "%04X", gEeprom.MDC1200_ID); // %04X确保输出是4个字符长度的十六进制数
 
