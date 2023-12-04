@@ -13,7 +13,7 @@
  *     See the License for the specific language governing permissions and
  *     limitations under the License.
  */
-
+#include "ui.h"
 #include <string.h>
 #include <stdio.h>     // NULL
 #include "app/mdc1200.h"
