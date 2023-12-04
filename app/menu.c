@@ -1449,8 +1449,8 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld)
 		if (edit_index >= 0 && edit_index < 4)
 		{	// editing the channel name characters
 
-			if (++edit_index < 4)
-				return;	// next char
+			if (++edit_index >= 4)
+		{
 
 			// exit
 			if (memcmp(edit_original, edit, sizeof(edit_original)) == 0)
@@ -1464,6 +1464,7 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld)
 				gFlagAcceptSetting  = false;
 				gAskForConfirmation = 0;
 			}
+            }
 		}
     }
 
