@@ -27,59 +27,59 @@
 #include "ui/status.h"
 #include "version.h"
 #include "driver/system.h"
-void UI_DisplayReleaseKeys(BOOT_Mode_t BootMode) {
-    memset(gStatusLine, 0, sizeof(gStatusLine));
-    memset(gFrameBuffer, 0, sizeof(gFrameBuffer));
+//void UI_DisplayReleaseKeys(BOOT_Mode_t BootMode) {
+//    memset(gStatusLine, 0, sizeof(gStatusLine));
+//    memset(gFrameBuffer, 0, sizeof(gFrameBuffer));
+//
+//    if (BootMode == BOOT_MODE_F_LOCK) {
+//        //解锁，全部按键
+//        UI_PrintStringSmall(解锁, 0, 127, 1);
+//        UI_PrintStringSmall(全部按键, 0, 127, 3);
+//        ST7565_BlitStatusLine();  // blank status line
+//        ST7565_BlitFullScreen();
+//    }
+//
+//
+//}
 
-    if (BootMode == BOOT_MODE_F_LOCK) {
-        //解锁，全部按键
-        UI_PrintStringSmall(解锁, 0, 127, 1);
-        UI_PrintStringSmall(全部按键, 0, 127, 3);
-        ST7565_BlitStatusLine();  // blank status line
-        ST7565_BlitFullScreen();
-    }
-
-
-}
-
-void UI_DisplayWelcome(void) {
-    BACKLIGHT_TurnOn();
-
-    char WelcomeString0[16]={0};
-    char WelcomeString1[16]={0};
-
-    memset(gStatusLine, 0, sizeof(gStatusLine));
-    memset(gFrameBuffer, 0, sizeof(gFrameBuffer));
-
-
-
-
-#
-
-            EEPROM_ReadBuffer(0x0EB0, WelcomeString0, 16);
-            EEPROM_ReadBuffer(0x0EC0, WelcomeString1, 16);
-
-
-        UI_PrintStringSmall(WelcomeString0, 0, 127, 0);
-        UI_PrintStringSmall(WelcomeString1, 0, 127, 2);
-        sprintf(WelcomeString1, "%u.%02uV %u%%",
-                gBatteryVoltageAverage / 100,
-                gBatteryVoltageAverage % 100,
-                BATTERY_VoltsToPercent(gBatteryVoltageAverage));
-        UI_PrintStringSmall(WelcomeString1, 0, 127, 4);
-
-     UI_PrintStringSmall(Version, 0, 127, 6);
-
-        ST7565_BlitStatusLine();  // blank status line
-        ST7565_BlitFullScreen();
-        unsigned char i=250;
-        while (i--) {
-            if (KEYBOARD_Poll() == KEY_EXIT)
-                break;
-            SYSTEM_DelayMs(10);
-
-
-        }
-
-}
-
+//void UI_DisplayWelcome(void) {
+//    BACKLIGHT_TurnOn();
+//
+//    char WelcomeString0[16]={0};
+//    char WelcomeString1[16]={0};
+//
+//    memset(gStatusLine, 0, sizeof(gStatusLine));
+//    memset(gFrameBuffer, 0, sizeof(gFrameBuffer));
+//
+//
+//
+//
+//#
+//
+//            EEPROM_ReadBuffer(0x0EB0, WelcomeString0, 16);
+//            EEPROM_ReadBuffer(0x0EC0, WelcomeString1, 16);
+//
+//
+//        UI_PrintStringSmall(WelcomeString0, 0, 127, 0);
+//        UI_PrintStringSmall(WelcomeString1, 0, 127, 2);
+//        sprintf(WelcomeString1, "%u.%02uV %u%%",
+//                gBatteryVoltageAverage / 100,
+//                gBatteryVoltageAverage % 100,
+//                BATTERY_VoltsToPercent(gBatteryVoltageAverage));
+//        UI_PrintStringSmall(WelcomeString1, 0, 127, 4);
+//
+//     UI_PrintStringSmall(Version, 0, 127, 6);
+//
+//        ST7565_BlitStatusLine();  // blank status line
+//        ST7565_BlitFullScreen();
+//        unsigned char i=250;
+//        while (i--) {
+//            if (KEYBOARD_Poll() == KEY_EXIT)
+//                break;
+//            SYSTEM_DelayMs(10);
+//
+//
+//        }
+//
+//}
+//
