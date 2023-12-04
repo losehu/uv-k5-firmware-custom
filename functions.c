@@ -225,12 +225,12 @@ void FUNCTION_Select(FUNCTION_Type_t Function)
 
                         BK4819_send_MDC1200(1, 0x80, gEeprom.MDC1200_ID, true);
 
-#ifdef ENABLE_MDC1200_SIDE_BEEP
-                            BK4819_start_tone(880, 10, true, true);
-                            SYSTEM_DelayMs(120);
-                            BK4819_stop_tones(true);
-#endif
-                    }
+//#ifdef ENABLE_MDC1200_SIDE_BEEP
+//                            BK4819_start_tone(880, 10, true, true);
+//                            SYSTEM_DelayMs(120);
+//                            BK4819_stop_tones(true);
+//#endif
+//                    }
                     else
 #endif
                 if (gCurrentVfo->DTMF_PTT_ID_TX_MODE == PTT_ID_APOLLO)
