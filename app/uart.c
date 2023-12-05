@@ -516,9 +516,9 @@ bool UART_IsCommandAvailable(void)
 //    for (int i = 0; i < Size; i++) {
 //        tmp[i]=UART_Command.Buffer[i];
 //    }
+bool judge=(CRC_Calculate1(UART_Command.Buffer, Size)!= CRC) ? false : true;
 
-
-    return (CRC_Calculate(UART_Command.Buffer, Size)!= CRC) ? false : true;
+    return judge;
 }
 
 void UART_HandleCommand(void)

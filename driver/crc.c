@@ -48,28 +48,11 @@ void CRC_InitReverse(void)
 		CRC_IV = 0;
 	}
 #endif
-// uint16_t CRC_Calculate(const void *pBuffer, uint16_t Size)
-//{
-//    const uint8_t *pData = (const uint8_t *)pBuffer;
-//    uint16_t i, Crc;
-//    UART_Send(pData, Size);
-//
-//    CRC_CR = (CRC_CR & ~CRC_CR_CRC_EN_MASK) | CRC_CR_CRC_EN_BITS_ENABLE;
-//    UART_Send(pData, Size);
-//
-//    for (i = 0; i < Size; i++) {
-//        CRC_DATAIN = pData[i];
-//    }
-//    Crc = (uint16_t)CRC_DATAOUT;
-//
-//    CRC_CR = (CRC_CR & ~CRC_CR_CRC_EN_MASK) | CRC_CR_CRC_EN_BITS_DISABLE;
-//
-//    return Crc;
-//}
 #define CRC16_XMODEM_POLY 0x1021
 
-uint16_t CRC_Calculate(const void *pBuffer, uint16_t Size) {
-    const uint8_t *pData = (const uint8_t *)pBuffer;
+ uint16_t CRC_Calculate1( void *pBuffer, uint16_t Size)
+{
+     uint8_t *pData = ( uint8_t *)pBuffer;
     uint16_t crc = 0; // 初始CRC值为0
 
     while (Size--) {
@@ -84,4 +67,33 @@ uint16_t CRC_Calculate(const void *pBuffer, uint16_t Size) {
     }
 
     return crc;
+}
+
+uint16_t CRC_Calculate( void *pBuffer, uint16_t Size) {
+//     uint8_t *pData = ( uint8_t *)pBuffer;
+//    uint16_t crc = 0; // 初始CRC值为0
+//
+//    while (Size--) {
+//        crc ^= (*pData++) << 8; // 将数据字节的最高位与CRC异或
+//        for (uint8_t i = 0; i < 8; i++) {
+//            if (crc & 0x8000) { // 检查最高位是否为1
+//                crc = (crc << 1) ^ CRC16_XMODEM_POLY; // 如果最高位为1，执行CRC多项式计算
+//            } else {
+//                crc = crc << 1; // 如果最高位为0，继续左移
+//            }
+//        }
+//    }
+//
+//    return crc;
+		unsigned int   i;
+		 uint8_t *data8 = ( uint8_t *)pBuffer;
+		uint16_t       crc = 0;
+		for (i = 0; i < Size; i++)
+		{
+			unsigned int k;
+			crc ^= data8[i];
+			for (k = 8; k > 0; k--)
+				crc = (crc & 1u) ? (crc >> 1) ^ 0x8408 : crc >> 1;
+		}
+		return crc ^ 0xffff;
 }

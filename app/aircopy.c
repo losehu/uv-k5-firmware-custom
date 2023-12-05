@@ -85,6 +85,8 @@ void AIRCOPY_StorePacket(void)
 			g_FSK_Buffer[i + 1] ^= Obfuscation[i % 8];
 
 		CRC = CRC_Calculate(&g_FSK_Buffer[1], 2 + 64);
+            CRC_Init();
+
 		if (g_FSK_Buffer[34] == CRC)
 		{
 			const uint16_t *pData;

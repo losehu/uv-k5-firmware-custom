@@ -13,7 +13,7 @@ const uint8_t mdc1200_sync[5]     = {0x07, 0x09, 0x2a, 0x44, 0x6f};
 uint8_t mdc1200_sync_suc_xor[sizeof(mdc1200_sync)];
 
 
-#if 1
+#if 0
 
 uint16_t compute_crc(const void *data, const unsigned int data_len)
 {	// let the CPU's hardware do some work :)
@@ -25,21 +25,24 @@ uint16_t compute_crc(const void *data, const unsigned int data_len)
 }
 
 #elif 1
+uint16_t compute_crc( void *data, const unsigned int data_len) {    // let the CPU's hardware do some work :)
 
-uint16_t compute_crc(const void *data, const unsigned int data_len)
-	{	// using the reverse computation and polynominal avoids having to reverse the bit order during and after
-		unsigned int   i;
-		const uint8_t *data8 = (const uint8_t *)data;
-		uint16_t       crc = 0;
-		for (i = 0; i < data_len; i++)
-		{
-			unsigned int k;
-			crc ^= data8[i];
-			for (k = 8; k > 0; k--)
-				crc = (crc & 1u) ? (crc >> 1) ^ 0x8408 : crc >> 1;
-		}
-		return crc ^ 0xffff;
-	}
+    return CRC_Calculate(data, data_len);
+}
+//uint16_t compute_crc( void *data, const unsigned int data_len)
+//	{	// using the reverse computation and polynominal avoids having to reverse the bit order during and after
+//		unsigned int   i;
+//		 uint8_t *data8 = ( uint8_t *)data;
+//		uint16_t       crc = 0;
+//		for (i = 0; i < data_len; i++)
+//		{
+//			unsigned int k;
+//			crc ^= data8[i];
+//			for (k = 8; k > 0; k--)
+//				crc = (crc & 1u) ? (crc >> 1) ^ 0x8408 : crc >> 1;
+//		}
+//		return crc ^ 0xffff;
+//	}
 
 #else
 
@@ -528,7 +531,7 @@ void MDC1200_process_rx(const uint16_t interrupt_bits)
                     &mdc1200_op,
                     &mdc1200_arg,
                     &mdc1200_unit_id)) {
-                mdc1200_rx_ready_tick_500ms = 2 * 3;  // 6 second MDC display time
+                mdc1200_rx_ready_tick_500ms = 2 * 5;  // 6 second MDC display time
                 gUpdateDisplay = true;
 
             }
