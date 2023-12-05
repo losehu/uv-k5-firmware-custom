@@ -512,8 +512,13 @@ bool UART_IsCommandAvailable(void)
 
     CRC = UART_Command.Buffer[Size] | (UART_Command.Buffer[Size + 1] << 8);
 //    char b[2]="3K";
-    UART_Send(UART_Command.Buffer, Size);
-    return (CRC_Calculate(UART_Command.Buffer, Size) != CRC) ? false : true;
+//     uint8_t tmp[Size];
+//    for (int i = 0; i < Size; i++) {
+//        tmp[i]=UART_Command.Buffer[i];
+//    }
+
+
+    return (CRC_Calculate(UART_Command.Buffer, Size)!= CRC) ? false : true;
 }
 
 void UART_HandleCommand(void)
