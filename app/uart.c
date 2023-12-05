@@ -514,10 +514,10 @@ bool UART_IsCommandAvailable(void)
     return (CRC_Calculate(UART_Command.Buffer, Size) != CRC) ? false : true;
 }
 
-volatile void UART_HandleCommand(void)
+ void UART_HandleCommand(void)
 {
 //    volatile uint16_t CMD_ID=
-   UART_Send((uint8_t *)&UART_Command.Header.ID,1);
+   UART_Send((uint8_t *)&UART_Command.Header.ID,2);
     switch (UART_Command.Header.ID)
     {
         case 0x0514:
