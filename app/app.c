@@ -1185,8 +1185,7 @@ void APP_TimeSlice10ms(void)
 
     if (UART_IsCommandAvailable())
     {
-        char a[2]="OK";
-        UART_Send((uint8_t *)&a,2);
+
         __disable_irq();
         UART_HandleCommand();
         __enable_irq();
