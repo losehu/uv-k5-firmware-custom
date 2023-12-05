@@ -81,8 +81,8 @@ void ACTION_Monitor(void)
 			gNoaaChannel = gRxVfo->CHANNEL_SAVE - NOAA_CHANNEL_FIRST;
 #endif
 		RADIO_SetupRegisters(true);
-		APP_StartListening(FUNCTION_MONITOR, false);
-		return;
+        APP_StartListening(FUNCTION_MONITOR);
+        return;
 	}
 
 	gMonitor = false;

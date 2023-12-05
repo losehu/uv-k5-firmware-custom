@@ -74,7 +74,7 @@ static void UpdateRSSI(const int vfo)
 #ifdef ENABLE_AM_FIX
     // add RF gain adjust compensation
 		if (gEeprom.VfoInfo[vfo].Modulation == MODULATION_AM && gSetting_AM_fix)
-			rssi -= rssi_gain_diff[vfo];
+			rssi -= AM_fix_get_rssi_gain_diff(vfo);
 #endif
 
     if (gCurrentRSSI[vfo] == rssi)
@@ -172,7 +172,7 @@ static void CheckForIncoming(void)
 
 static void HandleIncoming(void)
 {
-    bool bFlag;
+
 
     if (!g_SquelchLost) {	// squelch is closed
 #ifdef ENABLE_DTMF_CALLING
@@ -186,8 +186,7 @@ static void HandleIncoming(void)
         return;
     }
 
-    bFlag = (gScanStateDir == SCAN_OFF && gCurrentCodeType == CODE_TYPE_OFF);
-
+    bool bFlag = (gScanStateDir == SCAN_OFF && gCurrentCodeType == CODE_TYPE_OFF);
 #ifdef ENABLE_NOAA
     if (IS_NOAA_CHANNEL(gRxVfo->CHANNEL_SAVE) && gNOAACountdown_10ms > 0) {
 		gNOAACountdown_10ms = 0;
@@ -200,8 +199,9 @@ static void HandleIncoming(void)
         gFoundCTCSS = false;
     }
 
-    if (g_CDCSS_Lost && gCDCSSCodeType == CDCSS_POSITIVE_CODE && (gCurrentCodeType == CODE_TYPE_DIGITAL || gCurrentCodeType == CODE_TYPE_REVERSE_DIGITAL)) {
-        gFoundCDCSS = false;
+    if (g_CDCSS_Lost && gCDCSSCodeType == CDCSS_POSITIVE_CODE
+        && (gCurrentCodeType == CODE_TYPE_DIGITAL || gCurrentCodeType == CODE_TYPE_REVERSE_DIGITAL))
+    {        gFoundCDCSS = false;
     }
     else if (!bFlag)
         return;
@@ -231,7 +231,7 @@ static void HandleIncoming(void)
 	}
 #endif
 
-    APP_StartListening(gMonitor ? FUNCTION_MONITOR : FUNCTION_RECEIVE, false);
+    APP_StartListening(gMonitor ? FUNCTION_MONITOR : FUNCTION_RECEIVE);
 }
 
 static void HandleReceive(void)
@@ -445,11 +445,9 @@ static void HandleFunction(void)
     }
 }
 
-void APP_StartListening(FUNCTION_Type_t Function, const bool reset_am_fix)
-{
-    (void)reset_am_fix;
-    const unsigned int chan = gEeprom.RX_VFO;
-//	const unsigned int chan = gRxVfo->CHANNEL_SAVE;
+void APP_StartListening(FUNCTION_Type_t function){
+    const unsigned int vfo = gEeprom.RX_VFO;
+    //	const unsigned int chan = gRxVfo->CHANNEL_SAVE;
 
 #ifdef ENABLE_DTMF_CALLING
     if (gSetting_KILLED)
@@ -462,8 +460,7 @@ void APP_StartListening(FUNCTION_Type_t Function, const bool reset_am_fix)
 #endif
 
     // clear the other vfo's rssi level (to hide the antenna symbol)
-    gVFO_RSSI_bar_level[(chan + 1) & 1u] = 0;
-
+    gVFO_RSSI_bar_level[!vfo] = 0;
     AUDIO_AudioPathOn();
     gEnableSpeaker = true;
 
@@ -477,8 +474,7 @@ void APP_StartListening(FUNCTION_Type_t Function, const bool reset_am_fix)
 		gRxVfo->CHANNEL_SAVE        = gNoaaChannel + NOAA_CHANNEL_FIRST;
 		gRxVfo->pRX->Frequency      = NoaaFrequencyTable[gNoaaChannel];
 		gRxVfo->pTX->Frequency      = NoaaFrequencyTable[gNoaaChannel];
-		gEeprom.ScreenChannel[chan] = gRxVfo->CHANNEL_SAVE;
-
+gEeprom.ScreenChannel[vfo] = gRxVfo->CHANNEL_SAVE;
 		gNOAA_Countdown_10ms        = 500;   // 5 sec
 		gScheduleNOAA               = false;
 	}
@@ -500,38 +496,25 @@ void APP_StartListening(FUNCTION_Type_t Function, const bool reset_am_fix)
         gUpdateStatus    = true;
     }
 
-#ifdef ENABLE_AM_FIX
-        if (gRxVfo->Modulation == MODULATION_AM && gSetting_AM_fix) {	// AM RX mode
-			if (reset_am_fix)
-				AM_fix_reset(chan);      // TODO: only reset it when moving channel/frequency
-			AM_fix_10ms(chan);
-		}
-#endif
 
-    // AF gain - original QS values
-    // if (gRxVfo->Modulation != MODULATION_FM){
-    // 	BK4819_WriteRegister(BK4819_REG_48, 0xB3A8);
-    // }
-    // else
-    {
+
         BK4819_WriteRegister(BK4819_REG_48,
                              (11u << 12)                |     // ??? .. 0 to 15, doesn't seem to make any difference
                              ( 0u << 10)                |     // AF Rx Gain-1
                              (gEeprom.VOLUME_GAIN << 4) |     // AF Rx Gain-2
                              (gEeprom.DAC_GAIN    << 0));     // AF DAC Gain (after Gain-1 and Gain-2)
-    }
+
 
 #ifdef ENABLE_VOICE
     if (gVoiceWriteIndex == 0)       // AM/FM RX mode will be set when the voice has finished
 #endif
     RADIO_SetModulation(gRxVfo->Modulation);  // no need, set it now
 
-    FUNCTION_Select(Function);
-
+    FUNCTION_Select(function);
 #ifdef ENABLE_FMRADIO
-    if (Function == FUNCTION_MONITOR || gFmRadioMode)
+    if (function == FUNCTION_MONITOR || gFmRadioMode)
 #else
-    if (Function == FUNCTION_MONITOR)
+    if (function == FUNCTION_MONITOR)
 #endif
     {	// squelch is disabled
         if (gScreenToDisplay != DISPLAY_MENU)     // 1of11 .. don't close the menu
@@ -1180,7 +1163,7 @@ void APP_TimeSlice10ms(void)
 
 #ifdef ENABLE_AM_FIX
 		if (gRxVfo->Modulation == MODULATION_AM && gSetting_AM_fix)
-			AM_fix_10ms(gEeprom.RX_VFO);
+AM_fix_10ms(gEeprom.RX_VFO, false);
 #endif
 
     if (UART_IsCommandAvailable())
@@ -1581,7 +1564,7 @@ void APP_TimeSlice500ms(void)
 
     BATTERY_TimeSlice500ms();
     SCANNER_TimeSlice500ms();
-
+    UI_MAIN_TimeSlice500ms();
 #ifdef ENABLE_DTMF_CALLING
     if (gCurrentFunction != FUNCTION_TRANSMIT)
 	{

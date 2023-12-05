@@ -246,7 +246,52 @@ void UI_UpdateRSSI(const int16_t rssi, const int vfo)
 	}
 
 }
+#ifdef ENABLE_AGC_SHOW_DATA
+static void PrintAGC(bool now)
+{
+	char buf[20];
+	memset(gFrameBuffer[3], 0, 128);
+	union {
+		struct {
+			uint16_t _ : 5;
+			uint16_t agcSigStrength : 7;
+			int16_t gainIdx : 3;
+			uint16_t agcEnab : 1;
+		};
+    	uint16_t __raw;
+	} reg7e;
+	reg7e.__raw = BK4819_ReadRegister(0x7E);
+	uint8_t gainAddr = reg7e.gainIdx < 0 ? 0x14 : 0x10 + reg7e.gainIdx;
+	union {
+		struct {
+			uint16_t pga:3;
+			uint16_t mixer:2;
+			uint16_t lna:3;
+			uint16_t lnaS:2;
+		};
+		uint16_t __raw;
+	} agcGainReg;
+	agcGainReg.__raw = BK4819_ReadRegister(gainAddr);
+	int8_t lnaShortTab[] = {-28, -24, -19, 0};
+	int8_t lnaTab[] = {-24, -19, -14, -9, -6, -4, -2, 0};
+	int8_t mixerTab[] = {-8, -6, -3, 0};
+	int8_t pgaTab[] = {-33, -27, -21, -15, -9, -6, -3, 0};
+	int16_t agcGain = lnaShortTab[agcGainReg.lnaS] + lnaTab[agcGainReg.lna] + mixerTab[agcGainReg.mixer] + pgaTab[agcGainReg.pga];
 
+	sprintf(buf, "%d%2d %2d %2d %3d", reg7e.agcEnab, reg7e.gainIdx, -agcGain, reg7e.agcSigStrength, BK4819_GetRSSI());
+	UI_PrintStringSmall(buf, 2, 0, 3);
+	if(now)
+		ST7565_BlitLine(3);
+}
+#endif
+
+void UI_MAIN_TimeSlice500ms(void)
+{
+#ifdef ENABLE_AGC_SHOW_DATA
+    if(gScreenToDisplay==DISPLAY_MAIN)
+	PrintAGC(true);
+#endif
+}
 // ***************************************************************************
 
 void UI_DisplayMain(void)
@@ -428,7 +473,7 @@ void UI_DisplayMain(void)
 		{	// frequency mode
 			// show the frequency band number
 			const unsigned int x = 2;
-			char * buf = gEeprom.VfoInfo[vfo_num].pRX->Frequency < 100000000 ? "" : "+";
+            char * buf = gEeprom.VfoInfo[vfo_num].pRX->Frequency < _1GHz_in_KHz ? "" : "+";
 			sprintf(String, "F%u%s", 1 + gEeprom.ScreenChannel[vfo_num] - FREQ_CHANNEL_FIRST, buf);
 			UI_PrintStringSmall(String, x, 0, line + 1);
 		}
@@ -473,7 +518,7 @@ void UI_DisplayMain(void)
 
 
             const char * ascii = INPUTBOX_GetAscii();
-			bool isGigaF = frequency>=100000000;
+            bool isGigaF = frequency>=_1GHz_in_KHz;
 			sprintf(String, "%.*s.%.3s", 3 + isGigaF, ascii, ascii + 3 + isGigaF);
 #ifdef ENABLE_BIG_FREQ
 			if(!isGigaF) {
@@ -528,8 +573,8 @@ void UI_DisplayMain(void)
 					case MDF_FREQUENCY:	// show the channel frequency
 						sprintf(String, "%3u.%05u", frequency / 100000, frequency % 100000);
 #ifdef ENABLE_BIG_FREQ
-						if(frequency < 100000000) {
-							// show the remaining 2 small frequency digits
+                        if(frequency < _1GHz_in_KHz) {
+                            // show the remaining 2 small frequency digits
 							UI_PrintStringSmall(String + 7, 113, 0, line + 1);
 							String[7] = 0;
 							// show the main large frequency digits
@@ -583,8 +628,8 @@ void UI_DisplayMain(void)
 				sprintf(String, "%3u.%05u", frequency / 100000, frequency % 100000);
 
 #ifdef ENABLE_BIG_FREQ
-				if(frequency < 100000000) {
-					// show the remaining 2 small frequency digits
+                if(frequency < _1GHz_in_KHz) {
+                    // show the remaining 2 small frequency digits
 					UI_PrintStringSmall(String + 7, 113, 0, line + 1);
 					String[7] = 0;
 					// show the main large frequency digits
@@ -702,7 +747,10 @@ void UI_DisplayMain(void)
 			UI_PrintStringSmall("SCR", LCD_WIDTH + 106, 0, line + 1);
 
 	}
-
+#ifdef ENABLE_AGC_SHOW_DATA
+    center_line = CENTER_LINE_IN_USE;
+	PrintAGC(false);
+#endif
 	if (center_line == CENTER_LINE_NONE)
 	{	// we're free to use the middle line
 
