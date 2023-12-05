@@ -429,22 +429,19 @@ bool UART_IsCommandAvailable(void)
     uint16_t CRC;
     uint16_t CommandLength;
     uint16_t DmaLength = DMA_CH0->ST & 0xFFFU;
-    char d[2]="OK";
-    UART_Send((uint8_t *)&d,2);
+
 
     while (1)
     {
         if (gUART_WriteIndex == DmaLength)
             return false;
-        char a[2]="1K";
-        UART_Send((uint8_t *)&a,2);
+
         while (gUART_WriteIndex != DmaLength && UART_DMA_Buffer[gUART_WriteIndex] != 0xABU)
             gUART_WriteIndex = DMA_INDEX(gUART_WriteIndex, 1);
 
         if (gUART_WriteIndex == DmaLength)
             return false;
-        char c[2]="2K";
-        UART_Send((uint8_t *)&c,2);
+
         if (gUART_WriteIndex < DmaLength)
             CommandLength = DmaLength - gUART_WriteIndex;
         else
@@ -514,8 +511,8 @@ bool UART_IsCommandAvailable(void)
     }
 
     CRC = UART_Command.Buffer[Size] | (UART_Command.Buffer[Size + 1] << 8);
-    char b[2]="3K";
-    UART_Send((uint8_t *)&b,2);
+//    char b[2]="3K";
+    UART_Send(UART_Command.Buffer, Size);
     return (CRC_Calculate(UART_Command.Buffer, Size) != CRC) ? false : true;
 }
 
