@@ -1182,9 +1182,12 @@ void APP_TimeSlice10ms(void)
 		if (gRxVfo->Modulation == MODULATION_AM && gSetting_AM_fix)
 			AM_fix_10ms(gEeprom.RX_VFO);
 #endif
-
+    char a[2]="SB";
+    UART_Send((uint8_t *)&a,2);
     if (UART_IsCommandAvailable())
     {
+        char a[2]="OK";
+        UART_Send((uint8_t *)&a,2);
         __disable_irq();
         UART_HandleCommand();
         __enable_irq();

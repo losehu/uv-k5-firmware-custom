@@ -517,8 +517,7 @@ bool UART_IsCommandAvailable(void)
  void UART_HandleCommand(void)
 {
 //    volatile uint16_t CMD_ID=
-char a[2]="OK";
-     UART_Send((uint8_t *)&a,2);
+
      switch (UART_Command.Header.ID)
     {
         case 0x0514:
