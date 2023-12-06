@@ -20,7 +20,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="MDC RX" />
+    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="106 MDC crc fix" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -127,132 +127,7 @@
       <workItem from="1701430185864" duration="10115000" />
       <workItem from="1701559895523" duration="22519000" />
       <workItem from="1701678199532" duration="14440000" />
-    </task>
-    <task id="LOCAL-00001" summary="bug fix">
-      <created>1701136012311</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1701136012311</updated>
-    </task>
-    <task id="LOCAL-00002" summary="bug fix">
-      <created>1701136095519</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1701136095519</updated>
-    </task>
-    <task id="LOCAL-00003" summary="bug fix">
-      <created>1701136455006</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1701136455006</updated>
-    </task>
-    <task id="LOCAL-00004" summary="payment">
-      <created>1701136490007</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1701136490007</updated>
-    </task>
-    <task id="LOCAL-00005" summary="1129 190 update">
-      <created>1701241566748</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1701241566748</updated>
-    </task>
-    <task id="LOCAL-00006" summary="1129 190 update">
-      <created>1701242206464</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1701242206464</updated>
-    </task>
-    <task id="LOCAL-00007" summary="lite create">
-      <created>1701276006594</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1701276006594</updated>
-    </task>
-    <task id="LOCAL-00008" summary="lite aim">
-      <created>1701312923492</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1701312923492</updated>
-    </task>
-    <task id="LOCAL-00009" summary="lite aim">
-      <created>1701313038755</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1701313038755</updated>
-    </task>
-    <task id="LOCAL-00010" summary="create">
-      <created>1701326536194</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1701326536194</updated>
-    </task>
-    <task id="LOCAL-00011" summary="create">
-      <created>1701326555477</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1701326555477</updated>
-    </task>
-    <task id="LOCAL-00012" summary="create">
-      <created>1701326799477</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1701326799477</updated>
-    </task>
-    <task id="LOCAL-00013" summary="create">
-      <created>1701326908353</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1701326908353</updated>
-    </task>
-    <task id="LOCAL-00014" summary="create">
-      <created>1701326945551</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1701326945551</updated>
-    </task>
-    <task id="LOCAL-00015" summary="rebuild chinese">
-      <created>1701353957333</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1701353957333</updated>
-    </task>
-    <task id="LOCAL-00016" summary="fix bug">
-      <created>1701432443458</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1701432443458</updated>
-    </task>
-    <task id="LOCAL-00017" summary="fix bug">
-      <created>1701432770200</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1701432770200</updated>
-    </task>
-    <task id="LOCAL-00018" summary="掃描下翻譯">
-      <created>1701439333297</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1701439333297</updated>
+      <workItem from="1701736592511" duration="24083000" />
     </task>
     <task id="LOCAL-00019" summary="fix https://github.com/losehu/uv-k5-firmware-chinese/issues/4">
       <created>1701484068802</created>
@@ -464,7 +339,140 @@
       <option name="project" value="LOCAL" />
       <updated>1701693594928</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="写频">
+      <created>1701736695809</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1701736695809</updated>
+    </task>
+    <task id="LOCAL-00050" summary="写频">
+      <created>1701737194492</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1701737194493</updated>
+    </task>
+    <task id="LOCAL-00051" summary="写频">
+      <created>1701737616363</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1701737616364</updated>
+    </task>
+    <task id="LOCAL-00052" summary="写频">
+      <created>1701738044160</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1701738044160</updated>
+    </task>
+    <task id="LOCAL-00053" summary="写频">
+      <created>1701738066407</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1701738066407</updated>
+    </task>
+    <task id="LOCAL-00054" summary="写频">
+      <created>1701738074321</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1701738074322</updated>
+    </task>
+    <task id="LOCAL-00055" summary="写频">
+      <created>1701738086757</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1701738086757</updated>
+    </task>
+    <task id="LOCAL-00056" summary="写频">
+      <created>1701738213205</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1701738213205</updated>
+    </task>
+    <task id="LOCAL-00057" summary="写频">
+      <created>1701738485690</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1701738485690</updated>
+    </task>
+    <task id="LOCAL-00058" summary="写频">
+      <created>1701738979545</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1701738979545</updated>
+    </task>
+    <task id="LOCAL-00059" summary="写频">
+      <created>1701739409050</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1701739409050</updated>
+    </task>
+    <task id="LOCAL-00060" summary="写频">
+      <created>1701739895017</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1701739895017</updated>
+    </task>
+    <task id="LOCAL-00061" summary="写频">
+      <created>1701740303236</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1701740303236</updated>
+    </task>
+    <task id="LOCAL-00062" summary="写频">
+      <created>1701740447231</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1701740447231</updated>
+    </task>
+    <task id="LOCAL-00063" summary="写频">
+      <created>1701740770876</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1701740770876</updated>
+    </task>
+    <task id="LOCAL-00064" summary="写频">
+      <created>1701755444295</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1701755444295</updated>
+    </task>
+    <task id="LOCAL-00065" summary="am-fix">
+      <created>1701769945196</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1701769945196</updated>
+    </task>
+    <task id="LOCAL-00066" summary="mdc side beep">
+      <created>1701775483012</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1701775483012</updated>
+    </task>
+    <task id="LOCAL-00067" summary="106 MDC crc fix">
+      <created>1701778784894</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1701778784894</updated>
+    </task>
+    <option name="localTasksCounter" value="68" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -504,6 +512,10 @@
     <MESSAGE value="reduce flash" />
     <MESSAGE value="rebuild chinese" />
     <MESSAGE value="MDC RX" />
-    <option name="LAST_COMMIT_MESSAGE" value="MDC RX" />
+    <MESSAGE value="写频" />
+    <MESSAGE value="am-fix" />
+    <MESSAGE value="mdc side beep" />
+    <MESSAGE value="106 MDC crc fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="106 MDC crc fix" />
   </component>
 </project>

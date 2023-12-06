@@ -20,7 +20,7 @@
 #include <stdint.h>
 
 void CRC_Init(void);
- uint16_t CRC_Calculate( void *pBuffer, uint16_t Size);
+uint16_t CRC_Calculate(const void *buffer, const unsigned int size);
 uint16_t CRC_Calculate1( void *pBuffer, uint16_t Size);
 
 void CRC_InitReverse(void);

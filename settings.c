@@ -517,7 +517,7 @@ void SETTINGS_SaveSettings(void)
    // State[2] = 0;//gEeprom.KEY_1_LONG_PRESS_ACTION;
     State[3] = 0;//gEeprom.KEY_2_SHORT_PRESS_ACTION;
     State[4] = 0;//gEeprom.KEY_2_LONG_PRESS_ACTION;
-    State[5] = //gEeprom.SCAN_RESUME_MODE;
+    State[5] = gEeprom.SCAN_RESUME_MODE;
     State[6] = 0;//gEeprom.AUTO_KEYPAD_LOCK;
     State[7] = 0;//gEeprom.POWER_ON_DISPLAY_MODE;
     EEPROM_WriteBuffer(0x0E90, State);

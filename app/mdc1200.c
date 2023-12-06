@@ -13,7 +13,7 @@ const uint8_t mdc1200_sync[5]     = {0x07, 0x09, 0x2a, 0x44, 0x6f};
 uint8_t mdc1200_sync_suc_xor[sizeof(mdc1200_sync)];
 
 
-#if 0
+#if 1
 
 uint16_t compute_crc(const void *data, const unsigned int data_len)
 {	// let the CPU's hardware do some work :)
@@ -471,7 +471,8 @@ uint8_t  mdc1200_rx_ready_tick_500ms;
 
 void MDC1200_process_rx(const uint16_t interrupt_bits)
 {
-
+    char b[2]="R0";
+    UART_Send((uint8_t *)&b,2);
     const uint16_t rx_sync_flags   = BK4819_ReadRegister(0x0B);
     const uint16_t fsk_reg59       = BK4819_ReadRegister(0x59) & ~((1u << 15) | (1u << 14) | (1u << 12) | (1u << 11));
 
@@ -519,18 +520,22 @@ void MDC1200_process_rx(const uint16_t interrupt_bits)
                 mdc1200_rx_buffer[mdc1200_rx_buffer_index++] = (word >> 8) & 0xff;
         }
 
-
+        char a[2]="R1";
+        UART_Send((uint8_t *)&a,2);
         if (mdc1200_rx_buffer_index >= sizeof(mdc1200_rx_buffer))
         {
             BK4819_WriteRegister(0x59, (1u << 15) | (1u << 14) | fsk_reg59);
             BK4819_WriteRegister(0x59, (1u << 12) | fsk_reg59);
-
+            char a[2]="RE";
+            UART_Send((uint8_t *)&a,2);
             if (MDC1200_process_rx_data(
                     mdc1200_rx_buffer,
                     mdc1200_rx_buffer_index,
                     &mdc1200_op,
                     &mdc1200_arg,
                     &mdc1200_unit_id)) {
+                char a[2]="OK";
+                UART_Send((uint8_t *)&a,2);
                 mdc1200_rx_ready_tick_500ms = 2 * 5;  // 6 second MDC display time
                 gUpdateDisplay = true;
 

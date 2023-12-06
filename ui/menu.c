@@ -710,6 +710,7 @@ void UI_DisplayMenu(void) {
                 {
                    //     sprintf(edit, "%04lX", gEeprom.MDC1200_ID); // %04X确保输出是4个字符长度的十六进制数
                                       sprintf(String, "%04X", gEeprom.MDC1200_ID); // %04X确保输出是4个字符长度的十六进制数
+            edit_index = -1;
 
                         edit[0]=String[0];
                         edit[1]=String[1];

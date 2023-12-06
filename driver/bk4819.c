@@ -128,17 +128,17 @@ static uint16_t BK4819_ReadU16(void)
 
     PORTCON_PORTC_IE = (PORTCON_PORTC_IE & ~PORTCON_PORTC_IE_C2_MASK) | PORTCON_PORTC_IE_C2_BITS_ENABLE;
     GPIOC->DIR = (GPIOC->DIR & ~GPIO_DIR_2_MASK) | GPIO_DIR_2_BITS_INPUT;
-    SYSTICK_DelayUs(1);
-
+    //SYSTICK_DelayUs(1);
+    SYSTICK_Delay250ns(1);
     Value = 0;
     for (i = 0; i < 16; i++)
     {
         Value <<= 1;
         Value |= GPIO_CheckBit(&GPIOC->DATA, GPIOC_PIN_BK4819_SDA);
         GPIO_SetBit(&GPIOC->DATA, GPIOC_PIN_BK4819_SCL);
-        SYSTICK_DelayUs(1);
+        SYSTICK_Delay250ns(1);
         GPIO_ClearBit(&GPIOC->DATA, GPIOC_PIN_BK4819_SCL);
-        SYSTICK_DelayUs(1);
+        SYSTICK_Delay250ns(1);
     }
     PORTCON_PORTC_IE = (PORTCON_PORTC_IE & ~PORTCON_PORTC_IE_C2_MASK) | PORTCON_PORTC_IE_C2_BITS_DISABLE;
     GPIOC->DIR = (GPIOC->DIR & ~GPIO_DIR_2_MASK) | GPIO_DIR_2_BITS_OUTPUT;
@@ -153,14 +153,14 @@ uint16_t BK4819_ReadRegister(BK4819_REGISTER_t Register)
     GPIO_SetBit(&GPIOC->DATA, GPIOC_PIN_BK4819_SCN);
     GPIO_ClearBit(&GPIOC->DATA, GPIOC_PIN_BK4819_SCL);
 
-    SYSTICK_DelayUs(1);
+    SYSTICK_Delay250ns(1);
 
     GPIO_ClearBit(&GPIOC->DATA, GPIOC_PIN_BK4819_SCN);
     BK4819_WriteU8(Register | 0x80);
     Value = BK4819_ReadU16();
     GPIO_SetBit(&GPIOC->DATA, GPIOC_PIN_BK4819_SCN);
 
-    SYSTICK_DelayUs(1);
+    SYSTICK_Delay250ns(1);
 
     GPIO_SetBit(&GPIOC->DATA, GPIOC_PIN_BK4819_SCL);
     GPIO_SetBit(&GPIOC->DATA, GPIOC_PIN_BK4819_SDA);
@@ -174,20 +174,20 @@ void BK4819_WriteRegister(BK4819_REGISTER_t Register, uint16_t Data)
     GPIO_SetBit(&GPIOC->DATA, GPIOC_PIN_BK4819_SCN);
     GPIO_ClearBit(&GPIOC->DATA, GPIOC_PIN_BK4819_SCL);
 
-    SYSTICK_DelayUs(1);
+    SYSTICK_Delay250ns(1);
 
     GPIO_ClearBit(&GPIOC->DATA, GPIOC_PIN_BK4819_SCN);
     BK4819_WriteU8(Register);
 
-    SYSTICK_DelayUs(1);
+    //SYSTICK_Delay250ns(1);
 
     BK4819_WriteU16(Data);
 
-    SYSTICK_DelayUs(1);
+    //SYSTICK_Delay250ns(1);
 
     GPIO_SetBit(&GPIOC->DATA, GPIOC_PIN_BK4819_SCN);
 
-    SYSTICK_DelayUs(1);
+    SYSTICK_Delay250ns(1);
 
     GPIO_SetBit(&GPIOC->DATA, GPIOC_PIN_BK4819_SCL);
     GPIO_SetBit(&GPIOC->DATA, GPIOC_PIN_BK4819_SDA);
@@ -205,14 +205,14 @@ void BK4819_WriteU8(uint8_t Data)
         else
             GPIO_SetBit(&GPIOC->DATA, GPIOC_PIN_BK4819_SDA);
 
-        SYSTICK_DelayUs(1);
+        SYSTICK_Delay250ns(1);
         GPIO_SetBit(&GPIOC->DATA, GPIOC_PIN_BK4819_SCL);
-        SYSTICK_DelayUs(1);
+        SYSTICK_Delay250ns(1);
 
         Data <<= 1;
 
         GPIO_ClearBit(&GPIOC->DATA, GPIOC_PIN_BK4819_SCL);
-        SYSTICK_DelayUs(1);
+        SYSTICK_Delay250ns(1);
     }
 }
 
@@ -228,14 +228,14 @@ void BK4819_WriteU16(uint16_t Data)
         else
             GPIO_SetBit(&GPIOC->DATA, GPIOC_PIN_BK4819_SDA);
 
-        SYSTICK_DelayUs(1);
+        SYSTICK_Delay250ns(1);
         GPIO_SetBit(&GPIOC->DATA, GPIOC_PIN_BK4819_SCL);
 
         Data <<= 1;
 
-        SYSTICK_DelayUs(1);
+        SYSTICK_Delay250ns(1);
         GPIO_ClearBit(&GPIOC->DATA, GPIOC_PIN_BK4819_SCL);
-        SYSTICK_DelayUs(1);
+        SYSTICK_Delay250ns(1);
     }
 }
 
