@@ -423,7 +423,7 @@ else ifneq (,$(HAS_CRCMOD))
 	$(info !!!!!!!! run: pip install crcmod)
 	$(info )
 else
-	-$(MY_PYTHON) fw-pack.py $<.bin $(AUTHOR_STRING) $(VERSION_STRING) $<.packed.bin
+	-$(MY_PYTHON) fw-pack.py $<.bin $(AUTHOR_STRING) $<.packed.bin
 endif
 
 	$(SIZE) $<
