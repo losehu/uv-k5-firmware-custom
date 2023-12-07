@@ -36,5 +36,5 @@ crc.update(packed)
 digest = crc.digest()
 digest = bytes([digest[1], digest[0]])
 
-open(sys.argv[3], 'wb').write(packed + digest)
+open(sys.argv[4], 'wb').write(packed + digest)
 
