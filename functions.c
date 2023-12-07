@@ -219,7 +219,7 @@ void FUNCTION_Select(FUNCTION_Type_t Function)
              if(gEeprom.ROGER == ROGER_MODE_MDC_HEAD||gEeprom.ROGER==ROGER_MODE_MDC_BOTH||gEeprom.ROGER==ROGER_MODE_MDC_HEAD_ROGER)
                     {
 
-                        SYSTEM_DelayMs(30);
+                      //  SYSTEM_DelayMs(30);
 
                         BK4819_send_MDC1200(1, 0x80, gEeprom.MDC1200_ID, true);
 
