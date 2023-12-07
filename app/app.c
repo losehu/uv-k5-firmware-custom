@@ -2063,7 +2063,7 @@ static void ProcessKey(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld)
 
     gUpdateDisplay = true;
 }
-ifdef ENABLE_FLASHLIGHT
+#ifdef ENABLE_FLASHLIGHT
 
 #include "driver/gpio.h"
 #include "bsp/dp32g030/gpio.h"
