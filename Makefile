@@ -51,7 +51,7 @@ TEST_UNDE_CTCSS := 1
 ENABLE_AM_FIX_SHOW_DATA       := 0
 ENABLE_AGC_SHOW_DATA          := 0
 ENABLE_MDC1200                   := 1
-ENABLE_MDC1200_SHOW_OP_ARG       := 1
+ENABLE_MDC1200_SHOW_OP_ARG       := 0
 ENABLE_MDC1200_SIDE_BEEP         := 0
 #############################################################
 
