@@ -20,6 +20,7 @@ ENABLE_ALARM                  := 0
 ENABLE_TX1750                 := 0
 ENABLE_PWRON_PASSWORD         := 0
 ENABLE_DTMF_CALLING           := 1
+ENABLE_FLASHLIGHT             := 1
 
 # ---- CUSTOM MODS ----
 ENABLE_BIG_FREQ               := 1
@@ -44,13 +45,13 @@ ENABLE_REDUCE_LOW_MID_TX_POWER:= 0
 ENABLE_BYP_RAW_DEMODULATORS   := 0
 ENABLE_BLMIN_TMP_OFF          := 0
 ENABLE_SCAN_RANGES            := 1
-ENABLE_MDC1200                   := 1
-ENABLE_MDC1200_SHOW_OP_ARG       := 1
-ENABLE_MDC1200_SIDE_BEEP         := 0
+
 # ---- DEBUGGING ----
 ENABLE_AM_FIX_SHOW_DATA       := 0
 ENABLE_AGC_SHOW_DATA          := 0
-
+ENABLE_MDC1200                   := 1
+ENABLE_MDC1200_SHOW_OP_ARG       := 1
+ENABLE_MDC1200_SIDE_BEEP         := 0
 #############################################################
 
 TARGET = firmware
@@ -105,7 +106,9 @@ OBJS += driver/systick.o
 ifeq ($(ENABLE_UART),1)
 	OBJS += driver/uart.o
 endif
-
+ifeq ($(ENABLE_MDC1200),1)
+    OBJS += app/mdc1200.o
+endif
 # Main
 OBJS += app/action.o
 ifeq ($(ENABLE_AIRCOPY),1)
@@ -115,6 +118,9 @@ OBJS += app/app.o
 OBJS += app/chFrScanner.o
 OBJS += app/common.o
 OBJS += app/dtmf.o
+ifeq ($(ENABLE_FLASHLIGHT),1)
+	OBJS += app/flashlight.o
+endif
 ifeq ($(ENABLE_FMRADIO),1)
 	OBJS += app/fm.o
 endif
@@ -155,9 +161,6 @@ OBJS += ui/helper.o
 OBJS += ui/inputbox.o
 ifeq ($(ENABLE_PWRON_PASSWORD),1)
 	OBJS += ui/lock.o
-endif
-ifeq ($(ENABLE_MDC1200),1)
-	OBJS += app/mdc1200.o
 endif
 OBJS += ui/main.o
 OBJS += ui/menu.o
@@ -205,7 +208,7 @@ endif
 OBJCOPY = arm-none-eabi-objcopy
 SIZE = arm-none-eabi-size
 
-AUTHOR_STRING := LOSEHU
+AUTHOR_STRING := EGZUMER
 # the user might not have/want git installed
 # can set own version string here (max 7 chars)
 ifneq (, $(shell $(WHERE) git))
@@ -368,14 +371,17 @@ endif
 ifeq ($(ENABLE_AGC_SHOW_DATA),1)
 	CFLAGS  += -DENABLE_AGC_SHOW_DATA
 endif
+ifeq ($(ENABLE_FLASHLIGHT),1)
+	CFLAGS  += -DENABLE_FLASHLIGHT
+endif
 ifeq ($(ENABLE_MDC1200),1)
-	CFLAGS  += -DENABLE_MDC1200
+    CFLAGS  += -DENABLE_MDC1200
 endif
 ifeq ($(ENABLE_MDC1200_SHOW_OP_ARG),1)
-	CFLAGS  += -DENABLE_MDC1200_SHOW_OP_ARG
+    CFLAGS  += -DENABLE_MDC1200_SHOW_OP_ARG
 endif
 ifeq ($(ENABLE_MDC1200_SIDE_BEEP),1)
-	CFLAGS  += -DENABLE_MDC1200_SIDE_BEEP
+    CFLAGS  += -DENABLE_MDC1200_SIDE_BEEP
 endif
 LDFLAGS =
 LDFLAGS += -z noexecstack -mcpu=cortex-m0 -nostartfiles -Wl,-T,firmware.ld -Wl,--gc-sections

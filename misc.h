@@ -48,13 +48,6 @@ enum {
 };
 
 enum {
-    FLASHLIGHT_OFF = 0,
-    FLASHLIGHT_ON,
-    FLASHLIGHT_BLINK,
-    FLASHLIGHT_SOS
-};
-
-enum {
     VFO_CONFIGURE_NONE = 0,
     VFO_CONFIGURE,
     VFO_CONFIGURE_RELOAD
@@ -63,7 +56,7 @@ enum {
 enum AlarmState_t {
     ALARM_STATE_OFF = 0,
     ALARM_STATE_TXALARM,
-    ALARM_STATE_ALARM,
+    ALARM_STATE_SITE_ALARM,
     ALARM_STATE_TX1750
 };
 typedef enum AlarmState_t AlarmState_t;
@@ -245,7 +238,6 @@ enum
 extern volatile bool     gScheduleScanListen;
 extern volatile uint16_t gScanPauseDelayIn_10ms;
 
-extern bool                  gUpdateRSSI;
 extern AlarmState_t          gAlarmState;
 extern uint16_t              gMenuCountdown;
 extern bool                  gPttWasReleased;
@@ -284,7 +276,7 @@ extern bool              g_VOX_Lost;
 
 // true means we are receiving signal
 extern bool                  g_SquelchLost;
-extern uint8_t               gFlashLightState;
+
 extern volatile uint16_t     gFlashLightBlinkCounter;
 extern bool                  gFlagEndTransmission;
 extern uint8_t               gNextMrChannel;
@@ -329,7 +321,6 @@ extern volatile uint8_t      gVFOStateResumeCountdown_500ms;
 #ifdef ENABLE_FMRADIO
 extern volatile bool     gScheduleFM;
 #endif
-extern int16_t               gCurrentRSSI[2];   // now one per VFO
 extern uint8_t               gIsLocked;
 extern volatile uint8_t      boot_counter_10ms;
 

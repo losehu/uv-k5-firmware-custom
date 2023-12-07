@@ -1,3 +1,0 @@
-C:/Users/RUPC/Desktop/UV-K6/test/uv-k5-firmware-chinese/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-kqwa5a/CMakeFiles/cmTC_dcfdd.dir
-C:/Users/RUPC/Desktop/UV-K6/test/uv-k5-firmware-chinese/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-kqwa5a/CMakeFiles/edit_cache.dir
-C:/Users/RUPC/Desktop/UV-K6/test/uv-k5-firmware-chinese/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-kqwa5a/CMakeFiles/rebuild_cache.dir

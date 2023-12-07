@@ -158,7 +158,6 @@ bool     		  gCssBackgroundScan;
 volatile bool     gScheduleScanListen = true;
 volatile uint16_t gScanPauseDelayIn_10ms;
 
-bool              gUpdateRSSI;
 #if defined(ENABLE_ALARM) || defined(ENABLE_TX1750)
 AlarmState_t  gAlarmState;
 #endif
@@ -197,7 +196,6 @@ bool          g_VOX_Lost;
 	uint16_t      gVoxPauseCountdown;
 #endif
 bool              g_SquelchLost;
-uint8_t           gFlashLightState;
 volatile uint16_t gFlashLightBlinkCounter;
 bool              gFlagEndTransmission;
 uint8_t           gNextMrChannel;
@@ -247,7 +245,6 @@ volatile bool gScheduleFM;
 
 volatile uint8_t  boot_counter_10ms;
 
-int16_t           gCurrentRSSI[2] = {0, 0};  // now one per VFO
 
 uint8_t           gIsLocked = 0xFF;
 

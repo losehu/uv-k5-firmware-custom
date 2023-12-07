@@ -100,7 +100,7 @@ void UI_PrintCharSmall(char character, uint8_t Start, uint8_t Line) {
 }
 
 void UI_PrintStringSmall(const char *pString, uint8_t Start, uint8_t End, uint8_t Line) {
-   uint8_t Length = strlen(pString);
+    uint8_t Length = strlen(pString);
 
     if (menu_set_flag == 1)
     {

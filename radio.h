@@ -50,7 +50,8 @@ enum VfoState_t
     VFO_STATE_TX_DISABLE,
     VFO_STATE_TIMEOUT,
     VFO_STATE_ALARM,
-    VFO_STATE_VOLTAGE_HIGH
+    VFO_STATE_VOLTAGE_HIGH,
+    _VFO_STATE_LAST_ELEMENT
 };
 typedef enum VfoState_t VfoState_t;
 
@@ -165,6 +166,6 @@ void     RADIO_PrepareTX(void);
 void     RADIO_EnableCxCSS(void);
 void     RADIO_PrepareCssTX(void);
 void     RADIO_SendEndOfTransmission(void);
-
+void RADIO_SetupAGC(bool listeningAM, bool disable);
 
 #endif

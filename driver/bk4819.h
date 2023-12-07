@@ -74,10 +74,10 @@ void     BK4819_WriteU8(uint8_t Data);
 void     BK4819_WriteU16(uint16_t Data);
 
 void     BK4819_SetAGC(bool enable);
-void     BK4819_InitAGC();
-
+void BK4819_InitAGC(bool amModulation);
 void     BK4819_ToggleGpioOut(BK4819_GPIO_PIN_t Pin, bool bSet);
-
+int8_t   BK4819_GetRxGain_dB(void);
+int16_t  BK4819_GetRSSI_dBm(void);
 void     BK4819_SetCDCSSCodeWord(uint32_t CodeWord);
 void     BK4819_SetCTCSSFrequency(uint32_t BaudRate);
 void     BK4819_SetTailDetection(const uint32_t freq_10Hz);

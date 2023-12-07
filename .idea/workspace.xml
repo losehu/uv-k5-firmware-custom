@@ -20,7 +20,296 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="106 MDC crc fix" />
+    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="fix EEPROM">
+      <change afterPath="$PROJECT_DIR$/app/flashlight.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/docker-image.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/docker-image.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uv-k5-firmware-chinese.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/uv-k5-firmware-chinese.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/am_fix.c" beforeDir="false" afterPath="$PROJECT_DIR$/am_fix.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/am_fix.h" beforeDir="false" afterPath="$PROJECT_DIR$/am_fix.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/action.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/action.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/action.h" beforeDir="false" afterPath="$PROJECT_DIR$/app/action.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/aircopy.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/aircopy.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/aircopy.h" beforeDir="false" afterPath="$PROJECT_DIR$/app/aircopy.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/app.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/app.h" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/chFrScanner.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/chFrScanner.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/chFrScanner.h" beforeDir="false" afterPath="$PROJECT_DIR$/app/chFrScanner.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/common.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/common.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/common.h" beforeDir="false" afterPath="$PROJECT_DIR$/app/common.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dtmf.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/dtmf.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dtmf.h" beforeDir="false" afterPath="$PROJECT_DIR$/app/dtmf.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/fm.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/fm.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/fm.h" beforeDir="false" afterPath="$PROJECT_DIR$/app/fm.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/generic.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/generic.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/generic.h" beforeDir="false" afterPath="$PROJECT_DIR$/app/generic.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/main.h" beforeDir="false" afterPath="$PROJECT_DIR$/app/main.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/menu.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/menu.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/menu.h" beforeDir="false" afterPath="$PROJECT_DIR$/app/menu.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/scanner.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/scanner.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/scanner.h" beforeDir="false" afterPath="$PROJECT_DIR$/app/scanner.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/spectrum.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/spectrum.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/spectrum.h" beforeDir="false" afterPath="$PROJECT_DIR$/app/spectrum.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/uart.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/uart.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/uart.h" beforeDir="false" afterPath="$PROJECT_DIR$/app/uart.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/audio.c" beforeDir="false" afterPath="$PROJECT_DIR$/audio.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/audio.h" beforeDir="false" afterPath="$PROJECT_DIR$/audio.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bitmaps.c" beforeDir="false" afterPath="$PROJECT_DIR$/bitmaps.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bitmaps.h" beforeDir="false" afterPath="$PROJECT_DIR$/bitmaps.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/board.c" beforeDir="false" afterPath="$PROJECT_DIR$/board.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/board.h" beforeDir="false" afterPath="$PROJECT_DIR$/board.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bsp/dp32g030/aes.h" beforeDir="false" afterPath="$PROJECT_DIR$/bsp/dp32g030/aes.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bsp/dp32g030/crc.h" beforeDir="false" afterPath="$PROJECT_DIR$/bsp/dp32g030/crc.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bsp/dp32g030/dma.h" beforeDir="false" afterPath="$PROJECT_DIR$/bsp/dp32g030/dma.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bsp/dp32g030/flash.h" beforeDir="false" afterPath="$PROJECT_DIR$/bsp/dp32g030/flash.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bsp/dp32g030/gpio.h" beforeDir="false" afterPath="$PROJECT_DIR$/bsp/dp32g030/gpio.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bsp/dp32g030/irq.h" beforeDir="false" afterPath="$PROJECT_DIR$/bsp/dp32g030/irq.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bsp/dp32g030/pmu.h" beforeDir="false" afterPath="$PROJECT_DIR$/bsp/dp32g030/pmu.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bsp/dp32g030/portcon.h" beforeDir="false" afterPath="$PROJECT_DIR$/bsp/dp32g030/portcon.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bsp/dp32g030/pwmplus.h" beforeDir="false" afterPath="$PROJECT_DIR$/bsp/dp32g030/pwmplus.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bsp/dp32g030/saradc.h" beforeDir="false" afterPath="$PROJECT_DIR$/bsp/dp32g030/saradc.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bsp/dp32g030/spi.h" beforeDir="false" afterPath="$PROJECT_DIR$/bsp/dp32g030/spi.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bsp/dp32g030/syscon.h" beforeDir="false" afterPath="$PROJECT_DIR$/bsp/dp32g030/syscon.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bsp/dp32g030/uart.h" beforeDir="false" afterPath="$PROJECT_DIR$/bsp/dp32g030/uart.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chinese.h" beforeDir="false" afterPath="$PROJECT_DIR$/chinese.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeCCompiler.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeCCompiler.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeCXXCompiler.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeCXXCompiler.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeDetermineCompilerABI_C.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeDetermineCompilerABI_C.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeRCCompiler.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeSystem.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeSystem.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CompilerIdC/CMakeCCompilerId.c" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CompilerIdC/CMakeCCompilerId.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CompilerIdC/a.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CompilerIdCXX/CMakeCXXCompilerId.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CompilerIdCXX/CMakeCXXCompilerId.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CompilerIdCXX/a.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-kqwa5a/CMakeCache.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-kqwa5a/CMakeFiles/CMakeDirectoryInformation.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-kqwa5a/CMakeFiles/Makefile2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-kqwa5a/CMakeFiles/TargetDirectories.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-kqwa5a/CMakeFiles/cmTC_dcfdd.dir/CMakeCXXCompilerABI.cpp.obj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-kqwa5a/CMakeFiles/cmTC_dcfdd.dir/DependInfo.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-kqwa5a/CMakeFiles/cmTC_dcfdd.dir/build.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-kqwa5a/CMakeFiles/cmTC_dcfdd.dir/cmake_clean.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-kqwa5a/CMakeFiles/cmTC_dcfdd.dir/compiler_depend.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-kqwa5a/CMakeFiles/cmTC_dcfdd.dir/compiler_depend.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-kqwa5a/CMakeFiles/cmTC_dcfdd.dir/depend.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-kqwa5a/CMakeFiles/cmTC_dcfdd.dir/flags.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-kqwa5a/CMakeFiles/cmTC_dcfdd.dir/link.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-kqwa5a/CMakeFiles/cmTC_dcfdd.dir/objects1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-kqwa5a/CMakeFiles/cmTC_dcfdd.dir/progress.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-kqwa5a/CMakeFiles/cmake.check_cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-kqwa5a/CMakeFiles/progress.marks" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-kqwa5a/CMakeLists.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-kqwa5a/Makefile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-kqwa5a/cmTC_dcfdd_loc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-kqwa5a/cmake_install.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-environment.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-environment.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/build.ninja" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/build.ninja" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/uv_k5_firmware_custom_0_17.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/uv_k5_firmware_custom_0_17.cbp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/compile-with-docker.bat" beforeDir="false" afterPath="$PROJECT_DIR$/compile-with-docker.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/compile-with-docker.sh" beforeDir="false" afterPath="$PROJECT_DIR$/compile-with-docker.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dcs.c" beforeDir="false" afterPath="$PROJECT_DIR$/dcs.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dcs.h" beforeDir="false" afterPath="$PROJECT_DIR$/dcs.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/debugging.h" beforeDir="false" afterPath="$PROJECT_DIR$/debugging.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dp32g030.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/dp32g030.cfg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/adc.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/adc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/adc.h" beforeDir="false" afterPath="$PROJECT_DIR$/driver/adc.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/aes.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/aes.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/aes.h" beforeDir="false" afterPath="$PROJECT_DIR$/driver/aes.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/backlight.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/backlight.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/backlight.h" beforeDir="false" afterPath="$PROJECT_DIR$/driver/backlight.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/bk1080-regs.h" beforeDir="false" afterPath="$PROJECT_DIR$/driver/bk1080-regs.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/bk1080.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/bk1080.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/bk1080.h" beforeDir="false" afterPath="$PROJECT_DIR$/driver/bk1080.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/bk4819-regs.h" beforeDir="false" afterPath="$PROJECT_DIR$/driver/bk4819-regs.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/bk4819.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/bk4819.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/bk4819.h" beforeDir="false" afterPath="$PROJECT_DIR$/driver/bk4819.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/crc.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/crc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/crc.h" beforeDir="false" afterPath="$PROJECT_DIR$/driver/crc.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/eeprom.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/eeprom.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/eeprom.h" beforeDir="false" afterPath="$PROJECT_DIR$/driver/eeprom.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/flash.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/flash.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/flash.h" beforeDir="false" afterPath="$PROJECT_DIR$/driver/flash.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/gpio.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/gpio.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/gpio.h" beforeDir="false" afterPath="$PROJECT_DIR$/driver/gpio.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/i2c.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/i2c.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/i2c.h" beforeDir="false" afterPath="$PROJECT_DIR$/driver/i2c.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/keyboard.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/keyboard.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/keyboard.h" beforeDir="false" afterPath="$PROJECT_DIR$/driver/keyboard.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/spi.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/spi.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/spi.h" beforeDir="false" afterPath="$PROJECT_DIR$/driver/spi.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/st7565.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/st7565.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/st7565.h" beforeDir="false" afterPath="$PROJECT_DIR$/driver/st7565.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/system.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/system.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/system.h" beforeDir="false" afterPath="$PROJECT_DIR$/driver/system.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/systick.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/systick.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/systick.h" beforeDir="false" afterPath="$PROJECT_DIR$/driver/systick.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/uart.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/uart.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/uart.h" beforeDir="false" afterPath="$PROJECT_DIR$/driver/uart.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/external/printf/.gitattributes" beforeDir="false" afterPath="$PROJECT_DIR$/external/printf/.gitattributes" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/external/printf/.travis.yml" beforeDir="false" afterPath="$PROJECT_DIR$/external/printf/.travis.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/external/printf/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/external/printf/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/external/printf/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/external/printf/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/external/printf/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/external/printf/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/external/printf/codecov.yml" beforeDir="false" afterPath="$PROJECT_DIR$/external/printf/codecov.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/external/printf/printf.c" beforeDir="false" afterPath="$PROJECT_DIR$/external/printf/printf.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/external/printf/printf.h" beforeDir="false" afterPath="$PROJECT_DIR$/external/printf/printf.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/external/printf/test/catch.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/external/printf/test/catch.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/external/printf/test/test_suite.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/external/printf/test/test_suite.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/firmware.ld" beforeDir="false" afterPath="$PROJECT_DIR$/firmware.ld" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/font.c" beforeDir="false" afterPath="$PROJECT_DIR$/font.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/font.h" beforeDir="false" afterPath="$PROJECT_DIR$/font.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frequencies.c" beforeDir="false" afterPath="$PROJECT_DIR$/frequencies.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frequencies.h" beforeDir="false" afterPath="$PROJECT_DIR$/frequencies.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions.c" beforeDir="false" afterPath="$PROJECT_DIR$/functions.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions.h" beforeDir="false" afterPath="$PROJECT_DIR$/functions.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fw-pack.py" beforeDir="false" afterPath="$PROJECT_DIR$/fw-pack.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/h --force-with-lease origin main" beforeDir="false" afterPath="$PROJECT_DIR$/h --force-with-lease origin main" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hardware/dp32g030/aes.def" beforeDir="false" afterPath="$PROJECT_DIR$/hardware/dp32g030/aes.def" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hardware/dp32g030/crc.def" beforeDir="false" afterPath="$PROJECT_DIR$/hardware/dp32g030/crc.def" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hardware/dp32g030/dma.def" beforeDir="false" afterPath="$PROJECT_DIR$/hardware/dp32g030/dma.def" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hardware/dp32g030/flash.def" beforeDir="false" afterPath="$PROJECT_DIR$/hardware/dp32g030/flash.def" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hardware/dp32g030/gpio.def" beforeDir="false" afterPath="$PROJECT_DIR$/hardware/dp32g030/gpio.def" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hardware/dp32g030/pmu.def" beforeDir="false" afterPath="$PROJECT_DIR$/hardware/dp32g030/pmu.def" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hardware/dp32g030/portcon.def" beforeDir="false" afterPath="$PROJECT_DIR$/hardware/dp32g030/portcon.def" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hardware/dp32g030/saradc.def" beforeDir="false" afterPath="$PROJECT_DIR$/hardware/dp32g030/saradc.def" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hardware/dp32g030/spi.def" beforeDir="false" afterPath="$PROJECT_DIR$/hardware/dp32g030/spi.def" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hardware/dp32g030/syscon.def" beforeDir="false" afterPath="$PROJECT_DIR$/hardware/dp32g030/syscon.def" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hardware/dp32g030/uart.def" beforeDir="false" afterPath="$PROJECT_DIR$/hardware/dp32g030/uart.def" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/helper/battery.c" beforeDir="false" afterPath="$PROJECT_DIR$/helper/battery.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/helper/battery.h" beforeDir="false" afterPath="$PROJECT_DIR$/helper/battery.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/helper/boot.c" beforeDir="false" afterPath="$PROJECT_DIR$/helper/boot.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/helper/boot.h" beforeDir="false" afterPath="$PROJECT_DIR$/helper/boot.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/init.c" beforeDir="false" afterPath="$PROJECT_DIR$/init.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/misc.c" beforeDir="false" afterPath="$PROJECT_DIR$/misc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/misc.h" beforeDir="false" afterPath="$PROJECT_DIR$/misc.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment/payment-codes.md" beforeDir="false" afterPath="$PROJECT_DIR$/payment/payment-codes.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment/sponsors.md" beforeDir="false" afterPath="$PROJECT_DIR$/payment/sponsors.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/printf_config.h" beforeDir="false" afterPath="$PROJECT_DIR$/printf_config.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/radio.c" beforeDir="false" afterPath="$PROJECT_DIR$/radio.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/radio.h" beforeDir="false" afterPath="$PROJECT_DIR$/radio.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler.c" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.c" beforeDir="false" afterPath="$PROJECT_DIR$/settings.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.h" beforeDir="false" afterPath="$PROJECT_DIR$/settings.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sram-overlay.c" beforeDir="false" afterPath="$PROJECT_DIR$/sram-overlay.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sram-overlay.h" beforeDir="false" afterPath="$PROJECT_DIR$/sram-overlay.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/start.S" beforeDir="false" afterPath="$PROJECT_DIR$/start.S" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/aircopy.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/aircopy.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/aircopy.h" beforeDir="false" afterPath="$PROJECT_DIR$/ui/aircopy.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/battery.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/battery.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/battery.h" beforeDir="false" afterPath="$PROJECT_DIR$/ui/battery.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/fmradio.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/fmradio.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/fmradio.h" beforeDir="false" afterPath="$PROJECT_DIR$/ui/fmradio.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/helper.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/helper.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/helper.h" beforeDir="false" afterPath="$PROJECT_DIR$/ui/helper.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/inputbox.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/inputbox.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/inputbox.h" beforeDir="false" afterPath="$PROJECT_DIR$/ui/inputbox.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/lock.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/lock.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/lock.h" beforeDir="false" afterPath="$PROJECT_DIR$/ui/lock.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/main.h" beforeDir="false" afterPath="$PROJECT_DIR$/ui/main.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/menu.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/menu.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/menu.h" beforeDir="false" afterPath="$PROJECT_DIR$/ui/menu.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/scanner.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/scanner.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/scanner.h" beforeDir="false" afterPath="$PROJECT_DIR$/ui/scanner.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/status.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/status.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/status.h" beforeDir="false" afterPath="$PROJECT_DIR$/ui/status.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/ui.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/ui.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/ui.h" beforeDir="false" afterPath="$PROJECT_DIR$/ui/ui.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/welcome.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/welcome.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/welcome.h" beforeDir="false" afterPath="$PROJECT_DIR$/ui/welcome.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/clean.bat" beforeDir="false" afterPath="$PROJECT_DIR$/utils/clean.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/utils/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/misc.bpf" beforeDir="false" afterPath="$PROJECT_DIR$/utils/misc.bpf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/misc.bpr" beforeDir="false" afterPath="$PROJECT_DIR$/utils/misc.bpr" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/.idea/deployment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/.idea/uv-k5font.iml" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/.idea/uv-k5font.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/chinese_array.txt" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/chinese_array.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/.cmake/api/v1/reply/cache-v2-df413000627ac4e14d09.json" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/.cmake/api/v1/reply/cache-v2-df413000627ac4e14d09.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/.cmake/api/v1/reply/cmakeFiles-v1-27728e3c475d83152d3d.json" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/.cmake/api/v1/reply/cmakeFiles-v1-27728e3c475d83152d3d.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/.cmake/api/v1/reply/codemodel-v2-66228003665412cdcaa1.json" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/.cmake/api/v1/reply/codemodel-v2-66228003665412cdcaa1.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/.cmake/api/v1/reply/directory-.-Debug-d0094a50bb2071803777.json" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/.cmake/api/v1/reply/directory-.-Debug-d0094a50bb2071803777.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/.cmake/api/v1/reply/index-2023-12-04T06-41-11-0259.json" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/.cmake/api/v1/reply/index-2023-12-04T06-41-11-0259.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/.cmake/api/v1/reply/target-uv_k5font-Debug-d44d0c737a7679b20600.json" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/.cmake/api/v1/reply/target-uv_k5font-Debug-d44d0c737a7679b20600.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/.cmake/api/v1/reply/toolchains-v1-a74a31a1757014c51fb0.json" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/.cmake/api/v1/reply/toolchains-v1-a74a31a1757014c51fb0.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/.ninja_log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeCache.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/3.25.2/CMakeCCompiler.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/3.25.2/CMakeCCompiler.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/3.25.2/CMakeCXXCompiler.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/3.25.2/CMakeCXXCompiler.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/3.25.2/CMakeRCCompiler.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/3.25.2/CMakeRCCompiler.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/3.25.2/CMakeSystem.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/3.25.2/CMakeSystem.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/3.25.2/CompilerIdC/CMakeCCompilerId.c" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/3.25.2/CompilerIdC/CMakeCCompilerId.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/3.25.2/CompilerIdCXX/CMakeCXXCompilerId.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/3.25.2/CompilerIdCXX/CMakeCXXCompilerId.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/TargetDirectories.txt" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/TargetDirectories.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/cmake.check_cache" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/cmake.check_cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/progress.marks" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/uv_k5font.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/uv_k5font.dir/DependInfo.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/uv_k5font.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/uv_k5font.dir/build.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/uv_k5font.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/uv_k5font.dir/cmake_clean.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/uv_k5font.dir/compiler_depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/uv_k5font.dir/compiler_depend.internal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/uv_k5font.dir/compiler_depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/uv_k5font.dir/compiler_depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/uv_k5font.dir/compiler_depend.ts" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/uv_k5font.dir/compiler_depend.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/uv_k5font.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/uv_k5font.dir/depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/uv_k5font.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/uv_k5font.dir/flags.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/uv_k5font.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/uv_k5font.dir/link.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/uv_k5font.dir/linkLibs.rsp" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/uv_k5font.dir/linkLibs.rsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/uv_k5font.dir/objects1" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/uv_k5font.dir/objects1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/uv_k5font.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/uv_k5font.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/build.ninja" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/build.ninja" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/cmake_install.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/cmake_install.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/uv_k5font.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/uv_k5font.cbp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/ee" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/ee" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/font-pixel-made/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/font-pixel-made/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/font-pixel-made/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/font-pixel-made/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/font-pixel-made/.idea/font-pixel-made.iml" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/font-pixel-made/.idea/font-pixel-made.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/font-pixel-made/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/font-pixel-made/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/font-pixel-made/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/font-pixel-made/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/font-pixel-made/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/font-pixel-made/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/font-pixel-made/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/font-pixel-made/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/font-pixel-made/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/font-pixel-made/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/font-pixel-made/chinese.txt" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/font-pixel-made/chinese.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/font-pixel-made/font.py" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/font-pixel-made/font.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/font-pixel-made/pic.py" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/font-pixel-made/pic.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/font-pixel-made/text.py" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/font-pixel-made/text.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/font.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/font.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/font.h" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/font.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/name.txt" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/name.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/name_out.txt" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/name_out.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/name_out_fina.txt" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/name_out_fina.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/name_tmp.txt" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/name_tmp.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/version.c" beforeDir="false" afterPath="$PROJECT_DIR$/version.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/version.h" beforeDir="false" afterPath="$PROJECT_DIR$/version.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/win_make.bat" beforeDir="false" afterPath="$PROJECT_DIR$/win_make.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/版本说明.txt" beforeDir="false" afterPath="$PROJECT_DIR$/版本说明.txt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -90,10 +379,30 @@
       <recent name="C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Shell Script.未命名 (1)">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="未命名 (1)" type="ShConfigurationType" nameIsGenerated="true">
+      <option name="SCRIPT_TEXT" value="" />
+      <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
+      <option name="SCRIPT_PATH" value="$PROJECT_DIR$/compile-with-docker.sh" />
+      <option name="SCRIPT_OPTIONS" value="" />
+      <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="true" />
+      <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="INDEPENDENT_INTERPRETER_PATH" value="true" />
+      <option name="INTERPRETER_PATH" value="/bin/zsh" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="EXECUTE_IN_TERMINAL" value="true" />
+      <option name="EXECUTE_SCRIPT_FILE" value="true" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <configuration name="未命名" type="ShConfigurationType" nameIsGenerated="true">
       <option name="SCRIPT_TEXT" value="" />
-      <option name="INDEPENDENT_SCRIPT_PATH" value="false" />
+      <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
       <option name="SCRIPT_PATH" value="$PROJECT_DIR$/win_make.bat" />
       <option name="SCRIPT_OPTIONS" value="" />
       <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="true" />
@@ -106,6 +415,10 @@
       <envs />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Shell Script.未命名" />
+      <item itemvalue="Shell Script.未命名 (1)" />
+    </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -128,13 +441,9 @@
       <workItem from="1701559895523" duration="22519000" />
       <workItem from="1701678199532" duration="14440000" />
       <workItem from="1701736592511" duration="24083000" />
-    </task>
-    <task id="LOCAL-00019" summary="fix https://github.com/losehu/uv-k5-firmware-chinese/issues/4">
-      <created>1701484068802</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1701484068802</updated>
+      <workItem from="1701834513154" duration="11699000" />
+      <workItem from="1701908787854" duration="5232000" />
+      <workItem from="1701917497420" duration="1662000" />
     </task>
     <task id="LOCAL-00020" summary="修复切换调制模式时亚音消失问题">
       <created>1701562094909</created>
@@ -472,7 +781,14 @@
       <option name="project" value="LOCAL" />
       <updated>1701778784894</updated>
     </task>
-    <option name="localTasksCounter" value="68" />
+    <task id="LOCAL-00068" summary="fix EEPROM">
+      <created>1701870824988</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1701870824988</updated>
+    </task>
+    <option name="localTasksCounter" value="69" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -516,6 +832,7 @@
     <MESSAGE value="am-fix" />
     <MESSAGE value="mdc side beep" />
     <MESSAGE value="106 MDC crc fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="106 MDC crc fix" />
+    <MESSAGE value="fix EEPROM" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix EEPROM" />
   </component>
 </project>

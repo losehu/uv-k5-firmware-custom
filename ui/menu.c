@@ -36,6 +36,18 @@
 #include "ui/ui.h"
 #include "chinese.h"
 
+void insertNewline(char a[], int index,int len) {
+
+    if(index < 0 || index >= len || len >= 63) {
+        return;
+    }
+    for (int i = len; i >= index; i--) {
+        a[i + 1] = a[i];
+    }
+    a[index] = '\n';
+    a[len + 1] = '\0'; // Null-terminate the string
+}
+
 const t_menu_item MenuList[] =
         {
 //   text,     voice ID,                               menu ID
@@ -399,7 +411,7 @@ void UI_DisplayMenu(void) {
     const unsigned int menu_item_x1 = (8 * menu_list_width) ;//+ 2;
     const unsigned int menu_item_x2 = LCD_WIDTH - 1;
     unsigned int i;
-    char String[128];  // bigger cuz we can now do multi-line in one string (use '\n' char)
+    char String[64];  // bigger cuz we can now do multi-line in one string (use '\n' char)
 #ifdef ENABLE_DTMF_CALLING
     char               Contact[16];
 #endif
@@ -853,11 +865,12 @@ void UI_DisplayMenu(void) {
 #endif
 
         case MENU_UPCODE:
-            strcpy(String, gEeprom.DTMF_UP_CODE);
+
+            sprintf(String, "%.8s\n%.8s", gEeprom.DTMF_UP_CODE, gEeprom.DTMF_UP_CODE + 8);
             break;
 
         case MENU_DWCODE:
-            strcpy(String, gEeprom.DTMF_DOWN_CODE);
+            sprintf(String, "%.8s\n%.8s", gEeprom.DTMF_DOWN_CODE, gEeprom.DTMF_DOWN_CODE + 8);
             break;
 #ifdef ENABLE_DTMF_CALLING
         case MENU_D_RSP:
@@ -1067,14 +1080,14 @@ void UI_DisplayMenu(void) {
         //扫描
         UI_PrintStringSmall(扫描, menu_item_x1, menu_item_x2, 5);
 
-
-    if (UI_MENU_GetCurrentMenuId() == MENU_UPCODE)
-        if (strlen(gEeprom.DTMF_UP_CODE) > 8)
-            UI_PrintStringSmall(gEeprom.DTMF_UP_CODE + 8, menu_item_x1, menu_item_x2, 5);
-
-    if (UI_MENU_GetCurrentMenuId() == MENU_DWCODE)
-        if (strlen(gEeprom.DTMF_DOWN_CODE) > 8)
-            UI_PrintStringSmall(gEeprom.DTMF_DOWN_CODE + 8, menu_item_x1, menu_item_x2, 5);
+//
+//    if (UI_MENU_GetCurrentMenuId() == MENU_UPCODE)
+//        if (strlen(gEeprom.DTMF_UP_CODE) > 12)
+//            UI_PrintStringSmall(gEeprom.DTMF_UP_CODE + 12, menu_item_x1, menu_item_x2, 5);
+//
+//    if (UI_MENU_GetCurrentMenuId() == MENU_DWCODE)
+//        if (strlen(gEeprom.DTMF_DOWN_CODE) > 12)
+//            UI_PrintStringSmall(gEeprom.DTMF_DOWN_CODE + 12, menu_item_x1, menu_item_x2, 5);
 #ifdef ENABLE_DTMF_CALLING
     if (UI_MENU_GetCurrentMenuId() == MENU_D_LIST && gIsDtmfContactValid) {
         Contact[11] = 0;
