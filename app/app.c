@@ -708,6 +708,10 @@ static void CheckRadioInterrupts(void)
 				AIRCOPY_StorePacket();
 			}
 #endif
+#ifdef ENABLE_MDC1200
+         MDC1200_process_rx(  interrupt_status_bits);
+
+#endif
     }
 }
 void APP_EndTransmission(void)

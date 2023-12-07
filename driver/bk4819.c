@@ -1784,9 +1784,8 @@ void BK4819_PlayDTMFEx(bool bLocalLoopback, char Code)
 
     BK4819_ExitTxMute();
 }
-//ENABLE_MDC1200
-#define h
-#ifdef h
+
+#ifdef ENABLE_MDC1200
 void BK4819_start_tone(const uint16_t frequency, const unsigned int level, const bool tx, const bool tx_mute)
 {
 	SYSTEM_DelayMs(1);
