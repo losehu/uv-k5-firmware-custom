@@ -49,7 +49,12 @@ void UI_DisplayScanner(void)
 	else
 	if (gScanCssResultType == CODE_TYPE_CONTINUOUS_TONE)
    //模拟亚音
-        sprintf(String, "\x0C\x0D\x09\x0B:%u.%uHz", CTCSS_Options[gScanCssResultCode] / 10, CTCSS_Options[gScanCssResultCode] % 10);
+#ifdef TEST_UNDE_CTCSS
+
+         sprintf(String, "\x0C\x0D\x09\x0B:%u.%uHz", gScanCssResultCode_all/10, gScanCssResultCode_all% 10);
+#else
+      sprintf(String, "\x0C\x0D\x09\x0B:%u.%uHz", CTCSS_Options[gScanCssResultCode] / 10, CTCSS_Options[gScanCssResultCode] % 10);
+#endif
 	else
 //数字亚音
     sprintf(String, "\x07\x08\x09\x0B:D%03oN", DCS_Options[gScanCssResultCode]);

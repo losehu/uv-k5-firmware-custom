@@ -20,7 +20,18 @@
 	#define ARRAY_SIZE(x) (sizeof(x) / sizeof(x[0]))
 #endif
 
-// CTCSS Hz * 10
+
+#ifdef TEST_UNDE_CTCSS
+
+const uint16_t CTCSS_Options[50] = {
+	 200,  693,  719,  744,  770,  797,  825,  854,  885,  915,
+	 948,  974, 1000, 1035, 1072, 1109, 1148, 1188, 1230, 1273,
+	1318, 1365, 1413, 1462, 1514, 1567, 1598, 1622, 1655, 1679,
+	1713, 1738, 1773, 1799, 1835, 1862, 1899, 1928, 1966, 1995,
+	2035, 2065, 2107, 2181, 2257, 2291, 2336, 2418, 2503, 2541
+};
+#else
+ //CTCSS Hz * 10
 const uint16_t CTCSS_Options[50] = {
 	 670,  693,  719,  744,  770,  797,  825,  854,  885,  915,
 	 948,  974, 1000, 1035, 1072, 1109, 1148, 1188, 1230, 1273,
@@ -28,14 +39,7 @@ const uint16_t CTCSS_Options[50] = {
 	1713, 1738, 1773, 1799, 1835, 1862, 1899, 1928, 1966, 1995,
 	2035, 2065, 2107, 2181, 2257, 2291, 2336, 2418, 2503, 2541
 };
-//const uint16_t CTCSS_Options[50] = {
-//	 200,  693,  719,  744,  770,  797,  825,  854,  885,  915,
-//	 948,  974, 1000, 1035, 1072, 1109, 1148, 1188, 1230, 1273,
-//	1318, 1365, 1413, 1462, 1514, 1567, 1598, 1622, 1655, 1679,
-//	1713, 1738, 1773, 1799, 1835, 1862, 1899, 1928, 1966, 1995,
-//	2035, 2065, 2107, 2181, 2257, 2291, 2336, 2418, 2503, 2541
-//};
-//
+#endif
 
 
 const uint16_t DCS_Options[104] = {
@@ -120,3 +124,26 @@ uint8_t DCS_GetCtcssCode(int Code)
 
 	return Result;
 }
+#ifdef TEST_UNDE_CTCSS
+
+uint16_t DCS_GetCtcssCode_ALL(int Code)
+{
+    unsigned int i;
+    uint16_t      Result = 0xFFFF;
+    int          Smallest = 50;
+
+    for (i = 0; i <2550; i++)
+    {
+        int Delta = Code - i;
+        if (Delta < 0)
+            Delta = -(Code - i);
+        if (Smallest > Delta)
+        {
+            Smallest = Delta;
+            Result   = i;
+        }
+    }
+
+    return Result;
+}
+#endif

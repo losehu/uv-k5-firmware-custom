@@ -779,10 +779,7 @@ void RADIO_SetupRegisters(bool switchToForeground)
         BK4819_EnableDTMF();
         InterruptMask |= BK4819_REG_3F_DTMF_5TONE_FOUND;
 
-#ifdef ENABLE_MDC1200
-        BK4819_enable_mdc1200_rx(true);
-		InterruptMask |= BK4819_REG_3F_FSK_RX_SYNC | BK4819_REG_3F_FSK_RX_FINISHED | BK4819_REG_3F_FSK_FIFO_ALMOST_FULL;
-#endif
+
 
     }
     else
@@ -792,6 +789,10 @@ void RADIO_SetupRegisters(bool switchToForeground)
 #endif
     RADIO_SetupAGC(false, false);
     // enable/disable BK4819 selected interrupts
+#ifdef ENABLE_MDC1200
+    BK4819_enable_mdc1200_rx(true);
+		InterruptMask |= BK4819_REG_3F_FSK_RX_SYNC | BK4819_REG_3F_FSK_RX_FINISHED | BK4819_REG_3F_FSK_FIFO_ALMOST_FULL;
+#endif
     BK4819_WriteRegister(BK4819_REG_3F, InterruptMask);
 
     FUNCTION_Init();

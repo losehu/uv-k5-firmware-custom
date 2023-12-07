@@ -30,6 +30,9 @@
 
 DCS_CodeType_t    gScanCssResultType;
 uint8_t           gScanCssResultCode;
+#ifdef  TEST_UNDE_CTCSS
+uint16_t           gScanCssResultCode_all;
+#endif
 bool              gScanSingleFrequency; // scan CTCSS/DCS codes for current frequency
 SCAN_SaveState_t  gScannerSaveState;
 uint8_t           gScanChannel;
@@ -351,6 +354,11 @@ void SCANNER_Start(bool singleFreq)
 #endif
 	gScanDelay_10ms        = scan_delay_10ms;
 	gScanCssResultCode     = 0xFF;
+#ifdef TEST_UNDE_CTCSS
+
+    gScanCssResultCode_all=0xffff;
+#endif
+
 	gScanCssResultType     = 0xFF;
 	scanHitCount          = 0;
 	gScanUseCssResult      = false;
@@ -421,6 +429,10 @@ void SCANNER_TimeSlice10ms(void)
 			else {
 				BK4819_SetScanFrequency(gScanFrequency);
 				gScanCssResultCode     = 0xFF;
+#ifdef TEST_UNDE_CTCSS
+
+                gScanCssResultCode_all=0xffff;
+#endif
 				gScanCssResultType     = 0xFF;
 				scanHitCount          = 0;
 				gScanUseCssResult      = false;
@@ -458,9 +470,20 @@ void SCANNER_TimeSlice10ms(void)
 				}
 			}
 			else if (scanResult == BK4819_CSS_RESULT_CTCSS) {
-				const uint8_t Code = DCS_GetCtcssCode(ctcssFreq);
-				if (Code != 0xFF) {
-					if (Code == gScanCssResultCode && gScanCssResultType == CODE_TYPE_CONTINUOUS_TONE) {
+#ifdef TEST_UNDE_CTCSS
+				const uint16_t Code = DCS_GetCtcssCode_ALL(ctcssFreq);
+#else
+                const uint8_t Code = DCS_GetCtcssCode(ctcssFreq);
+#endif
+#ifdef TEST_UNDE_CTCSS
+                    if (Code != 0xFFFF) {
+                        					if (Code == gScanCssResultCode_all && gScanCssResultType == CODE_TYPE_CONTINUOUS_TONE) {
+
+#else
+                if (Code != 0xFF) {
+                    if (Code == gScanCssResultCode && gScanCssResultType == CODE_TYPE_CONTINUOUS_TONE) {
+
+#endif
 						if (++scanHitCount >= 2) {
 							gScanCssState     = SCAN_CSS_STATE_FOUND;
 							gScanUseCssResult = true;
@@ -471,10 +494,30 @@ void SCANNER_TimeSlice10ms(void)
 						scanHitCount = 0;
 
 					gScanCssResultType = CODE_TYPE_CONTINUOUS_TONE;
-					gScanCssResultCode = Code;
+#ifdef TEST_UNDE_CTCSS
+                    gScanCssResultCode_all = Code;
+#else
+                    gScanCssResultCode= Code;
+#endif
 				}
 			}
-
+//            else if (scanResult == BK4819_CSS_RESULT_CTCSS) {
+//                const uint8_t Code = DCS_GetCtcssCode(ctcssFreq);
+//                if (Code != 0xFF) {
+//                    if (Code == gScanCssResultCode && gScanCssResultType == CODE_TYPE_CONTINUOUS_TONE) {
+//                        if (++scanHitCount >= 2) {
+//                            gScanCssState     = SCAN_CSS_STATE_FOUND;
+//                            gScanUseCssResult = true;
+//                            gUpdateStatus     = true;
+//                        }
+//                    }
+//                    else
+//                        scanHitCount = 0;
+//
+//                    gScanCssResultType = CODE_TYPE_CONTINUOUS_TONE;
+//                    gScanCssResultCode = Code;
+//                }
+//            }
 			if (gScanCssState < SCAN_CSS_STATE_FOUND) { // scanning or off
 				BK4819_SetScanFrequency(gScanFrequency);
 				gScanDelay_10ms = scan_delay_10ms;

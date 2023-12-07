@@ -199,11 +199,11 @@ void DisplayRSSIBar(const bool now) {
 
     const int16_t      s0_dBm       = -130;                  // S0 .. base level
 const int16_t      rssi_dBm     =
-		BK4819_GetRSSI_dBm()
+        BK4819_GetRSSI_dBm()
 #ifdef ENABLE_AM_FIX
 + ((gSetting_AM_fix && gRxVfo->Modulation == MODULATION_AM) ? AM_fix_get_gain_diff() : 0)
 #endif
-		+ dBmCorrTable[gRxVfo->Band];
+        + dBmCorrTable[gRxVfo->Band];
     const uint8_t s_level = MIN(MAX((rssi_dBm - s0_dBm) / 6, 0), 9); // S0 - S9
     uint8_t overS9dBm = MIN(MAX(rssi_dBm - (s0_dBm + 9*6), 0), 99);
     uint8_t overS9Bars = MIN(overS9dBm/10, 4);
@@ -249,9 +249,6 @@ UI_PrintStringSmall(str, 2, 0, line);
 }
 
 
-
-
-
 #ifdef ENABLE_AGC_SHOW_DATA
 static void PrintAGC(bool now)
 {
@@ -292,18 +289,18 @@ static void PrintAGC(bool now)
 #endif
 
 void UI_MAIN_TimeSlice500ms(void) {
-    if(gScreenToDisplay==DISPLAY_MAIN) {
+    if (gScreenToDisplay == DISPLAY_MAIN) {
 #ifdef ENABLE_AGC_SHOW_DATA
         PrintAGC(true);
-		return;
+        return;
 #endif
-        const bool rx = (gCurrentFunction == FUNCTION_RECEIVE ||
-                         gCurrentFunction == FUNCTION_MONITOR ||
-                         gCurrentFunction == FUNCTION_INCOMING);
-
-
-        if(rx)
-            DisplayRSSIBar(true);
+//        const bool rx = (gCurrentFunction == FUNCTION_RECEIVE ||
+//                         gCurrentFunction == FUNCTION_MONITOR ||
+//                         gCurrentFunction == FUNCTION_INCOMING);
+//
+//
+//        if (rx && mdc1200_rx_ready_tick_500ms <= 0)
+//            DisplayRSSIBar(true);
     }
 }
 // ***************************************************************************
@@ -346,8 +343,7 @@ void UI_DisplayMain(void) {
     }
 
     unsigned int activeTxVFO = gRxVfoIsActive ? gEeprom.RX_VFO : gEeprom.TX_VFO;
-    for (unsigned int vfo_num = 0; vfo_num < 2; vfo_num++)
-    {
+    for (unsigned int vfo_num = 0; vfo_num < 2; vfo_num++) {
         const unsigned int line0 = 0;  // text screen line
         const unsigned int line1 = 4;
 
@@ -433,7 +429,7 @@ void UI_DisplayMain(void) {
 
 #ifdef ENABLE_ALARM
             if (gAlarmState == ALARM_STATE_SITE_ALARM)
-				mode = VFO_MODE_RX;
+                mode = VFO_MODE_RX;
             else
 #endif
             {
@@ -676,7 +672,7 @@ void UI_DisplayMain(void) {
         switch (mod) {
             case MODULATION_FM: {
                 const FREQ_Config_t *pConfig = (mode == VFO_MODE_TX) ? gEeprom.VfoInfo[vfo_num].pTX
-                                                           : gEeprom.VfoInfo[vfo_num].pRX;
+                                                                     : gEeprom.VfoInfo[vfo_num].pRX;
                 const unsigned int code_type = pConfig->CodeType;
                 const char *code_list[] = {"", "CT", "DCS", "DCR"};
                 //   UART_Send((uint8_t*)&code_type,1);
@@ -790,6 +786,7 @@ void UI_DisplayMain(void) {
         }
         else
 #endif
+
         if (rx || gCurrentFunction == FUNCTION_FOREGROUND || gCurrentFunction == FUNCTION_POWER_SAVE) {
 #if 1
             if (gSetting_live_DTMF_decoder && gDTMF_RX_live[0] != 0) {    // show live DTMF decode

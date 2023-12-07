@@ -20,7 +20,15 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="dtmf显示" />
+    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="dtmf显示">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/scanner.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/scanner.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/scanner.h" beforeDir="false" afterPath="$PROJECT_DIR$/app/scanner.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dcs.c" beforeDir="false" afterPath="$PROJECT_DIR$/dcs.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dcs.h" beforeDir="false" afterPath="$PROJECT_DIR$/dcs.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/scanner.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/scanner.c" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -90,12 +98,7 @@
       <recent name="C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese" />
     </key>
   </component>
-  <component name="RunManager" selected="Shell Script.未命名 (1)">
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Shell Script.未命名">
     <configuration name="未命名 (1)" type="ShConfigurationType" nameIsGenerated="true">
       <option name="SCRIPT_TEXT" value="" />
       <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
@@ -156,6 +159,7 @@
       <workItem from="1701908787854" duration="5232000" />
       <workItem from="1701917497420" duration="1955000" />
       <workItem from="1701921618473" duration="1000" />
+      <workItem from="1701934352200" duration="2423000" />
     </task>
     <task id="LOCAL-00021" summary="按键锁定改回以前逻辑">
       <created>1701563372624</created>
