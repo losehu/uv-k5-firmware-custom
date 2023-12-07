@@ -91,9 +91,9 @@
     </key>
   </component>
   <component name="RunManager" selected="Shell Script.未命名 (1)">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="未命名 (1)" type="ShConfigurationType" nameIsGenerated="true">
@@ -155,6 +155,7 @@
       <workItem from="1701834513154" duration="11699000" />
       <workItem from="1701908787854" duration="5232000" />
       <workItem from="1701917497420" duration="1955000" />
+      <workItem from="1701921618473" duration="1000" />
     </task>
     <task id="LOCAL-00021" summary="按键锁定改回以前逻辑">
       <created>1701563372624</created>
