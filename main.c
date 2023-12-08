@@ -85,7 +85,7 @@ void Main(void)
 
 
     SETTINGS_InitEEPROM();
-
+    SETTINGS_WriteBuildOptions();
     SETTINGS_LoadCalibration();
 #ifdef ENABLE_MDC1200
     MDC1200_init();

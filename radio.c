@@ -787,7 +787,7 @@ void RADIO_SetupRegisters(bool switchToForeground)
         BK4819_DisableDTMF();
     }
 #endif
-    RADIO_SetupAGC(false, false);
+    RADIO_SetupAGC(gRxVfo->Modulation == MODULATION_AM, false);
     // enable/disable BK4819 selected interrupts
 #ifdef ENABLE_MDC1200
     BK4819_enable_mdc1200_rx(true);
@@ -954,7 +954,7 @@ void RADIO_SetupAGC(bool listeningAM, bool disable)
 
 
     if(!listeningAM) { // if not actively listening AM we don't need any AM specific regulation
-        BK4819_SetAGC(1);
+        BK4819_SetAGC(!disable);
         BK4819_InitAGC(false);
     }
     else {

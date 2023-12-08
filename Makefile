@@ -45,14 +45,14 @@ ENABLE_REDUCE_LOW_MID_TX_POWER:= 0
 ENABLE_BYP_RAW_DEMODULATORS   := 0
 ENABLE_BLMIN_TMP_OFF          := 0
 ENABLE_SCAN_RANGES            := 1
-TEST_UNDE_CTCSS := 1
+ENABLE_MDC1200                   := 1
+ENABLE_MDC1200_SHOW_OP_ARG       := 1
+ENABLE_MDC1200_SIDE_BEEP         := 0
 
 # ---- DEBUGGING ----
 ENABLE_AM_FIX_SHOW_DATA       := 0
 ENABLE_AGC_SHOW_DATA          := 0
-ENABLE_MDC1200                   := 1
-ENABLE_MDC1200_SHOW_OP_ARG       := 0
-ENABLE_MDC1200_SIDE_BEEP         := 0
+
 #############################################################
 
 TARGET = firmware
@@ -79,6 +79,9 @@ ifeq ($(ENABLE_OVERLAY),1)
 	OBJS += sram-overlay.o
 endif
 OBJS += external/printf/printf.o
+ifeq ($(ENABLE_MDC1200),1)
+    OBJS += app/mdc1200.o
+endif
 
 # Drivers
 OBJS += driver/adc.o
@@ -107,9 +110,7 @@ OBJS += driver/systick.o
 ifeq ($(ENABLE_UART),1)
 	OBJS += driver/uart.o
 endif
-ifeq ($(ENABLE_MDC1200),1)
-    OBJS += app/mdc1200.o
-endif
+
 # Main
 OBJS += app/action.o
 ifeq ($(ENABLE_AIRCOPY),1)
@@ -179,7 +180,7 @@ else
 endif
 
 ifdef OS # windows
-   RM = del /Q
+   RM = del
    FixPath = $(subst /,\,$1)
    WHERE = where
    NULL_OUTPUT = nul
@@ -209,7 +210,7 @@ endif
 OBJCOPY = arm-none-eabi-objcopy
 SIZE = arm-none-eabi-size
 
-AUTHOR_STRING := LOSEHU
+AUTHOR_STRING := EGZUMER
 # the user might not have/want git installed
 # can set own version string here (max 7 chars)
 ifneq (, $(shell $(WHERE) git))
@@ -258,6 +259,16 @@ CFLAGS += -DAUTHOR_STRING=\"$(AUTHOR_STRING)\" -DVERSION_STRING=\"$(VERSION_STRI
 ifeq ($(ENABLE_SPECTRUM),1)
 CFLAGS += -DENABLE_SPECTRUM
 endif
+ifeq ($(ENABLE_MDC1200),1)
+    CFLAGS  += -DENABLE_MDC1200
+endif
+ifeq ($(ENABLE_MDC1200_SHOW_OP_ARG),1)
+    CFLAGS  += -DENABLE_MDC1200_SHOW_OP_ARG
+endif
+ifeq ($(ENABLE_MDC1200_SIDE_BEEP),1)
+    CFLAGS  += -DENABLE_MDC1200_SIDE_BEEP
+endif
+
 ifeq ($(ENABLE_SWD),1)
 	CFLAGS += -DENABLE_SWD
 endif
@@ -375,15 +386,7 @@ endif
 ifeq ($(ENABLE_FLASHLIGHT),1)
 	CFLAGS  += -DENABLE_FLASHLIGHT
 endif
-ifeq ($(ENABLE_MDC1200),1)
-    CFLAGS  += -DENABLE_MDC1200
-endif
-ifeq ($(ENABLE_MDC1200_SHOW_OP_ARG),1)
-    CFLAGS  += -DENABLE_MDC1200_SHOW_OP_ARG
-endif
-ifeq ($(ENABLE_MDC1200_SIDE_BEEP),1)
-    CFLAGS  += -DENABLE_MDC1200_SIDE_BEEP
-endif
+
 LDFLAGS =
 LDFLAGS += -z noexecstack -mcpu=cortex-m0 -nostartfiles -Wl,-T,firmware.ld -Wl,--gc-sections
 
@@ -430,7 +433,7 @@ else ifneq (,$(HAS_CRCMOD))
 	$(info !!!!!!!! run: pip install crcmod)
 	$(info )
 else
-	-$(MY_PYTHON) fw-pack.py $<.bin $(AUTHOR_STRING) $<.packed.bin
+	-$(MY_PYTHON) fw-pack.py $<.bin $(AUTHOR_STRING) $(VERSION_STRING) $<.packed.bin
 endif
 
 	$(SIZE) $<
@@ -458,5 +461,15 @@ bsp/dp32g030/%.h: hardware/dp32g030/%.def
 
 -include $(DEPS)
 
-clean:
-	$(RM) $(call FixPath, $(TARGET).bin $(TARGET).packed.bin $(TARGET) $(OBJS) $(DEPS))
+ifdef OS
+    ifeq ($(OS),Windows_NT)
+        clean:
+			.\clean.bat
+    else
+        clean:
+			$(RM) $(call FixPath, $(TARGET).bin $(TARGET).packed.bin $(TARGET) $(OBJS) $(DEPS))
+    endif
+else
+    clean:
+		@echo "Unsupported OS. Please use this Makefile on Windows or Linux."
+endif

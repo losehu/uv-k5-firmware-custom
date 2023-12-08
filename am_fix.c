@@ -25,7 +25,7 @@
 #include "app/main.h"
 #include "board.h"
 #include "driver/bk4819.h"
-#include "external/printf/printf.h"
+//#include "external/printf/printf.h"
 #include "frequencies.h"
 #include "functions.h"
 #include "misc.h"
@@ -303,23 +303,24 @@ void AM_fix_reset(const unsigned vfo)
 // won't/don't do it for itself, we're left to bodging it ourself by
 // playing with the RF front end gain setting
 //
-void AM_fix_10ms(const unsigned vfo, bool force)
+void AM_fix_10ms(const unsigned vfo)
 {
 	if(!gSetting_AM_fix || !enabled || vfo > 1 )
 		return;
 
-	if(!force) switch (gCurrentFunction)
-	{
+switch (gCurrentFunction)
+{
 		case FUNCTION_TRANSMIT:
 		case FUNCTION_BAND_SCOPE:
 		case FUNCTION_POWER_SAVE:
-		case FUNCTION_FOREGROUND:
 #ifdef ENABLE_AM_FIX_SHOW_DATA
 			counter = display_update_rate;  // queue up a display update as soon as we switch to RX mode
 #endif
 			return;
 
-		// only adjust stuff if we're in one of these modes
+		// only adjust stuff if we're in one of these modes、
+        		case FUNCTION_FOREGROUND:
+
 		case FUNCTION_RECEIVE:
 		case FUNCTION_MONITOR:
 		case FUNCTION_INCOMING:

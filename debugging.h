@@ -4,7 +4,8 @@
 #include "driver/uart.h"
 #include "driver/bk4819.h"
 #include "string.h"
-#include "external/printf/printf.h"
+#include <stdio.h>
+
 #include "am_fix.h"
 
 

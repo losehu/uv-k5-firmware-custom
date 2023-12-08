@@ -2,8 +2,8 @@ ENTRY(HandlerReset)
 
 _estack = 0x20004000;    /* end of 16K RAM */
 
-_Min_Heap_Size = 0x100;      /* required amount of heap  */
-_Min_Stack_Size = 0x100;  /* required amount of stack */
+_Min_Heap_Size = 0;      /* required amount of heap  */
+_Min_Stack_Size = 0x80;  /* required amount of stack */
 
 MEMORY
 {
@@ -76,4 +76,3 @@ SECTIONS
 		. = ALIGN(4);
 	} >RAM
 }
-
