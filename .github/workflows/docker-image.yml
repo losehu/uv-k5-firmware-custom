@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: safe.directory
-        run: git config --global --add safe.directory /__w/uv-k5-firmware-custom/uv-k5-firmware-custom
+        run: git config --global --add safe.directory /__w/uv-k5-firmware-chinese/uv-k5-firmware-chinese
 
       - name: Make
         run: make
