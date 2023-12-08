@@ -20,12 +20,13 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="Makefile">
+    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="readme add">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/menu.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/menu.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment/payment-codes.md" beforeDir="false" afterPath="$PROJECT_DIR$/payment/payment-codes.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/payment/sponsors.md" beforeDir="false" afterPath="$PROJECT_DIR$/payment/sponsors.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -40,6 +41,7 @@
   <component name="Git.Settings">
     <option name="PUSH_AUTO_UPDATE" value="true" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="WARN_ABOUT_CRLF" value="false" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -177,14 +179,7 @@
       <workItem from="1701921618473" duration="1000" />
       <workItem from="1701934352200" duration="14088000" />
       <workItem from="1702006730071" duration="3144000" />
-      <workItem from="1702024305901" duration="1550000" />
-    </task>
-    <task id="LOCAL-00028" summary="MDC RX">
-      <created>1701678519893</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1701678519893</updated>
+      <workItem from="1702024305901" duration="2385000" />
     </task>
     <task id="LOCAL-00029" summary="MDC RX">
       <created>1701678580088</created>
@@ -522,7 +517,14 @@
       <option name="project" value="LOCAL" />
       <updated>1702009532422</updated>
     </task>
-    <option name="localTasksCounter" value="77" />
+    <task id="LOCAL-00077" summary="readme add">
+      <created>1702026692058</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1702026692059</updated>
+    </task>
+    <option name="localTasksCounter" value="78" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -546,7 +548,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="payment" />
     <MESSAGE value="1129 190 update" />
     <MESSAGE value="lite create" />
     <MESSAGE value="lite aim" />
@@ -571,6 +572,7 @@
     <MESSAGE value="增加开机画面" />
     <MESSAGE value="关闭MDC1200信息显示" />
     <MESSAGE value="Makefile" />
-    <option name="LAST_COMMIT_MESSAGE" value="Makefile" />
+    <MESSAGE value="readme add" />
+    <option name="LAST_COMMIT_MESSAGE" value="readme add" />
   </component>
 </project>
