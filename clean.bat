@@ -15,4 +15,4 @@ for /d /r %%i in (*) do (
     popd
 )
 
-echo "删除完成"
+echo OK

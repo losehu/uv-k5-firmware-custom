@@ -210,7 +210,7 @@ endif
 OBJCOPY = arm-none-eabi-objcopy
 SIZE = arm-none-eabi-size
 
-AUTHOR_STRING := EGZUMER
+AUTHOR_STRING := LOSEHU
 # the user might not have/want git installed
 # can set own version string here (max 7 chars)
 ifneq (, $(shell $(WHERE) git))
@@ -433,7 +433,7 @@ else ifneq (,$(HAS_CRCMOD))
 	$(info !!!!!!!! run: pip install crcmod)
 	$(info )
 else
-	-$(MY_PYTHON) fw-pack.py $<.bin $(AUTHOR_STRING) $(VERSION_STRING) $<.packed.bin
+	-$(MY_PYTHON) fw-pack.py $<.bin $(AUTHOR_STRING) $<.packed.bin
 endif
 
 	$(SIZE) $<
