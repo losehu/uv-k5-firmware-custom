@@ -7,30 +7,29 @@ jobs:
     container:
       image: archlinux:latest
     steps:
-      - name: base-devel
-        run:  pacman -Syyu base-devel --noconfirm
-      - name: arm-none-eabi-gcc
-        run:  pacman -Syyu arm-none-eabi-gcc --noconfirm
-      - name: arm-none-eabi-newlib
-        run:  pacman -Syyu arm-none-eabi-newlib --noconfirm
-      - name: git
-        run:  pacman -Syyu git --noconfirm
-      - name: python-pip
-        run:  pacman -Syyu python-pip --noconfirm
-      - name: python-crcmod
-        run:  pacman -Syyu python-crcmod --noconfirm      
+      - name: Install dependencies
+        run: |
+          pacman -Syyu --noconfirm \
+            base-devel \
+            arm-none-eabi-gcc \
+            arm-none-eabi-newlib \
+            git \
+            python-pip \
+            python-crcmod
 
       - name: Checkout
         uses: actions/checkout@v3
-        
-      - name: safe.directory
-        run:  git config --global --add safe.directory /__w/uv-k5-firmware-custom/uv-k5-firmware-custom        
-      - name: Make
-        run:  make
-      - name: size
-        run:  arm-none-eabi-size firmware
 
-      - name: 'Upload Artifact'
+      - name: safe.directory
+        run: git config --global --add safe.directory /__w/uv-k5-firmware-custom/uv-k5-firmware-custom
+
+      - name: Make
+        run: make
+
+      - name: size
+        run: arm-none-eabi-size firmware
+
+      - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: firmware
@@ -45,5 +44,4 @@ jobs:
           asset_name: egzumer_$tag.packed.bin
           tag: ${{ github.ref }}
           overwrite: true
-          release_name: release ${{ github.ref_name }}     
-   
+          release_name: release ${{ github.ref_name }}
