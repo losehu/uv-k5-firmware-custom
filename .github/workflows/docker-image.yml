@@ -1,47 +1,51 @@
-on:
-  push:
+on:  # 指定触发 workflow 的事件
+  push:  # 当代码推送时触发
 
-jobs:
-  build:
-    runs-on: ubuntu-22.04
-    container:
-      image: archlinux:latest
-    steps:
-      - name: Install dependencies
-        run: |
-          pacman -Syyu --noconfirm \
-            base-devel \
-            arm-none-eabi-gcc \
-            arm-none-eabi-newlib \
-            git \
-            python-pip \
-            python-crcmod
+jobs:  # 定义工作流程
+  build:  # 工作流名称为 build
 
-      - name: Checkout
-        uses: actions/checkout@v3
+    runs-on: ubuntu-22.04  # 使用 Ubuntu 22.04 环境执行
 
-      - name: safe.directory
-        run: git config --global --add safe.directory /__w/uv-k5-firmware-chinese/uv-k5-firmware-chinese
+    container:  # 定义容器
+      image: archlinux:latest  # 使用 Arch Linux 镜像
 
-      - name: Make
-        run: make
+    steps:  # 定义工作流程中的步骤
 
-      - name: size
-        run: arm-none-eabi-size firmware
+      - name: Install dependencies  # 安装依赖项
+        run: |  # 多行命令开始
+          pacman -Syyu --noconfirm \  # 使用 pacman 命令安装依赖项
+            base-devel \  # 安装基本开发工具
+            arm-none-eabi-gcc \  # 安装 ARM 相关工具链
+            arm-none-eabi-newlib \  # 安装 ARM 相关库
+            git \  # 安装 Git
+            python-pip \  # 安装 Python pip
+            python-crcmod  # 安装 Python crcmod
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+      - name: Checkout  # 拉取代码
+        uses: actions/checkout@v3  # 使用 GitHub Actions 提供的 checkout 动作
+
+      - name: safe.directory  # 设置 git 的 safe.directory 配置
+        run: git config --global --add safe.directory /__w/uv-k5-firmware-custom/uv-k5-firmware-custom
+
+      - name: Make  # 执行 make 命令
+        run: make  # 编译项目
+
+      - name: size  # 计算 firmware 大小
+        run: arm-none-eabi-size firmware  # 使用 arm-none-eabi-size 命令计算固件大小
+
+      - name: Upload Artifact  # 上传固件文件
+        uses: actions/upload-artifact@v3  # 使用 GitHub Actions 提供的 upload-artifact 动作
         with:
-          name: firmware
-          path: firmware*.bin
+          name: firmware  # 设置 artifact 名称为 firmware
+          path: firmware*.bin  # 上传文件路径为 firmware*.bin
 
-      - name: Upload binaries to release
-        if: ${{ startsWith(github.ref, 'refs/tags/v') }}
-        uses: svenstaro/upload-release-action@v2
+      - name: Upload binaries to release  # 将二进制文件上传到 release
+        if: ${{ startsWith(github.ref, 'refs/tags/v') }}  # 设置条件，当 ref 以 'refs/tags/v' 开头时执行
+        uses: svenstaro/upload-release-action@v2  # 使用 GitHub Actions 提供的 upload-release-action 动作
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: firmware.packed.bin
-          asset_name: egzumer_$tag.packed.bin
-          tag: ${{ github.ref }}
-          overwrite: true
-          release_name: release ${{ github.ref_name }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}  # GitHub token
+          file: firmware.packed.bin  # 要上传的文件
+          asset_name: LoseHu_$tag.bin  # 上传的文件名
+          tag: ${{ github.ref }}  # GitHub ref
+          overwrite: true  # 覆盖已有的文件
+          release_name: release ${{ github.ref_name }}  # 发布名称为 release + ref 名称
