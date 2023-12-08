@@ -24,25 +24,25 @@ jobs: #定义工作流程
       - name: safe.directory #设置 git 的 safe.directory 配置
         run: git config --global --add safe.directory /__w/uv-k5-firmware-chinese/uv-k5-firmware-chinese
 
-      - name: Make
-        run: make
+      - name: Make #执行 make 命令
+        run: make  #编译项目
 
-      - name: size
-        run: arm-none-eabi-size firmware
+      - name: size #计算 firmware 大小
+        run: arm-none-eabi-size firmware #使用 arm-none-eabi-size 命令计算固件大小
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+      - name: Upload Artifact #上传固件文件
+        uses: actions/upload-artifact@v3 #使用 GitHub Actions 提供的 upload-artifact 动作
         with:
-          name: firmware
-          path: firmware*.bin
+          name: firmware #设置 artifact 名称为 firmware
+          path: firmware*.bin #上传文件路径为 firmware*.bin
 
-      - name: Upload binaries to release
-        if: ${{ startsWith(github.ref, 'refs/tags/v') }}
-        uses: svenstaro/upload-release-action@v2
+      - name: Upload binaries to release #将二进制文件上传到 release
+        if: ${{ startsWith(github.ref, 'refs/tags/v') }} #设置条件，当 ref 以 'refs/tags/v' 开头时执行
+        uses: svenstaro/upload-release-action@v2 #使用 GitHub Actions 提供的 upload-release-action 动作
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: firmware.packed.bin
-          asset_name: LoseHu_$tag.bin
-          tag: ${{ github.ref }}
-          overwrite: true
-          release_name: release ${{ github.ref_name }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }} #GitHub token
+          file: firmware.packed.bin #要上传的文件
+          asset_name: LoseHu_$tag.bin #上传的文件名
+          tag: ${{ github.ref }}  #GitHub ref
+          overwrite: true  #覆盖已有的文件
+          release_name: release ${{ github.ref_name }} #发布名称为 release + ref 名称
