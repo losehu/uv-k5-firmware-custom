@@ -20,22 +20,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="Makefile">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/am_fix.c" beforeDir="false" afterPath="$PROJECT_DIR$/am_fix.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/am_fix.h" beforeDir="false" afterPath="$PROJECT_DIR$/am_fix.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/app.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/spectrum.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/spectrum.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/compile-with-docker.bat" beforeDir="false" afterPath="$PROJECT_DIR$/compile-with-docker.bat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/debugging.h" beforeDir="false" afterPath="$PROJECT_DIR$/debugging.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/firmware.ld" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frequencies.c" beforeDir="false" afterPath="$PROJECT_DIR$/frequencies.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/radio.c" beforeDir="false" afterPath="$PROJECT_DIR$/radio.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.c" beforeDir="false" afterPath="$PROJECT_DIR$/settings.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.h" beforeDir="false" afterPath="$PROJECT_DIR$/settings.h" afterDir="false" />
-    </list>
+    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="Makefile" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -179,14 +164,7 @@
       <workItem from="1701917497420" duration="1955000" />
       <workItem from="1701921618473" duration="1000" />
       <workItem from="1701934352200" duration="14088000" />
-      <workItem from="1702006730071" duration="2234000" />
-    </task>
-    <task id="LOCAL-00026" summary="MDC RX">
-      <created>1701675179288</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1701675179288</updated>
+      <workItem from="1702006730071" duration="2549000" />
     </task>
     <task id="LOCAL-00027" summary="MDC RX">
       <created>1701678225234</created>
@@ -524,7 +502,14 @@
       <option name="project" value="LOCAL" />
       <updated>1701963619702</updated>
     </task>
-    <option name="localTasksCounter" value="75" />
+    <task id="LOCAL-00075" summary="Makefile">
+      <created>1702009339056</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1702009339056</updated>
+    </task>
+    <option name="localTasksCounter" value="76" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
