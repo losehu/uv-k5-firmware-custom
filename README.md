@@ -1,47 +1,49 @@
 
 # 快捷键操作
-* 按**侧键1后开机**打开隐藏菜单
-* **长按M**切换调制模式
-* **F+M**按键音开关切换
-* **F+5频谱**
-* **短按侧键1**监听
-* **长按侧键1**DTMF解码开关
-* **短按侧键2**设置宽窄带
-* **长按侧键2**手电筒
-* **长按6**切换发射功率
-* **长按5**切换搜索列表
+* **长按`M`**：切换调制模式
+* **长按`1`/`F+1`**：在信道模式下将当前信道复制到另一个VFO
+* **长按`2`/`F+2`**：切换A/B通道
+* **长按`3`/`F+3`**：扫描亚音
+* **长按`4`/`F+4`**：一键对频
+* **长按`5`**：信道模式下切换搜索列表
+* **长按`5`**：频率模式下设置搜索频率范围(通道AB),按*键开始搜索
+* **`F+5`**：频谱
+* **长按`6`/`F+6`**：切换发射功率
+* **长按`7`/`F+7`**：声控发射开关
+* **长按`8`/`F+8`**：一键倒频
+* **长按`9`/`F+9`**：一键即呼
+* **`F+M`**：按键音开关切换
+* **短按`侧键1`**：监听
+* **长按`侧键1`**：DTMF解码开关
+* **短按`侧键2`**：设置宽窄带
+* **长按`侧键2`**：手电筒
+
+
 
 # 主要功能：
 * 中文菜单
-* 按**侧键1**后开机打开隐藏菜单
-* 许多来自 OneOfEleven 的模块：
-  * **1o11 MDC信令**（实现中）
-  * AM 修复，显著提高接收质量
-  * 长按按钮执行 `F+` 操作的功能复制
-  * 快速扫描
-  * 菜单中的频道名称编辑
-  * 频道名称 + 频率显示选项
-  * 扫描列表分配的快捷方式（长按 `5 NOAA`）
-  * 扫描时的扫描列表切换（在扫描时长按 `* Scan`）
-  * 从菜单中可选择的可配置按钮功能
-  * 状态栏上的电池百分比/电压，可从菜单中选择
-  * 更长的背光时间
-  * 麦克风条
-  * 信号强度指示器（RSSI s-meter）
-  * 更多的频率步进
-  * 静噪更为敏感
-* fagci 频谱分析仪（**F+5** 打开）
-* SSB 解调（从 fagci 采用）
-* 背光调暗
+* **频谱分析仪**（`F+5`）
+* **MDC信令**
+* 信号强度指示器（ S表 ）
+* 麦克风条
+* 扫描列表分配的快捷方式（ 长按 `5` ）
+* 扫描时的扫描列表切换（在扫描时长按 `*`
+* AM 修复，显著提高接收质量
+* 快速扫描
+* 长按按钮执行 `F+` 操作的功能复制
+* 菜单中的频道名称编辑
+* 频道名称 + 频率显示选项
+* 从菜单中可选择的可配置按钮功能
+* 状态栏上的电池百分比/电压，可从菜单中选择
+* 更长的背光时间
+* 更多的频率步进
+* 静噪更为敏感
+* SSB 解调
 * 来自菜单的电池电压校准
 * 更好的电池百分比计算，可选择适用于 1600mAh 或 2200mAh
-* 更多可配置的按钮功能
-* 长按 MENU 作为另一个可配置按钮
-* 菜单中的更好的 DCS/CTCSS 扫描（在 RX DCS/CTCSS 菜单项中按 `* SCAN`）
+* 菜单中的更好的 DCS/CTCSS 扫描（在 RX DCS/CTCSS 菜单项中按 `*`）
 * Piotr022 信号强度指示器样式
 * 使用 EXIT 停止扫描时还原初始频率/频道，使用 MENU 按钮记住上次找到的传输
-* 重新排序并重命名菜单条目
-* 修复 LCD 干扰崩溃问题
 
 
 
@@ -57,46 +59,53 @@
 
 # 用户功能自定义
 
-你可以通过启用/禁用各种编译选项来定制固件，这允许我们删除某些固件功能，以便在闪存中为其他功能腾出空间。你会在 "Makefile" 的顶部找到这些选项（'0' = 禁用，'1' = 启用）... 
+你可以通过启用/禁用各种编译选项来定制固件。在 "Makefile" 的顶部找到这些选项（'0' = 禁用，'1' = 启用）
 
-（请注意：以下内容是一个示例，实际的 "Makefile" 可能会有所不同） 
+（请注意：有些功能已失效，标注`已失效！！`） 
 
 ```
 ENABLE_CLANG                  := 0     **实验性的，使用 clang 而不是 gcc 构建（如果启用此功能，LTO 将被禁用）
 ENABLE_SWD                    := 0       仅在使用 CPU 的 SWD 端口（调试/编程）时才需要）
 ENABLE_OVERLAY                := 0       CPU 闪存的东西，不需要
-ENABLE_LTO                    := 0     **实验性的，减小了已编译固件的大小，但可能会破坏 EEPROM 读取（如果启用此功能，则 OVERLAY 将被禁用）
+ENABLE_LTO                    := 1     **实验性的，减小了已编译固件的大小，但可能会破坏 EEPROM 读取（如果启用此功能，则 OVERLAY 将被禁用）
 ENABLE_UART                   := 1       没有这个，你就不能通过PC配置无线电！
 ENABLE_AIRCOPY                := 0       AirCopy无线复制
-ENABLE_FMRADIO                := 0       收音机功能
+ENABLE_FMRADIO                := 1       收音机功能
 ENABLE_NOAA                   := 0       NOAA功能
 ENABLE_VOICE                  := 0       语音提示
-ENABLE_VOX                    := 0       VOX
+ENABLE_VOX                    := 1       VOX
 ENABLE_ALARM                  := 0       TX 警报
-ENABLE_1750HZ                 := 0       侧键 1750Hz TX 音（旧中继器访问）
-ENABLE_PWRON_PASSWORD         := 1       开机密码
-ENABLE_BIG_FREQ               := 0       频率模式大字体
+ENABLE_1750HZ                 := 0       已失效！侧键 1750Hz TX 音（旧中继器访问）
+ENABLE_PWRON_PASSWORD         := 0       开机密码
+ENABLE_DTMF_CALLING           := 1
+ENABLE_FLASHLIGHT             := 1
+ENABLE_BIG_FREQ               := 1       频率模式大字体
 ENABLE_SMALL_BOLD             := 1       粗体通道名称/编号（当名称+频率频道显示模式时）
 ENABLE_KEEP_MEM_NAME          := 1       在（重新）保存信道时保持信道名称
 ENABLE_WIDE_RX                := 1       18MHz 至 1300MHz 接收（尽管前端/PA 不是为全范围设计的）
 ENABLE_TX_WHEN_AM             := 0       当 RX 设置为 AM 时允许 FM 发射
 ENABLE_F_CAL_MENU             := 0       启用隐藏频率校准菜单
-ENABLE_CTCSS_TAIL_PHASE_SHIFT := 1       标准的 CTCSS 尾部相移，而不是泉盛自己的 55Hz 音调方法
+ENABLE_CTCSS_TAIL_PHASE_SHIFT := 0       标准的 CTCSS 尾部相移，而不是泉盛自己的 55Hz 音调方法
 ENABLE_BOOT_BEEPS             := 0       在启动时为用户提供有关音量旋钮位置的音频反馈
 ENABLE_SHOW_CHARGE_LEVEL      := 0       显示收音机充电时的充电情况
-ENABLE_REVERSE_BAT_SYMBOL     := 1       镜像状态栏上的电池符号（正极在右侧） 
+ENABLE_REVERSE_BAT_SYMBOL     := 0       镜像状态栏上的电池符号（正极在右侧） 
 ENABLE_NO_CODE_SCAN_TIMEOUT   := 1       禁用 32 秒 CTCSS/DCS 扫描超时（按退出按钮而不是超时结束扫描） 
 ENABLE_AM_FIX                 := 1       在AM模式下动态调整前端增益，以防止AM解调器饱和，忽略屏幕上的RSSI电平（暂时） 
-ENABLE_AM_FIX_SHOW_DATA       := 1       显示 AM 修复的调试数据（仍在调整） 
-ENABLE_SQUELCH_MORE_SENSITIVE := 0       使静噪电平更灵敏一点 - 我计划让用户自己调整值
-ENABLE_FASTER_CHANNEL_SCAN    := 0       提高信道扫描速度，但静噪也变得更加抽搐
+ENABLE_SQUELCH_MORE_SENSITIVE := 1       使静噪电平更灵敏一点 - 我计划让用户自己调整值
+ENABLE_FASTER_CHANNEL_SCAN    := 1       提高信道扫描速度，但静噪也变得更加抽搐
 ENABLE_RSSI_BAR               := 1       启用 dBm/Sn RSSI 条形图电平代替小天线符号 
-ENABLE_AUDIO_BAR              := 0       实验性，当发射时显示音频条电平
-ENABLE_COPY_CHAN_TO_VFO       := 1       在通道模式下长按“1 BAND” 将当前通道复制到另一个 VFO . 
+ENABLE_AUDIO_BAR              := 1       实验性，当发射时显示音频条电平
+ENABLE_COPY_CHAN_TO_VFO       := 1       在信道模式下长按“1 BAND” 将当前信道复制到另一个 VFO . 
 ENABLE_SPECTRUM               := 1       fagci 频谱分析仪，用`F`+`5 NOAA`激活 
 ENABLE_REDUCE_LOW_MID_TX_POWER:= 0       使中低功率更低
 ENABLE_BYP_RAW_DEMODULATORS   := 0       额外的 BYRP（旁路？） 和 RAW 解调选项，被证明不是很有用，但如果您想尝试
-ENABLE_BLMIN_TMP_OFF          := 0       可配置按钮的附加功能，可打开和关闭`BLMin`，并将其保存到 EEPROM
+ENABLE_BLMIN_TMP_OFF          := 0       已失效！！可配置按钮的附加功能，可打开和关闭`BLMin`，并将其保存到 EEPROM
+ENABLE_SCAN_RANGES            := 1       扫描范围
+ENABLE_MDC1200                := 1       MDC1200发送功能
+ENABLE_MDC1200_SHOW_OP_ARG    := 1       MDC显示首尾音参数
+ENABLE_MDC1200_SIDE_BEEP      := 0       MDC侧音
+ENABLE_AM_FIX_SHOW_DATA       := 0       显示 AM 修复的调试数据（仍在调整） 
+ENABLE_AGC_SHOW_DATA          := 0       显示ACG参数
 ```
 
 # 打赏
@@ -121,9 +130,7 @@ ENABLE_BLMIN_TMP_OFF          := 0       可配置按钮的附加功能，可打
 
 [https://github.com/DualTachyon/uv-k5-firmware](https://github.com/DualTachyon/uv-k5-firmware) .. 一个很酷的成果！
 
-在使用此固件时，请自担风险（全部）。绝对不能保证它在任何情况下都能在你的电台上正常工作，它甚至可能会使你的电台变砖，如果出现这种情况，你可能需要购买另一台电台。
-
-总之，玩得开心。
+在使用此固件时，请自担风险（全部）。 祝您使用愉快。
 
 # 免责声明：
 * **如若需要验机，完全不建议刷写自定义固件！！！！！！！！！！！！！！**

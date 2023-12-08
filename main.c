@@ -126,38 +126,24 @@ void Main(void)
 		gKeyReading1 = KEY_INVALID;
 		gDebounceCounter = 0;
 //	}
-//close PS
-//	if (!gChargingWithTypeC && gBatteryDisplayLevel == 0)
-//	{
-//		FUNCTION_Select(FUNCTION_POWER_SAVE);
-//
-//		if (gEeprom.BACKLIGHT_TIME < (ARRAY_SIZE(gSubMenu_BACKLIGHT) - 1)) // backlight is not set to be always on
-//			BACKLIGHT_TurnOff();	// turn the backlight OFF
-//		else
-//			BACKLIGHT_TurnOn();  	// turn the backlight ON
-//
-//		gReducedService = true;
-//	}
-//	else
-//	{
+
 		UI_DisplayWelcome();
 
 
-//		if (gEeprom.POWER_ON_DISPLAY_MODE != POWER_ON_DISPLAY_MODE_NONE)
-//		{	// 2.55 second boot-up screen
-//			while (boot_counter_10ms > 0)
-//			{
-//				if (KEYBOARD_Poll() != KEY_INVALID)
-//				{	// halt boot beeps
-//					boot_counter_10ms = 0;
-//					break;
-//				}
-//#ifdef ENABLE_BOOT_BEEPS
-//				if ((boot_counter_10ms % 25) == 0)
-//					AUDIO_PlayBeep(BEEP_880HZ_40MS_OPTIONAL);
-//#endif
-//			}
-//		}
+#ifdef ENABLE_BOOT_BEEPS
+
+			while (boot_counter_10ms > 0)
+			{
+				if (KEYBOARD_Poll() != KEY_INVALID)
+				{	// halt boot beeps
+					boot_counter_10ms = 0;
+					break;
+				}
+				if ((boot_counter_10ms % 25) == 0)
+					AUDIO_PlayBeep(BEEP_880HZ_40MS_OPTIONAL);
+
+			}
+#endif
 
 #ifdef ENABLE_PWRON_PASSWORD
 		if (gEeprom.POWER_ON_PASSWORD < 1000000)

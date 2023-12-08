@@ -387,8 +387,8 @@ void MENU_AcceptSetting(void) {
         if (gSubMenuSelection < Min) gSubMenuSelection = Min;
         else if (gSubMenuSelection > Max) gSubMenuSelection = Max;
     }
-    char a = gSubMenuSelection;//UART_Send(a,1);
-    UART_Send((uint8_t * ) & a, 1);
+//    char a = gSubMenuSelection;//UART_Send(a,1);
+//    UART_Send((uint8_t * ) & a, 1);
 
     switch (UI_MENU_GetCurrentMenuId()) {
         default:
