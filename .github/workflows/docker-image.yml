@@ -15,17 +15,19 @@ jobs:
             arm-none-eabi-newlib \
             git \
             python-pip \
-            python-crcmod   
+            python-crcmod
 
       - name: Checkout
         uses: actions/checkout@v3
-        
+
       - name: safe.directory
-        run:  git config --global --add safe.directory /__w/uv-k5-firmware-custom/uv-k5-firmware-custom        
+        run: git config --global --add safe.directory /__w/uv-k5-firmware-custom/uv-k5-firmware-custom
+
       - name: Make
-        run:  make
+        run: make
+
       - name: size
-        run:  arm-none-eabi-size firmware
+        run: arm-none-eabi-size firmware
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
@@ -42,5 +44,4 @@ jobs:
           asset_name: egzumer_$tag.packed.bin
           tag: ${{ github.ref }}
           overwrite: true
-          release_name: release ${{ github.ref_name }}     
-   
+          release_name: release ${{ github.ref_name }}
