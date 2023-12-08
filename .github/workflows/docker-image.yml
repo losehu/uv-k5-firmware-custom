@@ -1,13 +1,13 @@
 
-on:
-  push:
+on: #指定触发 workflow 的事件
+  push: #当代码推送时触发
 
-jobs:
-  build:
-    runs-on: ubuntu-22.04
-    container:
-      image: archlinux:latest
-    steps:
+jobs: #定义工作流程
+  build: #工作流名称为 build
+    runs-on: ubuntu-22.04 #使用 Ubuntu 22.04 环境执行
+    container: #定义容器
+      image: archlinux:latest #使用 Arch Linux 镜像
+    steps: #定义工作流程中的步骤
       - name: Install dependencies
         run: |
           pacman -Syyu --noconfirm \
@@ -18,11 +18,11 @@ jobs:
             python-pip \
             python-crcmod
 
-      - name: Checkout
-        uses: actions/checkout@v3
+      - name: Checkout #拉取代码
+        uses: actions/checkout@v3 #使用 GitHub Actions 提供的 checkout 动作
 
-      - name: safe.directory
-        run: git config --global --add safe.directory /__w/uv-k5-firmware-custom/uv-k5-firmware-custom
+      - name: safe.directory #设置 git 的 safe.directory 配置
+        run: git config --global --add safe.directory /__w/uv-k5-firmware-chinese/uv-k5-firmware-chinese
 
       - name: Make
         run: make
@@ -42,7 +42,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: firmware.packed.bin
-          asset_name: egzumer_$tag.packed.bin
+          asset_name: LoseHu_$tag.bin
           tag: ${{ github.ref }}
           overwrite: true
           release_name: release ${{ github.ref_name }}
