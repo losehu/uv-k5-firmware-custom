@@ -7,18 +7,15 @@ jobs:
     container:
       image: archlinux:latest
     steps:
-      - name: base-devel
-        run:  pacman -Syyu base-devel --noconfirm
-      - name: arm-none-eabi-gcc
-        run:  pacman -Syyu arm-none-eabi-gcc --noconfirm
-      - name: arm-none-eabi-newlib
-        run:  pacman -Syyu arm-none-eabi-newlib --noconfirm
-      - name: git
-        run:  pacman -Syyu git --noconfirm
-      - name: python-pip
-        run:  pacman -Syyu python-pip --noconfirm
-      - name: python-crcmod
-        run:  pacman -Syyu python-crcmod --noconfirm      
+      - name: Install dependencies
+        run: |
+          pacman -Syyu --noconfirm \
+            base-devel \
+            arm-none-eabi-gcc \
+            arm-none-eabi-newlib \
+            git \
+            python-pip \
+            python-crcmod   
 
       - name: Checkout
         uses: actions/checkout@v3
@@ -30,7 +27,7 @@ jobs:
       - name: size
         run:  arm-none-eabi-size firmware
 
-      - name: 'Upload Artifact'
+      - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: firmware
