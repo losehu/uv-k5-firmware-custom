@@ -13,13 +13,14 @@ jobs:  # 定义工作流程
 
       - name: Install dependencies  # 安装依赖项
         run: |  # 多行命令开始
-          pacman -Syyu --noconfirm \  # 使用 pacman 命令安装依赖项
-            base-devel \  # 安装基本开发工具
-            arm-none-eabi-gcc \  # 安装 ARM 相关工具链
-            arm-none-eabi-newlib \  # 安装 ARM 相关库
-            git \  # 安装 Git
-            python-pip \  # 安装 Python pip
-            python-crcmod  # 安装 Python crcmod
+          pacman -Syyu --noconfirm \ 
+            base-devel \ 
+            arm-none-eabi-gcc \  
+            arm-none-eabi-newlib \ 
+            git \  
+            python-pip \ 
+            python-crcmod  
+        
 
       - name: Checkout  # 拉取代码
         uses: actions/checkout@v3  # 使用 GitHub Actions 提供的 checkout 动作
