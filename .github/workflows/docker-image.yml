@@ -11,8 +11,8 @@ jobs:  # 定义工作流程
 
     steps:  # 定义工作流程中的步骤
 
-      - name: Install dependencies  # 安装依赖项
-        run: |  # 多行命令开始
+      - name: Install dependencies 
+        run: |  
           pacman -Syyu --noconfirm \ 
             base-devel \ 
             arm-none-eabi-gcc \  
