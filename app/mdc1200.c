@@ -547,7 +547,7 @@ bool mdc1200_contact_find(uint16_t mdc_id, char *contact) {
         uint8_t read_once[16]={0};
         if ((i & 3) == 0 && i) add++;
         EEPROM_ReadBuffer(MDC_ADD[add] + i * 16, read_once, 16);
-        if (mdc_id == (uint16_t) (read_once[0] | (read_once[1] << 8))) {
+        if (mdc_id == (uint16_t) (read_once[1] | (read_once[0] << 8))) {
             for (int j = 0; j < 14; ++j) {
                 if(read_once[2+j]<' '||read_once[2+j]>'~')
                     return false;
