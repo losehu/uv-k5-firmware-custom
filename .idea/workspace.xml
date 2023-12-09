@@ -20,8 +20,13 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="重构">
+    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="clion">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/menu.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/menu.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/welcome.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/welcome.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -190,14 +195,7 @@
       <workItem from="1701934352200" duration="14088000" />
       <workItem from="1702006730071" duration="3144000" />
       <workItem from="1702024305901" duration="2385000" />
-      <workItem from="1702049513969" duration="9713000" />
-    </task>
-    <task id="LOCAL-00030" summary="MDC RX">
-      <created>1701678635953</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1701678635953</updated>
+      <workItem from="1702049513969" duration="14706000" />
     </task>
     <task id="LOCAL-00031" summary="MDC RX">
       <created>1701681045853</created>
@@ -535,7 +533,14 @@
       <option name="project" value="LOCAL" />
       <updated>1702092719871</updated>
     </task>
-    <option name="localTasksCounter" value="79" />
+    <task id="LOCAL-00079" summary="clion">
+      <created>1702093273462</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1702093273462</updated>
+    </task>
+    <option name="localTasksCounter" value="80" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -559,7 +564,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="lite create" />
     <MESSAGE value="lite aim" />
     <MESSAGE value="create" />
     <MESSAGE value="fix bug" />
@@ -584,6 +588,7 @@
     <MESSAGE value="Makefile" />
     <MESSAGE value="readme add" />
     <MESSAGE value="重构" />
-    <option name="LAST_COMMIT_MESSAGE" value="重构" />
+    <MESSAGE value="clion" />
+    <option name="LAST_COMMIT_MESSAGE" value="clion" />
   </component>
 </project>

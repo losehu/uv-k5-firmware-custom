@@ -72,14 +72,11 @@ void UI_DisplayWelcome(void) {
 
         ST7565_BlitStatusLine();  // blank status line
         ST7565_BlitFullScreen();
-        unsigned char i=250;
-        while (i--) {
-            if (KEYBOARD_Poll() == KEY_EXIT)
-                break;
-            SYSTEM_DelayMs(10);
 
 
-        }
+
+
+
 
 }
 

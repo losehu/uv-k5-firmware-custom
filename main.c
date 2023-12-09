@@ -128,22 +128,22 @@ void Main(void)
 //	}
 
 		UI_DisplayWelcome();
-
-
+    boot_counter_10ms=250;
+    while (boot_counter_10ms > 0)
+    {
+        if (KEYBOARD_Poll() != KEY_INVALID)
+        {	// halt boot beeps
+            boot_counter_10ms = 0;
+            break;
+        }
 #ifdef ENABLE_BOOT_BEEPS
 
-			while (boot_counter_10ms > 0)
-			{
-				if (KEYBOARD_Poll() != KEY_INVALID)
-				{	// halt boot beeps
-					boot_counter_10ms = 0;
-					break;
-				}
-				if ((boot_counter_10ms % 25) == 0)
+        if ((boot_counter_10ms % 25) == 0)
 					AUDIO_PlayBeep(BEEP_880HZ_40MS_OPTIONAL);
-
-			}
 #endif
+
+    }
+
 
 #ifdef ENABLE_PWRON_PASSWORD
 		if (gEeprom.POWER_ON_PASSWORD < 1000000)
