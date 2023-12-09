@@ -22,7 +22,6 @@
   <component name="ChangeListManager">
     <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="MDC联系人">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/mdc1200.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/mdc1200.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +93,7 @@
       <recent name="C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese" />
     </key>
   </component>
-  <component name="RunManager" selected="Shell Script.win">
+  <component name="RunManager" selected="Shell Script.win docker">
     <configuration name="clean" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
       <makefile filename="$PROJECT_DIR$/Makefile" target="clean" workingDirectory="" arguments="">
         <envs />
@@ -187,21 +186,8 @@
       <workItem from="1702006730071" duration="3144000" />
       <workItem from="1702024305901" duration="2385000" />
       <workItem from="1702049513969" duration="28027000" />
-      <workItem from="1702119088204" duration="12440000" />
-    </task>
-    <task id="LOCAL-00034" summary="MDC RX">
-      <created>1701685151218</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1701685151218</updated>
-    </task>
-    <task id="LOCAL-00035" summary="MDC RX">
-      <created>1701686694191</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1701686694191</updated>
+      <workItem from="1702119088204" duration="12764000" />
+      <workItem from="1702141572484" duration="2000" />
     </task>
     <task id="LOCAL-00036" summary="MDC RX">
       <created>1701687970236</created>
@@ -532,7 +518,21 @@
       <option name="project" value="LOCAL" />
       <updated>1702137966114</updated>
     </task>
-    <option name="localTasksCounter" value="83" />
+    <task id="LOCAL-00083" summary="MDC联系人">
+      <created>1702140031577</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1702140031577</updated>
+    </task>
+    <task id="LOCAL-00084" summary="MDC联系人">
+      <created>1702140061105</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1702140061106</updated>
+    </task>
+    <option name="localTasksCounter" value="85" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
