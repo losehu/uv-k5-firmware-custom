@@ -36,28 +36,28 @@ void UI_DisplayScanner(void)
 	if (gScanSingleFrequency || (gScanCssState != SCAN_CSS_STATE_OFF && gScanCssState != SCAN_CSS_STATE_FAILED))
 
 //频率
-    sprintf(String, "\x03\x04:%u.%05u", gScanFrequency / 100000, gScanFrequency % 100000);
+    sprintf(String, 频率":%u.%05u", gScanFrequency / 100000, gScanFrequency % 100000);
     else
-        strcpy(String, "\x03\x04:**.*****");
+        strcpy(String, 频率":**.*****");
     UI_PrintStringSmall(String, 2, 0, 1);
 
 	memset(String, 0, sizeof(String));
 	if (gScanCssState < SCAN_CSS_STATE_FOUND || !gScanUseCssResult)
 //模拟亚音
-    strcpy(String, "\x0C\x0D\x09\x0B:******");
+    strcpy(String, 模拟亚音":******");
 
 	else
 	if (gScanCssResultType == CODE_TYPE_CONTINUOUS_TONE)
    //模拟亚音
 #ifdef TEST_UNDE_CTCSS
 
-         sprintf(String, "\x0C\x0D\x09\x0B:%u.%uHz", gScanCssResultCode_all/10, gScanCssResultCode_all% 10);
+         sprintf(String, 模拟亚音":%u.%uHz", gScanCssResultCode_all/10, gScanCssResultCode_all% 10);
 #else
-      sprintf(String, "\x0C\x0D\x09\x0B:%u.%uHz", CTCSS_Options[gScanCssResultCode] / 10, CTCSS_Options[gScanCssResultCode] % 10);
+      sprintf(String, 模拟亚音":%u.%uHz", CTCSS_Options[gScanCssResultCode] / 10, CTCSS_Options[gScanCssResultCode] % 10);
 #endif
 	else
 //数字亚音
-    sprintf(String, "\x07\x08\x09\x0B:D%03oN", DCS_Options[gScanCssResultCode]);
+    sprintf(String, 数字亚音":D%03oN", DCS_Options[gScanCssResultCode]);
     UI_PrintStringSmall(String, 2, 0, 3);
 
 	memset(String, 0, sizeof(String));
@@ -85,12 +85,12 @@ void UI_DisplayScanner(void)
 		}
 		else if (gScanCssState == SCAN_CSS_STATE_FOUND)
             //扫描ok
-        strcpy(String, "\x81\x82 OK.");
+        strcpy(String, 扫描" OK.");
 
 
         else
             //扫描fail
-            strcpy(String, "\x81\x82 FAIL.");
+            strcpy(String, 扫描" FAIL.");
 		Start     = 2;
 		bCentered = 0;
 	}

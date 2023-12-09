@@ -117,7 +117,8 @@
 #define 发送接收时 "\x0E\x0F\x2F\x05\x06\x8B"
 
 //ui/menu.c
-//！！还有一个列表
+#define 列表 "\x83\x84"
+
 #define 全部 "\xD5\xD6"
 #define 扫描 "\x81\x82"
 
@@ -136,14 +137,13 @@
 //ui/welcome
 #define 解锁 "\xB8\xB9"
 //ui/scanner.c
-//！！两频率
-//！！两模拟亚音
-//！！一数字亚音
+#define 模拟亚音 "\x0C\x0D\x09\x0B"
+#define 数字亚音 "\x07\x08\x09\x0B"
+#define 频率 "\x03\x04"
 #define 存置问 "\x1A\x1B\x3F"
 #define 存置了 "\x1A\x1B\x3A"
+#define 扫描 "\x81\x82"
 
-//!! 扫描ok
-//!! 扫描fail
 //ui/fmradio.c
 #define 删除问 "\x1E\x1F?"
 

@@ -836,7 +836,7 @@ void UI_DisplayMenu(void) {
                    sprintf(String, "list %u", 1 + gSubMenuSelection);
 
 #else  //！！列表
-                sprintf(String, "\x83\x84 %u", 1 + gSubMenuSelection);
+                sprintf(String, 列表" %u", 1 + gSubMenuSelection);
 
 #endif
 

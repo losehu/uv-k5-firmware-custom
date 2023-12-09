@@ -32,7 +32,7 @@
 //};
 typedef enum POWER_OnDisplayMode_t POWER_OnDisplayMode_t;
 
-enum {
+enum TxLockModes_t {
     F_LOCK_DEF, //all default frequencies + configurable
     F_LOCK_FCC,
     F_LOCK_CE,
@@ -74,7 +74,8 @@ enum {
     OUTPUT_POWER_HIGH
 };
 
-enum {
+
+enum ACTION_OPT_t {
     ACTION_OPT_NONE = 0,
     ACTION_OPT_FLASHLIGHT,
     ACTION_OPT_POWER,
@@ -88,14 +89,11 @@ enum {
     ACTION_OPT_A_B,
     ACTION_OPT_VFO_MR,
     ACTION_OPT_SWITCH_DEMODUL,
-#ifdef ENABLE_BLMIN_TMP_OFF
     ACTION_OPT_BLMIN_TMP_OFF, //BackLight Minimum Temporay OFF
-#endif
-    ACTION_OPT_LEN,
     ACTION_OPT_D_DCD,
-    ACTION_OPT_WIDTH
+    ACTION_OPT_WIDTH,
+    ACTION_OPT_LEN
 };
-
 #ifdef ENABLE_VOICE
 enum VOICE_Prompt_t
 	{

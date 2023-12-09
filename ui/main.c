@@ -444,10 +444,7 @@ void UI_DisplayMain(void) {
             }
         } else {    // receiving .. show the RX symbol
             mode = VFO_MODE_RX;
-            if ((gCurrentFunction == FUNCTION_RECEIVE ||
-                 gCurrentFunction == FUNCTION_MONITOR ||
-                 gCurrentFunction == FUNCTION_INCOMING) &&
-                gEeprom.RX_VFO == vfo_num) {
+            if (FUNCTION_IsRx() && gEeprom.RX_VFO == vfo_num) {
 #ifdef ENABLE_SMALL_BOLD
                 UI_PrintStringSmallBold("RX", 14, 0, line);
 #else
@@ -733,9 +730,7 @@ void UI_DisplayMain(void) {
 #endif
     if (center_line == CENTER_LINE_NONE) {    // we're free to use the middle line
 
-        const bool rx = (gCurrentFunction == FUNCTION_RECEIVE ||
-                         gCurrentFunction == FUNCTION_MONITOR ||
-                         gCurrentFunction == FUNCTION_INCOMING);
+        const bool rx = FUNCTION_IsRx();
 #ifdef ENABLE_MDC1200
         if (mdc1200_rx_ready_tick_500ms > 0)
         {

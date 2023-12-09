@@ -251,7 +251,7 @@ void RADIO_ConfigureChannel(const unsigned int VFO, const unsigned int configure
         pVfo->Modulation = tmp;
 
         tmp = data[6];
-        if (tmp >= ARRAY_SIZE(gStepFrequencyTable))
+        if (tmp >= STEP_N_ELEM)
             tmp = STEP_12_5kHz;
         pVfo->STEP_SETTING  = tmp;
         pVfo->StepFrequency = gStepFrequencyTable[tmp];
@@ -423,13 +423,12 @@ void RADIO_ConfigureChannel(const unsigned int VFO, const unsigned int configure
 
 void RADIO_ConfigureSquelchAndOutputPower(VFO_Info_t *pInfo)
 {
-    uint8_t          Txp[3];
-    FREQUENCY_Band_t Band;
+
 
     // *******************************
     // squelch
 
-    Band = FREQUENCY_GetBand(pInfo->pRX->Frequency);
+    FREQUENCY_Band_t Band = FREQUENCY_GetBand(pInfo->pRX->Frequency);
     uint16_t Base = (Band < BAND4_174MHz) ? 0x1E60 : 0x1E00;
 
     if (gEeprom.SQUELCH_LEVEL == 0)
@@ -511,7 +510,7 @@ void RADIO_ConfigureSquelchAndOutputPower(VFO_Info_t *pInfo)
     // output power
 
     Band = FREQUENCY_GetBand(pInfo->pTX->Frequency);
-
+    uint8_t Txp[3];
     EEPROM_ReadBuffer(0x1ED0 + (Band * 16) + (pInfo->OUTPUT_POWER * 3), Txp, 3);
 
 
@@ -559,9 +558,8 @@ void RADIO_ApplyOffset(VFO_Info_t *pInfo)
 
     if (Frequency < frequencyBandTable[0].lower)
         Frequency = frequencyBandTable[0].lower;
-    else
-    if (Frequency > frequencyBandTable[ARRAY_SIZE(frequencyBandTable) - 1].upper)
-        Frequency = frequencyBandTable[ARRAY_SIZE(frequencyBandTable) - 1].upper;
+    else if (Frequency > frequencyBandTable[BAND_N_ELEM - 1].upper)
+        Frequency = frequencyBandTable[BAND_N_ELEM - 1].upper;
 
     pInfo->freq_config_TX.Frequency = Frequency;
 }

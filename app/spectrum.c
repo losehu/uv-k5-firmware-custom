@@ -20,7 +20,7 @@
 #include "driver/backlight.h"
 #include "ui/helper.h"
 #include "ui/main.h"
-
+#include "frequencies.h"
 struct FrequencyBandInfo {
     uint32_t lower;
     uint32_t upper;
@@ -28,7 +28,7 @@ struct FrequencyBandInfo {
 };
 
 #define F_MIN frequencyBandTable[0].lower
-#define F_MAX frequencyBandTable[ARRAY_SIZE(frequencyBandTable) - 1].upper
+#define F_MAX frequencyBandTable[BAND_N_ELEM - 1].upper
 
 const uint16_t RSSI_MAX_VALUE = 65535;
 

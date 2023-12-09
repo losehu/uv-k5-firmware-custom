@@ -807,7 +807,6 @@ static void HandleVox(void)
 	}
 }
 #endif
-
 void APP_Update(void)
 {
 #ifdef ENABLE_VOICE
@@ -902,12 +901,8 @@ void APP_Update(void)
     }
 
 #ifdef ENABLE_FMRADIO
-    if (gScheduleFM                          &&
-		gFM_ScanState    != FM_SCAN_OFF      &&
-		gCurrentFunction != FUNCTION_MONITOR &&
-		gCurrentFunction != FUNCTION_RECEIVE &&
-		gCurrentFunction != FUNCTION_TRANSMIT)
-	{	// switch to FM radio mode
+    if (gScheduleFM && gFM_ScanState != FM_SCAN_OFF && !FUNCTION_IsRx()) {
+		// switch to FM radio mode
 		FM_Play();
 		gScheduleFM = false;
 	}
@@ -952,6 +947,7 @@ void APP_Update(void)
 #endif
     }
 
+
     if (gPowerSaveCountdownExpired && gCurrentFunction == FUNCTION_POWER_SAVE
 #ifdef ENABLE_VOICE
         && gVoiceWriteIndex == 0
@@ -960,7 +956,6 @@ void APP_Update(void)
     {
         static bool goToSleep;
         // wake up, enable RX then go back to sleep
-
         if (gRxIdleMode)
         {
             BK4819_Conditional_RX_TurnOn_and_GPIO6_Enable();
@@ -985,13 +980,12 @@ void APP_Update(void)
         }
         else if (gEeprom.DUAL_WATCH == DUAL_WATCH_OFF || gScanStateDir != SCAN_OFF || gCssBackgroundScan || goToSleep)
         {	// dual watch mode off or scanning or rssi update request
-
-
             // go back to sleep
 
             gPowerSave_10ms = gEeprom.BATTERY_SAVE * 10;
             gRxIdleMode     = true;
             goToSleep = false;
+
             BK4819_DisableVox();
             BK4819_Sleep();
             BK4819_ToggleGpioOut(BK4819_GPIO0_PIN28_RX_ENABLE, false);
@@ -999,11 +993,9 @@ void APP_Update(void)
             // Authentic device checked removed
 
         }
-        else
-        {
+        else {
             // toggle between the two VFO's
             DualwatchAlternate();
-
             gPowerSave_10ms   = power_save1_10ms;
             goToSleep = true;
         }
@@ -1492,11 +1484,7 @@ void APP_TimeSlice500ms(void)
                     GUI_DisplayType_t disp = DISPLAY_INVALID;
 
 #ifdef ENABLE_FMRADIO
-                    if (gFmRadioMode &&
-							gCurrentFunction != FUNCTION_RECEIVE &&
-							gCurrentFunction != FUNCTION_MONITOR &&
-							gCurrentFunction != FUNCTION_TRANSMIT)
-						{
+                    if (gFmRadioMode && ! FUNCTION_IsRx()) {
 							disp = DISPLAY_FM;
 						}
 #endif
@@ -1524,11 +1512,8 @@ void APP_TimeSlice500ms(void)
         {
             RADIO_SetVfoState(VFO_STATE_NORMAL);
 #ifdef ENABLE_FMRADIO
-            if (gCurrentFunction != FUNCTION_RECEIVE  &&
-			    gCurrentFunction != FUNCTION_TRANSMIT &&
-			    gCurrentFunction != FUNCTION_MONITOR  &&
-				gFmRadioMode)
-			{	// switch back to FM radio mode
+            if (gFmRadioMode && !FUNCTION_IsRx()) {
+				// switch back to FM radio mode
 				FM_Start();
 				GUI_SelectNextDisplay(DISPLAY_FM);
 			}

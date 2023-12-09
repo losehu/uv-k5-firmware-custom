@@ -124,7 +124,7 @@ int MENU_GetLimits(uint8_t menu_id, int32_t *pMin, int32_t *pMax) {
 
         case MENU_STEP:
             *pMin = 0;
-            *pMax = ARRAY_SIZE(gStepFrequencyTable) - 1;
+            *pMax =STEP_N_ELEM - 1;
             break;
 
         case MENU_ABR:

@@ -62,7 +62,7 @@ static void Key_FUNC(KEY_Code_t Key, uint8_t state);
 
 bool FM_CheckValidChannel(uint8_t Channel)
 {
-	return (Channel < ARRAY_SIZE(gFM_Channels) && (gFM_Channels[Channel] >= 760 && gFM_Channels[Channel] < 1080)) ? true : false;
+return (Channel < ARRAY_SIZE(gFM_Channels) && (gFM_Channels[Channel] >= 760 && gFM_Channels[Channel] < 1080));
 }
 
 uint8_t FM_FindNextChannel(uint8_t Channel, uint8_t Direction)
@@ -192,43 +192,35 @@ int FM_CheckFrequencyLock(uint16_t Frequency, uint16_t LowerLimit)
 
 	// This is supposed to be a signed value, but above function is unsigned
 	const uint16_t Deviation = BK1080_REG_07_GET_FREQD(Test2);
-
-	if (BK1080_REG_07_GET_SNR(Test2) >= 2)
-	{
-		const uint16_t Status = BK1080_ReadRegister(BK1080_REG_10);
-		if ((Status & BK1080_REG_10_MASK_AFCRL) == BK1080_REG_10_AFCRL_NOT_RAILED && BK1080_REG_10_GET_RSSI(Status) >= 10)
-		{
-			//if (Deviation > -281 && Deviation < 280)
-			if (Deviation < 280 || Deviation > 3815)
-			{
-				// not BLE(less than or equal)
-
-				if (Frequency > LowerLimit && (Frequency - BK1080_BaseFrequency) == 1)
-				{
-					if (BK1080_FrequencyDeviation & 0x800)
-						goto Bail;
-
-					if (BK1080_FrequencyDeviation < 20)
-						goto Bail;
-				}
-
-				// not BLT(less than)
-
-				if (Frequency >= LowerLimit && (BK1080_BaseFrequency - Frequency) == 1)
-				{
-					if ((BK1080_FrequencyDeviation & 0x800) == 0)
-						goto Bail;
-
-					// if (BK1080_FrequencyDeviation > -21)
-					if (BK1080_FrequencyDeviation > 4075)
-						goto Bail;
-				}
-
-				ret = 0;
-			}
-		}
+if (BK1080_REG_07_GET_SNR(Test2) <= 2){
+		goto Bail;
 	}
 
+	const uint16_t Status = BK1080_ReadRegister(BK1080_REG_10);
+
+	if ((Status & BK1080_REG_10_MASK_AFCRL) != BK1080_REG_10_AFCRL_NOT_RAILED || BK1080_REG_10_GET_RSSI(Status) < 10) {
+		goto Bail;
+	}
+
+	//if (Deviation > -281 && Deviation < 280)
+	if (Deviation >= 280 && Deviation <= 3815) {
+		goto Bail;
+	}
+
+	// not BLE(less than or equal)
+	if (Frequency > LowerLimit && (Frequency - BK1080_BaseFrequency) == 1) {
+		if (BK1080_FrequencyDeviation & 0x800 || (BK1080_FrequencyDeviation < 20))
+			goto Bail;
+	}
+
+	// not BLT(less than)
+
+	if (Frequency >= LowerLimit && (BK1080_BaseFrequency - Frequency) == 1) {
+		if ((BK1080_FrequencyDeviation & 0x800) == 0 || (BK1080_FrequencyDeviation > 4075))
+			goto Bail;
+
+	}
+ret = 0;
 Bail:
 	BK1080_FrequencyDeviation = Deviation;
 	BK1080_BaseFrequency      = Frequency;
@@ -336,8 +328,8 @@ static void Key_DIGITS(KEY_Code_t Key, uint8_t state)
 
 static void Key_FUNC(KEY_Code_t Key, uint8_t state)
 {
-	if (state == BUTTON_EVENT_SHORT || state == BUTTON_EVENT_HELD)
-	{
+if (state == BUTTON_EVENT_SHORT || state == BUTTON_EVENT_HELD)
+{
 		bool autoScan = gWasFKeyPressed || (state == BUTTON_EVENT_HELD);
 
 		gBeepToPlay           = BEEP_1KHZ_60MS_OPTIONAL;
@@ -446,11 +438,10 @@ static void Key_MENU(uint8_t state)
 			if (gAskToSave)
 			{
 				gFM_Channels[gFM_ChannelPosition] = gEeprom.FM_FrequencyPlaying;
-				gAskToSave                        = false;
-				gRequestSaveFM                    = true;
+		gRequestSaveFM = true;
+
 			}
-			else
-				gAskToSave = true;
+gAskToSave = !gAskToSave;
 		}
 		else
 		{
@@ -462,10 +453,8 @@ static void Key_MENU(uint8_t state)
 				BK1080_SetFrequency(gEeprom.FM_FrequencyPlaying);
 
 				gRequestSaveFM = true;
-				gAskToDelete   = false;
 			}
-			else
-				gAskToDelete = true;
+	gAskToDelete = !gAskToDelete;
 		}
 	}
 	else
@@ -480,11 +469,9 @@ static void Key_MENU(uint8_t state)
 		if (gAskToSave)
 		{
 			gFM_Channels[gFM_ChannelPosition] = gEeprom.FM_FrequencyPlaying;
-			gAskToSave     = false;
 			gRequestSaveFM = true;
 		}
-		else
-			gAskToSave = true;
+gAskToSave = !gAskToSave;
 	}
 }
 
@@ -497,10 +484,8 @@ static void Key_UP_DOWN(uint8_t state, int8_t Step)
 		}
 
 		gBeepToPlay = BEEP_1KHZ_60MS_OPTIONAL;
-	}
-	else {
-		if (gInputBoxIndex || state!=BUTTON_EVENT_HELD)
-			return;
+	} else if (gInputBoxIndex || state!=BUTTON_EVENT_HELD) {
+		return;
 	}
 
 	if (gAskToSave) {
@@ -573,7 +558,7 @@ void FM_ProcessKeys(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld)
 			break;
 		case KEY_MENU:
 			Key_MENU(state);
-			return;
+			break;
 		case KEY_UP:
 			Key_UP_DOWN(state, 1);
 			break;

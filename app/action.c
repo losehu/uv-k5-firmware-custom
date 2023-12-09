@@ -13,6 +13,7 @@
  *     See the License for the specific language governing permissions and
  *     limitations under the License.
  */
+#  include <assert.h>
 
 #include <string.h>
 #ifdef ENABLE_FLASHLIGHT
@@ -40,20 +41,76 @@
 #include "settings.h"
 #include "ui/inputbox.h"
 #include "ui/ui.h"
+#if defined(ENABLE_FMRADIO)
+static void ACTION_Scan_FM(bool bRestart);
+#endif
 
+#if defined(ENABLE_ALARM) || defined(ENABLE_TX1750)
+static void ACTION_AlarmOr1750(bool b1750);
+inline static void ACTION_Alarm() { ACTION_AlarmOr1750(false); }
+inline static void ACTION_1750() { ACTION_AlarmOr1750(true); };
+#endif
 
+inline static void ACTION_ScanRestart() { ACTION_Scan(true); };
 
+void (*action_opt_table[])(void) = {
+        [ACTION_OPT_NONE] = &FUNCTION_NOP,
+        [ACTION_OPT_FLASHLIGHT] = &ACTION_FlashLight,
+        [ACTION_OPT_POWER] = &ACTION_Power,
+        [ACTION_OPT_MONITOR] = &ACTION_Monitor,
+        [ACTION_OPT_SCAN] = &ACTION_ScanRestart,
+        [ACTION_OPT_KEYLOCK] = &COMMON_KeypadLockToggle,
+        [ACTION_OPT_A_B] = &COMMON_SwitchVFOs,
+        [ACTION_OPT_VFO_MR] = &COMMON_SwitchVFOMode,
+        [ACTION_OPT_SWITCH_DEMODUL] = &ACTION_SwitchDemodul,
+
+#ifdef ENABLE_VOX
+        [ACTION_OPT_VOX] = &ACTION_Vox,
+#else
+        [ACTION_OPT_VOX] = &FUNCTION_NOP,
+#endif
+
+#ifdef ENABLE_FMRADIO
+        [ACTION_OPT_FM] = &ACTION_FM,
+#else
+        [ACTION_OPT_FM] = &FUNCTION_NOP,
+#endif
+
+#ifdef ENABLE_ALARM
+        [ACTION_OPT_ALARM] = &ACTION_Alarm,
+#else
+        [ACTION_OPT_ALARM] = &FUNCTION_NOP,
+#endif
+
+#ifdef ENABLE_TX1750
+        [ACTION_OPT_1750] = &ACTION_1750,
+#else
+        [ACTION_OPT_1750] = &FUNCTION_NOP,
+#endif
+
+#ifdef ENABLE_BLMIN_TMP_OFF
+        [ACTION_OPT_BLMIN_TMP_OFF] = &ACTION_BlminTmpOff,
+#else
+        [ACTION_OPT_BLMIN_TMP_OFF] = &FUNCTION_NOP,
+#endif
+
+        [ACTION_OPT_D_DCD] = &ACTION_D_DCD,
+        [ACTION_OPT_WIDTH] = &ACTION_WIDTH,
+
+};
+
+static_assert(ARRAY_SIZE(action_opt_table) == ACTION_OPT_LEN);
 void ACTION_Power(void)
 {
 	if (++gTxVfo->OUTPUT_POWER > OUTPUT_POWER_HIGH)
 		gTxVfo->OUTPUT_POWER = OUTPUT_POWER_LOW;
 
 	gRequestSaveChannel = 1;
+    gRequestDisplayScreen = gScreenToDisplay;
 #ifdef ENABLE_VOICE
     gAnotherVoiceID   = VOICE_ID_POWER;
 #endif
 
-	gRequestDisplayScreen = gScreenToDisplay;
 }
 
 void ACTION_Monitor(void)
@@ -101,250 +158,120 @@ void ACTION_Monitor(void)
 void ACTION_Scan(bool bRestart)
 {
 	(void)bRestart;
+
 #ifdef ENABLE_FMRADIO
-	if (gFmRadioMode)
-	{
-		if (gCurrentFunction != FUNCTION_RECEIVE &&
-			gCurrentFunction != FUNCTION_MONITOR &&
-			gCurrentFunction != FUNCTION_TRANSMIT)
-		{
-			GUI_SelectNextDisplay(DISPLAY_FM);
-
-			gMonitor = false;
-
-			if (gFM_ScanState != FM_SCAN_OFF)
-			{
-				FM_PlayAndUpdate();
-
-#ifdef ENABLE_VOICE
-				gAnotherVoiceID = VOICE_ID_SCANNING_STOP;
-#endif
-			}
-			else
-			{
-				uint16_t Frequency;
-
-				if (bRestart)
-				{
-					gFM_AutoScan        = true;
-					gFM_ChannelPosition = 0;
-					FM_EraseChannels();
-					Frequency           = gEeprom.FM_LowerLimit;
-				}
-				else
-				{
-					gFM_AutoScan        = false;
-					gFM_ChannelPosition = 0;
-					Frequency           = gEeprom.FM_FrequencyPlaying;
-				}
-
-				BK1080_GetFrequencyDeviation(Frequency);
-				FM_Tune(Frequency, 1, bRestart);
-#ifdef ENABLE_VOICE
-				gAnotherVoiceID = VOICE_ID_SCANNING_BEGIN;
-#endif
-			}
-		}
+    if (gFmRadioMode) {
+		ACTION_Scan_FM(bRestart);
 		return;
 	}
 #endif
 
-	if (!SCANNER_IsScanning())
-	{	// not scanning
+    if (SCANNER_IsScanning()) {
+        return;
+    }
 
-		gMonitor = false;
+    // not scanning
+    gMonitor = false;
 
 #ifdef ENABLE_DTMF_CALLING
-        DTMF_clear_RX();
+    DTMF_clear_RX();
 #endif
 
-		gDTMF_RX_live_timeout = 0;
-		memset(gDTMF_RX_live, 0, sizeof(gDTMF_RX_live));
+    gDTMF_RX_live_timeout = 0;
+    memset(gDTMF_RX_live, 0, sizeof(gDTMF_RX_live));
 
-		RADIO_SelectVfos();
-
+    RADIO_SelectVfos();
 #ifdef ENABLE_NOAA
-		if (!IS_NOAA_CHANNEL(gRxVfo->CHANNEL_SAVE))
-#endif
-		{
-			GUI_SelectNextDisplay(DISPLAY_MAIN);
-
-			if (gScanStateDir != SCAN_OFF)
-			{	// already scanning
-		
-				if (IS_MR_CHANNEL(gNextMrChannel))
-				{	// channel mode
-
-					// keep scanning but toggle between scan lists
-					gEeprom.SCAN_LIST_DEFAULT = (gEeprom.SCAN_LIST_DEFAULT + 1) % 3;
-
-					// jump to the next channel
-					CHFRSCANNER_Start(false, gScanStateDir);
-					gScanPauseDelayIn_10ms = 1;
-					gScheduleScanListen    = false;
-
-					gUpdateStatus = true;
-				}
-				else
-				{	// stop scanning
-			
-					CHFRSCANNER_Stop();
-
-					#ifdef ENABLE_VOICE
-						gAnotherVoiceID = VOICE_ID_SCANNING_STOP;
-					#endif
-				}
-			}
-			else
-			{	// start scanning
-	
-				CHFRSCANNER_Start(true, SCAN_FWD);
-
-				#ifdef ENABLE_VOICE
-					AUDIO_SetVoiceID(0, VOICE_ID_SCANNING_BEGIN);
-					AUDIO_PlaySingleVoice(true);
-				#endif
-
-				// clear the other vfo's rssi level (to hide the antenna symbol)
-				gVFO_RSSI_bar_level[(gEeprom.RX_VFO + 1) & 1u] = 0;
-
-				// let the user see DW is not active
-				gDualWatchActive = false;
-				gUpdateStatus    = true;
-			}
-		}
+    if (IS_NOAA_CHANNEL(gRxVfo->CHANNEL_SAVE)) {
+		return;
 	}
+#endif
+
+    GUI_SelectNextDisplay(DISPLAY_MAIN);
+
+    if (gScanStateDir != SCAN_OFF) {
+        // already scanning
+
+        if (!IS_MR_CHANNEL(gNextMrChannel)) {
+            CHFRSCANNER_Stop();
+#ifdef ENABLE_VOICE
+            gAnotherVoiceID = VOICE_ID_SCANNING_STOP;
+#endif
+            return;
+        }
+
+        // channel mode. Keep scanning but toggle between scan lists
+        gEeprom.SCAN_LIST_DEFAULT = (gEeprom.SCAN_LIST_DEFAULT + 1) % 3;
+
+        // jump to the next channel
+        CHFRSCANNER_Start(false, gScanStateDir);
+        gScanPauseDelayIn_10ms = 1;
+        gScheduleScanListen    = false;
+
+    } else {
+        // start scanning
+        CHFRSCANNER_Start(true, SCAN_FWD);
+
+#ifdef ENABLE_VOICE
+        AUDIO_SetVoiceID(0, VOICE_ID_SCANNING_BEGIN);
+		AUDIO_PlaySingleVoice(true);
+#endif
+
+        // clear the other vfo's rssi level (to hide the antenna symbol)
+        gVFO_RSSI_bar_level[(gEeprom.RX_VFO + 1) & 1U] = 0;
+
+        // let the user see DW is not active
+        gDualWatchActive = false;
+    }
+
+    gUpdateStatus = true;
 }
 
-#ifdef ENABLE_VOX
-	void ACTION_Vox(void)
-	{
-		gEeprom.VOX_SWITCH   = !gEeprom.VOX_SWITCH;
-		gRequestSaveSettings = true;
-		gFlagReconfigureVfos = true;
-		#ifdef ENABLE_VOICE
-			gAnotherVoiceID  = VOICE_ID_VOX;
-		#endif
-		gUpdateStatus        = true;
-	}
-#endif
 
-#if defined(ENABLE_ALARM) || defined(ENABLE_TX1750)
-static void ACTION_AlarmOr1750(const bool b1750)
-{
-
-#if defined(ENABLE_ALARM)
-		const AlarmState_t alarm_mode = (gEeprom.ALARM_MODE == ALARM_MODE_TONE) ? ALARM_STATE_TXALARM : ALARM_STATE_SITE_ALARM;
-		gAlarmRunningCounter = 0;
-	#endif
-
-	#if defined(ENABLE_ALARM) && defined(ENABLE_TX1750)
-		gAlarmState = b1750 ? ALARM_STATE_TX1750 : alarm_mode;
-	#elif defined(ENABLE_ALARM)
-		gAlarmState = alarm_mode;
-	#else
-		gAlarmState = ALARM_STATE_TX1750;
-	#endif
-
-	(void)b1750;
-	gInputBoxIndex = 0;
-
-	gFlagPrepareTX = gAlarmState != ALARM_STATE_OFF;
-
-	if (gScreenToDisplay != DISPLAY_MENU)     // 1of11 .. don't close the menu
-		gRequestDisplayScreen = DISPLAY_MAIN;
-}
-#endif
-
-
-#ifdef ENABLE_FMRADIO
-	void ACTION_FM(void)
-	{
-		if (gCurrentFunction != FUNCTION_TRANSMIT && gCurrentFunction != FUNCTION_MONITOR)
-		{
-			if (gFmRadioMode)
-			{
-				FM_TurnOff();
-
-				gInputBoxIndex        = 0;
-				#ifdef ENABLE_VOX
-					gVoxResumeCountdown = 80;
-				#endif
-				gFlagReconfigureVfos  = true;
-
-				gRequestDisplayScreen = DISPLAY_MAIN;
-				return;
-			}
-
-			gMonitor = false;
-
-			RADIO_SelectVfos();
-			RADIO_SetupRegisters(true);
-
-			FM_Start();
-
-			gInputBoxIndex = 0;
-
-			gRequestDisplayScreen = DISPLAY_FM;
-		}
-	}
-#endif
 
 void ACTION_SwitchDemodul(void)
 {
+    gRequestSaveChannel = 1;
 	gTxVfo->Modulation++;
 	if(gTxVfo->Modulation == MODULATION_UKNOWN)
 		gTxVfo->Modulation = MODULATION_FM;
-	gRequestSaveChannel = 1;
+
 }
 
-#ifdef ENABLE_BLMIN_TMP_OFF
-void ACTION_BlminTmpOff(void)
-{
-	if(++gEeprom.BACKLIGHT_MIN_STAT == BLMIN_STAT_UNKNOWN)
-	{
-		gEeprom.BACKLIGHT_MIN_STAT = BLMIN_STAT_ON;
-		BACKLIGHT_SetBrightness(0);
-	} else
-	{
-		BACKLIGHT_SetBrightness(0);
-	}
-}
-#endif
 
 void ACTION_Handle(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld)
 {
-	if (gScreenToDisplay == DISPLAY_MAIN && gDTMF_InputMode) // entering DTMF code
-	{
-		if (Key == KEY_SIDE1 && !bKeyHeld && bKeyPressed) // side1 btn pressed
-		{
-			gBeepToPlay = BEEP_1KHZ_60MS_OPTIONAL;
+    if (gScreenToDisplay == DISPLAY_MAIN && gDTMF_InputMode){
+        // entering DTMF code
 
-			if (gDTMF_InputBox_Index > 0) // DTMF codes are in the input box
-			{
-				gDTMF_InputBox[--gDTMF_InputBox_Index] = '-'; // delete one code
-				if (gDTMF_InputBox_Index > 0)
-				{
-					gPttWasReleased       = true;
-					gRequestDisplayScreen = DISPLAY_MAIN;
-					return;
-				}
-			}
+        gPttWasReleased = true;
 
-			#ifdef ENABLE_VOICE
-				gAnotherVoiceID   = VOICE_ID_CANCEL;
-			#endif
+        if (Key != KEY_SIDE1 || bKeyHeld || !bKeyPressed){
+            return;
+        }
 
-			gRequestDisplayScreen = DISPLAY_MAIN;
-			gDTMF_InputMode       = false; // turn off DTMF input box if no codes left
-		}
+        // side1 btn pressed
 
-		gPttWasReleased = true;
-		return;
-	}
+        gBeepToPlay = BEEP_1KHZ_60MS_OPTIONAL;
+        gRequestDisplayScreen = DISPLAY_MAIN;
 
-	uint8_t funcShort = ACTION_OPT_NONE;
-	uint8_t funcLong  = ACTION_OPT_NONE;
+        if (gDTMF_InputBox_Index <= 0) {
+            // turn off DTMF input box if no codes left
+            gDTMF_InputMode = false;
+            return;
+        }
+
+        // DTMF codes are in the input box
+        gDTMF_InputBox[--gDTMF_InputBox_Index] = '-'; // delete one code
+
+#ifdef ENABLE_VOICE
+        gAnotherVoiceID   = VOICE_ID_CANCEL;
+#endif
+        return;
+    }
+
+    enum ACTION_OPT_t funcShort = ACTION_OPT_NONE;
+    enum ACTION_OPT_t  funcLong  = ACTION_OPT_NONE;
 	switch(Key) {
 		case KEY_SIDE1:
 			funcShort = ACTION_OPT_MONITOR;//gEeprom.KEY_1_SHORT_PRESS_ACTION;
@@ -380,76 +307,219 @@ void ACTION_Handle(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld)
 	}
 
 	// held or released after short press beyond this point
+    action_opt_table[funcShort]();
+//	switch (funcShort)
+//	{
+//		default:
+//        case   ACTION_OPT_WIDTH:
+//            gTxVfo->CHANNEL_BANDWIDTH=!gTxVfo->CHANNEL_BANDWIDTH;
+//        gRequestSaveChannel = 1;
+//            break;
+//		case ACTION_OPT_NONE:
+//			break;
+//
+//		case ACTION_OPT_POWER:
+//			ACTION_Power();
+//			break;
+//		case ACTION_OPT_MONITOR:
+//			ACTION_Monitor();
+//			break;
+//		case ACTION_OPT_SCAN:
+//			ACTION_Scan(true);
+//			break;
+//
+//		case ACTION_OPT_KEYLOCK:
+//			COMMON_KeypadLockToggle();
+//			break;
+//		case ACTION_OPT_A_B:
+//			COMMON_SwitchVFOs();
+//			break;
+//		case ACTION_OPT_VFO_MR:
+//			COMMON_SwitchVFOMode();
+//			break;
+//		case ACTION_OPT_SWITCH_DEMODUL:
+//			ACTION_SwitchDemodul();
+//			break;
+//#ifdef ENABLE_FLASHLIGHT
+//            case ACTION_OPT_FLASHLIGHT:
+//			ACTION_FlashLight();
+//#endif
+//            break;
+//#ifdef ENABLE_VOX
+//            case ACTION_OPT_VOX:
+//			ACTION_Vox();
+//#endif
+//            break;
+//#ifdef ENABLE_FMRADIO
+//            case ACTION_OPT_FM:
+//			ACTION_FM();
+//#endif
+//            break;
+//#ifdef ENABLE_ALARM
+//            case ACTION_OPT_ALARM:
+//			ACTION_AlarmOr1750(false);
+//			break;
+//#endif
+//        case ACTION_OPT_1750:
+//#if defined(ENABLE_TX1750)
+//            ACTION_AlarmOr1750(true);
+//			break;
+//#endif
+//#ifdef ENABLE_DTMF_CALLING
+//           	case ACTION_OPT_D_DCD:
+//			gTxVfo->DTMF_DECODING_ENABLE = !gTxVfo->DTMF_DECODING_ENABLE;
+//			DTMF_clear_RX();
+//			gRequestSaveChannel = 1;
+//			break;
+//
+//#endif
+//#ifdef ENABLE_BLMIN_TMP_OFF
+//		case ACTION_OPT_BLMIN_TMP_OFF:
+//			ACTION_BlminTmpOff();
+//			break;
+//#endif
+//	}
+}
 
-	switch (funcShort)
-	{
-		default:
-        case   ACTION_OPT_WIDTH:
-            gTxVfo->CHANNEL_BANDWIDTH=!gTxVfo->CHANNEL_BANDWIDTH;
-        gRequestSaveChannel = 1;
-           // gRequestSaveSettings  = 1;
-
-            break;
-		case ACTION_OPT_NONE:
-			break;
-		case ACTION_OPT_FLASHLIGHT:
-#ifdef ENABLE_FLASHLIGHT
-			ACTION_FlashLight();
-#endif
-			break;
-		case ACTION_OPT_POWER:
-			ACTION_Power();
-			break;
-		case ACTION_OPT_MONITOR:
-			ACTION_Monitor();
-			break;
-		case ACTION_OPT_SCAN:
-			ACTION_Scan(true);
-			break;
-		case ACTION_OPT_VOX:
-#ifdef ENABLE_VOX
-			ACTION_Vox();
-#endif
-			break;
-		case ACTION_OPT_ALARM:
-#ifdef ENABLE_ALARM
-			ACTION_AlarmOr1750(false);
-#endif
-			break;
 #ifdef ENABLE_FMRADIO
-		case ACTION_OPT_FM:
-			ACTION_FM();
-			break;
+void ACTION_FM(void)
+{
+if (gCurrentFunction != FUNCTION_TRANSMIT && gCurrentFunction != FUNCTION_MONITOR)
+	{
+		gInputBoxIndex = 0;
+
+		if (gFmRadioMode) {
+			FM_TurnOff();
+			gFlagReconfigureVfos  = true;
+			gRequestDisplayScreen = DISPLAY_MAIN;
+
+#ifdef ENABLE_VOX
+			gVoxResumeCountdown = 80;
 #endif
-		case ACTION_OPT_1750:
-			#ifdef ENABLE_TX1750
-				ACTION_AlarmOr1750(true);
-			#endif
-			break;
-		case ACTION_OPT_KEYLOCK:
-			COMMON_KeypadLockToggle();
-			break;
-		case ACTION_OPT_A_B:
-			COMMON_SwitchVFOs();
-			break;
-		case ACTION_OPT_VFO_MR:
-			COMMON_SwitchVFOMode();
-			break;
-		case ACTION_OPT_SWITCH_DEMODUL:
-			ACTION_SwitchDemodul();
-			break;
-#ifdef ENABLE_DTMF_CALLING
-           	case ACTION_OPT_D_DCD:
-			gTxVfo->DTMF_DECODING_ENABLE = !gTxVfo->DTMF_DECODING_ENABLE;
-			DTMF_clear_RX();
-			gRequestSaveChannel = 1;
-			break;
+			return;
+		}
+
+		gMonitor = false;
+
+		RADIO_SelectVfos();
+		RADIO_SetupRegisters(true);
+
+		FM_Start();
+
+		gRequestDisplayScreen = DISPLAY_FM;
+	}
+}
+
+
+static void ACTION_Scan_FM(bool bRestart)
+{
+	if (FUNCTION_IsRx()) {
+		return;
+	}
+
+	GUI_SelectNextDisplay(DISPLAY_FM);
+	gMonitor = false;
+
+	if (gFM_ScanState != FM_SCAN_OFF) {
+		FM_PlayAndUpdate();
+#ifdef ENABLE_VOICE
+			gAnotherVoiceID = VOICE_ID_SCANNING_STOP;
+#endif
+		return;
+	}
+
+	uint16_t Frequency;
+
+	if (bRestart) {
+		gFM_AutoScan        = true;
+		gFM_ChannelPosition = 0;
+		FM_EraseChannels();
+		Frequency           = gEeprom.FM_LowerLimit;
+	} else {
+		gFM_AutoScan        = false;
+		gFM_ChannelPosition = 0;
+		Frequency           = gEeprom.FM_FrequencyPlaying;
+	}
+
+	BK1080_GetFrequencyDeviation(Frequency);
+	FM_Tune(Frequency, 1, bRestart);
+
+#ifdef ENABLE_VOICE
+	gAnotherVoiceID = VOICE_ID_SCANNING_BEGIN;
+#endif
+
+}
 
 #endif
-#ifdef ENABLE_BLMIN_TMP_OFF
-		case ACTION_OPT_BLMIN_TMP_OFF:
-			ACTION_BlminTmpOff();
-			break;
+
+
+#if defined(ENABLE_ALARM) || defined(ENABLE_TX1750)
+static void ACTION_AlarmOr1750(const bool b1750)
+{
+
+	#if defined(ENABLE_ALARM)
+		const AlarmState_t alarm_mode = (gEeprom.ALARM_MODE == ALARM_MODE_TONE) ? ALARM_STATE_TXALARM : ALARM_STATE_SITE_ALARM;
+		gAlarmRunningCounter = 0;
+	#endif
+
+	#if defined(ENABLE_ALARM) && defined(ENABLE_TX1750)
+		gAlarmState = b1750 ? ALARM_STATE_TX1750 : alarm_mode;
+	#elif defined(ENABLE_ALARM)
+		gAlarmState = alarm_mode;
+	#else
+		gAlarmState = ALARM_STATE_TX1750;
+	#endif
+
+	(void)b1750;
+	gInputBoxIndex = 0;
+
+	gFlagPrepareTX = gAlarmState != ALARM_STATE_OFF;
+
+	if (gScreenToDisplay != DISPLAY_MENU)      // 1of11 .. don't close the menu
+		gRequestDisplayScreen = DISPLAY_MAIN;
+
+}
 #endif
+
+
+#ifdef ENABLE_VOX
+void ACTION_Vox(void)
+{
+	gEeprom.VOX_SWITCH   = !gEeprom.VOX_SWITCH;
+	gRequestSaveSettings = true;
+	gFlagReconfigureVfos = true;
+	gUpdateStatus        = true;
+
+#ifdef ENABLE_VOICE
+	gAnotherVoiceID  = VOICE_ID_VOX;
+#endif
+
+}
+#endif
+
+
+#ifdef ENABLE_BLMIN_TMP_OFF
+void ACTION_BlminTmpOff(void)
+{
+	if(++gEeprom.BACKLIGHT_MIN_STAT == BLMIN_STAT_UNKNOWN) {
+		gEeprom.BACKLIGHT_MIN_STAT = BLMIN_STAT_ON;
+		BACKLIGHT_SetBrightness(gEeprom.BACKLIGHT_MIN);
+	} else {
+		BACKLIGHT_SetBrightness(0);
 	}
+}
+#endif
+
+void ACTION_WIDTH(void)
+{
+    gRequestSaveChannel = 1;
+
+    gTxVfo->CHANNEL_BANDWIDTH=!gTxVfo->CHANNEL_BANDWIDTH;
+}
+void ACTION_D_DCD(void)
+{
+    gRequestSaveChannel = 1;
+
+    gTxVfo->DTMF_DECODING_ENABLE = !gTxVfo->DTMF_DECODING_ENABLE;
+			DTMF_clear_RX();
 }
