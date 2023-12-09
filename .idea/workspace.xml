@@ -20,32 +20,8 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="readme add">
+    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="重构">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/action.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/action.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/action.h" beforeDir="false" afterPath="$PROJECT_DIR$/app/action.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/aircopy.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/aircopy.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/app.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/fm.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/fm.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/menu.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/menu.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/spectrum.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/spectrum.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/spectrum.h" beforeDir="false" afterPath="$PROJECT_DIR$/app/spectrum.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/audio.c" beforeDir="false" afterPath="$PROJECT_DIR$/audio.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chinese.h" beforeDir="false" afterPath="$PROJECT_DIR$/chinese.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frequencies.c" beforeDir="false" afterPath="$PROJECT_DIR$/frequencies.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frequencies.h" beforeDir="false" afterPath="$PROJECT_DIR$/frequencies.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions.c" beforeDir="false" afterPath="$PROJECT_DIR$/functions.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions.h" beforeDir="false" afterPath="$PROJECT_DIR$/functions.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/misc.c" beforeDir="false" afterPath="$PROJECT_DIR$/misc.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/misc.h" beforeDir="false" afterPath="$PROJECT_DIR$/misc.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment/sponsors.md" beforeDir="false" afterPath="$PROJECT_DIR$/payment/sponsors.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/radio.c" beforeDir="false" afterPath="$PROJECT_DIR$/radio.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.h" beforeDir="false" afterPath="$PROJECT_DIR$/settings.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/menu.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/menu.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/scanner.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/scanner.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/status.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/status.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -214,14 +190,7 @@
       <workItem from="1701934352200" duration="14088000" />
       <workItem from="1702006730071" duration="3144000" />
       <workItem from="1702024305901" duration="2385000" />
-      <workItem from="1702049513969" duration="8552000" />
-    </task>
-    <task id="LOCAL-00029" summary="MDC RX">
-      <created>1701678580088</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1701678580088</updated>
+      <workItem from="1702049513969" duration="9713000" />
     </task>
     <task id="LOCAL-00030" summary="MDC RX">
       <created>1701678635953</created>
@@ -559,7 +528,14 @@
       <option name="project" value="LOCAL" />
       <updated>1702026692059</updated>
     </task>
-    <option name="localTasksCounter" value="78" />
+    <task id="LOCAL-00078" summary="重构">
+      <created>1702092719871</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1702092719871</updated>
+    </task>
+    <option name="localTasksCounter" value="79" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -583,7 +559,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="1129 190 update" />
     <MESSAGE value="lite create" />
     <MESSAGE value="lite aim" />
     <MESSAGE value="create" />
@@ -608,6 +583,7 @@
     <MESSAGE value="关闭MDC1200信息显示" />
     <MESSAGE value="Makefile" />
     <MESSAGE value="readme add" />
-    <option name="LAST_COMMIT_MESSAGE" value="readme add" />
+    <MESSAGE value="重构" />
+    <option name="LAST_COMMIT_MESSAGE" value="重构" />
   </component>
 </project>
