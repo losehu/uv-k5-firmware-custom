@@ -15,6 +15,7 @@
  */
 #include "ui/ui.h"
 #include <string.h>
+
 #include <stdio.h>     // NULL
 #include "app/mdc1200.h"
 #include "app/uart.h"
@@ -42,7 +43,7 @@
 #include "ui/welcome.h"
 #include "ui/menu.h"
 #include "version.h"
-
+#include "driver/eeprom.h"
 void _putchar(char c)
 {
 	UART_Send((uint8_t *)&c, 1);
@@ -131,7 +132,7 @@ void Main(void)
     boot_counter_10ms=250;
     while (boot_counter_10ms > 0)
     {
-        if (KEYBOARD_Poll() != KEY_INVALID)
+        if (KEYBOARD_Poll() == KEY_EXIT)
         {	// halt boot beeps
             boot_counter_10ms = 0;
             break;
@@ -184,12 +185,25 @@ void Main(void)
 		RADIO_ConfigureNOAA();
 #endif
 
-		// ******************
-//	}
-
+//    uint8_t B[64];
+//    memset(B,'B',sizeof (B));
+//    for ( uint16_t j = 0; j < ARRAY_SIZE(MDC_ADD); ++j) {
+//        for (uint16_t i =MDC_ADD[j]; i < MDC_ADD[j]+64; ++i) {
+//            EEPROM_WriteBuffer(i,&B[i-MDC_ADD[j]]);
+//        }
+//    }
+//
+//
+//    uint8_t A[16]={0XFF,0XFF,'B','G','2','F','Z','V',' ','U','V','K','5',' ','S','B'};
+//    for (int i =MDC_ADD[0]; i < MDC_ADD[0]+16; ++i) {
+//        EEPROM_WriteBuffer(i,&A[i-MDC_ADD[0]]);
+//    }
 	while (1)
 	{
-		APP_Update();
+
+
+
+        APP_Update();
 
 		if (gNextTimeslice)
 		{

@@ -95,6 +95,8 @@ extern uint8_t mdc1200_sync_suc_xor[sizeof(mdc1200_sync)];
 extern uint8_t  mdc1200_op;
 extern uint8_t  mdc1200_arg;
 extern uint16_t mdc1200_unit_id;
+bool mdc1200_contact_find(uint16_t mdc_id, char *contact) ;
+
 extern uint8_t  mdc1200_rx_ready_tick_500ms;
 
 unsigned int   MDC1200_encode_single_packet(void *data, const uint8_t op, const uint8_t arg, const uint16_t unit_id);
@@ -104,5 +106,9 @@ void           MDC1200_process_rx(const uint16_t interrupt_bits);
 void           MDC1200_init(void);
 extern uint16_t MDC_ID;
 uint16_t extractHex(const char *str);
+extern uint16_t MDC_ADD[4] ;
+#define MDC_NUM_ADD 0X1D00
+#define MAX_CONTACT_NUM 15
+extern uint8_t contact_num;
 
 #endif

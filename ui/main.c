@@ -732,54 +732,63 @@ void UI_DisplayMain(void) {
 
         const bool rx = FUNCTION_IsRx();
 #ifdef ENABLE_MDC1200
-        if (mdc1200_rx_ready_tick_500ms > 0)
-        {
 
+        if (mdc1200_rx_ready_tick_500ms > 0) {
+            char mdc1200_contact[14];
             center_line = CENTER_LINE_MDC1200;
-#ifdef ENABLE_MDC1200_SHOW_OP_ARG
-                sprintf(String, "MDC1200 %02X %02X %04X", mdc1200_op, mdc1200_arg, mdc1200_unit_id);
-#else
-                sprintf(String, "MDC1200 ID %04X", mdc1200_unit_id);
-#endif
-#ifdef ENABLE_SMALL_BOLD
-                UI_PrintStringSmallBold(String, 2, 0, 3);
-#else
-                UI_PrintStringSmall(String, 2, 0, 3);
-#endif
-        }
-        else
+            uint8_t print_col = 0;
+            if (mdc1200_contact_find(mdc1200_unit_id, mdc1200_contact))//
+            {
+
+                memcpy(String, mdc1200_contact, 14);
+                String[14] = 0;
+                print_col = 29;
+            } else {
+                sprintf(String, "ID %04X", mdc1200_unit_id);
+                print_col = 40;
+            }
+
+//#ifdef ENABLE_MDC1200_SHOW_OP_ARG
+//                sprintf(String, "MDC1200 %02X %02X %04X", mdc1200_op, mdc1200_arg, mdc1200_unit_id);
+//#else
+//                sprintf(String, "MDC1200 ID %04X", mdc1200_unit_id);
+//#endif
+
+            UI_PrintStringSmallBold(String, print_col, 0, 3);
+
+        } else
 #endif
 #ifdef ENABLE_AUDIO_BAR
-        if (gCurrentFunction == FUNCTION_TRANSMIT) {
-            center_line = CENTER_LINE_AUDIO_BAR;
-            UI_DisplayAudioBar();
-        }
-        else
+            if (gCurrentFunction == FUNCTION_TRANSMIT) {
+                center_line = CENTER_LINE_AUDIO_BAR;
+                UI_DisplayAudioBar();
+            }
+            else
 #endif
 
 #if defined(ENABLE_AM_FIX) && defined(ENABLE_AM_FIX_SHOW_DATA)
-        if (rx && gEeprom.VfoInfo[gEeprom.RX_VFO].Modulation == MODULATION_AM && gSetting_AM_fix)
-        {
-            if (gScreenToDisplay != DISPLAY_MAIN
+            if (rx && gEeprom.VfoInfo[gEeprom.RX_VFO].Modulation == MODULATION_AM && gSetting_AM_fix)
+            {
+                if (gScreenToDisplay != DISPLAY_MAIN
 #ifdef ENABLE_DTMF_CALLING
-                || gDTMF_CallState != DTMF_CALL_STATE_NONE
+                    || gDTMF_CallState != DTMF_CALL_STATE_NONE
 #endif
-                )
-                return;
+                    )
+                    return;
 
-            center_line = CENTER_LINE_AM_FIX_DATA;
-            AM_fix_print_data(gEeprom.RX_VFO, String);
-            UI_PrintStringSmall(String, 2, 0, 3);
-        }
-        else
+                center_line = CENTER_LINE_AM_FIX_DATA;
+                AM_fix_print_data(gEeprom.RX_VFO, String);
+                UI_PrintStringSmall(String, 2, 0, 3);
+            }
+            else
 #endif
 
 #ifdef ENABLE_RSSI_BAR
-        if (rx) {
-            center_line = CENTER_LINE_RSSI;
-      DisplayRSSIBar(false);
-        }
-        else
+            if (rx) {
+                center_line = CENTER_LINE_RSSI;
+          DisplayRSSIBar(false);
+            }
+            else
 #endif
 
         if (rx || gCurrentFunction == FUNCTION_FOREGROUND || gCurrentFunction == FUNCTION_POWER_SAVE) {

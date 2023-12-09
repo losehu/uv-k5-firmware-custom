@@ -5,18 +5,18 @@
 #include "mdc1200.h"
 #include "misc.h"
 #include <string.h>
-uint16_t MDC_ID=0X542B;
+#include "driver/eeprom.h"
+uint16_t MDC_ID = 0X542B;
 
 const uint8_t mdc1200_pre_amble[] = {0x00, 0x00, 0x00};
-const uint8_t mdc1200_sync[5]     = {0x07, 0x09, 0x2a, 0x44, 0x6f};
+const uint8_t mdc1200_sync[5] = {0x07, 0x09, 0x2a, 0x44, 0x6f};
 
 uint8_t mdc1200_sync_suc_xor[sizeof(mdc1200_sync)];
 
 
 #if 1
 
-uint16_t compute_crc(const void *data, const unsigned int data_len)
-{	// let the CPU's hardware do some work :)
+uint16_t compute_crc(const void *data, const unsigned int data_len) {    // let the CPU's hardware do some work :)
     uint16_t crc;
     CRC_InitReverse();
     crc = CRC_Calculate(data, data_len);
@@ -46,68 +46,63 @@ uint16_t compute_crc( void *data, const unsigned int data_len) {    // let the C
 
 #else
 
-	uint16_t compute_crc(const void *data, const unsigned int data_len)
-	{
-		unsigned int   i;
-		const uint8_t *data8 = (const uint8_t *)data;
-		uint16_t       crc = 0;
+    uint16_t compute_crc(const void *data, const unsigned int data_len)
+    {
+        unsigned int   i;
+        const uint8_t *data8 = (const uint8_t *)data;
+        uint16_t       crc = 0;
 
-		for (i = 0; i < data_len; i++)
-		{
-			uint8_t mask;
+        for (i = 0; i < data_len; i++)
+        {
+            uint8_t mask;
 
-			// bit reverse each data byte
-			const uint8_t bits = bit_reverse_8(*data8++);
+            // bit reverse each data byte
+            const uint8_t bits = bit_reverse_8(*data8++);
 
-			for (mask = 0x0080; mask != 0; mask >>= 1)
-			{
-				uint16_t msb = crc & 0x8000;
-				if (bits & mask)
-					msb ^= 0x8000;
-				crc <<= 1;
-				if (msb)
-					crc ^= 0x1021;
-			}
-		}
+            for (mask = 0x0080; mask != 0; mask >>= 1)
+            {
+                uint16_t msb = crc & 0x8000;
+                if (bits & mask)
+                    msb ^= 0x8000;
+                crc <<= 1;
+                if (msb)
+                    crc ^= 0x1021;
+            }
+        }
 
-		// bit reverse and invert the final CRC
-		return bit_reverse_16(crc) ^ 0xffff;
-	}
+        // bit reverse and invert the final CRC
+        return bit_reverse_16(crc) ^ 0xffff;
+    }
 
 #endif
 
-void error_correction(void *data)
-{	// can correct up to 3 or 4 corrupted bits (I think)
+void error_correction(void *data) {    // can correct up to 3 or 4 corrupted bits (I think)
 
-    int     i;
+    int i;
     uint8_t shift_reg;
     uint8_t syn;
-    uint8_t *data8 = (uint8_t *)data;
+    uint8_t *data8 = (uint8_t *) data;
 
-    for (i = 0, shift_reg = 0, syn = 0; i < MDC1200_FEC_K; i++)
-    {
+    for (i = 0, shift_reg = 0, syn = 0; i < MDC1200_FEC_K; i++) {
         const uint8_t bi = data8[i];
         int bit_num;
-        for (bit_num = 0; bit_num < 8; bit_num++)
-        {
+        for (bit_num = 0; bit_num < 8; bit_num++) {
             uint8_t b;
             unsigned int k = 0;
 
             shift_reg = (shift_reg << 1) | ((bi >> bit_num) & 1u);
-            b         = ((shift_reg >> 6) ^ (shift_reg >> 5) ^ (shift_reg >> 2) ^ (shift_reg >> 0)) & 1u;
-            syn       = (syn << 1) | (((b ^ (data8[i + MDC1200_FEC_K] >> bit_num)) & 1u) ? 1u : 0u);
+            b = ((shift_reg >> 6) ^ (shift_reg >> 5) ^ (shift_reg >> 2) ^ (shift_reg >> 0)) & 1u;
+            syn = (syn << 1) | (((b ^ (data8[i + MDC1200_FEC_K] >> bit_num)) & 1u) ? 1u : 0u);
 
             if (syn & 0x80) k++;
             if (syn & 0x20) k++;
             if (syn & 0x04) k++;
             if (syn & 0x02) k++;
 
-            if (k >= 3)
-            {	// correct a bit error
+            if (k >= 3) {    // correct a bit error
                 int ii = i;
                 int bn = bit_num - 7;
-                if (bn < 0)
-                {
+                if (bn < 0) {
                     bn += 8;
                     ii--;
                 }
@@ -119,13 +114,12 @@ void error_correction(void *data)
     }
 }
 
-bool decode_data(void *data)
-{
+bool decode_data(void *data) {
     uint16_t crc1;
     uint16_t crc2;
-    uint8_t *data8 = (uint8_t *)data;
+    uint8_t *data8 = (uint8_t *) data;
 
-    {	// de-interleave
+    {    // de-interleave
 
         unsigned int i;
         unsigned int k;
@@ -151,18 +145,15 @@ bool decode_data(void *data)
         // 15, 31, 47, 63, 79, 95, 111
 
         // de-interleave the received bits
-        for (i = 0, k = 0; i < 16; i++)
-        {
-            for (m = 0; m < MDC1200_FEC_K; m++)
-            {
+        for (i = 0, k = 0; i < 16; i++) {
+            for (m = 0; m < MDC1200_FEC_K; m++) {
                 const unsigned int n = (m * 16) + i;
                 deinterleaved[k++] = (data8[n >> 3] >> ((7 - n) & 7u)) & 1u;
             }
         }
 
         // copy the de-interleaved bits back into the data buffer
-        for (i = 0, m = 0; i < (MDC1200_FEC_K * 2); i++)
-        {
+        for (i = 0, m = 0; i < (MDC1200_FEC_K * 2); i++) {
             unsigned int k;
             uint8_t b = 0;
             for (k = 0; k < 8; k++)
@@ -181,7 +172,7 @@ bool decode_data(void *data)
     // 01  80   1234  2E3E  00      6580A862DD8808
 
     crc1 = compute_crc(data, 4);
-    crc2 = ((uint16_t)data8[5] << 8) | (data8[4] << 0);
+    crc2 = ((uint16_t) data8[5] << 8) | (data8[4] << 0);
 
     return (crc1 == crc2) ? true : false;
 }
@@ -189,18 +180,15 @@ bool decode_data(void *data)
 // **********************************************************
 // TX
 
-void xor_modulation(void *data, const unsigned int size)
-{	// exclusive-or succesive bits - the entire packet
+void xor_modulation(void *data, const unsigned int size) {    // exclusive-or succesive bits - the entire packet
     unsigned int i;
-    uint8_t *data8 = (uint8_t *)data;
+    uint8_t *data8 = (uint8_t *) data;
     uint8_t prev_bit = 0;
-    for (i = 0; i < size; i++)
-    {
+    for (i = 0; i < size; i++) {
         int bit_num;
-        uint8_t in  = data8[i];
+        uint8_t in = data8[i];
         uint8_t out = 0;
-        for (bit_num = 7; bit_num >= 0; bit_num--)
-        {
+        for (bit_num = 7; bit_num >= 0; bit_num--) {
             const uint8_t new_bit = (in >> bit_num) & 1u;
             if (new_bit != prev_bit)
                 out |= 1u << bit_num;        // previous bit and new bit are different - send a '1'
@@ -210,8 +198,7 @@ void xor_modulation(void *data, const unsigned int size)
     }
 }
 
-uint8_t * encode_data(void *data)
-{
+uint8_t *encode_data(void *data) {
     // R=1/2 K=7 convolutional coder
     //
     // OP  ARG  ID    CRC   STATUS  FEC bits
@@ -222,18 +209,16 @@ uint8_t * encode_data(void *data)
     // 3. for each bit, calculate the modulo-2 sum: bit(n-0) + bit(n-2) + bit(n-5) + bit(n-6)
     // 4. then for each byte of resulting output, again reverse those bits to generate the values shown above
 
-    uint8_t *data8 = (uint8_t *)data;
+    uint8_t *data8 = (uint8_t *) data;
 
-    {	// add the FEC bits to the end of the data
+    {    // add the FEC bits to the end of the data
         unsigned int i;
         uint8_t shift_reg = 0;
-        for (i = 0; i < MDC1200_FEC_K; i++)
-        {
-            unsigned int  bit_num;
+        for (i = 0; i < MDC1200_FEC_K; i++) {
+            unsigned int bit_num;
             const uint8_t bi = data8[i];
-            uint8_t       bo = 0;
-            for (bit_num = 0; bit_num < 8; bit_num++)
-            {
+            uint8_t bo = 0;
+            for (bit_num = 0; bit_num < 8; bit_num++) {
                 shift_reg = (shift_reg << 1) | ((bi >> bit_num) & 1u);
                 bo |= (((shift_reg >> 6) ^ (shift_reg >> 5) ^ (shift_reg >> 2) ^ (shift_reg >> 0)) & 1u) << bit_num;
             }
@@ -242,7 +227,7 @@ uint8_t * encode_data(void *data)
     }
 
 
-    {	// interleave the bits
+    {    // interleave the bits
 
         unsigned int i;
         unsigned int k;
@@ -267,12 +252,10 @@ uint8_t * encode_data(void *data)
         // 15, 31, 47, 63, 79, 95, 111
 
         // bit interleaver
-        for (i = 0, k = 0; i < (MDC1200_FEC_K * 2); i++)
-        {
+        for (i = 0, k = 0; i < (MDC1200_FEC_K * 2); i++) {
             unsigned int bit_num;
             const uint8_t b = data8[i];
-            for (bit_num = 0; bit_num < 8; bit_num++)
-            {
+            for (bit_num = 0; bit_num < 8; bit_num++) {
                 interleaved[k] = (b >> bit_num) & 1u;
                 k += 16;
                 if (k >= sizeof(interleaved))
@@ -281,8 +264,7 @@ uint8_t * encode_data(void *data)
         }
 
         // copy the interleaved bits back to the data buffer
-        for (i = 0, k = 0; i < (MDC1200_FEC_K * 2); i++)
-        {
+        for (i = 0, k = 0; i < (MDC1200_FEC_K * 2); i++) {
             int bit_num;
             uint8_t b = 0;
             for (bit_num = 7; bit_num >= 0; bit_num--)
@@ -295,11 +277,10 @@ uint8_t * encode_data(void *data)
     return data8 + (MDC1200_FEC_K * 2);
 }
 
-unsigned int MDC1200_encode_single_packet(void *data, const uint8_t op, const uint8_t arg, const uint16_t unit_id)
-{
+unsigned int MDC1200_encode_single_packet(void *data, const uint8_t op, const uint8_t arg, const uint16_t unit_id) {
     unsigned int size;
-    uint16_t     crc;
-    uint8_t     *p = (uint8_t *)data;
+    uint16_t crc;
+    uint8_t *p = (uint8_t *) data;
 
     memcpy(p, mdc1200_pre_amble, sizeof(mdc1200_pre_amble));
     p += sizeof(mdc1200_pre_amble);
@@ -317,7 +298,7 @@ unsigned int MDC1200_encode_single_packet(void *data, const uint8_t op, const ui
 
     p = encode_data(p);
 
-    size = (unsigned int)(p - (uint8_t *)data);
+    size = (unsigned int) (p - (uint8_t *) data);
 
     xor_modulation(data, size);
 
@@ -326,19 +307,18 @@ unsigned int MDC1200_encode_single_packet(void *data, const uint8_t op, const ui
 
 
 struct {
-    uint8_t      bit;
-    uint8_t      prev_bit;
-    uint8_t      xor_bit;
-    uint64_t     shift_reg;
+    uint8_t bit;
+    uint8_t prev_bit;
+    uint8_t xor_bit;
+    uint64_t shift_reg;
     unsigned int bit_count;
     unsigned int stage;
-    bool         inverted_sync;
+    bool inverted_sync;
     unsigned int data_index;
-    uint8_t      data[40];
+    uint8_t data[40];
 } rx;
 
-void MDC1200_reset_rx(void)
-{
+void MDC1200_reset_rx(void) {
     memset(&rx, 0, sizeof(rx));
 }
 
@@ -348,10 +328,9 @@ bool MDC1200_process_rx_data(
         //const bool inverted,
         uint8_t *op,
         uint8_t *arg,
-        uint16_t *unit_id)
-{
-    const uint8_t *buffer8 = (const uint8_t *)buffer;
-    unsigned int   index;
+        uint16_t *unit_id) {
+    const uint8_t *buffer8 = (const uint8_t *) buffer;
+    unsigned int index;
 
     // 04 8D BF 66 58   sync
     // FB 72 40 99 A7   inverted sync
@@ -361,13 +340,11 @@ bool MDC1200_process_rx_data(
 
     memset(&rx, 0, sizeof(rx));
 
-    for (index = 0; index < size; index++)
-    {
-        int           bit;
+    for (index = 0; index < size; index++) {
+        int bit;
         const uint8_t rx_byte = buffer8[index];
 
-        for (bit = 7; bit >= 0; bit--)
-        {
+        for (bit = 7; bit >= 0; bit--) {
             unsigned int i;
 
             rx.prev_bit = rx.bit;
@@ -381,13 +358,11 @@ bool MDC1200_process_rx_data(
 
             // *********
 
-            if (rx.stage == 0)
-            {	// looking for the 40-bit sync pattern
+            if (rx.stage == 0) {    // looking for the 40-bit sync pattern
 
                 const unsigned int sync_bit_ok_threshold = 32;
 
-                if (rx.bit_count >= 40)
-                {
+                if (rx.bit_count >= 40) {
                     // 40-bit sync pattern
                     uint64_t sync_nor = 0x07092a446fu;            // normal
                     uint64_t sync_inv = 0xffffffffffu ^ sync_nor; // bit inverted
@@ -397,8 +372,7 @@ bool MDC1200_process_rx_data(
 
                     unsigned int nor_count = 0;
                     unsigned int inv_count = 0;
-                    for (i = 40; i > 0; i--, sync_nor >>= 1, sync_inv >>= 1)
-                    {
+                    for (i = 40; i > 0; i--, sync_nor >>= 1, sync_inv >>= 1) {
                         nor_count += sync_nor & 1u;
                         inv_count += sync_inv & 1u;
                     }
@@ -406,14 +380,12 @@ bool MDC1200_process_rx_data(
                     inv_count = 40 - inv_count;
 
 
-
-                    if (nor_count >= sync_bit_ok_threshold || inv_count >= sync_bit_ok_threshold)
-                    {	// good enough
+                    if (nor_count >= sync_bit_ok_threshold || inv_count >= sync_bit_ok_threshold) {    // good enough
 
                         rx.inverted_sync = (inv_count > nor_count) ? true : false;
-                        rx.data_index    = 0;
-                        rx.bit_count     = 0;
-                        rx.stage         = 1;
+                        rx.data_index = 0;
+                        rx.bit_count = 0;
+                        rx.stage = 1;
 
 
                     }
@@ -433,20 +405,17 @@ bool MDC1200_process_rx_data(
                 continue;
 
 
-
-            if (!decode_data(rx.data))
-            {
+            if (!decode_data(rx.data)) {
                 MDC1200_reset_rx();
-
 
 
                 continue;
             }
 
             // extract the info from the packet
-            *op      = rx.data[0];
-            *arg     = rx.data[1];
-            *unit_id = ((uint16_t)rx.data[2] << 8) | (rx.data[3] << 0);
+            *op = rx.data[0];
+            *arg = rx.data[1];
+            *unit_id = ((uint16_t) rx.data[2] << 8) | (rx.data[3] << 0);
 
 
             // reset the detector
@@ -461,28 +430,25 @@ bool MDC1200_process_rx_data(
     return false;
 }
 
-uint8_t      mdc1200_rx_buffer[sizeof(mdc1200_sync_suc_xor) + (MDC1200_FEC_K * 2)];
+uint8_t mdc1200_rx_buffer[sizeof(mdc1200_sync_suc_xor) + (MDC1200_FEC_K * 2)];
 unsigned int mdc1200_rx_buffer_index = 0;
 
-uint8_t  mdc1200_op;
-uint8_t  mdc1200_arg;
+uint8_t mdc1200_op;
+uint8_t mdc1200_arg;
 uint16_t mdc1200_unit_id;
-uint8_t  mdc1200_rx_ready_tick_500ms;
+uint8_t mdc1200_rx_ready_tick_500ms;
+void MDC1200_process_rx(const uint16_t interrupt_bits) {
 
-void MDC1200_process_rx(const uint16_t interrupt_bits)
-{
+    const uint16_t rx_sync_flags = BK4819_ReadRegister(0x0B);
+    const uint16_t fsk_reg59 = BK4819_ReadRegister(0x59) & ~((1u << 15) | (1u << 14) | (1u << 12) | (1u << 11));
 
-    const uint16_t rx_sync_flags   = BK4819_ReadRegister(0x0B);
-    const uint16_t fsk_reg59       = BK4819_ReadRegister(0x59) & ~((1u << 15) | (1u << 14) | (1u << 12) | (1u << 11));
-
-    const bool rx_sync             = (interrupt_bits & BK4819_REG_02_FSK_RX_SYNC) ? true : false;
-    const bool rx_sync_neg         = (rx_sync_flags & (1u << 7)) ? true : false;
+    const bool rx_sync = (interrupt_bits & BK4819_REG_02_FSK_RX_SYNC) ? true : false;
+    const bool rx_sync_neg = (rx_sync_flags & (1u << 7)) ? true : false;
     const bool rx_fifo_almost_full = (interrupt_bits & BK4819_REG_02_FSK_FIFO_ALMOST_FULL) ? true : false;
-    const bool rx_finished         = (interrupt_bits & BK4819_REG_02_FSK_RX_FINISHED) ? true : false;
+    const bool rx_finished = (interrupt_bits & BK4819_REG_02_FSK_RX_FINISHED) ? true : false;
 
 
-    if (rx_sync)
-    {
+    if (rx_sync) {
         mdc1200_rx_buffer_index = 0;
 
         {
@@ -493,23 +459,16 @@ void MDC1200_process_rx(const uint16_t interrupt_bits)
         }
 
 
-
-
-
-
     }
 
-    if (rx_fifo_almost_full)
-    {
+    if (rx_fifo_almost_full) {
         unsigned int i;
         const unsigned int count = BK4819_ReadRegister(0x5E) & (7u << 0);  // almost full threshold
 
 
         // fetch received packet data
-        for (i = 0; i < count; i++)
-        {
+        for (i = 0; i < count; i++) {
             const uint16_t word = BK4819_ReadRegister(0x5F) ^ (rx_sync_neg ? 0xFFFF : 0x0000);
-
 
 
             if (mdc1200_rx_buffer_index < sizeof(mdc1200_rx_buffer))
@@ -520,8 +479,7 @@ void MDC1200_process_rx(const uint16_t interrupt_bits)
         }
 
 
-        if (mdc1200_rx_buffer_index >= sizeof(mdc1200_rx_buffer))
-        {
+        if (mdc1200_rx_buffer_index >= sizeof(mdc1200_rx_buffer)) {
             BK4819_WriteRegister(0x59, (1u << 15) | (1u << 14) | fsk_reg59);
             BK4819_WriteRegister(0x59, (1u << 12) | fsk_reg59);
 
@@ -531,7 +489,6 @@ void MDC1200_process_rx(const uint16_t interrupt_bits)
                     &mdc1200_op,
                     &mdc1200_arg,
                     &mdc1200_unit_id)) {
-
                 mdc1200_rx_ready_tick_500ms = 2 * 5;  // 6 second MDC display time
                 gUpdateDisplay = true;
 
@@ -541,8 +498,7 @@ void MDC1200_process_rx(const uint16_t interrupt_bits)
         }
     }
 
-    if (rx_finished)
-    {
+    if (rx_finished) {
         mdc1200_rx_buffer_index = 0;
 
 
@@ -555,14 +511,13 @@ void MDC1200_process_rx(const uint16_t interrupt_bits)
 }
 
 
-
-void MDC1200_init(void)
-{
+void MDC1200_init(void) {
     memcpy(mdc1200_sync_suc_xor, mdc1200_sync, sizeof(mdc1200_sync));
     xor_modulation(mdc1200_sync_suc_xor, sizeof(mdc1200_sync_suc_xor));
 
     MDC1200_reset_rx();
 }
+
 uint16_t extractHex(const char *str) {
     uint16_t result = 0;
     while (*str) {
@@ -578,3 +533,54 @@ uint16_t extractHex(const char *str) {
     }
     return result;
 }
+uint8_t contact_num=0;
+uint16_t MDC_ADD[4] = {0x1D48, 0x1D88, 0x1DC8,0x1F08};
+void mdc1200_update_contact_num()
+{
+    EEPROM_ReadBuffer(MDC_NUM_ADD, (uint8_t *)&contact_num, 1);
+    if(contact_num>MAX_CONTACT_NUM)contact_num=0;
+}
+bool mdc1200_contact_find(uint16_t mdc_id, char *contact) {
+    mdc1200_update_contact_num();
+    uint8_t add = 0;
+    for (uint8_t i = 0; i < contact_num; i++) {
+        uint8_t read_once[16]={0};
+        if ((i & 3) == 0 && i) add++;
+        EEPROM_ReadBuffer(MDC_ADD[add] + i * 16, read_once, 16);
+        if (mdc_id == (uint16_t) (read_once[0] | (read_once[1] << 8))) {
+            for (int j = 0; j < 14; ++j) {
+                if(read_once[2+j]<' '||read_once[2+j]>'~')
+                    return false;
+                memcpy(contact,read_once+2,14);
+            }
+
+
+            return true;
+        }
+    }
+    return false;
+}
+//uint8_t A[64];
+//    memset(A,'A',6*16);
+//    for (int i = MDC_ADD1; i < MDC_ADD1+64; ++i) {
+//        EEPROM_WriteBuffer(i,&A[i-MDC_ADD1]);
+//    }
+//
+//    for (int i = MDC_ADD2+72; i <MDC_ADD2+64; ++i) {
+//        EEPROM_WriteBuffer(i,&A[i-MDC_ADD2]);
+//    }
+//    for (int i =MDC_ADD3; i < MDC_ADD3+64; ++i) {
+//        EEPROM_WriteBuffer(i,&A[i-MDC_ADD3]);
+//    }
+//    for (int i =MDC_ADD4; i < MDC_ADD4+64; ++i) {
+//        EEPROM_WriteBuffer(i,&A[i-MDC_ADD4]);
+//    }
+//    EEPROM_ReadBuffer(MDC_ADD1, A, sizeof(A));
+//    UART_Send(A,64);
+//    EEPROM_ReadBuffer(MDC_ADD2, A, sizeof(A));
+//    UART_Send(A,64);
+//    EEPROM_ReadBuffer(MDC_ADD3, A, sizeof(A));
+//    UART_Send(A,64);
+//    EEPROM_ReadBuffer(MDC_ADD4, A, sizeof(A));
+//    UART_Send(A,64);
+
