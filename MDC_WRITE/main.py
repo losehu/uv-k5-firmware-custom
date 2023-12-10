@@ -1,4 +1,5 @@
 import sys
+import serial.tools.list_ports
 import re
 import serial
 max_contact=15
@@ -6,6 +7,9 @@ line_count=0
 MDC_ADD= [ 0x1D48, 0x1D88, 0x1DC8,0x1F08]
 MDC_NUM_ADD=0X1D00
 file_out="MDC.txt"
+com_open=""
+
+
 def payload_xor(payload):
     XOR_ARRAY = bytes.fromhex('166c14e62e910d402135d5401303e980')
     XOR_LEN   = len(XOR_ARRAY)
@@ -81,7 +85,8 @@ def check_duplicates(file_path):
             else:
                 lines_seen.add(first_four)
 def time_set():
-    with serial.Serial('COM4', 38400, timeout=1) as ser:
+    global com_open
+    with serial.Serial(  com_open, 38400, timeout=1) as ser:
 
         settime = b'\xAB\xCD\x08\x00\x02\x69\x10\xE6\xAC\xD1\x79\x25\x9D\xAD\xDC\xBA'
         ser.write(settime)
@@ -92,7 +97,8 @@ def time_set():
 
             sys.exit()
 def read_eeprom_byte(add):
-    with serial.Serial('COM4', 38400, timeout=1) as ser:
+    global com_open
+    with serial.Serial(com_open, 38400, timeout=1) as ser:
         payload = b'\x1B\x05' + b'\x08\x00' + add.to_bytes(2, byteorder='little') + b'\x11\x00' + b'\x82\x40\x74\x65'
         # 将 payload 中的最后四个字节替换为当前时间戳
         hex_string = ' '.join(['{:02X}'.format(byte) for byte in payload])
@@ -123,47 +129,49 @@ def read_eeprom():
         sys.exit()
     print("开始读取MDC联系人")
     with open(file_out, 'w+') as file:
-        with serial.Serial('COM4', 38400, timeout=1) as ser:
-                a=0
-                while a<num_contact:
-                    add=MDC_ADD[a//4]+(a%4)*16
-                    a=a+1
-                    print(a*100/num_contact,end='%\n')
-                    payload = b'\x1B\x05' + b'\x08\x00' +add.to_bytes(2, byteorder='little')+b'\x10\x00'+b'\x82\x40\x74\x65'
+        global com_open
+        with serial.Serial(com_open, 38400, timeout=1) as ser:
+            a=0
+            while a<num_contact:
+                add=MDC_ADD[a//4]+(a%4)*16
+                a=a+1
+                print(a*100/num_contact,end='%\n')
+                payload = b'\x1B\x05' + b'\x08\x00' +add.to_bytes(2, byteorder='little')+b'\x10\x00'+b'\x82\x40\x74\x65'
                 # 将 payload 中的最后四个字节替换为当前时间戳
-                    hex_string = ' '.join(['{:02X}'.format(byte) for byte in payload])
-                    crc = crc16_ccitt(payload)
-                    payload = payload + bytes([crc & 0xFF,]) + bytes([crc>>8,])  #swap bytes of crc to get little endian
-                    message = b'\xAB\xCD' + b'\x0C\x00' + payload_xor(payload) + b'\xDC\xBA'
-                    ser.write(message)
-                    full_response = ser.read(128)
-                    if len(full_response) == 0:
-                        print("读取失败！")
-                        input("按 Enter 键退出程序")
+                hex_string = ' '.join(['{:02X}'.format(byte) for byte in payload])
+                crc = crc16_ccitt(payload)
+                payload = payload + bytes([crc & 0xFF,]) + bytes([crc>>8,])  #swap bytes of crc to get little endian
+                message = b'\xAB\xCD' + b'\x0C\x00' + payload_xor(payload) + b'\xDC\xBA'
+                ser.write(message)
+                full_response = ser.read(128)
+                if len(full_response) == 0:
+                    print("读取失败！")
+                    input("按 Enter 键退出程序")
 
-                        sys.exit()
+                    sys.exit()
 
-                    full_response_hex = full_response.hex()
-                    # 将16进制字符串转换为字节串
-                    full_response = bytes.fromhex(full_response_hex)
-            # 对payload部分进行解码，然后以两位十六进制输出
+                full_response_hex = full_response.hex()
+                # 将16进制字符串转换为字节串
+                full_response = bytes.fromhex(full_response_hex)
+                # 对payload部分进行解码，然后以两位十六进制输出
 
-                    payload_decoded = convert_payload_to_hex(full_response)
-                    i=0
-                    # 将print的输出定向到文件中
-                    for element in payload_decoded.split(' ')[8:]:
-                        i = i + 1
-                        if i == 3:
-                            file.write(' ')
-                        if i >= 3:
-                            file.write(chr(int(element, 16)))
-                        else:
-                            file.write(element.upper())
-                    file.write('\n')
-    print("读取成功，联系人保存至 MDC联系人.txt")
+                payload_decoded = convert_payload_to_hex(full_response)
+                i=0
+                # 将print的输出定向到文件中
+                for element in payload_decoded.split(' ')[8:]:
+                    i = i + 1
+                    if i == 3:
+                        file.write(' ')
+                    if i >= 3:
+                        file.write(chr(int(element, 16)))
+                    else:
+                        file.write(element.upper())
+                file.write('\n')
+    print("读取成功，联系人保存至 MDC.txt")
     return True
 def write_eeprom_byte(add,num):
-    with serial.Serial('COM4', 38400, timeout=1) as ser:
+    global com_open
+    with serial.Serial(com_open, 38400, timeout=1) as ser:
         payload = b'\x1D\x05' + b'\x09\x00' + add.to_bytes(2,
                                                            byteorder='little') + b'\x0F\x00' + b'\x82\x40\x74\x65' +  num.to_bytes(1, byteorder='big')
         # 将 payload 中的最后四个字节替换为当前时间戳
@@ -179,7 +187,8 @@ def write_eeprom_byte(add,num):
 
             sys.exit()
 def write_eeprom_select(a,my_str):
-    with serial.Serial('COM4', 38400, timeout=1) as ser:
+    global com_open
+    with serial.Serial(com_open, 38400, timeout=1) as ser:
         add = MDC_ADD[a // 4] + (a % 4) * 16
         payload_data = ''.join(my_str).encode('utf-8')
         hex1 = int(payload_data[0:2], 16)
@@ -219,7 +228,7 @@ def deal_blank_line():
 
 
 def write_eeprom():
-    print("正在将MDC联系人.txt写入到手台中")
+    print("正在将MDC.txt写入到手台中")
     global line_count  # 声明 line_count 是全局变量
     a=0
     deal_blank_line()
@@ -244,6 +253,15 @@ def write_eeprom():
 
 
 if __name__ == "__main__":
+    available_ports = list(serial.tools.list_ports.comports())
+
+    if available_ports:
+        print("可用串口：")
+        for port in available_ports:
+            print(port.device)
+    else:
+        print("没有发现可用串口。")
+    com_open=input("输入串口(例:COM4):")
     value=-1
     print("第一次使用MDC联系人请先写入联系人!!")
     while value!=0 and value!=1:
@@ -263,9 +281,9 @@ if __name__ == "__main__":
 
 
 
-    # code =[0xAB,0xCD,0x6C,0x00,0x0B,0x69,0x7C,0xE6,0x5E,0x9F,0x6D,0x41,0xBF,0x61,0xA1,0x25,0x13,0x02,0xE8,0x80,0x16,0x93,0x15,0xE2,0xD1,0x91,0x0D,0x44,0x20,0x36,0xD5,0x41,0x13,0x03,0x24,0x80,0x16,0xA1,0xDB,0x29,0xD1,0x6E,0x0D,0x40,0xDE,0xCA,0x2A,0xBF,0x13,0x00,0xE1,0x80,0x16,0x6D,0x14,0xE6,0xD1,0x6E,0xF2,0xBF,0xDE,0xCA,0x2A,0xBF,0x12,0x03,0x16,0x7F,0xE9,0x93,0xEB,0x19,0x2E,0x91,0x0D,0x40,0xDE,0xCA,0x2A,0xBF,0x42,0x56,0xA8,0xCE,0x45,0x24,0x51,0xA8,0x69,0x91,0x0D,0x40,0x21,0x35,0xD5,0x40,0x46,0x55,0xC4,0xCB,0x23,0x6C,0x14,0xE6,0x2E,0x91,0x0D,0x40,0x21,0x35,0xD5,0x40,0x79,0x5A,0xDC,0xBA]
-    # # code=[0xAB, 0xCD, 0x1C, 0x00, 0x0B, 0x69, 0x0C, 0xE6, 0xCE, 0x80, 0x1D, 0x40, 0xBF, 0x61, 0xA1, 0x25, 0xEC, 0xFC, 0x16, 0x7F, 0xE9, 0x93, 0xEB, 0x19, 0xD1, 0x6E, 0xF2, 0xBF, 0xDE, 0xCA, 0x2A, 0xBF, 0xCF, 0x04, 0xDC, 0xBA]
-    # payload_decoded = convert_payload_to_hex(code)  # 跳过头部和尾部的校验信息
-    # hex_payload = ' '.join(['{:02X}'.format(byte) for byte in payload_decoded])
-    # print(hex_payload)
+# code =[0xAB,0xCD,0x6C,0x00,0x0B,0x69,0x7C,0xE6,0x5E,0x9F,0x6D,0x41,0xBF,0x61,0xA1,0x25,0x13,0x02,0xE8,0x80,0x16,0x93,0x15,0xE2,0xD1,0x91,0x0D,0x44,0x20,0x36,0xD5,0x41,0x13,0x03,0x24,0x80,0x16,0xA1,0xDB,0x29,0xD1,0x6E,0x0D,0x40,0xDE,0xCA,0x2A,0xBF,0x13,0x00,0xE1,0x80,0x16,0x6D,0x14,0xE6,0xD1,0x6E,0xF2,0xBF,0xDE,0xCA,0x2A,0xBF,0x12,0x03,0x16,0x7F,0xE9,0x93,0xEB,0x19,0x2E,0x91,0x0D,0x40,0xDE,0xCA,0x2A,0xBF,0x42,0x56,0xA8,0xCE,0x45,0x24,0x51,0xA8,0x69,0x91,0x0D,0x40,0x21,0x35,0xD5,0x40,0x46,0x55,0xC4,0xCB,0x23,0x6C,0x14,0xE6,0x2E,0x91,0x0D,0x40,0x21,0x35,0xD5,0x40,0x79,0x5A,0xDC,0xBA]
+# # code=[0xAB, 0xCD, 0x1C, 0x00, 0x0B, 0x69, 0x0C, 0xE6, 0xCE, 0x80, 0x1D, 0x40, 0xBF, 0x61, 0xA1, 0x25, 0xEC, 0xFC, 0x16, 0x7F, 0xE9, 0x93, 0xEB, 0x19, 0xD1, 0x6E, 0xF2, 0xBF, 0xDE, 0xCA, 0x2A, 0xBF, 0xCF, 0x04, 0xDC, 0xBA]
+# payload_decoded = convert_payload_to_hex(code)  # 跳过头部和尾部的校验信息
+# hex_payload = ' '.join(['{:02X}'.format(byte) for byte in payload_decoded])
+# print(hex_payload)
 

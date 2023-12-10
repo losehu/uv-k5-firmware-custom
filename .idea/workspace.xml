@@ -20,8 +20,25 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="MDC联系人">
+    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="MDC PY">
+      <change beforePath="$PROJECT_DIR$/.idea/uv-k5-firmware-chinese.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/uv-k5-firmware-chinese.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MDC_WRITE/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/MDC_WRITE/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/aircopy.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/aircopy.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/aircopy.h" beforeDir="false" afterPath="$PROJECT_DIR$/app/aircopy.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/app.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/generic.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/generic.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/spectrum.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/spectrum.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frequencies.c" beforeDir="false" afterPath="$PROJECT_DIR$/frequencies.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frequencies.h" beforeDir="false" afterPath="$PROJECT_DIR$/frequencies.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions.c" beforeDir="false" afterPath="$PROJECT_DIR$/functions.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/misc.c" beforeDir="false" afterPath="$PROJECT_DIR$/misc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/misc.h" beforeDir="false" afterPath="$PROJECT_DIR$/misc.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/radio.c" beforeDir="false" afterPath="$PROJECT_DIR$/radio.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/helper.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/helper.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/ui.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/ui.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/ui.h" beforeDir="false" afterPath="$PROJECT_DIR$/ui/ui.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/win_make.bat" beforeDir="false" afterPath="$PROJECT_DIR$/win_make.bat" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,28 +93,51 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/win_make.bat&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/MDC_WRITE/main.py&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;File.Encoding&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
     &quot;structure.view.defaults.are.configured&quot;: &quot;true&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\MDC_WRITE" />
       <recent name="C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\app" />
       <recent name="C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese" />
     </key>
   </component>
-  <component name="RunManager" selected="Shell Script.win docker">
+  <component name="RunManager" selected="Python.main">
     <configuration name="clean" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
       <makefile filename="$PROJECT_DIR$/Makefile" target="clean" workingDirectory="" arguments="">
         <envs />
       </makefile>
+      <method v="2" />
+    </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="uv-k5-firmware-chinese" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\RUPC\py32\python.exe" />
+      <option name="SDK_NAME" value="Python 3.5 (uv-k5-firmware-chinese)" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/MDC_WRITE" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/MDC_WRITE/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
     <configuration name="linux docker" type="ShConfigurationType">
@@ -147,6 +187,7 @@
     </configuration>
     <list>
       <item itemvalue="Makefile 目标.clean" />
+      <item itemvalue="Python.main" />
       <item itemvalue="Shell Script.win docker" />
       <item itemvalue="Shell Script.linux docker" />
       <item itemvalue="Shell Script.win" />
@@ -187,14 +228,11 @@
       <workItem from="1702024305901" duration="2385000" />
       <workItem from="1702049513969" duration="28027000" />
       <workItem from="1702119088204" duration="12764000" />
-      <workItem from="1702141572484" duration="2000" />
-    </task>
-    <task id="LOCAL-00036" summary="MDC RX">
-      <created>1701687970236</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1701687970236</updated>
+      <workItem from="1702141572484" duration="2405000" />
+      <workItem from="1702171975719" duration="1521000" />
+      <workItem from="1702173556660" duration="287000" />
+      <workItem from="1702173911297" duration="1180000" />
+      <workItem from="1702175521208" duration="2000" />
     </task>
     <task id="LOCAL-00037" summary="MDC RX">
       <created>1701689801897</created>
@@ -532,11 +570,21 @@
       <option name="project" value="LOCAL" />
       <updated>1702140061106</updated>
     </task>
-    <option name="localTasksCounter" value="85" />
+    <task id="LOCAL-00085" summary="MDC PY">
+      <created>1702141605728</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1702141605728</updated>
+    </task>
+    <option name="localTasksCounter" value="86" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.bat" />
   </component>
   <component name="VCPKGProject">
     <isAutomaticEditVcpkgJson value="false" />
@@ -556,7 +604,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix bug" />
     <MESSAGE value="掃描下翻譯" />
     <MESSAGE value="fix https://github.com/losehu/uv-k5-firmware-chinese/issues/4" />
     <MESSAGE value="修复切换调制模式时亚音消失问题" />
@@ -581,6 +628,7 @@
     <MESSAGE value="clion" />
     <MESSAGE value="开机音修复" />
     <MESSAGE value="MDC联系人" />
-    <option name="LAST_COMMIT_MESSAGE" value="MDC联系人" />
+    <MESSAGE value="MDC PY" />
+    <option name="LAST_COMMIT_MESSAGE" value="MDC PY" />
   </component>
 </project>

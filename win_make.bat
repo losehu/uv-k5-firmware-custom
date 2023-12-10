@@ -28,8 +28,9 @@
 
 :: Do the compile
 ::
-::make clean
+make clean
 make
+:: pyinstaller --onefile ./MDC_WRITE/main.py
 :: If you have python installed, you can create a 'packed' .bin from the compiled firmware.bin file.
 :: The Quansheng windows upload-to-radio program requires a 'packed' .bin file.
 ::

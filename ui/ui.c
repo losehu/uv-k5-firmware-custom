@@ -13,7 +13,8 @@
  *     See the License for the specific language governing permissions and
  *     limitations under the License.
  */
-
+#include "../misc.h"
+#include <assert.h>
 #include <string.h>
 
 #include "app/chFrScanner.h"
@@ -42,37 +43,28 @@ uint8_t           gAskForConfirmation;
 bool              gAskToSave;
 bool              gAskToDelete;
 
+
+void (*UI_DisplayFunctions[])(void) = {
+        [DISPLAY_MAIN] = &UI_DisplayMain,
+        [DISPLAY_MENU] = &UI_DisplayMenu,
+        [DISPLAY_SCANNER] = &UI_DisplayScanner,
+
+#ifdef ENABLE_FMRADIO
+        [DISPLAY_FM] = &UI_DisplayFM,
+#endif
+
+#ifdef ENABLE_AIRCOPY
+        [DISPLAY_AIRCOPY] = &UI_DisplayAircopy,
+#endif
+};
+
+static_assert(ARRAY_SIZE(UI_DisplayFunctions) == DISPLAY_N_ELEM);
+
 void GUI_DisplayScreen(void)
 {
-	switch (gScreenToDisplay)
-	{
-		case DISPLAY_MAIN:
-			UI_DisplayMain();
-			break;
-
-		#ifdef ENABLE_FMRADIO
-			case DISPLAY_FM:
-				UI_DisplayFM();
-				break;
-		#endif
-		
-		case DISPLAY_MENU:
-			UI_DisplayMenu();
-			break;
-
-		case DISPLAY_SCANNER:
-			UI_DisplayScanner();
-			break;
-
-		#ifdef ENABLE_AIRCOPY
-			case DISPLAY_AIRCOPY:
-				UI_DisplayAircopy();
-				break;
-		#endif
-
-		default:
-			break;
-	}
+    if (gScreenToDisplay != DISPLAY_INVALID) {
+        UI_DisplayFunctions[gScreenToDisplay]();
+    }
 }
 
 void GUI_SelectNextDisplay(GUI_DisplayType_t Display)

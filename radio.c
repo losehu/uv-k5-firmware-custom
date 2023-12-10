@@ -1016,7 +1016,7 @@ void RADIO_PrepareTX(void)
             ) {
         // TX frequency not allowed
         State = VFO_STATE_TX_DISABLE;
-    } else if (gSerialConfigCountDown_500ms > 0) {
+    } else if ( SerialConfigInProgress()) {
         // TX is disabled or config upload/download in progress
         State = VFO_STATE_TX_DISABLE;
     } else if (gCurrentVfo->BUSY_CHANNEL_LOCK && gCurrentFunction == FUNCTION_RECEIVE) {

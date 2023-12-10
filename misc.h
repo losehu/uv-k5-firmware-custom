@@ -163,7 +163,9 @@ extern uint32_t              gCustomAesKey[4];
 extern bool                  bHasCustomAesKey;
 extern uint32_t              gChallenge[4];
 extern uint8_t               gTryCount;
-
+#ifdef ENABLE_AIRCOPY
+extern uint8_t           gAircopySendCountdown;
+#endif
 extern uint16_t              gEEPROM_RSSI_CALIB[7][4];
 
 extern uint16_t              gEEPROM_1F8A;
@@ -327,4 +329,7 @@ extern volatile uint8_t      boot_counter_10ms;
 int32_t NUMBER_AddWithWraparound(int32_t Base, int32_t Add, int32_t LowerLimit, int32_t UpperLimit);
 unsigned long StrToUL(const char * str);
 void FUNCTION_NOP();
+inline bool SerialConfigInProgress() { return gSerialConfigCountDown_500ms != 0; }
+
+
 #endif
