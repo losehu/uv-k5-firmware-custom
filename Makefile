@@ -48,6 +48,8 @@ ENABLE_SCAN_RANGES            := 1
 ENABLE_MDC1200                   := 1
 ENABLE_MDC1200_SHOW_OP_ARG       := 1
 ENABLE_MDC1200_SIDE_BEEP         := 0
+ENABLE_MDC1200_CONRACT         := 1
+
 
 # ---- DEBUGGING ----
 ENABLE_AM_FIX_SHOW_DATA       := 0

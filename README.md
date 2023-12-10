@@ -117,6 +117,7 @@ ENABLE_SCAN_RANGES            := 1       扫描范围
 ENABLE_MDC1200                := 1       MDC1200发送功能
 ENABLE_MDC1200_SHOW_OP_ARG    := 1       MDC显示首尾音参数
 ENABLE_MDC1200_SIDE_BEEP      := 0       MDC侧音
+ENABLE_MDC1200_CONRACT        := 1       MDC联系人，开启后ENABLE_MDC1200_SHOW_OP_ARG失效
 ENABLE_AM_FIX_SHOW_DATA       := 0       显示 AM 修复的调试数据（仍在调整） 
 ENABLE_AGC_SHOW_DATA          := 0       显示ACG参数
 ```

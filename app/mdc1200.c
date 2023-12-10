@@ -533,6 +533,7 @@ uint16_t extractHex(const char *str) {
     }
     return result;
 }
+#ifdef  ENABLE_MDC1200_CONRACT
 uint8_t contact_num=0;
 uint16_t MDC_ADD[4] = {0x1D48, 0x1D88, 0x1DC8,0x1F08};
 void mdc1200_update_contact_num()
@@ -583,4 +584,4 @@ bool mdc1200_contact_find(uint16_t mdc_id, char *contact) {
 //    UART_Send(A,64);
 //    EEPROM_ReadBuffer(MDC_ADD4, A, sizeof(A));
 //    UART_Send(A,64);
-
+#endif
