@@ -120,53 +120,41 @@ def read_eeprom_byte(add):
 
         payload_decoded = convert_payload_to_hex(full_response)
     return payload_decoded[24:26]
+import sys
+def read_contact_information(ser, add, file):
+    payload = b'\x1B\x05' + b'\x08\x00' + add.to_bytes(2, byteorder='little') + b'\x10\x00' + b'\x82\x40\x74\x65'
+    crc = crc16_ccitt(payload)
+    payload += bytes([crc & 0xFF,]) + bytes([crc >> 8,])
+    message = b'\xAB\xCD' + b'\x0C\x00' + payload_xor(payload) + b'\xDC\xBA'
+    ser.write(message)
+    full_response = ser.read(128)
+    if len(full_response) == 0:
+        raise ValueError("读取失败！")
+    full_response_hex = full_response.hex()
+    full_response = bytes.fromhex(full_response_hex)
+    payload_decoded = convert_payload_to_hex(full_response)
+    contact_info = ' '.join(payload_decoded.split(' ')[8:])
+    contact_info = ' '.join([element.upper() if i < 3 else chr(int(element, 16)) for i, element in enumerate(contact_info.split(' '))])
+    file.write(contact_info + '\n')
 def read_eeprom():
-    num_contact = int( read_eeprom_byte(MDC_NUM_ADD), 16)
-    if num_contact==0 or num_contact>max_contact:
+    num_contact = int(read_eeprom_byte(MDC_NUM_ADD), 16)
+    if num_contact == 0 or num_contact > max_contact:
         print("手台并无设置联系人,请先写入联系人！")
         input("按 Enter 键退出程序")
-
         sys.exit()
+
     print("开始读取MDC联系人")
-    with open(file_out, 'w+') as file:
-        global com_open
-        with serial.Serial(com_open, 38400, timeout=1) as ser:
-            a=0
-            while a<num_contact:
-                add=MDC_ADD[a//4]+(a%4)*16
-                a=a+1
-                print(a*100/num_contact,end='%\n')
-                payload = b'\x1B\x05' + b'\x08\x00' +add.to_bytes(2, byteorder='little')+b'\x10\x00'+b'\x82\x40\x74\x65'
-                # 将 payload 中的最后四个字节替换为当前时间戳
-                hex_string = ' '.join(['{:02X}'.format(byte) for byte in payload])
-                crc = crc16_ccitt(payload)
-                payload = payload + bytes([crc & 0xFF,]) + bytes([crc>>8,])  #swap bytes of crc to get little endian
-                message = b'\xAB\xCD' + b'\x0C\x00' + payload_xor(payload) + b'\xDC\xBA'
-                ser.write(message)
-                full_response = ser.read(128)
-                if len(full_response) == 0:
-                    print("读取失败！")
-                    input("按 Enter 键退出程序")
+    with open(file_out, 'w+') as file, serial.Serial(com_open, 38400, timeout=1) as ser:
+        for a in range(num_contact):
+            add = MDC_ADD[a // 4] + (a % 4) * 16
+            print(f"{(a + 1) * 100 / num_contact}%", end='%\n')
+            try:
+                read_contact_information(ser, add, file)
+            except ValueError as e:
+                print(e)
+                input("按 Enter 键退出程序")
+                sys.exit()
 
-                    sys.exit()
-
-                full_response_hex = full_response.hex()
-                # 将16进制字符串转换为字节串
-                full_response = bytes.fromhex(full_response_hex)
-                # 对payload部分进行解码，然后以两位十六进制输出
-
-                payload_decoded = convert_payload_to_hex(full_response)
-                i=0
-                # 将print的输出定向到文件中
-                for element in payload_decoded.split(' ')[8:]:
-                    i = i + 1
-                    if i == 3:
-                        file.write(' ')
-                    if i >= 3:
-                        file.write(chr(int(element, 16)))
-                    else:
-                        file.write(element.upper())
-                file.write('\n')
     print("读取成功，联系人保存至 MDC.txt")
     return True
 def write_eeprom_byte(add,num):
