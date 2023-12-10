@@ -251,7 +251,6 @@ def write_eeprom():
 # def main():
 
 
-
 if __name__ == "__main__":
     available_ports = list(serial.tools.list_ports.comports())
 
@@ -259,12 +258,14 @@ if __name__ == "__main__":
         print("可用串口：")
         for port in available_ports:
             print(port.device)
+        com_open = available_ports[0].device  # 自动选择第一个可用串口
     else:
         print("没有发现可用串口。")
-    com_open=input("输入串口(例:COM4):")
-    value=-1
+        com_open = input("输入串口(例:COM4):")
+
+    value = -1
     print("第一次使用MDC联系人请先写入联系人!!")
-    while value!=0 and value!=1:
+    while value != 0 and value != 1:
         value = int(input("写入(0)或读取(1)联系人:"))  # 获取用户输入的整数值
 
         if value == 0:
@@ -275,6 +276,7 @@ if __name__ == "__main__":
             read_eeprom()
         else:
             value = int(input("输入无效!\n输入(0/1)来(写入/读取)联系人:"))  # 获取用户输入的整数值
+
     input("按 Enter 键退出程序")
 
 #    main()
