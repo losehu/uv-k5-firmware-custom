@@ -21,24 +21,47 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="MDC PY">
-      <change beforePath="$PROJECT_DIR$/.idea/uv-k5-firmware-chinese.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/uv-k5-firmware-chinese.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MDC_WRITE/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/MDC_WRITE/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/aircopy.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/aircopy.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/aircopy.h" beforeDir="false" afterPath="$PROJECT_DIR$/app/aircopy.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/am_fix.c" beforeDir="false" afterPath="$PROJECT_DIR$/am_fix.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/action.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/action.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dtmf.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/dtmf.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/fm.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/fm.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/generic.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/generic.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/spectrum.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/spectrum.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frequencies.c" beforeDir="false" afterPath="$PROJECT_DIR$/frequencies.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frequencies.h" beforeDir="false" afterPath="$PROJECT_DIR$/frequencies.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions.c" beforeDir="false" afterPath="$PROJECT_DIR$/functions.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/mdc1200.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/mdc1200.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/menu.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/menu.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/uart.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/uart.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/audio.c" beforeDir="false" afterPath="$PROJECT_DIR$/audio.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/audio.h" beforeDir="false" afterPath="$PROJECT_DIR$/audio.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bitmaps.c" beforeDir="false" afterPath="$PROJECT_DIR$/bitmaps.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bitmaps.h" beforeDir="false" afterPath="$PROJECT_DIR$/bitmaps.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/board.c" beforeDir="false" afterPath="$PROJECT_DIR$/board.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/debugging.h" beforeDir="false" afterPath="$PROJECT_DIR$/debugging.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/backlight.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/backlight.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/backlight.h" beforeDir="false" afterPath="$PROJECT_DIR$/driver/backlight.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/bk4819.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/bk4819.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/crc.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/crc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/keyboard.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/keyboard.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/system.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/system.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/systick.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/systick.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/helper/battery.c" beforeDir="false" afterPath="$PROJECT_DIR$/helper/battery.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/helper/battery.h" beforeDir="false" afterPath="$PROJECT_DIR$/helper/battery.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/misc.c" beforeDir="false" afterPath="$PROJECT_DIR$/misc.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/misc.h" beforeDir="false" afterPath="$PROJECT_DIR$/misc.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/radio.c" beforeDir="false" afterPath="$PROJECT_DIR$/radio.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/radio.h" beforeDir="false" afterPath="$PROJECT_DIR$/radio.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.c" beforeDir="false" afterPath="$PROJECT_DIR$/settings.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.h" beforeDir="false" afterPath="$PROJECT_DIR$/settings.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/battery.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/battery.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/helper.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/helper.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/ui.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/ui.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/ui.h" beforeDir="false" afterPath="$PROJECT_DIR$/ui/ui.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/win_make.bat" beforeDir="false" afterPath="$PROJECT_DIR$/win_make.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/lock.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/lock.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/menu.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/menu.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/status.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/status.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/version.c" beforeDir="false" afterPath="$PROJECT_DIR$/version.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,7 +134,7 @@
       <recent name="C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager" selected="Shell Script.win docker">
     <configuration name="clean" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
       <makefile filename="$PROJECT_DIR$/Makefile" target="clean" workingDirectory="" arguments="">
         <envs />
@@ -233,6 +256,7 @@
       <workItem from="1702173556660" duration="287000" />
       <workItem from="1702173911297" duration="1180000" />
       <workItem from="1702175521208" duration="2000" />
+      <workItem from="1702774207484" duration="5418000" />
     </task>
     <task id="LOCAL-00037" summary="MDC RX">
       <created>1701689801897</created>

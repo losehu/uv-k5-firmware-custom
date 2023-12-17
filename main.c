@@ -14,6 +14,7 @@
  *     limitations under the License.
  */
 #include "ui/ui.h"
+#include <stdint.h>
 #include <string.h>
 
 #include <stdio.h>     // NULL
@@ -22,33 +23,40 @@
 #ifdef ENABLE_AM_FIX
 	#include "am_fix.h"
 #endif
+#include "audio.h"
+#include "board.h"
+#include "misc.h"
+#include "radio.h"
+#include "settings.h"
+#include "version.h"
 #include "app/app.h"
 #include "app/dtmf.h"
-#include "audio.h"
 #include "bsp/dp32g030/gpio.h"
 #include "bsp/dp32g030/syscon.h"
-#include "board.h"
 #include "driver/backlight.h"
 #include "driver/bk4819.h"
 #include "driver/gpio.h"
 #include "driver/system.h"
 #include "driver/systick.h"
+#ifdef ENABLE_UART
 #include "driver/uart.h"
+#endif
 #include "helper/battery.h"
 #include "helper/boot.h"
-#include "misc.h"
-#include "radio.h"
-#include "settings.h"
+
 #include "ui/lock.h"
 #include "ui/welcome.h"
 #include "ui/menu.h"
-#include "version.h"
 #include "driver/eeprom.h"
-void _putchar(char c)
-{
-	UART_Send((uint8_t *)&c, 1);
-}
 
+void _putchar(__attribute__((unused)) char c)
+{
+
+#ifdef ENABLE_UART
+    UART_Send((uint8_t *)&c, 1);
+#endif
+
+}
 void Main(void)
 {
 	//BOOT_Mode_t  BootMode;
@@ -67,15 +75,14 @@ void Main(void)
 
 	SYSTICK_Init();
 	BOARD_Init();
-	UART_Init();
+
 
 	boot_counter_10ms = 250;   // 2.5 sec
+#ifdef ENABLE_UART
+    UART_Init();
+#endif
 
-	//UART_Send(UART_Version, strlen(UART_Version));
 
-	// Not implementing authentic device checks
-
-	memset(&gEeprom, 0, sizeof(gEeprom));
 
 	memset(gDTMF_String, '-', sizeof(gDTMF_String));
 	gDTMF_String[sizeof(gDTMF_String) - 1] = 0;
@@ -98,9 +105,9 @@ void Main(void)
 
 	RADIO_SetupRegisters(true);
 
-	for (unsigned int i = 0; i < ARRAY_SIZE(gBatteryVoltages); i++)
-		BOARD_ADC_GetBatteryInfo(&gBatteryVoltages[i], &gBatteryCurrent);
-
+    for (unsigned int i = 0; i < ARRAY_SIZE(gBatteryVoltages); i++) {
+        BOARD_ADC_GetBatteryInfo(&gBatteryVoltages[i], &gBatteryCurrent);
+    }
 	BATTERY_GetReadings(false);
 
 	#ifdef ENABLE_AM_FIX
@@ -208,13 +215,11 @@ void Main(void)
 		if (gNextTimeslice)
 		{
 			APP_TimeSlice10ms();
-			gNextTimeslice = false;
 		}
 
 		if (gNextTimeslice_500ms)
 		{
 			APP_TimeSlice500ms();
-			gNextTimeslice_500ms = false;
 		}
 	}
 }

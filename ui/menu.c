@@ -436,7 +436,7 @@ void UI_DisplayMenu(void) {
     //const void *BITMAP_CurrentIndicator = BITMAP_MARKER;
 
     if (gIsInSubMenu)
-        memmove(gFrameBuffer[2] + 40, BITMAP_MARKER, sizeof(BITMAP_MARKER));
+        memmove(gFrameBuffer[2] + 40, BITMAP_VFO_Default, sizeof(BITMAP_VFO_Default));
 
     // draw the menu index number/count绘制菜单索引号/总数 ：
     sprintf(String, "%2u/%u", 1 + gMenuCursor, gMenuListCount);
@@ -499,7 +499,11 @@ void UI_DisplayMenu(void) {
     memset(String, 0, sizeof(String));
 
     bool already_printed = false;
+/* Brightness is set to max in some entries of this menu. Return it to the configured brightness
+	   level the "next" time we enter here.I.e., when we move from one menu to another.
+	   It also has to be set back to max when pressing the Exit key. */
 
+    BACKLIGHT_TurnOn();
     switch (UI_MENU_GetCurrentMenuId()) {
         case MENU_SQL:
             sprintf(String, "%d", gSubMenuSelection);
@@ -904,7 +908,7 @@ void UI_DisplayMenu(void) {
             if (!gIsDtmfContactValid)
                 strcpy(String, "NULL");
             else
-                memmove(String, Contact, 8);
+                memcpy(String, Contact, 8);
             break;
 #endif
 //        case MENU_PONMSG:
@@ -1091,7 +1095,7 @@ void UI_DisplayMenu(void) {
 #ifdef ENABLE_DTMF_CALLING
     if (UI_MENU_GetCurrentMenuId() == MENU_D_LIST && gIsDtmfContactValid) {
         Contact[11] = 0;
-        memmove(&gDTMF_ID, Contact + 8, 4);
+        memcpy(&gDTMF_ID, Contact + 8, 4);
         sprintf(String, "ID:%s", Contact + 8);
         UI_PrintStringSmall(String, menu_item_x1, menu_item_x2, 5);
     }

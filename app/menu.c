@@ -691,7 +691,7 @@ void MENU_AcceptSetting(void) {
                     GUI_SelectNextDisplay(DISPLAY_MAIN);
                     gDTMF_InputMode       = true;
                     gDTMF_InputBox_Index  = 3;
-                    memmove(gDTMF_InputBox, gDTMF_ID, 4);
+                    memcpy(gDTMF_InputBox, gDTMF_ID, 4);
                     gRequestDisplayScreen = DISPLAY_INVALID;
                 }
                 return;
@@ -1339,6 +1339,9 @@ static void MENU_Key_EXIT(bool bKeyPressed, bool bKeyHeld) {
     gBeepToPlay = BEEP_1KHZ_60MS_OPTIONAL;
 
     if (!gCssBackgroundScan) {
+        /* Backlight related menus set full brightness. Set it back to the configured value,
+		   just in case we are exiting from one of them. */
+        BACKLIGHT_TurnOn();
         if (gIsInSubMenu) {
             if (gInputBoxIndex == 0 || UI_MENU_GetCurrentMenuId() != MENU_OFFSET) {
                 gAskForConfirmation = 0;
@@ -1459,8 +1462,7 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld) {
             edit_index = 0;  // 'edit_index' is going to be used as the cursor position
 
             // make a copy so we can test for change when exiting the menu item
-            memmove(edit_original, edit, sizeof(edit_original));
-
+            memcpy(edit_original, edit, sizeof(edit_original));
             return;
         } else if (edit_index >= 0 && edit_index < 10) {    // editing the channel name characters
 
@@ -1637,8 +1639,9 @@ static void MENU_Key_UP_DOWN(bool bKeyPressed, bool bKeyHeld, int8_t Direction) 
 
         gRequestDisplayScreen = DISPLAY_MENU;
 
-        if (UI_MENU_GetCurrentMenuId() != MENU_ABR &&
-            gEeprom.BACKLIGHT_TIME == 0) // backlight always off and not in the backlight menu
+        if (UI_MENU_GetCurrentMenuId() != MENU_ABR
+            && UI_MENU_GetCurrentMenuId() != MENU_ABR_MAX
+            && gEeprom.BACKLIGHT_TIME == 0) // backlight always off and not in the backlight menu
         {
             BACKLIGHT_TurnOff();
         }

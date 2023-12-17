@@ -252,6 +252,10 @@ typedef struct {
 #endif
     uint8_t               BACKLIGHT_MAX;
     BATTERY_Type_t		  BATTERY_TYPE;
+#ifdef ENABLE_RSSI_BAR
+    uint8_t               S0_LEVEL;
+	uint8_t               S9_LEVEL;
+#endif
     uint32_t MDC1200_ID;
 } EEPROM_Config_t;
 

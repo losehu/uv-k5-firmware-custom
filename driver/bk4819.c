@@ -16,13 +16,13 @@
 
 #include <stdio.h>   // NULL
 
-#include "audio.h"
+#include "../audio.h"
+#include "../bsp/dp32g030/gpio.h"
+#include "../bsp/dp32g030/portcon.h"
 #include "bk4819.h"
-#include "bsp/dp32g030/gpio.h"
-#include "bsp/dp32g030/portcon.h"
-#include "driver/gpio.h"
-#include "driver/system.h"
-#include "driver/systick.h"
+#include "gpio.h"
+#include "system.h"
+#include "systick.h"
 #ifdef ENABLE_MDC1200
 #include "app/mdc1200.h"
 #endif

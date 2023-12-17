@@ -87,9 +87,7 @@ bool              gSetting_KILLED;
 //bool              gSetting_350EN;
 uint8_t           gSetting_F_LOCK;
 bool              gSetting_ScrambleEnable;
-#ifdef ENABLE_AIRCOPY
-uint8_t       gAircopySendCountdown;
-#endif
+
 
 #ifdef ENABLE_AM_FIX
 bool          gSetting_AM_fix;

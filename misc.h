@@ -16,7 +16,7 @@
 
 #ifndef MISC_H
 #define MISC_H
-
+#include "assert.h"
 #include <stdbool.h>
 #include <stdint.h>
 
@@ -163,9 +163,7 @@ extern uint32_t              gCustomAesKey[4];
 extern bool                  bHasCustomAesKey;
 extern uint32_t              gChallenge[4];
 extern uint8_t               gTryCount;
-#ifdef ENABLE_AIRCOPY
-extern uint8_t           gAircopySendCountdown;
-#endif
+
 extern uint16_t              gEEPROM_RSSI_CALIB[7][4];
 
 extern uint16_t              gEEPROM_1F8A;

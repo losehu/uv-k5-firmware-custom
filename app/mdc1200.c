@@ -533,7 +533,7 @@ uint16_t extractHex(const char *str) {
     }
     return result;
 }
-#ifdef  ENABLE_MDC1200_CONRACT
+#ifdef  ENABLE_MDC1200_CONTACT
 uint8_t contact_num=0;
 uint16_t MDC_ADD[4] = {0x1D48, 0x1D88, 0x1DC8,0x1F08};
 void mdc1200_update_contact_num()

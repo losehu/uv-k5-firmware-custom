@@ -83,7 +83,10 @@ void GENERIC_Key_F(bool bKeyPressed, bool bKeyHeld)
     }
     else // short pressed
     {
+
+#ifdef ENABLE_FMRADIO
         if (gScreenToDisplay != DISPLAY_FM)
+#endif
         {
             gBeepToPlay = BEEP_1KHZ_60MS_OPTIONAL;
             return;
@@ -229,8 +232,14 @@ void GENERIC_Key_PTT(bool bKeyPressed)
 
     done:
     gPttDebounceCounter = 0;
-    if (gScreenToDisplay != DISPLAY_MENU && gRequestDisplayScreen != DISPLAY_FM)     // 1of11 .. don't close the menu
+    if (gScreenToDisplay != DISPLAY_MENU
+#ifdef ENABLE_FMRADIO
+        && gRequestDisplayScreen != DISPLAY_FM
+#endif
+            ) {
+        // 1of11 .. don't close the menu
         gRequestDisplayScreen = DISPLAY_MAIN;
+    }
     gUpdateStatus  = true;
     gUpdateDisplay = true;
 }

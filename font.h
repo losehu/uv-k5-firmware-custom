@@ -18,14 +18,11 @@
 #define FONT_H
 
 #include <stdint.h>
-extern const uint8_t gFontChinese_out[1678];
-#define CHAR_SIZE 20U
-#define CHAR_COL 10U
-#define CHAR_ROW 11U
-#define GET_BIT(byte, bitPosition) (((byte) >> (bitPosition)) & 0x01U)
+extern const uint8_t gFontChinese_out[2013];
+#define CHN_FONT_WIDTH 11U
+#define CHN_FONT_HIGH 12U
 
-//extern const uint8_t gFontChinese[123][16] ;
-//gFontBig
+
 extern const uint8_t gFontBigDigits[11][20/*20*/];
 extern const uint8_t gFont3x5[96][3];
 extern const uint8_t gFontSmall[95 - 1][6];
