@@ -20,7 +20,12 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="MDC PY" />
+    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="赞助">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions.c" beforeDir="false" afterPath="$PROJECT_DIR$/functions.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/version.c" beforeDir="false" afterPath="$PROJECT_DIR$/version.c" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -215,14 +220,7 @@
       <workItem from="1702173911297" duration="1180000" />
       <workItem from="1702175521208" duration="2000" />
       <workItem from="1702774207484" duration="5418000" />
-      <workItem from="1702793061935" duration="1000" />
-    </task>
-    <task id="LOCAL-00037" summary="MDC RX">
-      <created>1701689801897</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1701689801897</updated>
+      <workItem from="1702793061935" duration="4131000" />
     </task>
     <task id="LOCAL-00038" summary="MDC RX">
       <created>1701690210457</created>
@@ -560,7 +558,14 @@
       <option name="project" value="LOCAL" />
       <updated>1702141605728</updated>
     </task>
-    <option name="localTasksCounter" value="86" />
+    <task id="LOCAL-00086" summary="赞助">
+      <created>1702793183140</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1702793183141</updated>
+    </task>
+    <option name="localTasksCounter" value="87" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -587,7 +592,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="掃描下翻譯" />
     <MESSAGE value="fix https://github.com/losehu/uv-k5-firmware-chinese/issues/4" />
     <MESSAGE value="修复切换调制模式时亚音消失问题" />
     <MESSAGE value="按键锁定改回以前逻辑" />
@@ -612,6 +616,7 @@
     <MESSAGE value="开机音修复" />
     <MESSAGE value="MDC联系人" />
     <MESSAGE value="MDC PY" />
-    <option name="LAST_COMMIT_MESSAGE" value="MDC PY" />
+    <MESSAGE value="赞助" />
+    <option name="LAST_COMMIT_MESSAGE" value="赞助" />
   </component>
 </project>

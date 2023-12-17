@@ -143,6 +143,9 @@ void FUNCTION_PowerSave() {
 
 void FUNCTION_Transmit() {
     // if DTMF is enabled when TX'ing, it changes the TX audio filtering !! .. 1of11
+#ifdef ENABLE_MDC1200
+    BK4819_enable_mdc1200_rx(false);
+#endif
     BK4819_DisableDTMF();
 
 #ifdef ENABLE_DTMF_CALLING

@@ -735,11 +735,9 @@ void UI_DisplayMain(void) {
 #ifdef ENABLE_MDC1200
 
         if (mdc1200_rx_ready_tick_500ms > 0) {
-            center_line = CENTER_LINE_MDC1200;
-#ifdef ENABLE_MDC1200_CONTACT
-            uint8_t print_col = 0;
             char mdc1200_contact[14];
-
+            center_line = CENTER_LINE_MDC1200;
+            uint8_t print_col = 0;
             if (mdc1200_contact_find(mdc1200_unit_id, mdc1200_contact))//
             {
 
@@ -750,22 +748,18 @@ void UI_DisplayMain(void) {
                 sprintf(String, "ID %04X", mdc1200_unit_id);
                 print_col = 40;
             }
-           UI_PrintStringSmallBold(String, print_col, 0, 3);
 
-#elifdef ENABLE_MDC1200_SHOW_OP_ARG
-        sprintf(String, "MDC1200 %02X %02X %04X", mdc1200_op, mdc1200_arg, mdc1200_unit_id);
-                   UI_PrintStringSmallBold(String, 4, 0, 3);
+//#ifdef ENABLE_MDC1200_SHOW_OP_ARG
+//                sprintf(String, "MDC1200 %02X %02X %04X", mdc1200_op, mdc1200_arg, mdc1200_unit_id);
+//#else
+//                sprintf(String, "MDC1200 ID %04X", mdc1200_unit_id);
+//#endif
 
-#else
-                 sprintf(String, "MDC1200 ID %04X", mdc1200_unit_id);
-                 UI_PrintStringSmallBold(String, 4, 0, 3);
-
-
-#endif
-
+            UI_PrintStringSmallBold(String, print_col, 0, 3);
 
         } else
 #endif
+
 #ifdef ENABLE_AUDIO_BAR
         if (gCurrentFunction == FUNCTION_TRANSMIT) {
             center_line = CENTER_LINE_AUDIO_BAR;
