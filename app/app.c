@@ -1375,7 +1375,67 @@ void APP_TimeSlice500ms(void)
 			}
 		}
 #endif
+#ifdef ENABLE_FMRADIO
+    if (gFmRadioCountdown_500ms > 0)
+	{
+		gFmRadioCountdown_500ms--;
+		if (gFmRadioMode)           // 1of11
+			return;
+	}
+#endif
+    if (gBacklightCountdown_500ms > 0 &&  !gAskToSave &&  !gCssBackgroundScan &&
+        // don't turn off backlight if user is in backlight menu option
+        !(gScreenToDisplay == DISPLAY_MENU && (UI_MENU_GetCurrentMenuId() == MENU_ABR || UI_MENU_GetCurrentMenuId() == MENU_ABR_MAX)))
+    {
+        if (--gBacklightCountdown_500ms == 0) {
+            if (gEeprom.BACKLIGHT_TIME < (ARRAY_SIZE(gSubMenu_BACKLIGHT) - 1)) {
+                // backlight is not set to be always on
+                BACKLIGHT_TurnOff();
+            }
+        }
+    }
+    if (gReducedService)
+    {
+        BOARD_ADC_GetBatteryInfo(&gBatteryCurrentVoltage, &gBatteryCurrent);
+
+        if (gBatteryCurrent > 500 || gBatteryCalibration[3] < gBatteryCurrentVoltage)
+        {
+#ifdef ENABLE_OVERLAY
+            overlay_FLASH_RebootToBootloader();
+#else
+            NVIC_SystemReset();
+#endif
+        }
+
+        return;
+    }
+
+    gBatteryCheckCounter++;
+
     // Skipped authentic device check
+
+    if (gCurrentFunction != FUNCTION_TRANSMIT)
+    {
+
+        if ((gBatteryCheckCounter & 1) == 0)
+        {
+            BOARD_ADC_GetBatteryInfo(&gBatteryVoltages[gBatteryVoltageIndex++], &gBatteryCurrent);
+            if (gBatteryVoltageIndex > 3)
+                gBatteryVoltageIndex = 0;
+            BATTERY_GetReadings(true);
+        }
+    }
+
+    // regular display updates (once every 2 sec) - if need be
+    if ((gBatteryCheckCounter & 3) == 0)
+    {
+        if (gChargingWithTypeC )
+            gUpdateStatus = true;
+#ifdef ENABLE_SHOW_CHARGE_LEVEL
+        if (gChargingWithTypeC)
+				gUpdateDisplay = true;
+#endif
+    }
 
     if (!gCssBackgroundScan
 #ifdef ENABLE_FMRADIO
