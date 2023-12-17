@@ -110,11 +110,15 @@ void UI_PrintStringSmall(const char *pString, uint8_t Start, uint8_t End, uint8_
     size_t i;
     uint8_t sum_pixel = 0;
     uint8_t chn_flag[Length];
+    bool flag_move = 0;
     for (size_t j = 0; j < Length; j++) {
         chn_flag[j] = is_chn(pString[j]);
         if (chn_flag[j] == 255 && pString[j] != '\n' && pString[j] != '\0')sum_pixel += 7;
 
-        else if (chn_flag[j] != 255)sum_pixel += 12;
+        else if (chn_flag[j] != 255) {
+            flag_move = 1;
+            sum_pixel += 12;
+        }
     }
 
     if (End > Start)
@@ -128,7 +132,19 @@ void UI_PrintStringSmall(const char *pString, uint8_t Start, uint8_t End, uint8_
             if (pString[i] > ' ') {
                 const unsigned int index = (unsigned int) pString[i] - ' ' - 1;
                 if (index < ARRAY_SIZE(gFontSmall)) {
-                    memcpy(pFb + now_pixel + 1, &gFontSmall[index], 6);
+                    if (flag_move) {
+                        uint8_t gFontSmall_More[12] = {0};
+                        for (int j = 0; j < 12; ++j) {
+                            if (j < 6) {
+                                gFontSmall_More[j] = (gFontSmall[index][j] & 31) << 3;//00011111
+                            } else {
+                                gFontSmall_More[j] = (gFontSmall[index][j - 6] & 224) >> 5;//11100000
+                            }
+                        }
+                        memcpy(pFb + now_pixel + 1, &gFontSmall_More[0], 6);
+                        memcpy(pFb1 + now_pixel + 1, &gFontSmall_More[6], 6);
+                    } else
+                        memcpy(pFb + now_pixel + 1, &gFontSmall[index], 6);
                 }
                 now_pixel += 7;
             } else if (pString[i] == ' ')
@@ -153,8 +169,6 @@ void UI_PrintStringSmall(const char *pString, uint8_t Start, uint8_t End, uint8_
             }
             memcpy(pFb + now_pixel + 1, &gFontChinese[0], 11);
             memcpy(pFb1 + now_pixel + 1, &gFontChinese[11], 11);
-
-
             now_pixel += 12;
         }
     }
