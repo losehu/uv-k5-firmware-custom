@@ -488,8 +488,9 @@ void BK4819_SetCTCSSFrequency(uint32_t FreqControlWord)
         // Enable Auto CDCSS Bw Mode
         // Enable Auto CTCSS Bw Mode
         // CTCSS/CDCSS Tx Gain1 Tuning = 74
-        //
-        Config = 0x904A;   // 1 0 0 1 0 0 0 0 0 1001010
+        //亚音
+//        Config = 0x904A;   // 1 0 0 1 0 0 0 0 0 1001010
+        Config = 0x9033;
     }
     BK4819_WriteRegister(BK4819_REG_51, Config);
 
@@ -1421,7 +1422,10 @@ void BK4819_GenTail(uint8_t Tail)
 void BK4819_EnableCDCSS(void)
 {
     BK4819_GenTail(0);     // CTC134
-    BK4819_WriteRegister(BK4819_REG_51, 0x804A);
+    //亚音
+//    BK4819_WriteRegister(BK4819_REG_51, 0x804A);
+   BK4819_WriteRegister(BK4819_REG_51, 0x8033);
+
 }
 
 void BK4819_EnableCTCSS(void)
@@ -1470,8 +1474,10 @@ void BK4819_EnableCTCSS(void)
     // <6:0> 0 CTCSS/CDCSS Tx Gain1 Tuning
     //       0   = min
     //       127 = max
+//亚音
+//    BK4819_WriteRegister(BK4819_REG_51, 0x904A); // 1 0 0 1 0 0 0 0 0 1001010
+    BK4819_WriteRegister(BK4819_REG_51, 0x9033); // 1 0 0 1 0 0 0 0 0 1001010
 
-    BK4819_WriteRegister(BK4819_REG_51, 0x904A); // 1 0 0 1 0 0 0 0 0 1001010
 }
 
 uint16_t BK4819_GetRSSI(void)

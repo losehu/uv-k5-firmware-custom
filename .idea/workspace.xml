@@ -20,7 +20,12 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="110" />
+    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="中英文字符对齐">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/app.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/bk4819.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/bk4819.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/helper.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/helper.c" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -216,20 +221,10 @@
       <workItem from="1702175521208" duration="2000" />
       <workItem from="1702774207484" duration="5418000" />
       <workItem from="1702793061935" duration="4377000" />
-    </task>
-    <task id="LOCAL-00039" summary="MDC RX">
-      <created>1701690633183</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1701690633183</updated>
-    </task>
-    <task id="LOCAL-00040" summary="MDC RX">
-      <created>1701691499718</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1701691499718</updated>
+      <workItem from="1702805980399" duration="8706000" />
+      <workItem from="1702888356614" duration="3552000" />
+      <workItem from="1702896385700" duration="1302000" />
+      <workItem from="1702910927065" duration="2432000" />
     </task>
     <task id="LOCAL-00041" summary="MDC RX">
       <created>1701692190748</created>
@@ -560,7 +555,21 @@
       <option name="project" value="LOCAL" />
       <updated>1702798230173</updated>
     </task>
-    <option name="localTasksCounter" value="88" />
+    <task id="LOCAL-00088" summary="中英文字符对齐">
+      <created>1702808870233</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1702808870234</updated>
+    </task>
+    <task id="LOCAL-00089" summary="中英文字符对齐">
+      <created>1702809094564</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1702809094564</updated>
+    </task>
+    <option name="localTasksCounter" value="90" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -587,7 +596,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="修复切换调制模式时亚音消失问题" />
     <MESSAGE value="按键锁定改回以前逻辑" />
     <MESSAGE value="mdc tx end test" />
     <MESSAGE value="test create" />
@@ -612,6 +620,7 @@
     <MESSAGE value="MDC PY" />
     <MESSAGE value="赞助" />
     <MESSAGE value="110" />
-    <option name="LAST_COMMIT_MESSAGE" value="110" />
+    <MESSAGE value="中英文字符对齐" />
+    <option name="LAST_COMMIT_MESSAGE" value="中英文字符对齐" />
   </component>
 </project>

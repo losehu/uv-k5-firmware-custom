@@ -117,7 +117,7 @@ void UI_PrintStringSmall(const char *pString, uint8_t Start, uint8_t End, uint8_
 
         else if (chn_flag[j] != 255) {
             flag_move = 1;
-            sum_pixel += 12;
+            sum_pixel += 13;
         }
     }
 
@@ -169,7 +169,7 @@ void UI_PrintStringSmall(const char *pString, uint8_t Start, uint8_t End, uint8_
             }
             memcpy(pFb + now_pixel + 1, &gFontChinese[0], 11);
             memcpy(pFb1 + now_pixel + 1, &gFontChinese[11], 11);
-            now_pixel += 12;
+            now_pixel += 13;
         }
     }
 }

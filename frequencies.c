@@ -80,19 +80,22 @@ const uint16_t gStepFrequencyTable[] = {
         [STEP_0_5kHz]   = 50,
         [STEP_1kHz]     = 100,
         [STEP_1_25kHz]  = 125,
+        [STEP_9kHz]     = 900,
         [STEP_15kHz]    = 1500,
+        [STEP_20kHz]    = 2000,
         [STEP_30kHz]    = 3000,
         [STEP_50kHz]    = 5000,
         [STEP_100kHz]   = 10000,
         [STEP_125kHz]   = 12500,
+        [STEP_200kHz]   = 20000,
         [STEP_250kHz]   = 25000,
         [STEP_500kHz]   = 50000
 };
 
 const STEP_Setting_t StepSortedIndexes[] = {
         STEP_0_01kHz, STEP_0_05kHz, STEP_0_1kHz, STEP_0_25kHz, STEP_0_5kHz, STEP_1kHz, STEP_1_25kHz, STEP_2_5kHz, STEP_5kHz, STEP_6_25kHz,
-        STEP_8_33kHz, STEP_10kHz, STEP_12_5kHz, STEP_15kHz, STEP_25kHz, STEP_30kHz, STEP_50kHz, STEP_100kHz,
-        STEP_125kHz, STEP_250kHz, STEP_500kHz
+        STEP_8_33kHz, STEP_9kHz, STEP_10kHz, STEP_12_5kHz, STEP_15kHz, STEP_20kHz, STEP_25kHz, STEP_30kHz, STEP_50kHz, STEP_100kHz,
+        STEP_125kHz, STEP_200kHz, STEP_250kHz, STEP_500kHz
 };
 
 STEP_Setting_t FREQUENCY_GetStepIdxFromSortedIdx(uint8_t sortedIdx)

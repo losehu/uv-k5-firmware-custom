@@ -43,6 +43,7 @@ typedef enum  {
 
 extern const freq_band_table_t frequencyBandTable[];
 typedef enum {
+// standard steps
     STEP_2_5kHz,
     STEP_5kHz,
     STEP_6_25kHz,
@@ -50,6 +51,7 @@ typedef enum {
     STEP_12_5kHz,
     STEP_25kHz,
     STEP_8_33kHz,
+// custom steps
     STEP_0_01kHz,
     STEP_0_05kHz,
     STEP_0_1kHz,
@@ -57,11 +59,14 @@ typedef enum {
     STEP_0_5kHz,
     STEP_1kHz,
     STEP_1_25kHz,
+    STEP_9kHz,
     STEP_15kHz,
+    STEP_20kHz,
     STEP_30kHz,
     STEP_50kHz,
     STEP_100kHz,
     STEP_125kHz,
+    STEP_200kHz,
     STEP_250kHz,
     STEP_500kHz,
     STEP_N_ELEM
