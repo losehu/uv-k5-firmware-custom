@@ -22,9 +22,12 @@
   <component name="ChangeListManager">
     <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="中英文字符对齐">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/app.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/driver/bk4819.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/bk4819.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/helper.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/helper.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/font.h" beforeDir="false" afterPath="$PROJECT_DIR$/font.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.c" beforeDir="false" afterPath="$PROJECT_DIR$/settings.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/font_new/font.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/font_new/font.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -29,6 +29,12 @@ extern const uint8_t gFontSmall[95 - 1][6];
 #ifdef ENABLE_SMALL_BOLD
 	extern const uint8_t gFontSmallBold[95 - 1][6];
 #endif
+#ifdef ENABLE_CHINESE_FULL1
+extern uint8_t  gFontChinese_out1[57742];
 
+#elifdef ENABLE_CHINESE_FULL2
+
+extern uint8_t gFontChinese_out2[57742];
+#endif
 #endif
 
