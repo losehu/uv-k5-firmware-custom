@@ -15,7 +15,7 @@
  */
 
 #include <string.h>
-
+#include "driver/uart.h"
 #include "driver/st7565.h"
 #include "external/printf/printf.h"
 #include "font.h"
@@ -23,12 +23,11 @@
 #include "ui/inputbox.h"
 #include "misc.h"
 #include "chinese.h"
-
+#include "driver/eeprom.h"
 #ifndef ARRAY_SIZE
 #define ARRAY_SIZE(arr) (sizeof(arr)/sizeof((arr)[0]))
 #endif
 #define IS_BIT_SET(byte, bit) ((byte>>bit) & (1))
-uint8_t menu_set_flag = 0;
 
 void set_bit(uint8_t *value, uint8_t bit_position, uint8_t bit_value) {
     if (bit_value == 0) {
@@ -39,11 +38,15 @@ void set_bit(uint8_t *value, uint8_t bit_position, uint8_t bit_value) {
 }
 
 uint8_t is_chn(uint8_t num) {
-
+#if ENABLE_CHINESE_FULL==4
+    if (num>=0x80) return 1;
+    return 255;
+#else
     if (num >= 1 && num < 10)return num - 1;
     else if (num > 10 && num < 32)return num - 2;
     else if (num > 126 && num <= 218)return num - 97;
     else return 255;
+#endif
 }
 
 void UI_GenerateChannelString(char *pString, const uint8_t Channel) {
@@ -103,20 +106,36 @@ void UI_PrintCharSmall(char character, uint8_t Start, uint8_t Line) {
 void UI_PrintStringSmall(const char *pString, uint8_t Start, uint8_t End, uint8_t Line) {
     uint8_t Length = strlen(pString);
 
-    if (menu_set_flag == 1) {
-        Length = Length > 7 ? 7 : Length;
-        menu_set_flag = 0;
-    }
+
     size_t i;
     uint8_t sum_pixel = 0;
-    uint8_t chn_flag[Length];
+    uint16_t true_char[Length];
+    uint8_t cn_flag[Length];
+    uint8_t char_num=0;
     bool flag_move = 0;
     for (size_t j = 0; j < Length; j++) {
-        chn_flag[j] = is_chn(pString[j]);
-        if (chn_flag[j] == 255 && pString[j] != '\n' && pString[j] != '\0')sum_pixel += 7;
 
-        else if (chn_flag[j] != 255) {
+       uint8_t chn_judge = is_chn(pString[j]);
+        if (chn_judge == 255 && pString[j] != '\n' && pString[j] != '\0') {
+            true_char[char_num]=pString[j];
+            cn_flag[char_num]=0;
+
+            char_num++;
+            sum_pixel += 7;
+        }
+        else if (chn_judge != 255) {
+            cn_flag[char_num]=1;
+
+#if ENABLE_CHINESE_FULL==4
+
+            true_char[char_num]=(pString[j]<<8)|pString[j+1];
+            j++;
+#else
+            true_char[char_num]=chn_judge;
+#endif
+
             flag_move = 1;
+            char_num++;
             sum_pixel += 13;
         }
     }
@@ -127,10 +146,10 @@ void UI_PrintStringSmall(const char *pString, uint8_t Start, uint8_t End, uint8_
     uint8_t *pFb = gFrameBuffer[Line] + Start;
     uint8_t *pFb1 = gFrameBuffer[Line + 1] + Start;
     uint8_t now_pixel = 0;
-    for (i = 0; i < Length; i++) {
-        if (chn_flag[i] == 255) {
-            if (pString[i] > ' ') {
-                const unsigned int index = (unsigned int) pString[i] - ' ' - 1;
+    for (i = 0; i < char_num; i++) {
+        if (cn_flag[i] == 0) {
+            if (true_char[i] > ' ') {
+                const unsigned int index = (unsigned int) true_char[i] - ' ' - 1;
                 if (index < ARRAY_SIZE(gFontSmall)) {
                     if (flag_move) {
                         uint8_t gFontSmall_More[12] = {0};
@@ -151,8 +170,32 @@ void UI_PrintStringSmall(const char *pString, uint8_t Start, uint8_t End, uint8_
                 now_pixel += 7;
         } else {
             uint8_t gFontChinese[22] = {0};
-            unsigned int local = CHN_FONT_HIGH * CHN_FONT_WIDTH * chn_flag[i] / 8;
-            unsigned int local_bit = (CHN_FONT_HIGH * CHN_FONT_WIDTH * chn_flag[i]) % 8;
+
+#if ENABLE_CHINESE_FULL==4
+            uint8_t tmp[17] = {0};
+            true_char[i]-=0x8000;
+
+            unsigned int local = (CHN_FONT_HIGH * CHN_FONT_WIDTH * true_char[i]) / 8;
+            unsigned int local_bit =(CHN_FONT_HIGH * CHN_FONT_WIDTH * true_char[i]) % 8;
+            EEPROM_ReadBuffer(local+0x2000,tmp,17);
+            local=0;
+            for (unsigned char i = 0; i < CHN_FONT_WIDTH * 2; ++i) {
+                unsigned char j_end = 8;
+                if (i >= CHN_FONT_WIDTH)
+                    j_end = CHN_FONT_HIGH - 8;
+                for (unsigned char j = 0; j < j_end; ++j) {
+                    if (IS_BIT_SET(tmp[local], local_bit))
+                        set_bit(&gFontChinese[i], j, 1);
+                    local_bit++;
+                    if (local_bit == 8) {
+                        local_bit = 0;
+                        local++;
+                    }
+                }
+            }
+#else
+            unsigned int local = (CHN_FONT_HIGH * CHN_FONT_WIDTH * true_char[i]) / 8;
+            unsigned int local_bit =(CHN_FONT_HIGH * CHN_FONT_WIDTH * true_char[i]) % 8;
             for (unsigned char i = 0; i < CHN_FONT_WIDTH * 2; ++i) {
                 unsigned char j_end = 8;
                 if (i >= CHN_FONT_WIDTH)
@@ -167,6 +210,7 @@ void UI_PrintStringSmall(const char *pString, uint8_t Start, uint8_t End, uint8_
                     }
                 }
             }
+#endif
             memcpy(pFb + now_pixel + 1, &gFontChinese[0], 11);
             memcpy(pFb1 + now_pixel + 1, &gFontChinese[11], 11);
             now_pixel += 13;
@@ -279,5 +323,5 @@ void UI_DisplayPopup(const char *string) {
 
     UI_PrintStringSmall(string, 9, 118, 2);
     //按EXIT键
-    UI_PrintStringSmall(按EXIT键, 9, 118, 6);
+    UI_PrintStringSmall(按EXIT键, 9, 118, 5);
 }

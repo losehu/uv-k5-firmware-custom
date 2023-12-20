@@ -21,6 +21,8 @@
 
 void EEPROM_ReadBuffer(uint32_t Address, void *pBuffer, uint8_t Size);
 void EEPROM_WriteBuffer(uint32_t Address, const void *pBuffer);
+extern uint8_t WRITE_SIZE;
+void EEPROM_WriteBuffer_1024(uint32_t Address, const void *pBuffer,uint8_t WRITE_SIZE) ;
 
 #endif
 

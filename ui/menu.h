@@ -16,18 +16,21 @@
 
 #ifndef UI_MENU_H
 #define UI_MENU_H
-
 #include <stdbool.h>
 #include <stdint.h>
 
 #include "audio.h"     // VOICE_ID_t
 #include "settings.h"
+#include "font.h"
 
 typedef struct {
     VOICE_ID_t  voice_id;
     uint8_t     menu_id;
-    const char name[7]; // 使用指针而不是固定长度数组
-
+#if ENABLE_CHINESE_FULL==4
+    const char name[16]; // 使用指针而不是固定长度数组
+#else
+const char name[7]; // 使用指针而不是固定长度数组
+#endif
 } t_menu_item;
 
 enum
@@ -140,31 +143,71 @@ extern const uint8_t FIRST_HIDDEN_MENU_ITEM;
 extern const t_menu_item MenuList[];
 
 //extern const char        gSubMenu_TXP[3][2];//5
+#if ENABLE_CHINESE_FULL!=4
 extern const char        gSubMenu_SFT_D[3][10];//3
+#else
+extern const char        gSubMenu_SFT_D[3][16];//3
+#endif
 //extern const char        gSubMenu_W_N[2][3];//7
+#if ENABLE_CHINESE_FULL!=4
 extern const char        gSubMenu_OFF_ON[2][3];//4
+#else
+extern const char        gSubMenu_OFF_ON[2][5];//4
+#endif
+#if ENABLE_CHINESE_FULL!=4
 extern const char        gSubMenu_SAVE[5][4];//4
+#else
+extern const char        gSubMenu_SAVE[5][6];//4
+#endif
+#if ENABLE_CHINESE_FULL!=4
 extern const char        gSubMenu_TOT[11][5];//7
+#else
+extern const char        gSubMenu_TOT[11][6];//7
+#endif
 extern const char*        gSubMenu_RXMode[4];
 
 #ifdef ENABLE_VOICE
 extern const char    gSubMenu_VOICE[3][4];
 #endif
+#if ENABLE_CHINESE_FULL!=4
 extern const char        gSubMenu_SC_REV[3][10];//8
+#else
+extern const char        gSubMenu_SC_REV[3][18];//8
+#endif
 extern const char*       gSubMenu_MDF[4];
 #ifdef ENABLE_ALARM
 extern const char    gSubMenu_AL_MOD[2][5];
 #endif
 #ifdef ENABLE_DTMF_CALLING
+#if ENABLE_CHINESE_FULL!=4
 extern const char        gSubMenu_D_RSP[4][10];//11
+#else
+extern const char        gSubMenu_D_RSP[4][18];//11
+#endif
 #endif
 
 extern const char*       gSubMenu_PTT_ID[5];
+#if ENABLE_CHINESE_FULL!=4
 extern const char        gSubMenu_ROGER[6][13];
+#else
+extern const char        gSubMenu_ROGER[6][15];
+#endif
+#if ENABLE_CHINESE_FULL!=4
 extern const char        gSubMenu_RESET[2][6];//4
+#else
+extern const char        gSubMenu_RESET[2][11];//4
+#endif
 extern const char*       gSubMenu_F_LOCK[F_LOCK_LEN];
+#if ENABLE_CHINESE_FULL!=4
 extern const char        gSubMenu_BACKLIGHT[8][5];//7
+#else
+extern const char        gSubMenu_BACKLIGHT[8][6];//7
+#endif
+#if ENABLE_CHINESE_FULL!=4
 extern const char        gSubMenu_RX_TX[4][7];//6
+#else
+extern const char        gSubMenu_RX_TX[4][12];//6
+#endif
 #ifdef ENABLE_AM_FIX_TEST1
 extern const char    gSubMenu_AM_fix_test1[4][8];
 #endif

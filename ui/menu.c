@@ -128,7 +128,11 @@ const t_menu_item MenuList[] =
 
 
 const uint8_t FIRST_HIDDEN_MENU_ITEM = MENU_F_LOCK;
+#if ENABLE_CHINESE_FULL!=4
 const char gSubMenu_SFT_D[][10] =//4
+#else
+const char gSubMenu_SFT_D[][16] =//4
+#endif
         {
 //                "OFF",
 //                "+",
@@ -140,16 +144,22 @@ const char gSubMenu_SFT_D[][10] =//4
         };
 
 
-
+#if ENABLE_CHINESE_FULL!=4
 const char gSubMenu_OFF_ON[][3] =//4
+#else
+const char gSubMenu_OFF_ON[][5] =//4
+#endif
         {
 //                "OFF",
 //                "ON"
                 关闭,
                 开启
         };
-
+#if ENABLE_CHINESE_FULL!=4
 const char gSubMenu_SAVE[][4] =//4
+#else
+const char gSubMenu_SAVE[][6] =//4
+#endif
         {
 //                "OFF",
 //                "1:1",
@@ -164,8 +174,11 @@ const char gSubMenu_SAVE[][4] =//4
                 四级
 
         };
-
+#if ENABLE_CHINESE_FULL!=4
 const char gSubMenu_TOT[][5] = //7
+#else
+const char gSubMenu_TOT[][6] = //7
+#endif
         {
 //                "30 sec",
 //                "1 min",
@@ -215,8 +228,11 @@ const char gSubMenu_VOICE[][4] =
     "ENG"
 };
 #endif
-
+#if ENABLE_CHINESE_FULL!=4
 const char gSubMenu_SC_REV[][10] =//8
+#else
+const char gSubMenu_SC_REV[][18] =//8
+#endif
         {
 //                "TIMEOUT",
 //                "CARRIER",
@@ -247,7 +263,11 @@ const char gSubMenu_AL_MOD[][5] =
 };
 #endif
 #ifdef ENABLE_DTMF_CALLING
+#if ENABLE_CHINESE_FULL!=4
 const char gSubMenu_D_RSP[][10] =//11
+#else
+const char gSubMenu_D_RSP[][18] =//11
+#endif
         {
 //                "DO\nNOTHING",
 //                "RING",
@@ -275,8 +295,11 @@ const char *gSubMenu_PTT_ID[] =
         };
 
 
-
+#if ENABLE_CHINESE_FULL!=4
 const char gSubMenu_ROGER[][13] =
+#else
+const char gSubMenu_ROGER[][15] =
+#endif
         {
 //                "OFF",
 //                "ROGER",
@@ -289,8 +312,11 @@ const char gSubMenu_ROGER[][13] =
         MDC首尾音,
                 MDC首音加ROGER
         };
-
+#if ENABLE_CHINESE_FULL!=4
 const char gSubMenu_RESET[][6] =//4
+#else
+const char gSubMenu_RESET[][11] =//4
+#endif
         {
 //                "VFO",
 //                "ALL"
@@ -311,8 +337,11 @@ const char *gSubMenu_F_LOCK[] =
                 禁用全部,
                 解锁全部,
         };
-
+#if ENABLE_CHINESE_FULL!=4
 const char gSubMenu_BACKLIGHT[][5] =//7
+#else
+const char gSubMenu_BACKLIGHT[][6] =//7
+#endif
         {
 //                "OFF",
 //                "5 sec",
@@ -332,8 +361,11 @@ const char gSubMenu_BACKLIGHT[][5] =//7
                 开启
 
         };
-
+#if ENABLE_CHINESE_FULL!=4
 const char gSubMenu_RX_TX[][7] =//6
+#else
+const char gSubMenu_RX_TX[][12] =//6
+#endif
         {
 //                "OFF",
 //                "TX",
@@ -1125,11 +1157,6 @@ void UI_DisplayMenu(void) {
         gRequestSaveSettings  = 1;
 
     }
-//    for (int i = 0; i < 128; i++) {
-//        // Set the 7th and 8th positions to 1, keep others unchanged
-//        gFrameBuffer[1][i] |= (1 << 7)|(1<<6) ;
-//
-//    }
 
     ST7565_BlitFullScreen();
 }
@@ -1153,25 +1180,7 @@ void UI_ShowChineseMenu() {
     }
     cnt_char = 0;
     if (size_menu < 48)cnt_char = (48 - size_menu ) / 2;
-    menu_set_flag=1;
     UI_PrintStringSmall(MenuList[gMenuCursor].name, (cnt_char), 0, 0);
-//
-//    for (uint8_t i = 0; i < cnt_menu; i++) {
-//        uint8_t num_solve=is_chn(MenuList[gMenuCursor].name[i]);
-//        if(num_solve==255)//数字/字母
-//        {
-//            char tmp[2]={0};
-//            tmp[0]=MenuList[gMenuCursor].name[i];
-//            UI_PrintStringSmall((const char *)tmp, (cnt_char), 0, 0);
-//            cnt_char += 7;
-//        } else  {
-//
-//
-//            UI_PrintChineseChar(num_solve, cnt_char, 0);
-//
-//            cnt_char += 13;
-//        }
-//
-//    }
+
 
 }

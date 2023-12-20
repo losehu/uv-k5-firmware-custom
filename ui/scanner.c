@@ -74,14 +74,25 @@ void UI_DisplayScanner(void)
 
 //存置
             strcpy(String, 存置了);
+#if ENABLE_CHINESE_FULL!=4
 
 			UI_GenerateChannelStringEx(String + 3, gShowChPrefix, gScanChannel);
+#else
+            UI_GenerateChannelStringEx(String + 5, gShowChPrefix, gScanChannel);
+
+#endif
+
 		}
 		else if (gScanCssState < SCAN_CSS_STATE_FOUND) {
 	
             //扫描
             strcpy(String, 扫描);
+#if ENABLE_CHINESE_FULL!=4
             memset(String + 2, '.', (gScanProgressIndicator & 7) + 1);
+#else
+            memset(String + 4, '.', (gScanProgressIndicator & 7) + 1);
+
+#endif
 		}
 		else if (gScanCssState == SCAN_CSS_STATE_FOUND)
             //扫描ok

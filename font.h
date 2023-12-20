@@ -18,23 +18,27 @@
 #define FONT_H
 
 #include <stdint.h>
+
 extern const uint8_t gFontChinese_out[2013];
 #define CHN_FONT_WIDTH 11U
 #define CHN_FONT_HIGH 12U
-
+#define ENABLE_CHINESE_FULL 4
 
 extern const uint8_t gFontBigDigits[11][20/*20*/];
 extern const uint8_t gFont3x5[96][3];
 extern const uint8_t gFontSmall[95 - 1][6];
 #ifdef ENABLE_SMALL_BOLD
-	extern const uint8_t gFontSmallBold[95 - 1][6];
+extern const uint8_t gFontSmallBold[95 - 1][6];
 #endif
-#ifdef ENABLE_CHINESE_FULL1
-extern uint8_t  gFontChinese_out1[57742];
 
-#elifdef ENABLE_CHINESE_FULL2
-
-extern uint8_t gFontChinese_out2[57742];
-#endif
+    #if ENABLE_CHINESE_FULL > 0
+        #if ENABLE_CHINESE_FULL==1
+            extern const uint8_t gFontChinese_out1[40960];
+        #elif ENABLE_CHINESE_FULL==2
+            extern const uint8_t gFontChinese_out2[40960];
+        #elif ENABLE_CHINESE_FULL==3
+            extern const uint8_t gFontChinese_out3[33564];
+        #endif
+    #endif
 #endif
 

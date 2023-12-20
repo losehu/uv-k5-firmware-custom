@@ -1,0 +1,3 @@
+C:/Users/RUPC/Desktop/uv-k5font/cmake-build-debug/CMakeFiles/uv_k5font.dir
+C:/Users/RUPC/Desktop/uv-k5font/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/RUPC/Desktop/uv-k5font/cmake-build-debug/CMakeFiles/rebuild_cache.dir
