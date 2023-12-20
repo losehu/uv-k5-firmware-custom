@@ -56,14 +56,15 @@ void UI_DisplayWelcome(void) {
 
 
 
-
+    EEPROM_ReadBuffer(0x0EB0, WelcomeString0, 16);
+    EEPROM_ReadBuffer(0x0EC0, WelcomeString1, 16);
 
 #if ENABLE_CHINESE_FULL==4
+
     UI_PrintStringSmall(    "\x84\x67\x88\xD0\x8C\x5F\x88\x0F\x86\x8A\x80\x85\x81\x9C\x96\x10\x21", 0, 127, 0);
     UI_PrintStringSmall(        "\x8C\x5F\x80\xD1\x80\xBC\x95\xCB\x80\x09\x88\x89\x96\xD2\x8B\xF3\x21", 0, 127, 2);
 #else
-    EEPROM_ReadBuffer(0x0EB0, WelcomeString0, 16);
-            EEPROM_ReadBuffer(0x0EC0, WelcomeString1, 16);
+
             UI_PrintStringSmall(WelcomeString0, 0, 127, 0);
         UI_PrintStringSmall(WelcomeString1, 0, 127, 2);
 #endif
