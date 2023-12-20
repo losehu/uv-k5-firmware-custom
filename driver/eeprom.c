@@ -39,7 +39,7 @@ void EEPROM_ReadBuffer(uint32_t Address, void *pBuffer, uint8_t Size) {
         I2C_Stop();
     } else{
         I2C_Start();
-      uint8_t  P0 = (StartAddr / 0x10000) << 1;
+      uint8_t  P0 = (Address / 0x10000) << 1;
 
         I2C_Write(0xA4|P0);
 
