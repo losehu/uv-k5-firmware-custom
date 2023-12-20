@@ -212,14 +212,14 @@ void Main(void)
 //    for (int i =MDC_ADD[0]; i < MDC_ADD[0]+16; ++i) {
 //        EEPROM_WriteBuffer(i,&A[i-MDC_ADD[0]]);
 //    }
-    uint8_t B[64];
-    memset(B,'B',sizeof (B));
-    E1EPROM_WriteBuffer_1024(0x10000,B,64);
-    E1EPROM_ReadBuffer_1024(0x10000,B,64);
-    UART_Send(B,64);
+
     while(1)
     {
-
+        uint8_t B[64];
+        memset(B,'B',sizeof (B));
+        EEPROM_ReadBuffer(0x10000,B,64);
+        EEPROM_ReadBuffer(0x10000,B,64);
+        UART_Send(B,64);
     }
 	while (1)
 	{

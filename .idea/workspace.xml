@@ -22,12 +22,8 @@
   <component name="ChangeListManager">
     <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="中英文字符对齐">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/driver/bk4819.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/bk4819.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/font.h" beforeDir="false" afterPath="$PROJECT_DIR$/font.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/eeprom.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/eeprom.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.c" beforeDir="false" afterPath="$PROJECT_DIR$/settings.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv-k5font/font_new/font.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/font_new/font.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +96,7 @@
       <recent name="C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese" />
     </key>
   </component>
-  <component name="RunManager" selected="Shell Script.win docker">
+  <component name="RunManager" selected="Shell Script.linux docker">
     <configuration name="clean" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
       <makefile filename="$PROJECT_DIR$/Makefile" target="clean" workingDirectory="" arguments="">
         <envs />
@@ -115,7 +111,6 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="C:\Users\RUPC\py32\python.exe" />
-      <option name="SDK_NAME" value="Python 3.5 (uv-k5-firmware-chinese)" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/MDC_WRITE" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -161,7 +156,7 @@
     </configuration>
     <configuration name="win" type="ShConfigurationType">
       <option name="SCRIPT_TEXT" value="" />
-      <option name="INDEPENDENT_SCRIPT_PATH" value="false" />
+      <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
       <option name="SCRIPT_PATH" value="$PROJECT_DIR$/win_make.bat" />
       <option name="SCRIPT_OPTIONS" value="" />
       <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="true" />
@@ -228,6 +223,7 @@
       <workItem from="1702888356614" duration="3552000" />
       <workItem from="1702896385700" duration="1302000" />
       <workItem from="1702910927065" duration="2432000" />
+      <workItem from="1703038736949" duration="3997000" />
     </task>
     <task id="LOCAL-00041" summary="MDC RX">
       <created>1701692190748</created>
