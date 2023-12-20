@@ -54,7 +54,6 @@ void UI_DisplayWelcome(void) {
 
 
 
-#
 
             EEPROM_ReadBuffer(0x0EB0, WelcomeString0, 16);
             EEPROM_ReadBuffer(0x0EC0, WelcomeString1, 16);
