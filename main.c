@@ -136,30 +136,6 @@ void Main(void) {
         p_font=gFontChinese_out3;
 
     #endif
-//    WRITE_SIZE = 128;
-//    uint32_t add=0;
-//    EEPROM_WriteBuffer_1024(start_add + add, gFontChinese_out2+add, WRITE_SIZE);
-//    uint8_t B[128];
-//    EEPROM_ReadBuffer(start_add + add, B, 128);
-//    if (memcmp(B, gFontChinese_out2+add, 128) != 0) {
-//
-//        UI_PrintStringSmall("FAILED!", 0, 127, 4);
-//
-//        ST7565_BlitStatusLine();  // blank status line
-//        ST7565_BlitFullScreen();
-//        UART_Send("FAILED!\n", 7);
-//        UART_Send(B, 128);
-//        while (1);
-//    }else
-//    {
-//        UI_PrintStringSmall("OK", 0, 127, 3);
-//
-//        ST7565_BlitStatusLine();  // blank status line
-//        ST7565_BlitFullScreen();
-//        UART_Send("OK!\n", 7);
-//        UART_Send(B, 128);
-//        while (1);
-//    }
     for (uint32_t i = 0; i < ALL_SIZE; i += 128) {
             if (i != (uint32_t) (ALL_SIZE / 128) * 128) {
                 WRITE_SIZE = 128;
@@ -373,17 +349,38 @@ void Main(void) {
 #ifdef ENABLE_NOAA
     RADIO_ConfigureNOAA();
 #endif
-
+//    int start_add=0x1E32C;
+//    WRITE_SIZE = 8;
+//    uint32_t add=0;
+//    uint8_t data_write[8];
+//    memset(data_write,'Z',sizeof (data_write));
+//    EEPROM_WriteBuffer_1024(start_add + add,data_write , WRITE_SIZE);
+//    uint8_t B[128];
+//    EEPROM_ReadBuffer(start_add + add, B, WRITE_SIZE);
+//    if (memcmp(B, data_write, WRITE_SIZE) != 0) {
+//
+//        UI_PrintStringSmall("FAILED!", 0, 127, 4);
+//
+//        ST7565_BlitStatusLine();  // blank status line
+//        ST7565_BlitFullScreen();
+//        UART_Send("FAILED!\n", 7);
+//        UART_Send(B, WRITE_SIZE);
+//    }else
+//    {
+//        UI_PrintStringSmall("OK", 0, 127, 3);
+//
+//        ST7565_BlitStatusLine();  // blank status line
+//        ST7565_BlitFullScreen();
+//        UART_Send("OK!\n", 7);
+//        UART_Send(B, WRITE_SIZE);
+//    }
+//    while (1);
 
     while (1) {
-
-
         APP_Update();
-
         if (gNextTimeslice) {
             APP_TimeSlice10ms();
         }
-
         if (gNextTimeslice_500ms) {
             APP_TimeSlice500ms();
         }

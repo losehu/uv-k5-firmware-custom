@@ -74,9 +74,6 @@ void EEPROM_WriteBuffer(uint32_t Address, const void *pBuffer) {
         SYSTEM_DelayMs(8);
 
         // give the EEPROM time to burn the data in (apparently takes 5ms)
-    } else {
-
-
     }
 
 }

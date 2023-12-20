@@ -24,7 +24,7 @@ ENABLE_FLASHLIGHT             ?= 1
 
 # ---- CUSTOM MODS ----
 ENABLE_BIG_FREQ               ?= 1
-ENABLE_SMALL_BOLD             ?= 1
+ENABLE_SMALL_BOLD             ?= 0
 ENABLE_KEEP_MEM_NAME          ?= 1
 ENABLE_WIDE_RX                ?= 1
 ENABLE_TX_WHEN_AM             ?= 0

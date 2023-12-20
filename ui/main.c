@@ -754,8 +754,11 @@ void UI_DisplayMain(void) {
 //#else
 //                sprintf(String, "MDC1200 ID %04X", mdc1200_unit_id);
 //#endif
-
+#ifdef ENABLE_SMALL_BOLD
             UI_PrintStringSmallBold(String, print_col, 0, 3);
+#else
+            UI_PrintStringSmall(String, print_col, 0, 3);
+#endif
 
         } else
 #endif

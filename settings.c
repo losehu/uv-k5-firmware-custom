@@ -387,6 +387,7 @@ void SETTINGS_FetchChannelName(char *s, const int channel)
 
     while (i >= 0 && s[i] == 32)  // trim trailing spaces
         s[i--] = 0;               // null term
+//    strcpy(s,"\x89\x11\x81\x53\x95\x33\x80\x7F\x8D\xD4");
 }
 
 void SETTINGS_FactoryReset(bool bIsAll)

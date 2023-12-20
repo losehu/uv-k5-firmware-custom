@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/RUPC/Desktop/uv-k5font
+# Install script for directory: C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/uv-k5font/uv-k5font_full
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Users/RUPC/Desktop/uv-k5font/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/uv-k5font/uv-k5font_full/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
