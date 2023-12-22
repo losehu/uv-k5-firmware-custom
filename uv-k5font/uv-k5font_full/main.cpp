@@ -10,11 +10,11 @@
 using namespace std;
 #define IS_BIT_SET(byte, bit) ((byte>>bit) & (1))
 
-ifstream file("../ALL_IN.txt"); // æ›¿æ¢æˆä½ çš„æ–‡ä»¶åæˆ–è·¯å¾„
-//ifstream file("../CHINESE7000_OUT.txt"); // æ›¿æ¢æˆä½ çš„æ–‡ä»¶åæˆ–è·¯å¾„
+ifstream file("../ALL_IN.txt"); // Ìæ»»³ÉÄãµÄÎÄ¼şÃû»òÂ·¾¶
+//ifstream file("../CHINESE7000_OUT.txt"); // Ìæ»»³ÉÄãµÄÎÄ¼şÃû»òÂ·¾¶
 ofstream outFile("../name_tmp.txt");
 ofstream out_chinese_array("../chinese_array.txt");
-
+ofstream output_file("../chinses_map.txt"); // ÎÄ¼şÃû¿ÉÒÔ¸ù¾İÄãµÄĞèÒª¸ü¸Ä
 string names[10000];
 unsigned char chinese[10000][2];
 unsigned char english[1000];
@@ -25,7 +25,7 @@ int init_file() {
     if (file.is_open()) {
         string line;
         while (getline(file, line)) {
-            // å¯¹è¯»å–çš„æ¯ä¸€è¡Œæ‰§è¡Œæ“ä½œï¼Œä¾‹å¦‚æ‰“å°åˆ°æ§åˆ¶å°
+            // ¶Ô¶ÁÈ¡µÄÃ¿Ò»ĞĞÖ´ĞĞ²Ù×÷£¬ÀıÈç´òÓ¡µ½¿ØÖÆÌ¨
             names[lines] = line;
             lines++;
 
@@ -33,7 +33,7 @@ int init_file() {
 
         file.close();
     } else {
-        cout << "æ— æ³•æ‰“å¼€æ–‡ä»¶" << endl;
+        cout << "ÎŞ·¨´ò¿ªÎÄ¼ş" << endl;
     }
     return lines;
 
@@ -47,7 +47,7 @@ map<array<unsigned char, 2>, unsigned int> map_str;
 map<array<unsigned char, 2>, unsigned int> all_code;
 
 bool isGBKChineseCharacter(const string &str, size_t index) {
-    // æ£€æŸ¥GBKç¼–ç çš„å­—ç¬¦æ˜¯å¦ä¸ºæ±‰å­—
+    // ¼ì²éGBK±àÂëµÄ×Ö·ûÊÇ·ñÎªºº×Ö
     if (index < str.size() - 1) {
         unsigned char firstByte = static_cast<unsigned char>(str[index]);
         unsigned char secondByte = static_cast<unsigned char>(str[index + 1]);
@@ -90,9 +90,9 @@ void removeNullStrings(const std::string &inputFile, const std::string &outputFi
 
 void set_bit(uint8_t *value, uint8_t bit_position, uint8_t bit_value) {
     if (bit_value == 0) {
-        *value = *value & ~(1 << bit_position); // å°†æŒ‡å®šä½è®¾ç½®ä¸º 0
+        *value = *value & ~(1 << bit_position); // ½«Ö¸¶¨Î»ÉèÖÃÎª 0
     } else {
-        *value = *value | (1 << bit_position);  // å°†æŒ‡å®šä½è®¾ç½®ä¸º 1
+        *value = *value | (1 << bit_position);  // ½«Ö¸¶¨Î»ÉèÖÃÎª 1
     }
 }
 
@@ -128,7 +128,7 @@ bool check_font(unsigned char *font1,unsigned char *font2)
 {
     return (memcmp(font1,font2,CHN_FONT_WIDTH*2)==0);
 }
-void back_font(int num_show, unsigned char *font) { //å‹ç¼©è½¬æ˜¾å­˜æ˜¾ç¤º
+void back_font(int num_show, unsigned char *font) { //Ñ¹Ëõ×ªÏÔ´æÏÔÊ¾
     unsigned int local = CHN_FONT_HIGH * CHN_FONT_WIDTH * num_show / 8;
     unsigned int local_bit = (CHN_FONT_HIGH * CHN_FONT_WIDTH * num_show) % 8;
     unsigned char now_font[CHN_FONT_WIDTH * 2] = {0};
@@ -155,7 +155,6 @@ void back_font(int num_show, unsigned char *font) { //å‹ç¼©è½¬æ˜¾å­˜æ˜¾ç¤º
     }
 }
 int main() {
-
     int num_names = init_file();
     // cout << num_names << endl;
 
@@ -164,10 +163,10 @@ int main() {
     if (!outFile.is_open()) {
         return -5;
     }
-    // å†™å…¥å†…å®¹åˆ°æ–‡ä»¶
+    // Ğ´ÈëÄÚÈİµ½ÎÄ¼ş
 
 
-//        // å…³é—­æ–‡ä»¶æµ
+//        // ¹Ø±ÕÎÄ¼şÁ÷
 //    outFile << "Hello, this is some text.\n";
 //    outFile << "This is a new line.";
 
@@ -183,7 +182,7 @@ int main() {
 
                 if (map_str.find(tmp) != map_str.end()) {
                 } else {
-                    // å¦‚æœä¸åœ¨æ˜ å°„ä¸­ï¼Œæ·»åŠ æ–°çš„é”®å¹¶è®¾ç½®å‡ºç°æ¬¡æ•°ä¸º1
+                    // Èç¹û²»ÔÚÓ³ÉäÖĞ£¬Ìí¼ÓĞÂµÄ¼ü²¢ÉèÖÃ³öÏÖ´ÎÊıÎª1
                     map_str[tmp] = num_chinese;
                     //   cout<<num_chinese<<":"<<tmp[0]<< tmp[1]<<endl;
 
@@ -193,14 +192,14 @@ int main() {
 
                     num_chinese++;
                 }
-                j++; // è·³è¿‡ä¸‹ä¸€ä¸ªå­—èŠ‚ï¼Œå› ä¸ºæ±‰å­—å ä¸¤ä¸ªå­—èŠ‚
+                j++; // Ìø¹ıÏÂÒ»¸ö×Ö½Ú£¬ÒòÎªºº×ÖÕ¼Á½¸ö×Ö½Ú
 
             } else {
 
                 if (en_flag[names[i][j]]) {
 
                 } else {
-                    //         å¦‚æœä¸åœ¨æ˜ å°„ä¸­ï¼Œæ·»åŠ æ–°çš„é”®å¹¶è®¾ç½®å‡ºç°æ¬¡æ•°ä¸º1
+                    //         Èç¹û²»ÔÚÓ³ÉäÖĞ£¬Ìí¼ÓĞÂµÄ¼ü²¢ÉèÖÃ³öÏÖ´ÎÊıÎª1
                     en_flag[names[i][j]] = true;
                     english[num_english] = names[i][j];
                     num_english++;
@@ -218,7 +217,7 @@ int main() {
 
     vector<pair<array<unsigned char, 2>, int>> vec(map_str.begin(), map_str.end());
 
-    // ä½¿ç”¨è‡ªå®šä¹‰çš„æ¯”è¾ƒå‡½æ•°æŒ‰å€¼æ’åº
+    // Ê¹ÓÃ×Ô¶¨ÒåµÄ±È½Ïº¯Êı°´ÖµÅÅĞò
     sort(vec.begin(), vec.end(), sortByValue);
     en_flag['\n'] = true;
     en_flag[' '] = true;
@@ -226,7 +225,7 @@ int main() {
     for (int i = '!'; i <= '~'; i++) {
         en_flag[i] = true;
     }
-    // è¾“å‡ºæ’åºåçš„é”®å€¼å¯¹
+    // Êä³öÅÅĞòºóµÄ¼üÖµ¶Ô
     int now_code = 0x8000;
     for (const auto &pair: vec) {
         // cout << "{" << static_cast<int>(pair.first[0]) << ", " << static_cast<int>(pair.first[1]) << "} : " << pair.second << endl;
@@ -243,8 +242,8 @@ int main() {
         all_code[tmp1] = map_str[tmp];
 
         now_code++;
-        cout << tmp[0] << tmp[1] << ":" <<hex <<(int) map_str[tmp] << endl;
-        //   cout << tmp[0] << tmp[1]<<"','\\" <<endl;
+//        cout << tmp[0] << tmp[1] << ":" <<hex <<(int) map_str[tmp] << endl;
+        output_file << tmp[0] << tmp[1] << ":" << std::hex << (int)map_str[tmp] << std::endl;
 
     }
 
@@ -261,7 +260,7 @@ int main() {
                 unsigned char byte2 = value & 0xFF;
 
                 outFile << "\\x" << std::hex << std::setw(2) << std::setfill('0') << std::uppercase << (int) byte1;
-                outFile.flush(); // åˆ·æ–°ç¼“å†²åŒºï¼Œç¡®ä¿ä¸æ¢è¡Œ
+                outFile.flush(); // Ë¢ĞÂ»º³åÇø£¬È·±£²»»»ĞĞ
 
 // Outputting byte2 as a character other than '\x00'
                 if (byte2 == 0x00) {
@@ -301,7 +300,7 @@ int main() {
 
     int now_byte_index = 0;
     int now_bit_index = 0;
-    for (int k = 0; k < CHN_FONT_NUM; k++) {//å‹ç¼©
+    for (int k = 0; k < CHN_FONT_NUM; k++) {//Ñ¹Ëõ
         unsigned char bitmap[CHN_FONT_HIGH][CHN_FONT_WIDTH] = {0};
         for (int i = 0; i < CHN_FONT_WIDTH * 2; i++) {
             if (i < CHN_FONT_WIDTH) {

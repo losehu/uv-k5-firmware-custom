@@ -14,6 +14,7 @@ using namespace std;
 ifstream file("../name.txt"); // 替换成你的文件名或路径
 ofstream outFile("../name_tmp.txt");
 ofstream out_chinese_array("../chinese_array.txt");
+ofstream out_chinese_map("../chinese_map.txt");
 
 string names[1000];
 unsigned char chinese[1000][2];
@@ -185,7 +186,7 @@ int main() {
                 } else {
                     // 如果不在映射中，添加新的键并设置出现次数为1
                     map_str[tmp] = num_chinese;
-                    //   cout<<num_chinese<<":"<<tmp[0]<< tmp[1]<<endl;
+//                       cout<<num_chinese<<":"<<tmp[0]<< tmp[1]<<endl;
 
                     chinese[num_chinese][0] = tmp[0];
                     chinese[num_chinese][0] = tmp[1];
