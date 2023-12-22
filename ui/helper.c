@@ -104,6 +104,7 @@ void UI_PrintCharSmall(char character, uint8_t Start, uint8_t Line) {
 }
 
 void UI_PrintStringSmall(const char *pString, uint8_t Start, uint8_t End, uint8_t Line) {
+
     uint8_t Length = strlen(pString);
 
 
@@ -174,7 +175,7 @@ void UI_PrintStringSmall(const char *pString, uint8_t Start, uint8_t End, uint8_
 #if ENABLE_CHINESE_FULL==4
             uint8_t tmp[17] = {0};
             true_char[i]-=0x8000;
-
+true_char[i]=true_char[i]-true_char[i]/256-1;
             unsigned int local = (CHN_FONT_HIGH * CHN_FONT_WIDTH * true_char[i]) / 8;
             unsigned int local_bit =(CHN_FONT_HIGH * CHN_FONT_WIDTH * true_char[i]) % 8;
             EEPROM_ReadBuffer(local+0x2000,tmp,17);

@@ -282,8 +282,14 @@ void SETTINGS_InitEEPROM(void)
     }
 
     // 0F30..0F3F
+    char B[8];
+    memset(B,0XFF,8);
+    EEPROM_WriteBuffer(0x0F30, B);
+    EEPROM_WriteBuffer(0x0F38, B);
+
     EEPROM_ReadBuffer(0x0F30, gCustomAesKey, sizeof(gCustomAesKey));
     bHasCustomAesKey = false;
+    //锁定
     for (i = 0; i < ARRAY_SIZE(gCustomAesKey); i++)
     {
         if (gCustomAesKey[i] != 0xFFFFFFFFu)

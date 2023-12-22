@@ -233,6 +233,8 @@ int main() {
         array<unsigned char, 2> tmp = {0};
         tmp[0] = pair.first[0];
         tmp[1] = pair.first[1];
+        if(now_code%256==0)
+            now_code+=1;
         map_str[tmp] = now_code;
 
         array<unsigned char, 2> tmp1;
@@ -241,7 +243,7 @@ int main() {
         all_code[tmp1] = map_str[tmp];
 
         now_code++;
-        cout << tmp[0] << tmp[1] << ":" << (int) map_str[tmp] << endl;
+        cout << tmp[0] << tmp[1] << ":" <<hex <<(int) map_str[tmp] << endl;
         //   cout << tmp[0] << tmp[1]<<"','\\" <<endl;
 
     }

@@ -22,6 +22,7 @@
 #include "driver/system.h"
 uint8_t WRITE_SIZE=0;
 void EEPROM_ReadBuffer(uint32_t Address, void *pBuffer, uint8_t Size) {
+    if(Size==0)return;
     if(Address<0x10000) {
         I2C_Start();
 

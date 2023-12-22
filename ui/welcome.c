@@ -13,6 +13,7 @@
  *     See the License for the specific language governing permissions and
  *     limitations under the License.
  */
+#include "driver/uart.h"
 #include "chinese.h"
 #include <string.h>
 #include "driver/keyboard.h"
@@ -45,43 +46,40 @@
 void UI_DisplayWelcome(void) {
     BACKLIGHT_TurnOn();
 
-    char WelcomeString0[16]={0};
-    char WelcomeString1[16]={0};
+    char WelcomeString0[19] = {0};
+    char WelcomeString1[19] = {0};
 
     memset(gStatusLine, 0, sizeof(gStatusLine));
     memset(gFrameBuffer, 0, sizeof(gFrameBuffer));
 
 
+#if ENABLE_CHINESE_FULL == 4
+    uint8_t welcome_len[2];
+    EEPROM_ReadBuffer(0x1e31e, welcome_len, 2) ;
+    welcome_len[0]=welcome_len[0]>18?0:welcome_len[0];
+    welcome_len[1]=welcome_len[1]>18?0:welcome_len[1];
 
-
-
+    EEPROM_ReadBuffer(0x1e320, WelcomeString0, welcome_len[0]) ;
+    EEPROM_ReadBuffer(0x1e333, WelcomeString1, welcome_len[1]);
+    UI_PrintStringSmall(   WelcomeString0, 0, 127, 0);
+    UI_PrintStringSmall(      WelcomeString1, 0, 127, 2);
+#else
 
     EEPROM_ReadBuffer(0x0EB0, WelcomeString0, 16);
     EEPROM_ReadBuffer(0x0EC0, WelcomeString1, 16);
-
-#if ENABLE_CHINESE_FULL==4
-
-    UI_PrintStringSmall(    "\x84\x67\x88\xD0\x8C\x5F\x88\x0F\x86\x8A\x80\x85\x81\x9C\x96\x10\x21", 0, 127, 0);
-    UI_PrintStringSmall(        "\x8C\x5F\x80\xD1\x80\xBC\x95\xCB\x80\x09\x88\x89\x96\xD2\x8B\xF3\x21", 0, 127, 2);
-#else
-
-            UI_PrintStringSmall(WelcomeString0, 0, 127, 0);
-        UI_PrintStringSmall(WelcomeString1, 0, 127, 2);
+    UI_PrintStringSmall(WelcomeString0, 0, 127, 0);
+    UI_PrintStringSmall(WelcomeString1, 0, 127, 2);
 #endif
-        sprintf(WelcomeString1, "%u.%02uV %u%%",
-                gBatteryVoltageAverage / 100,
-                gBatteryVoltageAverage % 100,
-                BATTERY_VoltsToPercent(gBatteryVoltageAverage));
-        UI_PrintStringSmall(WelcomeString1, 0, 127, 4);
+    sprintf(WelcomeString1, "%u.%02uV %u%%",
+            gBatteryVoltageAverage / 100,
+            gBatteryVoltageAverage % 100,
+            BATTERY_VoltsToPercent(gBatteryVoltageAverage));
+    UI_PrintStringSmall(WelcomeString1, 0, 127, 4);
 
-     UI_PrintStringSmall(Version, 0, 127, 6);
+    UI_PrintStringSmall(Version, 0, 127, 6);
 
-        ST7565_BlitStatusLine();  // blank status line
-        ST7565_BlitFullScreen();
-
-
-
-
+    ST7565_BlitStatusLine();  // blank status line
+    ST7565_BlitFullScreen();
 
 
 }

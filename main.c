@@ -115,6 +115,11 @@ void Main(void) {
 
     RADIO_ConfigureChannel(0, VFO_CONFIGURE_RELOAD);
     RADIO_ConfigureChannel(1, VFO_CONFIGURE_RELOAD);
+    //0x2000~1e31c中文字库
+    // 1e31e开机字符1长度  1e31f开机字符2长度
+    // 0x1e320~0x1e332 开机字符1
+    // 0x1e333~0x1e345 开机字符2
+
 #if ENABLE_CHINESE_FULL > 0&&ENABLE_CHINESE_FULL < 4
     BACKLIGHT_TurnOn();
 
@@ -349,8 +354,8 @@ void Main(void) {
 #ifdef ENABLE_NOAA
     RADIO_ConfigureNOAA();
 #endif
-//    int start_add=0x1E32C;
-//    WRITE_SIZE = 8;
+//    int start_add=0x1EFFD;
+//    WRITE_SIZE = 11;
 //    uint32_t add=0;
 //    uint8_t data_write[8];
 //    memset(data_write,'Z',sizeof (data_write));

@@ -34,7 +34,7 @@ endif()
 
 # Set default install directory permissions.
 if(NOT DEFINED CMAKE_OBJDUMP)
-  set(CMAKE_OBJDUMP "C:/Qt/Qt5.13.1/Tools/mingw730_64/bin/objdump.exe")
+  set(CMAKE_OBJDUMP "C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/objdump.exe")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)

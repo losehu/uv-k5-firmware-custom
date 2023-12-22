@@ -72,29 +72,29 @@ CMakeFiles/uv_k5font.dir/main.cpp.obj: CMakeFiles/uv_k5font.dir/flags.make
 CMakeFiles/uv_k5font.dir/main.cpp.obj: C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/uv-k5font/uv-k5font_full/main.cpp
 CMakeFiles/uv_k5font.dir/main.cpp.obj: CMakeFiles/uv_k5font.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\uv-k5font\uv-k5font_full\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/uv_k5font.dir/main.cpp.obj"
-	C:\Qt\Qt5.13.1\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/uv_k5font.dir/main.cpp.obj -MF CMakeFiles\uv_k5font.dir\main.cpp.obj.d -o CMakeFiles\uv_k5font.dir\main.cpp.obj -c C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\uv-k5font\uv-k5font_full\main.cpp
+	C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/uv_k5font.dir/main.cpp.obj -MF CMakeFiles\uv_k5font.dir\main.cpp.obj.d -o CMakeFiles\uv_k5font.dir\main.cpp.obj -c C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\uv-k5font\uv-k5font_full\main.cpp
 
 CMakeFiles/uv_k5font.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/uv_k5font.dir/main.cpp.i"
-	C:\Qt\Qt5.13.1\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\uv-k5font\uv-k5font_full\main.cpp > CMakeFiles\uv_k5font.dir\main.cpp.i
+	C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\uv-k5font\uv-k5font_full\main.cpp > CMakeFiles\uv_k5font.dir\main.cpp.i
 
 CMakeFiles/uv_k5font.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/uv_k5font.dir/main.cpp.s"
-	C:\Qt\Qt5.13.1\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\uv-k5font\uv-k5font_full\main.cpp -o CMakeFiles\uv_k5font.dir\main.cpp.s
+	C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\uv-k5font\uv-k5font_full\main.cpp -o CMakeFiles\uv_k5font.dir\main.cpp.s
 
 CMakeFiles/uv_k5font.dir/font.cpp.obj: CMakeFiles/uv_k5font.dir/flags.make
 CMakeFiles/uv_k5font.dir/font.cpp.obj: C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/uv-k5font/uv-k5font_full/font.cpp
 CMakeFiles/uv_k5font.dir/font.cpp.obj: CMakeFiles/uv_k5font.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\uv-k5font\uv-k5font_full\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/uv_k5font.dir/font.cpp.obj"
-	C:\Qt\Qt5.13.1\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/uv_k5font.dir/font.cpp.obj -MF CMakeFiles\uv_k5font.dir\font.cpp.obj.d -o CMakeFiles\uv_k5font.dir\font.cpp.obj -c C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\uv-k5font\uv-k5font_full\font.cpp
+	C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/uv_k5font.dir/font.cpp.obj -MF CMakeFiles\uv_k5font.dir\font.cpp.obj.d -o CMakeFiles\uv_k5font.dir\font.cpp.obj -c C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\uv-k5font\uv-k5font_full\font.cpp
 
 CMakeFiles/uv_k5font.dir/font.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/uv_k5font.dir/font.cpp.i"
-	C:\Qt\Qt5.13.1\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\uv-k5font\uv-k5font_full\font.cpp > CMakeFiles\uv_k5font.dir\font.cpp.i
+	C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\uv-k5font\uv-k5font_full\font.cpp > CMakeFiles\uv_k5font.dir\font.cpp.i
 
 CMakeFiles/uv_k5font.dir/font.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/uv_k5font.dir/font.cpp.s"
-	C:\Qt\Qt5.13.1\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\uv-k5font\uv-k5font_full\font.cpp -o CMakeFiles\uv_k5font.dir\font.cpp.s
+	C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\uv-k5font\uv-k5font_full\font.cpp -o CMakeFiles\uv_k5font.dir\font.cpp.s
 
 # Object files for target uv_k5font
 uv_k5font_OBJECTS = \
