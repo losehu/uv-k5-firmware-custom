@@ -62,7 +62,7 @@ static void Key_FUNC(KEY_Code_t Key, uint8_t state);
 
 bool FM_CheckValidChannel(uint8_t Channel)
 {
-return (Channel < ARRAY_SIZE(gFM_Channels) && (gFM_Channels[Channel] >= 760 && gFM_Channels[Channel] < 1080));
+return (Channel < ARRAY_SIZE(gFM_Channels) && (gFM_Channels[Channel] >= 640 && gFM_Channels[Channel] < 1080));
 }
 
 uint8_t FM_FindNextChannel(uint8_t Channel, uint8_t Direction)
