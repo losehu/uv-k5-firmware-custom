@@ -122,7 +122,10 @@ void Main(void) {
 
 #if ENABLE_CHINESE_FULL > 0&&ENABLE_CHINESE_FULL < 4
     BACKLIGHT_TurnOn();
-
+       UI_PrintStringSmall("FREE FIRMWARE!", 0, 127, 0);
+       UI_PrintStringSmall("QQ QUN: 707856906!", 0, 127, 1);
+               ST7565_BlitStatusLine();  // blank status line
+        ST7565_BlitFullScreen();
     uint32_t ALL_SIZE = 40960;
         uint32_t start_add = 0x2000;
         const uint8_t *p_font;
@@ -130,16 +133,27 @@ void Main(void) {
         ALL_SIZE = 40960;
         start_add = 0x2000;
         p_font = gFontChinese_out1;
+
+       UI_PrintStringSmall("FONT 1 / 3", 0, 127, 2);
+
+        ST7565_BlitStatusLine();  // blank status line
+        ST7565_BlitFullScreen();
     #elif ENABLE_CHINESE_FULL == 2
         ALL_SIZE=40960;
         start_add= 0x2000+40960;
         p_font=gFontChinese_out2;
+       UI_PrintStringSmall("FONT 2 / 3", 0, 127, 2);
 
+        ST7565_BlitStatusLine();  // blank status line
+        ST7565_BlitFullScreen();
     #elif  ENABLE_CHINESE_FULL==3
         ALL_SIZE=33564;
         start_add=  0x2000+40960*2;
         p_font=gFontChinese_out3;
+       UI_PrintStringSmall("FONT 3 / 3", 0, 127, 2);
 
+        ST7565_BlitStatusLine();  // blank status line
+        ST7565_BlitFullScreen();
     #endif
     for (uint32_t i = 0; i < ALL_SIZE; i += 128) {
             if (i != (uint32_t) (ALL_SIZE / 128) * 128) {

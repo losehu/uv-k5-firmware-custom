@@ -434,23 +434,20 @@ void UI_DisplayMain(void) {
             else
 #endif
             {
+
                 if (activeTxVFO == vfo_num) {    // show the TX symbol
                     mode = VFO_MODE_TX;
-#ifdef ENABLE_SMALL_BOLD
-                    UI_PrintStringSmallBold("TX", 14, 0, line);
-#else
-                    UI_PrintStringSmall("TX", 14, 0, line);
-#endif
+
+                    memcpy( gFrameBuffer[line + 0] + 14, BITMAP_SEND, sizeof(BITMAP_SEND));
+
                 }
             }
         } else {    // receiving .. show the RX symbol
             mode = VFO_MODE_RX;
             if (FUNCTION_IsRx() && gEeprom.RX_VFO == vfo_num) {
-#ifdef ENABLE_SMALL_BOLD
-                UI_PrintStringSmallBold("RX", 14, 0, line);
-#else
-                UI_PrintStringSmall("RX", 14, 0, line);
-#endif
+
+                memcpy( gFrameBuffer[line + 0] + 14, BITMAP_RECV, sizeof(BITMAP_RECV));
+
             }
         }
 
@@ -536,12 +533,31 @@ void UI_DisplayMain(void) {
                 // show the scan list assigment symbols
 
                 const ChannelAttributes_t att = gMR_ChannelAttributes[gEeprom.ScreenChannel[vfo_num]];
-                if (att.scanlist1)
-
+                if (att.scanlist1) {
+#if ENABLE_CHINESE_FULL != 4
                     memcpy(p_line0 + 113, BITMAP_ScanList1, sizeof(BITMAP_ScanList1));
-                if (att.scanlist2)
+#else
+                    if(IS_MR_CHANNEL(gEeprom.ScreenChannel[vfo_num])      )
+                        memcpy(gFrameBuffer[line + 2] + 113, BITMAP_ScanList1, sizeof(BITMAP_ScanList1));
+                    else
+                        memcpy(p_line0 + 113, BITMAP_ScanList1, sizeof(BITMAP_ScanList1));
+}
 
+
+
+#endif
+                if (att.scanlist2) {
+#if ENABLE_CHINESE_FULL != 4
                     memcpy(p_line0 + 120, BITMAP_ScanList2, sizeof(BITMAP_ScanList2));
+#else
+                    if(IS_MR_CHANNEL(gEeprom.ScreenChannel[vfo_num])        )
+                    memcpy(gFrameBuffer[line + 2] + 120, BITMAP_ScanList2, sizeof(BITMAP_ScanList2));
+            else
+                        memcpy(p_line0 + 120, BITMAP_ScanList2, sizeof(BITMAP_ScanList2));
+
+    }
+
+#endif
 
                 // compander symbol
 #ifndef ENABLE_BIG_FREQ
@@ -596,7 +612,13 @@ void UI_DisplayMain(void) {
 #endif
                             // show the channel frequency below the channel number/name
                             sprintf(String, "%03u.%05u", frequency / 100000, frequency % 100000);
+#if ENABLE_CHINESE_FULL != 4
                             UI_PrintStringSmall(String, 32 + 4, 0, line + 1);
+#else
+                            UI_PrintStringSmall(String, 32 + 4, 0, line + 2);
+
+#endif
+
                         }
 
                         break;
@@ -682,14 +704,34 @@ void UI_DisplayMain(void) {
                 s = gModulationStr[mod];
                 break;
         }
-        UI_PrintStringSmall(s, LCD_WIDTH + 24, 0, line + 1);
+#if ENABLE_CHINESE_FULL != 4
+        UI_PrintStringSmall(s, LCD_WIDTH + 24, 0, line + 1); //中文信道1
+#else
+        if(IS_MR_CHANNEL(gEeprom.ScreenChannel[vfo_num])       )
+        UI_PrintStringSmall(s, LCD_WIDTH +0, 0, line + 1); //中文信道1
+        else
+        UI_PrintStringSmall(s, LCD_WIDTH + 24, 0, line + 1); //中文信道1
 
+
+
+#endif
         if (state == VFO_STATE_NORMAL || state == VFO_STATE_ALARM) {    // show the TX power
             const char pwr_list[] = "LMH";
             const unsigned int i = gEeprom.VfoInfo[vfo_num].OUTPUT_POWER;
             String[0] = (i < ARRAY_SIZE(pwr_list)) ? pwr_list[i] : '\0';
             String[1] = '\0';
-            UI_PrintStringSmall(String, LCD_WIDTH + 46, 0, line + 1);
+
+#if ENABLE_CHINESE_FULL != 4
+            UI_PrintStringSmall(String, LCD_WIDTH + 46, 0, line + 1); //中文信道1
+#else
+
+            if(IS_MR_CHANNEL(gEeprom.ScreenChannel[vfo_num])  &&!(FUNCTION_IsRx() && gEeprom.RX_VFO == vfo_num  )   &&!( gCurrentFunction == FUNCTION_TRANSMIT&&activeTxVFO == vfo_num) )
+
+            UI_PrintStringSmall(String, LCD_WIDTH + 8, 0, line -1); //中文信道1
+            else if(!IS_MR_CHANNEL(gEeprom.ScreenChannel[vfo_num]) )
+                UI_PrintStringSmall(String, LCD_WIDTH + 46, 0, line + 1); //中文信道1
+
+#endif
         }
 
         if (gEeprom.VfoInfo[vfo_num].freq_config_RX.Frequency !=
@@ -698,31 +740,75 @@ void UI_DisplayMain(void) {
             const unsigned int i = gEeprom.VfoInfo[vfo_num].TX_OFFSET_FREQUENCY_DIRECTION;
             String[0] = (i < sizeof(dir_list)) ? dir_list[i] : '?';
             String[1] = '\0';
-            UI_PrintStringSmall(String, LCD_WIDTH + 54, 0, line + 1);
+#if ENABLE_CHINESE_FULL != 4
+            UI_PrintStringSmall(String, LCD_WIDTH + 54, 0, line + 1);//中文信道1
+#else
+    if(IS_MR_CHANNEL(gEeprom.ScreenChannel[vfo_num])   &&!(FUNCTION_IsRx() && gEeprom.RX_VFO == vfo_num  )    &&!( gCurrentFunction == FUNCTION_TRANSMIT&&activeTxVFO == vfo_num)  )
+            UI_PrintStringSmall(String, LCD_WIDTH + 16, 0, line - 1);//中文信道1
+                    else if(!IS_MR_CHANNEL(gEeprom.ScreenChannel[vfo_num]) )
+            UI_PrintStringSmall(String, LCD_WIDTH + 54, 0, line + 1);//中文信道1
+#endif
         }
 
         // show the TX/RX reverse symbol
-        if (gEeprom.VfoInfo[vfo_num].FrequencyReverse)
-            UI_PrintStringSmall("R", LCD_WIDTH + 62, 0, line + 1);
+        if (gEeprom.VfoInfo[vfo_num].FrequencyReverse) {
+#if ENABLE_CHINESE_FULL != 4
+            UI_PrintStringSmall("R", LCD_WIDTH + 62, 0, line + 1);//中文信道1
 
+#else
+            if(IS_MR_CHANNEL(gEeprom.ScreenChannel[vfo_num])    &&!(FUNCTION_IsRx() && gEeprom.RX_VFO == vfo_num  )    &&!( gCurrentFunction == FUNCTION_TRANSMIT&&activeTxVFO == vfo_num)      )
+                    UI_PrintStringSmall("R", LCD_WIDTH + 24, 0, line - 1);//中文信道1
+                    else if(IS_MR_CHANNEL(gEeprom.ScreenChannel[vfo_num]))
+                        UI_PrintStringSmall("R", LCD_WIDTH + 62, 0, line + 1);//中文信道1
+
+#endif
+        }
         {    // show the narrow band symbol
             String[0] = '\0';
             if (gEeprom.VfoInfo[vfo_num].CHANNEL_BANDWIDTH == BANDWIDTH_NARROW) {
                 String[0] = 'N';
                 String[1] = '\0';
             }
-            UI_PrintStringSmall(String, LCD_WIDTH + 70, 0, line + 1);
+#if ENABLE_CHINESE_FULL != 4
+            UI_PrintStringSmall(String, LCD_WIDTH + 71, 0, line + 1);//中文信道1
+#else
+            if(IS_MR_CHANNEL(gEeprom.ScreenChannel[vfo_num])        )
+            UI_PrintStringSmall(String,   LCD_WIDTH + 21, 0, line + 1);//中文信道1
+        else
+            UI_PrintStringSmall(String, LCD_WIDTH + 70, 0, line + 1);//中文信道1
+
+
+#endif
         }
 #ifdef ENABLE_DTMF_CALLING
         // show the DTMF decoding symbol
         if (gEeprom.VfoInfo[vfo_num].DTMF_DECODING_ENABLE || gSetting_KILLED)
-            UI_PrintStringSmall("DTMF", LCD_WIDTH + 78, 0, line + 1);
+            {
+#if ENABLE_CHINESE_FULL != 4
+            UI_PrintStringSmall("DTMF", LCD_WIDTH + 78, 0, line + 1);//中文信道1
+#else
+
+            if(IS_MR_CHANNEL(gEeprom.ScreenChannel[vfo_num])        )
+            UI_PrintStringSmall("D", LCD_WIDTH + 105, 0, line + 1);//中文信道1
+        else
+            UI_PrintStringSmall("DTMF", LCD_WIDTH + 78, 0, line + 1);//中文信道1
+}
+
+#endif
 #endif
         // show the audio scramble symbol
-        if (gEeprom.VfoInfo[vfo_num].SCRAMBLING_TYPE > 0/* && gSetting_ScrambleEnable*/)
-
+        if (gEeprom.VfoInfo[vfo_num].SCRAMBLING_TYPE > 0/* && gSetting_ScrambleEnable*/) {
             //   if (gEeprom.VfoInfo[vfo_num].SCRAMBLING_TYPE > 0 && gSetting_ScrambleEnable)
-            UI_PrintStringSmall("SCR", LCD_WIDTH + 106, 0, line + 1);
+#if ENABLE_CHINESE_FULL != 4
+            UI_PrintStringSmall("ENC", LCD_WIDTH + 106, 0, line + 1);//中文信道1
+#else
+            if(IS_MR_CHANNEL(gEeprom.ScreenChannel[vfo_num])        )
+            UI_PrintStringSmall("E", LCD_WIDTH + 29, 0, line +1);//中文信道1 ok
+            else
+                UI_PrintStringSmall("ENC", LCD_WIDTH + 106, 0, line + 1);//中文信道1
+    }
+
+#endif
 
     }
 #ifdef ENABLE_AGC_SHOW_DATA

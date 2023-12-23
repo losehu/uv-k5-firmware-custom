@@ -17,6 +17,7 @@
 #include "app/mdc1200.h"
 #include <string.h>
 #include "driver/uart.h"
+#include "ui/helper.h"
 
 #if !defined(ENABLE_OVERLAY)
 
@@ -124,7 +125,7 @@ int MENU_GetLimits(uint8_t menu_id, int32_t *pMin, int32_t *pMax) {
 
         case MENU_STEP:
             *pMin = 0;
-            *pMax =STEP_N_ELEM - 1;
+            *pMax = STEP_N_ELEM - 1;
             break;
 
         case MENU_ABR:
@@ -199,7 +200,7 @@ int MENU_GetLimits(uint8_t menu_id, int32_t *pMin, int32_t *pMax) {
         case MENU_R_CTCS:
         case MENU_T_CTCS:
             *pMin = 0;
-            *pMax = ARRAY_SIZE(CTCSS_Options) ;
+            *pMax = ARRAY_SIZE(CTCSS_Options);
             break;
 
 //		case MENU_W_N:
@@ -1192,7 +1193,7 @@ static void MENU_Key_0_to_9(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
 
     gBeepToPlay = BEEP_1KHZ_60MS_OPTIONAL;
     uint8_t now_menu = UI_MENU_GetCurrentMenuId();
-    uint8_t end_index = now_menu == MENU_MEM_NAME ? 10 : 4;
+    uint8_t end_index = now_menu == MENU_MEM_NAME ? MAX_EDIT_INDEX : 4;
     if ((now_menu == MENU_MEM_NAME || now_menu == MENU_MDC_ID) &&
         edit_index >= 0) {    // currently editing the channel name
 
@@ -1428,22 +1429,18 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld) {
 #endif
         return;
     }
-     if (UI_MENU_GetCurrentMenuId() == MENU_MDC_ID&&edit_index < 4)
-    {	// editing the channel name characters
+    if (UI_MENU_GetCurrentMenuId() == MENU_MDC_ID && edit_index < 4) {    // editing the channel name characters
 
         if (++edit_index < 4)
             return;
 
         // exit
-        if (memcmp(edit_original, edit, sizeof(edit_original)) == 0)
-        {	// no change - drop it
-            gFlagAcceptSetting  = false;
-            gIsInSubMenu        = false;
+        if (memcmp(edit_original, edit, sizeof(edit_original)) == 0) {    // no change - drop it
+            gFlagAcceptSetting = false;
+            gIsInSubMenu = false;
             gAskForConfirmation = 0;
-        }
-        else
-        {
-            gFlagAcceptSetting  = false;
+        } else {
+            gFlagAcceptSetting = false;
             gAskForConfirmation = 0;
         }
 
@@ -1456,17 +1453,28 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld) {
             SETTINGS_FetchChannelName(edit, gSubMenuSelection);
             // pad the channel name out with '_'
             edit_index = strlen(edit);
-            while (edit_index < 10)
-                edit[edit_index++] = '_';
+#if ENABLE_CHINESE_FULL != 4
+            while (edit_index < MAX_EDIT_INDEX)edit[edit_index++] = '_';
             edit[edit_index] = 0;
             edit_index = 0;  // 'edit_index' is going to be used as the cursor position
+
+#else
+            if(!CHINESE_JUDGE(edit,edit_index))
+            {
+                while (edit_index < MAX_EDIT_INDEX)edit[edit_index++] = '_';
+                edit[edit_index] = 0;
+                edit_index = 0;  // 'edit_index' is going to be used as the cursor position
+
+            }
+
+#endif
 
             // make a copy so we can test for change when exiting the menu item
             memcpy(edit_original, edit, sizeof(edit_original));
             return;
-        } else if (edit_index >= 0 && edit_index < 10) {    // editing the channel name characters
+        } else if (edit_index >= 0 && edit_index < MAX_EDIT_INDEX) {    // editing the channel name characters
 
-            if (++edit_index < 10)
+            if (++edit_index < MAX_EDIT_INDEX)
                 return;    // next char
 
             // exit
@@ -1544,10 +1552,10 @@ static void MENU_Key_STAR(const bool bKeyPressed, const bool bKeyHeld) {
 
     if (UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME && edit_index >= 0) {    // currently editing the channel name
 
-        if (edit_index < 10) {
+        if (edit_index < MAX_EDIT_INDEX) {
             edit[edit_index] = '-';
 
-            if (++edit_index >= 10) {    // exit edit
+            if (++edit_index >= MAX_EDIT_INDEX) {    // exit edit
                 gFlagAcceptSetting = false;
                 gAskForConfirmation = 1;
             }
@@ -1587,7 +1595,7 @@ static void MENU_Key_UP_DOWN(bool bKeyPressed, bool bKeyHeld, int8_t Direction) 
     bool bCheckScanList;
     if (gIsInSubMenu && edit_index >= 0) {
         if (UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME) {    // change the character
-            if (bKeyPressed && edit_index < 10) {
+            if (bKeyPressed && edit_index < MAX_EDIT_INDEX) {
                 const char unwanted[] = "$%&!\"':;?^`|{}";
                 char c = edit[edit_index] + Direction;
                 unsigned int i = 0;
@@ -1725,9 +1733,9 @@ void MENU_ProcessKeys(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
                 edit_index >= 0) {    // currently editing the channel name
                 if (!bKeyHeld && bKeyPressed) {
                     gBeepToPlay = BEEP_1KHZ_60MS_OPTIONAL;
-                    if (edit_index < 10) {
+                    if (edit_index < MAX_EDIT_INDEX) {
                         edit[edit_index] = ' ';
-                        if (++edit_index >= 10) {    // exit edit
+                        if (++edit_index >= MAX_EDIT_INDEX) {    // exit edit
                             gFlagAcceptSetting = false;
                             gAskForConfirmation = 1;
                         }

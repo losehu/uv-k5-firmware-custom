@@ -62,7 +62,7 @@ bool RADIO_CheckValidChannel(uint16_t Channel, bool bCheckScanList, uint8_t VFO)
 
     if (!IS_MR_CHANNEL(Channel))
         return false;
-
+//0D60
     att = gMR_ChannelAttributes[Channel];
 
     if (att.band > BAND7_470MHz)

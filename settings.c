@@ -372,28 +372,42 @@ void SETTINGS_FetchChannelName(char *s, const int channel)
 {
     if (s == NULL)
         return;
-
-    memset(s, 0, 11);  // 's' had better be large enough !
-
+#if ENABLE_CHINESE_FULL==4
+    memset(s, 0, 16);  // 's' had better be large enough !
+#else
+    memset(s, 0, 10);  // 's' had better be large enough !
+#endif
     if (channel < 0)
         return;
 
     if (!RADIO_CheckValidChannel(channel, false, 0))
         return;
-
     EEPROM_ReadBuffer(0x0F50 + (channel * 16), s + 0, 8);
-    EEPROM_ReadBuffer(0x0F58 + (channel * 16), s + 8, 2);
 
+#if ENABLE_CHINESE_FULL==4
+    EEPROM_ReadBuffer(0x0F58 + (channel * 16), s + 8, 8);
+    int i;
+    for (i = 0; i < 16; i++)
+        if (!((s[i] >= 32 && s[i] <= 127)||(
+        s[i]>=0x80&&s[i]<=0x9b&&i!=15&&s[i+1]!=0)
+        ))break;                // invalid char
+            else if(s[i]>=0x80&&s[i]<=0x9b&&i!=15&&s[i+1]!=0) i++;
+#else
+
+    EEPROM_ReadBuffer(0x0F58 + (channel * 16), s + 8, 2);
     int i;
     for (i = 0; i < 10; i++)
         if (s[i] < 32 || s[i] > 127)
             break;                // invalid char
+#endif
+
 
     s[i--] = 0;                   // null term
 
     while (i >= 0 && s[i] == 32)  // trim trailing spaces
         s[i--] = 0;               // null term
-//    strcpy(s,"\x89\x11\x81\x53\x95\x33\x80\x7F\x8D\xD4");
+        //中文信道名
+//    strcpy(s,"\x9b\x2c\x9b\x2c\x9b\x2c\x9b\x2c\x9b\x2c\x9b\x2c\x9b\x2c");
 }
 
 void SETTINGS_FactoryReset(bool bIsAll)
@@ -693,7 +707,7 @@ void SETTINGS_SaveChannelName(uint8_t channel, const char * name)
     uint16_t offset = channel * 16;
     uint8_t  buf[16];
     memset(&buf, 0x00, sizeof(buf));
-    memcpy(buf, name, MIN(strlen(name),10u));
+    memcpy(buf, name, MIN(strlen(name),(unsigned char)MAX_EDIT_INDEX));
     EEPROM_WriteBuffer(0x0F50 + offset, buf);
     EEPROM_WriteBuffer(0x0F58 + offset, buf + 8);
 }

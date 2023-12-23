@@ -25,6 +25,7 @@ void UI_GenerateChannelStringEx(char *pString, const bool bShowPrefix, const uin
 void UI_PrintStringSmall(const char *pString, uint8_t Start, uint8_t End, uint8_t Line);
 void UI_PrintCharSmall(char character, uint8_t Start, uint8_t Line) ;
 uint8_t is_chn(uint8_t num);
+bool CHINESE_JUDGE(char *name,uint8_t len);
 
 
 #ifdef ENABLE_SMALL_BOLD

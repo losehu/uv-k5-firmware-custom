@@ -276,11 +276,8 @@ int main() {
                 tmp[1] = names[i][j];
                 outFile << "\\x" << hex << setw(2) << setfill('0') << uppercase << (int) tmp[1];
                 //  outFile << "\\x" << hex << setw(2) << setfill('0') << uppercase << static_cast<unsigned int>(all_code[tmp]);
-
             }
-
         }
-
         outFile << endl;
     }
 

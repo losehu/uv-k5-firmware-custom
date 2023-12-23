@@ -21,50 +21,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="中文">
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/uart.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/uart.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chinese.h" beforeDir="false" afterPath="$PROJECT_DIR$/chinese.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeCCompiler.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeCCompiler.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeCXXCompiler.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeCXXCompiler.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeDetermineCompilerABI_C.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeDetermineCompilerABI_C.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-environment.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-environment.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment/sponsors.md" beforeDir="false" afterPath="$PROJECT_DIR$/payment/sponsors.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.c" beforeDir="false" afterPath="$PROJECT_DIR$/settings.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/helper.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/helper.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/welcome.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/welcome.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv-k5font/font.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/font.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/ALL_IN.txt" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/ALL_IN.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/.cmake/api/v1/reply/toolchains-v1-a74a31a1757014c51fb0.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/CMakeCache.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/CMakeFiles/3.25.2/CMakeCCompiler.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/CMakeFiles/3.25.2/CMakeCCompiler.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/CMakeFiles/3.25.2/CMakeCXXCompiler.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/CMakeFiles/3.25.2/CMakeCXXCompiler.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/CMakeFiles/3.25.2/CMakeDetermineCompilerABI_C.bin" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/CMakeFiles/3.25.2/CMakeDetermineCompilerABI_C.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/CMakeFiles/3.25.2/CMakeDetermineCompilerABI_CXX.bin" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/CMakeFiles/3.25.2/CMakeDetermineCompilerABI_CXX.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/CMakeFiles/3.25.2/CMakeRCCompiler.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/CMakeFiles/3.25.2/CMakeRCCompiler.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/CMakeFiles/3.25.2/CompilerIdC/a.exe" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/CMakeFiles/3.25.2/CompilerIdC/a.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/CMakeFiles/3.25.2/CompilerIdCXX/a.exe" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/CMakeFiles/3.25.2/CompilerIdCXX/a.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/CMakeFiles/clion-environment.txt" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/CMakeFiles/clion-environment.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/CMakeFiles/uv_k5font.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/CMakeFiles/uv_k5font.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/CMakeFiles/uv_k5font.dir/compiler_depend.internal" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/CMakeFiles/uv_k5font.dir/compiler_depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/CMakeFiles/uv_k5font.dir/compiler_depend.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/CMakeFiles/uv_k5font.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/CMakeFiles/uv_k5font.dir/flags.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/CMakeFiles/uv_k5font.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/CMakeFiles/uv_k5font.dir/link.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/CMakeFiles/uv_k5font.dir/main.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/CMakeFiles/uv_k5font.dir/main.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/CMakeFiles/uv_k5font.dir/objects.a" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/CMakeFiles/uv_k5font.dir/objects.a" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/cmake_install.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/cmake_install.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/uv_k5font.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/uv_k5font.cbp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/uv_k5font.exe" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/cmake-build-debug/uv_k5font.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/name_out.txt" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/name_out.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/name_tmp.txt" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/name_tmp.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/version.c" beforeDir="false" afterPath="$PROJECT_DIR$/version.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -127,7 +90,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;File.Encoding&quot;,
     &quot;structure.view.defaults.are.configured&quot;: &quot;true&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -282,21 +245,9 @@
       <workItem from="1703140848837" duration="791000" />
       <workItem from="1703149188767" duration="162000" />
       <workItem from="1703159257296" duration="3312000" />
-      <workItem from="1703216340003" duration="11341000" />
-    </task>
-    <task id="LOCAL-00046" summary="MDC RX">
-      <created>1701693197494</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1701693197494</updated>
-    </task>
-    <task id="LOCAL-00047" summary="MDC RX">
-      <created>1701693386492</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1701693386492</updated>
+      <workItem from="1703216340003" duration="19547000" />
+      <workItem from="1703259169230" duration="73000" />
+      <workItem from="1703259273867" duration="8810000" />
     </task>
     <task id="LOCAL-00048" summary="MDC RX">
       <created>1701693594928</created>
@@ -627,7 +578,21 @@
       <option name="project" value="LOCAL" />
       <updated>1703089517953</updated>
     </task>
-    <option name="localTasksCounter" value="95" />
+    <task id="LOCAL-00095" summary="中文">
+      <created>1703238500842</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1703238500843</updated>
+    </task>
+    <task id="LOCAL-00096" summary="中文">
+      <created>1703258782152</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1703258782152</updated>
+    </task>
+    <option name="localTasksCounter" value="97" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -680,5 +645,21 @@
     <MESSAGE value="支持中文编译选项ENABLE_CHINESE_FULL" />
     <MESSAGE value="中文" />
     <option name="LAST_COMMIT_MESSAGE" value="中文" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/app/uart.c</url>
+          <line>595</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/ui/helper.h</url>
+          <line>25</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

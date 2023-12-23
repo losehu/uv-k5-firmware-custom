@@ -23,6 +23,11 @@ extern const uint8_t gFontChinese_out[2013];
 #define CHN_FONT_WIDTH 11U
 #define CHN_FONT_HIGH 12U
 #define ENABLE_CHINESE_FULL 4
+#if  ENABLE_CHINESE_FULL ==4
+#define MAX_EDIT_INDEX 13
+#else
+#define MAX_EDIT_INDEX 10
+#endif
 
 extern const uint8_t gFontBigDigits[11][20/*20*/];
 extern const uint8_t gFont3x5[96][3];

@@ -38,7 +38,7 @@ void set_bit(uint8_t *value, uint8_t bit_position, uint8_t bit_value) {
 }
 
 uint8_t is_chn(uint8_t num) {
-#if ENABLE_CHINESE_FULL==4
+#if ENABLE_CHINESE_FULL!=0
     if (num>=0x80) return 1;
     return 255;
 #else
@@ -63,7 +63,13 @@ void UI_GenerateChannelString(char *pString, const uint8_t Channel) {
     for (i = 0; i < 2; i++)
         pString[i + 3] = (gInputBox[i] == 10) ? '-' : gInputBox[i] + '0';
 }
+bool CHINESE_JUDGE(char *name,uint8_t len)
+{
+    for(int i=0;i<len;i++)
+        if(name[i]>=0x80&&name[i]<=0x9b&&i!=len-1&&name[i+1]!=0)return 1;
 
+    return 0;
+}
 void UI_GenerateChannelStringEx(char *pString, const bool bShowPrefix, const uint8_t ChannelNumber) {
     if (gInputBoxIndex > 0) {
         unsigned int i;
@@ -127,7 +133,7 @@ void UI_PrintStringSmall(const char *pString, uint8_t Start, uint8_t End, uint8_
         else if (chn_judge != 255) {
             cn_flag[char_num]=1;
 
-#if ENABLE_CHINESE_FULL==4
+#if ENABLE_CHINESE_FULL!=0
 
             true_char[char_num]=(pString[j]<<8)|pString[j+1];
             j++;
@@ -172,7 +178,7 @@ void UI_PrintStringSmall(const char *pString, uint8_t Start, uint8_t End, uint8_
         } else {
             uint8_t gFontChinese[22] = {0};
 
-#if ENABLE_CHINESE_FULL==4
+#if ENABLE_CHINESE_FULL!=0
             uint8_t tmp[17] = {0};
             true_char[i]-=0x8000;
 true_char[i]=true_char[i]-true_char[i]/256-1;

@@ -15,7 +15,7 @@
  */
 
 #include <string.h>
-
+#include "font.h"
 #if !defined(ENABLE_OVERLAY)
 
 #include "ARMCM0.h"
@@ -81,7 +81,15 @@ typedef struct {
     uint8_t Padding;
     uint32_t Timestamp;
 } CMD_051B_t;
+typedef struct {
+    Header_t Header;
+    uint16_t Offset;
+    uint8_t Size;
+    uint8_t Padding;
+    uint32_t Timestamp;
+    uint8_t ADD[2];
 
+} CMD_052B_t;
 typedef struct {
     Header_t Header;
     struct {
@@ -496,10 +504,11 @@ bool UART_IsCommandAvailable(void) {
     return judge;
 }
 
+#if ENABLE_CHINESE_FULL==4
 
 static void CMD_052B(const uint8_t *pBuffer)//read
 {
-    const CMD_051B_t *pCmd = (const CMD_051B_t *) pBuffer;
+    const CMD_052B_t *pCmd = (const CMD_052B_t *) pBuffer;
     REPLY_051B_t Reply;
     bool bLocked = false;
 
@@ -516,13 +525,16 @@ static void CMD_052B(const uint8_t *pBuffer)//read
     Reply.Header.ID = 0x051C;
     Reply.Header.Size = pCmd->Size + 4;
     Reply.Data.Offset = pCmd->Offset;
+
     Reply.Data.Size = pCmd->Size;
 
     if (bHasCustomAesKey)
         bLocked = gIsLocked;
+//    uint8_t add[4]={(pCmd->Offset)>>8,pCmd->Offset&0xff,(pCmd->ADD[1]),(pCmd->ADD[0])};
+//    UART_Send(add,4);
 
     if (!bLocked)
-        EEPROM_ReadBuffer(pCmd->Offset, Reply.Data.Data, pCmd->Size);
+        EEPROM_ReadBuffer(((pCmd->Offset) << 16) + ((pCmd->ADD[1]) << 8) + (pCmd->ADD[0]), Reply.Data.Data, pCmd->Size);
 
     SendReply(&Reply, pCmd->Size + 8);
 }
@@ -578,15 +590,17 @@ static void CMD_0538(const uint8_t *pBuffer)//write
 
     SendReply(&Reply, sizeof(Reply));
 }
-
+#endif
 void UART_HandleCommand(void) {
     switch (UART_Command.Header.ID) {
+#if ENABLE_CHINESE_FULL==4
         case 0x052B://read
             CMD_052B(UART_Command.Buffer);
             break;
         case 0x0538://write
             CMD_0538(UART_Command.Buffer);
             break;
+#endif
         case 0x0514:
             CMD_0514(UART_Command.Buffer);
             break;
