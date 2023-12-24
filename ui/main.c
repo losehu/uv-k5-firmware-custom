@@ -360,8 +360,7 @@ void UI_DisplayMain(void) {
                     UI_PrintStringSmall("ScnRng", 5, 0, line);
                     sprintf(String, "%3u.%05u", gScanRangeStart / 100000, gScanRangeStart % 100000);
                     UI_PrintStringSmall(String, 56, 0, line);
-                    uint32_t frq = gEeprom.VfoInfo[vfo_num].pRX->Frequency;
-                    sprintf(String, "%3u.%05u", frq / 100000, frq % 100000);
+                   sprintf(String, "%3u.%05u", gScanRangeStop / 100000, gScanRangeStop % 100000);
                     UI_PrintStringSmall(String, 56, 0, line + 1);
                 continue;
             }
@@ -541,11 +540,12 @@ void UI_DisplayMain(void) {
                         memcpy(gFrameBuffer[line + 2] + 113, BITMAP_ScanList1, sizeof(BITMAP_ScanList1));
                     else
                         memcpy(p_line0 + 113, BITMAP_ScanList1, sizeof(BITMAP_ScanList1));
-}
-
-
-
 #endif
+
+                }
+
+
+
                 if (att.scanlist2) {
 #if ENABLE_CHINESE_FULL != 4
                     memcpy(p_line0 + 120, BITMAP_ScanList2, sizeof(BITMAP_ScanList2));
@@ -554,10 +554,10 @@ void UI_DisplayMain(void) {
                     memcpy(gFrameBuffer[line + 2] + 120, BITMAP_ScanList2, sizeof(BITMAP_ScanList2));
             else
                         memcpy(p_line0 + 120, BITMAP_ScanList2, sizeof(BITMAP_ScanList2));
+#endif
 
     }
 
-#endif
 
                 // compander symbol
 #ifndef ENABLE_BIG_FREQ
@@ -605,11 +605,9 @@ void UI_DisplayMain(void) {
                         if (gEeprom.CHANNEL_DISPLAY_MODE == MDF_NAME) {
                             UI_PrintStringSmall(String, 32, 0, line);
                         } else {
-#ifdef ENABLE_SMALL_BOLD
-                            UI_PrintStringSmallBold(String, 32 + 4, 0, line);
-#else
+
                             UI_PrintStringSmall(String, 32 + 4, 0, line);
-#endif
+
                             // show the channel frequency below the channel number/name
                             sprintf(String, "%03u.%05u", frequency / 100000, frequency % 100000);
 #if ENABLE_CHINESE_FULL != 4
@@ -727,7 +725,7 @@ void UI_DisplayMain(void) {
 
             if(IS_MR_CHANNEL(gEeprom.ScreenChannel[vfo_num])  &&!(FUNCTION_IsRx() && gEeprom.RX_VFO == vfo_num  )   &&!( gCurrentFunction == FUNCTION_TRANSMIT&&activeTxVFO == vfo_num) )
 
-            UI_PrintStringSmall(String, LCD_WIDTH + 8, 0, line -1); //中文信道1
+            UI_PrintStringSmall(String, LCD_WIDTH + 9, 0, line -1); //中文信道1
             else if(!IS_MR_CHANNEL(gEeprom.ScreenChannel[vfo_num]) )
                 UI_PrintStringSmall(String, LCD_WIDTH + 46, 0, line + 1); //中文信道1
 
@@ -744,7 +742,7 @@ void UI_DisplayMain(void) {
             UI_PrintStringSmall(String, LCD_WIDTH + 54, 0, line + 1);//中文信道1
 #else
     if(IS_MR_CHANNEL(gEeprom.ScreenChannel[vfo_num])   &&!(FUNCTION_IsRx() && gEeprom.RX_VFO == vfo_num  )    &&!( gCurrentFunction == FUNCTION_TRANSMIT&&activeTxVFO == vfo_num)  )
-            UI_PrintStringSmall(String, LCD_WIDTH + 16, 0, line - 1);//中文信道1
+            UI_PrintStringSmall(String, LCD_WIDTH + 17, 0, line - 1);//中文信道1
                     else if(!IS_MR_CHANNEL(gEeprom.ScreenChannel[vfo_num]) )
             UI_PrintStringSmall(String, LCD_WIDTH + 54, 0, line + 1);//中文信道1
 #endif
@@ -792,9 +790,10 @@ void UI_DisplayMain(void) {
             UI_PrintStringSmall("D", LCD_WIDTH + 105, 0, line + 1);//中文信道1
         else
             UI_PrintStringSmall("DTMF", LCD_WIDTH + 78, 0, line + 1);//中文信道1
+            #endif
+
 }
 
-#endif
 #endif
         // show the audio scramble symbol
         if (gEeprom.VfoInfo[vfo_num].SCRAMBLING_TYPE > 0/* && gSetting_ScrambleEnable*/) {
@@ -806,9 +805,10 @@ void UI_DisplayMain(void) {
             UI_PrintStringSmall("E", LCD_WIDTH + 29, 0, line +1);//中文信道1 ok
             else
                 UI_PrintStringSmall("ENC", LCD_WIDTH + 106, 0, line + 1);//中文信道1
-    }
-
 #endif
+
+        }
+
 
     }
 #ifdef ENABLE_AGC_SHOW_DATA
@@ -840,11 +840,9 @@ void UI_DisplayMain(void) {
 //#else
 //                sprintf(String, "MDC1200 ID %04X", mdc1200_unit_id);
 //#endif
-#ifdef ENABLE_SMALL_BOLD
-            UI_PrintStringSmallBold(String, print_col, 0, 3);
-#else
+
             UI_PrintStringSmall(String, print_col, 0, 3);
-#endif
+
 
         } else
 #endif

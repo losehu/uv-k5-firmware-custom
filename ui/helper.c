@@ -112,8 +112,13 @@ void UI_PrintCharSmall(char character, uint8_t Start, uint8_t Line) {
 void UI_PrintStringSmall(const char *pString, uint8_t Start, uint8_t End, uint8_t Line) {
 
     uint8_t Length = strlen(pString);
-
-
+#if ENABLE_CHINESE_FULL == 0
+    if (menu_set_flag == 1)
+    {
+        Length = Length > 7 ? 7 : Length;
+        menu_set_flag = 0;
+    }
+#endif
     size_t i;
     uint8_t sum_pixel = 0;
     uint16_t true_char[Length];
@@ -225,29 +230,6 @@ true_char[i]=true_char[i]-true_char[i]/256-1;
     }
 }
 
-#ifdef ENABLE_SMALL_BOLD
-void UI_PrintStringSmallBold(const char *pString, uint8_t Start, uint8_t End, uint8_t Line)
-{
-    const size_t Length = strlen(pString);
-    size_t       i;
-
-    if (End > Start)
-        Start += (((End - Start) - (Length * 8)) + 1) / 2;
-
-    const unsigned int char_width   = ARRAY_SIZE(gFontSmallBold[0]);
-    const unsigned int char_spacing = char_width + 1;
-    uint8_t            *pFb         = gFrameBuffer[Line] + Start;
-    for (i = 0; i < Length; i++)
-    {
-        if (pString[i] > ' ')
-        {
-            const unsigned int index = (unsigned int)pString[i] - ' ' - 1;
-            if (index < ARRAY_SIZE(gFontSmallBold))
-                memmove(pFb + (i * char_spacing) + 1, &gFontSmallBold[index], char_width);
-        }
-    }
-}
-#endif
 
 void UI_PrintStringSmallBuffer(const char *pString, uint8_t *buffer) {
     size_t i;

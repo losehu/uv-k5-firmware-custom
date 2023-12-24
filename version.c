@@ -1,10 +1,15 @@
-
+#include "font.h"
 #define ONE_OF_ELEVEN_VER
 
 #ifdef GIT_HASH
 	#define VER     GIT_HASH
 #else
-	#define VER     "111TEST2"
+#if ENABLE_CHINESE_FULL ==0
+	#define VER     "111"
+#else
+#define VER     "111K"
+#endif
+
 #endif
 
 #ifndef ONE_OF_ELEVEN_VER

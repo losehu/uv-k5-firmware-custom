@@ -36,7 +36,9 @@
 #define IS_FREQ_CHANNEL(x)     ((x) >= FREQ_CHANNEL_FIRST && (x) <= FREQ_CHANNEL_LAST)
 #define IS_VALID_CHANNEL(x)    ((x) < LAST_CHANNEL)
 #define IS_NOAA_CHANNEL(x)     ((x) >= NOAA_CHANNEL_FIRST && (x) <= NOAA_CHANNEL_LAST)
-
+#ifndef SWAP
+#define SWAP(a, b) ({ __typeof__ (a) _c = (a);  a = b; b = _c; })
+#endif
 enum {
     MR_CHANNEL_FIRST   = 0,
     MR_CHANNEL_LAST    = 199u,

@@ -51,6 +51,9 @@ void toggle_chan_scanlist(void) {    // toggle the selected channels scanlist se
     if (!IS_MR_CHANNEL(gTxVfo->CHANNEL_SAVE)) {
 #ifdef ENABLE_SCAN_RANGES
         gScanRangeStart = gScanRangeStart ? 0 : gTxVfo->pRX->Frequency;
+        gScanRangeStop = gEeprom.VfoInfo[!gEeprom.TX_VFO].freq_config_RX.Frequency;
+		if(gScanRangeStart > gScanRangeStop)
+			SWAP(gScanRangeStart, gScanRangeStop);
 #endif
         return;
     }

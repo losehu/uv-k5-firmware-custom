@@ -22,19 +22,18 @@
 extern const uint8_t gFontChinese_out[2013];
 #define CHN_FONT_WIDTH 11U
 #define CHN_FONT_HIGH 12U
-#define ENABLE_CHINESE_FULL 4
+#define ENABLE_CHINESE_FULL 0
 #if  ENABLE_CHINESE_FULL ==4
 #define MAX_EDIT_INDEX 13
 #else
 #define MAX_EDIT_INDEX 10
 #endif
+extern bool menu_set_flag;
 
 extern const uint8_t gFontBigDigits[11][20/*20*/];
 extern const uint8_t gFont3x5[96][3];
 extern const uint8_t gFontSmall[95 - 1][6];
-#ifdef ENABLE_SMALL_BOLD
-extern const uint8_t gFontSmallBold[95 - 1][6];
-#endif
+
 
     #if ENABLE_CHINESE_FULL > 0
         #if ENABLE_CHINESE_FULL==1

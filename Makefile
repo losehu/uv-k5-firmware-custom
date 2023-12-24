@@ -24,7 +24,6 @@ ENABLE_FLASHLIGHT             ?= 1
 
 # ---- CUSTOM MODS ----
 ENABLE_BIG_FREQ               ?= 1
-ENABLE_SMALL_BOLD             ?= 0
 ENABLE_KEEP_MEM_NAME          ?= 1
 ENABLE_WIDE_RX                ?= 1
 ENABLE_TX_WHEN_AM             ?= 0
@@ -290,9 +289,7 @@ endif
 ifeq ($(ENABLE_BIG_FREQ),1)
 	CFLAGS  += -DENABLE_BIG_FREQ
 endif
-ifeq ($(ENABLE_SMALL_BOLD),1)
-	CFLAGS  += -DENABLE_SMALL_BOLD
-endif
+
 ifeq ($(ENABLE_NOAA),1)
 	CFLAGS  += -DENABLE_NOAA
 endif

@@ -1189,6 +1189,7 @@ void UI_ShowChineseMenu() {
     }
     cnt_char = 0;
     if (size_menu < 48)cnt_char = (48 - size_menu ) / 2;
+    menu_set_flag=1;
     UI_PrintStringSmall(MenuList[gMenuCursor].name, (cnt_char), 0, 0);
 
 

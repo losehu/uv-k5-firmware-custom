@@ -93,7 +93,6 @@ ENABLE_PWRON_PASSWORD         := 0       开机密码
 ENABLE_DTMF_CALLING           := 1
 ENABLE_FLASHLIGHT             := 1
 ENABLE_BIG_FREQ               := 1       频率模式大字体
-ENABLE_SMALL_BOLD             := 1       粗体通道名称/编号（当名称+频率频道显示模式时）
 ENABLE_KEEP_MEM_NAME          := 1       在（重新）保存信道时保持信道名称
 ENABLE_WIDE_RX                := 1       18MHz 至 1300MHz 接收（尽管前端/PA 不是为全范围设计的）
 ENABLE_TX_WHEN_AM             := 0       当 RX 设置为 AM 时允许 FM 发射
