@@ -50,7 +50,6 @@ void UI_DisplayWelcome(void) {
 
     memset(gStatusLine, 0, sizeof(gStatusLine));
     memset(gFrameBuffer, 0, sizeof(gFrameBuffer));
-    BACKLIGHT_TurnOn();
 
 
 #if ENABLE_CHINESE_FULL == 4
@@ -80,6 +79,7 @@ void UI_DisplayWelcome(void) {
 
     ST7565_BlitStatusLine();  // blank status line
     ST7565_BlitFullScreen();
+    BACKLIGHT_TurnOn();
 
 
 }
