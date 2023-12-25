@@ -577,7 +577,6 @@ void BK4819_EnableVox(uint16_t VoxEnableThreshold, uint16_t VoxDisableThreshold)
     // Enable VOX
     BK4819_WriteRegister(BK4819_REG_31, REG_31_Value | (1u << 2));    // VOX Enable
 }
-
 void BK4819_SetFilterBandwidth(const BK4819_FilterBandwidth_t Bandwidth, const bool weak_no_different)
 {
     // REG_43
@@ -628,54 +627,90 @@ void BK4819_SetFilterBandwidth(const BK4819_FilterBandwidth_t Bandwidth, const b
     //
     // <1:0>   0 ???
 
-    uint16_t val = 0;
+    uint16_t val;
+    m_bandwidth = Bandwidth;
+
     switch (Bandwidth)
     {
         default:
         case BK4819_FILTER_BW_WIDE:	// 25kHz
-            val = (4u << 12) |     // *3 RF filter bandwidth
-                  (6u <<  6) |     // *0 AFTxLPF2 filter Band Width
-                  (2u <<  4) |     //  2 BW Mode Selection
-                  (1u <<  3) |     //  1
-                  (0u <<  2);     //  0 Gain after FM Demodulation
-
-            if (weak_no_different) {
-                // make the RX bandwidth the same with weak signals
-                val |= (4u <<  9);     // *0 RF filter bandwidth when signal is weak
-            } else {
-                /// with weak RX signals the RX bandwidth is reduced
-                val |= (2u <<  9);     // *0 RF filter bandwidth when signal is weak
+            if (weak_no_different)
+            {	// make the RX bandwidth the same with weak signals
+                val =
+                        (0u << 15) |     //  0
+                        (4u << 12) |     // *3 RF filter bandwidth
+                        (4u <<  9) |     // *0 RF filter bandwidth when signal is weak
+                        (6u <<  6) |     // *0 AFTxLPF2 filter Band Width
+                        (2u <<  4) |     //  2 BW Mode Selection
+                        (1u <<  3) |     //  1
+                        (0u <<  2) |     //  0 Gain after FM Demodulation
+                        (0u <<  0);      //  0
             }
-
+            else
+            {	// with weak RX signals the RX bandwidth is reduced
+                val =                // 0x3028);         // 0 011 000 000 10 1 0 00
+                        (0u << 15) |     //  0
+                        (4u << 12) |     // *3 RF filter bandwidth
+                        (2u <<  9) |     // *0 RF filter bandwidth when signal is weak
+                        (6u <<  6) |     // *0 AFTxLPF2 filter Band Width
+                        (2u <<  4) |     //  2 BW Mode Selection
+                        (1u <<  3) |     //  1
+                        (0u <<  2) |     //  0 Gain after FM Demodulation
+                        (0u <<  0);      //  0
+            }
             break;
 
         case BK4819_FILTER_BW_NARROW:	// 12.5kHz
-            val = (4u << 12) |     // *4 RF filter bandwidth
-                  (0u <<  6) |     // *1 AFTxLPF2 filter Band Width
-                  (0u <<  4) |     //  0 BW Mode Selection
-                  (1u <<  3) |     //  1
-                  (0u <<  2);      //  0 Gain after FM Demodulation
-
-            if (weak_no_different) {
-                val |= (4u <<  9);     // *0 RF filter bandwidth when signal is weak
-            } else {
-                val |= (2u <<  9);
+            if (weak_no_different)
+            {
+                val =
+                        (0u << 15) |     //  0
+                        (4u << 12) |     // *4 RF filter bandwidth
+                        (4u <<  9) |     // *0 RF filter bandwidth when signal is weak
+                        (0u <<  6) |     // *1 AFTxLPF2 filter Band Width
+                        (0u <<  4) |     //  0 BW Mode Selection
+                        (1u <<  3) |     //  1
+                        (0u <<  2) |     //  0 Gain after FM Demodulation
+                        (0u <<  0);      //  0
             }
-
+            else
+            {
+                val =                // 0x4048);        // 0 100 000 001 00 1 0 00
+                        (0u << 15) |     //  0
+                        (4u << 12) |     // *4 RF filter bandwidth
+                        (2u <<  9) |     // *0 RF filter bandwidth when signal is weak
+                        (0u <<  6) |     // *1 AFTxLPF2 filter Band Width
+                        (0u <<  4) |     //  0 BW Mode Selection
+                        (1u <<  3) |     //  1
+                        (0u <<  2) |     //  0 Gain after FM Demodulation
+                        (0u <<  0);      //  0
+            }
             break;
 
         case BK4819_FILTER_BW_NARROWER:	// 6.25kHz
-            val = (3u << 12) |     //  3 RF filter bandwidth
-                  (3u <<  9) |     // *0 RF filter bandwidth when signal is weak
-                  (1u <<  6) |     //  1 AFTxLPF2 filter Band Width
-                  (1u <<  4) |     //  1 BW Mode Selection
-                  (1u <<  3) |     //  1
-                  (0u <<  2);      //  0 Gain after FM Demodulation
-
-            if (weak_no_different) {
-                val |= (3u <<  9);
-            } else {
-                val |= (0u <<  9);     //  0 RF filter bandwidth when signal is weak
+            if (weak_no_different)
+            {
+                val =
+                        (0u << 15) |     //  0
+                        (3u << 12) |     //  3 RF filter bandwidth
+                        (3u <<  9) |     // *0 RF filter bandwidth when signal is weak
+                        (1u <<  6) |     //  1 AFTxLPF2 filter Band Width
+                        (1u <<  4) |     //  1 BW Mode Selection
+                        (1u <<  3) |     //  1
+                        (0u <<  2) |     //  0 Gain after FM Demodulation
+                        (0u <<  0);      //  0
+            }
+            else
+            {
+                val =
+                        (0u << 15) |     //  0
+                        (3u << 12) |     //  3 RF filter bandwidth
+                        (0u <<  9) |     //  0 RF filter bandwidth when signal is weak
+                        (1u <<  6) |     //  1 AFTxLPF2 filter Band Width
+                        (1u <<  4) |     //  1 BW Mode Selection
+                        (1u <<  3) |     //  1
+                        (0u <<  2) |     //  1 Gain after FM Demodulation
+                        (0u <<  0);      //  0
             }
             break;
     }
