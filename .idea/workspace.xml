@@ -20,7 +20,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="中文" />
+    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="fix show" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -95,11 +95,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Shell Script.win docker">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="clean" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
       <makefile filename="$PROJECT_DIR$/Makefile" target="clean" workingDirectory="" arguments="">
         <envs />
@@ -240,22 +235,7 @@
       <workItem from="1703259169230" duration="73000" />
       <workItem from="1703259273867" duration="8810000" />
       <workItem from="1703380739516" duration="6230000" />
-      <workItem from="1703411329993" duration="1576000" />
-      <workItem from="1703419616449" duration="4000" />
-    </task>
-    <task id="LOCAL-00048" summary="MDC RX">
-      <created>1701693594928</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1701693594928</updated>
-    </task>
-    <task id="LOCAL-00049" summary="写频">
-      <created>1701736695809</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1701736695809</updated>
+      <workItem from="1703411329993" duration="17361000" />
     </task>
     <task id="LOCAL-00050" summary="写频">
       <created>1701737194492</created>
@@ -586,7 +566,21 @@
       <option name="project" value="LOCAL" />
       <updated>1703258782152</updated>
     </task>
-    <option name="localTasksCounter" value="97" />
+    <task id="LOCAL-00097" summary="中文">
+      <created>1703412914805</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1703412914805</updated>
+    </task>
+    <task id="LOCAL-00098" summary="fix show">
+      <created>1703482452046</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1703482452046</updated>
+    </task>
+    <option name="localTasksCounter" value="99" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -613,7 +607,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="test create" />
     <MESSAGE value="reduce flash" />
     <MESSAGE value="rebuild chinese" />
     <MESSAGE value="MDC RX" />
@@ -638,7 +631,8 @@
     <MESSAGE value="中英文字符对齐" />
     <MESSAGE value="支持中文编译选项ENABLE_CHINESE_FULL" />
     <MESSAGE value="中文" />
-    <option name="LAST_COMMIT_MESSAGE" value="中文" />
+    <MESSAGE value="fix show" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix show" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

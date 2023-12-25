@@ -16,6 +16,7 @@
 #include "app/spectrum.h"
 #include "am_fix.h"
 #include "audio.h"
+#include "misc.h"
 
 #ifdef ENABLE_SCAN_RANGES
 #include "chFrScanner.h"
@@ -37,7 +38,6 @@ struct FrequencyBandInfo {
 
 const uint16_t RSSI_MAX_VALUE = 65535;
 
-static uint16_t R30, R37, R3D, R43, R47, R48, R7E;
 static uint32_t initialFreq;
 static char String[32];
 
@@ -221,24 +221,29 @@ static void ToggleAFBit(bool on) {
     BK4819_WriteRegister(BK4819_REG_47, reg);
 }
 
+static const BK4819_REGISTER_t registers_to_save[] ={
+        BK4819_REG_30,
+        BK4819_REG_37,
+        BK4819_REG_3D,
+        BK4819_REG_43,
+        BK4819_REG_47,
+        BK4819_REG_48,
+        BK4819_REG_7E,
+};
+
+static uint16_t registers_stack [sizeof(registers_to_save)];
+
 static void BackupRegisters() {
-    R30 = BK4819_ReadRegister(BK4819_REG_30);
-    R37 = BK4819_ReadRegister(BK4819_REG_37);
-    R3D = BK4819_ReadRegister(BK4819_REG_3D);
-    R43 = BK4819_ReadRegister(BK4819_REG_43);
-    R47 = BK4819_ReadRegister(BK4819_REG_47);
-    R48 = BK4819_ReadRegister(BK4819_REG_48);
-    R7E = BK4819_ReadRegister(BK4819_REG_7E);
+    for (uint32_t i = 0; i < ARRAY_SIZE(registers_to_save); i++){
+        registers_stack[i] = BK4819_ReadRegister(registers_to_save[i]);
+    }
 }
 
 static void RestoreRegisters() {
-    BK4819_WriteRegister(BK4819_REG_30, R30);
-    BK4819_WriteRegister(BK4819_REG_37, R37);
-    BK4819_WriteRegister(BK4819_REG_3D, R3D);
-    BK4819_WriteRegister(BK4819_REG_43, R43);
-    BK4819_WriteRegister(BK4819_REG_47, R47);
-    BK4819_WriteRegister(BK4819_REG_48, R48);
-    BK4819_WriteRegister(BK4819_REG_7E, R7E);
+
+    for (uint32_t i = 0; i < ARRAY_SIZE(registers_to_save); i++){
+        BK4819_WriteRegister(registers_to_save[i], registers_stack[i]);
+    }
 }
 
 static void ToggleAFDAC(bool on) {
@@ -483,13 +488,12 @@ static void UpdateDBMax(bool inc) {
 }
 
 static void UpdateScanStep(bool inc) {
-    if (inc && settings.scanStepIndex < S_STEP_100_0kHz) {
-        settings.scanStepIndex++;
-    } else if (!inc && settings.scanStepIndex > 0) {
-        settings.scanStepIndex--;
+    if (inc) {
+        settings.scanStepIndex = settings.scanStepIndex != S_STEP_100_0kHz ? settings.scanStepIndex + 1 : 0;
     } else {
-        return;
+        settings.scanStepIndex = settings.scanStepIndex != 0 ? settings.scanStepIndex - 1 : S_STEP_100_0kHz;
     }
+
     settings.frequencyChangeStep = GetBW() >> 1;
     RelaunchScan();
     ResetBlacklist();

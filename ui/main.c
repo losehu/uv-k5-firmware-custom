@@ -19,8 +19,8 @@
 #include <stdlib.h>  // abs()
 #include "driver/uart.h"
 #include "app/dtmf.h"
+#include "font.h"
 #include "app/chFrScanner.h"
-
 #ifdef ENABLE_AM_FIX
 #include "am_fix.h"
 #endif
@@ -149,7 +149,14 @@ void UI_DisplayAudioBar(void)
         uint8_t bars = 13 * sqrt_level / 124;
 
         uint8_t *p_line = gFrameBuffer[line];
-        memset(p_line, 0, LCD_WIDTH);
+#if ENABLE_CHINESE_FULL==4
+        if(audio_keep_flag)
+            {
+//            audio_keep_flag=false;
+            }else
+#endif
+                    memset(p_line, 0, LCD_WIDTH);
+
 
         DrawLevelBar(62, line, bars);
 
@@ -241,9 +248,24 @@ UI_PrintStringSmall(str, 2, 0, line);
 
     uint8_t *pLine = (gEeprom.RX_VFO == 0) ? gFrameBuffer[2] : gFrameBuffer[6];
     if (now)
+#if ENABLE_CHINESE_FULL==0
         memset(pLine, 0, 23);
-    DrawSmallAntennaAndBars(pLine, Level);
 
+    DrawSmallAntennaAndBars(pLine, Level);
+#else
+    if(IS_MR_CHANNEL(gEeprom.ScreenChannel[vfo_num]) )
+        {
+                memset(gFrameBuffer[3], 0, 23);
+
+    DrawSmallAntennaAndBars(gFrameBuffer[3], Level);
+                         audio_keep_flag=true;
+    }
+else{
+    audio_keep_flag=false;
+            memset(pLine, 0, 23);
+    DrawSmallAntennaAndBars(pLine, Level);
+}
+#endif
     if (now)
         ST7565_BlitFullScreen();
 #endif
@@ -295,13 +317,9 @@ void UI_MAIN_TimeSlice500ms(void) {
         PrintAGC(true);
         return;
 #endif
-//        const bool rx = (gCurrentFunction == FUNCTION_RECEIVE ||
-//                         gCurrentFunction == FUNCTION_MONITOR ||
-//                         gCurrentFunction == FUNCTION_INCOMING);
-//
-//
-//        if (rx && mdc1200_rx_ready_tick_500ms <= 0)
-//            DisplayRSSIBar(true);
+        if(FUNCTION_IsRx()) {
+            DisplayRSSIBar(true);
+        }
     }
 }
 // ***************************************************************************
@@ -352,6 +370,7 @@ void UI_DisplayMain(void) {
         const bool isMainVFO = (vfo_num == gEeprom.TX_VFO);
         uint8_t *p_line0 = gFrameBuffer[line + 0];
         uint8_t *p_line1 = gFrameBuffer[line + 1];
+
         enum Vfo_txtr_mode mode = VFO_MODE_NONE;
         if (activeTxVFO != vfo_num) // this is not active TX VFO
         {
@@ -367,48 +386,47 @@ void UI_DisplayMain(void) {
 #endif
 
 
-            if (
+            if (gDTMF_InputMode
 #ifdef ENABLE_DTMF_CALLING
-                    gDTMF_CallState != DTMF_CALL_STATE_NONE || gDTMF_IsTx ||
+                || gDTMF_CallState != DTMF_CALL_STATE_NONE || gDTMF_IsTx
 #endif
-                    gDTMF_InputMode) {    // show DTMF stuff
+                    ) {
+                char *pPrintStr = "";
+
+                // show DTMF stuff
 #ifdef ENABLE_DTMF_CALLING
                 char Contact[16];
+if (!gDTMF_InputMode) {
+					if (gDTMF_CallState == DTMF_CALL_STATE_CALL_OUT) {
+						pPrintStr = DTMF_FindContact(gDTMF_String, Contact) ? Contact : gDTMF_String;
+					} else if (gDTMF_CallState == DTMF_CALL_STATE_RECEIVED || gDTMF_CallState == DTMF_CALL_STATE_RECEIVED_STAY){
+						pPrintStr = DTMF_FindContact(gDTMF_Callee, Contact) ? Contact : gDTMF_Callee;
+					}else if (gDTMF_IsTx) {
+						pPrintStr = gDTMF_String;
+					}
+				}
 
-                if (!gDTMF_InputMode)
-                {
-                    memset(Contact, 0, sizeof(Contact));
-                    if (gDTMF_CallState == DTMF_CALL_STATE_CALL_OUT)
-                        strcpy(String, (gDTMF_State == DTMF_STATE_CALL_OUT_RSP) ? "CALL OUT(RSP)" : "CALL OUT");
-                    else
-                    if (gDTMF_CallState == DTMF_CALL_STATE_RECEIVED || gDTMF_CallState == DTMF_CALL_STATE_RECEIVED_STAY)
-                        sprintf(String, "CALL FRM:%s", (DTMF_FindContact(gDTMF_Caller, Contact)) ? Contact : gDTMF_Caller);
-                    else
-                    if (gDTMF_IsTx)
-                        strcpy(String, (gDTMF_State == DTMF_STATE_TX_SUCC) ? "DTMF TX(SUCC)" : "DTMF TX");
+				UI_PrintStringSmall(pPrintStr, 2, 0, 2 + (vfo_num * 3));
+
+				pPrintStr = "";
+				if (!gDTMF_InputMode) {
+					if (gDTMF_CallState == DTMF_CALL_STATE_CALL_OUT) {
+						pPrintStr = (gDTMF_State == DTMF_STATE_CALL_OUT_RSP) ? "CALL OUT(RSP)" : "CALL OUT";
+					} else if (gDTMF_CallState == DTMF_CALL_STATE_RECEIVED || gDTMF_CallState == DTMF_CALL_STATE_RECEIVED_STAY) {
+                  sprintf(String, "CALL FRM:%s", (DTMF_FindContact(gDTMF_Caller, Contact)) ? Contact : gDTMF_Caller);
+                  pPrintStr = String;
+					} else if (gDTMF_IsTx) {
+						pPrintStr = (gDTMF_State == DTMF_STATE_TX_SUCC) ? "DTMF TX(SUCC)" : "DTMF TX";
+					}
                 }
                 else
 #endif
                 {
                     sprintf(String, ">%s", gDTMF_InputBox);
-                }
-                UI_PrintStringSmall(String, 2, 0, 0 + (vfo_num * 3));
-#ifdef ENABLE_DTMF_CALLING
-                memset(String,  0, sizeof(String));
-                if (!gDTMF_InputMode) {
+                    pPrintStr = String;
 
-                    memset(Contact, 0, sizeof(Contact));
-                    if (gDTMF_CallState == DTMF_CALL_STATE_CALL_OUT)
-                        sprintf(String, ">%s", (DTMF_FindContact(gDTMF_String, Contact)) ? Contact : gDTMF_String);
-                    else
-                    if (gDTMF_CallState == DTMF_CALL_STATE_RECEIVED || gDTMF_CallState == DTMF_CALL_STATE_RECEIVED_STAY)
-                        sprintf(String, ">%s", (DTMF_FindContact(gDTMF_Callee, Contact)) ? Contact : gDTMF_Callee);
-                    else
-                    if (gDTMF_IsTx)
-                        sprintf(String, ">%s", gDTMF_String);
                 }
-                UI_PrintStringSmall(String, 2, 0, 2 + (vfo_num * 3));
-#endif
+                UI_PrintStringSmall(pPrintStr, 2, 0, 0 + (vfo_num * 3));
                 center_line = CENTER_LINE_IN_USE;
 
                 continue;
@@ -452,7 +470,7 @@ void UI_DisplayMain(void) {
 
         if (IS_MR_CHANNEL(gEeprom.ScreenChannel[vfo_num])) {    // channel mode
             const unsigned int x = 2;
-            const bool inputting = (gInputBoxIndex == 0 || gEeprom.TX_VFO != vfo_num) ? false : true;
+            const bool inputting = gInputBoxIndex != 0 && gEeprom.TX_VFO == vfo_num;
             if (!inputting)
                 sprintf(String, "M%u", gEeprom.ScreenChannel[vfo_num] + 1);
             else
@@ -676,8 +694,20 @@ void UI_DisplayMain(void) {
                     Level = gVFO_RSSI_bar_level[vfo_num];
 #endif
             }
-            if (Level)
+            if (Level) {
+#if ENABLE_CHINESE_FULL==0
                 DrawSmallAntennaAndBars(p_line1 + LCD_WIDTH, Level);
+#else
+                if(IS_MR_CHANNEL(gEeprom.ScreenChannel[vfo_num]) )
+                  {  DrawSmallAntennaAndBars(gFrameBuffer[2]+LCD_WIDTH, Level);
+                         audio_keep_flag=true;
+                  }
+
+else
+                DrawSmallAntennaAndBars(p_line1 + LCD_WIDTH, Level);
+
+#endif
+            }
         }
 
         // ************
@@ -756,7 +786,7 @@ void UI_DisplayMain(void) {
 #else
             if(IS_MR_CHANNEL(gEeprom.ScreenChannel[vfo_num])    &&!(FUNCTION_IsRx() && gEeprom.RX_VFO == vfo_num  )    &&!( gCurrentFunction == FUNCTION_TRANSMIT&&activeTxVFO == vfo_num)      )
                     UI_PrintStringSmall("R", LCD_WIDTH + 24, 0, line - 1);//中文信道1
-                    else if(IS_MR_CHANNEL(gEeprom.ScreenChannel[vfo_num]))
+                    else if(!IS_MR_CHANNEL(gEeprom.ScreenChannel[vfo_num]))
                         UI_PrintStringSmall("R", LCD_WIDTH + 62, 0, line + 1);//中文信道1
 
 #endif

@@ -13,6 +13,7 @@
  *     See the License for the specific language governing permissions and
  *     limitations under the License.
  */
+#include "driver/bk4819-regs.h"
 #include "driver/bk4819.h"
 #include <stdint.h>
 #include "app/mdc1200.h"
@@ -52,7 +53,15 @@ const char gModulationStr[MODULATION_UKNOWN][4] = {
 	[MODULATION_RAW]="RAW"
 #endif
 };
+void RADIO_SendEndOfTransmission(void)
+{
+    BK4819_PlayRoger();
+    DTMF_SendEndOfTransmission();
 
+    // send the CTCSS/DCS tail tone - allows the receivers to mute the usual FM squelch tail/crash
+    RADIO_EnableCxCSS();
+    RADIO_SetupRegisters(false);
+}
 bool RADIO_CheckValidChannel(uint16_t Channel, bool bCheckScanList, uint8_t VFO)
 {	// return true if the channel appears valid
 
@@ -1103,52 +1112,4 @@ void RADIO_PrepareCssTX(void)
 
     RADIO_EnableCxCSS();
     RADIO_SetupRegisters(true);
-}
-
-void RADIO_SendEndOfTransmission(void)
-{
-    if (gEeprom.ROGER == ROGER_MODE_ROGER||gEeprom.ROGER==ROGER_MODE_MDC_HEAD_ROGER)
-        BK4819_PlayRoger();
-    else
-    if (gEeprom.ROGER == ROGER_MODE_MDC_END||gEeprom.ROGER==ROGER_MODE_MDC_BOTH) {
-
-        BK4819_send_MDC1200(MDC1200_OP_CODE_POST_ID, 0x00, gEeprom.MDC1200_ID, false);
-
-#ifdef ENABLE_MDC1200_SIDE_BEEP
-        BK4819_start_tone(880, 10, true, true);
-			SYSTEM_DelayMs(120);
-			BK4819_stop_tones(true);
-#endif
-    }
-    if (gCurrentVfo->DTMF_PTT_ID_TX_MODE == PTT_ID_APOLLO)
-    {  BK4819_PlaySingleTone(2475, 250, 28, gEeprom.DTMF_SIDE_TONE);
-
-    }
-    if ((gCurrentVfo->DTMF_PTT_ID_TX_MODE == PTT_ID_TX_DOWN || gCurrentVfo->DTMF_PTT_ID_TX_MODE == PTT_ID_BOTH)
-#ifdef ENABLE_DTMF_CALLING
-        && gDTMF_CallState == DTMF_CALL_STATE_NONE
-#endif
-            ) {	// end-of-tx
-        if (gEeprom.DTMF_SIDE_TONE)
-        {
-            AUDIO_AudioPathOn();
-            gEnableSpeaker = true;
-            SYSTEM_DelayMs(60);
-        }
-
-        BK4819_EnterDTMF_TX(gEeprom.DTMF_SIDE_TONE);
-
-        BK4819_PlayDTMFString(
-                gEeprom.DTMF_DOWN_CODE,
-                0,
-                gEeprom.DTMF_FIRST_CODE_PERSIST_TIME,
-                gEeprom.DTMF_HASH_CODE_PERSIST_TIME,
-                gEeprom.DTMF_CODE_PERSIST_TIME,
-                gEeprom.DTMF_CODE_INTERVAL_TIME);
-
-        AUDIO_AudioPathOff();
-        gEnableSpeaker = false;
-    }
-
-    BK4819_ExitDTMF_TX(true);
 }

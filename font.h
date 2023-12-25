@@ -16,14 +16,15 @@
 
 #ifndef FONT_H
 #define FONT_H
-
+#include "stdbool.h"
 #include <stdint.h>
 
 extern const uint8_t gFontChinese_out[2013];
 #define CHN_FONT_WIDTH 11U
 #define CHN_FONT_HIGH 12U
-#define ENABLE_CHINESE_FULL 0
 #if  ENABLE_CHINESE_FULL ==4
+extern bool audio_keep_flag;
+
 #define MAX_EDIT_INDEX 13
 #else
 #define MAX_EDIT_INDEX 10

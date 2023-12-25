@@ -302,7 +302,6 @@ void Main(void) {
 //		 BootMode != BOOT_MODE_NORMAL)
 //	{	// keys are pressed
 //		UI_DisplayReleaseKeys(BootMode);
-    BACKLIGHT_TurnOn();
     while (KEYBOARD_Poll() != KEY_INVALID)  // 500ms
     {
     }
@@ -315,6 +314,7 @@ void Main(void) {
 
 
     UI_DisplayWelcome();
+
     boot_counter_10ms = 250;
     while (boot_counter_10ms > 0) {
         if (KEYBOARD_Poll() == KEY_EXIT) {    // halt boot beeps

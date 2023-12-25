@@ -114,23 +114,16 @@ bool DTMF_GetContact(const int Index, char *pContact)
 
 bool DTMF_FindContact(const char *pContact, char *pResult)
 {
-	char         Contact[16];
-	unsigned int i;
+	pResult[0] = 0;
 
-	for (i = 0; i < MAX_DTMF_CONTACTS; i++)
-	{
-		unsigned int j;
-
-		if (!DTMF_GetContact(i, Contact))
+	for (unsigned int i = 0; i < MAX_DTMF_CONTACTS; i++) {
+		char Contact[16];
+		if (!DTMF_GetContact(i, Contact)) {
 			return false;
+		}
 
-		for (j = 0; j < 3; j++)
-			if (pContact[j] != Contact[j + 8])
-				break;
-
-		if (j == 3)
-		{
-memcpy(pResult, Contact, 8);
+		if (memcmp(pContact, Contact + 8, 3) == 0) {
+			memcpy(pResult, Contact, 8);
 			pResult[8] = 0;
 			return true;
 		}
@@ -478,4 +471,39 @@ gCurrentVfo->DTMF_PTT_ID_TX_MODE == PTT_ID_TX_DOWN)
     BK4819_ExitDTMF_TX(false);
     return true;
 
+}
+
+void DTMF_SendEndOfTransmission(void)
+{
+    if (gCurrentVfo->DTMF_PTT_ID_TX_MODE == PTT_ID_APOLLO) {
+        BK4819_PlaySingleTone(2475, 250, 28, gEeprom.DTMF_SIDE_TONE);
+    }
+
+    if ((gCurrentVfo->DTMF_PTT_ID_TX_MODE == PTT_ID_TX_DOWN || gCurrentVfo->DTMF_PTT_ID_TX_MODE == PTT_ID_BOTH)
+#ifdef ENABLE_DTMF_CALLING
+        && gDTMF_CallState == DTMF_CALL_STATE_NONE
+#endif
+            ) {	// end-of-tx
+        if (gEeprom.DTMF_SIDE_TONE)
+        {
+            AUDIO_AudioPathOn();
+            gEnableSpeaker = true;
+            SYSTEM_DelayMs(60);
+        }
+
+        BK4819_EnterDTMF_TX(gEeprom.DTMF_SIDE_TONE);
+
+        BK4819_PlayDTMFString(
+                gEeprom.DTMF_DOWN_CODE,
+                0,
+                gEeprom.DTMF_FIRST_CODE_PERSIST_TIME,
+                gEeprom.DTMF_HASH_CODE_PERSIST_TIME,
+                gEeprom.DTMF_CODE_PERSIST_TIME,
+                gEeprom.DTMF_CODE_INTERVAL_TIME);
+
+        AUDIO_AudioPathOff();
+        gEnableSpeaker = false;
+    }
+
+    BK4819_ExitDTMF_TX(true);
 }

@@ -44,13 +44,13 @@
 //}
 
 void UI_DisplayWelcome(void) {
-    BACKLIGHT_TurnOn();
 
     char WelcomeString0[19] = {0};
     char WelcomeString1[19] = {0};
 
     memset(gStatusLine, 0, sizeof(gStatusLine));
     memset(gFrameBuffer, 0, sizeof(gFrameBuffer));
+    BACKLIGHT_TurnOn();
 
 
 #if ENABLE_CHINESE_FULL == 4

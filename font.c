@@ -16,7 +16,9 @@
 
 #include "font.h"
 bool menu_set_flag=false;
-
+#if  ENABLE_CHINESE_FULL ==4
+ bool audio_keep_flag=false;
+#endif
 #if 0
 
 #elif 0

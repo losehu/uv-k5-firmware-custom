@@ -105,7 +105,7 @@ char DTMF_GetCharacter(const unsigned int code);
 void DTMF_clear_input_box(void);
 void DTMF_Append(const char vode);
 bool DTMF_Reply();
-
+void DTMF_SendEndOfTransmission(void);
 #ifdef ENABLE_DTMF_CALLING
 void DTMF_clear_RX(void);
 DTMF_CallMode_t DTMF_CheckGroupCall(const char *pDTMF, const unsigned int size);

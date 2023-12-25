@@ -14,8 +14,10 @@
  *     limitations under the License.
  */
 
-#include <stdio.h>   // NULL
+#include <stdint.h>
+#include <stdio.h>
 
+#include "settings.h"
 #include "../audio.h"
 #include "../bsp/dp32g030/gpio.h"
 #include "../bsp/dp32g030/portcon.h"
@@ -26,6 +28,7 @@
 #ifdef ENABLE_MDC1200
 #include "app/mdc1200.h"
 #endif
+#include "misc.h"
 #ifndef ARRAY_SIZE
 #define ARRAY_SIZE(x) (sizeof(x) / sizeof(x[0]))
 #endif
@@ -325,6 +328,22 @@ void BK4819_InitAGC(bool amModulation)
 }
 
 
+void BK4819_PlayRoger(void)
+{
+    if (gEeprom.ROGER == ROGER_MODE_ROGER||gEeprom.ROGER==ROGER_MODE_MDC_HEAD_ROGER)
+        BK4819_PlayRogerNormal();
+    else
+    if (gEeprom.ROGER == ROGER_MODE_MDC_END||gEeprom.ROGER==ROGER_MODE_MDC_BOTH) {
+
+        BK4819_send_MDC1200(MDC1200_OP_CODE_POST_ID, 0x00, gEeprom.MDC1200_ID, false);
+
+#ifdef ENABLE_MDC1200_SIDE_BEEP
+        BK4819_start_tone(880, 10, true, true);
+			SYSTEM_DelayMs(120);
+			BK4819_stop_tones(true);
+#endif
+    }
+}
 int8_t BK4819_GetRxGain_dB(void)
 {
     union {
@@ -609,90 +628,54 @@ void BK4819_SetFilterBandwidth(const BK4819_FilterBandwidth_t Bandwidth, const b
     //
     // <1:0>   0 ???
 
-    uint16_t val;
-    m_bandwidth = Bandwidth;
-
+    uint16_t val = 0;
     switch (Bandwidth)
     {
         default:
         case BK4819_FILTER_BW_WIDE:	// 25kHz
-            if (weak_no_different)
-            {	// make the RX bandwidth the same with weak signals
-                val =
-                        (0u << 15) |     //  0
-                        (4u << 12) |     // *3 RF filter bandwidth
-                        (4u <<  9) |     // *0 RF filter bandwidth when signal is weak
-                        (6u <<  6) |     // *0 AFTxLPF2 filter Band Width
-                        (2u <<  4) |     //  2 BW Mode Selection
-                        (1u <<  3) |     //  1
-                        (0u <<  2) |     //  0 Gain after FM Demodulation
-                        (0u <<  0);      //  0
+            val = (4u << 12) |     // *3 RF filter bandwidth
+                  (6u <<  6) |     // *0 AFTxLPF2 filter Band Width
+                  (2u <<  4) |     //  2 BW Mode Selection
+                  (1u <<  3) |     //  1
+                  (0u <<  2);     //  0 Gain after FM Demodulation
+
+            if (weak_no_different) {
+                // make the RX bandwidth the same with weak signals
+                val |= (4u <<  9);     // *0 RF filter bandwidth when signal is weak
+            } else {
+                /// with weak RX signals the RX bandwidth is reduced
+                val |= (2u <<  9);     // *0 RF filter bandwidth when signal is weak
             }
-            else
-            {	// with weak RX signals the RX bandwidth is reduced
-                val =                // 0x3028);         // 0 011 000 000 10 1 0 00
-                        (0u << 15) |     //  0
-                        (4u << 12) |     // *3 RF filter bandwidth
-                        (2u <<  9) |     // *0 RF filter bandwidth when signal is weak
-                        (6u <<  6) |     // *0 AFTxLPF2 filter Band Width
-                        (2u <<  4) |     //  2 BW Mode Selection
-                        (1u <<  3) |     //  1
-                        (0u <<  2) |     //  0 Gain after FM Demodulation
-                        (0u <<  0);      //  0
-            }
+
             break;
 
         case BK4819_FILTER_BW_NARROW:	// 12.5kHz
-            if (weak_no_different)
-            {
-                val =
-                        (0u << 15) |     //  0
-                        (4u << 12) |     // *4 RF filter bandwidth
-                        (4u <<  9) |     // *0 RF filter bandwidth when signal is weak
-                        (0u <<  6) |     // *1 AFTxLPF2 filter Band Width
-                        (0u <<  4) |     //  0 BW Mode Selection
-                        (1u <<  3) |     //  1
-                        (0u <<  2) |     //  0 Gain after FM Demodulation
-                        (0u <<  0);      //  0
+            val = (4u << 12) |     // *4 RF filter bandwidth
+                  (0u <<  6) |     // *1 AFTxLPF2 filter Band Width
+                  (0u <<  4) |     //  0 BW Mode Selection
+                  (1u <<  3) |     //  1
+                  (0u <<  2);      //  0 Gain after FM Demodulation
+
+            if (weak_no_different) {
+                val |= (4u <<  9);     // *0 RF filter bandwidth when signal is weak
+            } else {
+                val |= (2u <<  9);
             }
-            else
-            {
-                val =                // 0x4048);        // 0 100 000 001 00 1 0 00
-                        (0u << 15) |     //  0
-                        (4u << 12) |     // *4 RF filter bandwidth
-                        (2u <<  9) |     // *0 RF filter bandwidth when signal is weak
-                        (0u <<  6) |     // *1 AFTxLPF2 filter Band Width
-                        (0u <<  4) |     //  0 BW Mode Selection
-                        (1u <<  3) |     //  1
-                        (0u <<  2) |     //  0 Gain after FM Demodulation
-                        (0u <<  0);      //  0
-            }
+
             break;
 
         case BK4819_FILTER_BW_NARROWER:	// 6.25kHz
-            if (weak_no_different)
-            {
-                val =
-                        (0u << 15) |     //  0
-                        (3u << 12) |     //  3 RF filter bandwidth
-                        (3u <<  9) |     // *0 RF filter bandwidth when signal is weak
-                        (1u <<  6) |     //  1 AFTxLPF2 filter Band Width
-                        (1u <<  4) |     //  1 BW Mode Selection
-                        (1u <<  3) |     //  1
-                        (0u <<  2) |     //  0 Gain after FM Demodulation
-                        (0u <<  0);      //  0
-            }
-            else
-            {
-                val =
-                        (0u << 15) |     //  0
-                        (3u << 12) |     //  3 RF filter bandwidth
-                        (0u <<  9) |     //  0 RF filter bandwidth when signal is weak
-                        (1u <<  6) |     //  1 AFTxLPF2 filter Band Width
-                        (1u <<  4) |     //  1 BW Mode Selection
-                        (1u <<  3) |     //  1
-                        (0u <<  2) |     //  1 Gain after FM Demodulation
-                        (0u <<  0);      //  0
+            val = (3u << 12) |     //  3 RF filter bandwidth
+                  (3u <<  9) |     // *0 RF filter bandwidth when signal is weak
+                  (1u <<  6) |     //  1 AFTxLPF2 filter Band Width
+                  (1u <<  4) |     //  1 BW Mode Selection
+                  (1u <<  3) |     //  1
+                  (0u <<  2);      //  0 Gain after FM Demodulation
+
+            if (weak_no_different) {
+                val |= (3u <<  9);
+            } else {
+                val |= (0u <<  9);     //  0 RF filter bandwidth when signal is weak
             }
             break;
     }
@@ -1268,36 +1251,48 @@ void BK4819_EnableTXLink(void)
                          BK4819_REG_30_ENABLE_TX_DSP    |
                          BK4819_REG_30_DISABLE_RX_DSP);
 }
-
 void BK4819_PlayDTMF(char Code)
 {
-    uint16_t tone1 = 0;
-    uint16_t tone2 = 0;
 
+    struct DTMF_TonePair {
+        uint16_t tone1;
+        uint16_t tone2;
+    };
+
+    const struct DTMF_TonePair tones[] = {
+            {941, 1336},
+            {697, 1209},
+            {697, 1336},
+            {697, 1477},
+            {770, 1209},
+            {770, 1336},
+            {770, 1477},
+            {852, 1209},
+            {852, 1336},
+            {852, 1477},
+            {697, 1633},
+            {770, 1633},
+            {852, 1633},
+            {941, 1633},
+            {941, 1209},
+            {941, 1477},
+    };
+
+
+    const struct DTMF_TonePair *pSelectedTone = NULL;
     switch (Code)
     {
-        case '0': tone1 = 941; tone2 = 1336; break;
-        case '1': tone1 = 697; tone2 = 1209; break;
-        case '2': tone1 = 697; tone2 = 1336; break;
-        case '3': tone1 = 697; tone2 = 1477; break;
-        case '4': tone1 = 770; tone2 = 1209; break;
-        case '5': tone1 = 770; tone2 = 1336; break;
-        case '6': tone1 = 770; tone2 = 1477; break;
-        case '7': tone1 = 852; tone2 = 1209; break;
-        case '8': tone1 = 852; tone2 = 1336; break;
-        case '9': tone1 = 852; tone2 = 1477; break;
-        case 'A': tone1 = 697; tone2 = 1633; break;
-        case 'B': tone1 = 770; tone2 = 1633; break;
-        case 'C': tone1 = 852; tone2 = 1633; break;
-        case 'D': tone1 = 941; tone2 = 1633; break;
-        case '*': tone1 = 941; tone2 = 1209; break;
-        case '#': tone1 = 941; tone2 = 1477; break;
+        case '0'...'9': pSelectedTone = &tones[0  + Code - '0']; break;
+        case 'A'...'D': pSelectedTone = &tones[10 + Code - 'A']; break;
+        case '*': pSelectedTone = &tones[14]; break;
+        case '#': pSelectedTone = &tones[15]; break;
+        default: pSelectedTone = NULL;
     }
 
-    if (tone1 > 0)
-        BK4819_WriteRegister(BK4819_REG_71, (((uint32_t)tone1 * 103244) + 5000) / 10000);   // with rounding
-    if (tone2 > 0)
-        BK4819_WriteRegister(BK4819_REG_72, (((uint32_t)tone2 * 103244) + 5000) / 10000);   // with rounding
+    if (pSelectedTone) {
+        BK4819_WriteRegister(BK4819_REG_71, (((uint32_t)pSelectedTone->tone1 * 103244) + 5000) / 10000);   // with rounding
+        BK4819_WriteRegister(BK4819_REG_72, (((uint32_t)pSelectedTone->tone2 * 103244) + 5000) / 10000);   // with rounding
+    }
 }
 
 void BK4819_PlayDTMFString(const char *pString, bool bDelayFirst, uint16_t FirstCodePersistTime, uint16_t HashCodePersistTime, uint16_t CodePersistTime, uint16_t CodeInternalTime)
@@ -1717,8 +1712,8 @@ void BK4819_PrepareFSKReceive(void)
     BK4819_WriteRegister(BK4819_REG_59, 0x3068);
 }
 
-void BK4819_PlayRoger(void)
-{
+
+ void BK4819_PlayRogerNormal(void){
 #if 0
     const uint32_t tone1_Hz = 500;
 		const uint32_t tone2_Hz = 700;

@@ -48,6 +48,7 @@ ENABLE_MDC1200                ?= 1
 ENABLE_MDC1200_SHOW_OP_ARG    ?= 1
 ENABLE_MDC1200_SIDE_BEEP      ?= 0
 ENABLE_MDC1200_CONTACT        ?= 1
+ENABLE_CHINESE_FULL 		  =0
 
 
 
@@ -215,6 +216,11 @@ ifneq (, $(shell $(WHERE) git))
     	VERSION_STRING := $(shell git rev-parse --short HEAD)
 	endif
 endif
+# If there is still no VERSION_STRING we need to make one.
+# It is needed for the firmware packing script
+ifeq (, $(VERSION_STRING))
+	VERSION_STRING := NOGIT
+endif
 #VERSION_STRING := 230930b
 
 
@@ -262,6 +268,7 @@ endif
 ifeq ($(ENABLE_MDC1200_CONTACT),1)
     CFLAGS  += -DENABLE_MDC1200_CONTACT
 endif
+CFLAGS  += -DENABLE_CHINESE_FULL=$(ENABLE_CHINESE_FULL)
 
 
 ifeq ($(ENABLE_MDC1200_SHOW_OP_ARG),1)
@@ -466,6 +473,8 @@ ifdef OS
     else
         clean:
 			$(RM) $(call FixPath, $(TARGET).bin $(TARGET).packed.bin $(TARGET) $(OBJS) $(DEPS))
+		doxygen:
+			doxygen
     endif
 else
     clean:
