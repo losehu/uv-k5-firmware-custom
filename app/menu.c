@@ -80,7 +80,7 @@ void writeXtalFreqCal(const int32_t value, const bool update_eeprom)
         //
         EEPROM_ReadBuffer(0x1F88, &misc, 8);
         misc.BK4819_XtalFreqLow = value;
-        EEPROM_WriteBuffer(0x1F88, &misc);
+        EEPROM_WriteBuffer(0x1F88, &misc,8);
     }
 }
 #endif

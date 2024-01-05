@@ -20,46 +20,16 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="fix show">
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="113">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/am_fix.c" beforeDir="false" afterPath="$PROJECT_DIR$/am_fix.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/action.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/action.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/app.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/dtmf.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/dtmf.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/aircopy.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/aircopy.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/fm.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/fm.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/menu.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/menu.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/spectrum.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/spectrum.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/uart.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/uart.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeCCompiler.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.25.2/CMakeCCompiler.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/uv_k5_firmware_custom_0_17.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/uv_k5_firmware_custom_0_17.cbp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dp32g030.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/dp32g030.cfg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/driver/eeprom.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/eeprom.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/firmware" beforeDir="false" afterPath="$PROJECT_DIR$/firmware" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions.c" beforeDir="false" afterPath="$PROJECT_DIR$/functions.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions.h" beforeDir="false" afterPath="$PROJECT_DIR$/functions.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/misc.c" beforeDir="false" afterPath="$PROJECT_DIR$/misc.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/misc.h" beforeDir="false" afterPath="$PROJECT_DIR$/misc.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/radio.c" beforeDir="false" afterPath="$PROJECT_DIR$/radio.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/radio.h" beforeDir="false" afterPath="$PROJECT_DIR$/radio.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/eeprom.h" beforeDir="false" afterPath="$PROJECT_DIR$/driver/eeprom.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/settings.c" beforeDir="false" afterPath="$PROJECT_DIR$/settings.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/aircopy.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/aircopy.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/fmradio.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/fmradio.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/helper.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/helper.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/helper.h" beforeDir="false" afterPath="$PROJECT_DIR$/ui/helper.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/lock.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/lock.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/main.h" beforeDir="false" afterPath="$PROJECT_DIR$/ui/main.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/menu.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/menu.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/menu.h" beforeDir="false" afterPath="$PROJECT_DIR$/ui/menu.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/scanner.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/scanner.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/welcome.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/welcome.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/version.c" beforeDir="false" afterPath="$PROJECT_DIR$/version.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/win_make.bat" beforeDir="false" afterPath="$PROJECT_DIR$/win_make.bat" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -298,14 +268,7 @@
       <workItem from="1704363500769" duration="5676000" />
       <workItem from="1704370562673" duration="1618000" />
       <workItem from="1704421657950" duration="14943000" />
-      <workItem from="1704442479624" duration="1663000" />
-    </task>
-    <task id="LOCAL-00054" summary="写频">
-      <created>1701738074321</created>
-      <option name="number" value="00054" />
-      <option name="presentableId" value="LOCAL-00054" />
-      <option name="project" value="LOCAL" />
-      <updated>1701738074322</updated>
+      <workItem from="1704442479624" duration="3981000" />
     </task>
     <task id="LOCAL-00055" summary="写频">
       <created>1701738086757</created>
@@ -643,7 +606,14 @@
       <option name="project" value="LOCAL" />
       <updated>1703581336394</updated>
     </task>
-    <option name="localTasksCounter" value="103" />
+    <task id="LOCAL-00103" summary="113">
+      <created>1704445475471</created>
+      <option name="number" value="00103" />
+      <option name="presentableId" value="LOCAL-00103" />
+      <option name="project" value="LOCAL" />
+      <updated>1704445475471</updated>
+    </task>
+    <option name="localTasksCounter" value="104" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -670,7 +640,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="reduce flash" />
     <MESSAGE value="rebuild chinese" />
     <MESSAGE value="MDC RX" />
     <MESSAGE value="写频" />
@@ -695,7 +664,8 @@
     <MESSAGE value="支持中文编译选项ENABLE_CHINESE_FULL" />
     <MESSAGE value="中文" />
     <MESSAGE value="fix show" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix show" />
+    <MESSAGE value="113" />
+    <option name="LAST_COMMIT_MESSAGE" value="113" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -158,7 +158,7 @@ void Main(void) {
     for (uint32_t i = 0; i < ALL_SIZE; i += 128) {
             if (i != (uint32_t) (ALL_SIZE / 128) * 128) {
                 WRITE_SIZE = 128;
-                EEPROM_WriteBuffer_1024(start_add + i, p_font + i, WRITE_SIZE);
+                EEPROM_WriteBuffer(start_add + i, p_font + i, WRITE_SIZE);
                 //check
                 uint8_t B[128];
                 EEPROM_ReadBuffer(start_add + i, B, 128);
@@ -196,7 +196,7 @@ void Main(void) {
                 uint8_t tmp[128] = {0};
                 WRITE_SIZE = ALL_SIZE - (uint32_t) (ALL_SIZE / 128) * 128;
                 memcpy(tmp, p_font + i, WRITE_SIZE);
-                EEPROM_WriteBuffer_1024(start_add + i, tmp, WRITE_SIZE);
+                EEPROM_WriteBuffer(start_add + i, tmp, WRITE_SIZE);
                 //check
                 uint8_t B[128];
                 memset(B, 0, sizeof(B));
@@ -373,7 +373,7 @@ void Main(void) {
 //    uint32_t add=0;
 //    uint8_t data_write[8];
 //    memset(data_write,'Z',sizeof (data_write));
-//    EEPROM_WriteBuffer_1024(start_add + add,data_write , WRITE_SIZE);
+//    EEPROM_WriteBuffer(start_add + add,data_write , WRITE_SIZE);
 //    uint8_t B[128];
 //    EEPROM_ReadBuffer(start_add + add, B, WRITE_SIZE);
 //    if (memcmp(B, data_write, WRITE_SIZE) != 0) {

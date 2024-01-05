@@ -309,7 +309,7 @@ static void CMD_051D(const uint8_t *pBuffer) {
                     bReloadEeprom = true;
 
             if ((Offset < 0x0E98 || Offset >= 0x0EA0) || !bIsInLockScreen || pCmd->bAllowPassword)
-                EEPROM_WriteBuffer(Offset, &pCmd->Data[i * 8U]);
+                EEPROM_WriteBuffer(Offset, &pCmd->Data[i * 8U],8);
 
         }
 
@@ -615,9 +615,9 @@ static void CMD_0538(const uint8_t *pBuffer)//write
             if ((Offset > 0xffff || Offset < 0x0E98 || (Offset <= 0xffff && Offset >= 0x0EA0)) || !bIsInLockScreen ||
                 pCmd->bAllowPassword) {
                 if(add&&i==((pCmd->Size) - 2) / 8+(add==0?0:1)-1)
-                    EEPROM_WriteBuffer_1024(Offset, &pCmd->Data[i * 8U + 2], add);
+                    EEPROM_WriteBuffer(Offset, &pCmd->Data[i * 8U + 2], add);
                 else
-                EEPROM_WriteBuffer_1024(Offset, &pCmd->Data[i * 8U + 2], 8);
+                EEPROM_WriteBuffer(Offset, &pCmd->Data[i * 8U + 2], 8);
 //                uint8_t back[8];
 //                EEPROM_ReadBuffer(Offset, back, 8);
 //                UART_Send(back, 8);
