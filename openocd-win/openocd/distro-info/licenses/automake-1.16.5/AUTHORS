@@ -1,0 +1,27 @@
+Authors of GNU Automake.
+
+David Mackenzie
+  First version of most ".am" files.
+  Wrote sh version of automake.in.
+
+Tom Tromey
+  Touched all ".am" files.
+  Rewrote automake.in
+
+Alexandre Oliva
+  Some of the user-side dependency tracking system.
+  Some more random hacking.
+
+Alexandre Duret-Lutz
+  Major overhaul of everything.
+  Maintenance since 2002.
+
+Ralf Wildenhues
+  Random breakage.
+  Maintenance since 2006.
+
+Stefano Lattarini
+  Testsuite overhaul.
+  TAP support and custom testsuite drivers.
+  Random breakage.
+  De-facto maintenance since 2012.

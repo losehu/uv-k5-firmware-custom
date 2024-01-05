@@ -1,0 +1,119 @@
+This is the README file for the GNU Texinfo distribution.  Texinfo is
+the preferred documentation format for GNU software.
+
+  Copyright 1992-2022 Free Software Foundation, Inc.
+
+  Copying and distribution of this file, with or without modification,
+  are permitted in any medium without royalty provided the copyright
+  notice and this notice are preserved.
+
+Home page: https://www.gnu.org/software/texinfo/
+
+Primary distribution point: https://ftp.gnu.org/gnu/texinfo/
+  automatic mirror redirection: https://ftpmirror.gnu.org/texinfo/
+                   mirror list: https://www.gnu.org/prep/ftp.html
+
+Texinfo is a documentation system that uses a single source to produce
+many forms of output:
+- a PDF or DVI document (via the TeX typesetting system) with the normal
+  features of a book, including sectioning, cross references, indices, etc.
+- an Info file with analogous features
+- a plain text (ASCII) file
+- HTML output suitable for use with a web browser
+- an EPUB 3 e-book
+- a LaTeX file, which can then be used to create a PDF
+- a Docbook file
+
+See ./INSTALL* for installation instructions.
+
+To get started with Texinfo, you can read the Texinfo manual
+online at https://www.gnu.org/software/texinfo/manual/texinfo.
+
+If you don't have Internet access, you can read the manual locally:
+- first, build the distribution.
+- then, for HTML, run: make -C doc html
+  and you can start reading at doc/texinfo_html/index.html.
+- for PDF, if you have a working TeX, run: make -C doc pdf
+- for Info, you can read the manual:
+ ./info/ginfo doc/info-stnd
+  and/or read the Texinfo manual:
+ ./info/ginfo doc/texinfo
+
+Texinfo mailing lists and archives:
+- https://lists.gnu.org/mailman/listinfo/bug-texinfo
+  for bug reports, enhancement suggestions, technical discussion.
+- https://lists.gnu.org/mailman/listinfo/help-texinfo
+  for authoring questions and general discussion.
+
+Bug reports:
+Please include enough information for the maintainers to reproduce the
+problem.  Generally speaking, that means:
+- the contents of all input files needed to reproduce the bug (crucial!).
+- a statement of the problem and any samples of the erroneous output.
+- the version number of Texinfo and the program(s) involved (use --version).
+- hardware and operating system information (uname -a).
+- unusual options you gave to configure, if any (try ./config.status --help).
+- anything else that you think could be helpful.
+
+Patches are welcome; if possible, please make them with diff -c or
+git diff and include ChangeLog entries.
+
+See README-hacking for information on the Texinfo development
+environment -- any interested parties are welcome.  If you're a
+programmer and wish to contribute, this should get you started.
+
+This distribution includes the following files, among others:
+    README                 This file.
+    README-hacking         Texinfo developer information.
+
+    INSTALL                Texinfo-specific installation notes.
+    NEWS                   Summary of new features by release.
+
+Texinfo documentation files
+    doc/texinfo.texi       Describes the Texinfo language and many
+                           of the associated tools.  It tells how to use
+                           Texinfo to write documentation, how to use
+                           Texinfo mode in GNU Emacs, TeX, texi2any, and
+                           much else.
+
+    doc/info-stnd.texi     How to use the standalone GNU Info reader that is
+                           included in this distribution (./info).
+
+Printing-related files:
+    doc/texinfo.tex        This implements Texinfo in TeX, to typeset a
+                           Texinfo file into a DVI or PDF file.
+
+    util/texi2dvi          This is a shell script for producing an
+                           indexed DVI file using TeX and texindex.
+    
+    util/texi2pdf          Generate PDF (wrapper for texi2dvi).
+
+Source directories: 
+  djgpp/                   Support for compiling under DJGPP.
+  gnulib/                  Support files from Gnulib.
+  info/                    Standalone Info reader.
+  install-info/            Maintain the Info dir file.
+  tp/                      Texinfo Parser in Perl, includes texi2any.
+  texindex/                The `texindex' program that generates
+                           sorted indices used by TeX when
+                           typesetting a file for printing.
+
+Translation support:
+  po/                      Strings of the programs.
+  po_document/             Strings in generated Texinfo documents.
+
+Installation support:
+  Makefile.am              Read by Automake to create a Makefile.in.
+  Makefile.in              Read by configure to make a Makefile,
+                             created by Automake.
+  configure.ac             Read by Autoconf to create `configure'.
+  configure                Configuration script for local conditions,
+                             created by Autoconf.
+  build-aux/               Common files.
+
+The util/ directory contains a few other scripts, e.g., examples of
+using texi2any in various ways.  See util/README.
+
+Some files in this package have their copyright years stated as a range
+('2008-2010') rather than listed as individual years ('2008, 2009, 
+2010').

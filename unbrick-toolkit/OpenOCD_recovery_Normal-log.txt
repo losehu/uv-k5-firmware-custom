@@ -1,0 +1,74 @@
+UNBRICK SESSION:
+---------------
+
+> openocd -f interface/stlink.cfg -f target/dp32g030.cfg -c "reset halt" -c "uv_flash_bl boot3.bin" -c "uv_flash_fw TEST.bin" -c "shutdown"
+
+Open On-Chip Debugger 0.12.0 (2023-10-02) [https://github.com/sysprogs/openocd]
+Licensed under GNU GPL v2
+libusb1 09e75e98b4d9ea7909e8837b7a3f00dda4589dc3
+For bug reports, read
+        http://openocd.org/doc/doxygen/bugs.html
+Info : auto-selecting first available session transport "hla_swd". To override use 'transport select <transport>'.
+Info : The selected transport took over low-level target control. The results might differ compared to plain JTAG/SWD
+Info : clock speed 960 kHz
+Info : STLINK V2J32S1 (API v2) VID:PID 0483:3748
+Info : Target voltage: 3.262151
+Info : [DP32G0xx.cpu] Cortex-M0 r0p0 processor detected
+Info : [DP32G0xx.cpu] target has 4 breakpoints, 2 watchpoints
+Info : starting gdb server for DP32G0xx.cpu on 3333
+Info : Listening on port 3333 for gdb connections
+[DP32G0xx.cpu] halted due to debug-request, current mode: Thread
+xPSR: 0xc1000000 pc: 0x000000d4 msp: 0x200015d8
+
+Checking ROM masking
+Erasing sector 0x0f = offset 0x0f00
+Region cleared OK
+Erasing sector 0x1f = offset 0x1f00R=0xc3ff),   Remaining 00 %
+Region cleared OK
+Writing at offset 0x1ffc (FLASH_ADDR=0xc7ff),   Remaining 00 %
+Checking ROM masking
+
+ROM masking is set to 0b100. Setting ON...
+shutdown command invoked
+
+CPU reset: Transceiver should boot now.
+
+>
+
+___________________
+DUMP SESSION:
+------------
+
+>openocd -f interface/stlink.cfg -f target/dp32g030.cfg -c "reset halt" -c "uv_unmask_rom" -c "dump_image testFFFF.bin 0 0x10000" -c "shutdown"
+
+Open On-Chip Debugger 0.12.0 (2023-10-02) [https://github.com/sysprogs/openocd]
+Licensed under GNU GPL v2
+libusb1 09e75e98b4d9ea7909e8837b7a3f00dda4589dc3
+For bug reports, read
+        http://openocd.org/doc/doxygen/bugs.html
+Info : auto-selecting first available session transport "hla_swd". To override use 'transport select <transport>'.
+Info : The selected transport took over low-level target control. The results might differ compared to plain JTAG/SWD
+Info : clock speed 960 kHz
+Info : STLINK V2J32S1 (API v2) VID:PID 0483:3748
+Info : Target voltage: 3.263745
+Info : [DP32G0xx.cpu] Cortex-M0 r0p0 processor detected
+Info : [DP32G0xx.cpu] target has 4 breakpoints, 2 watchpoints
+Info : starting gdb server for DP32G0xx.cpu on 3333
+Info : Listening on port 3333 for gdb connections
+[DP32G0xx.cpu] halted due to debug-request, current mode: Thread
+xPSR: 0xc0000000 pc: 0xaaaaaaaa msp: 0xaaaaaaa8
+
+Checking ROM masking
+
+ROM masking is set to 0b110. Unsetting...
+0x4
+dumped 65536 bytes in 1.074061s (59.587 KiB/s)
+shutdown command invoked
+
+>
+
+_________________
+FIRMWARE ONLY:
+-------------
+
+>openocd -f interface/stlink.cfg -f target/dp32g030.cfg -c "reset halt" -c "rom_mask_off" -c "reset halt" -c "uv_flash_fw fw.dec.bin" -c "shutdown"

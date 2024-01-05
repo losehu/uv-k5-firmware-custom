@@ -1,0 +1,307 @@
+pkg-config 0.29.2
+=================
+
+- Improved pkg-config's recursive package list expansion performance.
+  Thanks to Matthew Hanna for the fix.
+- Handle an empty prefix setting correctly when --define-prefix is used.
+  (#97453)
+- Lazily load pc files instead of reading all available pc files during
+  initialization. Thanks to Marco Diego Aurélio Mesquita for the fix.
+  (#98215)
+- Check the CPATH environment variable when determining system include
+  paths like GCC does. Document the system search path behavior. Thanks
+  to v4hn for the fix. (#99224)
+- Make PKG_CHECK_MODULES show the module list rather than the variable
+  prefix in configure output. Thanks to Russ Albery for the fix.
+  (#98334)
+- Fix bundled glib build with GCC 6. (#98334)
+- Handle -isystem and -idirafter when PKG_CONFIG_SYSROOT_DIR is set.
+  (#97337)
+- Check the INCLUDE environment variable when determining system include
+  paths on Windows builds when --msvc-syntax is used. (#94729)
+
+pkg-config 0.29.1
+=================
+
+- Fixed a regression from 0.29 with unquoting values queried with
+  --variable. In some cases, this would cause shell special characters to
+  be escaped in ways they weren't before. Instead, the unquoting only
+  occurs if the value appears to be quoted. (#93284)
+- Add support for building pkg-config with Microsoft Visual Studio.
+  Thanks to Chun-wei Fan for the fix. (#92489)
+- Allow overriding pkg-config variables with environment variables. By
+  setting an environment variable of the form
+  PKG_CONFIG_$PACKAGE_$VARIABLE, a pkg-config variable can be set
+  globally without always having to pass --define-variable. Thanks to
+  Alex Larsson for the fix. (#90917)
+- Honor -Wl,-framework in addition to -framework so that multiple
+  frameworks are handled on OSX. (#1278)
+- Fix the OSX build using --with-internal-glib. Thanks to Rudá Moura for
+  the initial fix and Adam Mercer for testing the final patch. (#92902)
+
+pkg-config 0.29
+===
+
+- Fixed a regression from 0.28 in system -L flag handling. If the pc
+  file has multiple system -L flags, every other flag will be left as
+  is. Thanks to Andrew Oakley for the fix. (#78077)
+- Quoting of variables queried through --variable is removed so that the
+  output can be used verbatim in subsequent shell commands. Thanks to
+  Marek Kasik for the fix. (#67904)
+- Fixed a regression from 0.28 in -L flag handling on Windows. A .libs
+  suffix was inadvertantly being added to the library path.
+- Added a --validate option to check pc file syntax. This works just
+  like --exists, but package dependencies are disabled. (#7000)
+- Added the PKG_PREREQ autoconf macro. Whereas PKG_PROG_PKG_CONFIG is
+  used to check the version of the pkg-config tool, this is used to
+  check the version of the pkg-config autoconf macros in use.
+- Added the PKG_CHECK_MODULES_STATIC autoconf macro. This will
+  temporarily add --static to the pkg-config calls while invoking
+  PKG_CHECK_MODULES. (#19541)
+- Many fixes to the testsuite for Windows. It should now pass for a
+  MinGW, Cygwin, and cross-compiled MinGW using Wine for test execution.
+  (#66939)
+- More consistent handling of prefix redefinition. On Windows, the
+  prefix was always being redefined based on the pc file path. This
+  feature can now be enabled or disabled at runtime on all platforms
+  using the --define-prefix and --dont-define-prefix options. (#63602)
+- Continue listing packages with --list-all even if there are errors in
+  pc files. (#26615)
+- Various documentation improvements. (#62018, #62374, #66155)
+- Fixed a bug when multiple -isystem arguments are used. (#72584)
+- pkg-config is now built with largefile support to ensure that it works
+  correctly on filesystems with 64 bit inodes. Thanks to Peter Jones for
+  the fix. (#90078)
+- Bugs fixed: 7000, 19541, 26615, 62018, 62374, 63602, 66155, 66939,
+  67904, 70690, 72584, 78077, 80378, 80380, 89267, 90078, 90437, 92002.
+
+pkg-config 0.28
+===
+- Fixed a pair of long-standing and intertwined bugs involving unwanted
+  removal of flags. The first is that other Libs flags like -Wl are now
+  kept in context order with -l flags. The second is that aggressive
+  removal of all duplicate arguments has been scaled back so that just
+  consecutive duplicate arguments are removed. One result of this change
+  is that some flags could be repeated in the final output, especially
+  flags from non-pkg-config packages like -lm. Since pkg-config rarely
+  has enough knowledge here about the right thing to do, we throw the
+  duplicate arguments at the compiler/linker and trust it will do the
+  right thing.
+- Fixed an old bug to allow circular Requires. This fix brings along a
+  small behavior change in that pkg-config resolves requires depth
+  first, causing some lower level flags to show up earlier in the output
+  than previously.
+- Cleaned up many corner-case bugs and ambiguous behavior in
+  pkg-config's interface. Thanks to Michał Górny for finding so many of
+  these.
+- New autoconf macro PKG_CHECK_VAR for reading variables from .pc files.
+- Default to suppressing -L/lib and/or -L/lib64 like their /usr
+  counterparts.
+- To help support multiarch scenarios out of the box, $host-pkg-config
+  is now installed unless --disable-host-tool is passed to configure.
+- Added optional gcov usage through the --with-gcov configure option. As
+  a result, many more tests were added to greatly increase the coverage
+  of the code to 86% of executed lines on a Fedora 18 machine.
+- Bugs fixed: 130, 7331, 16101, 17053, 19950, 34504, 48098, 54231,
+  54271, 54379, 54384, 54386, 54388, 54389, 54390, 54391, 54427, 54463,
+  54716, 57078, 58363, 59435.
+
+pkg-config 0.27.1
+===
+
+ - Various fixes for using the internal glib snapshot. It should now be
+   usable pretty much everywhere with the exception that universal
+   builds are not supported on OS X.
+ - Remove usage of gettext from the internal glib to avoid gettext and
+   libintl dependencies.
+ - Update internal glib snapshot to 2.32.4.
+ - Fix check for POSIX shell used in tests to work better.
+ - Handle spaces in autodetected prefix on Windows.
+ - Bugs fixed 3550, 51883, 52031, 53493.
+
+pkg-config 0.27
+===
+
+ - Drop usage of popt for equivalent API in glib2.
+ - Add back an internal snapshot of glib2 to break circular dependency.
+   This can be used by passing --with-internal-glib to configure. On
+   Windows it may still be required to use an installed glib.
+ - Fix --exists to check for Requires and Requires.private. This ensures
+   that all necessary packages are installed prior to using --cflags,
+   --libs, etc.
+ - Various fixes for MinGW which should allow it to be used unpatched on
+   that system.
+ - New autoconf macros PKG_INSTALLDIR and PKG_NOARCH_INSTALLDIR to help
+   determine the .pc file install directory.
+ - Fix handling of --exact/atleast/max-version vs. =/>=/<=.
+ - Fix errors in man page source.
+ - Ensure testing only searches in the check directory.
+ - Bump glib requirement to 2.16 to avoid deprecated
+   g_win32_get_package_installation_subdirectory().
+ - Autotools refresh and update. The required versions now are
+   autoconf-2.62, automake-1.11 and libtool-2.2.
+ - Use g_alloca from glib instead of figuring out alloca ourselves.
+ - Remove search for setresuid & setreuid only needed for internal popt.
+ - Bugs fixed: 833, 2458, 5214, 5326, 5703, 6074, 8653, 9135, 9143,
+   9584, 10652, 11464, 14396, 17053, 23922, 28776, 29011, 29801, 31699,
+   31700, 32622, 34382, 37266, 39646, 41081, 43149, 44843, 45599, 45742,
+   48743
+
+pkg-config 0.26
+===
+
+ - Build system fixes
+ - More tests
+ - pkg.m4 fixups which makes autoconf 2.66 happier.
+ - Drop support for legacy -config scripts.  Those should already be
+   gone and cause problems in cross-compilation environments.
+ - Drop embedded glib
+ - Fix up pkg.m4 to handle the case of --exists working and --cflags
+   or --libs failing.
+ - Various documentation updates
+ - Allow $() through without escaping it.
+ - Add --with-system-include-path instead of hard-coding
+   /usr/include.
+
+pkg-config 0.25
+===
+
+ - 0.24 included a too strict whitespace/shell metacharacter filter
+   leading to some legal characters like = and : being escaped in the
+   output.  This has been fixed.
+ - when building with newer and external libpopt, it would be confused
+   over being asked to split an empty string, leading to errors with
+   packages that included empty fields in their .pc files.
+ - Make the COPYING file explicitly GPLv2.  The COPYING file in 0.24
+   was inadvertently GPLv3 rather than the correct GPLv2.
+ - Minor changes to documentation
+
+pkg-config 0.24
+===
+ - Fix up bug in PKG_CONFIG_SYSROOT handling which mangled non-I and
+   non-L arguments
+ - Put /usr/lib/pkgconfig and /usr/share/pkgconfig into the default
+   search path when no prefix is passed to configure.
+ - Portability fixes for Windows and NetBSD
+ - Various man page updates
+ - Add logging support to log how pkg-config is being called.
+ - Skip Requires.private unless we need them for Cflags
+ - Add a variable, pc_path to the compiled-in pkg-config package that
+   you can query for the compiled-in PKG_CONFIG_PC_PATH.
+ - Various updates to pkg.m4.
+ - Update rpmvercmp with bugfixes from upstream.
+ - Add introductory guide to pkg-config, thanks to Dan Nicholson for
+   the patch.
+ - Add listing of variables in a package
+ - Make it possible to use external popt.
+ - Add --print-provides and --print-requires(-private) options
+ - Add support for paths containing whitespace and shell metacharacters
+
+pkg-config 0.23
+===
+ - Add support for setting sysroot through PKG_CONFIG_SYSROOT_DIR in
+   the environment.
+ - Update included glib to 1.2.10.
+ - Other minor fixes, including a segfault.
+
+pkg-config 0.22
+===
+ - Make Requires.private a whole lot more useful by traversing the
+   whole tree, not just the top-level, for Cflags.
+ - Add support for using the system glib.
+ - Update URL to pkg-config website
+ - Fix some win32 problems.
+ - Other minor fixes.
+
+pkg-config 0.21
+===
+ - Fix some cosmetic output from pkg.m4
+ - Fix build problems with !gcc due to always passing -Wall
+ - Documentation fixes
+ - We now always add the Cflags from packages we depend on, whether
+   they are public or private dependencies.  The discussion surrouding
+   this change can be found in http://bugs.debian.org/340904 .
+ - Add internal pkg-config package which can be queried for version
+   number and other information.
+
+pkg-config 0.20
+===
+ - Fix test suite to work on Solaris.  Yay non-POSIX /bin/sh :-(
+ - Fix segfault on --help with gcc4.  Fix segfault on bigendian arches
+   in some cases.
+ - Win32 fixes
+ - Add --short-errors, now used by pkg.m4 if available.  This gives a
+   better error message if some libraries can't be found.
+
+pkg-config 0.19
+===
+ - Fix a segfault
+ - Fix default search path
+ - Fix cosmetic bug in pkg.m4 where AC_MSG_RESULT wasn't called in
+   some cases.
+
+pkg-config 0.18.1
+===
+ - Fix up pkg.m4 to not end up with pkg_failed=untried always.
+
+pkg-config 0.18
+===
+ - The inter-library dependencies check was too tight and caused
+ problems if one used the --no-undefined flag to libtool on Solaris
+ (since it there expands to -Wl,-z,defs which disallows undefined
+ symbols).  Add a new name to .pc files: Libs.private which will not
+ be listed in the output of --libs unless --static is also given.
+
+ Private libraries are libraries which are needed in the case of
+ static linking or on platforms not supporting inter-library
+ dependencies.  They are not supposed to be used for libraries which
+ are exposed through the library in question.  An example of an
+ exposed library is GTK+ exposing Glib.  A common example of a private
+ library is libm.
+
+ Generally, if include another library's headers in your own, it's a
+ public dependency and not a private one.
+
+ Thanks a lot to James Henstridge for both the bug and the following
+ discussion.
+
+pkg-config 0.17.2
+===
+ - Don't go into an infinite loop allocating more and more memory when
+   the same name is specified twice on the command line and we're in
+   "direct dependencies only"-mode.
+
+pkg-config 0.17.1
+===
+ - Now actually sets CFLAGS and LIBS instead of trying to set those in
+   a subshell.  (Only affects if you've autoreconfiscated with 0.17)
+ - Fix detection of inter-library dependencies.
+
+pkg-config 0.17
+===
+
+ - Evaluate second argument to PKG_CHECK_MODULES again
+ - Portability fixes (MacOS, BeOS, Cygwin)
+ - Handle inter-library dependencies and assume those are in place if
+   the platform supports them.  Disable with --enable-indirect-deps.
+ - Add initial test framework
+ - Build fixes (make distcheck now works)
+
+pkg-config 0.16
+===
+
+ - Use a search path, rather than a single default directory.
+ - Fix a bunch of bugs in glib by backporting
+ - More man page fixes
+ - Lots of small fixes and cleanups over the place.
+ - pkg-config now grabs _PKG_* and PKG_*, so don't use variables
+   starting with that in any configure scripts.
+
+pkg-config 0.15
+===
+
+ - add PKG_CONFIG_LIBDIR for cross-compiling (David Schleef)
+ - add --libs-only-other/--cflags-only-other (Zack Rusin)
+ - apply man page fixes (Pter Breitenlohner)
+ - C portability fix (David Robins)
+ - fix to win32 build (Tor Lillqvist)

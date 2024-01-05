@@ -56,7 +56,7 @@ ENABLE_AM_FIX_SHOW_DATA       ?= 0
 ENABLE_AGC_SHOW_DATA          ?= 0
 
 #############################################################
-OPENOCD = C:/openocd-win/bin/openocd.exe
+OPENOCD = openocd-win/bin/openocd.exe
 TARGET = firmware
 
 ifeq ($(ENABLE_CLANG),1)
@@ -429,7 +429,7 @@ ifdef MY_PYTHON
 endif
 
 
-build: $(TARGET)
+build:clean $(TARGET)
 	$(OBJCOPY) -O binary $(TARGET) $(TARGET).bin
 ifndef MY_PYTHON
 	$(info )
@@ -469,17 +469,6 @@ bsp/dp32g030/%.h: hardware/dp32g030/%.def
 
 -include $(DEPS)
 
-ifdef OS
-    ifeq ($(OS),Windows_NT)
-        clean:
-			.\clean.bat
-    else
-        clean:
-			$(RM) $(call FixPath, $(TARGET).bin $(TARGET).packed.bin $(TARGET) $(OBJS) $(DEPS))
-		doxygen:
-			doxygen
-    endif
-else
-    clean:
-		@echo "Unsupported OS. Please use this Makefile on Windows or Linux."
-endif
+clean:
+	$(RM) $(call FixPath, $(TARGET).bin $(TARGET).packed.bin $(TARGET) $(OBJS) $(DEPS))
+

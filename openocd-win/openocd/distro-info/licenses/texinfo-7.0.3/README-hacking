@@ -1,0 +1,362 @@
+This file describes the development environment for Texinfo.
+
+  Copyright 2002-2022 Free Software Foundation, Inc.
+
+  Copying and distribution of this file, with or without modification,
+  are permitted in any medium without royalty provided the copyright
+  notice and this notice are preserved.
+
+The development sources for GNU Texinfo are available through git
+at Savannah:
+  https://savannah.gnu.org/git/?group=texinfo
+
+This distribution uses whatever versions of Automake, Autoconf, and
+Gettext are listed in NEWS; usually the latest official releases.  If
+you are getting the sources from the development repository (or change
+configure.ac), you'll need to have these tools installed to (re)build.
+You'll also need help2man.  If you modify texindex/ti.twjr, you'll need
+gawk >= 4.0.  All of these programs are available from
+http://ftp.gnu.org/gnu.
+
+After getting the development sources, and installing the tools above,
+you can run
+ ./autogen.sh
+and then, for example,
+ ./configure -C CFLAGS='-g' PERL_EXT_CFLAGS='-g'
+and then
+ make
+
+The -C tells configure to cache test results, which usually speeds
+things up a bit.
+
+After the initial autogen && configure, simply running make should suffice.
+
+Gettext or help2man not installed do not cause configure to fail,
+though configure shows if they were found.  This is because a release
+does not require those tools.  Indeed, both prerequisites and
+result files are shipped in a release, such that the tools are only
+needed if the prerequisite changed.  The tools are needed when building
+from developpement sources, however, as result files are not under version
+control.  Make will fail with an explicit missing command for help2man,
+and with a command not found error for a Gettext utility command.
+
+Running make in one particular subdirectory is possible, for example
+make -C info.  However there are interdependencies between the 
+subdirectories, notably on gnulib, so if you don't want to run "make", 
+you may have to run "make -C gnulib/lib" first.
+
+Additionally, make dist may not work until make has been run at least 
+once, because of rules to create man pages under the man/ directory.
+
+"make dist" will fail if the use of Perl XS extension modules is 
+disabled and there is no Makefile in the XSParagraph subdirectory.
+
+
+Using git
+---------
+
+This section is if you have write access to the git repository.
+
+Usually commits to the git repository should include a ChangeLog
+entry.  Please follow the existing style (the GNU Coding Standards
+has a guide).
+
+You can automatically use the contents of the most recent ChangeLog
+entry with a git commit hook .git/hooks/prepare-commit-msg
+
+------------------------------------
+#!/bin/sh
+
+# $1 - file that contains commit log message
+# $2 - source of commit message
+
+outfile="$1"
+
+case $2 in
+  message|template|merge|squash|commit)
+    ;;
+  *)
+   # Use latest ChangeLog entry as commit message
+   sed -n -e '1,/^\w*$/d' -e '/^[^	]/q' -e '{s/^	//;p}' ChangeLog  >"$outfile"
+;;
+esac
+------------------------------------
+
+When unable to push commits due to other commits being made, please
+use "git pull --rebase" (the default for "git pull" complicates the
+git history).  To deal with conflicts in the ChangeLog, you should
+install the git-merge-changelog program.
+
+You can get better output from "git diff" for Texinfo files by putting
+the following section in your .gitconfig file:
+
+[diff "texinfo"]
+        xfuncname = "^(@node .*)$"
+
+This shows which node each change occurred in.
+
+
+Gnulib
+------
+
+This distribution uses Gnulib (http://www.gnu.org/software/gnulib)
+to share common files.  Gnulib files used in Texinfo are checked in to
+the repository.  A Gnulib directory is setup in two locations, in
+the main directory and in tp/Texinfo/XS/.
+
+To update the gnulib files, get a checkout of gnulib in a separate
+directory, then run, say
+
+  ../gnulib/gnulib-tool --add-import
+
+in your top-level Texinfo directory and
+
+  ../../../../gnulib/gnulib-tool --add-import
+
+under tp/Texinfo/XS.  (gnulib-tool is in the gnulib source tree.)
+
+The currently-used gnulib modules and other gnulib information are
+recorded in gnulib/m4/gnulib-cache.m4.
+
+gnulib-tool --add-import may also be used to add another gnulib module:
+  ../gnulib/gnulib-tool --add-import other_gnulib_module
+
+After running gnulib-tool --add-import or otherwise adding modules, it is
+necessary to check what files were added or removed (e.g., run "git
+status -u") and add new files to the repository with "git add".
+Add any new generated files (typically gnulib/lib/foo.h from foo.h.in) 
+to the ignore list in .gitignore.
+
+
+Subdirectories in repository
+----------------------------
+
+In addition to the subdirectories listed in README, there is the 
+following directory in the source control repository:
+
+js/ - Work on enhanced browsing of HTML manuals with JavaScript
+infog/ - HTML-Info reader using WebKitGTK library
+
+Finally, the contrib/ directory contains additional files from users
+provided for your reading and/or hacking pleasure.  They aren't part of
+Texinfo proper or maintained by the Texinfo developers.
+
+
+
+
+About running the Texinfo programs from a development source tree:
+
+- Once the distribution is built, you can run the compiled programs
+(info, install-info) out of the build tree without special settings; 
+they don't try to read any installed data files.
+
+- The texi2dvi script and texinfo.tex can be run as-is, since they 
+are standalone and don't require compilation.  For the same reasons,
+they are officially updated between full Texinfo releases, at
+http://ftpmirror.gnu.org/texinfo.
+
+- Regarding texi2any (aka makeinfo), you can run tp/texi2any.pl
+directly.  This is the original source file for the program, so it's
+convenient to be able to make changes and then run it.
+
+To run the output "tp/texi2any" instead, you can set the environment
+variable TEXINFO_DEV_SOURCE to 1.  Otherwise, it will try to use
+Texinfo's Perl modules in the installed locations.  "tp/texi2any" uses
+the Perl interpreter found by configure, so you might want to run that 
+instead of texi2any.pl if it's different to the default interpreter in 
+your environment.
+
+
+
+References for working on various parts of the system:
+
+If you want to delve into making a new backend for the Perl makeinfo,
+the documentation in tp/Texinfo/Convert/Converter.pm is a good starting
+point, as it describes the existing backends and other places to look.
+
+If you want to delve into texinfo.tex, a thorough plain TeX reference
+is available under the GFDL:
+  TeX by Topic - http://www.eijkhout.net/texbytopic/texbytopic.html
+Another book on plain TeX, also available under the GFDL, is a GNU package:
+  TeX for the Impatient - http://www.gnu.org/software/teximpatient/
+Occasionally you may need to know about the details of the PDF format.
+A reference for this is the PDF reference, Sixth Edition, version 1.7,  
+downloadable at http://www.adobe.com/devnet/pdf/pdf_reference_archive.html
+
+The texindex program is implemented using the TexiWebJR literate
+programming system, combining Texinfo and Awk
+(https://github.com/arnoldrobbins/texiwebjr).  Running "make ti.pdf"
+in the texindex/ subdirectory creates the printable form of the
+program.  All the usual Texinfo output formats are possible.
+
+
+
+Steps for making a release (pretest or official):
+
+- When close to official release:
+
+check at latest automake/autoconf/gettext version, and mention in NEWS
+(to upgrade gettext, run
+  gettextize -f --po-dir=po --po-dir=po_document
+after installing new version of gettext.
+check that this does not actually downgrade files due to files also
+being updated from gnulib --add-import)
+
+# Under the top level, and also under tp/Texinfo/XS, which uses
+# a separate gnulib import.
+gnulib-tool --add-import
+'git status -u' and add untracked files
+
+After upgrading automake/autoconf/gettext, run ./autogen.sh
+and/or "autoreconf --verbose --force --install" to update ancilliary
+files in build-aux and elsewhere.  Check changes before committing.
+
+Use util/srclist-txi for checking files to be copied from gnulib
+
+run all tests with valgrind:
+* under info/t, put valgrind in $ginfo, then check t/*.val.log files after
+  running test suite
+* edit install-info/tests/defs.in, uncomment valgrind line and run
+  config.status to regenerate defs
+
+parsetexi memory leak checks with valgrind
+
+NYTProf profiling for Perl code
+* e.g. 'perl -d:NYTProf ../tp/texi2any.pl FILE.texi'.  See Devel::NYTProf
+  man page.
+
+
+try groff.texinfo from groff source repo.
+Check "make ccheck" and "make vcheck" work in "doc/refcard".
+process doc/texinfo-tex-test.texi with TeX and check that output is good.
+check for C compiler warnings by configuring with
+
+  ./configure CFLAGS='-Wall -Wdeclaration-after-statement' \
+              PERL_EXT_CFLAGS='-Wall -Wdeclaration-after-statement'
+
+-Wdeclaration-after-statement is useful because a) intermixing
+declarations with statements is an easy thing to do accidentally,
+b) gcc doesn't warn about it by default, and c) other compilers that
+don't support it are still widespread.
+
+Not all compiler warnings have to be fixed, though.
+
+Have a look at the output of "git status -u" to check for files that
+  should be tracked in git or ignored.
+make po-check             # update po/POTFILES.in as needed
+
+check indices of Texinfo manuals and check for duplicates (with <1> in Info)
+
+- Official releases only:
+make V=1 pdf and fix underfull/overfull boxes.
+
+- Final (easy) checks:
+
+check OpenCSW build reports at
+  https://buildfarm.opencsw.org/buildbot/waterfall?category=texinfo
+Check that translations have been updated, e.g.:
+  rsync  -Lrtzv  translationproject.org::tp/latest/texinfo/ po
+  rsync  -Lrtzv  translationproject.org::tp/latest/texinfo_document/ \
+                 po_document # note the trailing slashes in these commands
+make
+make update-po            # both po and po_document needed, build a dist first
+Ensure texinfo.tex, texi2dvi, and htmlxref.cnf are updated on ftp.gnu.org.
+Ensure TXI_XLATE in doc/Makefile.am matches actual file list.
+Check that LINGUAS under po and po_document match actual file list.
+Check that TEXINFO_DTD_VERSION has been updated to the next version in
+  configure.ac if the DTD has been modified since the last release.
+  See comments in configure.ac, and run (at the top level) make dtd-check.
+Check "dist-xz" is in the option list in configure.ac (often removed
+for speed when testing).
+update version in configure.ac, notice in ChangeLog.
+check up to date copyright years in files relevant to --version calls
+(tp/texi2any.pl, info/info.c, install-info/install-info.c)
+version number in texi2dvi, texi2pdf, txirefcard.tex.
+check that texindex version is updated properly
+  (cd texindex ; rm texindex.awk ; make)
+(cd tp && ./maintain/change_perl_modules_version.sh auto)
+  -- this updates all the version numbers in the Perl modules
+(cd tp ; maintain/regenerate_file_lists.pl) # list all test results
+
+- Official releases only:
+version and date in NEWS.
+version number in txirefcard.tex.
+(cd tp && maintain/regenerate_documentlanguages-loc.pl)
+  -- regenerates tp/Texinfo/Documentlanguages.pm (requires Text::CSV)
+
+one last "git diff" to check release commit looks good
+make distcheck
+(export MALLOC_CHECK_=2; make distcheck)  # repeat until clean
+git commit and push
+
+after uploading distribution,
+pretest announcement -> bug-texinfo / beebe / platform-testers to try.
+bcc coordinator@translationproject.org.
+
+
+
+- To do the actual upload:
+pkg=texinfo
+ver=7.0
+
+then do one of:
+gnupload --to alpha.gnu.org:$pkg $pkg-$ver.tar.xz                #pretest
+gnupload --to ftp.gnu.org:$pkg   $pkg-$ver.tar.{gz,xz} *.diff.xz #official
+   Use --user option if not using default key
+   texinfo.tex and texi2dvi should already be up to date, but check.  Use
+gnupload --replace --to ftp.gnu.org:texinfo texi2dvi
+
+#  Official releases only: tag source tree
+git tag texinfo-6.6
+git push --tags
+
+#  ... set up dtd directory on web pages:
+cd $HOME/gnu/www/texinfo/dtd # or wherever webpages checkout is
+mkdir $ver && cvs add $ver
+cp $tutil/texinfo.dtd $ver
+cvs add -kb $ver $ver/texinfo.dtd
+cvs commit -m$ver $ver
+
+
+- When official release is out there ...
+update home page (texinfo.html) and commit as needed.
+including:
+  pod2html $txi/Pod-Simple-Texinfo/pod2texi.pl \
+  | grep -Fv 'rev="made"' >manual/pod2texi.html
+
+check for http links that should be changed to https - then delete
+this item
+
+Build web documentation with
+  make -C doc wwwdoc-build
+
+Copy documentation files to web checkout with, e.g.
+  make -C doc \
+  wwwdoc-install www_target=../../TEXINFO_WEB_PAGES/texinfo/manual/
+Check for removed files with, e.g. ls -ltu $(www_target)/*/html_node, 
+followed by cvs rm -f.  Likewise, check for added files with
+cvs -qn update, followed by cvs add.  When done, run cvs commit.
+
+#  Official releases only: Contact root@tug.org to update texinfo at tug.org.
+# If root@tug.org doesn't reply, can try webmaster@tug.org,
+# or (last resort) board@tug.org.
+
+
+#  For official releases:
+send announcement to info-gnu,
+  cc bug-texinfo and bcc coordinator@translationproject.org.
+news item at savannah.
+
+#  ... post-release, or when development resumes:
+configure.ac, util/texi2dvi: add "dev" to versions for clarity,
+until it's time to do pretests again.
+
+after next release:
+rename old ChangeLog and start a new one
+check TODO file and do pending tasks
+discuss on mailing list changing the git branch structure to allow quick
+  bug fix releases for severe bugs (e.g. glibc 2.34 incompatibility, info crash
+  in Brazillian Portuguese locale)
+delete these lines from README-hacking
+
+

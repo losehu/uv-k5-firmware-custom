@@ -1,0 +1,3118 @@
+For planned incompatibilities in a future Automake 2.0 release,
+please see NEWS-2.0 and start following the advice there now.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+New in 1.16.5:
+
+* Bugs fixed
+
+  - PYTHON_PREFIX and PYTHON_EXEC_PREFIX are now set according to
+    Python's sys.* values only if the new configure option
+    --with-python-sys-prefix is specified. Otherwise, GNU default values
+    are used, as in the past. (The change in 1.16.3 was too incompatible.)
+
+  - consistently depend on install-libLTLIBRARIES.
+
+* Distribution
+
+  - use const for yyerror declaration in bison/yacc tests.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+New in 1.16.4:
+
+* New features added
+
+  - The PYTHON_PREFIX and PYTHON_EXEC_PREFIX variables are now set from
+    Python's sys.prefix and sys.exec_prefix; use the new configure options
+    --with-python_prefix and --with-python_exec_prefix to specify explicitly.
+
+  - Common top-level files can be provided as .md; the non-md version is
+    used if both are present:
+      AUTHORS ChangeLog INSTALL NEWS README README-alpha THANKS
+
+  - CTAGS, ETAGS, SCOPE variables can be set via configure.
+
+  - Silent make output for custom link commands.
+
+  - New option "no-dist-built-sources" skips generating $(BUILT_SOURCES)
+    before building the tarball as part of "make dist", that is,
+    omits the dependency of $(distdir): $(BUILT_SOURCES).
+
+* Bugs fixed
+
+  - automake output more reproducible.
+
+  - test-driver less likely to clash with tests writing to the same file.
+
+  - DejaGnu tests always use the directory name, testsuite/, for
+    compatibility with the newer dejagnu-1.6.3 and with prior versions.
+
+* Distribution
+
+  - config.sub and config.guess updates include restoration of `...`
+    for maximum portability.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+New in 1.16.3:
+
+* New features added
+
+  - In the testsuite summary, the "for $(PACKAGE_STRING)" suffix
+    can be overridden with the AM_TESTSUITE_SUMMARY_HEADER variable.
+
+* Bugs fixed
+
+  - Python version number 3.10 no longer considered to be 3.1.
+
+  - Broken links in manual fixed or removed, and new script
+    contrib/checklinkx (a small modification of W3C checklink) added,
+    with accompany target checklinkx to recheck urls.
+
+  - install-exec target depends on $(BUILT_SOURCES).
+
+  - valac argument matching more precise, to avoid garbage in DIST_COMMON.
+
+  - Support for Vala in VPATH builds fixed so that both freshly-generated and
+    distributed C files work, and operation is more reliable with or without
+    an installed valac.
+
+  - Dejagnu doesn't break on directories containing spaces.
+
+* Distribution
+
+  - new variable AM_DISTCHECK_DVI_TARGET, to allow overriding the
+    "make dvi" that is done as part of distcheck.
+
+* Miscellaneous changes
+
+  - install-sh tweaks:
+    . new option -p to preserve mtime, i.e., invoke cp -p.
+    . new option -S SUFFIX to attempt backup files using SUFFIX.
+    . no longer unconditionally uses -f when rm is overridden by RMPROG.
+    . does not chown existing directories.
+
+  - Removed function up_to_date_p in lib/Automake/FileUtils.pm.
+    We believe this function is completely unused.
+
+  - Support for in-tree Vala libraries improved.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+New in 1.16.2:
+
+* New features added
+
+  - add zstd support and the automake option, dist-zstd.
+
+  - support for Python 3: py-compile now supports both Python 3
+    and Python 2; tests do not require .pyo files, and uninstall
+    deletes __pycache__ correctly (automake bug #32088).
+
+* Miscellaneous changes
+
+  - automake no longer requires a @setfilename in each .texi file
+
+* Bugs fixed
+
+  - When cleaning the compiled python files, '\n' is not used anymore in the
+    substitution text of 'sed' transformations.  This is done to preserve
+    compatibility with the 'sed' implementation provided by macOS which
+    considers '\n' as the 'n' character instead of a newline.
+    (automake bug#31222)
+
+  - For make tags, lisp_LISP is followed by the necessary space when
+    used with CONFIG_HEADERS.
+    (automake bug#38139)
+
+  - The automake test txinfo-vtexi4.sh no longer fails when localtime
+    and UTC cross a day boundary.
+
+  - Emacsen older than version 25, which require use of
+    byte-compile-dest-file, are supported again.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+New in 1.16.1:
+
+* Bugs fixed:
+
+  - 'install-sh' now ensures that nobody can cross privilege boundaries by
+    pre-creating symlink on the directory inside "/tmp".
+
+  - 'automake' does not depend on the 'none' subroutine of the List::Util
+    module anymore to support older Perl version. (automake bug#30631)
+
+  - A regression in AM_PYTHON_PATH causing the rejection of non literal
+    minimum version parameter hasn't been fixed. (automake bug#30616)
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+New in 1.16:
+
+* Miscellaneous changes
+
+  - When subdir-objects is in effect, Automake will now construct
+    shorter object file names when no programs and libraries name
+    clashes are encountered.  This should make the discouraged use of
+    'foo_SHORTNAME' unnecessary in many cases.
+
+* Bugs fixed:
+
+  - Automatic dependency tracking has been fixed to work also when the
+    'subdir-object' option is used and some 'foo_SOURCES' definition
+    contains unexpanded references to make variables, as in, e.g.:
+
+        a_src = sources/libs/aaa
+        b_src = sources/bbb
+        foo_SOURCES = $(a_src)/bar.c $(b_src)/baz.c
+
+    With such a setup, the created makefile fragment containing dependency
+    tracking information will be correctly placed under the directories
+    named 'sources/libs/aaa/.deps' and 'sources/bbb/.deps', rather than
+    mistakenly under directories named (literally!) '$(src_a)/.deps' and
+    '$(src_b)/.deps' (this was the first part of automake bug#13928).
+
+    Notice that in order to fix this bug we had to slightly change the
+    semantics of how config.status bootstraps the makefile fragments
+    required for the dependency tracking to work: rather than attempting
+    to parse the Makefiles via grep and sed trickeries only, we actually
+    invoke 'make' on a slightly preprocessed version of those Makefiles,
+    using a private target that is only meant to bootstrap the required
+    makefile fragments.
+
+  - The 'subdir-object' option no longer causes object files corresponding
+    to source files specified with an explicit '$(srcdir)' component to be
+    placed in the source tree rather than in the build tree.
+
+    For example, if Makefile.am contains:
+
+        AUTOMAKE_OPTIONS = subdir-objects
+        foo_SOURCES = $(srcdir)/foo.c $(srcdir)/s/bar.c $(top_srcdir)/baz.c
+
+    then "make all" will create 'foo.o' and 's/bar.o' in $(builddir) rather
+    than in $(srcdir), and will create 'baz.o' in $(top_builddir) rather
+    than in $(top_srcdir).
+
+    This was the second part of automake bug#13928.
+
+  - Installed 'aclocal' m4 macros can now accept installation directories
+    containing '@' characters (automake bug#20903)
+
+  - "./configure && make dist" no longer fails when a distributed file depends
+    on one from BUILT_SOURCES.
+
+  - When combining AC_LIBOBJ or AC_FUNC_ALLOCA with the
+    "--disable-dependency-tracking" configure option in an out of source
+    build, the build sub-directory defined by AC_CONFIG_LIBOBJ_DIR is now
+    properly created.  (automake bug#27781)
+
+  - The time printed by 'mdate-sh' is now using the UTC time zone to support
+    the reproducible build effort.  (automake bug#20314)
+
+  - The elisp byte-compilation rule now uses byte-compile-dest-file-function,
+    rather than byte-compile-dest-file, which was obsoleted in 2009. We expect
+    that Emacs-26 will continue to support the old function, but will complain
+    loudly, and that Emacs-27 will remove support for it altogether.
+
+* New features added
+
+  - A custom testsuite driver for the Guile Scheme SRFI-64 API has been added
+    to the "contrib" section.  This allows a more convenient way to test Guile
+    code without having to use low primitives such as exit status.  See
+    SRFI-64 API specification for more details:
+    <https://srfi.schemers.org/srfi-64/srfi-64.html>
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+New in 1.15.1:
+
+* Bugs fixed:
+
+  - The code has been adapted to remove a warning present since Perl
+    5.22 stating that "Unescaped left brace in regex is deprecated".
+    This warning has become an hard error in Perl 5.26 (bug#22372).
+
+  - The generated Makefiles do not rely on the obsolescent GZIP
+    environment variable which was used for passing arguments to
+    'gzip'.  Compatibility with old versions has been
+    preserved. (bug#20132)
+
+* Miscellaneous changes:
+
+  - Support the Windows version of the Intel C Compiler (icl) in the
+    'compile' script in the same way the (compatible) Microsoft C
+    Compiler is supported.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+New in 1.15:
+
+* Improvements and refactorings in the install-sh script:
+
+  - It has been modernized, and now makes the following assumptions
+    *unconditionally*:
+    (1) a working 'dirname' program is available;
+    (2) the ${var:-value} shell parameters substitution works;
+    (3) the "set -f" and "set +f" shell commands work, and, respectively,
+        disable and enable shell globbing.
+
+  - The script implements stricter error checking, and now it complains
+    and bails out if any of the following expectations is not met:
+    (1) the options -d and -t are never used together;
+    (2) the argument passed to option -t is a directory;
+    (3) if there are two or more SOURCEFILE arguments, the
+        DESTINATION argument must be a directory.
+
+* Automake-generated testsuites:
+
+  - The default test-driver used by the Automake-generated testsuites
+    now appends the result and exit status of each "plain" test to the
+    associated log file (automake bug#11814).
+
+  - The perl implementation of the TAP testsuite driver is no longer
+    installed in the Automake's scripts directory, and is instead just
+    distributed as a "contrib" addition.  There should be no reason to
+    use this implementation anyway in real packages, since the awk+shell
+    implementation of the TAP driver (which is documented in the manual)
+    is more portable and has feature parity with the perl implementation.
+
+  - The rule generating 'test-suite.log' no longer risk incurring in an
+    extra useless "make all" recursive invocation in some corner cases
+    (automake bug#16302).
+
+* Distribution:
+
+  - Automake bug#18286: "make distcheck" could sometimes fail to detect
+    files missing from the distribution tarball, especially in those cases
+    where both the generated files and their dependencies are explicitly
+    in $(srcdir).  An important example of this are *generated* makefile
+    fragments included at Automake time in Makefile.am; e.g.:
+
+        ...
+        $(srcdir)/fragment.am: $(srcdir)/data.txt $(srcdir)/preproc.sh
+            cd $(srcdir) && $(SHELL) preproc.sh <data.txt >fragment.am
+        include $(srcdir)/fragment.am
+        ...
+
+    If the use forgot to add data.txt and/or preproc.sh in the distribution
+    tarball, "make distcheck" would have erroneously succeeded!  This issue
+    is now fixed.
+
+  - As a consequence of the previous change, "make distcheck" will run
+    using '$(distdir)/_build/sub' as the build directory, rather than
+    simply '$(distdir)/_build' (as it was the case for Automake 1.14 and
+    earlier).  Consequently, the './configure' and 'make' invocations
+    issued by the distcheck recipe now have $(srcdir) equal to '../..',
+    rather than to just '..'.  Dependent and similar variables (e.g.,
+    '$(top_srcdir)') are also changed accordingly.
+
+    Thus, Makefiles that made assumptions about the exact values of the
+    build and source directories used by "make distcheck" will have to
+    be adjusted.  Notice that making such assumptions was a bad and
+    unsupported practice anyway, since the exact locations of those
+    directories should be considered implementation details, and we
+    reserve the right to change them at any time.
+
+* Miscellaneous bugs fixed:
+
+  - The expansion of AM_INIT_AUTOMAKE ends once again with a trailing
+    newline (bug#16841).  Regression introduced in Automake 1.14.
+
+  - We no longer risk to use '$ac_aux_dir' before it's defined (see
+    automake bug#15981). Bug introduced in Automake 1.14.
+
+  - The code used to detect whether the currently used make is GNU make
+    or not (relying on the private macro 'am__is_gnu_make') no longer
+    risks causing "Arg list too long" for projects using automatic
+    dependency tracking and having a ton of source files (bug#18744).
+
+  - Automake tries to offer a more deterministic output for generated
+    Makefiles, in the face of the newly-introduced randomization for
+    hash keys order in Perl 5.18.
+
+  - In older Automake versions, if a user defined one single Makefile
+    fragment (say 'foo.am') to be included via Automake includes in
+    his main Makefile.am, and defined a custom make rule to generate that
+    file from other data, Automake used to spuriously complain with some
+    message like "... overrides Automake target '$(srcdir)/foo.am".
+    This bug is now fixed.
+
+  - The user can now extend the special .PRECIOUS target, the same way
+    he could already do with the .MAKE .and .PHONY targets.
+
+  - Some confusing typos have been fixed in the manual and in few warning
+    messages (automake bug#16827 and bug#16997).
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+New in 1.14.1:
+
+* Bugs fixed:
+
+  - The user is no longer allowed to override the --srcdir nor the --prefix
+    configure options used by "make distcheck" (bug#14991).
+
+  - Fixed a gross inefficiency in the recipes for installing byte-compiled
+    python files, that was causing an O(N^2) performance on the number N of
+    files, instead of the expected O(N) performance.  Note that this bug
+    was only relevant when the number of python files was high (which is
+    unusual in practice).
+
+  - Automake try to offer a more deterministic output for warning messages,
+    in the face of the newly-introduced randomization for hash keys order
+    in Perl 5.18.
+
+  - The 'test-driver' script now actually error out with a clear error
+    message on the most common invalid usages.
+
+  - Several spurious failures/hangs in the testsuite (bugs #14706, #14707,
+    #14760, #14911, #15181, #15237).
+
+* Documentation fixes:
+
+  - Fixed typos in the 'fix-timestamp.sh' example script that made it
+    nonsensical.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+New in 1.14:
+
+* C compilation, and the AC_PROG_CC and AM_PROG_CC_C_O macros:
+
+  - The 'compile' script is now unconditionally required for all packages
+    that perform C compilation (if you are using the '--add-missing'
+    option, automake will fetch that script for you, so you shouldn't
+    need any explicit adjustment).  This new behaviour is needed to avoid
+    obscure errors when the 'subdir-objects' option is used, and the
+    compiler is an inferior one that doesn't grasp the combined use of
+    both the "-c -o" options; see discussion about automake bug#13378 for
+    more details:
+    <https://debbugs.gnu.org/cgi/bugreport.cgi?bug=13378#35>
+    <https://debbugs.gnu.org/cgi/bugreport.cgi?bug=13378#44>
+
+  - The next major Automake version (2.0) will unconditionally activate
+    the 'subdir-objects' option.  In order to smooth out the transition,
+    we now give a warning (in the category 'unsupported') whenever a
+    source file is present in a subdirectory but the 'subdir-object' is
+    not enabled.  For example, the following usage will trigger such a
+    warning:
+
+        bin_PROGRAMS = sub/foo
+        sub_foo_SOURCES = sub/main.c sub/bar.c
+
+  - Automake will automatically enhance the autoconf-provided macro
+    AC_PROG_CC to force it to check, at configure time, that the
+    C compiler supports the combined use of both the '-c' and '-o'
+    options.  The result of this check is saved in the cache variable
+    'am_cv_prog_cc_c_o', and said result can be overridden by
+    pre-defining that variable.
+
+  - The AM_PROG_CC_C_O macro can still be called, albeit that should no
+    longer be necessary. This macro is now just a thin wrapper around the
+    Automake-enhanced AC_PROG_CC.  This means, among the other things,
+    that its behaviour is changed in three ways:
+
+      1. It no longer invokes the Autoconf-provided AC_PROG_CC_C_O
+         macro behind the scenes.
+
+      2. It caches the check result in the 'am_cv_prog_cc_c_o' variable,
+         and not in a 'ac_cv_prog_cc_*_c_o' variable whose exact name is
+         dynamically computed only at configure runtime (really!) from
+         the content of the '$CC' variable.
+
+      3. It no longer automatically AC_DEFINE the C preprocessor
+         symbol 'NO_MINUS_C_MINUS_O'.
+
+* Texinfo support:
+
+  - Automake can now be instructed to place '.info' files generated from
+    Texinfo input in the builddir rather than in the srcdir; this is done
+    specifying the new automake option 'info-in-builddir'.  This feature
+    was requested by the developers of GCC, GDB, GNU binutils and the GNU
+    bfd library.  See the extensive discussion about automake bug#11034
+    for more details.
+
+  - For quite a long time, Automake has been implementing an undocumented
+    hack which ensured that '.info' files which appeared to be cleaned
+    (by being listed in the CLEANFILES or DISTCLEANFILES variables) were
+    built in the builddir rather than in the srcdir; this hack was
+    introduced to ensure better backward-compatibility with package
+    such as Texinfo, which do things like:
+
+        info_TEXINFOS = texinfo.txi info-stnd.texi info.texi
+        DISTCLEANFILES = texinfo texinfo-* info*.info*
+        # Do not create info files for distribution.
+        dist-info:
+            @:
+
+    in order not to distribute generated '.info' files.
+
+    Now that we have the 'info-in-builddir' option that explicitly causes
+    generated '.info' files to be placed in the builddir, this hack should
+    be longer necessary, so we deprecate it with runtime warnings.
+    It will be removed altogether in Automake 2.0.
+
+* Relative directory in Makefile fragments:
+
+  - The special Automake-time substitutions '%reldir%' and '%canon_reldir%'
+    (and their short versions, '%D%' and '%C%' respectively) can now be used
+    in an included Makefile fragment.  The former is substituted with the
+    relative directory of the included fragment (compared to the top-level
+    including Makefile), and the latter with the canonicalized version of
+    the same relative directory.
+
+        # in 'Makefile.am':
+        bin_PROGRAMS = # will be updated by included Makefile fragments
+        include src/Makefile.inc
+
+        # in 'src/Makefile.inc':
+        bin_PROGRAMS += %reldir%/foo
+        %canon_reldir%_foo_SOURCES = %reldir%/bar.c
+
+    This should be especially useful for packages using a non-recursive
+    build system.
+
+* Deprecated distribution formats:
+
+  - The 'shar' and 'compress' distribution formats are deprecated, and
+    scheduled for removal in Automake 2.0.  Accordingly, the use of the
+    'dist-shar' and 'dist-tarZ' will cause warnings at automake runtime
+    (in the 'obsolete' category), and the recipes of the Automake-generated
+    targets 'dist-shar' and 'dist-tarZ' will unconditionally display
+    (non-fatal) warnings at make runtime.
+
+* New configure runtime warnings about "rm -f" support:
+
+  - To simplify transition to Automake 2.0, the shell code expanded by
+    AM_INIT_AUTOMAKE now checks (at configure runtime) that the default
+    'rm' program in PATH doesn't complain when called without any
+    non-option argument if the '-f' option is given (so that commands like
+    "rm -f" and "rm -rf" act as a no-op, instead of raising usage errors).
+    If this is not the case, the configure script is aborted, to call the
+    attention of the user on the issue, and invite him to fix his PATH.
+    The checked 'rm' behavior is very widespread in the wild, and will be
+    required by future POSIX versions:
+
+        <http://austingroupbugs.net/view.php?id=542>
+
+    The user can still force the configure process to complete even in the
+    presence of a broken 'rm' by defining the ACCEPT_INFERIOR_RM_PROGRAM
+    environment variable to "yes".  And the generated Makefiles should
+    still work correctly even when such broken 'rm' is used.  But note
+    that this will no longer be the case with Automake 2.0 though, so, if
+    you encounter the warning, please report it to us ASAP (and try to fix
+    your environment as well).
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+New in 1.13.4:
+
+* Bugs fixed:
+
+  - Fix a minor regression introduced in Automake 1.13.3: when two or more
+    user-defined suffix rules were present in a single Makefile.am,
+    automake would needlessly include definition of some make variables
+    related to C compilation in the generated Makefile.in (bug#14560).
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+New in 1.13.3:
+
+* Documentation fixes:
+
+  - The documentation no longer mistakenly reports that the obsolete
+    'AM_MKDIR_PROG_P' macro and '$(mkdir_p)' make variable are going
+    to be removed in Automake 2.0.
+
+* Bugs fixed:
+
+  - Byte-compilation of Emacs lisp files could fail spuriously on
+    Solaris,  when /bin/ksh or /usr/xpg4/bin/sh were used as shell.
+
+  - If the same user-defined suffixes were transformed into different
+    Automake-known suffixes in different Makefile.am files in the same
+    project, automake could get confused and generate inconsistent
+    Makefiles (automake bug#14441).
+    For example, if 'Makefile.am' contained a ".ext.cc:" suffix rule,
+    and 'sub/Makefile.am' contained a ".ext.c:" suffix rule, automake
+    would have mistakenly placed into 'Makefile.in' rules to compile
+    "*.c" files into object files, and into 'sub/Makefile.in' rules to
+    compile "*.cc" files into object files --- rather than the other
+    way around.  This is now fixed.
+
+* Testsuite work:
+
+  - The test cases no longer have the executable bit set.  This should
+    make it clear that they are not meant to be run directly; as
+    explained in t/README, they can only be run through the custom
+    'runtest' script, or by a "make check" invocation.
+
+  - The testsuite has seen the introduction of a new helper function
+    'run_make', and several related changes.  These serve a two-fold
+    purpose:
+
+     1. Remove brittleness due to the use of "make -e" in test cases.
+
+     2. Seamlessly allow the use of parallel make ("make -j...") in the
+        test cases, even where redirection of make output is involved
+        (see automake bug#11413 for a description of the subtle issues
+        in this area).
+
+  - Several spurious failures have been fixed (they hit especially
+    MinGW/MSYS builds).  See automake bugs #14493, #14494, #14495,
+    #14498, #14499, #14500, #14501, #14517 and #14528.
+
+  - Some other minor miscellaneous changes and fixlets.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+New in 1.13.2:
+
+* Documentation fixes:
+
+  - The long-deprecated but still supported two-arguments invocation form
+    of AM_INIT_AUTOMAKE is documented once again.  This seems the sanest
+    thing to do, given that support for such usage might need to remain
+    in place for an unspecified amount of time in order to cater to people
+    who want to define the version number for their package dynamically at
+    configure runtime (unfortunately, Autoconf does not yet support this
+    scenario, so we cannot delegate the work to it).
+
+  - The serial testsuite harness is no longer reported as "deprecated",
+    but as "discouraged".  We have no plan to remove it, nor to make its
+    use cause runtime warnings.
+
+  - The parallel testsuite is no longer reported as "experimental"; it
+    is well tested, and should be stable now.
+
+  - The 'shar' and 'tarZ' distribution formats and the 'dist-shar' and
+    'dist-tarZ' options are obsolescent, and their use is deprecated
+    in the documentation.
+
+  - Other minor miscellaneous fixes and improvements; in particular,
+    some improvements in cross-references.
+
+* Obsolescent features:
+
+  - Use of suffix-less info files (that can be specified through the
+    '@setfilename' macro in Texinfo input files) is discouraged, and
+    its use will raise warnings in the 'obsolete' category.  Simply
+    use the '.info' extension for all your info files, transforming
+    usages like:
+
+        @setfilename myprogram
+
+    into:
+
+        @setfilename myprogram.info
+
+  - Use of Texinfo input files with '.txi' or '.texinfo' extensions
+    is discouraged, and its use will raise warnings in the 'obsolete'
+    category.  You are advised to simply use the '.texi' extension
+    instead.
+
+* Bugs fixed:
+
+  - When the 'ustar' option is used, the generated configure script no
+    longer risks hanging during the tests for the availability of the
+    'pax' utility, even if the user running configure has a UID or GID
+    that requires more than 21 bits to be represented.
+    See automake bug#8343 and bug#13588.
+
+  - The obsolete macros AM_CONFIG_HEADER or AM_PROG_CC_STDC work once
+    again, as they did in Automake 1.12.x (albeit printing runtime
+    warnings in the 'obsolete' category).  Removing them has turned
+    out to be a very bad idea, because it complicated distro packing
+    enormously.  Making them issue fatal warnings, as we did in
+    Automake 1.13, has turned out to be a similarly very bad idea,
+    for exactly the same reason.
+
+  - aclocal will no longer error out if the first local m4 directory
+    (as specified by the '-I' option or the 'AC_CONFIG_MACRO_DIRS' or
+    'AC_CONFIG_MACRO_DIR' macros) doesn't exist; it will merely report
+    a warning in the 'unsupported' category.  This is done to support
+    some pre-existing real-world usages.  See automake bug#13514.
+
+  - aclocal will no longer consider directories for extra m4 files more
+    than once, even if they are specified multiple times.  This ensures
+    packages that specify both
+
+        AC_CONFIG_MACRO_DIR([m4])       in configure.ac
+        ACLOCAL_AMFLAGS = -I m4         in Makefile.am
+
+    will work correctly, even when the 'm4' directory contains no
+    package-specific files, but is used only to install third-party
+    m4 files (as can happen with e.g., "libtoolize --install").
+    See automake bug#13514.
+
+  - Analysis of make flags in Automake-generated rules has been made more
+    robust, and more future-proof.  For example, in presence of make that
+    (like '-I') take an argument, the characters in said argument will no
+    longer be spuriously considered as a set of additional make options.
+    In particular, automake-generated rules will no longer spuriously
+    believe to be running in dry mode ("make -n") if run with an invocation
+    like "make -I noob"; nor will they believe to be running in keep-going
+    mode ("make -k") if run with an invocation like "make -I kool"
+    (automake bug#12554).
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+New in 1.13.1:
+
+* Bugs fixed:
+
+  - Use of the obsolete macros AM_CONFIG_HEADER or AM_PROG_CC_STDC now
+    causes a clear and helpful error message, instead of obscure ones
+    (issue introduced in Automake 1.13).
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+New in 1.13:
+
+* Bugs fixed:
+
+  - ylwrap renames properly header guards in generated header files
+    (*.h), instead of leaving Y_TAB_H.
+
+  - ylwrap now also converts header guards in implementation files
+    (*.c).  Because ylwrap failed to rename properly #include in the
+    implementation files, current versions of Bison (e.g., 2.7)
+    duplicate the generated header file in the implementation file.
+    The header guard then protects the implementation file from
+    duplicate definitions from the header file.
+
+* Version requirements:
+
+  - Autoconf 2.65 or greater is now required.
+
+  - The rules to build PDF and DVI output from Texinfo input now
+    require Texinfo 4.9 or later.
+
+* Obsolete features:
+
+  - Support for the "Cygnus-style" trees (once enabled by the 'cygnus'
+    option) has been removed.  See discussion about automake bug#11034
+    for more background: <https://debbugs.gnu.org/11034>.
+
+  - The deprecated aclocal option '--acdir' has been removed.  You
+    should use the options '--automake-acdir' and '--system-acdir'
+    instead (which have been introduced in Automake 1.11.2).
+
+  - The following long-obsolete m4 macros have been removed:
+
+      AM_PROG_CC_STDC:    superseded by AC_PROG_CC since October 2002
+      fp_PROG_CC_STDC:    broken alias for AM_PROG_CC_STDC
+      fp_WITH_DMALLOC:    old alias for AM_WITH_DMALLOC
+      AM_CONFIG_HEADER:   superseded by AC_CONFIG_HEADERS since July 2002
+      ud_PATH_LISPDIR:    old alias for AM_PATH_LISPDIR
+      jm_MAINTAINER_MODE: old alias for AM_MAINTAINER_MODE
+      ud_GNU_GETTEXT:     old alias for AM_GNU_GETTEXT
+      gm_PROG_LIBTOOL:    old alias for AC_PROG_LIBTOOL
+      fp_C_PROTOTYPES:    old alias for AM_C_PROTOTYPES (which was part
+                          of the now-removed automatic de-ANSI-fication
+                          support of Automake)
+
+  - All the "old alias" macros in 'm4/obsolete.m4' have been removed.
+
+  - Use of the long-deprecated two- and three-arguments invocation forms
+    of the AM_INIT_AUTOMAKE is no longer documented.  It's still supported
+    though (albeit with a warning in the 'obsolete' category), to cater
+    for people who want to define the version number for their package
+    dynamically (e.g., from the current VCS revision).  We'll have to
+    continue this support until Autoconf itself is fixed to allow better
+    support for such dynamic version numbers.
+
+* Elisp byte-compilation:
+
+  - The byte compilation of '.el' files into '.elc' files is now done
+    with a suffix rule.  This has simplified the compilation process, and
+    more importantly made it less brittle.  The downside is that emacs is
+    now invoked once for each '.el' files, which cause some noticeable
+    slowdowns.  These should however be mitigated on multicore machines
+    (which are becoming the norm today) if concurrent  make ("make -j")
+    is used.
+
+  - Elisp files placed in a subdirectory are now byte-compiled to '.elc'
+    files in the same subdirectory; for example, byte-compiling of file
+    'sub/foo.el' file will result in 'sub/foo.elc' rather than in
+    'foo.elc'.  This behaviour is backward-incompatible with older
+    Automake versions, but it is more natural and more sane.  See also
+    automake bug#7441.
+
+  - The Emacs invocation performing byte-compilation of '.el' files honors
+    the $(AM_ELCFLAGS) and $(ELCFLAGS) variables; as typical, the former
+    one is  developer-reserved and the latter one user-reserved.
+
+  - The 'elisp-comp' script, once provided by Automake, has been rendered
+    obsoleted by the just-described changes, and thus removed.
+
+* Changes to Automake-generated testsuite harnesses:
+
+  - The parallel testsuite harness (previously only enabled by the
+    'parallel-tests' option) is the default one; the older serial
+    testsuite harness will still be available through the use of the
+    'serial-tests' option (introduced in Automake 1.12).
+
+  - The 'color-tests' option is now unconditionally activated by default.
+    In particular, this means that testsuite output is now colorized by
+    default if the attached terminal seems to support ANSI escapes, and
+    that the user can force output colorization by setting the variable
+    AM_COLOR_TESTS to "always".  The 'color-tests' is still recognized
+    for backward-compatibility, although it's a handled as a no-op now.
+
+* Silent rules support:
+
+  - Support for silent rules is now always active in Automake-generated
+    Makefiles.  So, although the verbose output is still the default,
+    the user can now always use "./configure --enable-silent-rules" or
+    "make V=0" to enable quieter output in the package he's building.
+
+  - The 'silent-rules' option has now become a no-op, preserved for
+    backward-compatibility only.  In particular, its use no longer
+    disables the warnings in the 'portability-recursive' category.
+
+* Texinfo Support:
+
+  - The rules to build PDF and DVI files from Texinfo input now require
+    Texinfo 4.9 or later.
+
+  - The rules to build PDF and DVI files from Texinfo input now use the
+    '--build-dir' option, to keep the auxiliary files used by texi2dvi
+    and texi2pdf around without cluttering the build directory, and to
+    make it possible to run the "dvi" and "pdf" recipes in parallel.
+
+* Automatic remake rules and 'missing' script:
+
+  - The 'missing' script no longer tries to update the timestamp of
+    out-of-date files that require a maintainer-specific tool to be
+    remade, in case the user lacks such a tool (or has a too-old version
+    of it).  It just gives a useful warning, and in some cases also a
+    tip about how to obtain such a tool.
+
+  - The missing script has thus become useless as a (poor) way to work
+    around the sketched-timestamps issues that can happen for projects
+    that keep generated files committed in their VCS repository.  Such
+    projects are now encouraged to write a custom "fix-timestamps.sh"
+    script to avoid such issues; a simple example is provided in the
+    "CVS and generated files" chapter of the automake manual.
+
+* Recursive targets:
+
+  - The user can now define his own recursive targets that recurse
+    in the directories specified in $(SUBDIRS).  This can be done by
+    specifying the name of such targets in invocations of the new
+    'AM_EXTRA_RECURSIVE_TARGETS' m4 macro.
+
+* Tags:
+
+  - Any failure in the recipe of the "tags", "ctags", "cscope" or
+    "cscopelist" targets in a subdirectory is now propagated to the
+    top-level make invocation.
+
+  - Tags are correctly computed also for files in _SOURCES variables that
+    only list files with non-standard suffixes (see automake bug#12372).
+
+* Improvements to aclocal and related rebuilds rules:
+
+  - Autoconf-provided macros AC_CONFIG_MACRO_DIR and AC_CONFIG_MACRO_DIRS
+    are now traced by aclocal, and can be used to declare the local m4
+    include directories.  Formerly, one had to specify it with an explicit
+    '-I' option to the 'aclocal' invocation.
+
+  - The special make variable ACLOCAL_AMFLAGS is deprecated; future
+    Automake versions will warn about its use, and later version will
+    remove support for it altogether.
+
+* The depcomp script:
+
+  - Dropped support for libtool 1.4.
+
+  - Various internal refactorings.  They should cause no visible change,
+    but the chance for regression is there anyway, so please report any
+    unexpected or suspicious behaviour.
+
+  - Support for pre-8.0 versions of the Intel C Compiler has been dropped.
+    This should cause no problem, since icc 8.0 has been released in
+    December 2003 -- almost nine years ago.
+
+  - Support for tcc (the Tiny C Compiler) has been improved, and is now
+    handled through a dedicated 'tcc' mode.
+
+* The ylwrap script:
+
+  - ylwrap generates header guards with a single '_' for series of non
+    alphabetic characters, instead of several.  This is what Bison >=
+    2.5.1 does.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Bugs fixed in 1.12.6:
+
+* Python-related bugs:
+
+  - The default installation location for python modules has been improved
+    for Python 3 on Debian and Ubuntu systems, changing from:
+
+        ${prefix}/lib/python3/dist-packages
+
+    to
+
+        ${prefix}/lib/python3.x/site-packages
+
+    This change should ensure modules installed using the default ${prefix}
+    "/usr/local" are found by default by system python 3.x installations.
+    See automake bug#10227.
+
+  - Python byte-compilation supports the new layout mandated by PEP-3147,
+    with its __pycache__ directory (automake bug#8847).
+
+* Build system issues:
+
+  - The maintainer rebuild rules for Makefiles and aclocal.m4 in
+    Automake's own build system works correctly again (bug introduced
+    in Automake 1.12.5).
+
+* Testsuite issues:
+
+  - The Vala-related tests has been changed to adjust to the removal of
+    the 'posix' profile in the valac compiler.  See automake bug#12934
+    a.k.a. bug#12522.
+
+  - Some spurious testsuite failures related to older tools and systems
+    have been fixed.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+New in 1.12.5:
+
+* Vala support:
+
+  - The AM_PROG_VALAC macro has been enhanced to takes two further
+    optional arguments; it's signature now being
+
+        AM_PROG_VALAC([MINIMUM-VERSION], [ACTION-IF-FOUND],
+                      [ACTION-IF-NOT-FOUND])
+
+  - By default, AM_PROG_VALAC no longer aborts the configure invocation
+    if the Vala compiler found is too old, but simply prints a warning
+    messages (as it did when the Vala compiler was not found).  This
+    should avoid unnecessary difficulties for end users that just want
+    to compile the unmodified, distributed Vala-generated C sources,
+    but happens to have an old Vala compiler in their PATH.  This fixes
+    automake bug#12688.
+
+  - If no proper Vala compiler is found at configure runtime, AM_PROG_VALAC
+    will set the AC_SUBST'd variable 'VALAC' to 'valac' rather than to ':'.
+    This is a better default, because with it a triggered makefile rule
+    invoking a Vala compilation will clearly fail with an informative error
+    message like "valac: command not found", rather than silently, with
+    the error possibly going unnoticed or triggering harder-to-diagnose
+    fallout failures in later steps.
+
+* Miscellaneous changes:
+
+  - automake and aclocal no longer honours the 'perllibdir' environment
+    variable.  That had always been intended only as an hack required in
+    the testsuite, not meant for any use beyond that.
+
+Bugs fixed in 1.12.5:
+
+* Long-standing bugs:
+
+  - Automake no longer generates spurious remake rules invoking autoheader
+    to regenerate the template corresponding to header files specified after
+    the first one in AC_CONFIG_HEADERS (automake bug#12495).
+
+  - When wrapping Microsoft tools, the 'compile' script falls back to
+    finding classic 'libname.a' style libraries when 'name.lib' and
+    'name.dll.lib' aren't available.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+New in 1.12.4:
+
+* Warnings and deprecations:
+
+  - Warnings in the 'obsolete' category are enabled by default both in
+    automake and aclocal.
+
+* Miscellaneous changes:
+
+  - Some testsuite weaknesses and spurious failures have been fixed.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+New in 1.12.3:
+
+* Miscellaneous changes:
+
+  - The '.m4' files provided by Automake no longer define serial numbers.
+    This should cause no difference in the behaviour of aclocal though.
+
+  - Some testsuite weaknesses and spurious failures have been fixed.
+
+  - There is initial support for automatic dependency tracking with the
+    Portland Group C/C++ compilers, thanks to the new new depmode 'pgcc'.
+
+Bugs fixed in 1.12.3:
+
+* Long-standing bugs:
+
+  - Instead of renaming only self-references of files (typically for
+    #lines), ylwrap now also renames references to the other generated
+    files.  This fixes support for GLR and C++ parsers from Bison (PR
+    automake/491 and automake bug#7648): 'parser.c' now properly
+    #includes 'parser.h' instead of 'y.tab.h'.
+
+  - Generated files unknown to ylwrap are now preserved.  This fixes
+    C++ support for Bison (automake bug#7648): location.hh and the
+    like are no longer discarded.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+New in 1.12.2:
+
+* Warnings and deprecations:
+
+  - Automake now issues a warning (in the 'portability' category) if
+    'configure.in' is used instead of 'configure.ac' as the Autoconf
+    input file.  Such a warning will also be present in the next
+    Autoconf version (2.70).
+
+* Cleaning rules:
+
+  - Recursive cleaning rules descends into the $(SUBDIRS) in the natural
+    order (as done by the other recursive rules), rather than in the
+    inverse order.  They used to do that in order to work a round a
+    limitation in an older implementation of the automatic dependency
+    tracking support, but that limitation had been lifted years ago
+    already, when the automatic dependency tracking based on side-effects
+    of compilation had been introduced.
+
+  - Cleaning rules for compiled objects (both "plain" and libtool) work
+    better when subdir objects are involved, not triggering a distinct
+    'rm' invocation for each such object.  They do so by removing *any*
+    compiled object file that is in the same directory of a subdir
+    object.  See automake bug#10697.
+
+* Silent rules support:
+
+  - A new predefined $(AM_V_P) make variable is provided; it expands
+    to a shell conditional that can be used in recipes to know whether
+    make is being run in silent or verbose mode.
+
+Bugs fixed in 1.12.2:
+
+* SECURITY VULNERABILITIES!
+
+  - The 'distcheck' recipe no longer grants temporary world-write
+    permissions on the extracted distdir.  Even if such rights were
+    only granted for a vanishingly small time window, the implied
+    race condition proved to be enough to allow a local attacker
+    to run arbitrary code with the privileges of the user running
+    "make distcheck".  This is CVE-2012-3386.
+
+* Long-standing bugs:
+
+  - The "recheck" targets behaves better in the face of build failures
+    related to previously failed tests.  For example, if a test is a
+    compiled program that must be rerun by "make recheck", and its
+    compilation fails, it will still be rerun by further "make recheck"
+    invocations.  See automake bug#11791.
+
+* Bugs introduced by 1.12.1:
+
+  - Automake provides once again the '$(mkdir_p)' make variable and the
+    '@mkdir_p@' substitution (both as simple aliases for '$(MKDIR_P)'),
+    for better backward-compatibility.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+New in 1.12.1:
+
+* New supported languages:
+
+  - Support for Objective C++ has been added; it should work similarly to
+    the support for Objective C.
+
+* Deprecated obsolescent features:
+
+  - Use of the long-deprecated two- and three-arguments invocation forms
+    of the AM_INIT_AUTOMAKE macro now elicits a warning in the 'obsolete'
+    category.  Starting from some future major Automake release (likely
+    post-1.13), such usages will no longer be allowed.
+
+  - Support for the "Cygnus-style" trees (enabled by the 'cygnus' option) is
+    now deprecated (its use triggers a warning in the 'obsolete' category).
+    It will be removed in the next major Automake release (1.13).
+
+  - The long-obsolete (since 1.10) automake-provided $(mkdir_p) make
+    variable, @mkdir_p@ configure-time substitution and AM_PROG_MKDIR
+    m4 macro are deprecated, eliciting a warning in the 'obsolete'
+    category.
+
+* Miscellaneous changes:
+
+  - The Automake test cases now require a proper POSIX-conforming shell.
+    Older non-POSIX Bourne shells (like Solaris 10 /bin/sh) will no longer
+    be accepted.  In most cases, the user shouldn't have to specify such
+    POSIX shell explicitly, since it will be looked up at configure time.
+    Still, when this lookup fails, or when the user wants to override its
+    conclusion, the variable 'AM_TEST_RUNNER_SHELL' can be used (pointing
+    to the shell that will be used to run the Automake test cases).
+
+Bugs fixed in 1.12.1:
+
+* Bugs introduced by 1.12:
+
+  - Several weaknesses in Automake's own build system and test suite
+    have been fixed.
+
+* Bugs introduced by 1.11.3:
+
+  - When given non-option arguments, aclocal rejects them, instead of
+    silently ignoring them.
+
+* Long-standing bugs:
+
+  - When the 'color-tests' option is in use, forcing of colored testsuite
+    output through "AM_COLOR_TESTS=always" works even if the terminal is
+    a non-ANSI one, i.e., if the TERM environment variable has a value of
+    "dumb".
+
+  - Several inefficiencies and poor performances in the implementation
+    of the parallel-tests 'check' and 'recheck' targets have been fixed.
+
+  - The post-processing of output "#line" directives done the ylwrap
+    script is more faithful w.r.t. files in a subdirectory; for example,
+    if the processed file is "src/grammar.y", ylwrap will correctly
+    produce directives like:
+        #line 7 "src/grammar.y"
+    rather than like
+        #line 7 "grammar.y"
+    as it did before.
+
+* Bugs with new Perl versions:
+
+  - Aclocal works correctly with perl 5.16.0 (automake bug#11543).
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+New in 1.12:
+
+* Obsolete features removed:
+
+  - The never documented nor truly used script 'acinstall' has been
+    removed.
+
+  - Support for automatic de-ANSI-fication has been removed.
+
+  - The support for the "obscure" multilib feature has been removed
+    from Automake core (but remains available in the 'contrib/'
+    directory of the Automake distribution).
+
+  - Support for ".log -> .html" conversion and the check-html and
+    recheck-html targets has been removed from Automake core (but
+    remains available in the 'contrib/' directory of the Automake
+    distribution).
+
+  - The deprecated 'lzma' compression format for distribution archives
+    has been removed, in favor of 'xz' and 'lzip'.
+
+  - The obsolete AM_WITH_REGEX macro has been removed.
+
+  - The long-deprecated options '--output-dir', '--Werror' and
+    '--Wno-error' have been removed.
+
+  - The chapter on the history of Automake has been moved out of the
+    reference manual, into a new dedicated Texinfo file.
+
+* New targets:
+
+  - New 'cscope' target to build a cscope database for the source tree.
+
+* Changes to Automake-generated testsuite harnesses:
+
+  - The new automake option 'serial-tests' has been introduced.  It can
+    be used to explicitly instruct automake to use the older serial
+    testsuite harness.  This is still the default at the moment, but it
+    might change in future versions.
+
+  - The 'recheck' target (provided by the parallel testsuite harness) now
+    depends on the 'all' target.  This allows for a better user-experience
+    in test-driven development.  See automake bug#11252.
+
+  - Test scripts that exit with status 99 to signal an "hard error" (e.g.,
+    and unexpected or internal error, or a failure to set up the test case
+    scenario) have their outcome reported as an 'ERROR' now.  Previous
+    versions of automake reported such an outcome as a 'FAIL' (the only
+    difference with normal failures being that hard errors were counted
+    as failures even when the test originating them was listed in
+    XFAIL_TESTS).
+
+  - The testsuite summary displayed by the parallel-test harness has a
+    completely new format, that always list the numbers of passed, failed,
+    xfailed, xpassed, skipped and errored tests, even when these numbers
+    are zero (but using smart coloring when the color-tests option is in
+    effect).
+
+  - The default testsuite driver offered by the 'parallel-tests' option is
+    now implemented (partly at least) with the help of automake-provided
+    auxiliary scripts (e.g., 'test-driver'), instead of relying entirely
+    on code in the generated Makefile.in.
+    This has two noteworthy implications.  The first one is that projects
+    using the 'parallel-tests' option should now either run automake with
+    the '--add-missing' option, or manually copy the 'test-driver' script
+    into their tree.  The second, and more important, implication is that
+    now, when the 'parallel-tests' option is in use, TESTS_ENVIRONMENT can
+    no longer be used to define a test runner, and the command specified
+    in LOG_COMPILER (and <ext>_LOG_COMPILER) must be a *real* executable
+    program or script.  For example, this is still a valid usage (albeit
+    a little contorted):
+
+      TESTS_ENVIRONMENT = \
+        if test -n '$(STRICT_TESTS)'; then \
+          maybe_errexit='-e'; \
+        else \
+          maybe_errexit=''; \
+        fi;
+      LOG_COMPILER = $(SHELL) $$maybe_errexit
+
+    OTOH, this is no longer a valid usage:
+
+      TESTS_ENVIRONMENT = \
+        $(SHELL) `test -n '$(STRICT_TESTS_CHECKING)' && echo ' -e'`
+
+    neither is this:
+
+      TESTS_ENVIRONMENT = \
+        run_with_perl_or_shell () \
+        { \
+          if grep -q '^#!.*perl' $$1; then
+            $(PERL) $$1; \
+          else \
+            $(SHELL) $$1; \
+          fi; \
+        }
+      LOG_COMPILER = run_with_perl_or_shell
+
+  - The package authors can now use customary testsuite drivers within
+    the framework provided by the 'parallel-tests' testsuite harness.
+    Consistently with the existing syntax, this can be done by defining
+    special makefile variables 'LOG_DRIVER' and '<ext>_LOG_DRIVER'.
+
+  - A new developer-reserved variable 'AM_TESTS_FD_REDIRECT' can be used
+    to redirect/define file descriptors used by the test scripts.
+
+  - The parallel-tests harness generates now, in addition the '.log' files
+    holding the output produced by the test scripts, a new set of '.trs'
+    files, holding "metadata" derived by the execution of the test scripts;
+    among such metadata are the outcomes of the test cases run by a script.
+
+  - Initial and still experimental support for the TAP test protocol is
+    now provided.
+
+* Changes to Yacc and Lex support:
+
+  - C source and header files derived from non-distributed Yacc and/or
+    Lex sources are now removed by a simple "make clean" (while they were
+    previously removed only by "make maintainer-clean").
+
+  - Slightly backward-incompatible change, relevant only for use of Yacc
+    with C++: the extensions of the header files produced by the Yacc
+    rules are now modelled after the extension of the corresponding
+    sources.  For example, yacc files named "foo.y++" and "bar.yy" will
+    produce header files named "foo.h++" and "bar.hh" respectively, where
+    they would have previously produced header files named simply "foo.h"
+    and "bar.h".  This change offers better compatibility with 'bison -o'.
+
+* Miscellaneous changes:
+
+  - The AM_PROG_VALAC macro now causes configure to exit with status 77,
+    rather than 1, if the vala compiler found is too old.
+
+  - The build system of Automake itself now avoids the use of make
+    recursion as much as possible.
+
+  - Automake now prefers to quote 'like this' or "like this", rather
+    than `like this', in diagnostic message and generated Makefiles,
+    to accommodate the new GNU Coding Standards recommendations.
+
+  - Automake has a new option '--print-libdir' that prints the path of the
+    directory containing the Automake-provided scripts and data files.
+
+  - The 'dist' and 'dist-all' targets now can run compressors in parallel.
+
+  - The rules to create pdf, dvi and ps output from Texinfo files now
+    works better with modern 'texi2dvi' script, by explicitly passing
+    it the '--clean' option to ensure stray auxiliary files are not
+    left to clutter the build directory.
+
+  - Automake can now generate silenced rules for texinfo outputs.
+
+  - Some auxiliary files that are automatically distributed by Automake
+    (e.g., 'install-sh', or the 'depcomp' script for packages compiling
+    C sources) might now be listed in the DIST_COMMON variable in many
+    Makefile.in files, rather than in the top-level one.
+
+  - Messages of types warning or error from 'automake' and 'aclocal'
+    are now prefixed with the respective type, and presence of -Werror
+    is noted.
+
+  - Automake's early configure-time sanity check now tries to avoid
+    sleeping for a second, which slowed down cached configure runs
+    noticeably.  In that case, it will check back at the end of the
+    configure script to ensure that at least one second has passed, to
+    avoid time stamp issues with makefile rules rerunning autotools
+    programs.
+
+  - The warnings in the category 'extra-portability' are now enabled by
+    '-Wall'.  In previous versions, one has to use '-Wextra-portability'
+    to enable them.
+
+Bugs fixed in 1.12:
+
+  - Various minor bugfixes for recent or long-standing bugs.
+
+* Bugs introduced by 1.11:
+
+  - The AM_COND_IF macro also works if the shell expression for the
+    conditional is no longer valid for the condition.
+
+  - The automake-provided parallel testsuite harness no longer fails
+    with BSD make used in parallel mode when there are test scripts in
+    a subdirectory, like in:
+
+      TESTS = sub/foo.test sub/bar.test
+
+* Long-standing bugs:
+
+  - Automake's own build system finally have a real "installcheck" target.
+
+  - Vala-related cleanup rules are now more complete, and work better in
+    a VPATH setup.
+
+  - Files listed with the AC_REQUIRE_AUX_FILE macro in configure.ac are
+    now automatically distributed also if the directory of the auxiliary
+    files coincides with the top-level directory.
+
+  - Automake now detects the presence of the '-d' flag in the various
+    '*YFLAGS' variables even when their definitions involve indirections
+    through other variables, such as in:
+      foo_opts = -d
+      AM_YFLAGS = $(foo_opts)
+
+  - Automake now complains if a '*YFLAGS' variable has any conditional
+    content, not only a conditional definition.
+
+  - Explicit enabling and/or disabling of Automake warning categories
+    through the '-W...' options now always takes precedence over the
+    implicit warning level implied by Automake strictness (foreign, gnu
+    or gnits), regardless of the order in which such strictness and
+    warning flags appear.  For example, a setting like:
+      AUTOMAKE_OPTIONS = -Wall --foreign
+    will cause the warnings in category 'portability' to be enabled, even
+    if those warnings are by default disabled in 'foreign' strictness.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Bugs fixed in 1.11.5:
+
+* Bugs introduced by 1.11.3:
+
+  - Vala files with '.vapi' extension are now recognized and handled
+    correctly again.  See automake bug#11222.
+
+  - Vala support work again for projects that contain some program
+    built from '.vala' (and possibly '.c') sources and some other
+    program built from '.c' sources *only*.  See automake bug#11229.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+New in 1.11.4:
+
+* Miscellaneous changes:
+
+  - The 'ar-lib' script now ignores the "s" (symbol index) and "S" (no
+    symbol index) modifiers as well as the "s" action, as the symbol index
+    is created unconditionally by Microsoft lib.  Also, the "q" (quick)
+    action is now a synonym for "r" (replace).  Also, the script has been
+    ignoring the "v" (verbose) modifier already since Automake 1.11.3.
+
+  - When the 'compile' script is used to wrap MSVC, it now accepts an
+    optional space between the -I, -L and -l options and their respective
+    arguments, for better POSIX compliance.
+
+  - There is an initial, experimental support for automatic dependency
+    tracking with tcc (the Tiny C Compiler).  Its associated depmode is
+    currently recognized as "icc" (but this and other details are likely
+    to change in future versions).
+
+  - Automatic dependency tracking now works also with the IBM XL C/C++
+    compilers, thanks to the new new depmode 'xlc'.
+
+Bugs fixed in 1.11.4:
+
+* Bugs introduced by 1.11.2:
+
+  - A definition of 'noinst_PYTHON' before 'python_PYTHON' (or similar)
+    no longer cause spurious failures upon "make install".
+
+  - The user can now instruct the 'uninstall-info' rule not to update
+    the '${infodir}/dir' file by exporting the environment variable
+    'AM_UPDATE_INFO_DIR' to the value "no".  This is done for consistency
+    with how the 'install-info' rule operates since automake 1.11.2.
+
+* Long-standing bugs:
+
+  - It is now possible for a foo_SOURCES variable to hold Vala sources
+    together with C header files, as well as with sources and headers for
+    other supported languages (e.g., C++).  Previously, only mixing C and
+    Vala sources was supported.
+
+  - If "aclocal --install" is used, and the first directory specified with
+    '-I' is non-existent, aclocal will now create it before trying to copy
+    files in it.
+
+  - An empty declaration of a "foo_PRIMARY" no longer cause the generated
+    install rules to create an empty $(foodir) directory; for example, if
+    Makefile.am contains something like:
+
+      pkglibexec_SCRIPTS =
+      if FALSE
+      pkglibexec_SCRIPTS += bar.sh
+      endif
+
+    the $(pkglibexec) directory will not be created upon "make install".
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+New in 1.11.3:
+
+* Miscellaneous changes:
+
+  - Automake's own build system is more silent by default, making use of
+    the 'silent-rules' option.
+
+  - The master copy of the 'gnupload' script is now maintained in gnulib,
+    not in automake.
+
+  - The 'missing' script no longer tries to wrap calls to 'tar'.
+
+  - "make dist" no longer wraps 'tar' invocations with the 'missing'
+    script.  Similarly, the obsolescent variable '$(AMTAR)' (which you
+    shouldn't be using BTW ;-) no longer invokes the 'missing' script
+    to wrap tar, but simply invokes the 'tar' program itself.
+    The TAR environment variable overrides.
+
+  - "make dist" can now create lzip-compressed tarballs.
+
+  - In the Automake info documentation, the Top node and the nodes about
+    the invocation of the automake and aclocal programs have been renamed;
+    now, calling "info automake" will open the Top node, while calling
+    "info automake-invocation" and "info aclocal-invocation" will access
+    the nodes about the invocation of respectively automake and aclocal.
+
+  - Automake is now distributed as a gzip-compressed and an xz-compressed
+    tarball.  Previously, bzip2 was used instead of xz.
+
+  - The last relics of Python 1.5 support have been removed from the
+    AM_PATH_PYTHON macro.
+
+  - For programs and libraries, automake now detects EXTRA_foo_DEPENDENCIES
+    and adds them to the normal list of dependencies, but without
+    overwriting the foo_DEPENDENCIES variable, which is normally computed
+    by automake.
+
+Bugs fixed in 1.11.3:
+
+* Bugs introduced by 1.11.2:
+
+  - Automake now correctly recognizes the prefix/primary combination
+   'pkglibexec_SCRIPTS' as valid.
+
+  - The parallel-tests harness no longer trips on sed implementations
+    with stricter limits on the length of input lines (problem seen at
+    least on Solaris 8).
+
+* Long-standing bugs:
+
+  - The "deleted header file problem" for *.am files is avoided by stub
+    rules.  This allows 'make' to trigger a rerun of 'automake' also if
+    some previously needed '.am' file has been removed.
+
+  - The 'silent-rules' option now generates working makefiles even
+    for the uncommon 'make' implementations that do not support the
+    nested-variables extension to POSIX 2008.  For such 'make'
+    implementations, whether a build is silent is determined at
+    configure time, and cannot be overridden at make time with
+    "make V=0" or "make V=1".
+
+  - Vala support now works better in VPATH setups.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+New in 1.11.2:
+
+* Changes to aclocal:
+
+  - The `--acdir' option is deprecated.  Now you should use the new options
+    `--automake-acdir' and `--system-acdir' instead.
+
+  - The `ACLOCAL_PATH' environment variable is now interpreted as a
+    colon-separated list of additional directories to search after the
+    automake internal acdir (by default ${prefix}/share/aclocal-APIVERSION)
+    and before the system acdir (by default ${prefix}/share/aclocal).
+
+* Miscellaneous changes:
+
+  - The Automake support for automatic de-ANSI-fication has been
+    deprecated.  It will probably be removed in the next major Automake
+    release (1.12).
+
+  - The `lzma' compression scheme and associated automake option `dist-lzma'
+    is obsoleted by `xz' and `dist-xz' due to upstream changes.
+
+  - You may adjust the compression options used in dist-xz and dist-bzip2.
+    The default is now merely -e for xz, but still -9 for bzip;  you may
+    specify a different level via the XZ_OPT and BZIP2 envvars respectively.
+    E.g., "make dist-xz XZ_OPT=-7" or "make dist-bzip2 BZIP2=-5"
+
+  - The `compile' script now converts some options for MSVC for a better
+    user experience.  Similarly, the new `ar-lib' script wraps Microsoft lib.
+
+  - The py-compile script now accepts empty arguments passed to the options
+    `--destdir' and `--basedir', and complains about unrecognized options.
+    Moreover, a non-option argument or a special `--' argument terminates
+    the list of options.
+
+  - A developer that needs to pass specific flags to configure at "make
+    distcheck" time can now, and indeed is advised to, do so by defining
+    the developer-reserved makefile variable AM_DISTCHECK_CONFIGURE_FLAGS,
+    instead of the old DISTCHECK_CONFIGURE_FLAGS.
+    The DISTCHECK_CONFIGURE_FLAGS variable should now be reserved for the
+    user; still, the old Makefile.am files that used to define it will
+    still continue to work as before.
+
+  - New macro AM_PROG_AR that looks for an archiver and wraps it in the new
+    'ar-lib' auxiliary script if the selected archiver is Microsoft lib.
+    This new macro is required for LIBRARIES and LTLIBRARIES when automake
+    is run with -Wextra-portability and -Werror.
+
+  - When using DejaGnu-based testsuites, the user can extend the `site.exp'
+    file generated by automake-provided rules by defining the special make
+    variable `$(EXTRA_DEJAGNU_SITE_CONFIG)'.
+
+  - The `install-info' rule can now be instructed not to create/update
+    the `${infodir}/dir' file, by exporting the new environment variable
+    `AM_UPDATE_INFO_DIR' to the value "no".
+
+Bugs fixed in 1.11.2:
+
+* Bugs introduced by 1.11:
+
+  - The parallel-tests driver no longer produces erroneous results with
+    Tru64/OSF 5.1 sh upon unreadable log files.
+
+  - The `parallel-tests' test driver does not report spurious successes
+    when used with concurrent FreeBSD make (e.g., "make check -j3").
+
+  - When the parallel-tests driver is in use, automake now explicitly
+    rejects invalid entries and conditional contents in TEST_EXTENSIONS,
+    instead of issuing confusing and apparently unrelated error messages
+    (e.g., "non-POSIX variable name", "bad characters in variable name",
+    or "redefinition of TEST_EXTENSIONS), or even, in some situations,
+    silently producing broken `Makefile.in' files.
+
+  - The `silent-rules' option now truly silences all compile rules, even
+    when dependency tracking is disabled.  Also, when `silent-rules' is
+    not used, `make' output no longer contains spurious backslash-only
+    lines, thus once again matching what Automake did before 1.11.
+
+  - The AM_COND_IF macro also works if the shell expression for the
+    conditional is no longer valid for the condition.
+
+* Long-standing bugs:
+
+  - The order of Yacc and Lex flags is fixed to be consistent with other
+    languages: $(AM_YFLAGS) comes before $(YFLAGS), and $(AM_LFLAGS) before
+    $(LFLAGS), so that the user variables override the developer variables.
+
+  - "make distcheck" now correctly complains also when "make uninstall"
+    leaves one and only one file installed in $(prefix).
+
+  - A "make uninstall" issued before a "make install", or after a mere
+    "make install-data" or a mere "make install-exec" does not spuriously
+    fail anymore.
+
+  - Automake now warns about more primary/directory invalid combinations,
+    such as "doc_LIBRARIES" or "pkglib_PROGRAMS".
+
+  - Rules generated by Automake now try harder to not change any files when
+    `make -n' is invoked.  Fixes include compilation of Emacs Lisp, Vala, or
+    Yacc source files and the rule to update config.h.
+
+  - Several scripts and the parallel-tests testsuite driver now exit with
+    the right exit status upon receiving a signal.
+
+  - A per-Makefile.am setting of -Werror does not erroneously carry over
+    to the handling of other Makefile.am files.
+
+  - The code for automatic dependency tracking works around a Solaris
+    make bug triggered by sources containing repeated slashes when the
+    `subdir-objects' option was used.
+
+  - The makedepend and hp depmodes now work better with VPATH builds.
+
+  - Java sources specified with check_JAVA are no longer compiled for
+    "make all", but only for "make check".
+
+  - An usage like "java_JAVA = foo.java" will now cause Automake to warn
+    and error out if `javadir' is undefined, instead of silently producing
+    a broken Makefile.in.
+
+  - aclocal and automake now honour the configure-time definitions of
+    AUTOCONF and AUTOM4TE when they spawn autoconf or autom4te processes.
+
+  - The `install-info' recipe no longer tries to guess whether the
+    `install-info' program is from Debian or from GNU, and adaptively
+    change its behaviour; this has proven to be frail and easy to
+    regress.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Bugs fixed in 1.11.1:
+
+  - Lots of minor bugfixes.
+
+* Bugs introduced by 1.11:
+
+  - The `parallel-tests' test driver works around a GNU make 3.80 bug with
+    trailing white space in the test list (`TESTS = foo $(EMPTY)').
+
+* Long standing bugs:
+
+  - On Darwin 9, `pythondir' and `pyexecdir' pointed below `/Library/Python'
+    even if the `--prefix' argument pointed outside of a system directory.
+    AM_PATH_PYTHON has been fixed to ignore the value returned from python's
+    `get_python_lib' function if it points outside the configured prefix,
+    unless the `--prefix' argument was either `/usr' or below `/System'.
+
+  - The testsuite does not try to change the mode of `ltmain.sh' files from
+    a Libtool installation (symlinked to test directories) any more.
+
+  - AM_PROG_GCJ uses AC_CHECK_TOOLS to look for `gcj' now, so that prefixed
+    tools are preferred in a cross-compile setup.
+
+  - The distribution is tarred up with mode 755 now by the `dist*' targets.
+    This fixes a race condition where untrusted users could modify files
+    in the $(PACKAGE)-$(VERSION) distdir before packing if the toplevel
+    build directory was world-searchable.  This is CVE-2009-4029.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+New in 1.11:
+
+* Version requirements:
+
+  - Autoconf 2.62 or greater is required.
+
+* Changes to aclocal:
+
+  - The autoconf version check implemented by aclocal in aclocal.m4
+    (and new in Automake 1.10) is degraded to a warning.  This helps
+    in the common case where the Autoconf versions used are compatible.
+
+* Changes to automake:
+
+  - The automake program can run multiple threads for creating most
+    Makefile.in files concurrently, if at least Perl 5.7.2 is available
+    with interpreter-based threads enabled.  Set the environment variable
+    AUTOMAKE_JOBS to the maximum number of threads to use, in order to
+    enable this experimental feature.
+
+* Changes to Libtool support:
+
+  - Libtool generic flags are now passed to the install and uninstall
+    modes as well.
+
+  - distcheck works with Libtool 2.x even when LT_OUTPUT is used, as
+    config.lt is removed correctly now.
+
+* Languages changes:
+
+  - subdir-object mode works now with Fortran (F77, FC, preprocessed
+    Fortran, and Ratfor).
+
+  - For files with extension .f90, .f95, .f03, or .f08, the flag
+    $(FCFLAGS_f[09]x) computed by AC_FC_SRCEXT is now used in compile rules.
+
+  - Files with extension .sx are also treated as preprocessed assembler.
+
+  - The default source file extension (.c) can be overridden with
+    AM_DEFAULT_SOURCE_EXT now.
+
+  - Python 3.0 is supported now, Python releases prior to 2.0 are no
+    longer supported.
+
+  - AM_PATH_PYTHON honors python's idea about the site directory.
+
+  - There is initial support for the Vala programming language, when using
+    Vala 0.7.0 or later.
+
+* Miscellaneous changes:
+
+  - Automake development is done in a git repository on Savannah now, see
+
+      https://git.sv.gnu.org/gitweb/?p=automake.git
+
+    A read-only CVS mirror is provided at
+
+      cvs -d :pserver:anonymous@pserver.git.sv.gnu.org:/automake.git \
+          checkout -d automake HEAD
+
+  - "make dist" can now create xz-compressed tarballs,
+    as well as (deprecated?) lzma-compressed tarballs.
+
+  - `automake --add-missing' will by default install the GPLv3 file as
+    COPYING if it is missing.  It will also warn that the license file
+    should be added to source control.  Note that Automake will never
+    overwrite an existing COPYING file, even when the `--force-missing'
+    option is used.
+
+  - The manual is now distributed under the terms of the GNU FDL 1.3.
+
+  - Automake ships and installs man pages for automake and aclocal now.
+
+  - New shorthand `$(pkglibexecdir)' for `$(libexecdir)/@PACKAGE@'.
+
+  - install-sh supports -C, which does not update the installed file
+    (and its time stamps) if the contents did not change.
+
+  - The `gnupload' script has been revamped.
+
+  - The `depcomp' and `compile' scripts now work with MSVC under MSYS.
+
+  - The targets `install' and `uninstall' are more efficient now, in that
+    for example multiple files from one Automake variable such as
+    `bin_SCRIPTS' are copied in one `install' (or `libtool --mode=install')
+    invocation if they do not have to be renamed.
+
+    Both install and uninstall may sometimes enter (`cd' into) the target
+    installation directory now, when no build-local scripts are used.
+
+    Both install and uninstall do not fail anymore but do nothing if an
+    installation directory variable like `bindir' is set to the empty string.
+
+    For built-in rules, `make install' now fails reliably if installation
+    of a file failed.  Conversely, `make uninstall' even succeeds when
+    issued multiple times.
+
+    These changes may need some adjustments from users:  For example,
+    some `install' programs refuse to install multiple copies of the
+    same file in one invocation, so you may need to remove duplicate
+    entries from file lists.
+
+    Also, within one set of files, say, nobase_data_DATA, the order of
+    installation may be changed, or even unstable among different hosts,
+    due to the use of associative arrays in awk.  The increased use of
+    awk matches a similar move in Autoconf to provide for better scaling.
+
+    Further, most undocumented per-rule install command variables such as
+    binSCRIPT_INSTALL have been removed because they are not needed any
+    more.  Packages which use them should be using the appropriate one of
+    INSTALL_{DATA,PROGRAM,SCRIPT} or their install_sh_{DATA,PROGRAM,SCRIPT}
+    counterpart, depending on the type of files and the need for automatic
+    target directory creation.
+
+  - The "deleted header file problem" for *.m4 files is avoided by
+    stub rules.  This allows `make' to trigger a rerun of `aclocal'
+    also if some previously needed macro file has been removed.
+
+  - Rebuild rules now also work for a removed `subdir/Makefile.in' in
+    an otherwise up to date tree.
+
+  - The `color-tests' option causes colored test result output on terminals.
+
+  - The `parallel-tests' option enables a new test driver that allows for
+    parallel test execution, inter-test dependencies, lazy test execution
+    for unit-testing, re-testing only failed tests, and formatted result output
+    as RST (reStructuredText) and HTML.  Enabling this option may require some
+    changes to your test suite setup; see the manual for details.
+
+  - The `silent-rules' option enables Linux kernel-style silent build output.
+    This option requires the widely supported but non-POSIX `make' feature
+    of recursive variable expansion, so do not use it if your package needs
+    to build with `make' implementations that do not support it.
+
+    To enable less verbose build output, the developer has to use the Automake
+    option `silent-rules' in `AM_INIT_AUTOMAKE', or call the `AM_SILENT_RULES'
+    macro.  The user may then set the default verbosity by passing the
+    `--enable-silent-rules' option to `configure'.  At `make' run time, this
+    default may be overridden using `make V=0' for less verbose, and `make V=1'
+    for backward-compatible verbose output.
+
+  - New prefix `notrans_' for manpages which should not be transformed
+    by --program-transform.
+
+  - New macro AM_COND_IF for conditional evaluation and conditional
+    config files.
+
+  - For AC_CONFIG_LINKS, if source and destination are equal, do not
+    remove the file in a non-VPATH build.  Such setups work with Autoconf
+    2.62 or newer.
+
+  - AM_MAINTAINER_MODE now allows for an optional argument specifying
+    the default setting.
+
+  - AM_SUBST_NOTMAKE may prevent substitution of AC_SUBSTed variables,
+    useful especially for multi-line values.
+
+  - Automake's early configure-time sanity check now diagnoses an
+    unsafe absolute source directory name and makes configure fail.
+
+  - The Automake macros and rules cope better with whitespace in the
+    current directory name, as long as the relative path to `configure'
+    does not contain whitespace.  To this end, the values of `$(MISSING)'
+    and `$(install_sh)' may contain suitable quoting, and their expansion
+    might need `eval'uation if used outside of a makefile.  These
+    undocumented variables may be used in several documented macros such
+    as $(AUTOCONF) or $(MAKEINFO).
+
+Bugs fixed in 1.11:
+
+* Long-standing bugs:
+
+  - Fix aix dependency tracking for libtool objects.
+
+  - Work around AIX sh quoting issue in AC_PROG_CC_C_O, leading to
+    unnecessary use of the `compile' script.
+
+  - For nobase_*_LTLIBRARIES with nonempty directory components, the
+    correct `-rpath' argument is used now.
+
+  - `config.status --file=Makefile depfiles' now also works with the
+    extra quoting used internally by Autoconf 2.62 and newer
+    (it used to work only without the `--file=' bit).
+
+  - The `missing' script works better with versioned tool names.
+
+  - Semantics for `missing help2man' have been revamped:
+
+    Previously, if `help2man' was not present, `missing help2man' would have
+    the following semantics: if some man page was out of date but present, then
+    a warning would be printed, but the exit status was 0.  If the man page was
+    not present at all, then `missing' would create a replacement man page
+    containing an error message, and exit with a status of 2.  This does not play
+    well with `make': the next run will see this particular man page as being up
+    to date, and will only error out on the next generated man page, if any;
+    repeat until all pages are done.  This was not desirable.
+
+    These are the new semantics: if some man page is not present, and help2man
+    is not either, then `missing' will warn and generate the replacement page
+    containing the error message, but exit successfully.  However, `make dist'
+    will ensure that no such bogus man pages are packaged into a tarball.
+
+  - Targets provided by automake behave better with `make -n', in that they
+    take care not to create files.
+
+  - `config.status Makefile... depfiles' works fine again in the presence of
+    disabled dependency tracking.
+
+  - The default no-op recursive rules for these targets also work with BSD make
+    now: html, install-html, install-dvi, install-pdf, install-pdf, install-info.
+
+  - `make distcheck' works also when both a directory and some file below it
+    have been added to a distribution variable, such as EXTRA_DIST or *_SOURCES.
+
+  - Texinfo dvi, ps, pdf, and html output files are not removed upon
+    `make mostlyclean' any more; only the LaTeX by-products are.
+
+  - Renamed objects also work with the `subdir-objects' option and
+    source file languages which Automake does not know itself.
+
+  - `automake' now correctly complains about variable assignments which are
+    preceded by a comment, extend over multiple lines with backslash-escaped
+    newlines, and end in a comment sign.  Previous versions would silently
+    and wrongly ignore such assignments completely.
+
+* Bugs introduced by 1.10:
+
+  - Fix output of dummy dependency files in presence of post-processed
+    Makefile.in's again, but also cope with long lines.
+
+  - $(EXEEXT) is automatically appended to filenames of XFAIL_TESTS
+    that have been declared as programs in the same Makefile.
+    This is for consistency with the analogous change to TESTS in 1.10.
+
+  - Fix order of standard includes to again be `-I. -I$(srcdir)',
+    followed by directories containing config headers.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+New in 1.10:
+
+* Version requirements:
+
+  - Autoconf 2.60 or greater is required.
+
+  - Perl 5.6 or greater is required.
+
+* Changes to aclocal:
+
+  - aclocal now also supports -Wmumble and -Wno-mumble options.
+
+  - `dirlist' entries (for the aclocal search path) may use shell
+    wildcards such as `*', `?', or `[...]'.
+
+  - aclocal supports an --install option that will cause system-wide
+    third-party macros to be installed in the local directory
+    specified with the first -I flag.  This option also uses #serial
+    lines in M4 files to upgrade local macros.
+
+    The new aclocal options --dry-run and --diff help to review changes
+    before they are installed.
+
+  - aclocal now outputs an autoconf version check in aclocal.m4 in
+    projects using automake.
+
+    For a few years, automake and aclocal have been calling autoconf
+    (or its underlying engine autom4te) to accurately retrieve the
+    data they need from configure.ac and its siblings.  Doing so can
+    only work if all autotools use the same version of autoconf.  For
+    instance a Makefile.in generated by automake for one version of
+    autoconf may stop working if configure is regenerated with another
+    version of autoconf, and vice versa.
+
+    This new version check ensures that the whole build system has
+    been generated using the same autoconf version.
+
+* Support for new Autoconf macros:
+
+  - The new AC_REQUIRE_AUX_FILE Autoconf macro is supported.
+
+  - If `subdir-objects' is set, and AC_CONFIG_LIBOBJ_DIR is specified,
+    $(LIBOBJS), $(LTLIBOBJS), $(ALLOCA), and $(LTALLOCA) can be used
+    in different directories.  However, only one instance of such a
+    library objects directory is supported.
+
+* Change to Libtool support:
+
+  - Libtool generic flags (those that go before the --mode=MODE option)
+    can be specified using AM_LIBTOOLFLAGS and target_LIBTOOLFLAGS.
+
+* Yacc and Lex changes:
+
+  - The rebuild rules for distributed Yacc and Lex output will avoid
+    overwriting existing files if AM_MAINTAINER_MODE and maintainer-mode
+    is not enabled.
+
+  - ylwrap is now always used for lex and yacc source files,
+    regardless of whether there is more than one source per directory.
+
+* Languages changes:
+
+  - Preprocessed assembler (*.S) compilation now honors CPPFLAGS,
+    AM_CPPFLAGS and per-target _CPPFLAGS, and supports dependency
+    tracking, unlike non-preprocessed assembler (*.s).
+
+  - subdir-object mode works now with Assembler.  Automake assumes
+    that the compiler understands `-c -o'.
+
+  - Preprocessed assembler (*.S) compilation now also honors
+    $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES).
+
+  - Improved support for Objective C:
+    - Autoconf's new AC_PROG_OBJC will enable automatic dependency tracking.
+    - A new section of the manual documents the support.
+
+  - New support for Unified Parallel C:
+    - AM_PROG_UPC looks for a UPC compiler.
+    - A new section of the manual documents the support.
+
+  - Per-target flags are now correctly handled in link rules.
+
+    For instance maude_CFLAGS correctly overrides AM_CFLAGS; likewise
+    for maude_LDFLAGS and AM_LDFLAGS.  Previous versions bogusly
+    preferred AM_CFLAGS over maude_CFLAGS while linking, and they
+    used both AM_LDFLAGS and maude_LDFLAGS on the same link command.
+
+    The fix for compiler flags (i.e., using maude_CFLAGS instead of
+    AM_CFLAGS) should not hurt any package since that is how _CFLAGS
+    is expected to work (and actually works during compilation).
+
+    However using maude_LDFLAGS "instead of" AM_LDFLAGS rather than
+    "in addition to" breaks backward compatibility with older versions.
+    If your package used both variables, as in
+
+      AM_LDFLAGS = common flags
+      bin_PROGRAMS = a b c
+      a_LDFLAGS = more flags
+      ...
+
+    and assumed *_LDFLAGS would sum up, you should rewrite it as
+
+      AM_LDFLAGS = common flags
+      bin_PROGRAMS = a b c
+      a_LDFLAGS = $(AM_LDFLAGS) more flags
+      ...
+
+    This new behavior of *_LDFLAGS is more coherent with other
+    per-target variables, and the way *_LDFLAGS variables were
+    considered internally.
+
+* New installation targets:
+
+  - New targets mandated by GNU Coding Standards:
+      install-dvi
+      install-html
+      install-ps
+      install-pdf
+    By default they will only install Texinfo manuals.
+    You can customize them with *-local variants:
+      install-dvi-local
+      install-html-local
+      install-ps-local
+      install-pdf-local
+
+  - The undocumented recursive target `uninstall-info' no longer exists.
+    (`uninstall' is in charge of removing all possible documentation
+    flavors, including optional formats such as dvi, ps, or info even
+    when `no-installinfo' is used.)
+
+* Miscellaneous changes:
+
+  - Automake no longer complains if input files for AC_CONFIG_FILES
+    are specified using shell variables.
+
+  - clean, distribution, or rebuild rules are normally disabled for
+    inputs and outputs of AC_CONFIG_FILES, AC_CONFIG_HEADERS, and
+    AC_CONFIG_LINK specified using shell variables.  However, if these
+    variables are used as ${VAR}, and AC_SUBSTed, then Automake will
+    be able to output rules anyway.
+    (See the Automake documentation for AC_CONFIG_FILES.)
+
+  - $(EXEEXT) is automatically appended to filenames of TESTS
+    that have been declared as programs in the same Makefile.
+    This is mostly useful when some check_PROGRAMS are listed in TESTS.
+
+  - `-Wportability' has finally been turned on by default for `gnu' and
+    `gnits' strictness.  This means, automake will complain about %-rules
+    or $(GNU Make functions) unless you switch to `foreign' strictness or
+    use `-Wno-portability'.
+
+  - Automake now uses AC_PROG_MKDIR_P (new in Autoconf 2.60), and uses
+    $(MKDIR_P) instead of $(mkdir_p) to create directories.  The
+    $(mkdir_p) variable is still defined (to the same value as
+    $(MKDIR_P)) but should be considered obsolete.  If you are using
+    $(mkdir_p) in some of your rules, please plan to update them to
+    $(MKDIR_P) at some point.
+
+  - AM_C_PROTOTYPES and ansi2knr are now documented as being obsolete.
+    They still work in this release, but may be withdrawn in a future one.
+
+  - Inline compilation rules for gcc3-style dependency tracking are
+    more readable.
+
+  - Automake installs a "Hello World!" example package in $(docdir).
+    This example is used throughout the new "Autotools Introduction"
+    chapter of the manual.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+New in 1.9:
+
+* Makefile.in bloat reduction:
+
+  - Inference rules are used to compile sources in subdirectories when
+    the `subdir-objects' option is used and no per-target flags are
+    used.  This should reduce the size of some projects a lot, because
+    Automake used to output an explicit rule for each such object in
+    the past.
+
+  - Automake no longer outputs three rules (.o, .obj, .lo) for each
+    object that must be built with explicit rules.  It just outputs
+    the rules required to build the kind of object considered: either
+    the two .o and .obj rules for usual objects, or the .lo rule for
+    libtool objects.
+
+* Change to Libtool support:
+
+  - Libtool tags are used with libtool versions that support them.
+    (I.e., with Libtool 1.5 or greater.)
+
+  - Automake is now able to handle setups where a libtool library is
+    conditionally installed in different directories, as in
+
+      if COND
+        lib_LTLIBRARIES = liba.la
+      else
+        pkglib_LTLIBRARIES = liba.la
+      endif
+      liba_la_SOURCES = ...
+
+* Changes to aclocal:
+
+  - aclocal now ensures that AC_DEFUNs and AU_DEFUNs it discovers are
+    really evaluated, before it decides to include them in aclocal.m4.
+    This solves nasty problems with conditional redefinitions of
+    Autoconf macros in /usr/share/aclocal/*.m4 files causing extraneous
+    *.m4 files to be included in any project using these macros.
+    (Calls to AC_PROG_EGREP causing libtool.m4 to be included is the
+    most famous instance of this bug.)
+
+  - Do not complain about missing conditionally AC_REQUIREd macros
+    that are not actually used.  In 1.8.x aclocal would correctly
+    determine which of these macros were really needed (and include
+    only these in the package); unfortunately it would also require
+    all of them to be present in order to run.  This created
+    situations were aclocal would not work on a tarball distributing
+    all the macros it uses.  For instance running aclocal on a project
+    containing only the subset of the Gettext macros in use by the
+    project did not work, because gettext conditionally requires other
+    macros.
+
+* Portability improvements:
+
+  - Tar format can be chosen with the new options tar-v7, tar-ustar, and
+    tar-pax.  The new option filename-length-max=99 helps diagnosing
+    filenames that are too long for tar-v7.  (PR/414)
+
+  - Variables augmented with `+=' are now automatically flattened (i.e.,
+    trailing backslashes removed) and then wrapped around 80 columns
+    (adding trailing backslashes).  In previous versions, a long series
+    of
+      VAR += value1
+      VAR += value2
+      VAR += value3
+      ...
+    would result in a single-line definition of VAR that could possibly
+    exceed the maximum line length of some make implementations.
+
+    Non-augmented variables are still output as they are defined in
+    the Makefile.am.
+
+* Miscellaneous:
+
+  - Support Fortran 90/95 with the new "fc" and "ppfc" languages.
+    Works the same as the old Fortran 77 implementation; just replace
+    F77 with FC everywhere (exception: FFLAGS becomes FCFLAGS).
+    Requires a version of autoconf which provides AC_PROG_FC (>=2.59).
+
+  - Support for conditional _LISP.
+
+  - Support for conditional -hook and -local rules (PR/428).
+
+  - Diagnose AC_CONFIG_AUX_DIR calls following AM_INIT_AUTOMAKE. (PR/49)
+
+  - Automake will not write any Makefile.ins after the first error it
+    encounters.  The previous Makefile.ins (if any) will be left in
+    place.  (Warnings will not prevent output, but remember they can
+    be turned into errors with -Werror.)
+
+  - The restriction that SUBDIRS must contain direct children is gone.
+    Do not abuse.
+
+  - The manual tells more about SUBDIRS vs. DIST_SUBDIRS.
+    It also gives an example of nested packages using AC_CONFIG_SUBDIRS.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Bugs fixed in 1.8.5:
+
+* Long-standing bugs:
+
+  - Define DIST_SUBDIRS even when the `no-dist' or `cygnus' options are used
+    so that `make distclean' and `make maintainer-clean' can work.
+
+  - Define AR and ARFLAGS even when only EXTRA_LIBRARIES are defined.
+
+  - Fix many rules to please FreeBSD make, which runs commands with `sh -e'.
+
+  - Polish diagnostic when no input file is found.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Bugs fixed in 1.8.4:
+
+* Long-standing bugs:
+
+  - Fix AM_PATH_PYTHON to correctly display $PYTHON when it has been
+    overridden by the user.
+
+  - Honor PATH_SEPARATOR in various places of the Automake package, for
+    the sake of OS/2.
+
+  - Adjust dependency tracking mode detection to ICC 8.0's new output.
+    (PR/416)
+
+  - Fix install-sh so it can install the `mv' binary... using `mv'.
+
+  - Fix tru64 dependency tracking for libtool objects.
+
+  - Work around Exuberant Ctags when creating a TAGS files in a directory
+    without files to scan but with subdirectories to include.
+
+* Bugs introduced by 1.8:
+
+  - Fix an "internal error" when @LIBOBJS@ is used in a variable that is
+    not defined in the same conditions as the _LDADD that uses it.
+
+  - Do not warn when JAVAROOT is overridden, this is legitimate.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Bugs fixed in 1.8.3:
+
+* Long-standing bugs:
+
+  - Quote filenames in installation rules, in case $DESTDIR, $prefix,
+    or any of the other *dir variables contain a space.
+
+    Please note that Automake does not and cannot support spaces in
+    filenames that are involved during the build.  This change affects
+    only installation paths, so that `make install' does not bomb out
+    in packages configured with
+      ./configure --prefix '/c/Program Files'
+
+  - Fix the depfiles output so it works with GNU sed (<4.1) even when
+    POSIXLY_CORRECT is set.
+
+  - Do not AC_SUBST(LIBOBJS) in AM_WITH_REGEX.  This macro was unusable
+    since Autoconf 2.54, which defines LIBOBJS itself.
+
+  - Fix a potential (but unlikely) race condition in parallel elisp
+    builds.  (Introduced in 1.7.3.)
+
+  - Do not assume that users override _DEPENDENCIES in all conditions
+    where Automake will try to define them.
+
+  - Do not use `mkdir -p' in mkinstalldirs, unless this is GNU mkdir.
+    Solaris 8's `mkdir -p' is not thread-safe and can break parallel
+    builds.
+
+    This fix also affects the $(mkdir_p) variable defined since
+    Automake 1.8.  It will be set to `mkdir -p' only if mkdir is GNU
+    mkdir, and to `mkinstalldirs' or `install-sh -d' otherwise.
+
+  - Secure temporary directory creation in `make distcheck'. (PR/413)
+
+  - Do not generate two build rules for `parser.h' when the
+    parser appears in two different conditionals.
+
+  - Work around a Solaris 8 /bin/sh bug in the test for dependency
+    checking.  Usually ./configure will not pick this shell; so this
+    fix only helps cases where the shell is forced to /bin/sh.
+
+* Bugs introduced by 1.8:
+
+  - In some situations (hand-written `m4_include's), aclocal would
+    call the `File::Spec->rel2abs' method, which was only introduced
+    in Perl 5.6.  This new version reestablish support Perl 5.005.
+
+    It is likely that the next major Automake releases will require at
+    least Perl 5.6.  Consider upgrading your development environment
+    if you are still using the five-year-old Perl 5.005.
+
+  - Automake would sometimes fail to define rules for targets listed
+    in variables defined in multiple conditions.  For instance on
+      if C1
+	bin_PROGRAMS = a
+      else
+	bin_PROGRAMS = b
+      endif
+    it would define only the `a.$(OBJEXT): a.c' rule and omit the
+    `b.$(OBJEXT): b.c' rule.
+
+* New sections in manual:
+
+  - Third-Party Makefiles: how to interface third party Makefiles.
+  - Upgrading: upgrading packages to newer Automake versions.
+  - Multiple Outputs: handling tools that produce many outputs.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Bug fixed in 1.8.2:
+
+* A (well known) portability bug slipped in the changes made to
+  install-sh in Automake 1.8.1.  The broken install-sh would refuse to
+  install anything on Tru64.
+
+* Fix install rules for conditionally built python files.  (This never
+  really worked.)
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Bug fixed in 1.8.1:
+
+* Bugs introduced by 1.8:
+
+  - Fix Config.pm import error with old Perl versions (at least
+    5.005_03).  One symptom is that aclocal could not find its macro
+    directory.
+
+  - Automake 1.8 used `mkdir -m 0755 -p --' to ensure that directories
+    created by `make install' are always world readable, even if the
+    installer happens to have an overly restrictive umask (e.g. 077).
+    This was a mistake and has been reverted.  There are at least two
+    reasons why we must not use `-m 0755':
+      - it causes special bits like SGID to be ignored,
+      - it may be too restrictive (some setups expect 775 directories).
+
+  - Fix aclocal to honor definitions located in files which have been
+    m4_included manually.  aclocal 1.8 had been updated to check
+    m4_included files for new requirements, but forgot that these
+    m4_included files can also provide new definitions.
+
+    Note that if you have such a setup, we recommend you get rid of
+    it.  In the past, there was a reason to m4_include files manually:
+    aclocal used to duplicate entire M4 files into aclocal.m4, even
+    files that were distributed.  Some packages were therefore
+    m4_including the distributed file directly, and playing some
+    tricks to ensure aclocal would not copy that file to aclocal.m4,
+    in order to limit the amount of duplication.  Since aclocal 1.8.x
+    will precisely output m4_includes for local M4 files, we recommend
+    that you clean up your setup, removing all manual m4_includes and
+    letting aclocal output them.
+
+  - Output detailed menus in the Info version if the Automake manual,
+    so that Emacs can locate the indexes.
+
+  - configure.ac and configure were listed twice in DIST_COMMON (an
+    internal variable where Automake lists configury files to
+    distribute).  This was harmless, but unaesthetic.
+
+  - Use `chmod a-w' instead of `chmod -w' as the latter honors umask.
+    This was an issue only in the Automake package itself, not in
+    its output.
+
+  - Automake assumed that all AC_CONFIG_LINKS arguments had the form
+    DEST:SRC.  This was wrong, as some packages do
+    AC_CONFIG_LINKS($computedlinks).  This version no longer abort in
+    that situation.
+
+  - Contrary to mkinstalldirs, $(mkdir_p) was expecting exactly one
+    argument.  This caused two kinds of failures:
+      - Rules installing data in a conditionally defined directory
+        failed when that directory was undefined.  In this case no
+        argument was supplied.
+      - `make installdirs' failed, because several directories were
+        passed to $(mkdir_p).  This was an issue only on platform
+        were $(mkdir_p) is implemented with `install-sh -d'.
+    $(mkdir_p) as been changed to accept 0 or more arguments, as
+    mkinstalldirs did.
+
+* Long-standing bugs:
+
+  - Fix an unexpected diagnostic occurring when users attempt
+    to override some internal variables that Automake appends to.
+
+  - aclocal now scans configure.ac for macro definitions (PR/319).
+
+  - Fix a portability issue with OSF1/Tru64 Make.  If a directory
+    distributes files which are outside itself (this usually occurs
+    when using AC_CONFIG_AUX_DIR([../dir]) to use auxiliary files
+    from a parent package), then `make distcheck' fails due to an
+    optimization performed by OSF1/Tru64 Make in its VPATH handling.
+    (tests/subpkg2.test failure)
+
+  - Fix another portability issue with Sun and OSF1/Tru64 Make.
+    In a VPATH-build configuration, `make install' would install
+    nobase_ files to wrong locations.
+
+  - Fix a Perl `uninitialized value' diagnostic occurring when
+    automake complains that a Texinfo file does not have a
+    @setfilename statement.
+
+  - Erase config.status.lineno during `make distclean'.  This file
+    can be created by config.status.  Automake already knew about
+    configure.lineno, but forgot config.status.lineno.
+
+  - Distribute all files, even those which are built and installed
+    conditionally.  This change affects files listed in conditionally
+    defined *_HEADERS and *_PYTHON variable (unless they are nodist_*)
+    as well as those listed in conditionally defined dist_*_DATA,
+    dist_*_JAVA, dist_*_LISP, and dist_*_SCRIPTS variables.
+
+  - Fix AM_PATH_LISPDIR to avoid \? in sed regular expressions; it
+    doesn't conform to POSIX.
+
+  - Normalize help strings for configure variables and options added
+    by Automake macros.
+
+* Anticipation:
+
+  - Check for python2.4 in AM_PATH_PYTHON.
+
+* Spurious failures in test suite:
+
+  - tests/libtool5.test, tests/ltcond.test, tests/ltcond2.test,
+    tests/ltconv.test: fix failures with CVS Libtool.
+  - tests/aclocal6.test: fix failure if autom4te.cache is disabled.
+  - tests/txinfo24.test, tests/txinfo25.test, tests/txinfo28.test:
+    fix failures with old Texinfo versions.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+New in 1.8:
+
+* Meta-News
+
+  - The NEWS file is more verbose.
+
+* Requirements
+
+  - Autoconf 2.58 or greater is required.
+
+* New features
+
+  - Default source file names in the absence of a _SOURCES declaration
+    are made by removing any target extension before appending `.c', so
+    to make the libtool module `foo.la' from `foo.c', you only need to
+    do this:
+
+	lib_LTLIBRARIES = foo.la
+	foo_la_LDFLAGS  = -module
+
+    For backward compatibility, foo_la.c will be used instead of
+    foo.c if this file exists or is the explicit target of a rule.
+    However -Wobsolete will warn about this deprecated naming.
+
+  - AR's `cru' flags are now set in a global ARFLAGS variable instead
+    of being hard-coded in each $(AR) invocation, so they can be
+    substituted from configure.ac.  This has been requested by people
+    dealing with non-POSIX ar implementations.
+
+  - New warning option: -Woverride.  This will warn about any user
+    target or variable definitions which override Automake
+    definitions.
+
+  - Texinfo rules back up and restore info files when makeinfo fails.
+
+  - Texinfo rules now support the `html' target.
+    Running this requires Texinfo 4.0 or greater.
+
+    `html' is a new recursive target, so if your package mixes
+    hand-crafted `Makefile.in's with Automake-generated
+    `Makefile.in's, you should adjust the former to support (or
+    ignore) this target so that `make html' recurses successfully.  If
+    you had a custom `html' rule in your `Makefile.am', it's better to
+    rename it as `html-local', otherwise your rule will override
+    Automake's new rule (you can check that by running `automake
+    -Woverride') and that will stop the recursion to subdirectories.
+
+    Last but not least, this `html' rule is declared PHONY, even when
+    overridden.  Fortunately, it appears that few packages use a
+    non-PHONY `html' rule.
+
+  - Any file which is m4_included from configure.ac will appear as a
+    configure and Makefile.in dependency, and will be automatically
+    distributed.
+
+  - The rules for rebuilding Makefiles and Makefile.ins will now
+    rebuild all Makefiles and all Makefile.ins at once when one of
+    configure's dependencies has changed.  This is considerably faster
+    than previous implementations, where config.status and automake
+    were run separately in each directory (this still happens when you
+    change a Makefile.am locally, without touching configure.ac or
+    friends).  Doing this also solves a longstanding issue: these
+    rebuild rules failed to work when adding new directories to the
+    tree, forcing you to run automake manually.
+
+  - For similar reasons, the rules to rebuild configure,
+    config.status, and aclocal.m4 are now defined in all directories.
+    Note that if you were using the CONFIG_STATUS_DEPENDENCIES and
+    CONFIGURE_DEPENDENCIES (formerly undocumented) variables, you
+    should better define them in all directories.  This is easily done
+    using an AC_SUBST (make sure you prefix these dependencies with
+    $(top_srcdir) since this variable will appear at different
+    levels of the build tree).
+
+  - aclocal will now use `m4_include' instead of copying local m4
+    files into aclocal.m4.  (Local m4 files are those you ship with
+    your project, other files will be copied as usual.)
+
+    Because m4_included files are automatically distributed, it means
+    for most projects there is no point in EXTRA_DISTing the list of
+    m4 files which are used.  (You can probably get rid of
+    m4/Makefile.am if you had one.)
+
+  - aclocal will avoid touching aclocal.m4 when possible, so that
+    Autom4te's cache isn't needlessly invalidated.  This behavior can
+    be switched off with the new `--force' option.
+
+  - aclocal now uses Autoconf's --trace to detect macros which are
+    actually used and will no longer include unused macros simply
+    because they where mentioned.  This was often the case for macros
+    called conditionally.
+
+  - New options no-dist and no-dist-gzip.
+
+  - compile, depcomp, elisp-comp, install-sh, mdate-sh, mkinstalldirs,
+    py-compile, and ylwrap, now all understand --version and --help.
+
+  - Automake will now recognize AC_CONFIG_LINKS so far as removing created
+    links as part of the distclean target and including source files in
+    distributions.
+
+  - AM_PATH_PYTHON now supports ACTION-IF-FOUND and ACTION-IF-NOT-FOUND
+    argument.  The latter can be used to override the default behavior
+    (which is to abort).
+
+  - Automake will exit with $? = 63 on version mismatch.  (So does
+    Autoconf 2.58)  missing knows this, and in this case it will
+    emulate the tools as if they were absent.  Because older versions
+    of Automake and Autoconf did not use this exit code, this change
+    will only be useful in projects generated with future versions of
+    these tools.
+
+  - When using AC_CONFIG_FILES with multiple input files, Automake
+    generates the first ".in" input file for which a ".am" exists.
+    (Former versions would try to use only the first input file.)
+
+  - lisp_DATA is now allowed.  If you are using the empty ELCFILES
+    idiom to disable byte-compilation of lisp_LISP files, it is
+    recommended that you switch to using lisp_DATA.  Note that
+    this is not strictly equivalent: lisp_DATA will install elisp
+    files even if emacs is not installed, while *_LISP do not
+    install anything unless emacs is found.
+
+  - Makefiles will prefer `mkdir -p' over mkinstalldirs if it is
+    available.  This selection is achieved through the Makefile
+    variable $(mkdir_p) that is set by AM_INIT_AUTOMAKE to either
+    `mkdir -m 0755 -p --', `$(mkinstalldirs) -m 0755', or
+    `$(install_sh) -m 0755 -d'.
+
+* Obsolete features
+
+  - Because `mkdir -p' is available on most platforms, and we can use
+    `install-sh -d' when it is not, the use of the mkinstalldirs
+    script is being phased out.  `automake --add-missing' no longer
+    installs it, and if you remove mkinstalldirs from your package,
+    automake will define $(mkinstalldirs) as an alias for $(mkdir_p).
+
+    Gettext 0.12.1 still requires mkinstalldirs.  Fortunately
+    gettextize and autopoint will install it when needed.  Automake
+    will continue to define the $(mkinstalldirs) and to distribute
+    mkinstalldirs when this script is in the source tree.
+
+  - AM_PROG_CC_STDC is now empty.  The content of this macro was
+    merged in AC_PROG_CC.  If your code uses $am_cv_prog_cc_stdc, you
+    should adjust it to use $ac_cv_prog_cc_stdc instead.  (This
+    renaming should be safe, even if you have to support several,
+    versions of Automake, because AC_PROG_CC defines this variable
+    since Autoconf 2.54.)
+
+  - Some users where using the undocumented ACLOCAL_M4_SOURCES
+    variable to override the aclocal.m4 dependencies computed
+    (inaccurately) by older versions of Automake.  Because Automake
+    now tracks configure's m4 dependencies accurately (see m4_include
+    above), the use of ACLOCAL_M4_SOURCES should be considered
+    obsolete and will be flagged as such when running `automake
+    -Wobsolete'.
+
+* Bug fixes
+
+  - Defining programs conditionally using Automake conditionals no
+    longer leads to a combinatorial explosion.  The following
+    construct used to be troublesome when used with dozens of
+    conditions.
+
+      bin_PROGRAMS = a
+      if COND1
+        bin_PROGRAMS += a1
+      endif
+      if COND2
+        bin_PROGRAMS += a2
+      endif
+      if COND3
+        bin_PROGRAMS += a3
+      endif
+      ...
+
+    Likewise for _SOURCES, _LDADD, and _LIBADD variables.
+
+  - Due to implementation constraints, previous versions of Automake
+    proscribed multiple conditional definitions of some variables
+    like bin_PROGRAMS:
+
+      if COND1
+        bin_PROGRAMS = a1
+      endif
+      if COND2
+        bin_PROGRAMS = a2
+      endif
+
+    All _PROGRAMS, _LDADD, and _LIBADD variables were affected.
+    This restriction has been lifted, and these variables now
+    support multiple conditional definitions as do other variables.
+
+  - Cleanup the definitions of $(distdir) and $(top_distdir).
+    $(top_distdir) now points to the root of the distribution
+    directory created during `make dist', as it did in Automake 1.4,
+    not to the root of the build tree as it did in intervening
+    versions.  Furthermore these two variables are now only defined in
+    the top level Makefile, and passed to sub-directories when running
+    `make dist'.
+
+  - The --no-force option now correctly checks the Makefile.in's
+    dependencies before deciding not to update it.
+
+  - Do not assume that make files are called Makefile in cleaning rules.
+
+  - Update .info files in the source tree, not in the build tree.  This
+    is what the GNU Coding Standard recommend.  Only Automake 1.7.x
+    used to update these files in the build tree (previous versions did
+    it in the source tree too), and it caused several problems, varying
+    from mere annoyance to portability issues.
+
+  - COPYING, COPYING.LIB, and COPYING.LESSER are no longer overwritten
+    when --add-missing and --force-missing are used.  For backward
+    compatibility --add-missing will continue to install COPYING (in
+    `gnu' strictness) when none of these three files exist, but this
+    use is deprecated: you should better choose a license yourself and
+    install it once for all in your source tree (and in your code
+    management system).
+
+  - Fix ylwrap so that it does not overwrite header files that haven't
+    changed, as the inline rule already does.
+
+  - User-defined rules override automake-defined rules for the same
+    targets, even when rules do not have commands.  This is not new
+    (and was documented), however some of the automake-generated
+    rules have escaped this principle in former Automake versions.
+    Rules for the following targets are affected by this fix:
+
+       clean, clean-am, dist-all, distclean, distclean-am, dvi, dvi-am,
+       info, info-am, install-data-am, install-exec-am, install-info,
+       install-info-am, install-man, installcheck-am, maintainer-clean,
+       maintainer-clean-am, mostlyclean, mostlyclean-am, pdf, pdf-am,
+       ps, ps-am, uninstall-am, uninstall-info, uninstall-man
+
+    Practically it means that an attempt to supplement the dependencies
+    of some target, as in
+
+       clean: my-clean-rule
+
+    will now *silently override* the automake definition of the
+    rule for this target.  Running `automake -Woverride' will diagnose
+    all such overriding definitions.
+
+    It should be noted that almost all of these targets support a *-local
+    variant that is meant to supplement the automake-defined rule
+    (See node `Extending' in the manual).  The above rule should
+    be rewritten as
+
+      clean-local: my-clean-rule
+
+    These *-local targets have been documented since at least
+    Automake 1.2, so you should not fear the change if you have
+    to support multiple automake versions.
+
+* Miscellaneous
+
+  - The Automake manual is now distributed under the terms of the GNU FDL.
+
+  - Targets dist-gzip, dist-bzip2, dist-tarZ, dist-zip are always defined.
+
+  - core dumps are no longer removed by the cleaning rules.  There are
+    at least three reasons for this:
+      1. These files should not be created by any build step,
+	 so their removal do not fit any of the cleaning rules.
+	 Actually, they may be precious to the developer.
+      2. If such file is created during a build, then it's clearly a
+         bug Automake should not hide.  Not removing the file will
+         cause `make distcheck' to complain about its presence.
+      3. Operating systems have different naming conventions for
+         core dump files.  A core file on one system might be a
+	 completely legitimate data file on another system.
+
+  - RUNTESTFLAGS, CTAGSFLAGS, ETAGSFLAGS, JAVACFLAGS are no longer
+    defined by Automake.  This means that any definition in the
+    environment will be used, unless overridden in the Makefile.am or
+    on the command line.  The old behavior, where these variables were
+    defined empty in each Makefile, can be obtained by AC_SUBSTing or
+    AC_ARG_VARing each variable from configure.ac.
+
+  - CONFIGURE_DEPENDENCIES and CONFIG_STATUS_DEPENDENCIES are now
+    documented.  (The is not a new feature, these variables have
+    been there since at least Automake 1.4.)
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Bugs fixed in 1.7.9:
+* Fix install-strip to work with nobase_ binaries.
+* Fix renaming of #line directives in ylwrap.
+* Rebuild with Autoconf 2.59.  (1.7.8 was not installable with pdksh.)
+
+Bugs fixed in 1.7.8:
+* Remove spurious blank lines in cleaning rules introduced in 1.7.7.
+* Fix detection of Debian's install-info, broken since version 1.5.
+  (Debian bug #213524).
+* Honor -module if it appears in AM_LDFLAGS (i.e., relax name checking)
+  This was only done for libfoo_LDFLAGS and LDFLAGS in previous versions.
+
+Bugs fixed in 1.7.7:
+* The implementation of automake's --no-force option is unreliable,
+  so this option is ignored in this version.  A real fix will appear in
+  Automake 1.8.  (Debian Bug #206299)
+* AM_PATH_PYTHON: really check the whole list of interpreters if no
+  argument is given.  (PR/399)
+* Do not warn about leading `_' in variable names, even with -Wportability.
+* Support user redefinitions of TEXINFO_TEX.
+* depcomp: support AIX Compiler version 6.
+* Fix missing rebuilds during `make dist' with BSD make.
+  (Could produce tarballs containing out-of-date files.)
+* Resurrect multilib support.
+* Noteworthy manual updates:
+  - Extending aclocal: how to write m4 macros that won't trigger warnings
+    with Automake 1.8.
+  - A Shared Library: Rewrite and split into subsections.
+
+Bugs fixed in 1.7.6:
+* Fix depcomp's icc mode for ICC 7.1.
+* Diagnose calls to AC_CONFIG_FILES and friends with not enough arguments.
+* Fix maintainer-clean's removal of autom4te.cache in VPATH builds.
+* Fix AM_PATH_LISPDIR to work with POSIXLY_CORRECT=1.
+* Fix the location reported in some diagnostics related to AUTOMAKE_OPTIONS.
+* Remove Latin-1 characters from elisp-comp.
+* Update the manual's @dircategory to match the Free Software Directory.
+
+Bugs fixed in 1.7.5:
+* Update install-sh's license to remove an advertising clause.
+  (Debian bug #191717)
+* Fix a bug introduced in 1.7.4, related to BUILT_SOURCE handling,
+  that caused invalid Makefile.ins to be generated.
+* Make sure AM_MAKE_INCLUDE doesn't fail when a `doit' file exists.
+* New FAQ entry: renamed objects.
+
+Bugs fixed in 1.7.4:
+* Tweak the TAGS rule to support Exuberant Ctags (in addition to
+  the Emacs implementation)
+* Fix output of aclocal.m4 dependencies in subdirectories.
+* Use `mv -f' instead of `mv' in fastdep rules.
+* Upgrade mdate-sh to work on OS/2.
+* Don't byte-compile elisp files when ELCFILES is set empty.
+  (this documented feature was broken by 1.7.3)
+* Diagnose trailing backslashes on last line of Makefile.am.
+* Diagnose whitespace following trailing backslashes.
+* Multiple tests are now correctly supported in DEJATOOL. (PR/388)
+* Fix rebuilt rules for AC_CONFIG_FILES([Makefile:Makefile.in:Makefile.bot])
+  Makefiles. (PR/389)
+* `make install' will build `BUILT_SOURCES' first.
+* Minor documentation fixes.
+
+Bugs fixed in 1.7.3:
+* Fix stamp files numbering (when using multiple AC_CONFIG_HEADERS).
+* Query distutils for `pythondir' and `pythonexecdir', instead of
+  using an hardcoded path.  This should allow builds on 64-bit
+  distributions that usually use lib64/ instead of lib/.
+* AM_PATH_PYTHON will also search for python2.3.
+* elisp files are now built all at once instead of one by one. Besides
+  incurring a speed-up, this is required to support interdependent elisp files.
+* Support for DJGPP:
+  - `make distcheck' will now work in `_inst/' and `_build' instead
+    of `=inst/' and `=build/'
+  - use `_dirstamp' when the file-system doesn't support `.dirstamp'
+  - install/uninstall `*.i[0-9][0-9]'-style info files
+  - more changes that affect only the Automake package (not its output)
+* Fix some incompatibilities with upcoming perl-5.10.
+* Properly quote AC_PACKAGE_TARNAME and AC_PACKAGE_VERSION when defining
+  PACKAGE and VERSION.
+* depcomp fixes:
+  - dashmstdout and dashXmstdout modes: don't use `-o /dev/null', this
+    is troublesome with gcc and Solaris compilers. (PR/385)
+  - makedepend mode: work with Libtool. (PR/385 too)
+  - support for ICC.
+* better support for unusual gettext setups, such as multiple po/ directories
+  (PR/381):
+  - Flag missing po/ and intl/ directories as warnings, not errors.
+  - Disable these warnings if po/ does not exist.
+* Noteworthy manual updates:
+  - New FAQ chapter.
+  - Document how AC_CONFIG_AUX_DIR interacts with missing files.
+    (Debian Bug #39542)
+  - Document `AM_YFLAGS = -d'.  (PR/382)
+
+Bugs fixed in 1.7.2:
+* Fix installation and uninstallation of Info files built in subdirectories.
+* Do not run `./configure --with-included-gettext' during `make distcheck'
+  if AM_GNU_GETTEXT([external]) is used.
+* Correctly uninstall renamed man pages.
+* Do not strip escaped newline in variables defined in one condition
+  and augmented in another condition.
+* Fix ansi2knr rules for LIBOBJS sources.
+* Clean all known Texinfo index files, not only those which appear to
+  be used, because we cannot know which indexes are used in included files.
+  (PR/375, Debian Bug #168671)
+* Honor only the first @setfilename seen in a Texinfo file.
+* Treat "required file X not found" diagnostics as errors (exit status 1).
+* Don't complain that a required file is not found when it is a Makefile
+  target. (PR/357)
+* Don't use single suffix inference rules when building `.info'-less
+  Info files, for the sake of Solaris make.
+* The `check' target now depends on `$(BUILT_SOURCES)'. (PR/359)
+* Recognize multiple inference rules such as `.a.b .c.d:'. (PR/371)
+* Warn about multiple inference rules when -Wportability is used. (PR/372)
+* Fix building of deansified files from subdirectories. (PR/370)
+* Add missing `fi' in the .c->.obj rules.
+* Improve install-sh to work even when names contain spaces or certain
+  (but not all) shell metachars.
+* Fix the following spurious failures in the test suite:
+  depcomp2.test, gnits2.test, gnits3.test, python3.test, texinfo13.test
+* Noteworthy manual updates:
+  - Augment the section about BUILT_SOURCES.
+  - Mention that AM_PROG_CC_STDC is a relic that is better avoided today.
+
+Bugs fixed in 1.7.1:
+* Honor `ansi2knr' for files built in subdirectories, or using per-targets
+  flags.
+* Aclocal should now recognize macro names containing parentheses, e.g.
+  AC_DEFUN([AC_LANG_PREPROC(Fortran 90)], [...]).
+* Erase *.sum and *.log files created by DejaGnu, during `make distclean'.
+  (Debian Bug#153697)
+* Install Python files even if they were built.  (PR/369)
+* Have stamp-vti dependent upon configure instead of configure.ac, as the
+  version might not be defined in the latter. (PR/358)
+* Reorder arguments passed to a couple of commands, so things works
+  when POSIXLY_CORRECT=1.
+* Fix a regex that can cause Perl to segfault on large input.
+  (Debian Bug#162583)
+* Fix distribution of packages that have some sources defined conditionally,
+  as in the `Conditional compilation using Automake conditionals' example
+  of the manual.
+* Fix spurious test suite failures on IRIX.
+* Don't report a required variable as undefined if it has been
+  defined conditionally for the "right" conditions.
+* Fix cleaning of the /tmp subdirectory used by `make distcheck', in case
+  `make distcheck' fails.
+* Fix distribution of included Makefile fragment, so we don't create
+  spurious directories in the distribution. (PR/366)
+* Don't complain that a target lacks `.$(EXEEXT)' when it has it.
+
+New in 1.7:
+* Autoconf 2.54 is required.
+* `aclocal' and `automake' will no longer warn about obsolete
+  configure macros.  This is done by `autoconf -Wobsolete'.
+* AM_CONFIG_HEADER, AM_SYS_POSIX_TERMIOS and
+  AM_HEADER_TIOCGWINSZ_NEEDS_SYS_IOCTL are obsolete (although still
+  supported).  You should use AC_CONFIG_HEADERS, AC_SYS_POSIX_TERMIOS,
+  and AC_HEADER_TIOCGWINSZ instead.  `autoupdate' can upgrade
+  `configure.ac' for you.
+* Support for per-program and per-library `_CPPFLAGS'.
+* New `ctags' target (builds CTAGS files).
+* Support for -Wmumble and -Wno-mumble, where mumble is a warning category
+  (see `automake --help' or the manual for a list of them).
+* Honor the WARNINGS environment variable.
+* Omit the call to depcomp when using gcc3: call the compiler directly.
+* A new option, std-options, tests that programs support --help and --version
+  when `make installcheck' is run.  This is enabled by --gnits.
+* Texinfo rules now support the `ps' and `pdf' targets.
+* Info files are now created in the build directory, not the source directory.
+* info_TEXINFOS supports files in subdirectories (this requires Texinfo 4.1
+  or greater).
+* `make distcheck' will enforce DESTDIR support by attempting
+  a DESTDIR install.
+* `+=' can be used in conditionals, even if the augmented variable
+  was defined for another condition.
+* Makefile fragments (inserted with `include') are always distributed.
+* Use Autoconf's --trace interface to inspect configure.ac and get
+  a more accurate view of it.
+* Add support for extending aclocal's default macro search path
+  using a `dirlist' file within the aclocal directory.
+* automake --output-dir is deprecated.
+* The part of the distcheck target that checks whether uninstall actually
+  removes all installed files has been moved to a separate target,
+  distuninstallcheck, so it can be overridden easily.
+* Many bug fixes.
+
+New in 1.6.3:
+* Support for AM_INIT_GETTEXT([external])
+* Bug fixes, including:
+  - Fix Automake's own `make install' so it works even if `ln' doesn't.
+  - nobase_ programs and scripts honor --program-transform correctly.
+  - Erase configure.lineno during `make distclean'.
+  - Erase YACC and LEX outputs during `make maintainer-clean'.
+
+New in 1.6.2:
+* Many bug fixes, including:
+  - Requiring the current version works.
+  - Fix "$@" portability issues (for Zsh).
+  - Fix output of dummy dependency files in presence of post-processed
+    Makefile.in's.
+  - Don't compute dependencies in background to avoid races with libtool.
+  - Fix handling of _OBJECTS variables for targets sharing source variables.
+  - Check dependency mode for Java when AM_PROG_GCJ is used.
+
+New in 1.6.1:
+* automake --output-dir is deprecated
+* Many bug fixes, including:
+  - Don't choke on AM_LDFLAGS definitions.
+  - Clean libtool objects from subdirectories.
+  - Allow configure variables with reserved suffix and unknown prefix
+    (e.g. AC_SUBST(mumble_LDFLAGS) when 'mumble' is not a target).
+  - Fix the definition of AUTOMAKE and ACLOCAL in configure.
+
+New in 1.6:
+* Autoconf 2.52 is required.
+* automake no longer run libtoolize.
+  This is the job of autoreconf (from GNU Autoconf).
+* `dist' generates all the archive flavors, as did `dist-all'.
+* `dist-gzip' generates the Gzip tar file only.
+* Combining Automake Makefile conditionals no longer lead to a combinatorial
+  explosion.  Makefile.in's keep a reasonable size.
+* AM_FUNC_ERROR_AT_LINE, AM_FUNC_STRTOD, AM_FUNC_OBSTACK, AM_PTRDIFF_T
+  are no longer shipped, since Autoconf 2.52 provides them (both as AM_
+  and AC_).
+* `#line' of Lex and Yacc files are properly set.
+* EXTRA_DIST can contain generated directories.
+* Support for dot-less extensions in suffix rules.
+* The part of the distcheck target that checks whether distclean actually
+  cleans all built files has been moved to a separate target, distcleancheck,
+  so it can be overridden easily.
+* `make distcheck' will pass additional options defined in
+  $(DISTCHECK_CONFIGURE_FLAGS) to configure.
+* Fixed CDPATH portability problems, in particular for MacOS X.
+* Fixed handling of nobase_ targets.
+* Fixed support of implicit rules leading to .lo objects.
+* Fixed late inclusion of --add-missing files (e.g. depcomp) in DIST_COMMON
+* Added uninstall-hook target
+* `AC_INIT AM_INIT_AUTOMAKE(tarname,version)' is an obsolete construct.
+  You can now use `AC_INIT(pkgname,version) AM_INIT_AUTOMAKE' instead.
+  (Note that "pkgname" is not "tarname", see the manual for details.)
+  It is also possible to pass a list of global Automake options as
+  first argument to this new form of AM_INIT_AUTOMAKE.
+* Compiler-based assembler is now called `CCAS'; people expected `AS'
+  to be a real assembler.
+* AM_INIT_AUTOMAKE will set STRIP itself when it needs it.  Adding
+  AC_CHECK_TOOL([STRIP], [strip]) manually is no longer required.
+* aclocal and automake are also installed with the version number
+  appended, and some of the install directory names have changed.
+  This lets you have multiple versions installed simultaneously.
+* Support for parsers and lexers in subdirectories.
+
+New in 1.5:
+* Support for `configure.ac'.
+* Support for `else COND', `endif COND' and negated conditions `!COND'.
+* `make dist-all' is much faster.
+* Allows '@' AC_SUBSTs in macro names.
+* Faster AM_INIT_AUTOMAKE (requires update of `missing' script)
+* User-side dependency tracking.  Developers no longer need GNU make
+* Python support
+* Uses DIST_SUBDIRS in some situations when SUBDIRS is conditional
+* Most files are correctly handled if they appear in subdirs
+  For instance, a _DATA file can appear in a subdir
+* GNU tar is no longer required for `make dist'
+* Added support for `dist_' and `nodist_' prefixes
+* Added support for `nobase_' prefix
+* Compiled Java support
+* Support for per-executable and per-library compilation flags
+* Many bug fixes
+
+New in 1.4:
+* Added support for the Fortran 77 programming language.
+* Re-indexed the Automake Texinfo manual.
+* Added `AM_FOOFLAGS' variable for each compiler invocation;
+  e.g. AM_CFLAGS can be used in Makefile.am to set C compiler flags
+* Support for latest autoconf, including support for objext
+* Can now put `.' in SUBDIRS to control build order
+* `include' command and `+=' support for macro assignment
+* Dependency tracking no long susceptible to deleted header file problem
+* Maintainer mode now a conditional.  @MAINT@ is now an anachronism.
+* Bug fixes
+
+New in 1.3:
+* Bug fixes
+* Better Cygwin32 support
+* Support for suffix rules with _SOURCES variables
+* New options `readme-alpha' and `check-news'; Gnits mode sets these
+* @LEXLIB@ no longer required when lex source seen
+  Lex support in `missing', and new lex macro.  Update your missing script.
+* Built-in support for assembly
+* aclocal gives error if `AM_' macro not found
+* Passed YFLAGS, not YACCFLAGS, to yacc
+* AM_PROG_CC_STDC does not have to come before AC_PROG_CPP
+* Dependencies computed as a side effect of compilation
+* Preliminary support for Java
+* DESTDIR support at "make install" time
+* Improved ansi2knr support; you must use the latest ansi2knr.c (included)
+
+New in 1.2:
+* Bug fixes
+* Better DejaGnu support
+* Added no-installinfo option
+* Added Emacs Lisp support
+* Added --no-force option
+* Included `aclocal' program
+* Automake will now generate rules to regenerate aclocal.m4, if appropriate
+* Now uses `AM_' macro names everywhere
+* ansi2knr option can have directory prefix (eg `../lib/ansi2knr')
+  ansi2knr now works correctly on K&R sources
+* Better C++, yacc, lex support
+* Will compute _DEPENDENCIES variables automatically if not supplied
+* Will interpolate $(...) and ${...} when examining contents of a variable
+* .deps files now in build directory, not source directory; dependency
+  handling generally rewritten
+* DATA, MANS and BUILT_SOURCES no longer included in distribution
+* can now put config.h into a subdir
+* Added dist-all target
+* Support for install-info program (see texinfo 3.9)
+* Support for "yacc -d"
+* configure substitutions are automatically discovered and included
+  in generated Makefile.in
+* Special --cygnus mode
+* OMIT_DEPENDENCIES can now hold list of dependencies to be omitted
+  when making distribution.  Some dependencies are auto-ignored.
+* Changed how libraries are specified in _LIBRARIES variable
+* Full libtool support, from Gord Matzigkeit
+* No longer have to explicitly touch stamp-h when using AC_CONFIG_HEADER;
+  AM_CONFIG_HEADER handles it automatically
+* Texinfo output files no longer need .info extension
+* Added `missing' support
+* Cygwin32 support
+* Conditionals in Makefile.am, from Ian Taylor
+
+New in 1.0:
+* Bug fixes
+* distcheck target runs install and installcheck targets
+* Added preliminary support for DejaGnu.
+
+New in 0.33:
+* More bug fixes
+* More checking
+* More libtool fixes from Gord Matzigkeit; libtool support is still
+  preliminary however
+* Added support for jm_MAINTAINER_MODE
+* dist-zip support
+* New "distcheck" target
+
+New in 0.32:
+* Many bug fixes
+* mkinstalldirs and mdate-sh now appear in directory specified by
+  AC_CONFIG_AUX_DIR.
+* Removed DIST_SUBDIRS, DIST_OTHER
+* AC_ARG_PROGRAM only required when an actual program exists
+* dist-hook target now run before distribution packaged up; idea from
+  Dieter Baron.  Other hooks exist, too.
+* Preliminary (unfinished) support for libtool
+* Added short option names.
+* Better "dist" support when gluing together multiple packages
+
+New in 0.31:
+* Bug fixes
+* Documentation updates (many from François Pinard)
+* strictness `normal' now renamed to `foreign'
+* Renamed --install-missing to --add-missing
+* Now handles AC_CONFIG_AUX_DIR
+* Now handles TESTS macro
+* DIST_OTHER renamed to EXTRA_DIST
+* DIST_SUBDIRS is deprecated
+* @ALLOCA@ and @LIBOBJS@ now work in _LDADD variables
+* Better error messages in many cases
+* Program names are canonicalized
+* Added "check" prefix; from Gord Matzigkeit
+
+New in 0.30:
+* Bug fixes
+* configure.in scanner knows about AC_PATH_XTRA, AC_OUTPUT ":" syntax
+* Beginnings of a test suite
+* Automatically adds -I options for $(srcdir), ".", and path to config.h
+* Doesn't print anything when running
+* Beginnings of MAINT_CHARSET support
+* Can specify version in AUTOMAKE_OPTIONS
+* Most errors recognizable by Emacs' M-x next-error
+* Added --verbose option
+* All "primary" variables now obsolete; use EXTRA_PRIMARY to supply
+  configure-generated names
+* Required macros now distributed in aclocal.m4
+* New documentation
+* --strictness=gnu is default
+
+New in 0.29:
+* Many bug fixes
+* More sophisticated configure.in scanning; now understands ALLOCA and
+  LIBOBJS directly, handles AC_CONFIG_HEADER more precisely, etc.
+* TEXINFOS and MANS now obsolete; use info_TEXINFOS and man_MANS instead.
+* CONFIG_HEADER variable now obsolete
+* Can handle multiple Texinfo sources
+* Allow hierarchies deeper than 2.  From Gord Matzigkeit.
+* HEADERS variable no longer needed; now can put .h files directly into
+  foo_SOURCES variable.
+* Automake automatically rebuilds files listed in AC_OUTPUT.  The
+  corresponding ".in" files are included in the distribution.
+
+New in 0.28:
+* Added --gnu and --gnits options
+* More standards checking
+* Bug fixes
+* Cleaned up 'dist' targets
+* Added AUTOMAKE_OPTIONS variable and several options
+* Now scans configure.in to get some information (preliminary)
+
+New in 0.27:
+* Works with Perl 4 again
+
+New in 0.26:
+* Added --install-missing option.
+* Pretty-prints generated macros and rules
+* Comments in Makefile.am are placed more intelligently in Makefile.in
+* Generates .PHONY target
+* Rule or macro in Makefile.am now overrides contents of Automake file
+* Substantial cleanups from François Pinard
+
+New in 0.25:
+* Bug fixes.
+* Works with Perl 4 again.
+
+New in 0.24:
+* New uniform naming scheme.
+* --strictness option
+* Works with Perl 5
+* '.c' files corresponding to '.y' or '.l' files are automatically
+  distributed.
+* Many bug fixes and cleanups
+
+New in 0.23:
+* Allow objects to be conditionally included in libraries via lib_LIBADD.
+
+New in 0.22:
+* Bug fixes in 'clean' code.
+* Now generates 'installdirs' target.
+* man page installation reworked.
+* 'make dist' no longer re-creates all Makefile.in's.
+
+New in 0.21:
+* Reimplemented in Perl
+* Added --amdir option (for debugging)
+* Texinfo support cleaned up.
+* Automatic de-ANSI-fication cleaned up.
+* Cleaned up 'clean' targets.
+
+New in 0.20:
+* Automatic dependency tracking
+* More documentation
+* New variables DATA and PACKAGEDATA
+* SCRIPTS installed using $(INSTALL_SCRIPT)
+* No longer uses double-colon rules
+* Bug fixes
+* Changes in advance of internationalization
+
+-----
+
+Copyright (C) 1995-2021 Free Software Foundation, Inc.
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2, or (at your option)
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.

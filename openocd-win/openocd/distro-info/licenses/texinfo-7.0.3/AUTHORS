@@ -1,0 +1,58 @@
+Texinfo authors.
+
+  Copyright 2003-2019 Free Software Foundation, Inc.
+  
+  Copying and distribution of this file, with or without modification,
+  are permitted in any medium without royalty provided the copyright
+  notice and this notice are preserved.
+
+Adrian Aichner		texi2html.
+Olaf Bachmann		texi2html.
+Karl Berry		all files.
+Per Bothner		makeinfo/xml.c, makeinfo/docbook.c updates.
+Torsten Bronger         texinfo.dtd.
+Bob Chassell		texinfo.tex, original texinfo.txi.
+Lionel Cons		original texi2html.
+Akim Demaille		texi2dvi, util/* tests.
+Patrice Dumas		texi2html, texi2html.texi, texinfo.txi, tp author.
+Alper Ersoy		makeinfo: enhancements in all files, especially
+                          html-, xml-, and docbook-related.
+Brian Fox		all makeinfo/* and info/* files, info-stnd.texi.
+Noah Friedman		original texi2dvi.
+Oleg Katsitadze		doc/*
+Dave Love		original makeinfo/html.[ch].
+Karl Heinz Marbaise	original makeinfo language support, most files,
+			  texi2html manual.
+Philippe Martin		original makeinfo xml/docbook output.
+Sergey Poznyakoff	all files.
+Derek Price		texi2html.
+Arnold Robbins		literate (texi+awk) texindex.
+Paul Rubin		original makeinfo/multi.c.
+Andreas Schwab		texinfo.tex, configure.ac, most makeinfo files.
+Gavin Smith		all files.
+Richard Stallman	original texinfo.tex, install-info.c,
+			texindex.c, texinfo.txi.
+Zack Weinberg		texinfo.tex: @macro implementation.
+Ralf Wildenhues		util/gendocs.sh, makeinfo/tests/*,
+			makeinfo/html.c, makeinfo/cmds.c, makeinfo/footnote.c,
+			doc/texinfo.txi,
+			Makefile.am, configure.ac.
+Eli Zaretskii		all files.
+
+See http://translationproject.org/team/index.html for the
+translation teams for a given language LL.  Additional info for
+original texi2html translations:
+fr:    Patrice Dumas and Jean-Charles Malahieude
+de:    Reinhold Kainhofer
+pt_BR,
+pt:    Jorge Barros de Abreu
+ja:    Found in Fedora. Don't know the author.
+es:    Francisco Vila
+it:    Federico Bruni
+hu:    Dénes Harmath
+
+Images in the images directory come from the Singular project:
+http://www.singular.uni-kl.de/
+
+Many files included in the Texinfo distribution are copied from other
+locations, no author information is given for those.  See util/srclist*.
