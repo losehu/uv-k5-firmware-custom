@@ -95,8 +95,8 @@ bool          gSetting_AM_fix;
 #ifdef ENABLE_AM_FIX_TEST1
 uint8_t       gSetting_AM_fix_test1 = 0;
 #endif
-#ifdef ENABLE_AUDIO_BAR
-#endif
+//#ifdef ENABLE_AUDIO_BAR
+//#endif
 bool              gSetting_live_DTMF_decoder;
 
 bool              gMonitor = false;           // true opens the squelch

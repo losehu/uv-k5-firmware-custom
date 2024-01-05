@@ -64,14 +64,15 @@ void EEPROM_WriteBuffer(uint32_t Address, const void *pBuffer) {
 
         uint8_t buffer[8];
         EEPROM_ReadBuffer(Address, buffer, 8);
-        if (memcmp(pBuffer, buffer, 8) != 0) {
-            I2C_Start();
-            I2C_Write(0xA0);
-            I2C_Write((Address >> 8) & 0xFF);
-            I2C_Write((Address >> 0) & 0xFF);
-            I2C_WriteBuffer(pBuffer, 8);
-            I2C_Stop();
+        if (memcmp(pBuffer, buffer, 8) == 0) {
+            return;
         }
+        I2C_Start();
+        I2C_Write(0xA0);
+        I2C_Write((Address >> 8) & 0xFF);
+        I2C_Write((Address >> 0) & 0xFF);
+        I2C_WriteBuffer(pBuffer, 8);
+        I2C_Stop();
         SYSTEM_DelayMs(8);
 
         // give the EEPROM time to burn the data in (apparently takes 5ms)

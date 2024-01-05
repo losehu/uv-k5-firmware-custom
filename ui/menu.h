@@ -27,7 +27,7 @@ typedef struct {
     VOICE_ID_t  voice_id;
     uint8_t     menu_id;
 #if ENABLE_CHINESE_FULL==4
-    const char name[15]; // 使用指针而不是固定长度数组
+    const char name[14]; // 使用指针而不是固定长度数组
 #else
 const char name[7]; // 使用指针而不是固定长度数组
 #endif
@@ -72,9 +72,9 @@ enum
     MENU_STE,
     MENU_RP_STE,
     MENU_MIC,
-#ifdef ENABLE_AUDIO_BAR
+//#ifdef ENABLE_AUDIO_BAR
     //MENU_MIC_BAR,
-#endif
+//#endif
     MENU_COMPAND,
     MENU_1_CALL,
     MENU_S_LIST,
@@ -164,7 +164,7 @@ extern const char        gSubMenu_TOT[11][5];//7
 #else
 extern const char        gSubMenu_TOT[11][6];//7
 #endif
-extern const char*        gSubMenu_RXMode[4];
+extern const char*        const gSubMenu_RXMode[4];
 
 #ifdef ENABLE_VOICE
 extern const char    gSubMenu_VOICE[3][4];
@@ -174,7 +174,7 @@ extern const char        gSubMenu_SC_REV[3][10];//8
 #else
 extern const char        gSubMenu_SC_REV[3][18];//8
 #endif
-extern const char*       gSubMenu_MDF[4];
+extern const char*      const gSubMenu_MDF[4];
 #ifdef ENABLE_ALARM
 extern const char    gSubMenu_AL_MOD[2][5];
 #endif
@@ -186,7 +186,7 @@ extern const char        gSubMenu_D_RSP[4][18];//11
 #endif
 #endif
 
-extern const char*       gSubMenu_PTT_ID[5];
+extern const char*    const   gSubMenu_PTT_ID[5];
 #if ENABLE_CHINESE_FULL!=4
 extern const char        gSubMenu_ROGER[6][13];
 #else
@@ -197,7 +197,7 @@ extern const char        gSubMenu_RESET[2][6];//4
 #else
 extern const char        gSubMenu_RESET[2][11];//4
 #endif
-extern const char*       gSubMenu_F_LOCK[F_LOCK_LEN];
+extern const char*   const    gSubMenu_F_LOCK[F_LOCK_LEN];
 #if ENABLE_CHINESE_FULL!=4
 extern const char        gSubMenu_BACKLIGHT[8][5];//7
 #else

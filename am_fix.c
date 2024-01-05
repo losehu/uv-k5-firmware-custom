@@ -30,7 +30,9 @@
 #include "functions.h"
 #include "misc.h"
 #include "settings.h"
-
+#ifdef ENABLE_AGC_SHOW_DATA
+#include "ui/main.h"
+#endif
 #ifdef ENABLE_AM_FIX
 
 typedef struct
@@ -269,13 +271,7 @@ switch (gCurrentFunction)
 #endif
 			return;
 
-		// only adjust stuff if we're in one of these modes、
-        		case FUNCTION_FOREGROUND:
 
-		case FUNCTION_RECEIVE:
-		case FUNCTION_MONITOR:
-		case FUNCTION_INCOMING:
-			break;
 	}
 
 #ifdef ENABLE_AM_FIX_SHOW_DATA
@@ -370,6 +366,9 @@ switch (gCurrentFunction)
 		gain_table_index_prev[vfo] = index;
 		currentGainDiff = gain_table[0].gain_dB - gain_table[index].gain_dB;
 		BK4819_WriteRegister(BK4819_REG_13, gain_table[index].reg_val);
+        #ifdef ENABLE_AGC_SHOW_DATA
+		UI_MAIN_PrintAGC(true);
+#endif
 	}
 
 #ifdef ENABLE_AM_FIX_SHOW_DATA

@@ -26,7 +26,7 @@ void UI_PrintStringSmall(const char *pString, uint8_t Start, uint8_t End, uint8_
 void UI_PrintCharSmall(char character, uint8_t Start, uint8_t Line) ;
 uint8_t is_chn(uint8_t num);
 bool CHINESE_JUDGE(char *name,uint8_t len);
-
+void UI_DisplayClear();
 
 
 void UI_PrintStringSmallBuffer(const char *pString, uint8_t *buffer);

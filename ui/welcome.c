@@ -49,8 +49,7 @@ void UI_DisplayWelcome(void) {
     char WelcomeString1[19] = {0};
 
     memset(gStatusLine, 0, sizeof(gStatusLine));
-    memset(gFrameBuffer, 0, sizeof(gFrameBuffer));
-
+    UI_DisplayClear();
 
 #if ENABLE_CHINESE_FULL == 4
     uint8_t welcome_len[2];

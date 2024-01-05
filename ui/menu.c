@@ -36,9 +36,9 @@
 #include "ui/ui.h"
 #include "chinese.h"
 
-void insertNewline(char a[], int index,int len) {
+void insertNewline(char a[], int index, int len) {
 
-    if(index < 0 || index >= len || len >= 63) {
+    if (index < 0 || index >= len || len >= 63) {
         return;
     }
     for (int i = len; i >= index; i--) {
@@ -51,54 +51,54 @@ void insertNewline(char a[], int index,int len) {
 const t_menu_item MenuList[] =
         {
 //   text,     voice ID,                               menu ID
-                {/*"Step",*/   VOICE_ID_FREQUENCY_STEP,                MENU_STEP          ,步进频率},
-                {/*"RxDCS",*/  VOICE_ID_DCS,                           MENU_R_DCS         ,接收数字亚音}, // was "R_DCS"
-                {/*"RxCTCS",*/ VOICE_ID_CTCSS,                         MENU_R_CTCS        ,接收模拟亚音}, // was "R_CTCS"
-                {/*"TxDCS",*/  VOICE_ID_DCS,                           MENU_T_DCS         ,发送数字亚音}, // was "T_DCS"
-                {/*"TxCTCS",*/ VOICE_ID_CTCSS,                         MENU_T_CTCS        ,发送模拟亚音}, // was "T_CTCS"
-                {/*"TxODir",*/ VOICE_ID_TX_OFFSET_FREQUENCY_DIRECTION, MENU_SFT_D         ,频差方向}, // was "SFT_D"
-                {/*"TxOffs",*/ VOICE_ID_TX_OFFSET_FREQUENCY,           MENU_OFFSET        ,频差频率}, // was "OFFSET"
-                {/*"Scramb",*/ VOICE_ID_SCRAMBLER_ON,                  MENU_SCR           ,加密}, // was "SCR"
-                {/*"BusyCL",*/ VOICE_ID_BUSY_LOCKOUT,                  MENU_BCL           ,遇忙禁发}, // was "BCL"
-                {/*"Compnd",*/ VOICE_ID_INVALID,                       MENU_COMPAND       ,压扩},
-                {/*"ChSave",*/ VOICE_ID_MEMORY_CHANNEL,                MENU_MEM_CH        ,存置信道}, // was "MEM-CH"
-                {/*"ChDele",*/ VOICE_ID_DELETE_CHANNEL,                MENU_DEL_CH        ,删除信道}, // was "DEL-CH"
-                {/*"ChName",*/ VOICE_ID_INVALID,                       MENU_MEM_NAME      ,命名信道},
-                {/*"SList",*/  VOICE_ID_INVALID,                       MENU_S_LIST        ,信道扫描列表},
-                {/*"SList1",*/ VOICE_ID_INVALID,                       MENU_SLIST1        ,扫描列表1},
-                {/*"SList2",*/ VOICE_ID_INVALID,                       MENU_SLIST2        ,扫描列表2},
-                {/*"ScnRev",*/ VOICE_ID_INVALID,                       MENU_SC_REV        ,搜索恢复模式},
-                {/*"TxTOut",*/ VOICE_ID_TRANSMIT_OVER_TIME,            MENU_TOT           ,发送超时}, // was "TOT"
-                {/*"BatSav",*/ VOICE_ID_SAVE_MODE,                     MENU_SAVE          ,省电模式}, // was "SAVE"
-                {/*"Mic",*/    VOICE_ID_INVALID,                       MENU_MIC           ,麦克风增益},
-                {/*"ChDisp",*/ VOICE_ID_INVALID,                       MENU_MDF           ,信道显示模式}, // was "MDF"
-             //   {/*"POnMsg",*/ VOICE_ID_INVALID,                       MENU_PONMSG        ,开机显示},
-                {/*"BackLt",*/ VOICE_ID_INVALID,                       MENU_ABR           ,自动背光}, // was "ABR"
-                {/*"BLMax",*/  VOICE_ID_INVALID,                       MENU_ABR_MAX       ,背光亮度},
-                {/*"MDCID",*/  VOICE_ID_INVALID,                       MENU_MDC_ID         ,MDC_ID},
+                {/*"Step",*/   VOICE_ID_FREQUENCY_STEP, MENU_STEP, 步进频率},
+                {/*"RxDCS",*/  VOICE_ID_DCS, MENU_R_DCS, 接收数字亚音}, // was "R_DCS"
+                {/*"RxCTCS",*/ VOICE_ID_CTCSS, MENU_R_CTCS, 接收模拟亚音}, // was "R_CTCS"
+                {/*"TxDCS",*/  VOICE_ID_DCS, MENU_T_DCS, 发送数字亚音}, // was "T_DCS"
+                {/*"TxCTCS",*/ VOICE_ID_CTCSS, MENU_T_CTCS, 发送模拟亚音}, // was "T_CTCS"
+                {/*"TxODir",*/ VOICE_ID_TX_OFFSET_FREQUENCY_DIRECTION, MENU_SFT_D, 频差方向}, // was "SFT_D"
+                {/*"TxOffs",*/ VOICE_ID_TX_OFFSET_FREQUENCY, MENU_OFFSET, 频差频率}, // was "OFFSET"
+                {/*"Scramb",*/ VOICE_ID_SCRAMBLER_ON, MENU_SCR, 加密}, // was "SCR"
+                {/*"BusyCL",*/ VOICE_ID_BUSY_LOCKOUT, MENU_BCL, 遇忙禁发}, // was "BCL"
+                {/*"Compnd",*/ VOICE_ID_INVALID, MENU_COMPAND, 压扩},
+                {/*"ChSave",*/ VOICE_ID_MEMORY_CHANNEL, MENU_MEM_CH, 存置信道}, // was "MEM-CH"
+                {/*"ChDele",*/ VOICE_ID_DELETE_CHANNEL, MENU_DEL_CH, 删除信道}, // was "DEL-CH"
+                {/*"ChName",*/ VOICE_ID_INVALID, MENU_MEM_NAME, 命名信道},
+                {/*"SList",*/  VOICE_ID_INVALID, MENU_S_LIST, 信道扫描列表},
+                {/*"SList1",*/ VOICE_ID_INVALID, MENU_SLIST1, 扫描列表1},
+                {/*"SList2",*/ VOICE_ID_INVALID, MENU_SLIST2, 扫描列表2},
+                {/*"ScnRev",*/ VOICE_ID_INVALID, MENU_SC_REV, 搜索恢复模式},
+                {/*"TxTOut",*/ VOICE_ID_TRANSMIT_OVER_TIME, MENU_TOT, 发送超时}, // was "TOT"
+                {/*"BatSav",*/ VOICE_ID_SAVE_MODE, MENU_SAVE, 省电模式}, // was "SAVE"
+                {/*"Mic",*/    VOICE_ID_INVALID, MENU_MIC, 麦克风增益},
+                {/*"ChDisp",*/ VOICE_ID_INVALID, MENU_MDF, 信道显示模式}, // was "MDF"
+                //   {/*"POnMsg",*/ VOICE_ID_INVALID,                       MENU_PONMSG        ,开机显示},
+                {/*"BackLt",*/ VOICE_ID_INVALID, MENU_ABR, 自动背光}, // was "ABR"
+                {/*"BLMax",*/  VOICE_ID_INVALID, MENU_ABR_MAX, 背光亮度},
+                {/*"MDCID",*/  VOICE_ID_INVALID, MENU_MDC_ID, MDC_ID},
 
-                {/*"Roger",*/  VOICE_ID_INVALID,                       MENU_ROGER         ,首尾音},
+                {/*"Roger",*/  VOICE_ID_INVALID, MENU_ROGER, 首尾音},
 
-                {/*"STE",*/    VOICE_ID_INVALID,                       MENU_STE           ,尾音消除},
-                {/*"RP STE",*/ VOICE_ID_INVALID,                       MENU_RP_STE        ,过中继尾音消除},
-                {/*"1 Call",*/ VOICE_ID_INVALID,                       MENU_1_CALL        ,按键即呼},
+                {/*"STE",*/    VOICE_ID_INVALID, MENU_STE, 尾音消除},
+                {/*"RP STE",*/ VOICE_ID_INVALID, MENU_RP_STE, 过中继尾音消除},
+                {/*"1 Call",*/ VOICE_ID_INVALID, MENU_1_CALL, 按键即呼},
 
 #ifdef ENABLE_DTMF_CALLING
                 {/*"ANI ID",*/ VOICE_ID_ANI_CODE,                      MENU_ANI_ID        ,DTMF_ID},
 #endif
-                {/*"UPCode",*/ VOICE_ID_INVALID,                       MENU_UPCODE        ,DTMF上线码},
-                {/*"DWCode",*/ VOICE_ID_INVALID,                       MENU_DWCODE        ,DTMF下线码},
-                {/*"PTT ID",*/ VOICE_ID_INVALID,                       MENU_PTT_ID        ,DTMF发送},
-                {/*"D ST",*/   VOICE_ID_INVALID,                       MENU_D_ST          ,DTMF侧音},
+                {/*"UPCode",*/ VOICE_ID_INVALID, MENU_UPCODE, DTMF上线码},
+                {/*"DWCode",*/ VOICE_ID_INVALID, MENU_DWCODE, DTMF下线码},
+                {/*"PTT ID",*/ VOICE_ID_INVALID, MENU_PTT_ID, DTMF发送},
+                {/*"D ST",*/   VOICE_ID_INVALID, MENU_D_ST, DTMF侧音},
 #ifdef ENABLE_DTMF_CALLING
                 {/*"D Resp",*/ VOICE_ID_INVALID,                       MENU_D_RSP         ,DTMF响应},
                 {/*"D Hold",*/ VOICE_ID_INVALID,                       MENU_D_HOLD        ,DTMF复位},
 #endif
-                {/*"D Prel",*/ VOICE_ID_INVALID,                       MENU_D_PRE         ,DTMF预载波},
+                {/*"D Prel",*/ VOICE_ID_INVALID, MENU_D_PRE, DTMF预载波},
 #ifdef ENABLE_DTMF_CALLING
                 {/*"D List",*/ VOICE_ID_INVALID,                       MENU_D_LIST        ,DTMF联系人},
 #endif
-                {/*"D Live",*/ VOICE_ID_INVALID,                       MENU_D_LIVE_DEC    ,DTMF显示}, // live DTMF decoder
+                {/*"D Live",*/ VOICE_ID_INVALID, MENU_D_LIVE_DEC, DTMF显示}, // live DTMF decoder
 #ifdef ENABLE_AM_FIX//1
                 {/*"AM Fix",*/ VOICE_ID_INVALID,                       MENU_AM_FIX        ,AM自动增益},
 #endif
@@ -106,12 +106,12 @@ const t_menu_item MenuList[] =
                 {/*"AM FT1",*/ VOICE_ID_INVALID,                       MENU_AM_FIX_TEST1  ,""},
 #endif
 
-                {/*"RxMode",*/ VOICE_ID_DUAL_STANDBY,                  MENU_TDR           ,收发模式},
-                {/*"Sql",*/    VOICE_ID_SQUELCH,                       MENU_SQL           ,静噪等级},
+                {/*"RxMode",*/ VOICE_ID_DUAL_STANDBY, MENU_TDR, 收发模式},
+                {/*"Sql",*/    VOICE_ID_SQUELCH, MENU_SQL, 静噪等级},
 
                 // hidden menu items from here on
                 // enabled if pressing both the PTT and upper side button at power-on
-                {/*"F Lock",*/ VOICE_ID_INVALID,                       MENU_F_LOCK        ,频段解锁},
+                {/*"F Lock",*/ VOICE_ID_INVALID, MENU_F_LOCK, 频段解锁},
 //                {/*"Tx 200",*/ VOICE_ID_INVALID,                       MENU_200TX         ,两百M发射}, // was "200TX"
 //                {/*"Tx 350",*/ VOICE_ID_INVALID,                       MENU_350TX         ,三百五十M发射}, // was "350TX"
 //                {/*"Tx 500",*/ VOICE_ID_INVALID,                       MENU_500TX         ,五百M发射}, // was "500TX"
@@ -119,19 +119,20 @@ const t_menu_item MenuList[] =
 #ifdef ENABLE_F_CAL_MENU//0
                 {/*"FrCali",*/ VOICE_ID_INVALID,                       MENU_F_CALI        ,""}, // reference xtal calibration
 #endif
-                {/*"BatCal",*/ VOICE_ID_INVALID,                       MENU_BATCAL        ,电池调压}, // battery voltage calibration
-               {/*"BatTyp",*/ VOICE_ID_INVALID,                       MENU_BATTYP        ,电池大小}, // battery type 1600/2200mAh
-                {/*"Reset",*/  VOICE_ID_INITIALISATION,                MENU_RESET         ,参数复位}, // might be better to move this to the hidden menu items ?
+                {/*"BatCal",*/ VOICE_ID_INVALID, MENU_BATCAL, 电池调压}, // battery voltage calibration
+                {/*"BatTyp",*/ VOICE_ID_INVALID, MENU_BATTYP, 电池大小}, // battery type 1600/2200mAh
+                {/*"Reset",*/  VOICE_ID_INITIALISATION, MENU_RESET,
+                               参数复位}, // might be better to move this to the hidden menu items ?
 
-            //   {/*"",*/       VOICE_ID_INVALID,                       0xff               ,"\x00"}  // end of list - DO NOT delete or move this this
+                //   {/*"",*/       VOICE_ID_INVALID,                       0xff               ,"\x00"}  // end of list - DO NOT delete or move this this
         };
 
 
 const uint8_t FIRST_HIDDEN_MENU_ITEM = MENU_F_LOCK;
-#if ENABLE_CHINESE_FULL!=4
+#if ENABLE_CHINESE_FULL != 4
 const char gSubMenu_SFT_D[][10] =//4
 #else
-const char gSubMenu_SFT_D[][16] =//4
+        const char gSubMenu_SFT_D[][16] =//4
 #endif
         {
 //                "OFF",
@@ -144,10 +145,10 @@ const char gSubMenu_SFT_D[][16] =//4
         };
 
 
-#if ENABLE_CHINESE_FULL!=4
+#if ENABLE_CHINESE_FULL != 4
 const char gSubMenu_OFF_ON[][3] =//4
 #else
-const char gSubMenu_OFF_ON[][5] =//4
+        const char gSubMenu_OFF_ON[][5] =//4
 #endif
         {
 //                "OFF",
@@ -155,10 +156,10 @@ const char gSubMenu_OFF_ON[][5] =//4
                 关闭,
                 开启
         };
-#if ENABLE_CHINESE_FULL!=4
+#if ENABLE_CHINESE_FULL != 4
 const char gSubMenu_SAVE[][4] =//4
 #else
-const char gSubMenu_SAVE[][6] =//4
+        const char gSubMenu_SAVE[][6] =//4
 #endif
         {
 //                "OFF",
@@ -174,10 +175,10 @@ const char gSubMenu_SAVE[][6] =//4
                 四级
 
         };
-#if ENABLE_CHINESE_FULL!=4
+#if ENABLE_CHINESE_FULL != 4
 const char gSubMenu_TOT[][5] = //7
 #else
-const char gSubMenu_TOT[][6] = //7
+        const char gSubMenu_TOT[][6] = //7
 #endif
         {
 //                "30 sec",
@@ -192,21 +193,21 @@ const char gSubMenu_TOT[][6] = //7
 //                "9 min",
 //                "15 min"
 
- 三十秒 ,
- 一分 ,
- 两分,
- 三分 ,
- 四分 ,
- 五分 ,
- 六分 ,
- 七分 ,
- 八分 ,
- 九分 ,
- 十五分
+                三十秒,
+                一分,
+                两分,
+                三分,
+                四分,
+                五分,
+                六分,
+                七分,
+                八分,
+                九分,
+                十五分
 
         };
 
-const char *gSubMenu_RXMode[] =
+const char *const gSubMenu_RXMode[] =
         {
 
 //                "MAIN\nONLY",        // TX and RX on main only
@@ -228,22 +229,22 @@ const char gSubMenu_VOICE[][4] =
     "ENG"
 };
 #endif
-#if ENABLE_CHINESE_FULL!=4
+#if ENABLE_CHINESE_FULL != 4
 const char gSubMenu_SC_REV[][10] =//8
 #else
-const char gSubMenu_SC_REV[][18] =//8
+        const char gSubMenu_SC_REV[][18] =//8
 #endif
         {
 //                "TIMEOUT",
 //                "CARRIER",
 //                "STOP"
-                遇信号5秒后搜索  ,
-                信号停止后搜索  ,
+                遇信号5秒后搜索,
+                信号停止后搜索,
                 遇信号后停止搜索
 
         };
 
-const char *gSubMenu_MDF[] =
+const char *const gSubMenu_MDF[] =
         {
 //                "FREQ",
 //                "CHANNEL\nNUMBER",
@@ -280,7 +281,7 @@ const char gSubMenu_D_RSP[][18] =//11
         };
 #endif
 
-const char *gSubMenu_PTT_ID[] =
+const char *const gSubMenu_PTT_ID[] =
         {
 //                "OFF",
 //                "UP CODE",
@@ -295,10 +296,10 @@ const char *gSubMenu_PTT_ID[] =
         };
 
 
-#if ENABLE_CHINESE_FULL!=4
+#if ENABLE_CHINESE_FULL != 4
 const char gSubMenu_ROGER[][13] =
 #else
-const char gSubMenu_ROGER[][15] =
+        const char gSubMenu_ROGER[][15] =
 #endif
         {
 //                "OFF",
@@ -309,13 +310,13 @@ const char gSubMenu_ROGER[][15] =
                 ROGER尾音,
                 MDC尾音,
                 MDC首音,
-        MDC首尾音,
+                MDC首尾音,
                 MDC首音加ROGER
         };
-#if ENABLE_CHINESE_FULL!=4
+#if ENABLE_CHINESE_FULL != 4
 const char gSubMenu_RESET[][6] =//4
 #else
-const char gSubMenu_RESET[][11] =//4
+        const char gSubMenu_RESET[][11] =//4
 #endif
         {
 //                "VFO",
@@ -324,7 +325,7 @@ const char gSubMenu_RESET[][11] =//4
                 全部参数
         };
 
-const char *gSubMenu_F_LOCK[] =
+const char *const gSubMenu_F_LOCK[] =
         {
                 "DEFAULT+\n137-174\n400-470",
                 "FCC HAM\n144-148\n420-450",
@@ -337,10 +338,10 @@ const char *gSubMenu_F_LOCK[] =
                 禁用全部,
                 解锁全部,
         };
-#if ENABLE_CHINESE_FULL!=4
+#if ENABLE_CHINESE_FULL != 4
 const char gSubMenu_BACKLIGHT[][5] =//7
 #else
-const char gSubMenu_BACKLIGHT[][6] =//7
+        const char gSubMenu_BACKLIGHT[][6] =//7
 #endif
         {
 //                "OFF",
@@ -361,10 +362,10 @@ const char gSubMenu_BACKLIGHT[][6] =//7
                 开启
 
         };
-#if ENABLE_CHINESE_FULL!=4
+#if ENABLE_CHINESE_FULL != 4
 const char gSubMenu_RX_TX[][7] =//6
 #else
-const char gSubMenu_RX_TX[][12] =//6
+        const char gSubMenu_RX_TX[][12] =//6
 #endif
         {
 //                "OFF",
@@ -386,7 +387,6 @@ const char gSubMenu_AM_fix_test1[][8] =
     "LNA-S 3"
 };
 #endif
-
 
 
 const char gSubMenu_BATTYP[][8] =
@@ -440,7 +440,7 @@ int edit_index;
 
 void UI_DisplayMenu(void) {
     const unsigned int menu_list_width = 6; // max no. of characters on the menu list (left side)
-   const  unsigned int menu_item_x1 = (8 * menu_list_width) ;//+ 2;
+    const unsigned int menu_item_x1 = (8 * menu_list_width);//+ 2;
     const unsigned int menu_item_x2 = LCD_WIDTH - 1;
     unsigned int i;
     char String[64];  // bigger cuz we can now do multi-line in one string (use '\n' char)
@@ -449,7 +449,7 @@ void UI_DisplayMenu(void) {
 #endif
 
     // clear the screen buffer
-    memset(gFrameBuffer, 0, sizeof(gFrameBuffer));
+    UI_DisplayClear();
 
 #if 1
     // original menu layout
@@ -518,9 +518,8 @@ void UI_DisplayMenu(void) {
         else
         if (menu_index >= 0 && menu_index < (int)gMenuListCount)
         {	// current menu item
-            strcpy(String, MenuList[menu_index].name);
-//			strcat(String, ":");
-            UI_PrintStringSmall(String, 0, 0, 0);
+
+            UI_PrintStringSmall(MenuList[menu_index].name, 0, 0, 0);
 //			UI_PrintStringSmall(String, 0, 0, 0);
         }
     }
@@ -547,11 +546,11 @@ void UI_DisplayMenu(void) {
         }
             break;
 
-#ifdef ENABLE_AUDIO_BAR
+//#ifdef ENABLE_AUDIO_BAR
 //            case MENU_MIC_BAR:
 //                strcpy(String, gSubMenu_OFF_ON[gSubMenuSelection]);
 //                break;
-#endif
+//#endif
 
         case MENU_STEP: {
             uint16_t step = gStepFrequencyTable[FREQUENCY_GetStepIdxFromSortedIdx(gSubMenuSelection)];
@@ -571,7 +570,7 @@ void UI_DisplayMenu(void) {
             if (gSubMenuSelection == 0)
                 //translate
 #ifdef test
-                  strcpy(String, "OFF");
+                strcpy(String, "OFF");
 
 #else
                 strcpy(String, 关闭);
@@ -587,12 +586,12 @@ void UI_DisplayMenu(void) {
         case MENU_R_CTCS:
         case MENU_T_CTCS: {
             if (gSubMenuSelection == 0)
-               // translate
+                // translate
 #ifdef test
-                    strcpy(String, "OFF");
+                strcpy(String, "OFF");
 
 #else
-            //关闭
+                //关闭
                 strcpy(String, 关闭);
 
 #endif
@@ -604,8 +603,8 @@ void UI_DisplayMenu(void) {
         }
 
         case MENU_SFT_D:
-            strncpy(String, gSubMenu_SFT_D[gSubMenuSelection] , sizeof( gSubMenu_SFT_D[gSubMenuSelection] ));
-            String[sizeof( gSubMenu_SFT_D[gSubMenuSelection])] = '\0';
+            strncpy(String, gSubMenu_SFT_D[gSubMenuSelection], sizeof(gSubMenu_SFT_D[gSubMenuSelection]));
+            String[sizeof(gSubMenu_SFT_D[gSubMenuSelection])] = '\0';
             break;
 
         case MENU_OFFSET:
@@ -627,13 +626,13 @@ void UI_DisplayMenu(void) {
 //
 //            strcpy(String, gSubMenu_W_N[gSubMenuSelection]);
 //            break;
-   
+
         case MENU_SCR:
             strcpy(String, gSubMenu_SCRAMBLER[gSubMenuSelection]);
-       
+
 #if 1
-          //  if (gSubMenuSelection > 0 && gSetting_ScrambleEnable)
-            if (gSubMenuSelection > 0 )
+            //  if (gSubMenuSelection > 0 && gSetting_ScrambleEnable)
+            if (gSubMenuSelection > 0)
                 BK4819_EnableScramble(gSubMenuSelection - 1);
             else
                 BK4819_DisableScramble();
@@ -641,15 +640,14 @@ void UI_DisplayMenu(void) {
             break;
 
 
-
         case MENU_ABR:
             strcpy(String, gSubMenu_BACKLIGHT[gSubMenuSelection]);
-            
-            
+
+
 //            BACKLIGHT_SetBrightness(-1);
             break;
 
-       // case MENU_ABR_MIN:
+            // case MENU_ABR_MIN:
         case MENU_ABR_MAX:
             sprintf(String, "%d", gSubMenuSelection);
             if (gIsInSubMenu)
@@ -671,7 +669,6 @@ void UI_DisplayMenu(void) {
 #endif
 
 
-
         case MENU_COMPAND:
             strcpy(String, gSubMenu_RX_TX[gSubMenuSelection]);
 
@@ -682,13 +679,13 @@ void UI_DisplayMenu(void) {
             case MENU_AM_FIX:
 #endif
         case MENU_BCL:
-   //     case MENU_BEEP:
+            //     case MENU_BEEP:
 //        case MENU_S_ADD1:
 //        case MENU_S_ADD2:
         case MENU_STE:
         case MENU_D_ST:
 #ifdef ENABLE_DTMF_CALLING
-       // case MENU_D_DCD:
+            // case MENU_D_DCD:
 #endif
         case MENU_D_LIVE_DEC:
 #ifdef ENABLE_NOAA
@@ -698,7 +695,7 @@ void UI_DisplayMenu(void) {
 //        case MENU_200TX:
 //        case MENU_500TX:
 //        case MENU_350EN:
-                       strcpy(String, gSubMenu_OFF_ON[gSubMenuSelection]);
+            strcpy(String, gSubMenu_OFF_ON[gSubMenuSelection]);
 
             break;
 //        case MENU_SCREN:
@@ -713,99 +710,80 @@ void UI_DisplayMenu(void) {
             const bool valid = RADIO_CheckValidChannel(gSubMenuSelection, false, 1);
 
             UI_GenerateChannelStringEx(String, valid, gSubMenuSelection);
-            UI_PrintStringSmall(String, menu_item_x1-12, menu_item_x2, 2);
+            UI_PrintStringSmall(String, menu_item_x1 - 12, menu_item_x2, 2);
 
             if (valid && !gAskForConfirmation) {    // show the frequency so that the user knows the channels frequency
                 const uint32_t frequency = SETTINGS_FetchChannelFrequency(gSubMenuSelection);
                 sprintf(String, "%u.%05u", frequency / 100000, frequency % 100000);
-                UI_PrintStringSmall(String, menu_item_x1-12, menu_item_x2, 5);
+                UI_PrintStringSmall(String, menu_item_x1 - 12, menu_item_x2, 5);
             }
-
+            SETTINGS_FetchChannelName(String, gSubMenuSelection);
+            UI_PrintStringSmall(String[0] ? String : "--", menu_item_x1 - 12, menu_item_x2, 3);
             already_printed = true;
             break;
         }
 #ifdef ENABLE_MDC1200
-//            case MENU_MDC_ID:
-//            ///    char mdc_id_str[4];
-//    sprintf(String, "%04X", gEeprom.MDC1200_ID); // %04X确保输出是4个字符长度的十六进制数
-//          //  strcpy(String, id);
-//            break;
+            //            case MENU_MDC_ID:
+            //            ///    char mdc_id_str[4];
+            //    sprintf(String, "%04X", gEeprom.MDC1200_ID); // %04X确保输出是4个字符长度的十六进制数
+            //          //  strcpy(String, id);
+            //            break;
 
-        case MENU_MDC_ID:
-        {
-//            gIsInSubMenu
-//            if (!gIsInSubMenu||(edit_index<0&&gIsInSubMenu)) {    // show the channel name
-//                               //     sprintf(edit, "%04lX", gEeprom.MDC1200_ID); // %04X确保输出是4个字符长度的十六进制数
-//                                      sprintf(String, "%04X", gEeprom.MDC1200_ID); // %04X确保输出是4个字符长度的十六进制数
-//
-//                        edit[0]=String[0];
-//                        edit[1]=String[1];
-//                        edit[2]=String[2];
-//                        edit[3]=String[3];
-//
-//
-//                UI_PrintStringSmall(String, menu_item_x1, menu_item_x2, 3);//4
-            //}
-//            else
-                if(gIsInSubMenu){    // show the channel name being edited
-//                   edit_index= edit_index<0?0:edit_index;
-//                   			memmove(edit_original, edit, sizeof(edit_original));
+                    case MENU_MDC_ID:
+                    {
 
-                UI_PrintStringSmall(edit, menu_item_x1, menu_item_x2, 3);
-                if (edit_index < 4)
-                    UI_PrintStringSmall("^", menu_item_x1+(((menu_item_x2 - menu_item_x1) - (28)) + 1) / 2 + (7 * edit_index), 0, 4);  // show the cursor
-            }else
-                {
-                   //     sprintf(edit, "%04lX", gEeprom.MDC1200_ID); // %04X确保输出是4个字符长度的十六进制数
-                                      sprintf(String, "%04X", gEeprom.MDC1200_ID); // %04X确保输出是4个字符长度的十六进制数
-            edit_index = -1;
-
-                        edit[0]=String[0];
-                        edit[1]=String[1];
-                        edit[2]=String[2];
-                        edit[3]=String[3];
+                            if(gIsInSubMenu){    // show the channel name being edited
 
 
-                UI_PrintStringSmall(String, menu_item_x1, menu_item_x2, 3);//4
-                }
-            already_printed = true;
-            break;
-        }
+                            UI_PrintStringSmall(edit, menu_item_x1, menu_item_x2, 3);
+                            if (edit_index < 4)
+                                UI_PrintStringSmall("^", menu_item_x1+(((menu_item_x2 - menu_item_x1) - (28)) + 1) / 2 + (7 * edit_index), 0, 4);  // show the cursor
+                        }else
+                            {
+                               //     sprintf(edit, "%04lX", gEeprom.MDC1200_ID); // %04X确保输出是4个字符长度的十六进制数
+                                                  sprintf(String, "%04X", gEeprom.MDC1200_ID); // %04X确保输出是4个字符长度的十六进制数
+                        edit_index = -1;
+
+                                    edit[0]=String[0];
+                                    edit[1]=String[1];
+                                    edit[2]=String[2];
+                                    edit[3]=String[3];
+
+
+                            UI_PrintStringSmall(String, menu_item_x1, menu_item_x2, 3);//4
+                            }
+                        already_printed = true;
+                        break;
+                    }
 #endif
         case MENU_MEM_NAME: {
             const bool valid = RADIO_CheckValidChannel(gSubMenuSelection, false, 1);
 
             UI_GenerateChannelStringEx(String, valid, gSubMenuSelection);
-            UI_PrintStringSmall(String, menu_item_x1-12, menu_item_x2, 2);
+            UI_PrintStringSmall(String, menu_item_x1 - 12, menu_item_x2, 2);
 
             if (valid) {
                 const uint32_t frequency = SETTINGS_FetchChannelFrequency(gSubMenuSelection);
                 //bug way
-                char tmp_name[17]={0};
+                char tmp_name[17] = {0};
                 SETTINGS_FetchChannelName(tmp_name, gSubMenuSelection);
 
                 if (!gIsInSubMenu || edit_index < 0) {    // show the channel name
                     SETTINGS_FetchChannelName(String, gSubMenuSelection);
-                    if (String[0] == 0)
-                        strcpy(String, "--");
-                    
-                    UI_PrintStringSmall(String, menu_item_x1-12, menu_item_x2, 3);//-显示
-                } else if(!CHINESE_JUDGE(tmp_name,strlen(tmp_name))) {    // show the channel name being edited
-                    UI_PrintStringSmall(edit, menu_item_x1-12, 0, 3);
+                    char *pPrintStr = String[0] ? String : "--";
+                    UI_PrintStringSmall(pPrintStr, menu_item_x1 - 12, menu_item_x2, 3);
+                } else if (!CHINESE_JUDGE(tmp_name, strlen(tmp_name))) {    // show the channel name being edited
+                    UI_PrintStringSmall(edit, menu_item_x1 - 12, 0, 3);
 
                     if (edit_index < MAX_EDIT_INDEX)
-                        UI_PrintStringSmall("^", menu_item_x1 -12+ (7 * edit_index), 0, 4);  // show the cursor
-                }else if(CHINESE_JUDGE(tmp_name,strlen(tmp_name)))
-                {
-                    edit_index =-1;
+                        UI_PrintStringSmall("^", menu_item_x1 - 12 + (7 * edit_index), 0, 4);  // show the cursor
+                } else if (CHINESE_JUDGE(tmp_name, strlen(tmp_name))) {
+                    edit_index = -1;
                 }
 
                 if (!gAskForConfirmation) {    // show the frequency so that the user knows the channels frequency
                     sprintf(String, "%u.%05u", frequency / 100000, frequency % 100000);
-                    if (!gIsInSubMenu || edit_index < 0)
-                        UI_PrintStringSmall(String, menu_item_x1-12, menu_item_x2, 5);
-                    else
-                        UI_PrintStringSmall(String, menu_item_x1-12, menu_item_x2, 5);
+                    UI_PrintStringSmall(String, menu_item_x1 - 12, menu_item_x2, 5);
                 }
             }
 
@@ -815,20 +793,20 @@ void UI_DisplayMenu(void) {
 
         case MENU_SAVE:
             strcpy(String, gSubMenu_SAVE[gSubMenuSelection]);
-            
-            
+
+
             break;
 
         case MENU_TDR:
             strcpy(String, gSubMenu_RXMode[gSubMenuSelection]);
-            
-            
+
+
             break;
 
         case MENU_TOT:
             strcpy(String, gSubMenu_TOT[gSubMenuSelection]);
-            
-            
+
+
             break;
 
 #ifdef ENABLE_VOICE
@@ -848,19 +826,19 @@ void UI_DisplayMenu(void) {
         case MENU_MDF:
 
 
-    strcpy(String, gSubMenu_MDF[gSubMenuSelection]);
-            
-            
+            strcpy(String, gSubMenu_MDF[gSubMenuSelection]);
+
+
             break;
 
         case MENU_RP_STE:
             if (gSubMenuSelection == 0)
 //translate
 #ifdef test
-                   strcpy(String, "OFF");
+                strcpy(String, "OFF");
 
 #else
-            //关闭
+                //关闭
                 strcpy(String, 关闭);
 
 #endif
@@ -873,10 +851,10 @@ void UI_DisplayMenu(void) {
         case MENU_S_LIST:
             if (gSubMenuSelection < 2)
 
-         //translate
+                //translate
 
 #ifdef test
-                   sprintf(String, "list %u", 1 + gSubMenuSelection);
+                sprintf(String, "list %u", 1 + gSubMenuSelection);
 
 #else  //！！列表
                 sprintf(String, 列表" %u", 1 + gSubMenuSelection);
@@ -886,11 +864,11 @@ void UI_DisplayMenu(void) {
             else
 
 #ifdef test
-                  strcpy(String, "ALL");
+                strcpy(String, "ALL");
 
 #else
-            //全部
-            strcpy(String, 全部);
+                //全部
+                strcpy(String, 全部);
 
 #endif
             break;
@@ -901,10 +879,10 @@ void UI_DisplayMenu(void) {
                 break;
 #endif
 #ifdef ENABLE_DTMF_CALLING
-        case MENU_ANI_ID:
+            case MENU_ANI_ID:
 
-            strcpy(String, gEeprom.ANI_DTMF_ID);
-            break;
+                strcpy(String, gEeprom.ANI_DTMF_ID);
+                break;
 #endif
 
         case MENU_UPCODE:
@@ -916,15 +894,15 @@ void UI_DisplayMenu(void) {
             sprintf(String, "%.8s\n%.8s", gEeprom.DTMF_DOWN_CODE, gEeprom.DTMF_DOWN_CODE + 8);
             break;
 #ifdef ENABLE_DTMF_CALLING
-        case MENU_D_RSP:
-            strcpy(String, gSubMenu_D_RSP[gSubMenuSelection]);
-            
-            
-            break;
+            case MENU_D_RSP:
+                strcpy(String, gSubMenu_D_RSP[gSubMenuSelection]);
 
-        case MENU_D_HOLD:
-            sprintf(String, "%ds", gSubMenuSelection);
-            break;
+
+                break;
+
+            case MENU_D_HOLD:
+                sprintf(String, "%ds", gSubMenuSelection);
+                break;
 #endif
         case MENU_D_PRE:
             sprintf(String, "%d*10ms", gSubMenuSelection);
@@ -932,8 +910,8 @@ void UI_DisplayMenu(void) {
 
         case MENU_PTT_ID:
             strcpy(String, gSubMenu_PTT_ID[gSubMenuSelection]);
-            
-            
+
+
             break;
 
 //        case MENU_BAT_TXT:
@@ -942,13 +920,13 @@ void UI_DisplayMenu(void) {
 //
 //            break;
 #ifdef ENABLE_DTMF_CALLING
-        case MENU_D_LIST:
-            gIsDtmfContactValid = DTMF_GetContact((int) gSubMenuSelection - 1, Contact);
-            if (!gIsDtmfContactValid)
-                strcpy(String, "NULL");
-            else
-                memcpy(String, Contact, 8);
-            break;
+            case MENU_D_LIST:
+                gIsDtmfContactValid = DTMF_GetContact((int) gSubMenuSelection - 1, Contact);
+                if (!gIsDtmfContactValid)
+                    strcpy(String, "NULL");
+                else
+                    memcpy(String, Contact, 8);
+                break;
 #endif
 //        case MENU_PONMSG:
 //            strcpy(String, gSubMenu_OFF_ON[gSubMenuSelection]);
@@ -958,8 +936,8 @@ void UI_DisplayMenu(void) {
 
         case MENU_ROGER:
             strcpy(String, gSubMenu_ROGER[gSubMenuSelection]);
-            
-            
+
+
             break;
 
 //        case MENU_VOL:
@@ -970,8 +948,8 @@ void UI_DisplayMenu(void) {
 
         case MENU_RESET:
             strcpy(String, gSubMenu_RESET[gSubMenuSelection]);
-            
-            
+
+
             break;
 
         case MENU_F_LOCK:
@@ -979,9 +957,9 @@ void UI_DisplayMenu(void) {
 //                strcpy(String, "READ\nMANUAL");
 //
 //            else
-                strcpy(String, gSubMenu_F_LOCK[gSubMenuSelection]);
-            
-            
+            strcpy(String, gSubMenu_F_LOCK[gSubMenuSelection]);
+
+
             break;
 
 #ifdef ENABLE_F_CAL_MENU
@@ -1031,7 +1009,7 @@ void UI_DisplayMenu(void) {
             // count number of lines
             for (i = 0; i < len; i++) {
                 if (String[i] == '\n' && i < (len - 1)) {    // found new line char
-                    lines+=1;
+                    lines += 1;
                     String[i] = 0;  // null terminate the line
                 }
             }
@@ -1056,11 +1034,11 @@ void UI_DisplayMenu(void) {
                     UI_PrintStringSmall(String + i, menu_item_x1, menu_item_x2, y + 1);
 
                 // look for start of next line
-                while (i < len && String[i] !=0&&String[i] !='\n')
+                while (i < len && String[i] != 0 && String[i] != '\n')
                     i++;
 
                 // hop over the null term char(s)
-                while (i < len && (String[i] ==0||String[i] =='\n'))
+                while (i < len && (String[i] == 0 || String[i] == '\n'))
                     i++;
 
                 y += small ? 1 : 2;
@@ -1070,53 +1048,45 @@ void UI_DisplayMenu(void) {
 
     if (UI_MENU_GetCurrentMenuId() == MENU_SLIST1 || UI_MENU_GetCurrentMenuId() == MENU_SLIST2) {
         i = (UI_MENU_GetCurrentMenuId() == MENU_SLIST1) ? 0 : 1;
-//		if (gSubMenuSelection == 0xFF)
-        if (gSubMenuSelection < 0)
-            strcpy(String, "NULL");
-        else
-            UI_GenerateChannelStringEx(String, true, gSubMenuSelection);
 
-//		if (gSubMenuSelection == 0xFF || !gEeprom.SCAN_LIST_ENABLED[i])
-        if (gSubMenuSelection < 0 || !gEeprom.SCAN_LIST_ENABLED[i]) {
-            // channel number
-            UI_PrintStringSmall(String, menu_item_x1-12, menu_item_x2, 2);
+        char *pPrintStr = String;
 
-            // channel name
-            SETTINGS_FetchChannelName(String, gSubMenuSelection);
-            if (String[0] == 0)
-                strcpy(String, "--");
-            UI_PrintStringSmall(String, menu_item_x1-12, menu_item_x2, 4);
+        if (gSubMenuSelection < 0) {
+            pPrintStr = "NULL";
         } else {
-            // channel number
-            UI_PrintStringSmall(String, menu_item_x1-12, menu_item_x2, 2);
+            UI_GenerateChannelStringEx(String, true, gSubMenuSelection);
+            pPrintStr = String;
+        }
 
-            // channel name
-            SETTINGS_FetchChannelName(String, gSubMenuSelection);
-            if (String[0] == 0)
-                strcpy(String, "--");
-            UI_PrintStringSmall(String, menu_item_x1-12, menu_item_x2, 4);
+        // channel number
+        UI_PrintStringSmall(pPrintStr, menu_item_x1 - 12, menu_item_x2, 2);
+
+
+        SETTINGS_FetchChannelName(String, gSubMenuSelection);
+        pPrintStr = String[0] ? String : "--";
+
+
+// channel name and scan-list
+        if (gSubMenuSelection < 0 || !gEeprom.SCAN_LIST_ENABLED[i]) {
+            UI_PrintStringSmall(pPrintStr, menu_item_x1 - 12, menu_item_x2, 4);
+        } else {
+            UI_PrintStringSmall(pPrintStr, menu_item_x1 - 12, menu_item_x2, 4);
+
 
             if (IS_MR_CHANNEL(gEeprom.SCANLIST_PRIORITY_CH1[i])) {
-                sprintf(String, "PRI1:%u", gEeprom.SCANLIST_PRIORITY_CH1[i] + 1);
-                UI_PrintStringSmall(String, menu_item_x1-12, menu_item_x2, 4);
+                sprintf(String, "PRI%d:%u", 1, gEeprom.SCANLIST_PRIORITY_CH1[i] + 1);
+                UI_PrintStringSmall(String, menu_item_x1 - 12, menu_item_x2, 3);
             }
 
+//            if (IS_MR_CHANNEL(gEeprom.SCANLIST_PRIORITY_CH2[i])) {
+//                sprintf(String, "PRI2:%u", gEeprom.SCANLIST_PRIORITY_CH2[i] + 1);
             if (IS_MR_CHANNEL(gEeprom.SCANLIST_PRIORITY_CH2[i])) {
-                sprintf(String, "PRI2:%u", gEeprom.SCANLIST_PRIORITY_CH2[i] + 1);
-                UI_PrintStringSmall(String, menu_item_x1-12, menu_item_x2, 5);
+                sprintf(String, "PRI%d:%u", 2, gEeprom.SCANLIST_PRIORITY_CH2[i] + 1);
+                UI_PrintStringSmall(String, menu_item_x1 - 12, menu_item_x2, 6);
             }
         }
     }
 
-    if (UI_MENU_GetCurrentMenuId() == MENU_MEM_CH ||
-        UI_MENU_GetCurrentMenuId() == MENU_DEL_CH ||
-        UI_MENU_GetCurrentMenuId() == MENU_1_CALL) {    // display the channel name
-        char s[17];
-        SETTINGS_FetchChannelName(s, gSubMenuSelection);
-        if (s[0] == 0)
-            strcpy(s, "--");
-        UI_PrintStringSmall(s, menu_item_x1-12, menu_item_x2, 3);
-    }
 
     if ((UI_MENU_GetCurrentMenuId() == MENU_R_CTCS || UI_MENU_GetCurrentMenuId() == MENU_R_DCS) && gCssBackgroundScan)
         //扫描
@@ -1132,22 +1102,21 @@ void UI_DisplayMenu(void) {
 //            UI_PrintStringSmall(gEeprom.DTMF_DOWN_CODE + 12, menu_item_x1, menu_item_x2, 5);
 #ifdef ENABLE_DTMF_CALLING
     if (UI_MENU_GetCurrentMenuId() == MENU_D_LIST && gIsDtmfContactValid) {
+
         Contact[11] = 0;
         memcpy(&gDTMF_ID, Contact + 8, 4);
-        sprintf(String, "ID:%s", Contact + 8);
+        sprintf(String, "ID:%4s", gDTMF_ID);
         UI_PrintStringSmall(String, menu_item_x1, menu_item_x2, 5);
     }
 #endif
     if (UI_MENU_GetCurrentMenuId() == MENU_R_CTCS ||
         UI_MENU_GetCurrentMenuId() == MENU_T_CTCS ||
         UI_MENU_GetCurrentMenuId() == MENU_R_DCS ||
-            UI_MENU_GetCurrentMenuId() == MENU_T_DCS
+        UI_MENU_GetCurrentMenuId() == MENU_T_DCS
 #ifdef ENABLE_DTMF_CALLING
         || UI_MENU_GetCurrentMenuId() == MENU_D_LIST
 #endif
-            )
-
-    {
+            ) {
 
         sprintf(String, "%2d", gSubMenuSelection);
         UI_PrintStringSmall(String, 105, 0, 1);//small
@@ -1156,14 +1125,15 @@ void UI_DisplayMenu(void) {
     if ((UI_MENU_GetCurrentMenuId() == MENU_RESET ||
          UI_MENU_GetCurrentMenuId() == MENU_MEM_CH ||
          UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME ||
-            UI_MENU_GetCurrentMenuId() == MENU_MDC_ID||
+         UI_MENU_GetCurrentMenuId() == MENU_MDC_ID ||
          UI_MENU_GetCurrentMenuId() == MENU_DEL_CH) && gAskForConfirmation) {    // display confirmation
-        strcpy(String, (gAskForConfirmation == 1) ? "SURE?" : "WAIT!");
-        if((UI_MENU_GetCurrentMenuId() == MENU_MEM_CH ||UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME ||UI_MENU_GetCurrentMenuId() == MENU_DEL_CH)&&gAskForConfirmation)
-        UI_PrintStringSmall(String, menu_item_x1-12, menu_item_x2, 5);
-        else         UI_PrintStringSmall(String, menu_item_x1, menu_item_x2, 5);
+        char *pPrintStr = (gAskForConfirmation == 1) ? "SURE?" : "WAIT!";
+        if ((UI_MENU_GetCurrentMenuId() == MENU_MEM_CH || UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME ||
+             UI_MENU_GetCurrentMenuId() == MENU_DEL_CH) && gAskForConfirmation)
+            UI_PrintStringSmall(pPrintStr, menu_item_x1 - 12, menu_item_x2, 5);
+        else UI_PrintStringSmall(pPrintStr, menu_item_x1, menu_item_x2, 5);
 
-        gRequestSaveSettings  = 1;
+        gRequestSaveSettings = 1;
 
     }
 
@@ -1174,23 +1144,26 @@ void UI_DisplayMenu(void) {
 
 
 void UI_ShowChineseMenu() {
-  //  return;
-    uint8_t cnt_char = 0;
+
 
     uint8_t size_menu = 0;
-    uint8_t cnt_menu=0;
-    for ( cnt_menu = 0; cnt_menu < 7 && MenuList[gMenuCursor].name[cnt_menu] != 0; cnt_menu++) {
-
-            if(is_chn(MenuList[gMenuCursor].name[cnt_menu])!=255)//中文
-                size_menu+=12;
-            else//英文
-                size_menu+=7;
-
+    uint8_t cnt_menu = 0;
+    for (cnt_menu = 0; cnt_menu < 7 && MenuList[gMenuCursor].name[cnt_menu] != 0; cnt_menu++) {
+        if (is_chn(MenuList[gMenuCursor].name[cnt_menu]) != 255)//中文
+        {
+            size_menu += 12;
+#if ENABLE_CHINESE_FULL != 0
+            cnt_menu++;
+#endif
+        } else//英文
+        {
+            size_menu += 7;
+        }
     }
-    cnt_char = 0;
-    if (size_menu < 48)cnt_char = (48 - size_menu ) / 2;
-    menu_set_flag=1;
-    UI_PrintStringSmall(MenuList[gMenuCursor].name, (cnt_char), 0, 0);
+
+    menu_set_flag = 1;
+
+    UI_PrintStringSmall(MenuList[gMenuCursor].name, size_menu < 48 ? (48 - size_menu) / 2 : 0, 0, 0);
 
 
 }

@@ -35,15 +35,11 @@ static const uint32_t gDefaultFrequencyTable[] =
                 43350000     //
         };
 
-EEPROM_Config_t gEeprom;
+EEPROM_Config_t gEeprom={0};
 
 void SETTINGS_InitEEPROM(void)
 {
-    unsigned int i;
-    uint8_t      Data[16];
-
-    memset(Data, 0, sizeof(Data));
-    memset(&gEeprom, 0, sizeof(gEeprom));
+    uint8_t Data[16] = {0};
     // 0E70..0E77
     EEPROM_ReadBuffer(0x0E70, Data, 8);
     gEeprom.CHAN_1_CALL          = IS_MR_CHANNEL(Data[0]) ? Data[0] : MR_CHANNEL_FIRST;
@@ -84,7 +80,7 @@ void SETTINGS_InitEEPROM(void)
     gEeprom.FreqChannel[1]     = IS_FREQ_CHANNEL(Data[5])  ? Data[5] : (FREQ_CHANNEL_FIRST + BAND6_400MHz);
 #ifdef ENABLE_NOAA
     gEeprom.NoaaChannel[0] = IS_NOAA_CHANNEL(Data[6])  ? Data[6] : NOAA_CHANNEL_FIRST;
-		gEeprom.NoaaChannel[1] = IS_NOAA_CHANNEL(Data[7])  ? Data[7] : NOAA_CHANNEL_FIRST;
+	gEeprom.NoaaChannel[1] = IS_NOAA_CHANNEL(Data[7])  ? Data[7] : NOAA_CHANNEL_FIRST;
 #endif
 
 #ifdef ENABLE_FMRADIO
@@ -128,7 +124,7 @@ void SETTINGS_InitEEPROM(void)
 
     // 0E98..0E9F
     EEPROM_ReadBuffer(0x0E98, Data, 8);
-    memmove(&gEeprom.POWER_ON_PASSWORD, Data, 4);
+    memcpy(&gEeprom.POWER_ON_PASSWORD, Data, 4);
 
     // 0EA0..0EA7
     EEPROM_ReadBuffer(0x0EA0, Data, 8);
@@ -180,62 +176,51 @@ void SETTINGS_InitEEPROM(void)
 
 	// 0EE0..0EE7
 
-	EEPROM_ReadBuffer(0x0EE0, Data, 8);
-	if (DTMF_ValidateCodes((char *)Data, 8))
-		memmove(gEeprom.ANI_DTMF_ID, Data, 8);
-	else
-	{
-		memset(gEeprom.ANI_DTMF_ID, 0, sizeof(gEeprom.ANI_DTMF_ID));
+EEPROM_ReadBuffer(0x0EE0, Data, sizeof(gEeprom.ANI_DTMF_ID));
+	if (DTMF_ValidateCodes((char *)Data, sizeof(gEeprom.ANI_DTMF_ID))) {
+		memcpy(gEeprom.ANI_DTMF_ID, Data, sizeof(gEeprom.ANI_DTMF_ID));
+	} else {
 		strcpy(gEeprom.ANI_DTMF_ID, "123");
 	}
 
 
 	// 0EE8..0EEF
-	EEPROM_ReadBuffer(0x0EE8, Data, 8);
-	if (DTMF_ValidateCodes((char *)Data, 8))
-		memmove(gEeprom.KILL_CODE, Data, 8);
-	else
-	{
-		memset(gEeprom.KILL_CODE, 0, sizeof(gEeprom.KILL_CODE));
+EEPROM_ReadBuffer(0x0EE8, Data, sizeof(gEeprom.KILL_CODE));
+	if (DTMF_ValidateCodes((char *)Data, sizeof(gEeprom.KILL_CODE))) {
+		memcpy(gEeprom.KILL_CODE, Data, sizeof(gEeprom.KILL_CODE));
+	} else {
 		strcpy(gEeprom.KILL_CODE, "ABCD9");
 	}
 
 	// 0EF0..0EF7
-	EEPROM_ReadBuffer(0x0EF0, Data, 8);
-	if (DTMF_ValidateCodes((char *)Data, 8))
-		memmove(gEeprom.REVIVE_CODE, Data, 8);
-	else
-	{
-		memset(gEeprom.REVIVE_CODE, 0, sizeof(gEeprom.REVIVE_CODE));
+EEPROM_ReadBuffer(0x0EF0, Data, sizeof(gEeprom.REVIVE_CODE));
+	if (DTMF_ValidateCodes((char *)Data, sizeof(gEeprom.REVIVE_CODE))) {
+		memcpy(gEeprom.REVIVE_CODE, Data, sizeof(gEeprom.REVIVE_CODE));
+	} else {
 		strcpy(gEeprom.REVIVE_CODE, "9DCBA");
 	}
 #endif
 
     // 0EF8..0F07
-    EEPROM_ReadBuffer(0x0EF8, Data, 16);
-    if (DTMF_ValidateCodes((char *)Data, 16))
-        memmove(gEeprom.DTMF_UP_CODE, Data, 16);
-    else
-    {
-        memset(gEeprom.DTMF_UP_CODE, 0, sizeof(gEeprom.DTMF_UP_CODE));
+    EEPROM_ReadBuffer(0x0EF8, Data, sizeof(gEeprom.DTMF_UP_CODE));
+    if (DTMF_ValidateCodes((char *)Data, sizeof(gEeprom.DTMF_UP_CODE))) {
+        memcpy(gEeprom.DTMF_UP_CODE, Data, sizeof(gEeprom.DTMF_UP_CODE));
+    } else {
         strcpy(gEeprom.DTMF_UP_CODE, "12345");
     }
 
     // 0F08..0F17
-    EEPROM_ReadBuffer(0x0F08, Data, 16);
-    if (DTMF_ValidateCodes((char *)Data, 16))
-        memmove(gEeprom.DTMF_DOWN_CODE, Data, 16);
-    else
-    {
-        memset(gEeprom.DTMF_DOWN_CODE, 0, sizeof(gEeprom.DTMF_DOWN_CODE));
+    EEPROM_ReadBuffer(0x0F08, Data, sizeof(gEeprom.DTMF_DOWN_CODE));
+    if (DTMF_ValidateCodes((char *)Data, sizeof(gEeprom.DTMF_DOWN_CODE))) {
+        memcpy(gEeprom.DTMF_DOWN_CODE, Data, sizeof(gEeprom.DTMF_DOWN_CODE));
+    } else {
         strcpy(gEeprom.DTMF_DOWN_CODE, "54321");
     }
 
     // 0F18..0F1F
     EEPROM_ReadBuffer(0x0F18, Data, 8);
-//	gEeprom.SCAN_LIST_DEFAULT = (Data[0] < 2) ? Data[0] : false;
-    gEeprom.SCAN_LIST_DEFAULT = (Data[0] < 3) ? Data[0] : false;  // we now have 'all' channel scan option
-    for (i = 0; i < 2; i++)
+    gEeprom.SCAN_LIST_DEFAULT = (Data[0] < 3) ? Data[0] : 0;  // we now have 'all' channel scan option
+    for (unsigned int i = 0; i < 2; i++)
     {
         const unsigned int j = 1 + (i * 3);
         gEeprom.SCAN_LIST_ENABLED[i]     = (Data[j + 0] < 2) ? Data[j] : false;
@@ -255,13 +240,13 @@ void SETTINGS_InitEEPROM(void)
 //    gSetting_350EN             = (Data[5] < 2) ? Data[5] : true;
     gSetting_ScrambleEnable    = (Data[6] < 2) ? Data[6] : true;
     //gSetting_TX_EN             = (Data[7] & (1u << 0)) ? true : false;
-    gSetting_live_DTMF_decoder = (Data[7] & (1u << 1)) ? true : false;
+    gSetting_live_DTMF_decoder = !!(Data[7] & (1u << 1));
     //gSetting_battery_text      = (((Data[7] >> 2) & 3u) <= 2) ? (Data[7] >> 2) & 3 : 2;
-#ifdef ENABLE_AUDIO_BAR
+//#ifdef ENABLE_AUDIO_BAR
     //gSetting_mic_bar       = (Data[7] & (1u << 4)) ? true : false;
-#endif
+//#endif
 #ifdef ENABLE_AM_FIX
-    gSetting_AM_fix        = (Data[7] & (1u << 5)) ? true : false;
+    gSetting_AM_fix = !!(Data[7] & (1u << 5));
 #endif
   //  gSetting_backlight_on_tx_rx = (Data[7] >> 6) & 3u;
 
@@ -290,7 +275,7 @@ void SETTINGS_InitEEPROM(void)
     EEPROM_ReadBuffer(0x0F30, gCustomAesKey, sizeof(gCustomAesKey));
     bHasCustomAesKey = false;
     //锁定
-    for (i = 0; i < ARRAY_SIZE(gCustomAesKey); i++)
+    for (unsigned int i = 0; i < ARRAY_SIZE(gCustomAesKey); i++)
     {
         if (gCustomAesKey[i] != 0xFFFFFFFFu)
         {
@@ -372,20 +357,22 @@ void SETTINGS_FetchChannelName(char *s, const int channel)
 {
     if (s == NULL)
         return;
-#if ENABLE_CHINESE_FULL==4
-    memset(s, 0, 16);  // 's' had better be large enough !
-#else
-    memset(s, 0, 10);  // 's' had better be large enough !
-#endif
+    s[0] = 0;
+//#if ENABLE_CHINESE_FULL==4
+//    memset(s, 0, 16);  // 's' had better be large enough !
+//#else
+//    memset(s, 0, 10);  // 's' had better be large enough !
+//#endif
     if (channel < 0)
         return;
 
     if (!RADIO_CheckValidChannel(channel, false, 0))
         return;
-    EEPROM_ReadBuffer(0x0F50 + (channel * 16), s + 0, 8);
+//    EEPROM_ReadBuffer(0x0F50 + (channel * 16), s + 0, 8);
 
 #if ENABLE_CHINESE_FULL==4
-    EEPROM_ReadBuffer(0x0F58 + (channel * 16), s + 8, 8);
+    EEPROM_ReadBuffer(0x0F50 + (channel * 16), s, 16);
+//    EEPROM_ReadBuffer(0x0F58 + (channel * 16), s + 8, 8);
     int i;
     for (i = 0; i < 16; i++)
         if (!((s[i] >= 32 && s[i] <= 127)||(
@@ -393,8 +380,8 @@ void SETTINGS_FetchChannelName(char *s, const int channel)
         ))break;                // invalid char
             else if(s[i]>=0x80&&s[i]<=0x9b&&i!=15&&s[i+1]!=0) i++;
 #else
-
-    EEPROM_ReadBuffer(0x0F58 + (channel * 16), s + 8, 2);
+    EEPROM_ReadBuffer(0x0F50 + (channel * 16), s, 10);
+//    EEPROM_ReadBuffer(0x0F58 + (channel * 16), s + 8, 2);
     int i;
     for (i = 0; i < 10; i++)
         if (s[i] < 32 || s[i] > 127)
@@ -634,62 +621,59 @@ void SETTINGS_SaveSettings(void)
 void SETTINGS_SaveChannel(uint8_t Channel, uint8_t VFO, const VFO_Info_t *pVFO, uint8_t Mode)
 {
 #ifdef ENABLE_NOAA
-    if (!IS_NOAA_CHANNEL(Channel))
+    if (IS_NOAA_CHANNEL(Channel))
+		return;
 #endif
-    {
-        uint16_t OffsetVFO = Channel * 16;
 
-        if (!IS_MR_CHANNEL(Channel))
-        {	// it's a VFO, not a channel
-            OffsetVFO  = (VFO == 0) ? 0x0C80 : 0x0C90;
-            OffsetVFO += (Channel - FREQ_CHANNEL_FIRST) * 32;
-        }
+    uint16_t OffsetVFO = Channel * 16;
 
-        if (Mode >= 2 || !IS_MR_CHANNEL(Channel))
-        {	// copy VFO to a channel
+    if (IS_FREQ_CHANNEL(Channel)) { // it's a VFO, not a channel
+        OffsetVFO  = (VFO == 0) ? 0x0C80 : 0x0C90;
+        OffsetVFO += (Channel - FREQ_CHANNEL_FIRST) * 32;
+    }
 
+    if (Mode >= 2 || IS_FREQ_CHANNEL(Channel)) { // copy VFO to a channel
+        union {
+            uint8_t _8[8];
+            uint32_t _32[2];
+        } State;
 
-            union {
-                uint8_t _8[8];
-                uint32_t _32[2];
-            } State;
+        State._32[0] = pVFO->freq_config_RX.Frequency;
+        State._32[1] = pVFO->TX_OFFSET_FREQUENCY;
+        EEPROM_WriteBuffer(OffsetVFO + 0, State._32);
 
-            State._32[0] = pVFO->freq_config_RX.Frequency;
-            State._32[1] = pVFO->TX_OFFSET_FREQUENCY;
-            EEPROM_WriteBuffer(OffsetVFO + 0, State._32);
-
-            State._8[0] =  pVFO->freq_config_RX.Code;
-            State._8[1] =  pVFO->freq_config_TX.Code;
-            State._8[2] = (pVFO->freq_config_TX.CodeType << 4) | pVFO->freq_config_RX.CodeType;
-            State._8[3] = (pVFO->Modulation << 4) | pVFO->TX_OFFSET_FREQUENCY_DIRECTION;
-            State._8[4] = 0
-                       | (pVFO->BUSY_CHANNEL_LOCK << 4)
-                       | (pVFO->OUTPUT_POWER      << 2)
-                       | (pVFO->CHANNEL_BANDWIDTH << 1)
-                       | (pVFO->FrequencyReverse  << 0);
-            State._8[5] = ((pVFO->DTMF_PTT_ID_TX_MODE & 7u) << 1)
+        State._8[0] =  pVFO->freq_config_RX.Code;
+        State._8[1] =  pVFO->freq_config_TX.Code;
+        State._8[2] = (pVFO->freq_config_TX.CodeType << 4) | pVFO->freq_config_RX.CodeType;
+        State._8[3] = (pVFO->Modulation << 4) | pVFO->TX_OFFSET_FREQUENCY_DIRECTION;
+        State._8[4] = 0
+                      | (pVFO->BUSY_CHANNEL_LOCK << 4)
+                      | (pVFO->OUTPUT_POWER      << 2)
+                      | (pVFO->CHANNEL_BANDWIDTH << 1)
+                      | (pVFO->FrequencyReverse  << 0);
+        State._8[5] = ((pVFO->DTMF_PTT_ID_TX_MODE & 7u) << 1)
 #ifdef ENABLE_DTMF_CALLING
-                | ((pVFO->DTMF_DECODING_ENABLE & 1u) << 0)
+            | ((pVFO->DTMF_DECODING_ENABLE & 1u) << 0)
 #endif
-                    ;
-            State._8[6] =  pVFO->STEP_SETTING;
-            State._8[7] =  pVFO->SCRAMBLING_TYPE;
-            EEPROM_WriteBuffer(OffsetVFO + 8, State._8);
+                ;
+        State._8[6] =  pVFO->STEP_SETTING;
+        State._8[7] =  pVFO->SCRAMBLING_TYPE;
+        EEPROM_WriteBuffer(OffsetVFO + 8, State._8);
 
-            SETTINGS_UpdateChannel(Channel, pVFO, true);
+        SETTINGS_UpdateChannel(Channel, pVFO, true);
 
-            if (IS_MR_CHANNEL(Channel)) {
+        if (IS_MR_CHANNEL(Channel)) {
 #ifndef ENABLE_KEEP_MEM_NAME
-                // clear/reset the channel name
-                SETTINGS_SaveChannelName(Channel, "");
+            // clear/reset the channel name
+            SETTINGS_SaveChannelName(Channel, "");
 #else
-                if (Mode >= 3) {
-						SETTINGS_SaveChannelName(Channel, pVFO->Name);
-					}
+            if (Mode >= 3) {
+				SETTINGS_SaveChannelName(Channel, pVFO->Name);
+			}
 #endif
-            }
         }
     }
+
 }
 
 void SETTINGS_SaveBatteryCalibration(const uint16_t * batteryCalibration)
@@ -705,9 +689,8 @@ void SETTINGS_SaveBatteryCalibration(const uint16_t * batteryCalibration)
 void SETTINGS_SaveChannelName(uint8_t channel, const char * name)
 {
     uint16_t offset = channel * 16;
-    uint8_t  buf[16];
-    memset(&buf, 0x00, sizeof(buf));
-    memcpy(buf, name, MIN(strlen(name),(unsigned char)MAX_EDIT_INDEX));
+    uint8_t buf[16] = {0};
+    memcpy(buf, name, MIN(strlen(name), 10u));
     EEPROM_WriteBuffer(0x0F50 + offset, buf);
     EEPROM_WriteBuffer(0x0F58 + offset, buf + 8);
 }
@@ -753,8 +736,8 @@ void SETTINGS_UpdateChannel(uint8_t channel, const VFO_Info_t *pVFO, bool keep)
 }
 void SETTINGS_WriteBuildOptions(void)
 {
-    uint8_t buf[8]= {};
-    buf[0] = 0
+    uint8_t buf[8] = {0};
+    buf[0]=0
 #ifdef ENABLE_FMRADIO
         | (1 << 0)
 #endif

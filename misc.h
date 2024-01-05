@@ -154,8 +154,8 @@ extern bool              gSetting_AM_fix;
 #ifdef ENABLE_AM_FIX_TEST1
 extern uint8_t           gSetting_AM_fix_test1;
 #endif
-#ifdef ENABLE_AUDIO_BAR
-#endif
+//#ifdef ENABLE_AUDIO_BAR
+//#endif
 extern bool                  gSetting_live_DTMF_decoder;
 
 extern bool                  gMonitor;

@@ -62,53 +62,29 @@ void RADIO_SendEndOfTransmission(void)
     RADIO_EnableCxCSS();
     RADIO_SetupRegisters(false);
 }
-bool RADIO_CheckValidChannel(uint16_t Channel, bool bCheckScanList, uint8_t VFO)
-{	// return true if the channel appears valid
 
-    ChannelAttributes_t att;
-    uint8_t PriorityCh1;
-    uint8_t PriorityCh2;
-
-    if (!IS_MR_CHANNEL(Channel))
+bool RADIO_CheckValidChannel(uint16_t channel, bool checkScanList, uint8_t scanList)
+{
+    // return true if the channel appears valid
+    if (!IS_MR_CHANNEL(channel))
         return false;
-//0D60
-    att = gMR_ChannelAttributes[Channel];
+
+    const ChannelAttributes_t att = gMR_ChannelAttributes[channel];
 
     if (att.band > BAND7_470MHz)
         return false;
 
-    if (bCheckScanList) {
-        switch (VFO) {
-            case 0:
-                if (!att.scanlist1)
-                    return false;
+    if (!checkScanList || scanList > 1)
+        return true;
 
-                PriorityCh1 = gEeprom.SCANLIST_PRIORITY_CH1[0];
-                PriorityCh2 = gEeprom.SCANLIST_PRIORITY_CH2[0];
-                break;
+    if (scanList ? !att.scanlist2 : !att.scanlist1)
+        return false;
 
-            case 1:
-                if (!att.scanlist2)
-                    return false;
+    const uint8_t PriorityCh1 = gEeprom.SCANLIST_PRIORITY_CH1[scanList];
+    const uint8_t PriorityCh2 = gEeprom.SCANLIST_PRIORITY_CH2[scanList];
 
-                PriorityCh1 = gEeprom.SCANLIST_PRIORITY_CH1[1];
-                PriorityCh2 = gEeprom.SCANLIST_PRIORITY_CH2[1];
-                break;
-
-            default:
-                return true;
-        }
-
-        if (PriorityCh1 == Channel)
-            return false;
-
-        if (PriorityCh2 == Channel)
-            return false;
-    }
-
-    return true;
+    return PriorityCh1 != channel && PriorityCh2 != channel;
 }
-
 uint8_t RADIO_FindNextChannel(uint8_t Channel, int8_t Direction, bool bCheckScanList, uint8_t VFO)
 {
     unsigned int i;
@@ -172,7 +148,7 @@ void RADIO_ConfigureChannel(const unsigned int VFO, const unsigned int configure
 
     if (IS_VALID_CHANNEL(channel)) {
 #ifdef ENABLE_NOAA
-        if (channel >= NOAA_CHANNEL_FIRST)
+        if (IS_NOAA_CHANNEL(channel))
 		{
 			RADIO_InitInfo(pVfo, gEeprom.ScreenChannel[VFO], NoaaFrequencyTable[channel - NOAA_CHANNEL_FIRST]);
 
@@ -825,7 +801,7 @@ void RADIO_ConfigureNOAA(void)
 				return;
 			}
 
-			if (gRxVfo->CHANNEL_SAVE >= NOAA_CHANNEL_FIRST)
+			if (IS_NOAA_CHANNEL(gRxVfo->CHANNEL_SAVE))
 			{
 				gIsNoaaMode          = true;
 				gNoaaChannel         = gRxVfo->CHANNEL_SAVE - NOAA_CHANNEL_FIRST;

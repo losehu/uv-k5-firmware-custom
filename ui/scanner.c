@@ -26,28 +26,27 @@
 
 void UI_DisplayScanner(void)
 {
-	char    String[16];
-	bool    bCentered;
+    char  String[16] = {0};
+    char *pPrintStr = String;
+    bool bCentered;
 	uint8_t Start;
 
-	memset(gFrameBuffer, 0, sizeof(gFrameBuffer));
-
-	memset(String, 0, sizeof(String));
-	if (gScanSingleFrequency || (gScanCssState != SCAN_CSS_STATE_OFF && gScanCssState != SCAN_CSS_STATE_FAILED))
-
+    UI_DisplayClear();
+    if (gScanSingleFrequency || (gScanCssState != SCAN_CSS_STATE_OFF && gScanCssState != SCAN_CSS_STATE_FAILED)) {
 //频率
     sprintf(String, 频率":%u.%05u", gScanFrequency / 100000, gScanFrequency % 100000);
-    else
-        strcpy(String, 频率":**.*****");
-    UI_PrintStringSmall(String, 2, 0, 1);
 
-	memset(String, 0, sizeof(String));
-	if (gScanCssState < SCAN_CSS_STATE_FOUND || !gScanUseCssResult)
-//模拟亚音
-    strcpy(String, 模拟亚音":******");
+        pPrintStr = String;
+    } else {
+        pPrintStr = 频率":**.*****";
+    }
 
-	else
-	if (gScanCssResultType == CODE_TYPE_CONTINUOUS_TONE)
+
+    UI_PrintStringSmall(pPrintStr, 2, 0, 1);
+
+    if (gScanCssState < SCAN_CSS_STATE_FOUND || !gScanUseCssResult) {
+        pPrintStr = 模拟亚音":******";
+    } else if (gScanCssResultType == CODE_TYPE_CONTINUOUS_TONE) {
    //模拟亚音
 #ifdef TEST_UNDE_CTCSS
 
@@ -55,21 +54,22 @@ void UI_DisplayScanner(void)
 #else
       sprintf(String, 模拟亚音":%u.%uHz", CTCSS_Options[gScanCssResultCode] / 10, CTCSS_Options[gScanCssResultCode] % 10);
 #endif
-	else
+        pPrintStr = String;
+    } else {
 //数字亚音
     sprintf(String, 数字亚音":D%03oN", DCS_Options[gScanCssResultCode]);
-    UI_PrintStringSmall(String, 2, 0, 3);
-
+        pPrintStr = String;
+    }
+    UI_PrintStringSmall(pPrintStr, 2, 0, 3);
 	memset(String, 0, sizeof(String));
-	if (gScannerSaveState == SCAN_SAVE_CHANNEL)
-	{
-//存置
-        strcpy(String, 存置问);
+
+    if (gScannerSaveState == SCAN_SAVE_CHANNEL) {
+        pPrintStr = 存置问;
 		Start     = 0;
 		bCentered = 1;
-	}
-	else
-	{
+    } else {
+        Start     = 2;
+        bCentered = 0;
 		if (gScannerSaveState == SCAN_SAVE_CHAN_SEL) {
 
 //存置
@@ -82,30 +82,29 @@ void UI_DisplayScanner(void)
 
 #endif
 
-		}
-		else if (gScanCssState < SCAN_CSS_STATE_FOUND) {
+            pPrintStr = String;
+        } else if (gScanCssState < SCAN_CSS_STATE_FOUND) {
 	
             //扫描
             strcpy(String, 扫描);
 #if ENABLE_CHINESE_FULL!=4
             memset(String + 2, '.', (gScanProgressIndicator & 7) + 1);
+
 #else
             memset(String + 4, '.', (gScanProgressIndicator & 7) + 1);
 
 #endif
+            pPrintStr = String;
+        } else if (gScanCssState == SCAN_CSS_STATE_FOUND) {
+            pPrintStr = 扫描" OK.";
+        } else {
+            pPrintStr = 扫描" FAIL.";
 		}
-		else if (gScanCssState == SCAN_CSS_STATE_FOUND)
-            //扫描ok
-        strcpy(String, 扫描" OK.");
 
 
-        else
-            //扫描fail
-            strcpy(String, 扫描" FAIL.");
-		Start     = 2;
-		bCentered = 0;
+
+
 	}
-    UI_PrintStringSmall(String, Start, bCentered ? 127 : 0, 5);
-	
+    UI_PrintStringSmall(pPrintStr, Start, bCentered ? 127 : 0, 5);
 	ST7565_BlitFullScreen();
 }

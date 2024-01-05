@@ -33,7 +33,9 @@ enum Vfo_txtr_mode{
     VFO_MODE_RX = 2,
 };
 typedef enum center_line_t center_line_t;
-
+#ifdef ENABLE_AGC_SHOW_DATA
+void UI_MAIN_PrintAGC(bool force);
+#endif
 extern center_line_t center_line;
 
 void UI_DisplayAudioBar(void);

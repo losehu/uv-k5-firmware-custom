@@ -1,0 +1,3 @@
+"C:\Program Files\JetBrains\CLion 2023.1.1\bin\cmake\win\x64\bin\cmake.exe" -E rm -f CMakeFiles\uv_k5_firmware_custom_0_17.dir/objects.a
+C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\ar.exe qc CMakeFiles\uv_k5_firmware_custom_0_17.dir/objects.a @CMakeFiles\uv_k5_firmware_custom_0_17.dir\objects1
+C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\g++.exe -g -Wl,--whole-archive CMakeFiles\uv_k5_firmware_custom_0_17.dir/objects.a -Wl,--no-whole-archive -o uv_k5_firmware_custom_0_17.exe -Wl,--out-implib,libuv_k5_firmware_custom_0_17.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\uv_k5_firmware_custom_0_17.dir\linkLibs.rsp
