@@ -20,16 +20,8 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="113">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/aircopy.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/aircopy.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/fm.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/fm.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/menu.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/menu.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/uart.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/uart.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/driver/eeprom.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/eeprom.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/driver/eeprom.h" beforeDir="false" afterPath="$PROJECT_DIR$/driver/eeprom.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.c" beforeDir="false" afterPath="$PROJECT_DIR$/settings.c" afterDir="false" />
+    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="简化EEPROM驱动逻辑&#10;改为STLINK-SWD烧录">
+      <change beforePath="$PROJECT_DIR$/payment/sponsors.md" beforeDir="false" afterPath="$PROJECT_DIR$/payment/sponsors.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -268,14 +260,7 @@
       <workItem from="1704363500769" duration="5676000" />
       <workItem from="1704370562673" duration="1618000" />
       <workItem from="1704421657950" duration="14943000" />
-      <workItem from="1704442479624" duration="3981000" />
-    </task>
-    <task id="LOCAL-00055" summary="写频">
-      <created>1701738086757</created>
-      <option name="number" value="00055" />
-      <option name="presentableId" value="LOCAL-00055" />
-      <option name="project" value="LOCAL" />
-      <updated>1701738086757</updated>
+      <workItem from="1704442479624" duration="4520000" />
     </task>
     <task id="LOCAL-00056" summary="写频">
       <created>1701738213205</created>
@@ -613,7 +598,14 @@
       <option name="project" value="LOCAL" />
       <updated>1704445475471</updated>
     </task>
-    <option name="localTasksCounter" value="104" />
+    <task id="LOCAL-00104" summary="简化EEPROM驱动逻辑&#10;改为STLINK-SWD烧录">
+      <created>1704446603814</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1704446603814</updated>
+    </task>
+    <option name="localTasksCounter" value="105" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -640,7 +632,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="rebuild chinese" />
     <MESSAGE value="MDC RX" />
     <MESSAGE value="写频" />
     <MESSAGE value="am-fix" />
@@ -665,7 +656,8 @@
     <MESSAGE value="中文" />
     <MESSAGE value="fix show" />
     <MESSAGE value="113" />
-    <option name="LAST_COMMIT_MESSAGE" value="113" />
+    <MESSAGE value="简化EEPROM驱动逻辑&#10;改为STLINK-SWD烧录" />
+    <option name="LAST_COMMIT_MESSAGE" value="简化EEPROM驱动逻辑&#10;改为STLINK-SWD烧录" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
