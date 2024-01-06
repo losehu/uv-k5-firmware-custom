@@ -5,7 +5,7 @@
 
 # ---- COMPILER/LINKER OPTIONS ----
 ENABLE_CLANG                  ?= 0
-ENABLE_SWD                    ?= 1
+ENABLE_SWD                    ?= 0
 ENABLE_OVERLAY                ?= 0
 ENABLE_LTO                    ?= 1
 
@@ -29,7 +29,7 @@ ENABLE_WIDE_RX                ?= 1
 ENABLE_TX_WHEN_AM             ?= 0
 ENABLE_F_CAL_MENU             ?= 0
 ENABLE_CTCSS_TAIL_PHASE_SHIFT ?= 0
-ENABLE_BOOT_BEEPS             ?= 0
+ENABLE_BOOT_BEEPS             ?= 1
 ENABLE_SHOW_CHARGE_LEVEL      ?= 0
 ENABLE_REVERSE_BAT_SYMBOL     ?= 0
 ENABLE_NO_CODE_SCAN_TIMEOUT   ?= 1
@@ -47,7 +47,7 @@ ENABLE_MDC1200                ?= 1
 ENABLE_MDC1200_SHOW_OP_ARG    ?= 1
 ENABLE_MDC1200_SIDE_BEEP      ?= 0
 ENABLE_MDC1200_CONTACT        ?= 1
-ENABLE_CHINESE_FULL 		  = 4
+ENABLE_CHINESE_FULL 		  = 0
 ENABLE_UART_RW_BK_REGS 		  ?= 0
 
 

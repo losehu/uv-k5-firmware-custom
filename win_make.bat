@@ -1,7 +1,7 @@
 
 @echo off
 
-
+:RRR
 
 
 :: Compile directly in windows without the need of a linux virtual machine:
@@ -60,3 +60,4 @@ make
 
 pause
 @echo on
+GOTO RRR
