@@ -121,6 +121,24 @@ ENABLE_AM_FIX_SHOW_DATA       := 0       显示 AM 修复的调试数据（仍�
 ENABLE_AGC_SHOW_DATA          := 0       显示ACG参数
 ```
 
+# 编译
+建议使用arm-none eabi GCC 10.3.1版本，这是Ubuntu 22.04.03 LTS上的当前版本。
+其他版本可能会生成过大的固件。
+
+您可以从以下位置获取适当的版本：https://developer.arm.com/downloads/-/gnu-rm
+
+使用codespace在线编译，每个用户每月有免费60小时。
+1. 点击绿色的 `Code` 按钮
+2. 选择 tab ，从 `Local` 到 `Codespace`
+3. 点击绿色 `Create codespace on main` 按钮
+4. 进入到codespace编辑器
+5. 打开 `Makefile`
+6. 编辑你需要的选项, 并保存 `Makefile` 文件
+7. 再终端中运行编译命令： `./compile-with-docker.sh` 
+8. 打开文件夹 `compiled-firmware`
+1. 右键选择编译出来的固件 `firmware.packed.bin`
+1. 点击下载 `Download`, 现在你有一个固件文件了，你可以用K5prog_win烧录到机器. 或者你可以使用在线烧录器 [online flasher](https://egzumer.github.io/uvtools)
+
 # 打赏
 
 如果这个项目对您有帮助,可以考虑赞助来支持开发工作。
