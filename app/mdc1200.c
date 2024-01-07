@@ -535,7 +535,7 @@ uint16_t extractHex(const char *str) {
 }
 #ifdef  ENABLE_MDC1200_CONTACT
 uint8_t contact_num=0;
-uint16_t MDC_ADD[4] = {0x1D48, 0x1D88, 0x1DC8,0x1F08};
+uint16_t MDC_ADD[6] = {0x1D00, 0x1D40, 0x1D80,0x1DC0,0X1F90,0X1FD0};//SHIT ADDRESS COMBINE :(
 void mdc1200_update_contact_num()
 {
     EEPROM_ReadBuffer(MDC_NUM_ADD, (uint8_t *)&contact_num, 1);

@@ -22,8 +22,9 @@
   <component name="ChangeListManager">
     <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="减少eeprom延时">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/driver/eeprom.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/eeprom.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/driver/i2c.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/i2c.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/radio.c" beforeDir="false" afterPath="$PROJECT_DIR$/radio.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +89,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "File.Encoding",
+    "settings.editor.selected.configurable": "language.cpp.clang-tidy",
     "structure.view.defaults.are.configured": "true",
     "vue.rearranger.settings.migration": "true"
   }
@@ -191,9 +192,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="Makefile 目标.all" />
+        <item itemvalue="Makefile 目标.flash" />
         <item itemvalue="Makefile 目标.clean" />
         <item itemvalue="Makefile 目标.build" />
-        <item itemvalue="Makefile 目标.flash" />
         <item itemvalue="Makefile 目标.debug" />
       </list>
     </recent_temporary>
@@ -262,14 +263,7 @@
       <workItem from="1704363500769" duration="5676000" />
       <workItem from="1704370562673" duration="1618000" />
       <workItem from="1704421657950" duration="14943000" />
-      <workItem from="1704442479624" duration="7979000" />
-    </task>
-    <task id="LOCAL-00058" summary="写频">
-      <created>1701738979545</created>
-      <option name="number" value="00058" />
-      <option name="presentableId" value="LOCAL-00058" />
-      <option name="project" value="LOCAL" />
-      <updated>1701738979545</updated>
+      <workItem from="1704442479624" duration="15616000" />
     </task>
     <task id="LOCAL-00059" summary="写频">
       <created>1701739409050</created>
@@ -607,7 +601,14 @@
       <option name="project" value="LOCAL" />
       <updated>1704451604305</updated>
     </task>
-    <option name="localTasksCounter" value="107" />
+    <task id="LOCAL-00107" summary="减少eeprom延时">
+      <created>1704451720350</created>
+      <option name="number" value="00107" />
+      <option name="presentableId" value="LOCAL-00107" />
+      <option name="project" value="LOCAL" />
+      <updated>1704451720350</updated>
+    </task>
+    <option name="localTasksCounter" value="108" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -676,5 +677,9 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

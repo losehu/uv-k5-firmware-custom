@@ -106,9 +106,9 @@ void           MDC1200_process_rx(const uint16_t interrupt_bits);
 void           MDC1200_init(void);
 extern uint16_t MDC_ID;
 uint16_t extractHex(const char *str);
-extern uint16_t MDC_ADD[4] ;
-#define MDC_NUM_ADD 0X1D00
-#define MAX_CONTACT_NUM 15
+extern uint16_t MDC_ADD[6] ;
+#define MDC_NUM_ADD 0X1FFF
+#define MAX_CONTACT_NUM 22
 extern uint8_t contact_num;
 
 #endif
