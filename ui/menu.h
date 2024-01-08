@@ -143,7 +143,6 @@ MENU_PONMSG,
     MENU_BATTYP
 };
 
-extern const uint8_t FIRST_HIDDEN_MENU_ITEM;
 extern const t_menu_item MenuList[];
 #if ENABLE_CHINESE_FULL==4
 

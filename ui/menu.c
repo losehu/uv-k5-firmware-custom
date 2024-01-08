@@ -126,7 +126,7 @@ const t_menu_item MenuList[] =
                 {/*"Reset",*/  VOICE_ID_INITIALISATION, MENU_RESET,
                                参数复位}, // might be better to move this to the hidden menu items ?
 
-                //   {/*"",*/       VOICE_ID_INVALID,                       0xff               ,"\x00"}  // end of list - DO NOT delete or move this this
+                   {/*"",*/       VOICE_ID_INVALID,                       0xff               ,"\x00"}  // end of list - DO NOT delete or move this this
         };
 #if ENABLE_CHINESE_FULL == 4
 const char gSubMenu_PONMSG[][5]={
@@ -135,7 +135,6 @@ const char gSubMenu_PONMSG[][5]={
         信息
 };
 #endif
-const uint8_t FIRST_HIDDEN_MENU_ITEM = MENU_F_LOCK;
 #if ENABLE_CHINESE_FULL != 4
 const char gSubMenu_SFT_D[][10] =//4
 #else
