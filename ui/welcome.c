@@ -52,9 +52,10 @@ void UI_DisplayWelcome(void) {
     UI_DisplayClear();
     ST7565_BlitStatusLine();  // blank status line
     ST7565_BlitFullScreen();
+#if ENABLE_CHINESE_FULL == 4
+
     if (gEeprom.POWER_ON_DISPLAY_MODE == POWER_ON_DISPLAY_MODE_MESSAGE) {
 
-#if ENABLE_CHINESE_FULL == 4
     uint8_t welcome_len[2];
     EEPROM_ReadBuffer(0x1e31e, welcome_len, 2) ;
     welcome_len[0]=welcome_len[0]>18?0:welcome_len[0];
@@ -74,8 +75,9 @@ void UI_DisplayWelcome(void) {
             BATTERY_VoltsToPercent(gBatteryVoltageAverage));
     UI_PrintStringSmall(WelcomeString1, 0, 127, 4);
     UI_PrintStringSmall(Version, 0, 127, 6);
-    }
 #if ENABLE_CHINESE_FULL == 4
+
+        }
     else if(gEeprom.POWER_ON_DISPLAY_MODE == POWER_ON_DISPLAY_MODE_PIC)
         {
              EEPROM_ReadBuffer( 0x1E350, gStatusLine, 128);
