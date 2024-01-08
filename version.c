@@ -4,7 +4,7 @@
 #ifdef GIT_HASH
 	#define VER     GIT_HASH
 #else
-	#define VER     "114TEST"
+	#define VER     "114"
 
 
 #endif
