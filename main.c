@@ -293,7 +293,7 @@ void Main(void) {
     //BootMode = BOOT_GetMode();
 
 //	if (BootMode == BOOT_MODE_F_LOCK)
-    gMenuListCount = 45;
+    gMenuListCount = 46;
 
 
     // wait for user to release all butts before moving on
@@ -316,8 +316,14 @@ void Main(void) {
     UI_DisplayWelcome();
 
     boot_counter_10ms = 250;
+
     while (boot_counter_10ms > 0) {
-        if (KEYBOARD_Poll() == KEY_EXIT) {    // halt boot beeps
+
+        if (KEYBOARD_Poll() == KEY_EXIT
+            #if ENABLE_CHINESE_FULL==4
+        ||gEeprom.POWER_ON_DISPLAY_MODE == POWER_ON_DISPLAY_MODE_NONE
+            #endif
+        ) {    // halt boot beeps
             boot_counter_10ms = 0;
             break;
         }

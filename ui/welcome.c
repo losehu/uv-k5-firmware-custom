@@ -50,31 +50,41 @@ void UI_DisplayWelcome(void) {
 
     memset(gStatusLine, 0, sizeof(gStatusLine));
     UI_DisplayClear();
+    ST7565_BlitStatusLine();  // blank status line
+    ST7565_BlitFullScreen();
+    if (gEeprom.POWER_ON_DISPLAY_MODE == POWER_ON_DISPLAY_MODE_MESSAGE) {
 
 #if ENABLE_CHINESE_FULL == 4
     uint8_t welcome_len[2];
     EEPROM_ReadBuffer(0x1e31e, welcome_len, 2) ;
     welcome_len[0]=welcome_len[0]>18?0:welcome_len[0];
     welcome_len[1]=welcome_len[1]>18?0:welcome_len[1];
-
     EEPROM_ReadBuffer(0x1e320, WelcomeString0, welcome_len[0]) ;
     EEPROM_ReadBuffer(0x1e333, WelcomeString1, welcome_len[1]);
-    UI_PrintStringSmall(   WelcomeString0, 0, 127, 0);
-    UI_PrintStringSmall(      WelcomeString1, 0, 127, 2);
 #else
-
     EEPROM_ReadBuffer(0x0EB0, WelcomeString0, 16);
     EEPROM_ReadBuffer(0x0EC0, WelcomeString1, 16);
-    UI_PrintStringSmall(WelcomeString0, 0, 127, 0);
-    UI_PrintStringSmall(WelcomeString1, 0, 127, 2);
+
 #endif
+        UI_PrintStringSmall(   WelcomeString0, 0, 127, 0);
+        UI_PrintStringSmall(      WelcomeString1, 0, 127, 2);
     sprintf(WelcomeString1, "%u.%02uV %u%%",
             gBatteryVoltageAverage / 100,
             gBatteryVoltageAverage % 100,
             BATTERY_VoltsToPercent(gBatteryVoltageAverage));
     UI_PrintStringSmall(WelcomeString1, 0, 127, 4);
-
     UI_PrintStringSmall(Version, 0, 127, 6);
+    }
+#if ENABLE_CHINESE_FULL == 4
+    else if(gEeprom.POWER_ON_DISPLAY_MODE == POWER_ON_DISPLAY_MODE_PIC)
+        {
+             EEPROM_ReadBuffer( 0x1E350, gStatusLine, 128);
+    for (int i = 0; i < 7; ++i)  EEPROM_ReadBuffer(0x1E350+128+128*i, &gFrameBuffer[i], 128);
+
+
+        }
+#endif
+
 
     ST7565_BlitStatusLine();  // blank status line
     ST7565_BlitFullScreen();

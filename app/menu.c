@@ -184,12 +184,13 @@ int MENU_GetLimits(uint8_t menu_id, int32_t *pMin, int32_t *pMax) {
             *pMin = 0;
             *pMax = ARRAY_SIZE(gSubMenu_ROGER) - 1;
             break;
+#if ENABLE_CHINESE_FULL==4
 
-//		case MENU_PONMSG:
-//			*pMin = 0;
-//			*pMax = ARRAY_SIZE(gSubMenu_OFF_ON) - 1;
-//			break;
-
+        case MENU_PONMSG:
+            *pMin = 0;
+            *pMax = ARRAY_SIZE(gSubMenu_PONMSG) - 1;
+            break;
+#endif
         case MENU_R_DCS:
         case MENU_T_DCS:
             *pMin = 0;
@@ -697,10 +698,12 @@ void MENU_AcceptSetting(void) {
                 }
                 return;
 #endif
-//		case MENU_PONMSG:
-//			gEeprom.POWER_ON_DISPLAY_MODE = gSubMenuSelection;
-//			break;
+#if ENABLE_CHINESE_FULL==4
 
+		case MENU_PONMSG:
+			gEeprom.POWER_ON_DISPLAY_MODE = gSubMenuSelection;
+			break;
+#endif
         case MENU_ROGER:
             gEeprom.ROGER = gSubMenuSelection;
             break;
@@ -1076,11 +1079,11 @@ void MENU_ShowCurrentSetting(void) {
         case MENU_D_LIVE_DEC:
             gSubMenuSelection = gSetting_live_DTMF_decoder;
             break;
-
-//		case MENU_PONMSG:
-//			gSubMenuSelection = gEeprom.POWER_ON_DISPLAY_MODE;
-//			break;
-
+#if ENABLE_CHINESE_FULL==4
+		case MENU_PONMSG:
+			gSubMenuSelection = gEeprom.POWER_ON_DISPLAY_MODE;
+			break;
+#endif
         case MENU_ROGER:
             gSubMenuSelection = gEeprom.ROGER;
             break;

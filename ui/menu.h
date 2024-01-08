@@ -106,7 +106,11 @@ enum
 #endif
 
     MENU_D_LIVE_DEC,
-   // MENU_PONMSG,
+#if ENABLE_CHINESE_FULL==4
+
+MENU_PONMSG,
+#endif
+
     MENU_ROGER,
    // MENU_VOL,
     //MENU_BAT_TXT,
@@ -141,16 +145,22 @@ enum
 
 extern const uint8_t FIRST_HIDDEN_MENU_ITEM;
 extern const t_menu_item MenuList[];
+#if ENABLE_CHINESE_FULL==4
+
+extern const char        gSubMenu_PONMSG[3][5];
+#endif
 
 //extern const char        gSubMenu_TXP[3][2];//5
 #if ENABLE_CHINESE_FULL!=4
 extern const char        gSubMenu_SFT_D[3][10];//3
 #else
+
 extern const char        gSubMenu_SFT_D[3][16];//3
 #endif
 //extern const char        gSubMenu_W_N[2][3];//7
 #if ENABLE_CHINESE_FULL!=4
 extern const char        gSubMenu_OFF_ON[2][3];//4
+
 #else
 extern const char        gSubMenu_OFF_ON[2][5];//4
 #endif

@@ -120,8 +120,9 @@ void SETTINGS_InitEEPROM(void)
 //    gEeprom.KEY_2_LONG_PRESS_ACTION      = (Data[4] < ACTION_OPT_LEN) ? Data[4] : ACTION_OPT_NONE;
     gEeprom.SCAN_RESUME_MODE             = (Data[5] < 3)              ? Data[5] : SCAN_RESUME_CO;
 //    gEeprom.AUTO_KEYPAD_LOCK             = (Data[6] < 2)              ? Data[6] : false;
-//    gEeprom.POWER_ON_DISPLAY_MODE        = (Data[7] < 4)              ? Data[7] : POWER_ON_DISPLAY_MODE_MESSAGE;
-
+#if ENABLE_CHINESE_FULL==4
+    gEeprom.POWER_ON_DISPLAY_MODE        = (Data[7] < 4)              ? Data[7] : POWER_ON_DISPLAY_MODE_NONE;
+#endif
     // 0E98..0E9F
     EEPROM_ReadBuffer(0x0E98, Data, 8);
     memcpy(&gEeprom.POWER_ON_PASSWORD, Data, 4);
@@ -537,7 +538,9 @@ void SETTINGS_SaveSettings(void)
     State[4] = 0;//gEeprom.KEY_2_LONG_PRESS_ACTION;
     State[5] = gEeprom.SCAN_RESUME_MODE;
     State[6] = 0;//gEeprom.AUTO_KEYPAD_LOCK;
-    State[7] = 0;//gEeprom.POWER_ON_DISPLAY_MODE;
+#if ENABLE_CHINESE_FULL==4
+    State[7] = gEeprom.POWER_ON_DISPLAY_MODE;
+#endif
     EEPROM_WriteBuffer(0x0E90, State,8);
 
     memset(Password, 0xFF, sizeof(Password));

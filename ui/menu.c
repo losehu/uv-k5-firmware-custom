@@ -72,7 +72,9 @@ const t_menu_item MenuList[] =
                 {/*"BatSav",*/ VOICE_ID_SAVE_MODE, MENU_SAVE, 省电模式}, // was "SAVE"
                 {/*"Mic",*/    VOICE_ID_INVALID, MENU_MIC, 麦克风增益},
                 {/*"ChDisp",*/ VOICE_ID_INVALID, MENU_MDF, 信道显示模式}, // was "MDF"
-                //   {/*"POnMsg",*/ VOICE_ID_INVALID,                       MENU_PONMSG        ,开机显示},
+#if ENABLE_CHINESE_FULL==4
+                   {/*"POnMsg",*/ VOICE_ID_INVALID,                       MENU_PONMSG        ,开机显示},
+#endif
                 {/*"BackLt",*/ VOICE_ID_INVALID, MENU_ABR, 自动背光}, // was "ABR"
                 {/*"BLMax",*/  VOICE_ID_INVALID, MENU_ABR_MAX, 背光亮度},
                 {/*"MDCID",*/  VOICE_ID_INVALID, MENU_MDC_ID, MDC_ID},
@@ -126,12 +128,19 @@ const t_menu_item MenuList[] =
 
                 //   {/*"",*/       VOICE_ID_INVALID,                       0xff               ,"\x00"}  // end of list - DO NOT delete or move this this
         };
-
-
+#if ENABLE_CHINESE_FULL == 4
+const char gSubMenu_PONMSG[][5]={
+        关闭,
+        图片,
+        信息
+};
+#endif
 const uint8_t FIRST_HIDDEN_MENU_ITEM = MENU_F_LOCK;
 #if ENABLE_CHINESE_FULL != 4
 const char gSubMenu_SFT_D[][10] =//4
 #else
+
+
         const char gSubMenu_SFT_D[][16] =//4
 #endif
         {
@@ -928,12 +937,12 @@ void UI_DisplayMenu(void) {
                     memcpy(String, Contact, 8);
                 break;
 #endif
-//        case MENU_PONMSG:
-//            strcpy(String, gSubMenu_OFF_ON[gSubMenuSelection]);
-//
-//
-//            break;
+#if ENABLE_CHINESE_FULL==4
 
+        case MENU_PONMSG:
+            strcpy(String, gSubMenu_PONMSG[gSubMenuSelection]);
+            break;
+#endif
         case MENU_ROGER:
             strcpy(String, gSubMenu_ROGER[gSubMenuSelection]);
 
