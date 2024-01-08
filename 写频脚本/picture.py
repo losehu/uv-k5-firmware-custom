@@ -1,14 +1,18 @@
 import serial
+from PyQt5.QtWidgets import QButtonGroup
+
 from PyQt5.QtCore import QTimer
 from PyQt5.QtWidgets import QMainWindow, QPushButton, QFileDialog, QLabel, QRadioButton, QMessageBox, QComboBox, \
     QProgressBar
 from PyQt5.QtWidgets import QApplication
 import sys
-from PyQt5.QtGui import QImage, QPixmap, QColor
+from PyQt5.QtGui import QImage, QPixmap, QColor, qGray, qRgb
+
 resized_image=None
 cal_bin=1
 com_open=""
-pixel_list =[]
+turn_color=0
+compress_pixels = [0] * 1024
 Crc16Tab = [0, 4129, 8258, 12387, 16516, 20645, 24774, 28903, 33032, 37161, 41290, 45419, 49548, 53677, 57806, 61935, 4657, 528, 12915, 8786, 21173, 17044, 29431, 25302,
             37689, 33560, 45947, 41818, 54205, 50076, 62463, 58334, 9314, 13379, 1056, 5121, 25830, 29895, 17572, 21637, 42346, 46411, 34088, 38153, 58862, 62927, 50604, 54669, 13907,
             9842, 5649, 1584, 30423, 26358, 22165, 18100, 46939, 42874, 38681, 34616, 63455, 59390, 55197, 51132, 18628, 22757, 26758, 30887, 2112, 6241, 10242, 14371, 51660, 55789,
@@ -29,35 +33,44 @@ class MainWindow(QMainWindow):
 
     def initUI(self):
         global cal_bin
+        global turn_color
 
-        self.setWindowTitle("Image Processing")
-        self.setGeometry(100, 100, 50+50+256, 300)
+        self.setWindowTitle("K5图片")
+        self.setGeometry(100, 100, 50+20+256, 250)
 
-        self.open_button = QPushButton("Open Image", self)
-        self.open_button.setGeometry(20, 20, 100, 30)
+        self.open_button = QPushButton("打开图片", self)
+        self.open_button.setGeometry(10, 50, 100, 30)
         self.open_button.clicked.connect(self.open_image)
 
-        self.process_button = QPushButton("Process Image", self)
-        self.process_button.setGeometry(20, 70, 120, 30)
+        self.process_button = QPushButton("写入图片", self)
+        self.process_button.setGeometry(130, 50, 100, 30)
         self.process_button.clicked.connect(self.process_image)
         self.process_button.setEnabled(False)
 
         self.label = QLabel(self)
-        self.label.setGeometry(50, 150, 256, 128)
-
+        self.label.setGeometry(35, 100, 256, 128)
+        self.button_group = QButtonGroup(self)
         self.radioButton1 = QRadioButton("效果1", self)
         self.radioButton2 = QRadioButton("效果2", self)
+        self.radioButton3 = QRadioButton("反色", self)
         cal_bin = 1
-        self.radioButton1.setGeometry(0, 100, 120, 30)
-        self.radioButton2.setGeometry(50, 100, 120, 30)
+        self.button_group.addButton(self.radioButton1)
+        self.button_group.addButton(self.radioButton2)
+        self.radioButton1.setGeometry(250, 40, 120, 20)
+        self.radioButton2.setGeometry(250, 55, 120, 30)
+        self.radioButton3.setGeometry(250, 75, 120, 30)
 
         self.radioButton1.setChecked(True)  # 默认选中第一个单选按钮
 
         self.radioButton1.toggled.connect(self.on_radio_button_toggled)
         self.radioButton2.toggled.connect(self.on_radio_button_toggled)
+        self.radioButton3.toggled.connect(self.on_radio_button3_toggled)
+
+
+        turn_color = 0
 
         self.combo_box = QComboBox(self)
-        self.combo_box.setGeometry(20, 120, 200, 30)
+        self.combo_box.setGeometry(10, 10, 100, 20)
         self.populate_serial_ports()  # Populate available serial ports
         self.combo_box.currentIndexChanged.connect(self.on_combo_box_changed)
 
@@ -66,7 +79,7 @@ class MainWindow(QMainWindow):
         self.timer.start(500)  # Refresh every 5 seconds (1000 milliseconds)
 
         self.progress_bar = QProgressBar(self)
-        self.progress_bar.setGeometry(50, 150, 200, 20)
+        self.progress_bar.setGeometry(130, 10, 200, 20)
         self.progress_bar.setValue(0)
     # ... (previous code remains the same)
 
@@ -103,28 +116,24 @@ class MainWindow(QMainWindow):
     def qimage_to_gray_list(self,img):
         if img.isNull():
             return None
-
+        global compress_pixels
         width = img.width()
         height = img.height()
-
-        pixel_list = []
+        compress_pixels = [0 for _ in range(len(compress_pixels))]
         for y in range(height):
             for x in range(width):
                 gray_value = QColor(img.pixelColor(x, y)).lightness()
-                pixel_list.append(gray_value)
-
-        return pixel_list
+                if gray_value!=255 :
+                    compress_pixels[y // 8 * 128 + x]=compress_pixels[y//8*128+x]|(1<<(y%8))
 
     def on_combo_box_changed(self, index):
         global com_open
         com_open = self.combo_box.currentText()
 
-        # Debugging: print selected serial port
-        print(f"Selected port: {com_open}")
     def on_radio_button_toggled(self):
         global cal_bin
         global resized_image
-        global pixel_list
+        global turn_color
 
         sender = self.sender()
 
@@ -133,20 +142,31 @@ class MainWindow(QMainWindow):
                 self.radioButton2.setChecked(False)
                 if self.process_button.isEnabled() and cal_bin == 2:
                     binarized_image = self.binarize_image1(resized_image)
-                    pixel_list=self.qimage_to_gray_list(binarized_image)
+                    compress_pixels=self.qimage_to_gray_list(binarized_image)
                     self.show_img(binarized_image)
                 cal_bin=1
-            else:
+            elif sender == self.radioButton2:
                 self.radioButton1.setChecked(False)
                 if self.process_button.isEnabled() and cal_bin == 1:
                     binarized_image = self.binarize_image2(resized_image)
-                    pixel_list=self.qimage_to_gray_list(binarized_image)
+                    compress_pixels=self.qimage_to_gray_list(binarized_image)
                     self.show_img(binarized_image)
                 cal_bin=2
+
+    def on_radio_button3_toggled(self):
+        global turn_color
+        turn_color = 1 - turn_color
+        if self.radioButton1.isChecked():
+            binarized_image = self.binarize_image1(resized_image)
+        else:
+            binarized_image = self.binarize_image2(resized_image)
+
+        compress_pixels = self.qimage_to_gray_list(binarized_image)
+        self.show_img(binarized_image)
+
     def open_image(self):
         global resized_image
         global cal_bin
-        global pixel_list
 
         options = QFileDialog.Options()
         file_path, _ = QFileDialog.getOpenFileName(self, "Open Image File", "", "Image Files (*.jpg *.png *.bmp *.jpeg)",
@@ -163,7 +183,7 @@ class MainWindow(QMainWindow):
                     binarized_image = self.binarize_image2(resized_image)
 
                 #binarized_image.save("C:/Users/RUPC/Desktop/3.jpg")
-                pixel_list=self.qimage_to_gray_list(binarized_image)
+                compress_pixels=self.qimage_to_gray_list(binarized_image)
                 self.show_img(binarized_image)
 
 
@@ -173,18 +193,28 @@ class MainWindow(QMainWindow):
                 print("Exception occurred:", str(e))
 
     def process_image(self):
-        global pixel_list
         global com_open
-
+        global compress_pixels
         self.disable_all_widgets()
         if self.time_set()==False:
             self.enable_all_widgets()
             self.progress_bar.setValue(0)
 
             return False
-        add=0x1E320
+        add=0x1E350
         num=128
         self.progress_bar.setValue(20)
+        # compress_pixels = [0] * 1024
+        #
+        # for i in range(8):
+        #     for j in range(128):
+        #         sum=0
+        #         for k in range(8):
+        #             sum=sum+(pixel_list[(k+i*8)*128+j]<<k)
+        #         if i==1:
+        #             compress_pixels[i*128+j]=255
+        #         else:
+        #             compress_pixels[i * 128 + j] = 0
 
         try:
             with serial.Serial(com_open, 38400, timeout=1) as ser:
@@ -192,7 +222,8 @@ class MainWindow(QMainWindow):
                 for i in range(8):
                     add1=add-0x10000
                     payload = b'\x38\x05' + b'\x8A\x00' + b'\x01\x00' + b'\x82\x00' + b'\x82\x40\x74\x65' +  add1.to_bytes(2, byteorder='little')
-                    for value in pixel_list[i*128:i*128+128]:
+
+                    for value in compress_pixels[i*128:i*128+128]:
                         payload += value.to_bytes(1, byteorder='big')  # 转换为字节并添加到 payload
 
                     # 将 payload 中的最后四个字节替换为当前时间戳
@@ -235,7 +266,12 @@ class MainWindow(QMainWindow):
         pixmap = QPixmap.fromImage(self.resize_image_qimage(binarized_image, 256, 128))
         self.label.setPixmap(pixmap)
     def binarize_image1(self, original_image):
+        global turn_color
         binarized_image = original_image.convertToFormat(QImage.Format_Mono)
+        binarized_image = binarized_image.convertToFormat(QImage.Format_Grayscale8)
+
+        if turn_color:
+            binarized_image=self.invert_grayscale_image(binarized_image)
         return binarized_image
 
     def otsu_threshold(self,qimage):
@@ -278,6 +314,7 @@ class MainWindow(QMainWindow):
 
         return threshold
     def binarize_image2(self, qimage):
+        global  turn_color
         threshold = self.otsu_threshold(qimage)
 
         # Convert QImage to grayscale
@@ -291,7 +328,8 @@ class MainWindow(QMainWindow):
                     gray_qimage.setPixel(x, y, QColor(255, 255, 255).rgb())  # White pixel
                 else:
                     gray_qimage.setPixel(x, y, QColor(0, 0, 0).rgb())  # Black pixel
-
+        if turn_color:
+            gray_qimage=self.invert_grayscale_image(gray_qimage)
         return gray_qimage
 
     def resize_image_qimage(self, image,width,high):
@@ -327,7 +365,7 @@ class MainWindow(QMainWindow):
         msg_box = QMessageBox()
         msg_box.setWindowTitle("提示")
         msg_box.setText(text)
-        msg_box.setIcon(QMessageBox.Critical)
+        msg_box.setIcon(QMessageBox.Information)
         msg_box.setStandardButtons(QMessageBox.Ok)
         msg_box.exec()
     def time_set(self):
@@ -342,11 +380,28 @@ class MainWindow(QMainWindow):
                     self.message("连接失败")
                     return False  # Connection failed due to exception
 
+
+
         except serial.SerialException:
             self.message("连接失败")
 
             return False  # Connection failed due to exception
 
+    def invert_grayscale_image(self,image):
+
+
+        width = image.width()
+        height = image.height()
+
+        for y in range(height):
+            for x in range(width):
+                pixel_value = image.pixel(x, y)
+                inverted_value = 255 - qGray(pixel_value)
+
+                inverted_pixel = qRgb(inverted_value, inverted_value, inverted_value)
+                image.setPixel(x, y, inverted_pixel)
+
+        return image
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = MainWindow()
