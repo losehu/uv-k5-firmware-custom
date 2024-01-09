@@ -1511,7 +1511,15 @@ void APP_TimeSlice500ms(void)
 		if (gDTMF_DecodeRingCountdown_500ms > 0) {
 			// make "ring-ring" sound
 			gDTMF_DecodeRingCountdown_500ms--;
-			AUDIO_PlayBeep(BEEP_880HZ_200MS);
+				#ifdef ENABLE_DTMF_CALL_FLASH_LIGHT
+					GPIO_SetBit(&GPIOC->DATA, GPIOC_PIN_FLASHLIGHT);    // light on
+				#endif
+	
+				AUDIO_PlayBeep(BEEP_880HZ_200MS);
+	
+				#ifdef ENABLE_DTMF_CALL_FLASH_LIGHT
+					GPIO_ClearBit(&GPIOC->DATA, GPIOC_PIN_FLASHLIGHT);  // light off
+				#endif
 		}
 	} else {
 		gDTMF_DecodeRingCountdown_500ms = 0;
