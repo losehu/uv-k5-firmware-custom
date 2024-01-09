@@ -151,9 +151,10 @@ void BATTERY_GetReadings(const bool bDisplayBatteryLevel)
         else
         {
             gLowBattery = false;
-
+#ifdef DENABLE_SHOW_BAT_SYMBOL
             if (bDisplayBatteryLevel)
                 UI_DisplayBattery(gBatteryDisplayLevel, gLowBatteryBlink);
+#endif
         }
 
         if(!gLowBatteryConfirmed)
@@ -170,9 +171,9 @@ void BATTERY_TimeSlice500ms(void)
     }
 
     gLowBatteryBlink = ++lowBatteryCountdown & 1;
-
+#ifdef DENABLE_SHOW_BAT_SYMBOL
     UI_DisplayBattery(0, gLowBatteryBlink);
-
+#endif
     if (gCurrentFunction == FUNCTION_TRANSMIT) {
         return;
     }

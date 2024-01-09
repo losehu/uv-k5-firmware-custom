@@ -61,7 +61,7 @@ const uint8_t BITMAP_BatteryLevel[2] =
                 0b01011101,
                 0b01011101
         };
-
+#ifdef DENABLE_SHOW_BAT_SYMBOL
 #ifndef ENABLE_REVERSE_BAT_SYMBOL
 // Quansheng way (+ pole to the left)
 const uint8_t BITMAP_BatteryLevel1[17] =
@@ -106,6 +106,7 @@ const uint8_t BITMAP_BatteryLevel1[17] =
 		0b00100010,
 		0b00111110
 	};
+#endif
 #endif
 
 const uint8_t BITMAP_USB_C[9] =

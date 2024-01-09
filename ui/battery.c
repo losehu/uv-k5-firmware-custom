@@ -13,6 +13,7 @@
  *     See the License for the specific language governing permissions and
  *     limitations under the License.
  */
+#ifdef DENABLE_SHOW_BAT_SYMBOL
 #include <assert.h>
 #include <stddef.h>
 #include <string.h>
@@ -52,3 +53,4 @@ void UI_DisplayBattery(uint8_t level, uint8_t blink)
     UI_DrawBattery(bitmap, level, blink);
     ST7565_DrawLine(LCD_WIDTH - sizeof(bitmap), 0, bitmap, sizeof(bitmap));
 }
+#endif

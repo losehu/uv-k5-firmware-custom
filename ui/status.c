@@ -145,7 +145,11 @@ void UI_DisplayStatus()
 
     {	// battery voltage or percentage
         char         s[8] = "";
+        #ifdef DENABLE_SHOW_BAT_SYMBOL
         unsigned int x2 = LCD_WIDTH - sizeof(BITMAP_BatteryLevel1) - 0;
+        #else
+        unsigned int x2 = LCD_WIDTH - 0;
+        #endif
 
         if (gChargingWithTypeC)
             x2 -= sizeof(BITMAP_USB_C);  // the radio is on charge
@@ -172,7 +176,11 @@ void UI_DisplayStatus()
     }
 
     // move to right side of the screen
+    #ifdef DENABLE_SHOW_BAT_SYMBOL
     x = LCD_WIDTH - sizeof(BITMAP_BatteryLevel1) - sizeof(BITMAP_USB_C);
+    #else
+    x = LCD_WIDTH - sizeof(BITMAP_USB_C);
+    #endif
 
     // USB-C charge indicator
     if (gChargingWithTypeC)
@@ -180,8 +188,9 @@ void UI_DisplayStatus()
     x += sizeof(BITMAP_USB_C);
 
     // BATTERY LEVEL indicator
+    #ifdef DENABLE_SHOW_BAT_SYMBOL
     UI_DrawBattery(line + x, gBatteryDisplayLevel, gLowBatteryBlink);
-
+    #endif
     // **************
 
     ST7565_BlitStatusLine();
