@@ -236,7 +236,7 @@ void FUNCTION_Transmit() {
         BK4819_DisableScramble();
 
 //    if (gSetting_backlight_on_tx_rx & BACKLIGHT_ON_TR_TX) {
-    BACKLIGHT_TurnOn();
+//    BACKLIGHT_TurnOn();
 //    }
 }
 

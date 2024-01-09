@@ -309,7 +309,9 @@ void SETTINGS_LoadCalibration(void)
 #ifdef ENABLE_VOX
     // EEPROM_ReadBuffer(0x1F50 + (gEeprom.VOX_LEVEL * 2), &gEeprom.VOX1_THRESHOLD, 2);
 	// 	EEPROM_ReadBuffer(0x1F68 + (gEeprom.VOX_LEVEL * 2), &gEeprom.VOX0_THRESHOLD, 2);
-
+//增加语音灵敏度
+		// vox threshold enable   30 50 70 90 110 130 150 170 200 230 FFFF FFFF
+		// vox threshold disable  20 40 60 80 100 120 140 160 190 220 FFFF FFFF
     EEPROM_ReadBuffer(0x1F50 + (gEeprom.VOX_LEVEL * 2), &gEeprom.VOX1_THRESHOLD, 2);
 	//EEPROM_ReadBuffer(0x1F68 + (gEeprom.VOX_LEVEL * 2), &gEeprom.VOX0_THRESHOLD, 2);
     gEeprom.VOX1_THRESHOLD = gEeprom.VOX1_THRESHOLD / 3;
