@@ -13,7 +13,7 @@ void FlashlightTimeSlice()
 		GPIO_FlipBit(&GPIOC->DATA, GPIOC_PIN_FLASHLIGHT);
 		return;
 	}
-
+	#ifdef ENABLE_FLASHLIGHT_SOS
 	if (gFlashLightState == FLASHLIGHT_SOS) {
 		const uint16_t u = 15;
 		static uint8_t c;
@@ -43,6 +43,7 @@ void FlashlightTimeSlice()
 			c++;
 		}
 	}
+	#endif
 }
 
 void ACTION_FlashLight(void)
@@ -50,16 +51,22 @@ void ACTION_FlashLight(void)
 	switch (gFlashLightState) {
 		case FLASHLIGHT_OFF:
 			gFlashLightState++;
-			GPIO_SetBit(&GPIOC->DATA, GPIOC_PIN_FLASHLIGHT);
+			GPIO_SetBit(&GPIOC->DATA, GPIOC_PIN_FLASHLIGHT);//on
 			break;
 		case FLASHLIGHT_ON:
+	#ifdef ENABLE_FLASHLIGHT_SOS
 		case FLASHLIGHT_BLINK:
 			gFlashLightState++;
 			break;
 		case FLASHLIGHT_SOS:
+	#else
+			gFlashLightState++;
+			break;
+		case FLASHLIGHT_BLINK:
+	#endif
 		default:
 			gFlashLightState = 0;
-			GPIO_ClearBit(&GPIOC->DATA, GPIOC_PIN_FLASHLIGHT);
+			GPIO_ClearBit(&GPIOC->DATA, GPIOC_PIN_FLASHLIGHT);//off
 	}
 }
 
