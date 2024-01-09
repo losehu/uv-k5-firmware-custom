@@ -207,6 +207,7 @@ static void HandleIncoming(void)
 #ifdef ENABLE_DTMF_CALLING
     if (gScanStateDir == SCAN_OFF && (gRxVfo->DTMF_DECODING_ENABLE || gSetting_KILLED)) {
 
+        //UART_Send("cm\n", 3);//debug@Yurisu
 		// DTMF DCD is enabled
 		DTMF_HandleRequest();
 		if (gDTMF_CallState == DTMF_CALL_STATE_NONE) {
@@ -436,6 +437,7 @@ static void HandleFunction(void)
 void APP_StartListening(FUNCTION_Type_t function){
     const unsigned int vfo = gEeprom.RX_VFO;
     //	const unsigned int chan = gRxVfo->CHANNEL_SAVE;
+//UART_Send("SL\n", 3);//debug@Yurisu
 
 #ifdef ENABLE_DTMF_CALLING
     if (gSetting_KILLED)
@@ -577,13 +579,19 @@ static void DualwatchAlternate(void)
 }
 static void CheckRadioInterrupts(void)
 {
+    //UART_Send("i", 1);//debug@Yurisu
     if (SCANNER_IsScanning())
         return;
 
-    while (BK4819_ReadRegister(BK4819_REG_0C) & 1u)
+    while(1)
+    //while (BK4819_ReadRegister(BK4819_REG_0C) & 1u)
     {	// BK chip interrupt request
-
+        //UART_Send("\n", 1);//debug@Yurisu
         uint16_t interrupt_status_bits;
+        const uint16_t reg_c = BK4819_ReadRegister(BK4819_REG_0C);
+
+		if ((reg_c & (1u << 0)) == 0)
+			break;       // no interrupt flags
 
         // reset the interrupt ?
         BK4819_WriteRegister(BK4819_REG_02, 0);
@@ -595,13 +603,29 @@ static void CheckRadioInterrupts(void)
         // 1 = 120deg phase shift
         // 2 = 180deg phase shift
         // 3 = 240deg phase shift
-//		const uint8_t ctcss_shift = BK4819_GetCTCShift();
-//		if (ctcss_shift > 0)
-//			g_CTCSS_Lost = true;
+        //		const uint8_t ctcss_shift = BK4819_GetCTCShift();
+        //		if (ctcss_shift > 0)
+        //			g_CTCSS_Lost = true;
+
+
+        if (interrupt_status_bits & BK4819_REG_02_SQUELCH_LOST)
+        {
+            g_SquelchLost = true;
+            BK4819_ToggleGpioOut(BK4819_GPIO6_PIN2_GREEN, true);
+        }
+
+        if (interrupt_status_bits & BK4819_REG_02_SQUELCH_FOUND)
+        {
+            g_SquelchLost = false;
+            BK4819_ToggleGpioOut(BK4819_GPIO6_PIN2_GREEN, false);
+            AUDIO_AudioPathOff();
+        }
+
 
         if (interrupt_status_bits & BK4819_REG_02_DTMF_5TONE_FOUND)
         {	// save the RX'ed DTMF character
             const char c = DTMF_GetCharacter(BK4819_GetDTMF_5TONE_Code());
+            //UART_Send("D5T", 3);//debug@Yurisu
             if (c != 0xff)
             {
                 if (gCurrentFunction != FUNCTION_TRANSMIT)
@@ -620,7 +644,7 @@ static void CheckRadioInterrupts(void)
                         gUpdateDisplay        = true;
                     }
 
-#ifdef ENABLE_DTMF_CALLING
+                    #ifdef ENABLE_DTMF_CALLING
                     if (gRxVfo->DTMF_DECODING_ENABLE || gSetting_KILLED)
 					{
 						if (gDTMF_RX_index >= (sizeof(gDTMF_RX) - 1))
@@ -633,15 +657,21 @@ static void CheckRadioInterrupts(void)
 						gDTMF_RX_timeout           = DTMF_RX_timeout_500ms;  // time till we delete it
 						gDTMF_RX_pending           = true;
 
+                        // UART_Send("CL:", 3);//debug@Yurisu
+                        // UART_Send(gDTMF_RX, gDTMF_RX_index);//debug@Yurisu
+                        // SYSTEM_DelayMs(3);//fix DTMF not reply@Yurisu
 						DTMF_HandleRequest();
 					}
-#endif
+                    #endif
                 }
             }
         }
 
         if (interrupt_status_bits & BK4819_REG_02_CxCSS_TAIL)
+        {
             g_CxCSS_TAIL_Found = true;
+            //g_ctcss_tail_phase_shift_rx = (reg_c >> 12) & 3u;
+        }
 
         if (interrupt_status_bits & BK4819_REG_02_CDCSS_LOST)
         {
@@ -658,7 +688,7 @@ static void CheckRadioInterrupts(void)
         if (interrupt_status_bits & BK4819_REG_02_CTCSS_FOUND)
             g_CTCSS_Lost = false;
 
-#ifdef ENABLE_VOX
+        #ifdef ENABLE_VOX
         if (interrupt_status_bits & BK4819_REG_02_VOX_LOST)
 		{
 			g_VOX_Lost         = true;
@@ -689,21 +719,9 @@ static void CheckRadioInterrupts(void)
 			g_VOX_Lost         = false;
 			gVoxPauseCountdown = 0;
 		}
-#endif
+        #endif
 
-        if (interrupt_status_bits & BK4819_REG_02_SQUELCH_LOST)
-        {
-            g_SquelchLost = true;
-            BK4819_ToggleGpioOut(BK4819_GPIO6_PIN2_GREEN, true);
-        }
-
-        if (interrupt_status_bits & BK4819_REG_02_SQUELCH_FOUND)
-        {
-            g_SquelchLost = false;
-            BK4819_ToggleGpioOut(BK4819_GPIO6_PIN2_GREEN, false);
-        }
-
-#ifdef ENABLE_AIRCOPY
+        #ifdef ENABLE_AIRCOPY
         if (interrupt_status_bits & BK4819_REG_02_FSK_FIFO_ALMOST_FULL &&
 			gScreenToDisplay == DISPLAY_AIRCOPY &&
 			gAircopyState == AIRCOPY_TRANSFER &&
@@ -715,11 +733,11 @@ static void CheckRadioInterrupts(void)
 
 			AIRCOPY_StorePacket();
 		}
-#endif
-#ifdef ENABLE_MDC1200
+        #endif
+        #ifdef ENABLE_MDC1200
          MDC1200_process_rx(  interrupt_status_bits);
 
-#endif
+        #endif
     }
 }
 void APP_EndTransmission(void)

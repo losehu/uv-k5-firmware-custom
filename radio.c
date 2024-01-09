@@ -37,6 +37,7 @@
 #include "radio.h"
 #include "settings.h"
 #include "ui/menu.h"
+#include "driver/uart.h"
 
 VFO_Info_t    *gTxVfo;
 VFO_Info_t    *gRxVfo;
@@ -729,6 +730,9 @@ void RADIO_SetupRegisters(bool switchToForeground)
 		&& !gFmRadioMode
 #endif
 	){
+//增加语音灵敏度
+		// vox threshold enable   30 50 70 90 110 130 150 170 200 230 FFFF FFFF
+		// vox threshold disable  20 40 60 80 100 120 140 160 190 220 FFFF FFFF
 		BK4819_EnableVox(gEeprom.VOX1_THRESHOLD, gEeprom.VOX0_THRESHOLD);
 		InterruptMask |= BK4819_REG_3F_VOX_FOUND | BK4819_REG_3F_VOX_LOST;
 	}
@@ -750,12 +754,18 @@ void RADIO_SetupRegisters(bool switchToForeground)
 		InterruptMask |= BK4819_REG_3F_DTMF_5TONE_FOUND;
 	}
 #else
-    BK4819_DisableDTMF();
 
-    if (gCurrentFunction != FUNCTION_TRANSMIT) {
+
+    // if (gCurrentFunction != FUNCTION_TRANSMIT) {
         BK4819_EnableDTMF();
         InterruptMask |= BK4819_REG_3F_DTMF_5TONE_FOUND;
-    }
+    //     UART_Send("D=1\n", 4);//debug@Yurisu
+    // }
+    // else
+    // {
+    //     BK4819_DisableDTMF();
+    //     UART_Send("D=0\n", 4);//debug@Yurisu
+    // }
 #endif
     RADIO_SetupAGC(gRxVfo->Modulation == MODULATION_AM, false);
     // enable/disable BK4819 selected interrupts

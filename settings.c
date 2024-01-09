@@ -307,8 +307,14 @@ void SETTINGS_LoadCalibration(void)
     gBatteryCalibration[5] = 2300;
 
 #ifdef ENABLE_VOX
+    // EEPROM_ReadBuffer(0x1F50 + (gEeprom.VOX_LEVEL * 2), &gEeprom.VOX1_THRESHOLD, 2);
+	// 	EEPROM_ReadBuffer(0x1F68 + (gEeprom.VOX_LEVEL * 2), &gEeprom.VOX0_THRESHOLD, 2);
+
     EEPROM_ReadBuffer(0x1F50 + (gEeprom.VOX_LEVEL * 2), &gEeprom.VOX1_THRESHOLD, 2);
-		EEPROM_ReadBuffer(0x1F68 + (gEeprom.VOX_LEVEL * 2), &gEeprom.VOX0_THRESHOLD, 2);
+	//EEPROM_ReadBuffer(0x1F68 + (gEeprom.VOX_LEVEL * 2), &gEeprom.VOX0_THRESHOLD, 2);
+    gEeprom.VOX1_THRESHOLD = gEeprom.VOX1_THRESHOLD / 3;
+    gEeprom.VOX0_THRESHOLD = (gEeprom.VOX1_THRESHOLD > 13) ? gEeprom.VOX1_THRESHOLD -10 : 3;
+
 #endif
 
     //EEPROM_ReadBuffer(0x1F80 + gEeprom.MIC_SENSITIVITY, &Mic, 1);
