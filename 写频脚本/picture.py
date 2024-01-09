@@ -156,13 +156,13 @@ class MainWindow(QMainWindow):
     def on_radio_button3_toggled(self):
         global turn_color
         turn_color = 1 - turn_color
-        if self.radioButton1.isChecked():
-            binarized_image = self.binarize_image1(resized_image)
-        else:
-            binarized_image = self.binarize_image2(resized_image)
-
-        compress_pixels = self.qimage_to_gray_list(binarized_image)
-        self.show_img(binarized_image)
+        if self.process_button.isEnabled():
+            if self.radioButton1.isChecked():
+                binarized_image = self.binarize_image1(resized_image)
+            else:
+                binarized_image = self.binarize_image2(resized_image)
+            compress_pixels = self.qimage_to_gray_list(binarized_image)
+            self.show_img(binarized_image)
 
     def open_image(self):
         global resized_image

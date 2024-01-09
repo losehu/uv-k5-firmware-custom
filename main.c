@@ -17,6 +17,7 @@
 #include "string.h"
 #include <stdio.h>
 #include "ui/helper.h"
+#include <string.h>
 
 #include "ui/ui.h"
 #include <stdint.h>
@@ -30,7 +31,9 @@
 #ifdef ENABLE_AM_FIX
 #include "am_fix.h"
 #endif
-
+#ifdef ENABLE_TIMER
+#include "bsp/dp32g030/timer.h"
+#endif
 #include "audio.h"
 #include "board.h"
 #include "misc.h"
@@ -313,9 +316,25 @@ void Main(void) {
     gDebounceCounter = 0;
 //	}
 
-
-
-
+//    TIM0_INIT();
+//
+//    memset(gStatusLine, 0, sizeof(gStatusLine));
+//    UI_DisplayClear();
+//    ST7565_BlitStatusLine();  // blank status line
+//    ST7565_BlitFullScreen();
+//    char str[20]={0}; // 分配一个足够大的字符串数组来存储转换后的字符串
+//
+//    while(1)
+//{
+//
+//    str[0]=TIMERBASE0_LOW_CNT/100+'0';
+//    str[1]=TIMERBASE0_LOW_CNT/10%10+'0';
+//    str[2]=TIMERBASE0_LOW_CNT%10+'0';
+//       UI_PrintStringSmall(str, 0, 127, 3);
+//    ST7565_BlitFullScreen();
+//
+//
+//}
     UI_DisplayWelcome();
 
     boot_counter_10ms = 250;

@@ -67,6 +67,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/system.c.obj.d"
   "CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/systick.c.obj"
   "CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/systick.c.obj.d"
+  "CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/timer.c.obj"
+  "CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/timer.c.obj.d"
   "CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/uart.c.obj"
   "CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/uart.c.obj.d"
   "CMakeFiles/uv_k5_firmware_custom_0_17.dir/external/CMSIS_5/CMSIS/Core/Template/ARMv8-M/main_s.c.obj"

@@ -87,16 +87,34 @@ static void DrawLevelBar(uint8_t xpos, uint8_t line, uint8_t level)
 
     uint8_t *p_line = gFrameBuffer[line];
     level = MIN(level, 13);
+#ifndef ENABLE_AUDIO_BAR_DEFAULT
+    if(xpos==35) {
 
-    for(uint8_t i = 0; i < level; i++) {
-        if(i < 9) {
-            for(uint8_t j = 0; j < 4; j++)
-                p_line[xpos + i * 5 + j] = (~(0x7F >> (i+1))) & 0x7F;
+        p_line[xpos] = 0x3E;
+
+        for (uint8_t i = 0; i < 91; i++) {
+            if (i < level * 7) {
+                p_line[xpos + i + 1] = 0x3E;
+            } else {
+                p_line[xpos + i + 1] = 0X22;
+            }
         }
-        else {
-            memcpy(p_line + (xpos + i * 5), &hollowBar, ARRAY_SIZE(hollowBar));
+        p_line[xpos + 91 + 1] = 0x3E;
+    }else {
+#endif
+        for (uint8_t i = 0; i < level; i++) {
+            if (i < 9) {
+                for (uint8_t j = 0; j < 4; j++)
+                    p_line[xpos + i * 5 + j] = (~(0x7F >> (i + 1))) & 0x7F;
+            } else {
+                memcpy(p_line + (xpos + i * 5), &hollowBar, ARRAY_SIZE(hollowBar));
+            }
         }
+#ifndef ENABLE_AUDIO_BAR_DEFAULT
+
     }
+#endif
+
 }
 //#endif
 
@@ -153,15 +171,26 @@ void UI_DisplayAudioBar(void)
         if(audio_keep_flag)
             {
 //            audio_keep_flag=false;
+
+#ifndef ENABLE_AUDIO_BAR_DEFAULT
+
+           memset(p_line+35, 0, LCD_WIDTH-35);
+#else
            memset(p_line+62, 0, LCD_WIDTH-62);
+
+#endif
 
             }else
 #endif
            memset(p_line, 0, LCD_WIDTH);
 
+#ifndef ENABLE_AUDIO_BAR_DEFAULT
 
-        DrawLevelBar(62, line, bars);
+        DrawLevelBar(35, line, bars);
+#else
+    DrawLevelBar(62, line, bars);
 
+#endif
         if (gCurrentFunction == FUNCTION_TRANSMIT)
             ST7565_BlitFullScreen();
 
@@ -622,8 +651,10 @@ if (!gDTMF_InputMode) {
                         }
 
                         if (gEeprom.CHANNEL_DISPLAY_MODE == MDF_NAME) {
+                            show_move_flag=1;
                             UI_PrintStringSmall(String, 32, 0, line);
                         } else {
+                            show_move_flag=1;
 
                             UI_PrintStringSmall(String, 32 + 4, 0, line);
 

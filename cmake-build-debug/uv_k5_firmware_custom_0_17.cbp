@@ -454,6 +454,9 @@
 		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/bsp/dp32g030/syscon.h">
 			<Option target="uv_k5_firmware_custom_0_17"/>
 		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/bsp/dp32g030/timer.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
 		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/bsp/dp32g030/uart.h">
 			<Option target="uv_k5_firmware_custom_0_17"/>
 		</Unit>
@@ -563,6 +566,9 @@
 			<Option target="uv_k5_firmware_custom_0_17"/>
 		</Unit>
 		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/systick.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/timer.c">
 			<Option target="uv_k5_firmware_custom_0_17"/>
 		</Unit>
 		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/uart.c">

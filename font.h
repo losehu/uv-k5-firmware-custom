@@ -29,7 +29,7 @@ extern bool audio_keep_flag;
 #else
 #define MAX_EDIT_INDEX 10
 #endif
-extern bool menu_set_flag;
+extern bool show_move_flag;
 
 extern const uint8_t gFontBigDigits[11][20/*20*/];
 extern const uint8_t gFont3x5[96][3];

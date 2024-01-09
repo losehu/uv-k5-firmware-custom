@@ -726,6 +726,8 @@ void UI_DisplayMenu(void) {
                 UI_PrintStringSmall(String, menu_item_x1 - 12, menu_item_x2, 5);
             }
             SETTINGS_FetchChannelName(String, gSubMenuSelection);
+            show_move_flag=1;
+
             UI_PrintStringSmall(String[0] ? String : "--", menu_item_x1 - 12, menu_item_x2, 3);
             already_printed = true;
             break;
@@ -779,6 +781,7 @@ void UI_DisplayMenu(void) {
                 if (!gIsInSubMenu || edit_index < 0) {    // show the channel name
                     SETTINGS_FetchChannelName(String, gSubMenuSelection);
                     char *pPrintStr = String[0] ? String : "--";
+                    show_move_flag=1;
                     UI_PrintStringSmall(pPrintStr, menu_item_x1 - 12, menu_item_x2, 3);
                 } else if (!CHINESE_JUDGE(tmp_name, strlen(tmp_name))) {    // show the channel name being edited
                     UI_PrintStringSmall(edit, menu_item_x1 - 12, 0, 3);
@@ -1069,6 +1072,7 @@ void UI_DisplayMenu(void) {
         // channel number
         UI_PrintStringSmall(pPrintStr, menu_item_x1 - 12, menu_item_x2, 2);
 
+        show_move_flag=1;
 
         SETTINGS_FetchChannelName(String, gSubMenuSelection);
         pPrintStr = String[0] ? String : "--";
@@ -1169,7 +1173,7 @@ void UI_ShowChineseMenu() {
         }
     }
 
-    menu_set_flag = 1;
+    show_move_flag = 1;
 
     UI_PrintStringSmall(MenuList[gMenuCursor].name, size_menu < 48 ? (48 - size_menu) / 2 : 0, 0, 0);
 

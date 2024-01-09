@@ -944,6 +944,30 @@ driver/systick.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\uv_k5_firmware_custom_0_17.dir\build.make CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/systick.c.s
 .PHONY : driver/systick.c.s
 
+driver/timer.obj: driver/timer.c.obj
+.PHONY : driver/timer.obj
+
+# target to build an object file
+driver/timer.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\uv_k5_firmware_custom_0_17.dir\build.make CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/timer.c.obj
+.PHONY : driver/timer.c.obj
+
+driver/timer.i: driver/timer.c.i
+.PHONY : driver/timer.i
+
+# target to preprocess a source file
+driver/timer.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\uv_k5_firmware_custom_0_17.dir\build.make CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/timer.c.i
+.PHONY : driver/timer.c.i
+
+driver/timer.s: driver/timer.c.s
+.PHONY : driver/timer.s
+
+# target to generate assembly for a file
+driver/timer.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\uv_k5_firmware_custom_0_17.dir\build.make CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/timer.c.s
+.PHONY : driver/timer.c.s
+
 driver/uart.obj: driver/uart.c.obj
 .PHONY : driver/uart.obj
 
@@ -8519,6 +8543,9 @@ help:
 	@echo ... driver/systick.obj
 	@echo ... driver/systick.i
 	@echo ... driver/systick.s
+	@echo ... driver/timer.obj
+	@echo ... driver/timer.i
+	@echo ... driver/timer.s
 	@echo ... driver/uart.obj
 	@echo ... driver/uart.i
 	@echo ... driver/uart.s

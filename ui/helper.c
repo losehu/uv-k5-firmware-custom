@@ -119,7 +119,7 @@ void UI_PrintStringSmall(const char *pString, uint8_t Start, uint8_t End, uint8_
 
     uint8_t Length = strlen(pString);
 
-    if (menu_set_flag) {
+    if (show_move_flag) {
 #if ENABLE_CHINESE_FULL == 0
         Length = Length > 7 ? 7 : Length;
 #else
@@ -127,7 +127,7 @@ void UI_PrintStringSmall(const char *pString, uint8_t Start, uint8_t End, uint8_
 
 #endif
         flag_move = 1;
-        menu_set_flag = 0;
+        show_move_flag = 0;
 
     }
     uint8_t sum_pixel = 0;

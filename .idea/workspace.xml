@@ -21,13 +21,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="修正MDC联系人地址">
+      <change afterPath="$PROJECT_DIR$/bsp/dp32g030/timer.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driver/timer.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MDC_WRITE/MDC.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MDC_WRITE/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/MDC_WRITE/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/menu.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/menu.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/menu.h" beforeDir="false" afterPath="$PROJECT_DIR$/ui/menu.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/welcome.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/welcome.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/version.c" beforeDir="false" afterPath="$PROJECT_DIR$/version.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/codemodel-v2-caa285142236f184f75e.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2024-01-04T12-24-34-0342.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-uv_k5_firmware_custom_0_17-Debug-793164c62e57d652e20e.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/uv_k5_firmware_custom_0_17.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/uv_k5_firmware_custom_0_17.dir/DependInfo.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/uv_k5_firmware_custom_0_17.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/uv_k5_firmware_custom_0_17.dir/build.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/uv_k5_firmware_custom_0_17.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/uv_k5_firmware_custom_0_17.dir/cmake_clean.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/uv_k5_firmware_custom_0_17.dir/objects1" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/uv_k5_firmware_custom_0_17.dir/objects1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/uv_k5_firmware_custom_0_17.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/uv_k5_firmware_custom_0_17.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/uv_k5_firmware_custom_0_17.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/uv_k5_firmware_custom_0_17.cbp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/start.S" beforeDir="false" afterPath="$PROJECT_DIR$/start.S" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/写频脚本/picture.py" beforeDir="false" afterPath="$PROJECT_DIR$/写频脚本/picture.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +117,12 @@
       <recent name="C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\app" />
     </key>
   </component>
-  <component name="RunManager" selected="Makefile 目标.flash">
+  <component name="RunManager" selected="Makefile 目标.build">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="all" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
       <makefile filename="$PROJECT_DIR$/Makefile" target="all" workingDirectory="" arguments="">
         <envs />
@@ -194,9 +210,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Makefile 目标.build" />
         <item itemvalue="Makefile 目标.flash" />
         <item itemvalue="Makefile 目标.all" />
-        <item itemvalue="Makefile 目标.build" />
         <item itemvalue="Makefile 目标.clean" />
         <item itemvalue="Makefile 目标.debug" />
       </list>
@@ -271,6 +287,7 @@
       <workItem from="1704636744423" duration="1043000" />
       <workItem from="1704681883948" duration="331000" />
       <workItem from="1704682476299" duration="8000" />
+      <workItem from="1704716322305" duration="3309000" />
     </task>
     <task id="LOCAL-00059" summary="写频">
       <created>1701739409050</created>

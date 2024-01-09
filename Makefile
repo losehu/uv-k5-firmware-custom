@@ -49,11 +49,12 @@ ENABLE_MDC1200_SIDE_BEEP      ?= 0
 ENABLE_MDC1200_CONTACT        ?= 1
 ENABLE_CHINESE_FULL 		  = 4
 ENABLE_UART_RW_BK_REGS 		  ?= 0
-
+ENABLE_AUDIO_BAR_DEFAULT     ?=0
 
 # ---- DEBUGGING ----
 ENABLE_AM_FIX_SHOW_DATA       ?= 0
 ENABLE_AGC_SHOW_DATA          ?= 0
+ENABLE_TIMER		  ?= 0
 
 #############################################################
 OPENOCD = openocd-win/bin/openocd.exe
@@ -81,10 +82,12 @@ ifeq ($(ENABLE_OVERLAY),1)
 	OBJS += sram-overlay.o
 endif
 OBJS += external/printf/printf.o
+ifeq ($(ENABLE_TIMER),1)
+    OBJS += driver/timer.o
+endif
 ifeq ($(ENABLE_MDC1200),1)
     OBJS += app/mdc1200.o
 endif
-
 # Drivers
 OBJS += driver/adc.o
 ifeq ($(ENABLE_UART),1)
@@ -264,12 +267,16 @@ endif
 ifeq ($(ENABLE_MDC1200),1)
     CFLAGS  += -DENABLE_MDC1200
 endif
-
+ifeq ($(ENABLE_TIMER),1)
+    CFLAGS  += -DENABLE_TIMER
+endif
 ifeq ($(ENABLE_MDC1200_CONTACT),1)
     CFLAGS  += -DENABLE_MDC1200_CONTACT
 endif
 CFLAGS  += -DENABLE_CHINESE_FULL=$(ENABLE_CHINESE_FULL)
-
+ifeq ($(ENABLE_AUDIO_BAR_DEFAULT),1)
+    CFLAGS  += -DENABLE_AUDIO_BAR_DEFAULT
+endif
 
 ifeq ($(ENABLE_MDC1200_SHOW_OP_ARG),1)
     CFLAGS  += -DENABLE_MDC1200_SHOW_OP_ARG
