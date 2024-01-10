@@ -343,9 +343,9 @@ void Main(void) {
 //    {
 //        char A[128];        char B[128];
 //
-//        memset(A,'A',sizeof (A));
-//         EEPROM_WriteBuffer(0x30000, A, 128);
-//         EEPROM_ReadBuffer(0x30000, B, 128) ;
+//        memset(A,'A',sizeof (A));//0x20000 128K 0X40000 256K
+//         EEPROM_WriteBuffer(0x50000, A, 128);
+//         EEPROM_ReadBuffer(0x50000, B, 128) ;
 //        if (memcmp(A,B,128)==0)
 //        {
 //            UI_PrintStringSmall("Double 2Mb Eeprom\nInstall OK!", 0, 127, 2);
