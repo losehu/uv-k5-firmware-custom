@@ -20,45 +20,55 @@
 #include "driver/eeprom.h"
 #include "driver/i2c.h"
 #include "driver/system.h"
-uint8_t WRITE_SIZE=0;
+
+uint8_t WRITE_SIZE = 0;
+
 void EEPROM_ReadBuffer(uint32_t Address, void *pBuffer, uint8_t Size) {
-    if(Size==0)return;
+    if (Size == 0)return;
 
-        I2C_Start();
-      uint8_t  P0 = (Address / 0x10000) << 1;
+    I2C_Start();
+    uint8_t IIC_ADD = 0xA0 | ((Address / 0x10000) << 1);
+#ifdef ENABLE_EEPROM_4M
 
-        I2C_Write(0xA0|P0);
+    if (Address >= 0x20000)
+        {IIC_ADD = 0xA8 | (((Address - 0x20000) / 0x10000) << 1);
+Address-=0x20000;
 
-        I2C_Write((Address >> 8) & 0xFF);
-        I2C_Write((Address >> 0) & 0xFF);
+        }
+#endif
+    I2C_Write(IIC_ADD);
+    I2C_Write((Address >> 8) & 0xFF);
+    I2C_Write((Address >> 0) & 0xFF);
 
-        I2C_Start();
+    I2C_Start();
 
-        I2C_Write((0xA0|P0)+1);
+    I2C_Write(IIC_ADD + 1);
 
-        I2C_ReadBuffer(pBuffer, Size);
+    I2C_ReadBuffer(pBuffer, Size);
 
-        I2C_Stop();
+    I2C_Stop();
 
 }
 
-void EEPROM_WriteBuffer(uint32_t Address, const void *pBuffer,uint8_t WRITE_SIZE) {
-    if (pBuffer == NULL )
+void EEPROM_WriteBuffer(uint32_t Address, const void *pBuffer, uint8_t WRITE_SIZE) {
+    if (pBuffer == NULL)
         return;
     uint8_t buffer[128];
     EEPROM_ReadBuffer(Address, buffer, WRITE_SIZE);
     if (memcmp(pBuffer, buffer, WRITE_SIZE) != 0) {
-        uint8_t P0 = (Address / 0x10000) << 1;
+        uint8_t IIC_ADD=0xA0 | ((Address / 0x10000) << 1);
         I2C_Start();
-        if(Address<0x10000)  I2C_Write(0xA0);
-        else         I2C_Write(0xA0 | P0);
-
-        I2C_Write((Address >> 8) & 0xFF);
-        I2C_Write((Address >> 0) & 0xFF);
+#ifdef ENABLE_EEPROM_4M
+        if(Address>=0x20000)
+            IIC_ADD = 0xA8 | (((Address - 0x20000) / 0x10000) << 1);
+#endif
+        I2C_Write(IIC_ADD);
+        I2C_Write(((Address>=0x20000?Address:Address-0x20000) >> 8) & 0xFF);
+        I2C_Write(((Address>=0x20000?Address:Address-0x20000) >> 0) & 0xFF);
         I2C_WriteBuffer(pBuffer, WRITE_SIZE);
         I2C_Stop();
     }
-    SYSTEM_DelayMs(11);
+    SYSTEM_DelayMs(8);
 
 }
 
