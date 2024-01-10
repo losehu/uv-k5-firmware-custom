@@ -20,11 +20,8 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="修复信道名显示">
+    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="修复收音机缺失文字">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/version.c" beforeDir="false" afterPath="$PROJECT_DIR$/version.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/win_make.bat" beforeDir="false" afterPath="$PROJECT_DIR$/win_make.bat" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +100,7 @@
       <recent name="C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\app" />
     </key>
   </component>
-  <component name="RunManager" selected="Makefile 目标.full">
+  <component name="RunManager" selected="Shell Script.win docker">
     <configuration name="all" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
       <makefile filename="$PROJECT_DIR$/Makefile" target="all" workingDirectory="" arguments="">
         <envs />
@@ -281,28 +278,7 @@
       <workItem from="1704853919857" duration="595000" />
       <workItem from="1704856873722" duration="3844000" />
       <workItem from="1704864846118" duration="988000" />
-      <workItem from="1704875852857" duration="8575000" />
-    </task>
-    <task id="LOCAL-00067" summary="106 MDC crc fix">
-      <created>1701778784894</created>
-      <option name="number" value="00067" />
-      <option name="presentableId" value="LOCAL-00067" />
-      <option name="project" value="LOCAL" />
-      <updated>1701778784894</updated>
-    </task>
-    <task id="LOCAL-00068" summary="fix EEPROM">
-      <created>1701870824988</created>
-      <option name="number" value="00068" />
-      <option name="presentableId" value="LOCAL-00068" />
-      <option name="project" value="LOCAL" />
-      <updated>1701870824988</updated>
-    </task>
-    <task id="LOCAL-00069" summary="dtmf显示">
-      <created>1701920351386</created>
-      <option name="number" value="00069" />
-      <option name="presentableId" value="LOCAL-00069" />
-      <option name="project" value="LOCAL" />
-      <updated>1701920351386</updated>
+      <workItem from="1704875852857" duration="9244000" />
     </task>
     <task id="LOCAL-00070" summary="fix https://github.com/losehu/uv-k5-firmware-chinese/issues/15">
       <created>1701941650076</created>
@@ -626,7 +602,28 @@
       <option name="project" value="LOCAL" />
       <updated>1704887484602</updated>
     </task>
-    <option name="localTasksCounter" value="116" />
+    <task id="LOCAL-00116" summary="同时编译多个版本">
+      <created>1704888346767</created>
+      <option name="number" value="00116" />
+      <option name="presentableId" value="LOCAL-00116" />
+      <option name="project" value="LOCAL" />
+      <updated>1704888346767</updated>
+    </task>
+    <task id="LOCAL-00117" summary="修复收音机缺失文字">
+      <created>1704888729393</created>
+      <option name="number" value="00117" />
+      <option name="presentableId" value="LOCAL-00117" />
+      <option name="project" value="LOCAL" />
+      <updated>1704888729393</updated>
+    </task>
+    <task id="LOCAL-00118" summary="修复收音机缺失文字">
+      <created>1704888827675</created>
+      <option name="number" value="00118" />
+      <option name="presentableId" value="LOCAL-00118" />
+      <option name="project" value="LOCAL" />
+      <updated>1704888827675</updated>
+    </task>
+    <option name="localTasksCounter" value="119" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -653,8 +650,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="关闭MDC1200信息显示" />
-    <MESSAGE value="Makefile" />
     <MESSAGE value="readme add" />
     <MESSAGE value="重构" />
     <MESSAGE value="clion" />
@@ -678,7 +673,9 @@
     <MESSAGE value="MDC ID地址改回原来的" />
     <MESSAGE value="DTMF CALL延时（存疑）" />
     <MESSAGE value="修复信道名显示" />
-    <option name="LAST_COMMIT_MESSAGE" value="修复信道名显示" />
+    <MESSAGE value="同时编译多个版本" />
+    <MESSAGE value="修复收音机缺失文字" />
+    <option name="LAST_COMMIT_MESSAGE" value="修复收音机缺失文字" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

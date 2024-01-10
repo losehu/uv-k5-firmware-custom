@@ -132,6 +132,9 @@ ENABLE_MDC1200_SIDE_BEEP      := 0       MDC侧音
 ENABLE_MDC1200_CONTACT        := 1       MDC联系人，开启后ENABLE_MDC1200_SHOW_OP_ARG失效
 ENABLE_AM_FIX_SHOW_DATA       := 0       显示 AM 修复的调试数据（仍在调整） 
 ENABLE_AGC_SHOW_DATA          := 0       显示ACG参数
+ENABLE_AUDIO_BAR_DEFAULT      ?=0        默认语音条样式
+ENABLE_EEPROM_4M              ?=1        两个2Mb Eeprom堆叠方案
+ENABLE_CHINESE_FULL 		   =4        编译固件版本选项
 ```
 
 # 打赏
