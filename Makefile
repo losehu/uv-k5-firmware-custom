@@ -47,16 +47,43 @@ ENABLE_MDC1200                ?= 1
 ENABLE_MDC1200_SHOW_OP_ARG    ?= 1
 ENABLE_MDC1200_SIDE_BEEP      ?= 0
 ENABLE_MDC1200_CONTACT        ?= 1
-ENABLE_CHINESE_FULL 		  = 4
 ENABLE_UART_RW_BK_REGS 		  ?= 0
 ENABLE_AUDIO_BAR_DEFAULT     ?=1
 ENABLE_EEPROM_4M       ?=1
+ENABLE_CHINESE_FULL 		  = 4
+
 # ---- DEBUGGING ----
 ENABLE_AM_FIX_SHOW_DATA       ?= 0
 ENABLE_AGC_SHOW_DATA          ?= 0
 ENABLE_TIMER		  ?= 0
 
 #############################################################
+PACKED_FILE_SUFFIX = LOSEHU115
+ifeq ($(ENABLE_CHINESE_FULL),1)
+    $(info font1)
+    PACKED_FILE_SUFFIX = font1
+endif
+
+ifeq ($(ENABLE_CHINESE_FULL),2)
+    $(info font2)
+    PACKED_FILE_SUFFIX = font2
+endif
+
+ifeq ($(ENABLE_CHINESE_FULL),3)
+    $(info font3)
+    PACKED_FILE_SUFFIX = font3
+endif
+
+ifeq ($(ENABLE_CHINESE_FULL),4)
+    $(info K)
+    PACKED_FILE_SUFFIX := $(PACKED_FILE_SUFFIX)K
+endif
+
+ifeq ($(ENABLE_CHINESE_FULL),0)
+    $(info Normal)
+endif
+
+
 OPENOCD = openocd-win/bin/openocd.exe
 TARGET = firmware
 
@@ -258,6 +285,9 @@ endif
 CFLAGS += -Wextra
 #CFLAGS += -Wpedantic
 
+# 设置PACKED_FILE_SUFFIX，根据ENABLE_CHINESE_FULL的值设置不同的后缀
+CFLAGS += -DENABLE_CHINESE_FULL=$(ENABLE_CHINESE_FULL)
+CFLAGS += -DPACKED_FILE_SUFFIX=\"$(PACKED_FILE_SUFFIX)\"
 CFLAGS += -DPRINTF_INCLUDE_CONFIG_H
 CFLAGS += -DAUTHOR_STRING=\"$(AUTHOR_STRING)\" -DVERSION_STRING=\"$(VERSION_STRING)\"
 
@@ -273,7 +303,6 @@ endif
 ifeq ($(ENABLE_MDC1200_CONTACT),1)
     CFLAGS  += -DENABLE_MDC1200_CONTACT
 endif
-CFLAGS  += -DENABLE_CHINESE_FULL=$(ENABLE_CHINESE_FULL)
 ifeq ($(ENABLE_AUDIO_BAR_DEFAULT),1)
     CFLAGS  += -DENABLE_AUDIO_BAR_DEFAULT
 endif
@@ -438,7 +467,6 @@ ifdef MY_PYTHON
     HAS_CRCMOD := $(shell $(MY_PYTHON) -c "import crcmod" 2>&1)
 endif
 
-
 build:clean $(TARGET)
 	$(OBJCOPY) -O binary $(TARGET) $(TARGET).bin
 ifndef MY_PYTHON
@@ -451,11 +479,25 @@ else ifneq (,$(HAS_CRCMOD))
 	$(info !!!!!!!! run: pip install crcmod)
 	$(info )
 else
-	-$(MY_PYTHON) fw-pack.py $(TARGET).bin $(AUTHOR_STRING) $(TARGET).packed.bin
+	-$(MY_PYTHON) fw-pack.py $(TARGET).bin $(AUTHOR_STRING) $(PACKED_FILE_SUFFIX).bin
 endif
 	$(SIZE) $(TARGET)
-all: clean build flash
-	make clean
+
+full:
+	$(MAKE) build ENABLE_CHINESE_FULL=0
+	$(MAKE) build ENABLE_CHINESE_FULL=1
+	$(MAKE) build ENABLE_CHINESE_FULL=2
+	$(MAKE) build ENABLE_CHINESE_FULL=3
+	$(MAKE) build ENABLE_CHINESE_FULL=4
+both:
+	$(MAKE) build ENABLE_CHINESE_FULL=0
+	$(MAKE) build ENABLE_CHINESE_FULL=4
+
+
+all:
+	$(MAKE) build
+	$(MAKE) flash
+
 debug:
 	$(OPENOCD) -c "bindto 0.0.0.0" -f interface/stlink.cfg -f dp32g030.cfg
 
@@ -480,5 +522,5 @@ bsp/dp32g030/%.h: hardware/dp32g030/%.def
 -include $(DEPS)
 
 clean:
-	$(RM) $(call FixPath, $(TARGET).bin $(TARGET).packed.bin $(TARGET) $(OBJS) $(DEPS))
+	$(RM) $(call FixPath, $(TARGET).bin $(PACKED_FILE_SUFFIX).bin $(TARGET) $(OBJS) $(DEPS))
 

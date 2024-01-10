@@ -20,25 +20,11 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="修正MDC联系人地址">
-      <change afterPath="$PROJECT_DIR$/bsp/dp32g030/timer.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/driver/timer.c" afterDir="false" />
+    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="修复信道名显示">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/codemodel-v2-caa285142236f184f75e.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2024-01-04T12-24-34-0342.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-uv_k5_firmware_custom_0_17-Debug-793164c62e57d652e20e.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/uv_k5_firmware_custom_0_17.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/uv_k5_firmware_custom_0_17.dir/DependInfo.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/uv_k5_firmware_custom_0_17.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/uv_k5_firmware_custom_0_17.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/uv_k5_firmware_custom_0_17.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/uv_k5_firmware_custom_0_17.dir/cmake_clean.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/uv_k5_firmware_custom_0_17.dir/objects1" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/uv_k5_firmware_custom_0_17.dir/objects1" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/uv_k5_firmware_custom_0_17.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/uv_k5_firmware_custom_0_17.dir/progress.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/uv_k5_firmware_custom_0_17.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/uv_k5_firmware_custom_0_17.cbp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/start.S" beforeDir="false" afterPath="$PROJECT_DIR$/start.S" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/写频脚本/picture.py" beforeDir="false" afterPath="$PROJECT_DIR$/写频脚本/picture.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/version.c" beforeDir="false" afterPath="$PROJECT_DIR$/version.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/win_make.bat" beforeDir="false" afterPath="$PROJECT_DIR$/win_make.bat" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,27 +73,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;language.cpp.clang-tidy&quot;,
-    &quot;structure.view.defaults.are.configured&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "last_opened_file_path": "C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/Makefile",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "language.cpp.clang-tidy",
+    "structure.view.defaults.are.configured": "true",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese" />
@@ -117,14 +103,15 @@
       <recent name="C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\app" />
     </key>
   </component>
-  <component name="RunManager" selected="Makefile 目标.build">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Makefile 目标.full">
     <configuration name="all" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
       <makefile filename="$PROJECT_DIR$/Makefile" target="all" workingDirectory="" arguments="">
+        <envs />
+      </makefile>
+      <method v="2" />
+    </configuration>
+    <configuration name="both" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile">
+      <makefile filename="C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\Makefile" target="both" workingDirectory="" arguments="">
         <envs />
       </makefile>
       <method v="2" />
@@ -141,14 +128,14 @@
       </makefile>
       <method v="2" />
     </configuration>
-    <configuration name="debug" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
-      <makefile filename="$PROJECT_DIR$/Makefile" target="debug" workingDirectory="" arguments="">
+    <configuration name="flash" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
+      <makefile filename="$PROJECT_DIR$/Makefile" target="flash" workingDirectory="" arguments="">
         <envs />
       </makefile>
       <method v="2" />
     </configuration>
-    <configuration name="flash" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
-      <makefile filename="$PROJECT_DIR$/Makefile" target="flash" workingDirectory="" arguments="">
+    <configuration name="full" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
+      <makefile filename="$PROJECT_DIR$/Makefile" target="full" workingDirectory="" arguments="">
         <envs />
       </makefile>
       <method v="2" />
@@ -199,7 +186,8 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Makefile 目标.debug" />
+      <item itemvalue="Makefile 目标.both" />
+      <item itemvalue="Makefile 目标.full" />
       <item itemvalue="Makefile 目标.build" />
       <item itemvalue="Makefile 目标.clean" />
       <item itemvalue="Makefile 目标.all" />
@@ -210,11 +198,11 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Makefile 目标.full" />
+        <item itemvalue="Makefile 目标.all" />
         <item itemvalue="Makefile 目标.build" />
         <item itemvalue="Makefile 目标.flash" />
-        <item itemvalue="Makefile 目标.all" />
         <item itemvalue="Makefile 目标.clean" />
-        <item itemvalue="Makefile 目标.debug" />
       </list>
     </recent_temporary>
   </component>
@@ -288,62 +276,12 @@
       <workItem from="1704681883948" duration="331000" />
       <workItem from="1704682476299" duration="8000" />
       <workItem from="1704716322305" duration="3309000" />
-    </task>
-    <task id="LOCAL-00059" summary="写频">
-      <created>1701739409050</created>
-      <option name="number" value="00059" />
-      <option name="presentableId" value="LOCAL-00059" />
-      <option name="project" value="LOCAL" />
-      <updated>1701739409050</updated>
-    </task>
-    <task id="LOCAL-00060" summary="写频">
-      <created>1701739895017</created>
-      <option name="number" value="00060" />
-      <option name="presentableId" value="LOCAL-00060" />
-      <option name="project" value="LOCAL" />
-      <updated>1701739895017</updated>
-    </task>
-    <task id="LOCAL-00061" summary="写频">
-      <created>1701740303236</created>
-      <option name="number" value="00061" />
-      <option name="presentableId" value="LOCAL-00061" />
-      <option name="project" value="LOCAL" />
-      <updated>1701740303236</updated>
-    </task>
-    <task id="LOCAL-00062" summary="写频">
-      <created>1701740447231</created>
-      <option name="number" value="00062" />
-      <option name="presentableId" value="LOCAL-00062" />
-      <option name="project" value="LOCAL" />
-      <updated>1701740447231</updated>
-    </task>
-    <task id="LOCAL-00063" summary="写频">
-      <created>1701740770876</created>
-      <option name="number" value="00063" />
-      <option name="presentableId" value="LOCAL-00063" />
-      <option name="project" value="LOCAL" />
-      <updated>1701740770876</updated>
-    </task>
-    <task id="LOCAL-00064" summary="写频">
-      <created>1701755444295</created>
-      <option name="number" value="00064" />
-      <option name="presentableId" value="LOCAL-00064" />
-      <option name="project" value="LOCAL" />
-      <updated>1701755444295</updated>
-    </task>
-    <task id="LOCAL-00065" summary="am-fix">
-      <created>1701769945196</created>
-      <option name="number" value="00065" />
-      <option name="presentableId" value="LOCAL-00065" />
-      <option name="project" value="LOCAL" />
-      <updated>1701769945196</updated>
-    </task>
-    <task id="LOCAL-00066" summary="mdc side beep">
-      <created>1701775483012</created>
-      <option name="number" value="00066" />
-      <option name="presentableId" value="LOCAL-00066" />
-      <option name="project" value="LOCAL" />
-      <updated>1701775483012</updated>
+      <workItem from="1704795916550" duration="1050000" />
+      <workItem from="1704811085499" duration="2000" />
+      <workItem from="1704853919857" duration="595000" />
+      <workItem from="1704856873722" duration="3844000" />
+      <workItem from="1704864846118" duration="988000" />
+      <workItem from="1704875852857" duration="8575000" />
     </task>
     <task id="LOCAL-00067" summary="106 MDC crc fix">
       <created>1701778784894</created>
@@ -632,7 +570,63 @@
       <option name="project" value="LOCAL" />
       <updated>1704451720350</updated>
     </task>
-    <option name="localTasksCounter" value="108" />
+    <task id="LOCAL-00108" summary="MDC ID地址改为0X1FFD~0X1FFE">
+      <created>1704876242671</created>
+      <option name="number" value="00108" />
+      <option name="presentableId" value="LOCAL-00108" />
+      <option name="project" value="LOCAL" />
+      <updated>1704876242672</updated>
+    </task>
+    <task id="LOCAL-00109" summary="适配2*2Mb Eerpom">
+      <created>1704876272339</created>
+      <option name="number" value="00109" />
+      <option name="presentableId" value="LOCAL-00109" />
+      <option name="project" value="LOCAL" />
+      <updated>1704876272339</updated>
+    </task>
+    <task id="LOCAL-00110" summary="TEST">
+      <created>1704876285410</created>
+      <option name="number" value="00110" />
+      <option name="presentableId" value="LOCAL-00110" />
+      <option name="project" value="LOCAL" />
+      <updated>1704876285410</updated>
+    </task>
+    <task id="LOCAL-00111" summary="适配2*2Mb Eerpom">
+      <created>1704876296069</created>
+      <option name="number" value="00111" />
+      <option name="presentableId" value="LOCAL-00111" />
+      <option name="project" value="LOCAL" />
+      <updated>1704876296069</updated>
+    </task>
+    <task id="LOCAL-00112" summary="修改ENABLE_SQUELCH_MORE_SENSITIVE 选项">
+      <created>1704876392887</created>
+      <option name="number" value="00112" />
+      <option name="presentableId" value="LOCAL-00112" />
+      <option name="project" value="LOCAL" />
+      <updated>1704876392887</updated>
+    </task>
+    <task id="LOCAL-00113" summary="MDC ID地址改回原来的">
+      <created>1704877354792</created>
+      <option name="number" value="00113" />
+      <option name="presentableId" value="LOCAL-00113" />
+      <option name="project" value="LOCAL" />
+      <updated>1704877354792</updated>
+    </task>
+    <task id="LOCAL-00114" summary="DTMF CALL延时（存疑）">
+      <created>1704879331739</created>
+      <option name="number" value="00114" />
+      <option name="presentableId" value="LOCAL-00114" />
+      <option name="project" value="LOCAL" />
+      <updated>1704879331739</updated>
+    </task>
+    <task id="LOCAL-00115" summary="修复信道名显示">
+      <created>1704887484602</created>
+      <option name="number" value="00115" />
+      <option name="presentableId" value="LOCAL-00115" />
+      <option name="project" value="LOCAL" />
+      <updated>1704887484602</updated>
+    </task>
+    <option name="localTasksCounter" value="116" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -659,13 +653,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="am-fix" />
-    <MESSAGE value="mdc side beep" />
-    <MESSAGE value="106 MDC crc fix" />
-    <MESSAGE value="fix EEPROM" />
-    <MESSAGE value="dtmf显示" />
-    <MESSAGE value="fix https://github.com/losehu/uv-k5-firmware-chinese/issues/15" />
-    <MESSAGE value="增加开机画面" />
     <MESSAGE value="关闭MDC1200信息显示" />
     <MESSAGE value="Makefile" />
     <MESSAGE value="readme add" />
@@ -684,7 +671,14 @@
     <MESSAGE value="简化EEPROM驱动逻辑&#10;改为STLINK-SWD烧录" />
     <MESSAGE value="赞助更新" />
     <MESSAGE value="减少eeprom延时" />
-    <option name="LAST_COMMIT_MESSAGE" value="减少eeprom延时" />
+    <MESSAGE value="MDC ID地址改为0X1FFD~0X1FFE" />
+    <MESSAGE value="TEST" />
+    <MESSAGE value="适配2*2Mb Eerpom" />
+    <MESSAGE value="修改ENABLE_SQUELCH_MORE_SENSITIVE 选项" />
+    <MESSAGE value="MDC ID地址改回原来的" />
+    <MESSAGE value="DTMF CALL延时（存疑）" />
+    <MESSAGE value="修复信道名显示" />
+    <option name="LAST_COMMIT_MESSAGE" value="修复信道名显示" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
