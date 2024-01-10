@@ -14,7 +14,7 @@
  *     limitations under the License.
  */
 
-#ifdef ENABLE_FMRADIO
+//#ifdef ENABLE_FMRADIO
 
 #include <string.h>
 
@@ -60,7 +60,7 @@ UI_DisplayClear();
 		pPrintStr = "M-SCAN";
 	}
 
-	UI_PrintStringSmall(String, 0, 127, 2);
+	UI_PrintStringSmall(pPrintStr, 0, 127, 2);
 
 	memset(String, 0, sizeof(String));
 	if (gAskToSave || (gEeprom.FM_IsMrMode && gInputBoxIndex > 0)) {
