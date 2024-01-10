@@ -14,7 +14,7 @@
  *     limitations under the License.
  */
 
-//#ifdef ENABLE_FMRADIO
+#ifdef ENABLE_FMRADIO
 
 #include <string.h>
 
