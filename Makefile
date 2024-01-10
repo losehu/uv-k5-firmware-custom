@@ -484,12 +484,14 @@ endif
 	$(SIZE) $(TARGET)
 
 full:
+	$(RM) *.bin
 	$(MAKE) build ENABLE_CHINESE_FULL=0
 	$(MAKE) build ENABLE_CHINESE_FULL=1
 	$(MAKE) build ENABLE_CHINESE_FULL=2
 	$(MAKE) build ENABLE_CHINESE_FULL=3
 	$(MAKE) build ENABLE_CHINESE_FULL=4
 both:
+	$(RM) *.bin
 	$(MAKE) build ENABLE_CHINESE_FULL=0
 	$(MAKE) build ENABLE_CHINESE_FULL=4
 

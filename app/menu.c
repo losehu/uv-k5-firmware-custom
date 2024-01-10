@@ -512,7 +512,7 @@ void MENU_AcceptSetting(void) {
 #endif
         case MENU_MEM_NAME:
             // trailing trim
-            for (int i = 9; i >= 0; i--) {
+            for (int i = MAX_EDIT_INDEX-1; i >= 0; i--) {
                 if (edit[i] != ' ' && edit[i] != '_' && edit[i] != 0x00 && edit[i] != 0xff)
                     break;
                 edit[i] = ' ';
