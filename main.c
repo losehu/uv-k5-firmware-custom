@@ -18,6 +18,7 @@
 #include <stdio.h>
 #include "ui/helper.h"
 #include <string.h>
+#include "driver/bk4819.h"
 
 #include "ui/ui.h"
 #include <stdint.h>
@@ -335,7 +336,29 @@ void Main(void) {
 //
 //
 //}
+
     UI_DisplayWelcome();
+
+//    while(1)
+//    {
+//        char A[128];        char B[128];
+//
+//        memset(A,'A',sizeof (A));
+//         EEPROM_WriteBuffer(0x30000, A, 128);
+//         EEPROM_ReadBuffer(0x30000, B, 128) ;
+//        if (memcmp(A,B,128)==0)
+//        {
+//            UI_PrintStringSmall("Double 2Mb Eeprom\nInstall OK!", 0, 127, 2);
+//            ST7565_BlitStatusLine();  // blank status line
+//            ST7565_BlitFullScreen();
+//        } else
+//        {
+//            UI_PrintStringSmall("Double 2Mb Eeprom\nInstall Failed!", 0, 127, 2);
+//            ST7565_BlitStatusLine();  // blank status line
+//            ST7565_BlitFullScreen();
+//        }
+//
+//        }
 
     boot_counter_10ms = 250;
 
@@ -424,6 +447,30 @@ void Main(void) {
 //    while (1);
 
     while (1) {
+
+
+//        BK4819_EnterTxMute();
+//        BK4819_SetAF(BK4819_AF_MUTE);
+//
+//        BK4819_WriteRegister(BK4819_REG_70, BK4819_REG_70_ENABLE_TONE1 | (66u << BK4819_REG_70_SHIFT_TONE1_TUNING_GAIN));
+//
+//        BK4819_EnableTXLink();
+//        SYSTEM_DelayMs(50);
+//
+//
+//        BK4819_WriteRegister(BK4819_REG_71, (((uint32_t)500 * 1353245u) + (1u << 16)) >> 17);
+//
+//        BK4819_ExitTxMute();
+//        SYSTEM_DelayMs(800);
+//        BK4819_EnterTxMute();
+//
+//        BK4819_WriteRegister(BK4819_REG_70, 0x0000);
+//        BK4819_WriteRegister(BK4819_REG_30, 0xC1FE);   // 1 1 0000 0 1 1111 1 1 1 0
+
+
+
+
+
         APP_Update();
         if (gNextTimeslice) {
             APP_TimeSlice10ms();
