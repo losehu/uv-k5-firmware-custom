@@ -693,7 +693,7 @@ void SETTINGS_SaveChannelName(uint8_t channel, const char * name)
 {
     uint16_t offset = channel * 16;
     uint8_t buf[16] = {0};
-    memcpy(buf, name, MIN(strlen(name), 10u));
+    memcpy(buf, name, MIN(strlen(name), MAX_EDIT_INDEX));
     EEPROM_WriteBuffer(0x0F50 + offset, buf,8);
     EEPROM_WriteBuffer(0x0F58 + offset, buf + 8,8);
 }
