@@ -651,11 +651,14 @@ if (!gDTMF_InputMode) {
                         }
 
                         if (gEeprom.CHANNEL_DISPLAY_MODE == MDF_NAME) {
+#if ENABLE_CHINESE_FULL==4
                             show_move_flag=1;
+#endif
                             UI_PrintStringSmall(String, 32, 0, line);
                         } else {
+#if ENABLE_CHINESE_FULL==4
                             show_move_flag=1;
-
+#endif
                             UI_PrintStringSmall(String, 32 + 4, 0, line);
 
                             // show the channel frequency below the channel number/name
@@ -727,7 +730,7 @@ if (!gDTMF_InputMode) {
 #endif
             }
             if (Level) {
-#if ENABLE_CHINESE_FULL==0
+#if ENABLE_CHINESE_FULL!=4
                 DrawSmallAntennaAndBars(p_line1 + LCD_WIDTH, Level);
 #else
                 if(IS_MR_CHANNEL(gEeprom.ScreenChannel[vfo_num]) )

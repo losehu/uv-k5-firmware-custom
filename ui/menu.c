@@ -726,8 +726,9 @@ void UI_DisplayMenu(void) {
                 UI_PrintStringSmall(String, menu_item_x1 - 12, menu_item_x2, 5);
             }
             SETTINGS_FetchChannelName(String, gSubMenuSelection);
+#if ENABLE_CHINESE_FULL==4
             show_move_flag=1;
-
+#endif
             UI_PrintStringSmall(String[0] ? String : "--", menu_item_x1 - 12, menu_item_x2, 3);
             already_printed = true;
             break;
@@ -781,15 +782,23 @@ void UI_DisplayMenu(void) {
                 if (!gIsInSubMenu || edit_index < 0) {    // show the channel name
                     SETTINGS_FetchChannelName(String, gSubMenuSelection);
                     char *pPrintStr = String[0] ? String : "--";
+#if ENABLE_CHINESE_FULL == 4
                     show_move_flag=1;
+#endif
                     UI_PrintStringSmall(pPrintStr, menu_item_x1 - 12, menu_item_x2, 3);
-                } else if (!CHINESE_JUDGE(tmp_name, strlen(tmp_name))) {    // show the channel name being edited
-                    UI_PrintStringSmall(edit, menu_item_x1 - 12, 0, 3);
+#if ENABLE_CHINESE_FULL == 4
+
+                    } else if (CHINESE_JUDGE(tmp_name, strlen(tmp_name))) {
+                    edit_index = -1;
+                }else if (!CHINESE_JUDGE(tmp_name, strlen(tmp_name))) {    // show the channel name being edited
+#else
+                }else{
+#endif
+
+                    UI_PrintStringSmall(edit, menu_item_x1 - 12, menu_item_x2, 3);
 
                     if (edit_index < MAX_EDIT_INDEX)
-                        UI_PrintStringSmall("^", menu_item_x1 - 12 + (7 * edit_index), 0, 4);  // show the cursor
-                } else if (CHINESE_JUDGE(tmp_name, strlen(tmp_name))) {
-                    edit_index = -1;
+                        UI_PrintStringSmall("^",           menu_item_x1 - 12+7*edit_index+(((menu_item_x2 - menu_item_x1 + 12 ) - (7*MAX_EDIT_INDEX)) + 1) / 2 , 0, 4);  // show the cursor
                 }
 
                 if (!gAskForConfirmation) {    // show the frequency so that the user knows the channels frequency
@@ -1072,8 +1081,9 @@ void UI_DisplayMenu(void) {
         // channel number
         UI_PrintStringSmall(pPrintStr, menu_item_x1 - 12, menu_item_x2, 2);
 
+#if ENABLE_CHINESE_FULL==4
         show_move_flag=1;
-
+#endif
         SETTINGS_FetchChannelName(String, gSubMenuSelection);
         pPrintStr = String[0] ? String : "--";
 
