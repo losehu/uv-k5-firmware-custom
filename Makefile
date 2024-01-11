@@ -51,6 +51,7 @@ ENABLE_UART_RW_BK_REGS 		  ?= 0
 ENABLE_AUDIO_BAR_DEFAULT     ?=0
 ENABLE_EEPROM_4M       ?=1
 ENABLE_CHINESE_FULL 		  = 4
+ENABLE_DOCK 		  = 1
 
 # ---- DEBUGGING ----
 ENABLE_AM_FIX_SHOW_DATA       ?= 0
@@ -297,6 +298,10 @@ endif
 ifeq ($(ENABLE_MDC1200),1)
     CFLAGS  += -DENABLE_MDC1200
 endif
+ifeq ($(ENABLE_DOCK),1)
+    CFLAGS  += -DENABLE_DOCK
+endif
+
 ifeq ($(ENABLE_TIMER),1)
     CFLAGS  += -DENABLE_TIMER
 endif

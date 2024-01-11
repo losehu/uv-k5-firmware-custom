@@ -26,7 +26,11 @@ KEY_Code_t gKeyReading0     = KEY_INVALID;
 KEY_Code_t gKeyReading1     = KEY_INVALID;
 uint16_t   gDebounceCounter = 0;
 bool       gWasFKeyPressed  = false;
-
+#ifdef ENABLE_DOCK
+KEY_Code_t gSimulateKey     = KEY_INVALID;
+	KEY_Code_t gSimulateHold     = KEY_INVALID;
+	uint8_t gDebounceDefeat = 0;
+#endif
 static const struct {
 
 	// Using a 16 bit pre-calculated shift and invert is cheaper
@@ -94,6 +98,21 @@ static const struct {
 
 KEY_Code_t KEYBOARD_Poll(void)
 {
+
+#ifdef ENABLE_DOCK
+    if(gSimulateKey != KEY_INVALID)
+		{
+			const KEY_Code_t temp = gSimulateKey;
+			if(gDebounceDefeat++ >= 5)
+				gSimulateKey = KEY_INVALID;
+			return temp;
+		}
+		if(gSimulateHold != KEY_INVALID)
+		{
+			return gSimulateHold;
+		}
+#endif
+
 	KEY_Code_t Key = KEY_INVALID;
 
 //	if (!GPIO_CheckBit(&GPIOC->DATA, GPIOC_PIN_PTT))

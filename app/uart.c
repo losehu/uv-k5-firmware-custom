@@ -52,7 +52,14 @@ typedef struct {
     uint16_t ID;
     uint16_t Size;
 } Header_t;
-
+#ifdef ENABLE_DOCK
+typedef struct {
+		Header_t Header;
+		uint8_t Key;
+		uint8_t Padding;
+		uint32_t Timestamp;
+	} CMD_0801_t; // simulate key press
+#endif
 typedef struct {
     uint8_t Padding[2];
     uint16_t ID;
@@ -632,6 +639,21 @@ static void CMD_0538(const uint8_t *pBuffer)//write
     SendReply(&Reply, sizeof(Reply));
 }
 #endif
+
+#ifdef ENABLE_DOCK
+static void CMD_0801(const uint8_t *pBuffer)
+	{
+		const CMD_0801_t *pCmd = (const CMD_0801_t *)pBuffer;
+		const uint8_t key = pCmd->Key & 0x1f;
+		const bool click = pCmd->Key & 32;
+		if(key != KEY_INVALID)
+		{
+			gSimulateKey = key;
+			gDebounceDefeat = 0;
+		}
+		gSimulateHold = click ? KEY_INVALID : key;
+	}
+#endif
 void UART_HandleCommand(void) {
     switch (UART_Command.Header.ID) {
 #if ENABLE_CHINESE_FULL==4
@@ -641,6 +663,12 @@ void UART_HandleCommand(void) {
         case 0x0538://write
             CMD_0538(UART_Command.Buffer);
             break;
+#endif
+#ifdef ENABLE_DOCK
+        case 0x0801:
+            CMD_0801(UART_Command.Buffer);
+            break;
+
 #endif
         case 0x0514:
             CMD_0514(UART_Command.Buffer);

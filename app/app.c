@@ -1016,7 +1016,8 @@ static void CheckKeys(void)
 // -------------------- PTT ------------------------
     if (gPttIsPressed)
     {
-        if (GPIO_CheckBit(&GPIOC->DATA, GPIOC_PIN_PTT) || SerialConfigInProgress())
+
+            if (GPIO_CheckBit(&GPIOC->DATA, GPIOC_PIN_PTT) || SerialConfigInProgress())
         {	// PTT released or serial comms config in progress
             if (++gPttDebounceCounter >= 3 || SerialConfigInProgress())	    // 30ms
             {	// stop transmitting
