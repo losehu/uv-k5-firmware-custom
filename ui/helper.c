@@ -175,9 +175,10 @@ void UI_PrintStringSmall(const char *pString, uint8_t Start, uint8_t End, uint8_
                         uint8_t gFontSmall_More[12] = {0};
                         for (int j = 0; j < 12; ++j) {
                             if (j < 6) {
-                                gFontSmall_More[j] = (gFontSmall[index][j] & 31) << 3;//00011111
+                                gFontSmall_More[j] = (gFontSmall[index][j] & 0x1F) << 3;//00011111
                             } else {
-                                gFontSmall_More[j] = (gFontSmall[index][j - 6] & 224) >> 5;//11100000
+                                gFontSmall_More[j] = (gFontSmall[index][j - 6] & 0XE0) >> 5|(0xFB& *(pFb1+ now_pixel + 1+j-6));//11100000
+                                //
                             }
                         }
                         memcpy(pFb + now_pixel + 1, &gFontSmall_More[0], 6);
