@@ -179,6 +179,10 @@ bool              gFlagPrepareTX;
 bool              gFlagAcceptSetting;
 bool              gFlagRefreshSetting;
 
+#ifdef ENABLE_SIDEFUNCTIONS_SEND
+bool              gFlagStopTX;
+bool              gFlagLastVfo;
+#endif
 bool              gFlagSaveVfo;
 bool              gFlagSaveSettings;
 bool              gFlagSaveChannel;

@@ -1594,6 +1594,19 @@ static void ProcessKey(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld)
 
             GUI_SelectNextDisplay(DISPLAY_MAIN);
         }
+
+#ifdef ENABLE_SIDEFUNCTIONS_SEND
+		if (gFlagStopTX)
+		{
+			gFlagStopTX = false;
+			RADIO_SetupRegisters(true);
+			GUI_SelectNextDisplay(DISPLAY_MAIN);
+			gEeprom.TX_VFO = gFlagLastVfo;
+			gFlagReconfigureVfos = true;
+			gUpdateDisplay = true;
+			return;
+		}
+#endif
     }
     else // key pressed or held
     {

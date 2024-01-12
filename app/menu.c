@@ -364,14 +364,16 @@ int MENU_GetLimits(uint8_t menu_id, int32_t *pMin, int32_t *pMax) {
             *pMax = 1;
             break;
 
-//		case MENU_F1SHRT:
-//		case MENU_F1LONG:
-//		case MENU_F2SHRT:
-//		case MENU_F2LONG:
-//		case MENU_MLONG:
-//			*pMin = 0;
-//			*pMax = gSubMenu_SIDEFUNCTIONS_size-1;
-//			break;
+#ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
+		case MENU_F1SHRT:
+		case MENU_F1LONG:
+		case MENU_F2SHRT:
+		case MENU_F2LONG:
+		case MENU_MLONG:
+			*pMin = 0;
+			*pMax = gSubMenu_SIDEFUNCTIONS_size-1;
+			break;
+#endif
 
         default:
             return -1;
@@ -802,21 +804,23 @@ void MENU_AcceptSetting(void) {
             gEeprom.BATTERY_TYPE = gSubMenuSelection;
             break;
 
-//		case MENU_F1SHRT:
-//		case MENU_F1LONG:
-//		case MENU_F2SHRT:
-//		case MENU_F2LONG:
-//		case MENU_MLONG:
-//			{
-//				uint8_t * fun[]= {
-//					&gEeprom.KEY_1_SHORT_PRESS_ACTION,
-//					&gEeprom.KEY_1_LONG_PRESS_ACTION,
-//					&gEeprom.KEY_2_SHORT_PRESS_ACTION,
-//					&gEeprom.KEY_2_LONG_PRESS_ACTION,
-//					&gEeprom.KEY_M_LONG_PRESS_ACTION};
-//				*fun[UI_MENU_GetCurrentMenuId()-MENU_F1SHRT] = gSubMenu_SIDEFUNCTIONS[gSubMenuSelection].id;
-//			}
-//			break;
+#ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
+        case MENU_F1SHRT:
+        case MENU_F1LONG:
+        case MENU_F2SHRT:
+        case MENU_F2LONG:
+        case MENU_MLONG:
+            {
+                uint8_t * fun[]= {
+                    &gEeprom.KEY_1_SHORT_PRESS_ACTION,
+                    &gEeprom.KEY_1_LONG_PRESS_ACTION,
+                    &gEeprom.KEY_2_SHORT_PRESS_ACTION,
+                    &gEeprom.KEY_2_LONG_PRESS_ACTION,
+                    &gEeprom.KEY_M_LONG_PRESS_ACTION};
+                *fun[UI_MENU_GetCurrentMenuId()-MENU_F1SHRT] = gSubMenu_SIDEFUNCTIONS[gSubMenuSelection].id;
+            }
+            break;
+#endif
 
     }
 
@@ -1156,29 +1160,31 @@ void MENU_ShowCurrentSetting(void) {
             gSubMenuSelection = gEeprom.BATTERY_TYPE;
             break;
 
-//		case MENU_F1SHRT:
-//		case MENU_F1LONG:
-//		case MENU_F2SHRT:
-//		case MENU_F2LONG:
-//		case MENU_MLONG:
-//		{
-//			uint8_t * fun[]= {
-//				&gEeprom.KEY_1_SHORT_PRESS_ACTION,
-//				&gEeprom.KEY_1_LONG_PRESS_ACTION,
-//				&gEeprom.KEY_2_SHORT_PRESS_ACTION,
-//				&gEeprom.KEY_2_LONG_PRESS_ACTION,
-//				&gEeprom.KEY_M_LONG_PRESS_ACTION};
-//			uint8_t id = *fun[UI_MENU_GetCurrentMenuId()-MENU_F1SHRT];
-//
-//			for(int i = 0; i < gSubMenu_SIDEFUNCTIONS_size; i++) {
-//				if(gSubMenu_SIDEFUNCTIONS[i].id==id) {
-//					gSubMenuSelection = i;
-//					break;
-//				}
-//
-//			}
-//			break;
-//		}
+#ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
+		case MENU_F1SHRT:
+		case MENU_F1LONG:
+		case MENU_F2SHRT:
+		case MENU_F2LONG:
+		case MENU_MLONG:
+		{
+			uint8_t * fun[]= {
+				&gEeprom.KEY_1_SHORT_PRESS_ACTION,
+				&gEeprom.KEY_1_LONG_PRESS_ACTION,
+				&gEeprom.KEY_2_SHORT_PRESS_ACTION,
+				&gEeprom.KEY_2_LONG_PRESS_ACTION,
+				&gEeprom.KEY_M_LONG_PRESS_ACTION};
+			uint8_t id = *fun[UI_MENU_GetCurrentMenuId()-MENU_F1SHRT];
+
+			for(int i = 0; i < gSubMenu_SIDEFUNCTIONS_size; i++) {
+				if(gSubMenu_SIDEFUNCTIONS[i].id==id) {
+					gSubMenuSelection = i;
+					break;
+				}
+
+			}
+			break;
+		}
+#endif
 
         default:
             return;

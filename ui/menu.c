@@ -85,6 +85,14 @@ const t_menu_item MenuList[] =
                 {/*"RP STE",*/ VOICE_ID_INVALID, MENU_RP_STE, 过中继尾音消除},
                 {/*"1 Call",*/ VOICE_ID_INVALID, MENU_1_CALL, 按键即呼},
 
+#ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
+                {/*"F1Shrt",*/ VOICE_ID_INVALID,                       MENU_F1SHRT        ,侧键一短按},
+                {/*"F1Long",*/ VOICE_ID_INVALID,                       MENU_F1LONG        ,侧键一长按},
+                {/*"F2Shrt",*/ VOICE_ID_INVALID,                       MENU_F2SHRT        ,侧键二短按},
+                {/*"F2Long",*/ VOICE_ID_INVALID,                       MENU_F2LONG        ,侧键二长按},
+                {/*"M Long",*/ VOICE_ID_INVALID,                       MENU_MLONG         ,M键长按},
+#endif
+
 #ifdef ENABLE_DTMF_CALLING
                 {/*"ANI ID",*/ VOICE_ID_ANI_CODE,                      MENU_ANI_ID        ,DTMF_ID},
 #endif
@@ -420,6 +428,43 @@ const char gSubMenu_SCRAMBLER[][7] =
                 "3500Hz"
         };
 
+#ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
+const t_sidefunction SIDEFUNCTIONS[] =
+        {
+               {关闭, ACTION_OPT_NONE},
+               {手电筒, ACTION_OPT_FLASHLIGHT},
+               {设置发射功率, ACTION_OPT_POWER},
+               {监听, ACTION_OPT_MONITOR},
+               {扫描, ACTION_OPT_SCAN},
+#ifdef ENABLE_VOX
+               {声控发射,				ACTION_OPT_VOX},
+#endif
+#ifdef ENABLE_ALARM
+                {"ALARM",			ACTION_OPT_ALARM},
+#endif
+#ifdef ENABLE_FMRADIO
+               {FM收音机,		ACTION_OPT_FM},
+#endif
+#ifdef ENABLE_TX1750
+                {"1750HZ",			ACTION_OPT_1750},
+#endif
+               {锁定按键, ACTION_OPT_KEYLOCK},
+               {切换信道, ACTION_OPT_A_B},
+               {频率信道模式, ACTION_OPT_VFO_MR},
+               {切换调制模式, ACTION_OPT_SWITCH_DEMODUL},
+               {DTMF解码, ACTION_OPT_D_DCD},
+               {切换宽窄带, ACTION_OPT_WIDTH},
+#ifdef ENABLE_SIDEFUNCTIONS_SEND
+               {主频率发射, ACTION_OPT_SEND_A},
+               {次频率发射, ACTION_OPT_SEND_B},
+#endif
+#ifdef ENABLE_BLMIN_TMP_OFF
+                {"BLMIN\nTMP OFF",  ACTION_OPT_BLMIN_TMP_OFF}, 		//BackLight Minimum Temporay OFF
+#endif
+        };
+const t_sidefunction *gSubMenu_SIDEFUNCTIONS = SIDEFUNCTIONS;
+const uint8_t gSubMenu_SIDEFUNCTIONS_size = ARRAY_SIZE(SIDEFUNCTIONS);
+#endif
 
 bool gIsInSubMenu;
 uint8_t gMenuCursor;
@@ -1008,13 +1053,15 @@ void UI_DisplayMenu(void) {
 
             break;
 
-//        case MENU_F1SHRT:
-//        case MENU_F1LONG:
-//        case MENU_F2SHRT:
-//        case MENU_F2LONG:
-//        case MENU_MLONG:
-//            strcpy(String, gSubMenu_SIDEFUNCTIONS[gSubMenuSelection].name);
-//            break;
+#ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
+        case MENU_F1SHRT:
+        case MENU_F1LONG:
+        case MENU_F2SHRT:
+        case MENU_F2LONG:
+        case MENU_MLONG:
+            strcpy(String, gSubMenu_SIDEFUNCTIONS[gSubMenuSelection].name);
+            break;
+#endif
 
     }
 
