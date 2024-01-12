@@ -100,7 +100,10 @@ void (*action_opt_table[])(void) = {
 
         [ACTION_OPT_D_DCD] = &ACTION_D_DCD,
         [ACTION_OPT_WIDTH] = &ACTION_WIDTH,
-
+#ifdef ENABLE_SIDEFUNCTIONS_SEND
+		[ACTION_OPT_SEND_A] = &ACTION_SEND_A,
+		[ACTION_OPT_SEND_B] = &ACTION_SEND_B
+#endif
 };
 
 static_assert(ARRAY_SIZE(action_opt_table) == ACTION_OPT_LEN);
@@ -276,6 +279,24 @@ void ACTION_Handle(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld)
 
     enum ACTION_OPT_t funcShort = ACTION_OPT_NONE;
     enum ACTION_OPT_t  funcLong  = ACTION_OPT_NONE;
+
+#ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
+	switch(Key) {
+		case KEY_SIDE1:
+			funcShort = gEeprom.KEY_1_SHORT_PRESS_ACTION;
+			funcLong  = gEeprom.KEY_1_LONG_PRESS_ACTION;
+			break;
+		case KEY_SIDE2:
+			funcShort = gEeprom.KEY_2_SHORT_PRESS_ACTION;
+			funcLong  = gEeprom.KEY_2_LONG_PRESS_ACTION;
+			break;
+		case KEY_MENU:
+			funcLong  = gEeprom.KEY_M_LONG_PRESS_ACTION;
+			break;
+		default:
+			break;
+	}
+#else
 	switch(Key) {
 		case KEY_SIDE1:
 			funcShort = ACTION_OPT_MONITOR;//gEeprom.KEY_1_SHORT_PRESS_ACTION;
@@ -291,6 +312,7 @@ void ACTION_Handle(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld)
 		default:
 			break;
 	}
+#endif
 
 	if (!bKeyHeld && bKeyPressed) // button pushed
 	{
@@ -305,6 +327,16 @@ void ACTION_Handle(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld)
 	if (bKeyHeld || bKeyPressed) // held
 	{
 		funcShort = funcLong;
+		
+#ifdef ENABLE_SIDEFUNCTIONS_SEND
+		if(funcShort == ACTION_OPT_SEND_A || funcShort == ACTION_OPT_SEND_B){
+			gFlagLastVfo = gEeprom.TX_VFO;
+			gEeprom.TX_VFO = funcShort == ACTION_OPT_SEND_A ? 0 : 1;
+			gFlagReconfigureVfos  = true;
+			gFlagStopTX = true;
+			GENERIC_Key_PTT(bKeyPressed);
+		}
+#endif
 
 		if (!bKeyPressed) //ignore release if held
 			return;
@@ -527,3 +559,8 @@ void ACTION_D_DCD(void)
     gTxVfo->DTMF_DECODING_ENABLE = !gTxVfo->DTMF_DECODING_ENABLE;
 			DTMF_clear_RX();
 }
+
+#ifdef ENABLE_SIDEFUNCTIONS_SEND
+void ACTION_SEND_A(void){return;}
+void ACTION_SEND_B(void){return;}
+#endif

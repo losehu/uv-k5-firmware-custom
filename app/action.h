@@ -43,5 +43,9 @@ void ACTION_WIDTH(void);
 
 void ACTION_Handle(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld);
 
+#ifdef ENABLE_SIDEFUNCTIONS_SEND
+void ACTION_SEND_A(void);
+void ACTION_SEND_B(void);
+#endif
 #endif
 

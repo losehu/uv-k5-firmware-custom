@@ -135,11 +135,13 @@ MENU_PONMSG,
     MENU_F_CALI,  // reference xtal calibration
 #endif
     MENU_BATCAL,  // battery voltage calibration
-//    MENU_F1SHRT,
-//    MENU_F1LONG,
-//    MENU_F2SHRT,
-//    MENU_F2LONG,
-    //MENU_MLONG,
+#ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
+   MENU_F1SHRT,
+   MENU_F1LONG,
+   MENU_F2SHRT,
+   MENU_F2LONG,
+    MENU_MLONG,
+#endif
     MENU_BATTYP
 };
 

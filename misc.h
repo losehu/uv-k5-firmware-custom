@@ -259,6 +259,10 @@ extern bool                  gFlagPrepareTX;
 extern bool                  gFlagAcceptSetting;   // accept menu setting
 extern bool                  gFlagRefreshSetting;  // refresh menu display
 
+#ifdef ENABLE_SIDEFUNCTIONS_SEND
+extern bool                  gFlagStopTX;
+extern bool                  gFlagLastVfo;
+#endif
 extern bool                  gFlagSaveVfo;
 extern bool                  gFlagSaveSettings;
 extern bool                  gFlagSaveChannel;

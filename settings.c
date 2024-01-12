@@ -123,6 +123,17 @@ void SETTINGS_InitEEPROM(void)
 #if ENABLE_CHINESE_FULL==4
     gEeprom.POWER_ON_DISPLAY_MODE        = (Data[7] < 4)              ? Data[7] : POWER_ON_DISPLAY_MODE_NONE;
 #endif
+
+#ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
+    // 1FF8..1FFF
+    EEPROM_ReadBuffer(0x1FF8, Data, 8);
+    gEeprom.KEY_M_LONG_PRESS_ACTION       = (Data[0] < ACTION_OPT_LEN) ? Data[0] : ACTION_OPT_SWITCH_DEMODUL;
+    gEeprom.KEY_1_SHORT_PRESS_ACTION      = (Data[1] < ACTION_OPT_LEN) ? Data[1] : ACTION_OPT_MONITOR;
+    gEeprom.KEY_1_LONG_PRESS_ACTION       = (Data[2] < ACTION_OPT_LEN) ? Data[2] : ACTION_OPT_D_DCD;
+    gEeprom.KEY_2_SHORT_PRESS_ACTION      = (Data[3] < ACTION_OPT_LEN) ? Data[3] : ACTION_OPT_WIDTH;
+    gEeprom.KEY_2_LONG_PRESS_ACTION       = (Data[4] < ACTION_OPT_LEN) ? Data[4] : ACTION_OPT_FLASHLIGHT;
+#endif
+
     // 0E98..0E9F
     EEPROM_ReadBuffer(0x0E98, Data, 8);
     memcpy(&gEeprom.POWER_ON_PASSWORD, Data, 4);
@@ -542,6 +553,18 @@ void SETTINGS_SaveSettings(void)
     State[7] = gEeprom.POWER_ON_DISPLAY_MODE;
 #endif
     EEPROM_WriteBuffer(0x0E90, State,8);
+
+#ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
+    State[0] = gEeprom.KEY_M_LONG_PRESS_ACTION;
+    State[1] = gEeprom.KEY_1_SHORT_PRESS_ACTION;
+    State[2] = gEeprom.KEY_1_LONG_PRESS_ACTION;
+    State[3] = gEeprom.KEY_2_SHORT_PRESS_ACTION;
+    State[4] = gEeprom.KEY_2_LONG_PRESS_ACTION;
+    State[5] = 0;
+    State[6] = 0;
+    State[7] = 0;
+    EEPROM_WriteBuffer(0x1FF8, State, 8);
+#endif
 
     memset(Password, 0xFF, sizeof(Password));
 #ifdef ENABLE_PWRON_PASSWORD

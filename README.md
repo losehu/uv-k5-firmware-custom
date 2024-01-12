@@ -135,6 +135,8 @@ ENABLE_AGC_SHOW_DATA          := 0       显示ACG参数
 ENABLE_AUDIO_BAR_DEFAULT      ?=0        默认语音条样式
 ENABLE_EEPROM_4M              ?=1        两个2Mb Eeprom堆叠方案
 ENABLE_CHINESE_FULL 		   =4        编译固件版本选项
+ENABLE_CUSTOM_SIDEFUNCTIONS   ?= 1       自定义侧键功能（仅扩容设备支持）
+ENABLE_SIDEFUNCTIONS_SEND     ?= 0       自定义侧键功能（侧键发射功能）
 ```
 
 # 打赏

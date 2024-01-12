@@ -94,8 +94,13 @@ enum ACTION_OPT_t {
     ACTION_OPT_BLMIN_TMP_OFF, //BackLight Minimum Temporay OFF
     ACTION_OPT_D_DCD,
     ACTION_OPT_WIDTH,
+#ifdef ENABLE_SIDEFUNCTIONS_SEND
+    ACTION_OPT_SEND_A,
+    ACTION_OPT_SEND_B,
+#endif
     ACTION_OPT_LEN
 };
+
 #ifdef ENABLE_VOICE
 enum VOICE_Prompt_t
 	{
@@ -196,10 +201,12 @@ typedef struct {
 #endif
     ROGER_Mode_t          ROGER;
     uint8_t               REPEATER_TAIL_TONE_ELIMINATION;
-//    uint8_t               KEY_1_SHORT_PRESS_ACTION;
-//    uint8_t               KEY_1_LONG_PRESS_ACTION;
-//    uint8_t               KEY_2_SHORT_PRESS_ACTION;
-//    uint8_t               KEY_2_LONG_PRESS_ACTION;
+#ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
+    uint8_t               KEY_1_SHORT_PRESS_ACTION;
+    uint8_t               KEY_1_LONG_PRESS_ACTION;
+    uint8_t               KEY_2_SHORT_PRESS_ACTION;
+    uint8_t               KEY_2_LONG_PRESS_ACTION;
+#endif
     uint8_t               MIC_SENSITIVITY;
     uint8_t               MIC_SENSITIVITY_TUNING;
     uint8_t               CHAN_1_CALL;
@@ -249,7 +256,9 @@ typedef struct {
     uint8_t               field78_0x96;
     uint8_t               field79_0x97;
 
-//    uint8_t 			  KEY_M_LONG_PRESS_ACTION;
+#ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
+    uint8_t 			  KEY_M_LONG_PRESS_ACTION;
+#endif
 //    uint8_t               BACKLIGHT_MIN;
 #ifdef ENABLE_BLMIN_TMP_OFF
     BLMIN_STAT_t		  BACKLIGHT_MIN_STAT;
