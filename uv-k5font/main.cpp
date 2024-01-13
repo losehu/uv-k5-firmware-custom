@@ -171,7 +171,6 @@ int main() {
 //        // 关闭文件流
 //    outFile << "Hello, this is some text.\n";
 //    outFile << "This is a new line.";
-
     for (int i = 0; i < num_names; i++) {
 
 

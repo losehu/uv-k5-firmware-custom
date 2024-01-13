@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/RUPC/CLionProjects/font_new
+# Install script for directory: C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/uv-k5font/font_new
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,7 +34,7 @@ endif()
 
 # Set default install directory permissions.
 if(NOT DEFINED CMAKE_OBJDUMP)
-  set(CMAKE_OBJDUMP "C:/Qt/Qt5.13.1/Tools/mingw730_64/bin/objdump.exe")
+  set(CMAKE_OBJDUMP "C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/objdump.exe")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Users/RUPC/CLionProjects/font_new/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/uv-k5font/font_new/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

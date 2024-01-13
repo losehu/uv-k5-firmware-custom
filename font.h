@@ -19,7 +19,7 @@
 #include "stdbool.h"
 #include <stdint.h>
 
-extern const uint8_t gFontChinese_out[2013];
+extern const uint8_t gFontChinese_out[2261];
 #define CHN_FONT_WIDTH 11U
 #define CHN_FONT_HIGH 12U
 #if  ENABLE_CHINESE_FULL ==4

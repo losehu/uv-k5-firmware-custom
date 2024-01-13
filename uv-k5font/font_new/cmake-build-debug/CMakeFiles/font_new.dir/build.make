@@ -52,10 +52,10 @@ RM = "C:\Program Files\JetBrains\CLion 2023.1.1\bin\cmake\win\x64\bin\cmake.exe"
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\RUPC\CLionProjects\font_new
+CMAKE_SOURCE_DIR = C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\uv-k5font\font_new
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\RUPC\CLionProjects\font_new\cmake-build-debug
+CMAKE_BINARY_DIR = C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\uv-k5font\font_new\cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/font_new.dir/depend.make
@@ -69,32 +69,32 @@ include CMakeFiles/font_new.dir/progress.make
 include CMakeFiles/font_new.dir/flags.make
 
 CMakeFiles/font_new.dir/main.cpp.obj: CMakeFiles/font_new.dir/flags.make
-CMakeFiles/font_new.dir/main.cpp.obj: C:/Users/RUPC/CLionProjects/font_new/main.cpp
+CMakeFiles/font_new.dir/main.cpp.obj: C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/uv-k5font/font_new/main.cpp
 CMakeFiles/font_new.dir/main.cpp.obj: CMakeFiles/font_new.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\RUPC\CLionProjects\font_new\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/font_new.dir/main.cpp.obj"
-	C:\Qt\Qt5.13.1\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/font_new.dir/main.cpp.obj -MF CMakeFiles\font_new.dir\main.cpp.obj.d -o CMakeFiles\font_new.dir\main.cpp.obj -c C:\Users\RUPC\CLionProjects\font_new\main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\uv-k5font\font_new\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/font_new.dir/main.cpp.obj"
+	C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/font_new.dir/main.cpp.obj -MF CMakeFiles\font_new.dir\main.cpp.obj.d -o CMakeFiles\font_new.dir\main.cpp.obj -c C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\uv-k5font\font_new\main.cpp
 
 CMakeFiles/font_new.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/font_new.dir/main.cpp.i"
-	C:\Qt\Qt5.13.1\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\RUPC\CLionProjects\font_new\main.cpp > CMakeFiles\font_new.dir\main.cpp.i
+	C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\uv-k5font\font_new\main.cpp > CMakeFiles\font_new.dir\main.cpp.i
 
 CMakeFiles/font_new.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/font_new.dir/main.cpp.s"
-	C:\Qt\Qt5.13.1\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\RUPC\CLionProjects\font_new\main.cpp -o CMakeFiles\font_new.dir\main.cpp.s
+	C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\uv-k5font\font_new\main.cpp -o CMakeFiles\font_new.dir\main.cpp.s
 
 CMakeFiles/font_new.dir/font.cpp.obj: CMakeFiles/font_new.dir/flags.make
-CMakeFiles/font_new.dir/font.cpp.obj: C:/Users/RUPC/CLionProjects/font_new/font.cpp
+CMakeFiles/font_new.dir/font.cpp.obj: C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/uv-k5font/font_new/font.cpp
 CMakeFiles/font_new.dir/font.cpp.obj: CMakeFiles/font_new.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\RUPC\CLionProjects\font_new\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/font_new.dir/font.cpp.obj"
-	C:\Qt\Qt5.13.1\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/font_new.dir/font.cpp.obj -MF CMakeFiles\font_new.dir\font.cpp.obj.d -o CMakeFiles\font_new.dir\font.cpp.obj -c C:\Users\RUPC\CLionProjects\font_new\font.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\uv-k5font\font_new\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/font_new.dir/font.cpp.obj"
+	C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/font_new.dir/font.cpp.obj -MF CMakeFiles\font_new.dir\font.cpp.obj.d -o CMakeFiles\font_new.dir\font.cpp.obj -c C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\uv-k5font\font_new\font.cpp
 
 CMakeFiles/font_new.dir/font.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/font_new.dir/font.cpp.i"
-	C:\Qt\Qt5.13.1\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\RUPC\CLionProjects\font_new\font.cpp > CMakeFiles\font_new.dir\font.cpp.i
+	C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\uv-k5font\font_new\font.cpp > CMakeFiles\font_new.dir\font.cpp.i
 
 CMakeFiles/font_new.dir/font.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/font_new.dir/font.cpp.s"
-	C:\Qt\Qt5.13.1\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\RUPC\CLionProjects\font_new\font.cpp -o CMakeFiles\font_new.dir\font.cpp.s
+	C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\uv-k5font\font_new\font.cpp -o CMakeFiles\font_new.dir\font.cpp.s
 
 # Object files for target font_new
 font_new_OBJECTS = \
@@ -110,7 +110,7 @@ font_new.exe: CMakeFiles/font_new.dir/build.make
 font_new.exe: CMakeFiles/font_new.dir/linkLibs.rsp
 font_new.exe: CMakeFiles/font_new.dir/objects1
 font_new.exe: CMakeFiles/font_new.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\RUPC\CLionProjects\font_new\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable font_new.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\uv-k5font\font_new\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable font_new.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\font_new.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -122,6 +122,6 @@ CMakeFiles/font_new.dir/clean:
 .PHONY : CMakeFiles/font_new.dir/clean
 
 CMakeFiles/font_new.dir/depend:
-	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" C:\Users\RUPC\CLionProjects\font_new C:\Users\RUPC\CLionProjects\font_new C:\Users\RUPC\CLionProjects\font_new\cmake-build-debug C:\Users\RUPC\CLionProjects\font_new\cmake-build-debug C:\Users\RUPC\CLionProjects\font_new\cmake-build-debug\CMakeFiles\font_new.dir\DependInfo.cmake --color=$(COLOR)
+	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\uv-k5font\font_new C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\uv-k5font\font_new C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\uv-k5font\font_new\cmake-build-debug C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\uv-k5font\font_new\cmake-build-debug C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\uv-k5font\font_new\cmake-build-debug\CMakeFiles\font_new.dir\DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/font_new.dir/depend
 

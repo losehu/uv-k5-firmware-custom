@@ -14,6 +14,7 @@
  *     limitations under the License.
  */
 #  include <assert.h>
+#include "app/generic.h"
 
 #include <string.h>
 #ifdef ENABLE_FLASHLIGHT

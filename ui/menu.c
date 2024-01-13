@@ -58,6 +58,11 @@ const t_menu_item MenuList[] =
                 {/*"TxCTCS",*/ VOICE_ID_CTCSS, MENU_T_CTCS, 发送模拟亚音}, // was "T_CTCS"
                 {/*"TxODir",*/ VOICE_ID_TX_OFFSET_FREQUENCY_DIRECTION, MENU_SFT_D, 频差方向}, // was "SFT_D"
                 {/*"TxOffs",*/ VOICE_ID_TX_OFFSET_FREQUENCY, MENU_OFFSET, 频差频率}, // was "OFFSET"
+#ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
+
+{/*"W/N",*/    VOICE_ID_CHANNEL_BANDWIDTH,             MENU_W_N           ,宽窄带},
+#endif
+
                 {/*"Scramb",*/ VOICE_ID_SCRAMBLER_ON, MENU_SCR, 加密}, // was "SCR"
                 {/*"BusyCL",*/ VOICE_ID_BUSY_LOCKOUT, MENU_BCL, 遇忙禁发}, // was "BCL"
                 {/*"Compnd",*/ VOICE_ID_INVALID, MENU_COMPAND, 压扩},
@@ -86,14 +91,15 @@ const t_menu_item MenuList[] =
                 {/*"1 Call",*/ VOICE_ID_INVALID, MENU_1_CALL, 按键即呼},
 
 #ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
-                {/*"F1Shrt",*/ VOICE_ID_INVALID,                       MENU_F1SHRT        ,侧键一短按},
-                {/*"F1Long",*/ VOICE_ID_INVALID,                       MENU_F1LONG        ,侧键一长按},
-                {/*"F2Shrt",*/ VOICE_ID_INVALID,                       MENU_F2SHRT        ,侧键二短按},
-                {/*"F2Long",*/ VOICE_ID_INVALID,                       MENU_F2LONG        ,侧键二长按},
+                {/*"F1Shrt",*/ VOICE_ID_INVALID,                       MENU_F1SHRT        ,侧键1短按},
+                {/*"F1Long",*/ VOICE_ID_INVALID,                       MENU_F1LONG        ,侧键1长按},
+                {/*"F2Shrt",*/ VOICE_ID_INVALID,                       MENU_F2SHRT        ,侧键2短按},
+                {/*"F2Long",*/ VOICE_ID_INVALID,                       MENU_F2LONG        ,侧键2长按},
                 {/*"M Long",*/ VOICE_ID_INVALID,                       MENU_MLONG         ,M键长按},
 #endif
 
 #ifdef ENABLE_DTMF_CALLING
+
                 {/*"ANI ID",*/ VOICE_ID_ANI_CODE,                      MENU_ANI_ID        ,DTMF_ID},
 #endif
                 {/*"UPCode",*/ VOICE_ID_INVALID, MENU_UPCODE, DTMF上线码},
@@ -101,11 +107,16 @@ const t_menu_item MenuList[] =
                 {/*"PTT ID",*/ VOICE_ID_INVALID, MENU_PTT_ID, DTMF发送},
                 {/*"D ST",*/   VOICE_ID_INVALID, MENU_D_ST, DTMF侧音},
 #ifdef ENABLE_DTMF_CALLING
+
                 {/*"D Resp",*/ VOICE_ID_INVALID,                       MENU_D_RSP         ,DTMF响应},
                 {/*"D Hold",*/ VOICE_ID_INVALID,                       MENU_D_HOLD        ,DTMF复位},
 #endif
                 {/*"D Prel",*/ VOICE_ID_INVALID, MENU_D_PRE, DTMF预载波},
 #ifdef ENABLE_DTMF_CALLING
+#ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
+
+                {/*"D Decd",*/ VOICE_ID_INVALID,                       MENU_D_DCD         ,DTMF解码},
+#endif
                 {/*"D List",*/ VOICE_ID_INVALID,                       MENU_D_LIST        ,DTMF联系人},
 #endif
                 {/*"D Live",*/ VOICE_ID_INVALID, MENU_D_LIVE_DEC, DTMF显示}, // live DTMF decoder
@@ -136,6 +147,20 @@ const t_menu_item MenuList[] =
 
                    {/*"",*/       VOICE_ID_INVALID,                       0xff               ,"\x00"}  // end of list - DO NOT delete or move this this
         };
+
+#ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
+#if ENABLE_CHINESE_FULL==0
+const char gSubMenu_W_N[][3] =//7
+#else
+        const char gSubMenu_W_N[][5] =//7
+#endif
+        {
+//                "WIDE",
+//                "NARROW"
+                宽带,
+               窄带
+        };
+#endif
 #if ENABLE_CHINESE_FULL == 4
 const char gSubMenu_PONMSG[][5]={
         关闭,
@@ -432,8 +457,8 @@ const char gSubMenu_SCRAMBLER[][7] =
 const t_sidefunction SIDEFUNCTIONS[] =
         {
                {关闭, ACTION_OPT_NONE},
-               {手电筒, ACTION_OPT_FLASHLIGHT},
-               {设置发射功率, ACTION_OPT_POWER},
+               {手电, ACTION_OPT_FLASHLIGHT},
+               {切换发射功率, ACTION_OPT_POWER},
                {监听, ACTION_OPT_MONITOR},
                {扫描, ACTION_OPT_SCAN},
 #ifdef ENABLE_VOX
@@ -450,13 +475,13 @@ const t_sidefunction SIDEFUNCTIONS[] =
 #endif
                {锁定按键, ACTION_OPT_KEYLOCK},
                {切换信道, ACTION_OPT_A_B},
-               {频率信道模式, ACTION_OPT_VFO_MR},
+               {切换信道模式, ACTION_OPT_VFO_MR},
                {切换调制模式, ACTION_OPT_SWITCH_DEMODUL},
                {DTMF解码, ACTION_OPT_D_DCD},
                {切换宽窄带, ACTION_OPT_WIDTH},
 #ifdef ENABLE_SIDEFUNCTIONS_SEND
-               {主频率发射, ACTION_OPT_SEND_A},
-               {次频率发射, ACTION_OPT_SEND_B},
+               {A信道发射, ACTION_OPT_SEND_A},
+               {B信道发射, ACTION_OPT_SEND_B},
 #endif
 #ifdef ENABLE_BLMIN_TMP_OFF
                 {"BLMIN\nTMP OFF",  ACTION_OPT_BLMIN_TMP_OFF}, 		//BackLight Minimum Temporay OFF
@@ -674,11 +699,13 @@ void UI_DisplayMenu(void) {
 
             already_printed = true;
             break;
+#ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
 
-//        case MENU_W_N:
-//
-//            strcpy(String, gSubMenu_W_N[gSubMenuSelection]);
-//            break;
+        case MENU_W_N:
+
+            strcpy(String, gSubMenu_W_N[gSubMenuSelection]);
+            break;
+#endif
 
         case MENU_SCR:
             strcpy(String, gSubMenu_SCRAMBLER[gSubMenuSelection]);
@@ -738,7 +765,10 @@ void UI_DisplayMenu(void) {
         case MENU_STE:
         case MENU_D_ST:
 #ifdef ENABLE_DTMF_CALLING
-            // case MENU_D_DCD:
+#ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
+
+             case MENU_D_DCD:
+#endif
 #endif
         case MENU_D_LIVE_DEC:
 #ifdef ENABLE_NOAA
