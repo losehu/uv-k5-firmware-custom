@@ -20,23 +20,15 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="赞助">
-      <change afterPath="$PROJECT_DIR$/uv-k5font/font_new/.idea/deployment.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/uv-k5font/font_new/.idea/font_new.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/uv-k5font/font_new/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/uv-k5font/font_new/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="修改侧键">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chinese.h" beforeDir="false" afterPath="$PROJECT_DIR$/chinese.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/menu.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/menu.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/uv_k5font.dir/main.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/uv_k5font.dir/main.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/uv_k5font.dir/objects.a" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/CMakeFiles/uv_k5font.dir/objects.a" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/uv_k5font.exe" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/cmake-build-debug/uv_k5font.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv-k5font/name.txt" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/name.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv-k5font/name_out.txt" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/name_out.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv-k5font/name_tmp.txt" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/name_tmp.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/uv_k5_firmware_custom_0_17.dir/includes_C.rsp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/uv_k5_firmware_custom_0_17.dir/includes_C.rsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/uv_k5_firmware_custom_0_17.dir/includes_CXX.rsp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/uv_k5_firmware_custom_0_17.dir/includes_CXX.rsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/uv_k5_firmware_custom_0_17.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/uv_k5_firmware_custom_0_17.cbp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.c" beforeDir="false" afterPath="$PROJECT_DIR$/settings.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +107,23 @@
       <recent name="C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\app" />
     </key>
   </component>
-  <component name="RunManager" selected="Makefile 目标.build">
+  <component name="RunManager" selected="Shell Script.win docker">
+    <configuration name="uv_k5_firmware_custom_0_17" type="CLionNativeAppRunConfigurationType" nameIsGenerated="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="uv_k5_firmware_custom_0_17" TARGET_NAME="uv_k5_firmware_custom_0_17" CONFIG_NAME="Debug" version="1" RUN_TARGET_PROJECT_NAME="uv_k5_firmware_custom_0_17" RUN_TARGET_NAME="uv_k5_firmware_custom_0_17">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Makefile" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile">
+      <makefile filename="$PROJECT_DIR$/Makefile" target="" workingDirectory="" arguments="">
+        <envs />
+      </makefile>
+      <method v="2" />
+    </configuration>
     <configuration name="all" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
       <makefile filename="$PROJECT_DIR$/Makefile" target="all" workingDirectory="" arguments="">
         <envs />
@@ -136,12 +144,6 @@
     </configuration>
     <configuration name="clean" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
       <makefile filename="$PROJECT_DIR$/Makefile" target="clean" workingDirectory="" arguments="">
-        <envs />
-      </makefile>
-      <method v="2" />
-    </configuration>
-    <configuration name="flash" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
-      <makefile filename="$PROJECT_DIR$/Makefile" target="flash" workingDirectory="" arguments="">
         <envs />
       </makefile>
       <method v="2" />
@@ -198,23 +200,23 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Makefile 应用程序.uv_k5_firmware_custom_0_17" />
+      <item itemvalue="Makefile 目标.Makefile" />
       <item itemvalue="Makefile 目标.both" />
       <item itemvalue="Makefile 目标.full" />
       <item itemvalue="Makefile 目标.build" />
       <item itemvalue="Makefile 目标.clean" />
       <item itemvalue="Makefile 目标.all" />
-      <item itemvalue="Makefile 目标.flash" />
       <item itemvalue="Shell Script.win docker" />
       <item itemvalue="Shell Script.linux docker" />
       <item itemvalue="Shell Script.win" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Makefile 目标.build" />
         <item itemvalue="Makefile 目标.clean" />
+        <item itemvalue="Makefile 目标.build" />
         <item itemvalue="Makefile 目标.full" />
         <item itemvalue="Makefile 目标.all" />
-        <item itemvalue="Makefile 目标.flash" />
       </list>
     </recent_temporary>
   </component>
@@ -298,14 +300,8 @@
       <workItem from="1704940032053" duration="4985000" />
       <workItem from="1705070925031" duration="721000" />
       <workItem from="1705072019086" duration="184000" />
-      <workItem from="1705123936006" duration="1376000" />
-    </task>
-    <task id="LOCAL-00076" summary="Makefile">
-      <created>1702009532422</created>
-      <option name="number" value="00076" />
-      <option name="presentableId" value="LOCAL-00076" />
-      <option name="project" value="LOCAL" />
-      <updated>1702009532422</updated>
+      <workItem from="1705123936006" duration="13772000" />
+      <workItem from="1705149583084" duration="4224000" />
     </task>
     <task id="LOCAL-00077" summary="readme add">
       <created>1702026692058</created>
@@ -643,7 +639,14 @@
       <option name="project" value="LOCAL" />
       <updated>1704956580565</updated>
     </task>
-    <option name="localTasksCounter" value="125" />
+    <task id="LOCAL-00125" summary="修改侧键">
+      <created>1705147244740</created>
+      <option name="number" value="00125" />
+      <option name="presentableId" value="LOCAL-00125" />
+      <option name="project" value="LOCAL" />
+      <updated>1705147244740</updated>
+    </task>
+    <option name="localTasksCounter" value="126" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -670,7 +673,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="MDC联系人" />
     <MESSAGE value="MDC PY" />
     <MESSAGE value="110" />
     <MESSAGE value="中英文字符对齐" />
@@ -695,7 +697,8 @@
     <MESSAGE value="4M TEST" />
     <MESSAGE value="信道长度" />
     <MESSAGE value="赞助" />
-    <option name="LAST_COMMIT_MESSAGE" value="赞助" />
+    <MESSAGE value="修改侧键" />
+    <option name="LAST_COMMIT_MESSAGE" value="修改侧键" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

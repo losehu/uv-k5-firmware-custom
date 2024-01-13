@@ -563,7 +563,7 @@ void SETTINGS_SaveSettings(void)
     State[5] = 0;
     State[6] = 0;
     State[7] = 0;
-    EEPROM_WriteBuffer(0x1FF8, State, 8);
+    EEPROM_WriteBuffer(0x1FF8, State, 5);
 #endif
 
     memset(Password, 0xFF, sizeof(Password));

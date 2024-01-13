@@ -312,9 +312,9 @@ void Main(void) {
 //		 BootMode != BOOT_MODE_NORMAL)
 //	{	// keys are pressed
 //		UI_DisplayReleaseKeys(BootMode);
-    while (KEYBOARD_Poll() != KEY_INVALID)  // 500ms
-    {
-    }
+//    while (KEYBOARD_Poll() != KEY_INVALID)  // 500ms
+//    {
+//    }
     gKeyReading0 = KEY_INVALID;
     gKeyReading1 = KEY_INVALID;
     gDebounceCounter = 0;
@@ -365,7 +365,7 @@ void Main(void) {
 
     boot_counter_10ms = 250;
 
-    while (boot_counter_10ms > 0) {
+    while (boot_counter_10ms > 0||(KEYBOARD_Poll() != KEY_INVALID)) {
 
         if (KEYBOARD_Poll() == KEY_EXIT
             #if ENABLE_CHINESE_FULL==4

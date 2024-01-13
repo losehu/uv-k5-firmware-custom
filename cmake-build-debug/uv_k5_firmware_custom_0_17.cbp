@@ -24,6 +24,7 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/Makefile"/>
 					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/."/>
 					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/app"/>
 					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/bsp"/>
@@ -160,6 +161,7 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/Makefile"/>
 					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/."/>
 					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/app"/>
 					<Add directory="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/bsp"/>
@@ -310,6 +312,9 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/Makefile">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
 		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/am_fix.c">
 			<Option target="uv_k5_firmware_custom_0_17"/>
 		</Unit>
