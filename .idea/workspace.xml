@@ -20,15 +20,11 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="修改侧键">
+    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="修复侧键与MDC联系人冲突">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/uv_k5_firmware_custom_0_17.dir/includes_C.rsp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/uv_k5_firmware_custom_0_17.dir/includes_C.rsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/uv_k5_firmware_custom_0_17.dir/includes_CXX.rsp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/uv_k5_firmware_custom_0_17.dir/includes_CXX.rsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/uv_k5_firmware_custom_0_17.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/uv_k5_firmware_custom_0_17.cbp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/eeprom.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/eeprom.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.c" beforeDir="false" afterPath="$PROJECT_DIR$/settings.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -301,14 +297,7 @@
       <workItem from="1705070925031" duration="721000" />
       <workItem from="1705072019086" duration="184000" />
       <workItem from="1705123936006" duration="13772000" />
-      <workItem from="1705149583084" duration="4224000" />
-    </task>
-    <task id="LOCAL-00077" summary="readme add">
-      <created>1702026692058</created>
-      <option name="number" value="00077" />
-      <option name="presentableId" value="LOCAL-00077" />
-      <option name="project" value="LOCAL" />
-      <updated>1702026692059</updated>
+      <workItem from="1705149583084" duration="5733000" />
     </task>
     <task id="LOCAL-00078" summary="重构">
       <created>1702092719871</created>
@@ -646,7 +635,14 @@
       <option name="project" value="LOCAL" />
       <updated>1705147244740</updated>
     </task>
-    <option name="localTasksCounter" value="126" />
+    <task id="LOCAL-00126" summary="修复侧键与MDC联系人冲突">
+      <created>1705154185626</created>
+      <option name="number" value="00126" />
+      <option name="presentableId" value="LOCAL-00126" />
+      <option name="project" value="LOCAL" />
+      <updated>1705154185626</updated>
+    </task>
+    <option name="localTasksCounter" value="127" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -673,7 +669,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="MDC PY" />
     <MESSAGE value="110" />
     <MESSAGE value="中英文字符对齐" />
     <MESSAGE value="支持中文编译选项ENABLE_CHINESE_FULL" />
@@ -698,7 +693,8 @@
     <MESSAGE value="信道长度" />
     <MESSAGE value="赞助" />
     <MESSAGE value="修改侧键" />
-    <option name="LAST_COMMIT_MESSAGE" value="修改侧键" />
+    <MESSAGE value="修复侧键与MDC联系人冲突" />
+    <option name="LAST_COMMIT_MESSAGE" value="修复侧键与MDC联系人冲突" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

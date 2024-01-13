@@ -339,29 +339,51 @@ void Main(void) {
 //
 //
 //}
-
-    UI_DisplayWelcome();
-
+//    memset(gStatusLine, 0, sizeof(gStatusLine));
+//    UI_DisplayClear();
 //    while(1)
 //    {
 //        char A[128];        char B[128];
 //
 //        memset(A,'A',sizeof (A));//0x20000 128K 0X40000 256K
-//         EEPROM_WriteBuffer(0x50000, A, 128);
-//         EEPROM_ReadBuffer(0x50000, B, 128) ;
+//        uint32_t ADD;
+//
+//#if ENABLE_EEPROM_TYPE==1
+//        ADD=0x50000;
+//#elif ENABLE_EEPROM_TYPE==2
+//        ADD=0x30000;
+//#endif
+//        EEPROM_WriteBuffer(ADD, A, 128);
+//        EEPROM_ReadBuffer(ADD, B, 128) ;
 //        if (memcmp(A,B,128)==0)
 //        {
-//            UI_PrintStringSmall("Double 2Mb Eeprom\nInstall OK!", 0, 127, 2);
+//#if ENABLE_EEPROM_TYPE==1
+//            UI_PrintStringSmall("Double 2Mb Eeprom", 0, 127, 2);
+//            UI_PrintStringSmall("Install OK!", 0, 127, 3);
+//
+//#elif ENABLE_EEPROM_TYPE==2
+//            UI_PrintStringSmall("Double 1Mb Eeprom", 0, 127, 2);
+//            UI_PrintStringSmall("Install OK!", 0, 127, 3);
+//#endif
 //            ST7565_BlitStatusLine();  // blank status line
 //            ST7565_BlitFullScreen();
 //        } else
 //        {
-//            UI_PrintStringSmall("Double 2Mb Eeprom\nInstall Failed!", 0, 127, 2);
+//#if ENABLE_EEPROM_TYPE==1
+//            UI_PrintStringSmall("Double 2Mb Eeprom", 0, 127, 2);
+//            UI_PrintStringSmall("Install Failed!", 0, 127, 3);
+//
+//#elif ENABLE_EEPROM_TYPE==2
+//            UI_PrintStringSmall("Double 1Mb Eeprom", 0, 127, 2);
+//            UI_PrintStringSmall("Install Failed!", 0, 127, 3);
+//#endif
 //            ST7565_BlitStatusLine();  // blank status line
 //            ST7565_BlitFullScreen();
 //        }
 //
-//        }
+//    }
+    UI_DisplayWelcome();
+
 
     boot_counter_10ms = 250;
 
