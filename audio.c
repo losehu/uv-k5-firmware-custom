@@ -50,11 +50,10 @@ void AUDIO_PlayBeep(BEEP_Type_t Beep)
 		return;
 #endif
 
-    if (gCurrentFunction == FUNCTION_RECEIVE)
+    if (gCurrentFunction == FUNCTION_RECEIVE||gCurrentFunction == FUNCTION_MONITOR)
         return;
 
-    if (gCurrentFunction == FUNCTION_MONITOR)
-        return;
+
 
 #ifdef ENABLE_FMRADIO
     if (gFmRadioMode)

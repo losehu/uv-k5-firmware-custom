@@ -271,7 +271,7 @@ switch (gCurrentFunction)
 #endif
 
 			return;
-
+default:
 
 	}
 

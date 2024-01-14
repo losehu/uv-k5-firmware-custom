@@ -110,7 +110,7 @@ void Main(void) {
     SETTINGS_InitEEPROM();
 
 
-    SETTINGS_WriteBuildOptions();
+//    SETTINGS_WriteBuildOptions();
     SETTINGS_LoadCalibration();
 #ifdef ENABLE_MDC1200
     MDC1200_init();
@@ -299,13 +299,13 @@ void Main(void) {
 //	if (BootMode == BOOT_MODE_F_LOCK)
 //    gMenuListCount = 46;
 
-    gMenuListCount = 0;
-    while (MenuList[gMenuListCount].name[0] != '\0') gMenuListCount++;
-//#if ENBALE_CHINESE_FULL==0
-//    gMenuListCount=52;
-//#else
-//    gMenuListCount=53;
-//#endif
+//    gMenuListCount = 0;
+//    while (MenuList[gMenuListCount].name[0] != '\0') gMenuListCount++;
+#if ENBALE_CHINESE_FULL==0
+    gMenuListCount=52;
+#else
+    gMenuListCount=53;
+#endif
     // wait for user to release all butts before moving on
 //	if (/*!GPIO_CheckBit(&GPIOC->DATA, GPIOC_PIN_PTT) ||*/
 //	     KEYBOARD_Poll() != KEY_INVALID ||

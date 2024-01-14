@@ -144,7 +144,7 @@ typedef struct {
     Header_t Header;
     uint32_t Response[4];
 } CMD_052D_t;
-
+#ifdef ENABLE_BLOCK
 typedef struct {
     Header_t Header;
     struct {
@@ -152,7 +152,7 @@ typedef struct {
         uint8_t Padding[3];
     } Data;
 } REPLY_052D_t;
-
+#endif
 typedef struct {
     Header_t Header;
     uint32_t Timestamp;
@@ -257,8 +257,10 @@ static void CMD_0514(const uint8_t *pBuffer) {
 static void CMD_051B(const uint8_t *pBuffer) {
     const CMD_051B_t *pCmd = (const CMD_051B_t *) pBuffer;
     REPLY_051B_t Reply;
-    bool bLocked = false;
+#ifdef ENABLE_BLOCK
 
+    bool bLocked = false;
+#endif
     if (pCmd->Timestamp != Timestamp)
         return;
 
@@ -273,11 +275,13 @@ static void CMD_051B(const uint8_t *pBuffer) {
     Reply.Header.Size = pCmd->Size + 4;
     Reply.Data.Offset = pCmd->Offset;
     Reply.Data.Size = pCmd->Size;
+#ifdef ENABLE_BLOCK
 
     if (bHasCustomAesKey)
         bLocked = gIsLocked;
 
     if (!bLocked)
+#endif
         EEPROM_ReadBuffer(pCmd->Offset, Reply.Data.Data, pCmd->Size);
 
     SendReply(&Reply, pCmd->Size + 8);
@@ -287,8 +291,10 @@ static void CMD_051D(const uint8_t *pBuffer) {
     const CMD_051D_t *pCmd = (const CMD_051D_t *) pBuffer;
     REPLY_051D_t Reply;
     bool bReloadEeprom;
-    bool bIsLocked;
+#ifdef ENABLE_BLOCK
 
+    bool bIsLocked;
+#endif
     if (pCmd->Timestamp != Timestamp)
         return;
 
@@ -303,26 +309,40 @@ static void CMD_051D(const uint8_t *pBuffer) {
     Reply.Header.ID = 0x051E;
     Reply.Header.Size = sizeof(Reply.Data);
     Reply.Data.Offset = pCmd->Offset;
+#ifdef ENABLE_BLOCK
 
     bIsLocked = bHasCustomAesKey ? gIsLocked : bHasCustomAesKey;
+#endif
+#ifdef ENABLE_BLOCK
 
     if (!bIsLocked) {
-        unsigned int i;
+#endif
+
+    unsigned int i;
         for (i = 0; i < (pCmd->Size / 8); i++) {
             const uint16_t Offset = pCmd->Offset + (i * 8U);
+#ifdef ENABLE_BLOCK
 
             if (Offset >= 0x0F30 && Offset < 0x0F40)
                 if (!gIsLocked)
-                    bReloadEeprom = true;
+#endif
+
+            bReloadEeprom = true;
+#ifdef ENABLE_BLOCK
 
             if ((Offset < 0x0E98 || Offset >= 0x0EA0) || !bIsInLockScreen || pCmd->bAllowPassword)
-                EEPROM_WriteBuffer(Offset, &pCmd->Data[i * 8U],8);
+#endif
+
+            EEPROM_WriteBuffer(Offset, &pCmd->Data[i * 8U],8);
 
         }
 
         if (bReloadEeprom)
             SETTINGS_InitEEPROM();
+#ifdef ENABLE_BLOCK
+
     }
+#endif
 
     SendReply(&Reply, sizeof(Reply));
 }
@@ -350,7 +370,7 @@ static void CMD_0529(void) {
 
     SendReply(&Reply, sizeof(Reply));
 }
-
+#ifdef ENABLE_BLOCK
 static void CMD_052D(const uint8_t *pBuffer) {
     const CMD_052D_t *pCmd = (const CMD_052D_t *) pBuffer;
     REPLY_052D_t Reply;
@@ -386,6 +406,7 @@ static void CMD_052D(const uint8_t *pBuffer) {
 
     SendReply(&Reply, sizeof(Reply));
 }
+#endif
 // session init, sends back version info and state
 // timestamp is a session id really
 // this command also disables dual watch, crossband,
@@ -558,7 +579,7 @@ static void CMD_052B(const uint8_t *pBuffer)//read
 {
     const CMD_052B_t *pCmd = (const CMD_052B_t *) pBuffer;
     REPLY_051B_t Reply;
-    bool bLocked = false;
+
 
     if (pCmd->Timestamp != Timestamp)
         return;
@@ -576,12 +597,7 @@ static void CMD_052B(const uint8_t *pBuffer)//read
 
     Reply.Data.Size = pCmd->Size;
 
-    if (bHasCustomAesKey)
-        bLocked = gIsLocked;
-//    uint8_t add[4]={(pCmd->Offset)>>8,pCmd->Offset&0xff,(pCmd->ADD[1]),(pCmd->ADD[0])};
-//    UART_Send(add,4);
 
-    if (!bLocked)
         EEPROM_ReadBuffer(((pCmd->Offset) << 16) + ((pCmd->ADD[1]) << 8) + (pCmd->ADD[0]), Reply.Data.Data, pCmd->Size);
 
     SendReply(&Reply, pCmd->Size + 8);
@@ -682,11 +698,7 @@ void UART_HandleCommand(void) {
             CMD_051D(UART_Command.Buffer);
             break;
 
-        case 0x051F:    // Not implementing non-authentic command
-            break;
 
-        case 0x0521:    // Not implementing non-authentic command
-            break;
 
         case 0x0527:
             CMD_0527();
@@ -695,11 +707,12 @@ void UART_HandleCommand(void) {
         case 0x0529:
             CMD_0529();
             break;
+#ifdef ENABLE_BLOCK
 
         case 0x052D:
             CMD_052D(UART_Command.Buffer);
             break;
-
+#endif
         case 0x052F:
             CMD_052F(UART_Command.Buffer);
             break;
