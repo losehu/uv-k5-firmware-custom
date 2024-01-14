@@ -24,7 +24,7 @@
 #define BX4819_band2_upper 130000000
 
 const freq_band_table_t BX4819_band1 = {BX4819_band1_lower,  63000000};
-const freq_band_table_t BX4819_band2 = {84000000, BX4819_band2_upper};
+const freq_band_table_t BX4819_band2 = {76000000, BX4819_band2_upper};
 
 const freq_band_table_t frequencyBandTable[] =
         {
