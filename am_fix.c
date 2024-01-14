@@ -269,9 +269,9 @@ switch (gCurrentFunction)
 #ifdef ENABLE_AM_FIX_SHOW_DATA
 			counter = display_update_rate;  // queue up a display update as soon as we switch to RX mode
 #endif
-default:
-			return;
 
+			return;
+default:
 
 	}
 
