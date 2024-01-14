@@ -272,7 +272,7 @@ switch (gCurrentFunction)
 
 			return;
 default:
-
+      return;
 	}
 
 #ifdef ENABLE_AM_FIX_SHOW_DATA
