@@ -1598,6 +1598,7 @@ static void ProcessKey(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld)
 		if (gFlagStopTX)
 		{
 			gFlagStopTX = false;
+            APP_EndTransmission();
 			RADIO_SetupRegisters(true);
 			GUI_SelectNextDisplay(DISPLAY_MAIN);
 			gEeprom.TX_VFO = gFlagLastVfo;
