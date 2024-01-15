@@ -301,7 +301,7 @@ void Main(void) {
 
 //    gMenuListCount = 0;
 //    while (MenuList[gMenuListCount].name[0] != '\0') gMenuListCount++;
-#if ENBALE_CHINESE_FULL==0
+#if ENABLE_CHINESE_FULL==0
     gMenuListCount=52;
 #else
     gMenuListCount=53;
