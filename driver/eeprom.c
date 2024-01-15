@@ -35,7 +35,7 @@ void EEPROM_ReadBuffer(uint32_t Address, void *pBuffer, uint8_t Size) {
 Address-=0x40000;
 
         }
-#elif ENABLE_EEPROM_4M==2
+#elif ENABLE_EEPROM_TYPE==2
     if (Address >= 0x20000)
         {IIC_ADD = 0xA4 | (((Address - 0x20000) / 0x10000) << 1);
 Address-=0x20000;
