@@ -10,60 +10,6 @@ The output was:
 
 Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.exe"
 
-The C compiler identification is GNU, found in "C:/Users/RUPC/Desktop/UV-K6/新建文件夹/uv-k5-firmware-chinese/cmake-build-debug/CMakeFiles/3.25.2/CompilerIdC/a.exe"
-
-Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
-Compiler: C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/g++.exe 
-Build flags: 
-Id flags:  
-
-The output was:
-0
-
-
-Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.exe"
-
-The CXX compiler identification is GNU, found in "C:/Users/RUPC/Desktop/UV-K6/新建文件夹/uv-k5-firmware-chinese/cmake-build-debug/CMakeFiles/3.25.2/CompilerIdCXX/a.exe"
-
-The system is: Windows - 10.0.19045 - AMD64
-Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
-Compiler: C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/gcc.exe 
-Build flags: 
-Id flags:  
-
-The output was:
-0
-
-
-Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.exe"
-
-The C compiler identification is GNU, found in "C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/CMakeFiles/3.25.2/CompilerIdC/a.exe"
-
-Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
-Compiler: C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/g++.exe 
-Build flags: 
-Id flags:  
-
-The output was:
-0
-
-
-Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.exe"
-
-The CXX compiler identification is GNU, found in "C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/CMakeFiles/3.25.2/CompilerIdCXX/a.exe"
-
-The system is: Windows - 10.0.19045 - AMD64
-Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
-Compiler: C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/gcc.exe 
-Build flags: 
-Id flags:  
-
-The output was:
-0
-
-
-Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.exe"
-
 The C compiler identification is GNU, found in "C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/CMakeFiles/3.25.2/CompilerIdC/a.exe"
 
 Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
@@ -80,20 +26,20 @@ Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" p
 The CXX compiler identification is GNU, found in "C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/CMakeFiles/3.25.2/CompilerIdCXX/a.exe"
 
 Detecting C compiler ABI info compiled with the following output:
-Change Dir: C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-tr4vja
+Change Dir: C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-eo4ojx
 
-Run Build Command(s):C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/mingw32-make.exe -f Makefile cmTC_b41ea/fast && C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/mingw32-make.exe  -f CMakeFiles\cmTC_b41ea.dir\build.make CMakeFiles/cmTC_b41ea.dir/build
-mingw32-make.exe[1]: Entering directory 'C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-tr4vja'
-Building C object CMakeFiles/cmTC_b41ea.dir/CMakeCCompilerABI.c.obj
-C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\gcc.exe   -fdiagnostics-color=always   -v -o CMakeFiles\cmTC_b41ea.dir\CMakeCCompilerABI.c.obj -c "C:\Program Files\JetBrains\CLion 2023.1.1\bin\cmake\win\x64\share\cmake-3.25\Modules\CMakeCCompilerABI.c"
+Run Build Command(s):C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/mingw32-make.exe -f Makefile cmTC_fe811/fast && C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/mingw32-make.exe  -f CMakeFiles\cmTC_fe811.dir\build.make CMakeFiles/cmTC_fe811.dir/build
+mingw32-make.exe[1]: Entering directory 'C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-eo4ojx'
+Building C object CMakeFiles/cmTC_fe811.dir/CMakeCCompilerABI.c.obj
+C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\gcc.exe   -fdiagnostics-color=always   -v -o CMakeFiles\cmTC_fe811.dir\CMakeCCompilerABI.c.obj -c "C:\Program Files\JetBrains\CLion 2023.1.1\bin\cmake\win\x64\share\cmake-3.25\Modules\CMakeCCompilerABI.c"
 Using built-in specs.
 COLLECT_GCC=C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\gcc.exe
 Target: x86_64-w64-mingw32
 Configured with: ../../../src/gcc-7.3.0/configure --host=x86_64-w64-mingw32 --build=x86_64-w64-mingw32 --target=x86_64-w64-mingw32 --prefix=/mingw64 --with-sysroot=/c/mingw730/x86_64-730-posix-seh-rt_v5-rev0/mingw64 --enable-shared --enable-static --disable-multilib --enable-languages=c,c++,fortran,lto --enable-libstdcxx-time=yes --enable-threads=posix --enable-libgomp --enable-libatomic --enable-lto --enable-graphite --enable-checking=release --enable-fully-dynamic-string --enable-version-specific-runtime-libs --enable-libstdcxx-filesystem-ts=yes --disable-libstdcxx-pch --disable-libstdcxx-debug --enable-bootstrap --disable-rpath --disable-win32-registry --disable-nls --disable-werror --disable-symvers --with-gnu-as --with-gnu-ld --with-arch=nocona --with-tune=core2 --with-libiconv --with-system-zlib --with-gmp=/c/mingw730/prerequisites/x86_64-w64-mingw32-static --with-mpfr=/c/mingw730/prerequisites/x86_64-w64-mingw32-static --with-mpc=/c/mingw730/prerequisites/x86_64-w64-mingw32-static --with-isl=/c/mingw730/prerequisites/x86_64-w64-mingw32-static --with-pkgversion='x86_64-posix-seh-rev0, Built by MinGW-W64 project' --with-bugurl=https://sourceforge.net/projects/mingw-w64 CFLAGS='-O2 -pipe -fno-ident -I/c/mingw730/x86_64-730-posix-seh-rt_v5-rev0/mingw64/opt/include -I/c/mingw730/prerequisites/x86_64-zlib-static/include -I/c/mingw730/prerequisites/x86_64-w64-mingw32-static/include' CXXFLAGS='-O2 -pipe -fno-ident -I/c/mingw730/x86_64-730-posix-seh-rt_v5-rev0/mingw64/opt/include -I/c/mingw730/prerequisites/x86_64-zlib-static/include -I/c/mingw730/prerequisites/x86_64-w64-mingw32-static/include' CPPFLAGS=' -I/c/mingw730/x86_64-730-posix-seh-rt_v5-rev0/mingw64/opt/include -I/c/mingw730/prerequisites/x86_64-zlib-static/include -I/c/mingw730/prerequisites/x86_64-w64-mingw32-static/include' LDFLAGS='-pipe -fno-ident -L/c/mingw730/x86_64-730-posix-seh-rt_v5-rev0/mingw64/opt/lib -L/c/mingw730/prerequisites/x86_64-zlib-static/lib -L/c/mingw730/prerequisites/x86_64-w64-mingw32-static/lib '
 Thread model: posix
 gcc version 7.3.0 (x86_64-posix-seh-rev0, Built by MinGW-W64 project) 
-COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles\cmTC_b41ea.dir\CMakeCCompilerABI.c.obj' '-c' '-mtune=core2' '-march=nocona'
- C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/cc1.exe -quiet -v -iprefix C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/ -D_REENTRANT C:\Program Files\JetBrains\CLion 2023.1.1\bin\cmake\win\x64\share\cmake-3.25\Modules\CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mtune=core2 -march=nocona -auxbase-strip CMakeFiles\cmTC_b41ea.dir\CMakeCCompilerABI.c.obj -version -fdiagnostics-color=always -o C:\Users\RUPC\AppData\Local\Temp\cc0jmZUq.s
+COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles\cmTC_fe811.dir\CMakeCCompilerABI.c.obj' '-c' '-mtune=core2' '-march=nocona'
+ C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/cc1.exe -quiet -v -iprefix C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/ -D_REENTRANT C:\Program Files\JetBrains\CLion 2023.1.1\bin\cmake\win\x64\share\cmake-3.25\Modules\CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mtune=core2 -march=nocona -auxbase-strip CMakeFiles\cmTC_fe811.dir\CMakeCCompilerABI.c.obj -version -fdiagnostics-color=always -o C:\Users\RUPC\AppData\Local\Temp\cc48WqBm.s
 GNU C11 (x86_64-posix-seh-rev0, Built by MinGW-W64 project) version 7.3.0 (x86_64-w64-mingw32)
 	compiled by GNU C version 7.3.0, GMP version 6.1.2, MPFR version 4.0.1, MPC version 1.1.0, isl version isl-0.18-GMP
 
@@ -114,17 +60,17 @@ GNU C11 (x86_64-posix-seh-rev0, Built by MinGW-W64 project) version 7.3.0 (x86_6
 
 GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
 Compiler executable checksum: afb3948cd5c0c8f535365414e7310436
-COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles\cmTC_b41ea.dir\CMakeCCompilerABI.c.obj' '-c' '-mtune=core2' '-march=nocona'
- C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/bin/as.exe -v -o CMakeFiles\cmTC_b41ea.dir\CMakeCCompilerABI.c.obj C:\Users\RUPC\AppData\Local\Temp\cc0jmZUq.s
+COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles\cmTC_fe811.dir\CMakeCCompilerABI.c.obj' '-c' '-mtune=core2' '-march=nocona'
+ C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/bin/as.exe -v -o CMakeFiles\cmTC_fe811.dir\CMakeCCompilerABI.c.obj C:\Users\RUPC\AppData\Local\Temp\cc48WqBm.s
 GNU assembler version 2.30 (x86_64-w64-mingw32) using BFD version (GNU Binutils) 2.30
 COMPILER_PATH=C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/;C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/;C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/bin/
 LIBRARY_PATH=C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/;C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/;C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib/../lib/;C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../lib/;C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib/;C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../
-COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles\cmTC_b41ea.dir\CMakeCCompilerABI.c.obj' '-c' '-mtune=core2' '-march=nocona'
-Linking C executable cmTC_b41ea.exe
-"C:\Program Files\JetBrains\CLion 2023.1.1\bin\cmake\win\x64\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_b41ea.dir\link.txt --verbose=1
-"C:\Program Files\JetBrains\CLion 2023.1.1\bin\cmake\win\x64\bin\cmake.exe" -E rm -f CMakeFiles\cmTC_b41ea.dir/objects.a
-C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\ar.exe qc CMakeFiles\cmTC_b41ea.dir/objects.a @CMakeFiles\cmTC_b41ea.dir\objects1
-C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\gcc.exe  -v -Wl,--whole-archive CMakeFiles\cmTC_b41ea.dir/objects.a -Wl,--no-whole-archive -o cmTC_b41ea.exe -Wl,--out-implib,libcmTC_b41ea.dll.a -Wl,--major-image-version,0,--minor-image-version,0 
+COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles\cmTC_fe811.dir\CMakeCCompilerABI.c.obj' '-c' '-mtune=core2' '-march=nocona'
+Linking C executable cmTC_fe811.exe
+"C:\Program Files\JetBrains\CLion 2023.1.1\bin\cmake\win\x64\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_fe811.dir\link.txt --verbose=1
+"C:\Program Files\JetBrains\CLion 2023.1.1\bin\cmake\win\x64\bin\cmake.exe" -E rm -f CMakeFiles\cmTC_fe811.dir/objects.a
+C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\ar.exe qc CMakeFiles\cmTC_fe811.dir/objects.a @CMakeFiles\cmTC_fe811.dir\objects1
+C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\gcc.exe  -v -Wl,--whole-archive CMakeFiles\cmTC_fe811.dir/objects.a -Wl,--no-whole-archive -o cmTC_fe811.exe -Wl,--out-implib,libcmTC_fe811.dll.a -Wl,--major-image-version,0,--minor-image-version,0 
 Using built-in specs.
 COLLECT_GCC=C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\gcc.exe
 COLLECT_LTO_WRAPPER=C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/lto-wrapper.exe
@@ -134,10 +80,10 @@ Thread model: posix
 gcc version 7.3.0 (x86_64-posix-seh-rev0, Built by MinGW-W64 project) 
 COMPILER_PATH=C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/;C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/;C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/bin/
 LIBRARY_PATH=C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/;C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/;C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib/../lib/;C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../lib/;C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib/;C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_b41ea.exe' '-mtune=core2' '-march=nocona'
- C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/collect2.exe -plugin C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/liblto_plugin-0.dll -plugin-opt=C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\RUPC\AppData\Local\Temp\ccqd6UnC.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-liconv -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt --sysroot=C:/mingw730/x86_64-730-posix-seh-rt_v5-rev0/mingw64 -m i386pep -Bdynamic -o cmTC_b41ea.exe C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib/../lib/crt2.o C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/crtbegin.o -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0 -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib/../lib -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../lib -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../.. --whole-archive CMakeFiles\cmTC_b41ea.dir/objects.a --no-whole-archive --out-implib libcmTC_b41ea.dll.a --major-image-version 0 --minor-image-version 0 -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -liconv -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/crtend.o
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_b41ea.exe' '-mtune=core2' '-march=nocona'
-mingw32-make.exe[1]: Leaving directory 'C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-tr4vja'
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_fe811.exe' '-mtune=core2' '-march=nocona'
+ C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/collect2.exe -plugin C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/liblto_plugin-0.dll -plugin-opt=C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\RUPC\AppData\Local\Temp\ccm6mEiE.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-liconv -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt --sysroot=C:/mingw730/x86_64-730-posix-seh-rt_v5-rev0/mingw64 -m i386pep -Bdynamic -o cmTC_fe811.exe C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib/../lib/crt2.o C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/crtbegin.o -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0 -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib/../lib -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../lib -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../.. --whole-archive CMakeFiles\cmTC_fe811.dir/objects.a --no-whole-archive --out-implib libcmTC_fe811.dll.a --major-image-version 0 --minor-image-version 0 -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -liconv -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/crtend.o
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_fe811.exe' '-mtune=core2' '-march=nocona'
+mingw32-make.exe[1]: Leaving directory 'C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-eo4ojx'
 
 
 
@@ -156,20 +102,20 @@ Parsed C implicit include dir info from above output: rv=done
 
 Parsed C implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld\.exe|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
-  ignore line: [Change Dir: C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-tr4vja]
+  ignore line: [Change Dir: C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-eo4ojx]
   ignore line: []
-  ignore line: [Run Build Command(s):C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/mingw32-make.exe -f Makefile cmTC_b41ea/fast && C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/mingw32-make.exe  -f CMakeFiles\cmTC_b41ea.dir\build.make CMakeFiles/cmTC_b41ea.dir/build]
-  ignore line: [mingw32-make.exe[1]: Entering directory 'C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-tr4vja']
-  ignore line: [Building C object CMakeFiles/cmTC_b41ea.dir/CMakeCCompilerABI.c.obj]
-  ignore line: [C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\gcc.exe   -fdiagnostics-color=always   -v -o CMakeFiles\cmTC_b41ea.dir\CMakeCCompilerABI.c.obj -c "C:\Program Files\JetBrains\CLion 2023.1.1\bin\cmake\win\x64\share\cmake-3.25\Modules\CMakeCCompilerABI.c"]
+  ignore line: [Run Build Command(s):C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/mingw32-make.exe -f Makefile cmTC_fe811/fast && C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/mingw32-make.exe  -f CMakeFiles\cmTC_fe811.dir\build.make CMakeFiles/cmTC_fe811.dir/build]
+  ignore line: [mingw32-make.exe[1]: Entering directory 'C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-eo4ojx']
+  ignore line: [Building C object CMakeFiles/cmTC_fe811.dir/CMakeCCompilerABI.c.obj]
+  ignore line: [C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\gcc.exe   -fdiagnostics-color=always   -v -o CMakeFiles\cmTC_fe811.dir\CMakeCCompilerABI.c.obj -c "C:\Program Files\JetBrains\CLion 2023.1.1\bin\cmake\win\x64\share\cmake-3.25\Modules\CMakeCCompilerABI.c"]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\gcc.exe]
   ignore line: [Target: x86_64-w64-mingw32]
   ignore line: [Configured with: ../../../src/gcc-7.3.0/configure --host=x86_64-w64-mingw32 --build=x86_64-w64-mingw32 --target=x86_64-w64-mingw32 --prefix=/mingw64 --with-sysroot=/c/mingw730/x86_64-730-posix-seh-rt_v5-rev0/mingw64 --enable-shared --enable-static --disable-multilib --enable-languages=c,c++,fortran,lto --enable-libstdcxx-time=yes --enable-threads=posix --enable-libgomp --enable-libatomic --enable-lto --enable-graphite --enable-checking=release --enable-fully-dynamic-string --enable-version-specific-runtime-libs --enable-libstdcxx-filesystem-ts=yes --disable-libstdcxx-pch --disable-libstdcxx-debug --enable-bootstrap --disable-rpath --disable-win32-registry --disable-nls --disable-werror --disable-symvers --with-gnu-as --with-gnu-ld --with-arch=nocona --with-tune=core2 --with-libiconv --with-system-zlib --with-gmp=/c/mingw730/prerequisites/x86_64-w64-mingw32-static --with-mpfr=/c/mingw730/prerequisites/x86_64-w64-mingw32-static --with-mpc=/c/mingw730/prerequisites/x86_64-w64-mingw32-static --with-isl=/c/mingw730/prerequisites/x86_64-w64-mingw32-static --with-pkgversion='x86_64-posix-seh-rev0, Built by MinGW-W64 project' --with-bugurl=https://sourceforge.net/projects/mingw-w64 CFLAGS='-O2 -pipe -fno-ident -I/c/mingw730/x86_64-730-posix-seh-rt_v5-rev0/mingw64/opt/include -I/c/mingw730/prerequisites/x86_64-zlib-static/include -I/c/mingw730/prerequisites/x86_64-w64-mingw32-static/include' CXXFLAGS='-O2 -pipe -fno-ident -I/c/mingw730/x86_64-730-posix-seh-rt_v5-rev0/mingw64/opt/include -I/c/mingw730/prerequisites/x86_64-zlib-static/include -I/c/mingw730/prerequisites/x86_64-w64-mingw32-static/include' CPPFLAGS=' -I/c/mingw730/x86_64-730-posix-seh-rt_v5-rev0/mingw64/opt/include -I/c/mingw730/prerequisites/x86_64-zlib-static/include -I/c/mingw730/prerequisites/x86_64-w64-mingw32-static/include' LDFLAGS='-pipe -fno-ident -L/c/mingw730/x86_64-730-posix-seh-rt_v5-rev0/mingw64/opt/lib -L/c/mingw730/prerequisites/x86_64-zlib-static/lib -L/c/mingw730/prerequisites/x86_64-w64-mingw32-static/lib ']
   ignore line: [Thread model: posix]
   ignore line: [gcc version 7.3.0 (x86_64-posix-seh-rev0  Built by MinGW-W64 project) ]
-  ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles\cmTC_b41ea.dir\CMakeCCompilerABI.c.obj' '-c' '-mtune=core2' '-march=nocona']
-  ignore line: [ C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/cc1.exe -quiet -v -iprefix C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/ -D_REENTRANT C:\Program Files\JetBrains\CLion 2023.1.1\bin\cmake\win\x64\share\cmake-3.25\Modules\CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mtune=core2 -march=nocona -auxbase-strip CMakeFiles\cmTC_b41ea.dir\CMakeCCompilerABI.c.obj -version -fdiagnostics-color=always -o C:\Users\RUPC\AppData\Local\Temp\cc0jmZUq.s]
+  ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles\cmTC_fe811.dir\CMakeCCompilerABI.c.obj' '-c' '-mtune=core2' '-march=nocona']
+  ignore line: [ C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/cc1.exe -quiet -v -iprefix C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/ -D_REENTRANT C:\Program Files\JetBrains\CLion 2023.1.1\bin\cmake\win\x64\share\cmake-3.25\Modules\CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mtune=core2 -march=nocona -auxbase-strip CMakeFiles\cmTC_fe811.dir\CMakeCCompilerABI.c.obj -version -fdiagnostics-color=always -o C:\Users\RUPC\AppData\Local\Temp\cc48WqBm.s]
   ignore line: [GNU C11 (x86_64-posix-seh-rev0  Built by MinGW-W64 project) version 7.3.0 (x86_64-w64-mingw32)]
   ignore line: [	compiled by GNU C version 7.3.0  GMP version 6.1.2  MPFR version 4.0.1  MPC version 1.1.0  isl version isl-0.18-GMP]
   ignore line: []
@@ -190,8 +136,8 @@ Parsed C implicit link information from above output:
   ignore line: []
   ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
   ignore line: [Compiler executable checksum: afb3948cd5c0c8f535365414e7310436]
-  ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles\cmTC_b41ea.dir\CMakeCCompilerABI.c.obj' '-c' '-mtune=core2' '-march=nocona']
-  ignore line: [ C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/bin/as.exe -v -o CMakeFiles\cmTC_b41ea.dir\CMakeCCompilerABI.c.obj C:\Users\RUPC\AppData\Local\Temp\cc0jmZUq.s]
+  ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles\cmTC_fe811.dir\CMakeCCompilerABI.c.obj' '-c' '-mtune=core2' '-march=nocona']
+  ignore line: [ C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/bin/as.exe -v -o CMakeFiles\cmTC_fe811.dir\CMakeCCompilerABI.c.obj C:\Users\RUPC\AppData\Local\Temp\cc48WqBm.s]
   ignore line: [GNU assembler version 2.30 (x86_64-w64-mingw32) using BFD version (GNU Binutils) 2.30]
   ignore line: [COMPILER_PATH=C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/]
   ignore line: [C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/]
@@ -202,12 +148,12 @@ Parsed C implicit link information from above output:
   ignore line: [C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../lib/]
   ignore line: [C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib/]
   ignore line: [C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../]
-  ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles\cmTC_b41ea.dir\CMakeCCompilerABI.c.obj' '-c' '-mtune=core2' '-march=nocona']
-  ignore line: [Linking C executable cmTC_b41ea.exe]
-  ignore line: ["C:\Program Files\JetBrains\CLion 2023.1.1\bin\cmake\win\x64\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_b41ea.dir\link.txt --verbose=1]
-  ignore line: ["C:\Program Files\JetBrains\CLion 2023.1.1\bin\cmake\win\x64\bin\cmake.exe" -E rm -f CMakeFiles\cmTC_b41ea.dir/objects.a]
-  ignore line: [C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\ar.exe qc CMakeFiles\cmTC_b41ea.dir/objects.a @CMakeFiles\cmTC_b41ea.dir\objects1]
-  ignore line: [C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\gcc.exe  -v -Wl --whole-archive CMakeFiles\cmTC_b41ea.dir/objects.a -Wl --no-whole-archive -o cmTC_b41ea.exe -Wl --out-implib libcmTC_b41ea.dll.a -Wl --major-image-version 0 --minor-image-version 0 ]
+  ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles\cmTC_fe811.dir\CMakeCCompilerABI.c.obj' '-c' '-mtune=core2' '-march=nocona']
+  ignore line: [Linking C executable cmTC_fe811.exe]
+  ignore line: ["C:\Program Files\JetBrains\CLion 2023.1.1\bin\cmake\win\x64\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_fe811.dir\link.txt --verbose=1]
+  ignore line: ["C:\Program Files\JetBrains\CLion 2023.1.1\bin\cmake\win\x64\bin\cmake.exe" -E rm -f CMakeFiles\cmTC_fe811.dir/objects.a]
+  ignore line: [C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\ar.exe qc CMakeFiles\cmTC_fe811.dir/objects.a @CMakeFiles\cmTC_fe811.dir\objects1]
+  ignore line: [C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\gcc.exe  -v -Wl --whole-archive CMakeFiles\cmTC_fe811.dir/objects.a -Wl --no-whole-archive -o cmTC_fe811.exe -Wl --out-implib libcmTC_fe811.dll.a -Wl --major-image-version 0 --minor-image-version 0 ]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\gcc.exe]
   ignore line: [COLLECT_LTO_WRAPPER=C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/lto-wrapper.exe]
@@ -224,13 +170,13 @@ Parsed C implicit link information from above output:
   ignore line: [C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../lib/]
   ignore line: [C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib/]
   ignore line: [C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_b41ea.exe' '-mtune=core2' '-march=nocona']
-  link line: [ C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/collect2.exe -plugin C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/liblto_plugin-0.dll -plugin-opt=C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\RUPC\AppData\Local\Temp\ccqd6UnC.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-liconv -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt --sysroot=C:/mingw730/x86_64-730-posix-seh-rt_v5-rev0/mingw64 -m i386pep -Bdynamic -o cmTC_b41ea.exe C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib/../lib/crt2.o C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/crtbegin.o -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0 -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib/../lib -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../lib -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../.. --whole-archive CMakeFiles\cmTC_b41ea.dir/objects.a --no-whole-archive --out-implib libcmTC_b41ea.dll.a --major-image-version 0 --minor-image-version 0 -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -liconv -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/crtend.o]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_fe811.exe' '-mtune=core2' '-march=nocona']
+  link line: [ C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/collect2.exe -plugin C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/liblto_plugin-0.dll -plugin-opt=C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\RUPC\AppData\Local\Temp\ccm6mEiE.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-liconv -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt --sysroot=C:/mingw730/x86_64-730-posix-seh-rt_v5-rev0/mingw64 -m i386pep -Bdynamic -o cmTC_fe811.exe C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib/../lib/crt2.o C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/crtbegin.o -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0 -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib/../lib -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../lib -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../.. --whole-archive CMakeFiles\cmTC_fe811.dir/objects.a --no-whole-archive --out-implib libcmTC_fe811.dll.a --major-image-version 0 --minor-image-version 0 -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -liconv -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/crtend.o]
     arg [C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/collect2.exe] ==> ignore
     arg [-plugin] ==> ignore
     arg [C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/liblto_plugin-0.dll] ==> ignore
     arg [-plugin-opt=C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/lto-wrapper.exe] ==> ignore
-    arg [-plugin-opt=-fresolution=C:\Users\RUPC\AppData\Local\Temp\ccqd6UnC.res] ==> ignore
+    arg [-plugin-opt=-fresolution=C:\Users\RUPC\AppData\Local\Temp\ccm6mEiE.res] ==> ignore
     arg [-plugin-opt=-pass-through=-lmingw32] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc_eh] ==> ignore
@@ -254,7 +200,7 @@ Parsed C implicit link information from above output:
     arg [i386pep] ==> ignore
     arg [-Bdynamic] ==> search dynamic
     arg [-o] ==> ignore
-    arg [cmTC_b41ea.exe] ==> ignore
+    arg [cmTC_fe811.exe] ==> ignore
     arg [C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib/../lib/crt2.o] ==> obj [C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib/../lib/crt2.o]
     arg [C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/crtbegin.o] ==> obj [C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/crtbegin.o]
     arg [-LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0] ==> dir [C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0]
@@ -264,10 +210,10 @@ Parsed C implicit link information from above output:
     arg [-LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib] ==> dir [C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib]
     arg [-LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../..] ==> dir [C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../..]
     arg [--whole-archive] ==> ignore
-    arg [CMakeFiles\cmTC_b41ea.dir/objects.a] ==> ignore
+    arg [CMakeFiles\cmTC_fe811.dir/objects.a] ==> ignore
     arg [--no-whole-archive] ==> ignore
     arg [--out-implib] ==> ignore
-    arg [libcmTC_b41ea.dll.a] ==> ignore
+    arg [libcmTC_fe811.dll.a] ==> ignore
     arg [--major-image-version] ==> ignore
     arg [0] ==> ignore
     arg [--minor-image-version] ==> ignore
@@ -311,20 +257,20 @@ Parsed C implicit link information from above output:
 
 
 Detecting CXX compiler ABI info compiled with the following output:
-Change Dir: C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-78vfav
+Change Dir: C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-mcpnvg
 
-Run Build Command(s):C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/mingw32-make.exe -f Makefile cmTC_d4c8b/fast && C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/mingw32-make.exe  -f CMakeFiles\cmTC_d4c8b.dir\build.make CMakeFiles/cmTC_d4c8b.dir/build
-mingw32-make.exe[1]: Entering directory 'C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-78vfav'
-Building CXX object CMakeFiles/cmTC_d4c8b.dir/CMakeCXXCompilerABI.cpp.obj
-C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\g++.exe   -fdiagnostics-color=always   -v -o CMakeFiles\cmTC_d4c8b.dir\CMakeCXXCompilerABI.cpp.obj -c "C:\Program Files\JetBrains\CLion 2023.1.1\bin\cmake\win\x64\share\cmake-3.25\Modules\CMakeCXXCompilerABI.cpp"
+Run Build Command(s):C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/mingw32-make.exe -f Makefile cmTC_31c9a/fast && C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/mingw32-make.exe  -f CMakeFiles\cmTC_31c9a.dir\build.make CMakeFiles/cmTC_31c9a.dir/build
+mingw32-make.exe[1]: Entering directory 'C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-mcpnvg'
+Building CXX object CMakeFiles/cmTC_31c9a.dir/CMakeCXXCompilerABI.cpp.obj
+C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\g++.exe   -fdiagnostics-color=always   -v -o CMakeFiles\cmTC_31c9a.dir\CMakeCXXCompilerABI.cpp.obj -c "C:\Program Files\JetBrains\CLion 2023.1.1\bin\cmake\win\x64\share\cmake-3.25\Modules\CMakeCXXCompilerABI.cpp"
 Using built-in specs.
 COLLECT_GCC=C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\g++.exe
 Target: x86_64-w64-mingw32
 Configured with: ../../../src/gcc-7.3.0/configure --host=x86_64-w64-mingw32 --build=x86_64-w64-mingw32 --target=x86_64-w64-mingw32 --prefix=/mingw64 --with-sysroot=/c/mingw730/x86_64-730-posix-seh-rt_v5-rev0/mingw64 --enable-shared --enable-static --disable-multilib --enable-languages=c,c++,fortran,lto --enable-libstdcxx-time=yes --enable-threads=posix --enable-libgomp --enable-libatomic --enable-lto --enable-graphite --enable-checking=release --enable-fully-dynamic-string --enable-version-specific-runtime-libs --enable-libstdcxx-filesystem-ts=yes --disable-libstdcxx-pch --disable-libstdcxx-debug --enable-bootstrap --disable-rpath --disable-win32-registry --disable-nls --disable-werror --disable-symvers --with-gnu-as --with-gnu-ld --with-arch=nocona --with-tune=core2 --with-libiconv --with-system-zlib --with-gmp=/c/mingw730/prerequisites/x86_64-w64-mingw32-static --with-mpfr=/c/mingw730/prerequisites/x86_64-w64-mingw32-static --with-mpc=/c/mingw730/prerequisites/x86_64-w64-mingw32-static --with-isl=/c/mingw730/prerequisites/x86_64-w64-mingw32-static --with-pkgversion='x86_64-posix-seh-rev0, Built by MinGW-W64 project' --with-bugurl=https://sourceforge.net/projects/mingw-w64 CFLAGS='-O2 -pipe -fno-ident -I/c/mingw730/x86_64-730-posix-seh-rt_v5-rev0/mingw64/opt/include -I/c/mingw730/prerequisites/x86_64-zlib-static/include -I/c/mingw730/prerequisites/x86_64-w64-mingw32-static/include' CXXFLAGS='-O2 -pipe -fno-ident -I/c/mingw730/x86_64-730-posix-seh-rt_v5-rev0/mingw64/opt/include -I/c/mingw730/prerequisites/x86_64-zlib-static/include -I/c/mingw730/prerequisites/x86_64-w64-mingw32-static/include' CPPFLAGS=' -I/c/mingw730/x86_64-730-posix-seh-rt_v5-rev0/mingw64/opt/include -I/c/mingw730/prerequisites/x86_64-zlib-static/include -I/c/mingw730/prerequisites/x86_64-w64-mingw32-static/include' LDFLAGS='-pipe -fno-ident -L/c/mingw730/x86_64-730-posix-seh-rt_v5-rev0/mingw64/opt/lib -L/c/mingw730/prerequisites/x86_64-zlib-static/lib -L/c/mingw730/prerequisites/x86_64-w64-mingw32-static/lib '
 Thread model: posix
 gcc version 7.3.0 (x86_64-posix-seh-rev0, Built by MinGW-W64 project) 
-COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles\cmTC_d4c8b.dir\CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=core2' '-march=nocona'
- C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/cc1plus.exe -quiet -v -iprefix C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/ -D_REENTRANT C:\Program Files\JetBrains\CLion 2023.1.1\bin\cmake\win\x64\share\cmake-3.25\Modules\CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mtune=core2 -march=nocona -auxbase-strip CMakeFiles\cmTC_d4c8b.dir\CMakeCXXCompilerABI.cpp.obj -version -fdiagnostics-color=always -o C:\Users\RUPC\AppData\Local\Temp\ccUIwvif.s
+COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles\cmTC_31c9a.dir\CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=core2' '-march=nocona'
+ C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/cc1plus.exe -quiet -v -iprefix C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/ -D_REENTRANT C:\Program Files\JetBrains\CLion 2023.1.1\bin\cmake\win\x64\share\cmake-3.25\Modules\CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mtune=core2 -march=nocona -auxbase-strip CMakeFiles\cmTC_31c9a.dir\CMakeCXXCompilerABI.cpp.obj -version -fdiagnostics-color=always -o C:\Users\RUPC\AppData\Local\Temp\ccGmePoc.s
 GNU C++14 (x86_64-posix-seh-rev0, Built by MinGW-W64 project) version 7.3.0 (x86_64-w64-mingw32)
 	compiled by GNU C version 7.3.0, GMP version 6.1.2, MPFR version 4.0.1, MPC version 1.1.0, isl version isl-0.18-GMP
 
@@ -351,17 +297,17 @@ GNU C++14 (x86_64-posix-seh-rev0, Built by MinGW-W64 project) version 7.3.0 (x86
 
 GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
 Compiler executable checksum: 86cf749bb84a0f12f1d61bff4e68fffd
-COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles\cmTC_d4c8b.dir\CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=core2' '-march=nocona'
- C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/bin/as.exe -v -o CMakeFiles\cmTC_d4c8b.dir\CMakeCXXCompilerABI.cpp.obj C:\Users\RUPC\AppData\Local\Temp\ccUIwvif.s
+COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles\cmTC_31c9a.dir\CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=core2' '-march=nocona'
+ C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/bin/as.exe -v -o CMakeFiles\cmTC_31c9a.dir\CMakeCXXCompilerABI.cpp.obj C:\Users\RUPC\AppData\Local\Temp\ccGmePoc.s
 GNU assembler version 2.30 (x86_64-w64-mingw32) using BFD version (GNU Binutils) 2.30
 COMPILER_PATH=C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/;C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/;C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/bin/
 LIBRARY_PATH=C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/;C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/;C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib/../lib/;C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../lib/;C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib/;C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../
-COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles\cmTC_d4c8b.dir\CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=core2' '-march=nocona'
-Linking CXX executable cmTC_d4c8b.exe
-"C:\Program Files\JetBrains\CLion 2023.1.1\bin\cmake\win\x64\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_d4c8b.dir\link.txt --verbose=1
-"C:\Program Files\JetBrains\CLion 2023.1.1\bin\cmake\win\x64\bin\cmake.exe" -E rm -f CMakeFiles\cmTC_d4c8b.dir/objects.a
-C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\ar.exe qc CMakeFiles\cmTC_d4c8b.dir/objects.a @CMakeFiles\cmTC_d4c8b.dir\objects1
-C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\g++.exe  -v -Wl,--whole-archive CMakeFiles\cmTC_d4c8b.dir/objects.a -Wl,--no-whole-archive -o cmTC_d4c8b.exe -Wl,--out-implib,libcmTC_d4c8b.dll.a -Wl,--major-image-version,0,--minor-image-version,0 
+COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles\cmTC_31c9a.dir\CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=core2' '-march=nocona'
+Linking CXX executable cmTC_31c9a.exe
+"C:\Program Files\JetBrains\CLion 2023.1.1\bin\cmake\win\x64\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_31c9a.dir\link.txt --verbose=1
+"C:\Program Files\JetBrains\CLion 2023.1.1\bin\cmake\win\x64\bin\cmake.exe" -E rm -f CMakeFiles\cmTC_31c9a.dir/objects.a
+C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\ar.exe qc CMakeFiles\cmTC_31c9a.dir/objects.a @CMakeFiles\cmTC_31c9a.dir\objects1
+C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\g++.exe  -v -Wl,--whole-archive CMakeFiles\cmTC_31c9a.dir/objects.a -Wl,--no-whole-archive -o cmTC_31c9a.exe -Wl,--out-implib,libcmTC_31c9a.dll.a -Wl,--major-image-version,0,--minor-image-version,0 
 Using built-in specs.
 COLLECT_GCC=C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\g++.exe
 COLLECT_LTO_WRAPPER=C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/lto-wrapper.exe
@@ -371,10 +317,10 @@ Thread model: posix
 gcc version 7.3.0 (x86_64-posix-seh-rev0, Built by MinGW-W64 project) 
 COMPILER_PATH=C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/;C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/;C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/bin/
 LIBRARY_PATH=C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/;C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/;C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib/../lib/;C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../lib/;C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib/;C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_d4c8b.exe' '-shared-libgcc' '-mtune=core2' '-march=nocona'
- C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/collect2.exe -plugin C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/liblto_plugin-0.dll -plugin-opt=C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\RUPC\AppData\Local\Temp\ccVwPyEl.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-liconv -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt --sysroot=C:/mingw730/x86_64-730-posix-seh-rt_v5-rev0/mingw64 -m i386pep -Bdynamic -o cmTC_d4c8b.exe C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib/../lib/crt2.o C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/crtbegin.o -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0 -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib/../lib -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../lib -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../.. --whole-archive CMakeFiles\cmTC_d4c8b.dir/objects.a --no-whole-archive --out-implib libcmTC_d4c8b.dll.a --major-image-version 0 --minor-image-version 0 -lstdc++ -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -liconv -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/crtend.o
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_d4c8b.exe' '-shared-libgcc' '-mtune=core2' '-march=nocona'
-mingw32-make.exe[1]: Leaving directory 'C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-78vfav'
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_31c9a.exe' '-shared-libgcc' '-mtune=core2' '-march=nocona'
+ C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/collect2.exe -plugin C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/liblto_plugin-0.dll -plugin-opt=C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\RUPC\AppData\Local\Temp\ccvAjo3f.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-liconv -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt --sysroot=C:/mingw730/x86_64-730-posix-seh-rt_v5-rev0/mingw64 -m i386pep -Bdynamic -o cmTC_31c9a.exe C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib/../lib/crt2.o C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/crtbegin.o -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0 -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib/../lib -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../lib -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../.. --whole-archive CMakeFiles\cmTC_31c9a.dir/objects.a --no-whole-archive --out-implib libcmTC_31c9a.dll.a --major-image-version 0 --minor-image-version 0 -lstdc++ -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -liconv -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/crtend.o
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_31c9a.exe' '-shared-libgcc' '-mtune=core2' '-march=nocona'
+mingw32-make.exe[1]: Leaving directory 'C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-mcpnvg'
 
 
 
@@ -399,20 +345,20 @@ Parsed CXX implicit include dir info from above output: rv=done
 
 Parsed CXX implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld\.exe|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
-  ignore line: [Change Dir: C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-78vfav]
+  ignore line: [Change Dir: C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-mcpnvg]
   ignore line: []
-  ignore line: [Run Build Command(s):C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/mingw32-make.exe -f Makefile cmTC_d4c8b/fast && C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/mingw32-make.exe  -f CMakeFiles\cmTC_d4c8b.dir\build.make CMakeFiles/cmTC_d4c8b.dir/build]
-  ignore line: [mingw32-make.exe[1]: Entering directory 'C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-78vfav']
-  ignore line: [Building CXX object CMakeFiles/cmTC_d4c8b.dir/CMakeCXXCompilerABI.cpp.obj]
-  ignore line: [C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\g++.exe   -fdiagnostics-color=always   -v -o CMakeFiles\cmTC_d4c8b.dir\CMakeCXXCompilerABI.cpp.obj -c "C:\Program Files\JetBrains\CLion 2023.1.1\bin\cmake\win\x64\share\cmake-3.25\Modules\CMakeCXXCompilerABI.cpp"]
+  ignore line: [Run Build Command(s):C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/mingw32-make.exe -f Makefile cmTC_31c9a/fast && C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/mingw32-make.exe  -f CMakeFiles\cmTC_31c9a.dir\build.make CMakeFiles/cmTC_31c9a.dir/build]
+  ignore line: [mingw32-make.exe[1]: Entering directory 'C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-mcpnvg']
+  ignore line: [Building CXX object CMakeFiles/cmTC_31c9a.dir/CMakeCXXCompilerABI.cpp.obj]
+  ignore line: [C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\g++.exe   -fdiagnostics-color=always   -v -o CMakeFiles\cmTC_31c9a.dir\CMakeCXXCompilerABI.cpp.obj -c "C:\Program Files\JetBrains\CLion 2023.1.1\bin\cmake\win\x64\share\cmake-3.25\Modules\CMakeCXXCompilerABI.cpp"]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\g++.exe]
   ignore line: [Target: x86_64-w64-mingw32]
   ignore line: [Configured with: ../../../src/gcc-7.3.0/configure --host=x86_64-w64-mingw32 --build=x86_64-w64-mingw32 --target=x86_64-w64-mingw32 --prefix=/mingw64 --with-sysroot=/c/mingw730/x86_64-730-posix-seh-rt_v5-rev0/mingw64 --enable-shared --enable-static --disable-multilib --enable-languages=c,c++,fortran,lto --enable-libstdcxx-time=yes --enable-threads=posix --enable-libgomp --enable-libatomic --enable-lto --enable-graphite --enable-checking=release --enable-fully-dynamic-string --enable-version-specific-runtime-libs --enable-libstdcxx-filesystem-ts=yes --disable-libstdcxx-pch --disable-libstdcxx-debug --enable-bootstrap --disable-rpath --disable-win32-registry --disable-nls --disable-werror --disable-symvers --with-gnu-as --with-gnu-ld --with-arch=nocona --with-tune=core2 --with-libiconv --with-system-zlib --with-gmp=/c/mingw730/prerequisites/x86_64-w64-mingw32-static --with-mpfr=/c/mingw730/prerequisites/x86_64-w64-mingw32-static --with-mpc=/c/mingw730/prerequisites/x86_64-w64-mingw32-static --with-isl=/c/mingw730/prerequisites/x86_64-w64-mingw32-static --with-pkgversion='x86_64-posix-seh-rev0, Built by MinGW-W64 project' --with-bugurl=https://sourceforge.net/projects/mingw-w64 CFLAGS='-O2 -pipe -fno-ident -I/c/mingw730/x86_64-730-posix-seh-rt_v5-rev0/mingw64/opt/include -I/c/mingw730/prerequisites/x86_64-zlib-static/include -I/c/mingw730/prerequisites/x86_64-w64-mingw32-static/include' CXXFLAGS='-O2 -pipe -fno-ident -I/c/mingw730/x86_64-730-posix-seh-rt_v5-rev0/mingw64/opt/include -I/c/mingw730/prerequisites/x86_64-zlib-static/include -I/c/mingw730/prerequisites/x86_64-w64-mingw32-static/include' CPPFLAGS=' -I/c/mingw730/x86_64-730-posix-seh-rt_v5-rev0/mingw64/opt/include -I/c/mingw730/prerequisites/x86_64-zlib-static/include -I/c/mingw730/prerequisites/x86_64-w64-mingw32-static/include' LDFLAGS='-pipe -fno-ident -L/c/mingw730/x86_64-730-posix-seh-rt_v5-rev0/mingw64/opt/lib -L/c/mingw730/prerequisites/x86_64-zlib-static/lib -L/c/mingw730/prerequisites/x86_64-w64-mingw32-static/lib ']
   ignore line: [Thread model: posix]
   ignore line: [gcc version 7.3.0 (x86_64-posix-seh-rev0  Built by MinGW-W64 project) ]
-  ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles\cmTC_d4c8b.dir\CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=core2' '-march=nocona']
-  ignore line: [ C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/cc1plus.exe -quiet -v -iprefix C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/ -D_REENTRANT C:\Program Files\JetBrains\CLion 2023.1.1\bin\cmake\win\x64\share\cmake-3.25\Modules\CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mtune=core2 -march=nocona -auxbase-strip CMakeFiles\cmTC_d4c8b.dir\CMakeCXXCompilerABI.cpp.obj -version -fdiagnostics-color=always -o C:\Users\RUPC\AppData\Local\Temp\ccUIwvif.s]
+  ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles\cmTC_31c9a.dir\CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=core2' '-march=nocona']
+  ignore line: [ C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/cc1plus.exe -quiet -v -iprefix C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/ -D_REENTRANT C:\Program Files\JetBrains\CLion 2023.1.1\bin\cmake\win\x64\share\cmake-3.25\Modules\CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mtune=core2 -march=nocona -auxbase-strip CMakeFiles\cmTC_31c9a.dir\CMakeCXXCompilerABI.cpp.obj -version -fdiagnostics-color=always -o C:\Users\RUPC\AppData\Local\Temp\ccGmePoc.s]
   ignore line: [GNU C++14 (x86_64-posix-seh-rev0  Built by MinGW-W64 project) version 7.3.0 (x86_64-w64-mingw32)]
   ignore line: [	compiled by GNU C version 7.3.0  GMP version 6.1.2  MPFR version 4.0.1  MPC version 1.1.0  isl version isl-0.18-GMP]
   ignore line: []
@@ -439,8 +385,8 @@ Parsed CXX implicit link information from above output:
   ignore line: []
   ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
   ignore line: [Compiler executable checksum: 86cf749bb84a0f12f1d61bff4e68fffd]
-  ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles\cmTC_d4c8b.dir\CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=core2' '-march=nocona']
-  ignore line: [ C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/bin/as.exe -v -o CMakeFiles\cmTC_d4c8b.dir\CMakeCXXCompilerABI.cpp.obj C:\Users\RUPC\AppData\Local\Temp\ccUIwvif.s]
+  ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles\cmTC_31c9a.dir\CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=core2' '-march=nocona']
+  ignore line: [ C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/bin/as.exe -v -o CMakeFiles\cmTC_31c9a.dir\CMakeCXXCompilerABI.cpp.obj C:\Users\RUPC\AppData\Local\Temp\ccGmePoc.s]
   ignore line: [GNU assembler version 2.30 (x86_64-w64-mingw32) using BFD version (GNU Binutils) 2.30]
   ignore line: [COMPILER_PATH=C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/]
   ignore line: [C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/]
@@ -451,12 +397,12 @@ Parsed CXX implicit link information from above output:
   ignore line: [C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../lib/]
   ignore line: [C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib/]
   ignore line: [C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../]
-  ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles\cmTC_d4c8b.dir\CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=core2' '-march=nocona']
-  ignore line: [Linking CXX executable cmTC_d4c8b.exe]
-  ignore line: ["C:\Program Files\JetBrains\CLion 2023.1.1\bin\cmake\win\x64\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_d4c8b.dir\link.txt --verbose=1]
-  ignore line: ["C:\Program Files\JetBrains\CLion 2023.1.1\bin\cmake\win\x64\bin\cmake.exe" -E rm -f CMakeFiles\cmTC_d4c8b.dir/objects.a]
-  ignore line: [C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\ar.exe qc CMakeFiles\cmTC_d4c8b.dir/objects.a @CMakeFiles\cmTC_d4c8b.dir\objects1]
-  ignore line: [C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\g++.exe  -v -Wl --whole-archive CMakeFiles\cmTC_d4c8b.dir/objects.a -Wl --no-whole-archive -o cmTC_d4c8b.exe -Wl --out-implib libcmTC_d4c8b.dll.a -Wl --major-image-version 0 --minor-image-version 0 ]
+  ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles\cmTC_31c9a.dir\CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=core2' '-march=nocona']
+  ignore line: [Linking CXX executable cmTC_31c9a.exe]
+  ignore line: ["C:\Program Files\JetBrains\CLion 2023.1.1\bin\cmake\win\x64\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_31c9a.dir\link.txt --verbose=1]
+  ignore line: ["C:\Program Files\JetBrains\CLion 2023.1.1\bin\cmake\win\x64\bin\cmake.exe" -E rm -f CMakeFiles\cmTC_31c9a.dir/objects.a]
+  ignore line: [C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\ar.exe qc CMakeFiles\cmTC_31c9a.dir/objects.a @CMakeFiles\cmTC_31c9a.dir\objects1]
+  ignore line: [C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\g++.exe  -v -Wl --whole-archive CMakeFiles\cmTC_31c9a.dir/objects.a -Wl --no-whole-archive -o cmTC_31c9a.exe -Wl --out-implib libcmTC_31c9a.dll.a -Wl --major-image-version 0 --minor-image-version 0 ]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\g++.exe]
   ignore line: [COLLECT_LTO_WRAPPER=C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/lto-wrapper.exe]
@@ -473,13 +419,13 @@ Parsed CXX implicit link information from above output:
   ignore line: [C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../lib/]
   ignore line: [C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib/]
   ignore line: [C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_d4c8b.exe' '-shared-libgcc' '-mtune=core2' '-march=nocona']
-  link line: [ C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/collect2.exe -plugin C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/liblto_plugin-0.dll -plugin-opt=C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\RUPC\AppData\Local\Temp\ccVwPyEl.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-liconv -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt --sysroot=C:/mingw730/x86_64-730-posix-seh-rt_v5-rev0/mingw64 -m i386pep -Bdynamic -o cmTC_d4c8b.exe C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib/../lib/crt2.o C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/crtbegin.o -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0 -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib/../lib -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../lib -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../.. --whole-archive CMakeFiles\cmTC_d4c8b.dir/objects.a --no-whole-archive --out-implib libcmTC_d4c8b.dll.a --major-image-version 0 --minor-image-version 0 -lstdc++ -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -liconv -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/crtend.o]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_31c9a.exe' '-shared-libgcc' '-mtune=core2' '-march=nocona']
+  link line: [ C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/collect2.exe -plugin C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/liblto_plugin-0.dll -plugin-opt=C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\RUPC\AppData\Local\Temp\ccvAjo3f.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-liconv -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt --sysroot=C:/mingw730/x86_64-730-posix-seh-rt_v5-rev0/mingw64 -m i386pep -Bdynamic -o cmTC_31c9a.exe C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib/../lib/crt2.o C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/crtbegin.o -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0 -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib/../lib -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../lib -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib -LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../.. --whole-archive CMakeFiles\cmTC_31c9a.dir/objects.a --no-whole-archive --out-implib libcmTC_31c9a.dll.a --major-image-version 0 --minor-image-version 0 -lstdc++ -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -liconv -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/crtend.o]
     arg [C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/collect2.exe] ==> ignore
     arg [-plugin] ==> ignore
     arg [C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/liblto_plugin-0.dll] ==> ignore
     arg [-plugin-opt=C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../libexec/gcc/x86_64-w64-mingw32/7.3.0/lto-wrapper.exe] ==> ignore
-    arg [-plugin-opt=-fresolution=C:\Users\RUPC\AppData\Local\Temp\ccVwPyEl.res] ==> ignore
+    arg [-plugin-opt=-fresolution=C:\Users\RUPC\AppData\Local\Temp\ccvAjo3f.res] ==> ignore
     arg [-plugin-opt=-pass-through=-lmingw32] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
@@ -503,7 +449,7 @@ Parsed CXX implicit link information from above output:
     arg [i386pep] ==> ignore
     arg [-Bdynamic] ==> search dynamic
     arg [-o] ==> ignore
-    arg [cmTC_d4c8b.exe] ==> ignore
+    arg [cmTC_31c9a.exe] ==> ignore
     arg [C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib/../lib/crt2.o] ==> obj [C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib/../lib/crt2.o]
     arg [C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/crtbegin.o] ==> obj [C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/crtbegin.o]
     arg [-LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0] ==> dir [C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0]
@@ -513,10 +459,10 @@ Parsed CXX implicit link information from above output:
     arg [-LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib] ==> dir [C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/lib]
     arg [-LC:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../..] ==> dir [C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../..]
     arg [--whole-archive] ==> ignore
-    arg [CMakeFiles\cmTC_d4c8b.dir/objects.a] ==> ignore
+    arg [CMakeFiles\cmTC_31c9a.dir/objects.a] ==> ignore
     arg [--no-whole-archive] ==> ignore
     arg [--out-implib] ==> ignore
-    arg [libcmTC_d4c8b.dll.a] ==> ignore
+    arg [libcmTC_31c9a.dll.a] ==> ignore
     arg [--major-image-version] ==> ignore
     arg [0] ==> ignore
     arg [--minor-image-version] ==> ignore
