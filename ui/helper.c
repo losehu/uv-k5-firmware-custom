@@ -47,6 +47,7 @@ uint8_t is_chn(uint8_t num) {
     else if (num > 10 && num < 32)return num - 2;
     else if (num > 126 && num <= 233)return num - 97;
     else return 255;
+
 #endif
 }
 
@@ -191,11 +192,13 @@ void UI_PrintStringSmall(const char *pString, uint8_t Start, uint8_t End, uint8_
                 now_pixel += 7;
         } else {
             uint8_t gFontChinese[22] = {0};
-
+#define ENABLE_CHINESE_FULL 4
+#define ENABLE_GB2312
 #if ENABLE_CHINESE_FULL != 0
+            #ifndef ENABLE_GB2312
             uint8_t tmp[17] = {0};
             true_char[i]-=0x8000;
-true_char[i]=true_char[i]-true_char[i]/256-1;
+            true_char[i]=true_char[i]-true_char[i]/256-1;
             unsigned int local = (CHN_FONT_HIGH * CHN_FONT_WIDTH * true_char[i]) / 8;
             unsigned int local_bit =(CHN_FONT_HIGH * CHN_FONT_WIDTH * true_char[i]) % 8;
             EEPROM_ReadBuffer(local+0x2000,tmp,17);
@@ -214,7 +217,13 @@ true_char[i]=true_char[i]-true_char[i]/256-1;
                     }
                 }
             }
+            #else
+    int solve1=true_char[i]<0XD8A1?((true_char[i]-0xB0A0)>>8)*94+((true_char[i]-0xB0A0)&0xff)-1:((true_char[i]-0xB0A0)>>8)*94+((true_char[i]-0xB0A0)& 0xFF)-6;
+    EEPROM_ReadBuffer(solve1*22+0x2000,gFontChinese,22);
+            #endif
 #else
+
+
             unsigned int local = (CHN_FONT_HIGH * CHN_FONT_WIDTH * true_char[i]) / 8;
             unsigned int local_bit = (CHN_FONT_HIGH * CHN_FONT_WIDTH * true_char[i]) % 8;
             for (unsigned char k = 0; k < CHN_FONT_WIDTH * 2; ++k) {

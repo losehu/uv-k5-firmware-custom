@@ -50,12 +50,12 @@ ENABLE_MDC1200_CONTACT        ?= 1
 ENABLE_UART_RW_BK_REGS 		  ?= 0
 ENABLE_AUDIO_BAR_DEFAULT      ?= 0
 ENABLE_EEPROM_TYPE        	   = 0 #0:1*1Mib 1:2*2Mib 2:2*1Mib
-ENABLE_CHINESE_FULL 		   = 4
+ENABLE_CHINESE_FULL 		   = 5
 ENABLE_DOCK 		          ?= 0
 ENABLE_CUSTOM_SIDEFUNCTIONS   ?= 1
 ENABLE_SIDEFUNCTIONS_SEND     ?= 1
 ENABLE_BLOCK     ?= 0
-
+ENABLE_GB2312 ?=1
 # ---- DEBUGGING ----
 ENABLE_AM_FIX_SHOW_DATA       ?= 0
 ENABLE_AGC_SHOW_DATA          ?= 0
@@ -82,7 +82,14 @@ ifeq ($(ENABLE_CHINESE_FULL),4)
     $(info K)
     PACKED_FILE_SUFFIX := $(PACKED_FILE_SUFFIX)K
 endif
+CFLAGS =
 
+ifeq ($(ENABLE_CHINESE_FULL),5)
+    $(info H)
+    ENABLE_CHINESE_FULL=4
+    CFLAGS += -DENABLE_GB2312
+    PACKED_FILE_SUFFIX := $(PACKED_FILE_SUFFIX)H
+endif
 ifeq ($(ENABLE_CHINESE_FULL),0)
 	ENABLE_EEPROM_TYPE=0
     $(info Normal)
@@ -264,7 +271,6 @@ ifeq ($(ENABLE_OVERLAY),1)
 	ASFLAGS += -DENABLE_OVERLAY
 endif
 
-CFLAGS =
 ifeq ($(ENABLE_CLANG),0)
 	CFLAGS += -Os -Wall -Wno-error -mcpu=cortex-m0 -fno-builtin -fshort-enums -fno-delete-null-pointer-checks -std=c2x -MMD
 	#CFLAGS += -Os -Wall -Werror -mcpu=cortex-m0 -fno-builtin -fshort-enums -fno-delete-null-pointer-checks -std=c11 -MMD
@@ -299,6 +305,7 @@ CFLAGS += -DPACKED_FILE_SUFFIX=\"$(PACKED_FILE_SUFFIX)\"
 CFLAGS += -DPRINTF_INCLUDE_CONFIG_H
 CFLAGS += -DAUTHOR_STRING=\"$(AUTHOR_STRING)\" -DVERSION_STRING=\"$(VERSION_STRING)\"
 
+
 ifeq ($(ENABLE_SPECTRUM),1)
 CFLAGS += -DENABLE_SPECTRUM
 endif
@@ -308,7 +315,9 @@ endif
 ifeq ($(ENABLE_DOCK),1)
     CFLAGS  += -DENABLE_DOCK
 endif
-
+ifeq ($(ENABLE_BLOCK),1)
+	CFLAGS += -DENABLE_BLOCK
+endif
 #ifeq ($(ENABLE_CHINESE_FULL),4)
 ifeq ($(ENABLE_CUSTOM_SIDEFUNCTIONS),1)
     CFLAGS  += -DENABLE_CUSTOM_SIDEFUNCTIONS
