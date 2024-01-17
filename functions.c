@@ -17,7 +17,9 @@
 #include <string.h>
 #include "app/mdc1200.h"
 #include "app/dtmf.h"
-
+#ifdef ENABLE_MESSENGER
+#include "app/messenger.h"
+#endif
 #if defined(ENABLE_FMRADIO)
 #include "app/fm.h"
 #endif
@@ -139,6 +141,9 @@ void FUNCTION_PowerSave() {
 }
 
 void FUNCTION_Transmit() {
+#ifdef ENABLE_MESSENGER
+    MSG_EnableRX(false);
+#endif
     // if DTMF is enabled when TX'ing, it changes the TX audio filtering !! .. 1of11
 #ifdef ENABLE_MDC1200
     BK4819_enable_mdc1200_rx(false);

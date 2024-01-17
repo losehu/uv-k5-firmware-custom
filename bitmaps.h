@@ -33,6 +33,10 @@ extern const uint8_t BITMAP_VoicePrompt[9];
 #ifdef ENABLE_NOAA
 extern const uint8_t BITMAP_NOAA[11];
 #endif
+#ifdef ENABLE_MESSENGER
+
+extern const uint8_t BITMAP_NEWMSG[8] ;
+#endif
 
 extern const uint8_t BITMAP_Antenna[5];
 
