@@ -21,25 +21,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="readme">
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/action.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/action.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/app.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/spectrum.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/spectrum.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/debugging.h" beforeDir="false" afterPath="$PROJECT_DIR$/debugging.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/driver/eeprom.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/eeprom.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/font.c" beforeDir="false" afterPath="$PROJECT_DIR$/font.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/font.h" beforeDir="false" afterPath="$PROJECT_DIR$/font.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/misc.c" beforeDir="false" afterPath="$PROJECT_DIR$/misc.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/misc.h" beforeDir="false" afterPath="$PROJECT_DIR$/misc.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/helper.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/helper.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/menu.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/menu.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/menu.h" beforeDir="false" afterPath="$PROJECT_DIR$/ui/menu.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/font.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/font.xlsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -168,9 +151,9 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="" />
+      <option name="SDK_HOME" value="C:\Users\RUPC\AppData\Local\Programs\Python\Python38\python.exe" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/写频脚本" />
-      <option name="IS_MODULE_SDK" value="true" />
+      <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
@@ -229,6 +212,13 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Makefile 应用程序.uv_k5_firmware_custom_0_17" />
+      <item itemvalue="Makefile 目标.Makefile" />
+      <item itemvalue="Makefile 目标.both" />
+      <item itemvalue="Makefile 目标.all" />
+      <item itemvalue="Makefile 目标.build" />
+      <item itemvalue="Makefile 目标.clean" />
+      <item itemvalue="Makefile 目标.full" />
       <item itemvalue="Python.picture" />
       <item itemvalue="Shell Script.win docker" />
       <item itemvalue="Shell Script.linux docker" />
@@ -323,6 +313,8 @@
       <workItem from="1705379097266" duration="1732000" />
       <workItem from="1705406498638" duration="212000" />
       <workItem from="1705486863658" duration="1783000" />
+      <workItem from="1705490192777" duration="989000" />
+      <workItem from="1705496768999" duration="619000" />
     </task>
     <task id="LOCAL-00080" summary="开机音修复">
       <created>1702098575234</created>
