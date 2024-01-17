@@ -679,6 +679,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/main.c.obj.d"
   "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/menu.c.obj"
   "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/menu.c.obj.d"
+  "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/messenger.c.obj"
+  "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/messenger.c.obj.d"
   "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/scanner.c.obj"
   "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/scanner.c.obj.d"
   "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/status.c.obj"

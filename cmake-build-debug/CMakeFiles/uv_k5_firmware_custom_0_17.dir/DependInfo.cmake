@@ -343,6 +343,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/lock.c" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/lock.c.obj" "gcc" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/lock.c.obj.d"
   "C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/main.c" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/main.c.obj" "gcc" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/main.c.obj.d"
   "C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/menu.c" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/menu.c.obj" "gcc" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/menu.c.obj.d"
+  "C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/messenger.c" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/messenger.c.obj" "gcc" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/messenger.c.obj.d"
   "C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/scanner.c" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/scanner.c.obj" "gcc" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/scanner.c.obj.d"
   "C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/status.c" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/status.c.obj" "gcc" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/status.c.obj.d"
   "C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/ui.c" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/ui.c.obj" "gcc" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/ui.c.obj.d"

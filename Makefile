@@ -12,7 +12,7 @@ ENABLE_LTO                    ?= 1
 # ---- STOCK QUANSHENG FERATURES ----
 ENABLE_UART                   ?= 1
 ENABLE_AIRCOPY                ?= 0
-ENABLE_FMRADIO                ?= 1
+ENABLE_FMRADIO                ?= 1 #~~~~~~~
 ENABLE_NOAA                   ?= 0
 ENABLE_VOICE                  ?= 0
 ENABLE_VOX                    ?= 1
@@ -20,7 +20,7 @@ ENABLE_ALARM                  ?= 0
 ENABLE_TX1750                 ?= 0
 ENABLE_PWRON_PASSWORD         ?= 0
 ENABLE_DTMF_CALLING           ?= 1
-ENABLE_FLASHLIGHT             ?= 1
+ENABLE_FLASHLIGHT             ?= 1 #~~~~~~~~~~
 
 # ---- CUSTOM MODS ----
 ENABLE_BIG_FREQ               ?= 1
@@ -42,7 +42,7 @@ ENABLE_SPECTRUM               ?= 1
 ENABLE_REDUCE_LOW_MID_TX_POWER?= 0
 ENABLE_BYP_RAW_DEMODULATORS   ?= 0
 ENABLE_BLMIN_TMP_OFF          ?= 0
-ENABLE_SCAN_RANGES            ?= 1
+ENABLE_SCAN_RANGES            ?= 1  # ~~~~~~~
 ENABLE_MDC1200                ?= 1
 ENABLE_MDC1200_SHOW_OP_ARG    ?= 1
 ENABLE_MDC1200_SIDE_BEEP      ?= 0
@@ -60,8 +60,13 @@ ENABLE_AM_FIX_SHOW_DATA       ?= 0
 ENABLE_AGC_SHOW_DATA          ?= 0
 ENABLE_TIMER		          ?= 0
 
+ENABLE_MESSENGER              			?= 1
+ENABLE_MESSENGER_DELIVERY_NOTIFICATION	?= 1
+ENABLE_MESSENGER_NOTIFICATION			?= 1
 #############################################################
+
 PACKED_FILE_SUFFIX = LOSEHU118
+
 ifeq ($(ENABLE_CHINESE_FULL),1)
     $(info font1)
     PACKED_FILE_SUFFIX = font1
@@ -82,6 +87,15 @@ ifeq ($(ENABLE_CHINESE_FULL),4)
     PACKED_FILE_SUFFIX := $(PACKED_FILE_SUFFIX)K
 endif
 CFLAGS =
+ifeq ($(ENABLE_MESSENGER),1)
+	CFLAGS  += -DENABLE_MESSENGER
+endif
+ifeq ($(ENABLE_MESSENGER_DELIVERY_NOTIFICATION),1)
+	CFLAGS += -DENABLE_MESSENGER_DELIVERY_NOTIFICATION
+endif
+ifeq ($(ENABLE_MESSENGER_NOTIFICATION),1)
+	CFLAGS += -DENABLE_MESSENGER_NOTIFICATION
+endif
 
 ifeq ($(ENABLE_CHINESE_FULL),5)
     $(info H)
@@ -125,6 +139,12 @@ ifeq ($(ENABLE_TIMER),1)
 endif
 ifeq ($(ENABLE_MDC1200),1)
     OBJS += app/mdc1200.o
+endif
+ifeq ($(ENABLE_MESSENGER),1)
+    OBJS += app/messenger.o
+endif
+ifeq ($(ENABLE_MESSENGER),1)
+    OBJS += ui/messenger.o
 endif
 # Drivers
 OBJS += driver/adc.o
