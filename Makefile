@@ -12,15 +12,15 @@ ENABLE_LTO                    ?= 1
 # ---- STOCK QUANSHENG FERATURES ----
 ENABLE_UART                   ?= 1
 ENABLE_AIRCOPY                ?= 0
-ENABLE_FMRADIO                ?= 1
+ENABLE_FMRADIO                ?= 0
 ENABLE_NOAA                   ?= 0
 ENABLE_VOICE                  ?= 0
 ENABLE_VOX                    ?= 1
 ENABLE_ALARM                  ?= 0
 ENABLE_TX1750                 ?= 0
 ENABLE_PWRON_PASSWORD         ?= 0
-ENABLE_DTMF_CALLING           ?= 1
-ENABLE_FLASHLIGHT             ?= 1
+ENABLE_DTMF_CALLING           ?= 0
+ENABLE_FLASHLIGHT             ?= 0
 
 # ---- CUSTOM MODS ----
 ENABLE_BIG_FREQ               ?= 1
@@ -43,10 +43,10 @@ ENABLE_REDUCE_LOW_MID_TX_POWER?= 0
 ENABLE_BYP_RAW_DEMODULATORS   ?= 0
 ENABLE_BLMIN_TMP_OFF          ?= 0
 ENABLE_SCAN_RANGES            ?= 1
-ENABLE_MDC1200                ?= 1
-ENABLE_MDC1200_SHOW_OP_ARG    ?= 1
+ENABLE_MDC1200                ?= 0
+ENABLE_MDC1200_SHOW_OP_ARG    ?= 0
 ENABLE_MDC1200_SIDE_BEEP      ?= 0
-ENABLE_MDC1200_CONTACT        ?= 1
+ENABLE_MDC1200_CONTACT        ?= 0
 ENABLE_UART_RW_BK_REGS 		  ?= 0
 ENABLE_AUDIO_BAR_DEFAULT      ?= 0
 ENABLE_EEPROM_TYPE        	   = 0 #0:1*1Mib 1:2*2Mib 2:2*1Mib
