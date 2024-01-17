@@ -53,6 +53,7 @@ void UI_DisplayWelcome(void) {
     ST7565_BlitStatusLine();  // blank status line
     ST7565_BlitFullScreen();
 #if ENABLE_CHINESE_FULL == 4
+    #ifndef ENABLE_GB2312
 
     if (gEeprom.POWER_ON_DISPLAY_MODE == POWER_ON_DISPLAY_MODE_MESSAGE) {
 
@@ -62,7 +63,18 @@ void UI_DisplayWelcome(void) {
     welcome_len[1]=welcome_len[1]>18?0:welcome_len[1];
     EEPROM_ReadBuffer(0x1e320, WelcomeString0, welcome_len[0]) ;
     EEPROM_ReadBuffer(0x1e333, WelcomeString1, welcome_len[1]);
-#else
+    #else
+        if (gEeprom.POWER_ON_DISPLAY_MODE == POWER_ON_DISPLAY_MODE_MESSAGE) {
+
+    uint8_t welcome_len[2];
+    EEPROM_ReadBuffer(0x2653E, welcome_len, 2) ;
+    welcome_len[0]=welcome_len[0]>18?0:welcome_len[0];
+    welcome_len[1]=welcome_len[1]>18?0:welcome_len[1];
+    EEPROM_ReadBuffer(0x26540, WelcomeString0, welcome_len[0]) ;
+    EEPROM_ReadBuffer(0x26553, WelcomeString1, welcome_len[1]);
+    #endif
+#elif ENABLE_CHINESE_FULL == 0
+
     EEPROM_ReadBuffer(0x0EB0, WelcomeString0, 16);
     EEPROM_ReadBuffer(0x0EC0, WelcomeString1, 16);
 
@@ -76,7 +88,7 @@ void UI_DisplayWelcome(void) {
     UI_PrintStringSmall(WelcomeString1, 0, 127, 4);
     UI_PrintStringSmall(Version, 0, 127, 6);
 #if ENABLE_CHINESE_FULL == 4
-
+    #ifndef ENABLE_GB2312
         }
     else if(gEeprom.POWER_ON_DISPLAY_MODE == POWER_ON_DISPLAY_MODE_PIC)
         {
@@ -85,6 +97,16 @@ void UI_DisplayWelcome(void) {
 
 
         }
+    #else
+    }
+    else if(gEeprom.POWER_ON_DISPLAY_MODE == POWER_ON_DISPLAY_MODE_PIC)
+        {
+             EEPROM_ReadBuffer( 0x26570, gStatusLine, 128);
+    for (int i = 0; i < 7; ++i)  EEPROM_ReadBuffer(0x26570+128+128*i, &gFrameBuffer[i], 128);
+
+
+        }
+    #endif
 #endif
 
 

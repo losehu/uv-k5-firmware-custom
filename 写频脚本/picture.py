@@ -7,11 +7,12 @@ from PyQt5.QtWidgets import QMainWindow, QPushButton, QFileDialog, QLabel, QRadi
 from PyQt5.QtWidgets import QApplication
 import sys
 from PyQt5.QtGui import QImage, QPixmap, QColor, qGray, qRgb
-
+import struct
 resized_image=None
 cal_bin=1
 com_open=""
 turn_color=0
+VERSION=0
 compress_pixels = [0] * 1024
 Crc16Tab = [0, 4129, 8258, 12387, 16516, 20645, 24774, 28903, 33032, 37161, 41290, 45419, 49548, 53677, 57806, 61935, 4657, 528, 12915, 8786, 21173, 17044, 29431, 25302,
             37689, 33560, 45947, 41818, 54205, 50076, 62463, 58334, 9314, 13379, 1056, 5121, 25830, 29895, 17572, 21637, 42346, 46411, 34088, 38153, 58862, 62927, 50604, 54669, 13907,
@@ -35,7 +36,7 @@ class MainWindow(QMainWindow):
         global cal_bin
         global turn_color
 
-        self.setWindowTitle("K5图片")
+        self.setWindowTitle("K5/K6开机图片V0.2")
         self.setGeometry(100, 100, 50+20+256, 250)
 
         self.open_button = QPushButton("打开图片", self)
@@ -167,7 +168,6 @@ class MainWindow(QMainWindow):
     def open_image(self):
         global resized_image
         global cal_bin
-
         options = QFileDialog.Options()
         file_path, _ = QFileDialog.getOpenFileName(self, "Open Image File", "", "Image Files (*.jpg *.png *.bmp *.jpeg)",
                                                    options=options)
@@ -199,9 +199,43 @@ class MainWindow(QMainWindow):
         if self.time_set()==False:
             self.enable_all_widgets()
             self.progress_bar.setValue(0)
-
             return False
         add=0x1E350
+        TYPE=0
+        with serial.Serial('COM4', 38400, timeout=1) as ser:
+            payload = b'\x14\x05' + b'\x04\x00' + b'\x82\x40\x74\x65'  # cmd_id + cmd_len (0+4) + unix timestamp LE
+            crc = self.crc16_ccitt(payload)
+            payload = payload + bytes([crc & 0xFF, ]) + bytes([crc >> 8, ])  # swap bytes of crc to get little endian
+            message = b'\xAB\xCD' + b'\x08\x00' + self.payload_xor(payload) + b'\xDC\xBA'
+            print('>>', message.hex())
+            ser.write(message)
+            full_response = ser.read(128)
+            if len(full_response) == 0:
+                self.message('写入失败')
+                self.progress_bar.setValue(0)
+                self.enable_all_widgets()
+                return False;
+            print('<<', full_response.hex())
+            payload_decoded = self.payload_xor(full_response[4:-4])  # skip header and checksum
+            s = struct.unpack_from('<HH20s', payload_decoded)
+            print('CMD: 0x{:04X}'.format(s[0]))
+            print('LEN: 0x{:04X}'.format(s[1]))
+            print('VER: {}'.format(s[2].split(b'\0', 1)[0].decode()))  # null terminated string
+            s = format(s[2].split(b'\0', 1)[0].decode())
+            # 检查是否以"LOSEHU"开头且以"K"结尾
+
+            if s.startswith("LOSEHU") and s.endswith("K"):
+                add = 0x1E350
+            elif s.startswith("LOSEHU") and s.endswith("H"):
+                add = 0x26570
+                TYPE = 1
+
+            else:
+                self.message('该固件不支持开机图片')
+                self.progress_bar.setValue(0)
+                self.enable_all_widgets()
+                return False;
+
         num=128
         self.progress_bar.setValue(20)
         # compress_pixels = [0] * 1024
@@ -220,8 +254,11 @@ class MainWindow(QMainWindow):
             with serial.Serial(com_open, 38400, timeout=1) as ser:
                 pass
                 for i in range(8):
-                    add1=add-0x10000
+                    add1=add%0x10000
+
                     payload = b'\x38\x05' + b'\x8A\x00' + b'\x01\x00' + b'\x82\x00' + b'\x82\x40\x74\x65' +  add1.to_bytes(2, byteorder='little')
+                    if TYPE==1:
+                        payload = b'\x38\x05' + b'\x8A\x00' + b'\x02\x00' + b'\x82\x00' + b'\x82\x40\x74\x65' + add1.to_bytes(2, byteorder='little')
 
                     for value in compress_pixels[i*128:i*128+128]:
                         payload += value.to_bytes(1, byteorder='big')  # 转换为字节并添加到 payload

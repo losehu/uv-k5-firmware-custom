@@ -607,15 +607,12 @@ static void CMD_0538(const uint8_t *pBuffer)//write
 {
     const CMD_051D_t *pCmd = (const CMD_051D_t *) pBuffer;
     REPLY_051D_t Reply;
-    bool bReloadEeprom;
-    bool bIsLocked;
 
     if (pCmd->Timestamp != Timestamp)
         return;
 
     gSerialConfigCountDown_500ms = 12; // 6 sec
 
-    bReloadEeprom = false;
 
 #ifdef ENABLE_FMRADIO
     gFmRadioCountdown_500ms = fm_radio_countdown_500ms;
@@ -625,32 +622,24 @@ static void CMD_0538(const uint8_t *pBuffer)//write
     Reply.Header.Size = sizeof(Reply.Data);
     Reply.Data.Offset = pCmd->Offset;
 
-    bIsLocked = bHasCustomAesKey ? gIsLocked : bHasCustomAesKey;
     int add=((pCmd->Size) - 2)%8;
-    if (!bIsLocked) {
         for ( int i = 0; i < ((pCmd->Size) - 2) / 8+(add==0?0:1); i++) {
             const uint32_t Offset = ((pCmd->Offset) << 16) + ((pCmd->Data[1]) << 8) + (pCmd->Data[0]) + (i * 8U);
 
-            if (Offset >= 0x0F30 && Offset < 0x0F40)
-                if (!gIsLocked)
-                    bReloadEeprom = true;
 
-            if ((Offset > 0xffff || Offset < 0x0E98 || (Offset <= 0xffff && Offset >= 0x0EA0)) || !bIsInLockScreen ||
-                pCmd->bAllowPassword) {
+
+
                 if(add&&i==((pCmd->Size) - 2) / 8+(add==0?0:1)-1)
                     EEPROM_WriteBuffer(Offset, &pCmd->Data[i * 8U + 2], add);
                 else
                 EEPROM_WriteBuffer(Offset, &pCmd->Data[i * 8U + 2], 8);
-//                uint8_t back[8];
-//                EEPROM_ReadBuffer(Offset, back, 8);
-//                UART_Send(back, 8);
-            }
+
+
         }
 
 
-        if (bReloadEeprom)
             SETTINGS_InitEEPROM();
-    }
+
 
     SendReply(&Reply, sizeof(Reply));
 }

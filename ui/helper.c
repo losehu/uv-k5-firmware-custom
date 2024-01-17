@@ -218,7 +218,9 @@ void UI_PrintStringSmall(const char *pString, uint8_t Start, uint8_t End, uint8_
                 }
             }
             #else
-    int solve1=true_char[i]<0XD8A1?((true_char[i]-0xB0A0)>>8)*94+((true_char[i]-0xB0A0)&0xff)-1:((true_char[i]-0xB0A0)>>8)*94+((true_char[i]-0xB0A0)& 0xFF)-6;
+            true_char[i]= 0xF7F4;
+
+            int solve1=true_char[i]<0XD8A1?((true_char[i]-0xB0A0)>>8)*94+((true_char[i]-0xB0A0)&0xff)-1:((true_char[i]-0xB0A0)>>8)*94+((true_char[i]-0xB0A0)& 0xFF)-6;
     EEPROM_ReadBuffer(solve1*22+0x2000,gFontChinese,22);
             #endif
 #else
