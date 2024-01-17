@@ -263,9 +263,7 @@ extern bool                  gFlagRefreshSetting;  // refresh menu display
 extern bool                  gFlagStopTX;
 extern bool                  gFlagLastVfo;
 #endif
-extern bool                  gFlagSaveVfo;
-extern bool                  gFlagSaveSettings;
-extern bool                  gFlagSaveChannel;
+
 #ifdef ENABLE_FMRADIO
 extern bool              gFlagSaveFM;
 #endif

@@ -383,24 +383,15 @@ void SETTINGS_FetchChannelName(char *s, const int channel)
 //    EEPROM_ReadBuffer(0x0F50 + (channel * 16), s + 0, 8);
 
 #if ENABLE_CHINESE_FULL==4
-    #ifndef  ENABLE_GB2312
+
     EEPROM_ReadBuffer(0x0F50 + (channel * 16), s, 16);
-//    EEPROM_ReadBuffer(0x0F58 + (channel * 16), s + 8, 8);
-    int i;
-    for (i = 0; i < 16; i++)
-        if (!((s[i] >= 32 && s[i] <= 127)||(
-        s[i]>=0x80&&s[i]<=0x9b&&i!=15&&s[i+1]!=0)
-        ))break;                // invalid char
-            else if(s[i]>=0x80&&s[i]<=0x9b&&i!=15&&s[i+1]!=0) i++;
-    #else
-                EEPROM_ReadBuffer(0x0F50 + (channel * 16), s, 16);
     int i;
     for (i = 0; i < 16; i++)
         if (!((s[i] >= 32 && s[i] <= 127)||(
         s[i]>=0xb0&&s[i]<=0xf7&&i!=15&&s[i+1]!=0)
         ))break;                // invalid char
             else if(s[i]>=0xb0&&s[i]<=0xf7&&i!=15&&s[i+1]!=0) i++;
-    #endif
+
 #else
     EEPROM_ReadBuffer(0x0F50 + (channel * 16), s, 10);
 //    EEPROM_ReadBuffer(0x0F58 + (channel * 16), s + 8, 2);

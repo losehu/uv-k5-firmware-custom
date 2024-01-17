@@ -8,7 +8,15 @@
 
 #include "am_fix.h"
 
-
+static inline void LogUartf(const char* format, ...)
+{
+	char buffer[128];
+	va_list va;
+	va_start(va, format);
+	vsnprintf(buffer, (size_t)-1, format, va);
+	va_end(va);
+	UART_Send(buffer, strlen(buffer));
+}
 
 static inline void LogUart(const char *const str)
 {

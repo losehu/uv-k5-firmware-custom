@@ -26,10 +26,11 @@
 typedef struct {
     VOICE_ID_t  voice_id;
     uint8_t     menu_id;
-#if ENABLE_CHINESE_FULL==4
-    const char name[14]; // 使用指针而不是固定长度数组
-#else
-const char name[7]; // 使用指针而不是固定长度数组
+#if ENABLE_CHINESE_FULL==0
+    const char name[7]; // 使用指针而不是固定长度数组
+
+//    const char name[14]; // 使用指针而不是固定长度数组
+//#else
 #endif
 } t_menu_item;
 

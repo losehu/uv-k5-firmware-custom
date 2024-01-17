@@ -20,11 +20,27 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="K缺失复位">
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="readme">
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/action.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/action.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/app.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/spectrum.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/spectrum.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/debugging.h" beforeDir="false" afterPath="$PROJECT_DIR$/debugging.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/eeprom.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/eeprom.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/font.c" beforeDir="false" afterPath="$PROJECT_DIR$/font.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/font.h" beforeDir="false" afterPath="$PROJECT_DIR$/font.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/misc.c" beforeDir="false" afterPath="$PROJECT_DIR$/misc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/misc.h" beforeDir="false" afterPath="$PROJECT_DIR$/misc.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/helper.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/helper.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/menu.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/menu.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/menu.h" beforeDir="false" afterPath="$PROJECT_DIR$/ui/menu.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/font.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/font.xlsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +119,7 @@
       <recent name="C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\app" />
     </key>
   </component>
-  <component name="RunManager" selected="Makefile 目标.build">
+  <component name="RunManager" selected="Python.picture">
     <configuration name="uv_k5_firmware_custom_0_17" type="CLionNativeAppRunConfigurationType" nameIsGenerated="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="uv_k5_firmware_custom_0_17" TARGET_NAME="uv_k5_firmware_custom_0_17" CONFIG_NAME="Debug" version="1" RUN_TARGET_PROJECT_NAME="uv_k5_firmware_custom_0_17" RUN_TARGET_NAME="uv_k5_firmware_custom_0_17">
       <method v="2">
         <option name="CLION.COMPOUND.BUILD" enabled="true" />
@@ -143,6 +159,28 @@
       <makefile filename="$PROJECT_DIR$/Makefile" target="full" workingDirectory="" arguments="">
         <envs />
       </makefile>
+      <method v="2" />
+    </configuration>
+    <configuration name="picture" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="uv-k5-firmware-chinese" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/写频脚本" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/写频脚本/picture.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
     <configuration name="linux docker" type="ShConfigurationType">
@@ -191,25 +229,11 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Makefile 应用程序.uv_k5_firmware_custom_0_17" />
-      <item itemvalue="Makefile 目标.Makefile" />
-      <item itemvalue="Makefile 目标.both" />
-      <item itemvalue="Makefile 目标.full" />
-      <item itemvalue="Makefile 目标.build" />
-      <item itemvalue="Makefile 目标.clean" />
-      <item itemvalue="Makefile 目标.all" />
+      <item itemvalue="Python.picture" />
       <item itemvalue="Shell Script.win docker" />
       <item itemvalue="Shell Script.linux docker" />
       <item itemvalue="Shell Script.win" />
     </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Makefile 目标.build" />
-        <item itemvalue="Makefile 目标.clean" />
-        <item itemvalue="Makefile 目标.full" />
-        <item itemvalue="Makefile 目标.all" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -296,6 +320,9 @@
       <workItem from="1705198506848" duration="2491000" />
       <workItem from="1705208410022" duration="2000" />
       <workItem from="1705324574679" duration="2981000" />
+      <workItem from="1705379097266" duration="1732000" />
+      <workItem from="1705406498638" duration="212000" />
+      <workItem from="1705486863658" duration="1783000" />
     </task>
     <task id="LOCAL-00080" summary="开机音修复">
       <created>1702098575234</created>
@@ -667,9 +694,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="支持中文编译选项ENABLE_CHINESE_FULL" />
-    <MESSAGE value="中文" />
-    <MESSAGE value="fix show" />
     <MESSAGE value="113" />
     <MESSAGE value="简化EEPROM驱动逻辑&#10;改为STLINK-SWD烧录" />
     <MESSAGE value="赞助更新" />
@@ -692,23 +716,10 @@
     <MESSAGE value="修复侧键与MDC联系人冲突" />
     <MESSAGE value="支持两个AT24C1024堆叠" />
     <MESSAGE value="K缺失复位" />
-    <option name="LAST_COMMIT_MESSAGE" value="K缺失复位" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/app/uart.c</url>
-          <line>658</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/ui/helper.h</url>
-          <line>25</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="增加GB2312(H版本)" />
+    <MESSAGE value="无关的CLIONE IDE" />
+    <MESSAGE value="makefile" />
+    <option name="LAST_COMMIT_MESSAGE" value="makefile" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

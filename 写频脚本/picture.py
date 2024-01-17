@@ -200,7 +200,7 @@ class MainWindow(QMainWindow):
             self.enable_all_widgets()
             self.progress_bar.setValue(0)
             return False
-        add=0x1E350
+        add=0x02080
         TYPE=0
         with serial.Serial('COM4', 38400, timeout=1) as ser:
             payload = b'\x14\x05' + b'\x04\x00' + b'\x82\x40\x74\x65'  # cmd_id + cmd_len (0+4) + unix timestamp LE
@@ -225,10 +225,10 @@ class MainWindow(QMainWindow):
             # 检查是否以"LOSEHU"开头且以"K"结尾
 
             if s.startswith("LOSEHU") and s.endswith("K"):
-                add = 0x1E350
+                add = 0x02080
             elif s.startswith("LOSEHU") and s.endswith("H"):
-                add = 0x26570
-                TYPE = 1
+                add = 0x02080
+
 
             else:
                 self.message('该固件不支持开机图片')
@@ -256,9 +256,8 @@ class MainWindow(QMainWindow):
                 for i in range(8):
                     add1=add%0x10000
 
-                    payload = b'\x38\x05' + b'\x8A\x00' + b'\x01\x00' + b'\x82\x00' + b'\x82\x40\x74\x65' +  add1.to_bytes(2, byteorder='little')
-                    if TYPE==1:
-                        payload = b'\x38\x05' + b'\x8A\x00' + b'\x02\x00' + b'\x82\x00' + b'\x82\x40\x74\x65' + add1.to_bytes(2, byteorder='little')
+                    payload = b'\x38\x05' + b'\x8A\x00' + b'\x00\x00' + b'\x82\x00' + b'\x82\x40\x74\x65' +  add1.to_bytes(2, byteorder='little')
+
 
                     for value in compress_pixels[i*128:i*128+128]:
                         payload += value.to_bytes(1, byteorder='big')  # 转换为字节并添加到 payload

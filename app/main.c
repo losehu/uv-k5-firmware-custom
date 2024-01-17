@@ -85,10 +85,7 @@ static void processFKeyFunction(const KEY_Code_t Key, const bool beep) {
         case KEY_0:
 #ifdef ENABLE_FMRADIO
             ACTION_FM();
-#else
 
-
-            // TODO: make use of this function key
 
 
 #endif
@@ -625,11 +622,9 @@ static void MAIN_Key_UP_DOWN(bool bKeyPressed, bool bKeyHeld, int8_t Direction) 
             return;
 
         if (!bKeyPressed) {
-            if (!bKeyHeld)
+            if (!bKeyHeld||IS_FREQ_CHANNEL(Channel))
                 return;
 
-            if (IS_FREQ_CHANNEL(Channel))
-                return;
 
 #ifdef ENABLE_VOICE
             AUDIO_SetDigitVoice(0, gTxVfo->CHANNEL_SAVE + 1);
@@ -663,7 +658,8 @@ static void MAIN_Key_UP_DOWN(bool bKeyPressed, bool bKeyHeld, int8_t Direction) 
                 }
 
                 gTxVfo->freq_config_RX.Frequency = frequency;
-
+                BK4819_SetFrequency(frequency);
+                BK4819_RX_TurnOn();
                 gRequestSaveChannel = 1;
                 return;
             }
@@ -736,19 +732,7 @@ void MAIN_ProcessKeys(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
 //	}
 
     switch (Key) {
-        case KEY_0:
-
-        case KEY_1:
-        case KEY_2:
-        case KEY_3:
-        case KEY_4:
-        case KEY_5:
-
-        case KEY_6:
-        case KEY_7:
-        case KEY_8:
-        case KEY_9:
-
+        case KEY_0...KEY_9:
             MAIN_Key_DIGITS(Key, bKeyPressed, bKeyHeld);
             break;
         case KEY_MENU:

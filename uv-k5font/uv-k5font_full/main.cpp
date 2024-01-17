@@ -293,7 +293,7 @@ int main() {
     unsigned int NEW_FONT_BYTE = ceil((float) (CHN_FONT_NUM) * (float) (CHN_FONT_HIGH) * (float) (CHN_FONT_WIDTH) / 8);
     cout << NEW_FONT_BYTE << endl;
     unsigned char gFontChinese_out[NEW_FONT_BYTE] = {0};
-    return 0;
+//    return 0;
 
     int now_byte_index = 0;
     int now_bit_index = 0;
@@ -342,37 +342,17 @@ int main() {
         back_font(k, gFontChinese_out);
 
     }
-    out_chinese_array<<"#if  ENABLE_CHINESE_FULL >0"<<endl;
-    out_chinese_array<<"#if  ENABLE_CHINESE_FULL ==1"<<endl;
+
 
 
 #
-    out_chinese_array<<"const uint8_t gFontChinese_out1["<<40960<<"]={"<<endl;
+    out_chinese_array<<"const uint8_t gFontChinese_out1["<<111590<<"]={"<<endl;
     for (int i = 0; i < 40960; i++) {
         out_chinese_array << "0X" << hex << setw(2) << setfill('0') << uppercase << (int) gFontChinese_out[i]<<",";
         if(i%20==0&&i!=0)out_chinese_array<<endl;
     }
     out_chinese_array<<"};"<<endl;
-    out_chinese_array<<"#elif  ENABLE_CHINESE_FULL ==2"<<endl;
 
-    out_chinese_array<<"const uint8_t gFontChinese_out2["<<dec<<40960<<"]={"<<endl;
-
-    for (int i = 40960; i < 40960*2; i++) {
-        out_chinese_array << "0X" << hex << setw(2) << setfill('0') << uppercase << (int) gFontChinese_out[i]<<",";
-        if(i%20==0&&i!=0)out_chinese_array<<endl;
-    }
-    out_chinese_array<<"};"<<endl;
-    out_chinese_array<<"#elif  ENABLE_CHINESE_FULL ==3"<<endl;
-
-    out_chinese_array<<"const uint8_t gFontChinese_out3["<<dec<<NEW_FONT_BYTE-40960*2<<"]={"<<endl;
-
-    for (int i = 40960*2; i < NEW_FONT_BYTE; i++) {
-        out_chinese_array << "0X" << hex << setw(2) << setfill('0') << uppercase << (int) gFontChinese_out[i]<<",";
-        if(i%20==0&&i!=0)out_chinese_array<<endl;
-    }
-    out_chinese_array<<"};"<<endl;
-    out_chinese_array<<"#endif"<<endl;
-    out_chinese_array<<"#endif"<<endl;
 
     out_chinese_array.close();
 

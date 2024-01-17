@@ -13,7 +13,7 @@
  *     See the License for the specific language governing permissions and
  *     limitations under the License.
  */
-
+#include "driver/eeprom.h"
 #include <string.h>
 #include <stdlib.h>  // abs()
 #include "bitmaps.h"
@@ -1247,8 +1247,16 @@ void UI_ShowChineseMenu() {
 
     uint8_t size_menu = 0;
     uint8_t cnt_menu = 0;
-    for (cnt_menu = 0; cnt_menu < 7 && MenuList[gMenuCursor].name[cnt_menu] != 0; cnt_menu++) {
+    uint8_t name[14];
+    EEPROM_ReadBuffer(0x028B0+gMenuCursor*14, name, 14) ;
+#if ENABLE_CHINESE_FULL==4
+
+    for (cnt_menu = 0; cnt_menu < 7 &&/* MenuList[gMenuCursor].name[cnt_menu]*/ name[cnt_menu]!= 0; cnt_menu++) {
+        if (is_chn(/*MenuList[gMenuCursor].name[cnt_menu]*/name[cnt_menu]) != 255)//中文
+#else
+    for (cnt_menu = 0; cnt_menu < 7 &&MenuList[gMenuCursor].name[cnt_menu]!= 0; cnt_menu++) {
         if (is_chn(MenuList[gMenuCursor].name[cnt_menu]) != 255)//中文
+#endif
         {
             size_menu += 12;
 #if ENABLE_CHINESE_FULL != 0
@@ -1262,7 +1270,11 @@ void UI_ShowChineseMenu() {
 
     show_move_flag = 1;
 
+#if ENABLE_CHINESE_FULL==4
+    UI_PrintStringSmall(name/*MenuList[gMenuCursor].name*/, size_menu < 48 ? (48 - size_menu) / 2 : 0, 0, 0);
+#else
     UI_PrintStringSmall(MenuList[gMenuCursor].name, size_menu < 48 ? (48 - size_menu) / 2 : 0, 0, 0);
 
+#endif
 
 }

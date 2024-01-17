@@ -70,7 +70,9 @@
 #include "ui/menu.h"
 #include "ui/status.h"
 #include "ui/ui.h"
-
+static bool flagSaveVfo;
+static bool flagSaveSettings;
+static bool flagSaveChannel;
 static void ProcessKey(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld);
 void (*ProcessKeysFunctions[])(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) = {
         [DISPLAY_MAIN] = &MAIN_ProcessKeys,
@@ -580,17 +582,31 @@ static void CheckRadioInterrupts(void)
     if (SCANNER_IsScanning())
         return;
 
-    while (BK4819_ReadRegister(BK4819_REG_0C) & 1u)
-    {	// BK chip interrupt request
+    while (BK4819_ReadRegister(BK4819_REG_0C) & 1u) { // BK chip interrupt request
+        // clear interrupts
+        union {
+            struct {
+                uint16_t __UNUSED : 1;
+                uint16_t fskRxSync : 1;
+                uint16_t sqlLost : 1;
+                uint16_t sqlFound : 1;
+                uint16_t voxLost : 1;
+                uint16_t voxFound : 1;
+                uint16_t ctcssLost : 1;
+                uint16_t ctcssFound : 1;
+                uint16_t cdcssLost : 1;
+                uint16_t cdcssFound : 1;
+                uint16_t cssTailFound : 1;
+                uint16_t dtmf5ToneFound : 1;
+                uint16_t fskFifoAlmostFull : 1;
+                uint16_t fskRxFinied : 1;
+                uint16_t fskFifoAlmostEmpty : 1;
+                uint16_t fskTxFinied : 1;
+            };
+            uint16_t __raw;
+        } interrupts;
 
-        uint16_t interrupt_status_bits;
-
-        // reset the interrupt ?
-        BK4819_WriteRegister(BK4819_REG_02, 0);
-
-        // fetch the interrupt status bits
-        interrupt_status_bits = BK4819_ReadRegister(BK4819_REG_02);
-
+        interrupts.__raw = BK4819_ReadRegister(BK4819_REG_02);
         // 0 = no phase shift
         // 1 = 120deg phase shift
         // 2 = 180deg phase shift
@@ -599,18 +615,13 @@ static void CheckRadioInterrupts(void)
 //		if (ctcss_shift > 0)
 //			g_CTCSS_Lost = true;
 
-        if (interrupt_status_bits & BK4819_REG_02_DTMF_5TONE_FOUND)
-        {	// save the RX'ed DTMF character
-            const char c = DTMF_GetCharacter(BK4819_GetDTMF_5TONE_Code());
-            if (c != 0xff)
-            {
-                if (gCurrentFunction != FUNCTION_TRANSMIT)
-                {
-                    if (gSetting_live_DTMF_decoder)
-                    {
+        if (interrupts.dtmf5ToneFound) {
+            const char c = DTMF_GetCharacter(BK4819_GetDTMF_5TONE_Code()); // save the RX'ed DTMF character
+            if (c != 0xff) {
+                if (gCurrentFunction != FUNCTION_TRANSMIT) {
+                    if (gSetting_live_DTMF_decoder) {
                         size_t len = strlen(gDTMF_RX_live);
-                        if (len >= (sizeof(gDTMF_RX_live) - 1))
-                        {	// make room
+                        if (len >= sizeof(gDTMF_RX_live) - 1) { // make room
                             memmove(&gDTMF_RX_live[0], &gDTMF_RX_live[1], sizeof(gDTMF_RX_live) - 1);
                             len--;
                         }
@@ -621,10 +632,8 @@ static void CheckRadioInterrupts(void)
                     }
 
 #ifdef ENABLE_DTMF_CALLING
-                    if (gRxVfo->DTMF_DECODING_ENABLE || gSetting_KILLED)
-					{
-						if (gDTMF_RX_index >= (sizeof(gDTMF_RX) - 1))
-						{	// make room
+                    if (gRxVfo->DTMF_DECODING_ENABLE || gSetting_KILLED) {
+						if (gDTMF_RX_index >= sizeof(gDTMF_RX) - 1) { // make room
 							memmove(&gDTMF_RX[0], &gDTMF_RX[1], sizeof(gDTMF_RX) - 1);
 							gDTMF_RX_index--;
 						}
@@ -641,40 +650,35 @@ static void CheckRadioInterrupts(void)
             }
         }
 
-        if (interrupt_status_bits & BK4819_REG_02_CxCSS_TAIL)
+        if (interrupts.cssTailFound)
             g_CxCSS_TAIL_Found = true;
 
-        if (interrupt_status_bits & BK4819_REG_02_CDCSS_LOST)
-        {
+        if (interrupts.cdcssLost) {
             g_CDCSS_Lost = true;
             gCDCSSCodeType = BK4819_GetCDCSSCodeType();
         }
 
-        if (interrupt_status_bits & BK4819_REG_02_CDCSS_FOUND)
+        if (interrupts.cdcssFound)
             g_CDCSS_Lost = false;
 
-        if (interrupt_status_bits & BK4819_REG_02_CTCSS_LOST)
+        if (interrupts.ctcssLost)
             g_CTCSS_Lost = true;
 
-        if (interrupt_status_bits & BK4819_REG_02_CTCSS_FOUND)
+        if (interrupts.ctcssFound)
             g_CTCSS_Lost = false;
 
 #ifdef ENABLE_VOX
-        if (interrupt_status_bits & BK4819_REG_02_VOX_LOST)
-		{
+        if (interrupts.voxLost) {
 			g_VOX_Lost         = true;
 			gVoxPauseCountdown = 10;
 
-			if (gEeprom.VOX_SWITCH)
-			{
-				if (gCurrentFunction == FUNCTION_POWER_SAVE && !gRxIdleMode)
-				{
+			if (gEeprom.VOX_SWITCH) {
+				if (gCurrentFunction == FUNCTION_POWER_SAVE && !gRxIdleMode) {
 					gPowerSave_10ms            = power_save2_10ms;
 					gPowerSaveCountdownExpired = 0;
 				}
 
-				if (gEeprom.DUAL_WATCH != DUAL_WATCH_OFF && (gScheduleDualWatch || gDualWatchCountdown_10ms < dual_watch_count_after_vox_10ms))
-				{
+				if (gEeprom.DUAL_WATCH != DUAL_WATCH_OFF && (gScheduleDualWatch || gDualWatchCountdown_10ms < dual_watch_count_after_vox_10ms)) {
 					gDualWatchCountdown_10ms = dual_watch_count_after_vox_10ms;
 					gScheduleDualWatch = false;
 
@@ -685,27 +689,24 @@ static void CheckRadioInterrupts(void)
 			}
 		}
 
-		if (interrupt_status_bits & BK4819_REG_02_VOX_FOUND)
-		{
+if (interrupts.voxFound) {
 			g_VOX_Lost         = false;
 			gVoxPauseCountdown = 0;
 		}
 #endif
 
-        if (interrupt_status_bits & BK4819_REG_02_SQUELCH_LOST)
-        {
+        if (interrupts.sqlLost) {
             g_SquelchLost = true;
             BK4819_ToggleGpioOut(BK4819_GPIO6_PIN2_GREEN, true);
         }
 
-        if (interrupt_status_bits & BK4819_REG_02_SQUELCH_FOUND)
-        {
+        if (interrupts.sqlFound) {
             g_SquelchLost = false;
             BK4819_ToggleGpioOut(BK4819_GPIO6_PIN2_GREEN, false);
         }
 
 #ifdef ENABLE_AIRCOPY
-        if (interrupt_status_bits & BK4819_REG_02_FSK_FIFO_ALMOST_FULL &&
+        if (interrupts.fskFifoAlmostFull &&
 			gScreenToDisplay == DISPLAY_AIRCOPY &&
 			gAircopyState == AIRCOPY_TRANSFER &&
 			gAirCopyIsSendMode == 0)
@@ -718,7 +719,7 @@ static void CheckRadioInterrupts(void)
 		}
 #endif
 #ifdef ENABLE_MDC1200
-         MDC1200_process_rx(  interrupt_status_bits);
+         MDC1200_process_rx(  interrupts.__raw);
 
 #endif
     }
@@ -1564,16 +1565,16 @@ static void ProcessKey(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld)
 
     if (!bKeyPressed) // key released
     {
-        if (gFlagSaveVfo)
+        if (flagSaveVfo)
         {
             SETTINGS_SaveVfoIndices();
-            gFlagSaveVfo = false;
+            flagSaveVfo = false;
         }
 
-        if (gFlagSaveSettings)
+        if (flagSaveSettings)
         {
             SETTINGS_SaveSettings();
-            gFlagSaveSettings = false;
+            flagSaveSettings = false;
         }
 
 #ifdef ENABLE_FMRADIO
@@ -1584,10 +1585,10 @@ static void ProcessKey(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld)
 			}
 #endif
 
-        if (gFlagSaveChannel)
+        if (flagSaveChannel)
         {
-            SETTINGS_SaveChannel(gTxVfo->CHANNEL_SAVE, gEeprom.TX_VFO, gTxVfo, gFlagSaveChannel);
-            gFlagSaveChannel = false;
+            SETTINGS_SaveChannel(gTxVfo->CHANNEL_SAVE, gEeprom.TX_VFO, gTxVfo, flagSaveChannel);
+            flagSaveChannel = false;
 
             if (!SCANNER_IsScanning() && gVfoConfigureMode == VFO_CONFIGURE_NONE)
                 // gVfoConfigureMode is so as we don't wipe out previously setting this variable elsewhere
@@ -1872,7 +1873,7 @@ static void ProcessKey(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld)
         if (!bKeyHeld)
             SETTINGS_SaveSettings();
         else
-            gFlagSaveSettings = 1;
+            flagSaveSettings = 1;
         gRequestSaveSettings = false;
         gUpdateStatus        = true;
     }
@@ -1893,7 +1894,7 @@ static void ProcessKey(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld)
         if (!bKeyHeld)
             SETTINGS_SaveVfoIndices();
         else
-            gFlagSaveVfo = true;
+            flagSaveVfo = true;
     }
 
     if (gRequestSaveChannel > 0)
@@ -1902,13 +1903,13 @@ static void ProcessKey(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld)
         {
             SETTINGS_SaveChannel(gTxVfo->CHANNEL_SAVE, gEeprom.TX_VFO, gTxVfo, gRequestSaveChannel);
 
-            if (!SCANNER_IsScanning())
-                if (gVfoConfigureMode == VFO_CONFIGURE_NONE)  // 'if' is so as we don't wipe out previously setting this variable elsewhere
+            if (!SCANNER_IsScanning() && gVfoConfigureMode == VFO_CONFIGURE_NONE)
+                // gVfoConfigureMode is so as we don't wipe out previously setting this variable elsewhere
                     gVfoConfigureMode = VFO_CONFIGURE;
         }
         else
-        {
-            gFlagSaveChannel = gRequestSaveChannel;
+        {// this is probably so settings are not saved when up/down button is held and save is postponed to btn release
+            flagSaveChannel = gRequestSaveChannel;
 
             if (gRequestDisplayScreen == DISPLAY_INVALID)
                 gRequestDisplayScreen = DISPLAY_MAIN;
@@ -1976,13 +1977,12 @@ static void ProcessKey(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld)
     }
 
 #ifdef ENABLE_VOICE
-    if (gAnotherVoiceID != VOICE_ID_INVALID)
-		{
-			if (gAnotherVoiceID < 76)
-				AUDIO_SetVoiceID(0, gAnotherVoiceID);
-			AUDIO_PlaySingleVoice(false);
-			gAnotherVoiceID = VOICE_ID_INVALID;
-		}
+    if (gAnotherVoiceID != VOICE_ID_INVALID) {
+		if (gAnotherVoiceID < 76)
+			AUDIO_SetVoiceID(0, gAnotherVoiceID);
+		AUDIO_PlaySingleVoice(false);
+		gAnotherVoiceID = VOICE_ID_INVALID;
+	}
 #endif
 
     GUI_SelectNextDisplay(gRequestDisplayScreen);

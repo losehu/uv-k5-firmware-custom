@@ -17,7 +17,7 @@
 #include "am_fix.h"
 #include "audio.h"
 #include "misc.h"
-
+#include "driver/eeprom.h"
 #ifdef ENABLE_SCAN_RANGES
 #include "chFrScanner.h"
 #endif
@@ -172,8 +172,15 @@ static void GUI_DisplaySmallest(const char *pString, uint8_t x, uint8_t y,
 
     while ((c = *p++) && c != '\0') {
         c -= 0x20;
+#if ENABLE_CHINESE_FULL!=0
+        uint8_t read_gFont3x5[3];
+        EEPROM_ReadBuffer(0x0255C+c*3, read_gFont3x5, 3);
+        for (int i = 0; i < 3; ++i) {
+            pixels = read_gFont3x5[i];
+#else
         for (int i = 0; i < 3; ++i) {
             pixels = gFont3x5[c][i];
+#endif
             for (int j = 0; j < 6; ++j) {
                 if (pixels & 1) {
                     if (statusbar)

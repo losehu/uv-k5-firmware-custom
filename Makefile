@@ -526,6 +526,7 @@ both:
 	$(RM) *.bin
 	$(MAKE) build ENABLE_CHINESE_FULL=0
 	$(MAKE) build ENABLE_CHINESE_FULL=4
+	$(MAKE) build ENABLE_CHINESE_FULL=4 ENABLE_GB2312=1
 
 
 all:
