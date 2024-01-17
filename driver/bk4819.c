@@ -334,9 +334,10 @@ void BK4819_PlayRoger(void)
         BK4819_PlayRogerNormal();
     else
     if (gEeprom.ROGER == ROGER_MODE_MDC_END||gEeprom.ROGER==ROGER_MODE_MDC_BOTH) {
+#ifdef ENABLE_MDC1200
 
         BK4819_send_MDC1200(MDC1200_OP_CODE_POST_ID, 0x00, gEeprom.MDC1200_ID, false);
-
+#endif
 #ifdef ENABLE_MDC1200_SIDE_BEEP
         BK4819_start_tone(880, 10, true, true);
 			SYSTEM_DelayMs(120);
