@@ -1462,10 +1462,12 @@ void APP_TimeSlice500ms(void)
             if (gEeprom.BACKLIGHT_TIME == 0) {
                 BACKLIGHT_TurnOff();
             }
+#ifdef ENABLE_WARING_BEEP
 
             if (gInputBoxIndex > 0 || gDTMF_InputMode) {
                 AUDIO_PlayBeep(BEEP_500HZ_60MS_DOUBLE_BEEP_OPTIONAL);
             }
+#endif
 /*
 			if (SCANNER_IsScanning()) {
 				BK4819_StopScan();
@@ -1712,7 +1714,10 @@ static void ProcessKey(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld)
 
             if (!bKeyHeld)
             {	// keypad is locked, tell the user
+#ifdef ENABLE_WARING_BEEP
+
                 AUDIO_PlayBeep(BEEP_500HZ_60MS_DOUBLE_BEEP_OPTIONAL);
+#endif
                 gKeypadLocked  = 4;      // 2 seconds
                 gUpdateDisplay = true;
                 return;
@@ -1730,9 +1735,10 @@ static void ProcessKey(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld)
             if ((!bKeyPressed || bKeyHeld || (Key == KEY_MENU && bKeyPressed)) && // prevent released or held, prevent KEY_MENU pressed
                 !(Key == KEY_MENU && !bKeyPressed))  // pass KEY_MENU released
                 return;
-
+#ifdef ENABLE_WARING_BEEP
             // keypad is locked, tell the user
             AUDIO_PlayBeep(BEEP_500HZ_60MS_DOUBLE_BEEP_OPTIONAL);
+#endif
             gKeypadLocked  = 4;          // 2 seconds
             gUpdateDisplay = true;
             return;
@@ -1743,8 +1749,10 @@ static void ProcessKey(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld)
     {
         if (gScanStateDir != SCAN_OFF || gCssBackgroundScan)
         {	// FREQ/CTCSS/DCS scanning
+#ifdef ENABLE_WARING_BEEP
             if (bKeyPressed && !bKeyHeld)
                 AUDIO_PlayBeep(BEEP_500HZ_60MS_DOUBLE_BEEP_OPTIONAL);
+#endif
             return;
         }
     }

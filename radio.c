@@ -728,14 +728,16 @@ void RADIO_SetupRegisters(bool switchToForeground)
     RADIO_SetupAGC(gRxVfo->Modulation == MODULATION_AM, false);
 
     // enable/disable BK4819 selected interrupts
-#ifdef ENABLE_MDC1200
-    BK4819_enable_mdc1200_rx(true); //注意干扰
-		InterruptMask |= BK4819_REG_3F_FSK_RX_SYNC | BK4819_REG_3F_FSK_RX_FINISHED | BK4819_REG_3F_FSK_FIFO_ALMOST_FULL;
-#endif
 #ifdef ENABLE_MESSENGER
     MSG_EnableRX(true);
 	InterruptMask |= BK4819_REG_3F_FSK_RX_SYNC | BK4819_REG_3F_FSK_RX_FINISHED | BK4819_REG_3F_FSK_FIFO_ALMOST_FULL | BK4819_REG_3F_FSK_TX_FINISHED;
 #endif
+
+#ifdef ENABLE_MDC1200
+    BK4819_enable_mdc1200_rx(true); //注意干扰
+//    InterruptMask |= BK4819_REG_3F_FSK_RX_SYNC | BK4819_REG_3F_FSK_RX_FINISHED | BK4819_REG_3F_FSK_FIFO_ALMOST_FULL;
+#endif
+
     BK4819_WriteRegister(BK4819_REG_3F, InterruptMask);
 
     FUNCTION_Init();
@@ -992,7 +994,9 @@ void RADIO_PrepareTX(void)
 #ifdef ENABLE_DTMF_CALLING
         gDTMF_ReplyState = DTMF_REPLY_NONE;
 #endif
+#ifdef ENABLE_WARING_BEEP
         AUDIO_PlayBeep(BEEP_500HZ_60MS_DOUBLE_BEEP_OPTIONAL);
+#endif
         return;
     }
 

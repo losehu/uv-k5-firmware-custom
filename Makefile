@@ -12,14 +12,14 @@ ENABLE_LTO                    ?= 1
 # ---- STOCK QUANSHENG FERATURES ----
 ENABLE_UART                   ?= 1
 ENABLE_AIRCOPY                ?= 0
-ENABLE_FMRADIO                ?= 0
+ENABLE_FMRADIO                ?= 1
 ENABLE_NOAA                   ?= 0
 ENABLE_VOICE                  ?= 0
 ENABLE_VOX                    ?= 1
 ENABLE_ALARM                  ?= 0
 ENABLE_TX1750                 ?= 0
 ENABLE_PWRON_PASSWORD         ?= 0
-ENABLE_DTMF_CALLING           ?= 0
+ENABLE_DTMF_CALLING           ?= 1
 ENABLE_FLASHLIGHT             ?= 0
 
 # ---- CUSTOM MODS ----
@@ -38,7 +38,7 @@ ENABLE_SQUELCH_MORE_SENSITIVE ?= 1
 ENABLE_FASTER_CHANNEL_SCAN    ?= 1
 ENABLE_RSSI_BAR               ?= 1
 ENABLE_COPY_CHAN_TO_VFO       ?= 1
-ENABLE_SPECTRUM               ?= 1
+ENABLE_SPECTRUM               ?= 0
 ENABLE_REDUCE_LOW_MID_TX_POWER?= 0
 ENABLE_BYP_RAW_DEMODULATORS   ?= 0
 ENABLE_BLMIN_TMP_OFF          ?= 0
@@ -62,7 +62,8 @@ ENABLE_TIMER		          ?= 0
 
 ENABLE_MESSENGER              			?= 1
 ENABLE_MESSENGER_DELIVERY_NOTIFICATION	?= 1
-ENABLE_MESSENGER_NOTIFICATION			?= 1
+ENABLE_MESSENGER_NOTIFICATION			?= 0
+ENABLE_WARING_BEEP 							?=1
 #############################################################
 
 PACKED_FILE_SUFFIX = LOSEHU118
@@ -95,6 +96,10 @@ ifeq ($(ENABLE_MESSENGER_DELIVERY_NOTIFICATION),1)
 endif
 ifeq ($(ENABLE_MESSENGER_NOTIFICATION),1)
 	CFLAGS += -DENABLE_MESSENGER_NOTIFICATION
+endif
+
+ifeq ($(ENABLE_WARING_BEEP),1)
+	CFLAGS += -DENABLE_WARING_BEEP
 endif
 
 ifeq ($(ENABLE_CHINESE_FULL),5)
