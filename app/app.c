@@ -17,6 +17,7 @@
 #ifdef ENABLE_FLASHLIGHT
 #include "app/flashlight.h"
 #endif
+#include "stdbool.h"
 #include <assert.h>
 #include <stdint.h>
 #include <string.h>
@@ -741,7 +742,7 @@ static void CheckRadioInterrupts(void)
 #endif
     }
 }
-void APP_EndTransmission(void)
+void APP_EndTransmission(bool inmediately)
 {
     // back to RX mode
     RADIO_SendEndOfTransmission();
@@ -749,6 +750,12 @@ void APP_EndTransmission(void)
     if (gMonitor) {
         //turn the monitor back on
         gFlagReconfigureVfos = true;
+    }
+
+    if (inmediately || gEeprom.REPEATER_TAIL_TONE_ELIMINATION == 0) {
+        FUNCTION_Select(FUNCTION_FOREGROUND);
+    } else {
+        gRTTECountdown = gEeprom.REPEATER_TAIL_TONE_ELIMINATION * 10;
     }
 }
 #ifdef ENABLE_VOX
@@ -788,29 +795,10 @@ static void HandleVox(void)
 		else if (gVoxStopCountdown_10ms == 0)
 			gVOX_NoiseDetected = false;
 
-		if (gCurrentFunction == FUNCTION_TRANSMIT && !gPttIsPressed && !gVOX_NoiseDetected)
-		{
-			if (gFlagEndTransmission)
-			{
-				//if (gCurrentFunction != FUNCTION_FOREGROUND)
-					FUNCTION_Select(FUNCTION_FOREGROUND);
-			}
-			else
-			{
-				APP_EndTransmission();
-
-				if (gEeprom.REPEATER_TAIL_TONE_ELIMINATION == 0)
-				{
-					//if (gCurrentFunction != FUNCTION_FOREGROUND)
-						FUNCTION_Select(FUNCTION_FOREGROUND);
-				}
-				else
-					gRTTECountdown = gEeprom.REPEATER_TAIL_TONE_ELIMINATION * 10;
-			}
-
-			gUpdateStatus        = true;
-			gUpdateDisplay       = true;
-			gFlagEndTransmission = false;
+		if (gCurrentFunction == FUNCTION_TRANSMIT && !gPttIsPressed && !gVOX_NoiseDetected) {
+			APP_EndTransmission(false);
+			gUpdateStatus = true;
+			gUpdateDisplay = true;
 		}
 		return;
 	}
@@ -821,7 +809,8 @@ static void HandleVox(void)
 
 		if (gCurrentFunction == FUNCTION_POWER_SAVE)
 			FUNCTION_Select(FUNCTION_FOREGROUND);
-if (gCurrentFunction != FUNCTION_TRANSMIT && !SerialConfigInProgress())
+
+		if (gCurrentFunction != FUNCTION_TRANSMIT && !SerialConfigInProgress())
 		{
 #ifdef ENABLE_DTMF_CALLING
 			gDTMF_ReplyState = DTMF_REPLY_NONE;
@@ -845,7 +834,7 @@ void APP_Update(void)
     {	// transmitter timed out or must de-key
         gTxTimeoutReached = false;
 
-        APP_EndTransmission();
+        APP_EndTransmission(true);
 
         AUDIO_PlayBeep(BEEP_880HZ_60MS_TRIPLE_BEEP);
 
@@ -1639,7 +1628,7 @@ static void ProcessKey(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld)
 		if (gFlagStopTX)
 		{
 			gFlagStopTX = false;
-            APP_EndTransmission();
+            APP_EndTransmission(true);
 			RADIO_SetupRegisters(true);
 			GUI_SelectNextDisplay(DISPLAY_MAIN);
 			gEeprom.TX_VFO = gFlagLastVfo;

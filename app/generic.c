@@ -19,7 +19,7 @@
 #include "app/app.h"
 #include "app/chFrScanner.h"
 #include "app/common.h"
-
+#include "misc.h"
 #ifdef ENABLE_FMRADIO
 #include "app/fm.h"
 #endif
@@ -109,26 +109,12 @@ void GENERIC_Key_F(bool bKeyPressed, bool bKeyHeld)
 void GENERIC_Key_PTT(bool bKeyPressed)
 {
     gInputBoxIndex = 0;
+
     if (!bKeyPressed || SerialConfigInProgress())
     {	// PTT released
         if (gCurrentFunction == FUNCTION_TRANSMIT)
         {	// we are transmitting .. stop
-
-            if (gFlagEndTransmission)
-            {
-                FUNCTION_Select(FUNCTION_FOREGROUND);
-            }
-            else
-            {
-                APP_EndTransmission();
-
-                if (gEeprom.REPEATER_TAIL_TONE_ELIMINATION == 0)
-                    FUNCTION_Select(FUNCTION_FOREGROUND);
-                else
-                    gRTTECountdown = gEeprom.REPEATER_TAIL_TONE_ELIMINATION * 10;
-            }
-
-            gFlagEndTransmission = false;
+            APP_EndTransmission(SerialConfigInProgress());
 
 #ifdef ENABLE_VOX
             gVOX_NoiseDetected = false;
@@ -175,6 +161,11 @@ void GENERIC_Key_PTT(bool bKeyPressed)
 #ifdef ENABLE_FMRADIO
     if (gScreenToDisplay == DISPLAY_FM)
 		goto start_tx;	// listening to the FM radio .. start TX'ing
+#endif
+
+#ifdef ENABLE_PMR_MODE
+    if (gScreenToDisplay == DISPLAY_PMR)
+		goto start_tx;	// PMR Mode
 #endif
 
     if (gCurrentFunction == FUNCTION_TRANSMIT && gRTTECountdown == 0)
@@ -232,14 +223,13 @@ void GENERIC_Key_PTT(bool bKeyPressed)
 
     done:
     gPttDebounceCounter = 0;
-    if (gScreenToDisplay != DISPLAY_MENU
 #ifdef ENABLE_FMRADIO
-        && gRequestDisplayScreen != DISPLAY_FM
-#endif
-            ) {
-        // 1of11 .. don't close the menu
+    if (gScreenToDisplay != DISPLAY_MENU && gRequestDisplayScreen != DISPLAY_FM)     // 1of11 .. don't close the menu
+			gRequestDisplayScreen = DISPLAY_MAIN;
+#else
+    if (gScreenToDisplay != DISPLAY_MENU)     // 1of11 .. don't close the menu
         gRequestDisplayScreen = DISPLAY_MAIN;
-    }
+#endif
     gUpdateStatus  = true;
     gUpdateDisplay = true;
 }
