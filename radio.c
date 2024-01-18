@@ -551,12 +551,9 @@ void RADIO_SelectVfos(void)
 
     RADIO_SelectCurrentVfo();
 }
-
 void RADIO_SetupRegisters(bool switchToForeground)
 {
     BK4819_FilterBandwidth_t Bandwidth = gRxVfo->CHANNEL_BANDWIDTH;
-    uint16_t                 InterruptMask;
-    uint32_t                 Frequency;
 
     AUDIO_AudioPathOff();
 
@@ -571,6 +568,7 @@ void RADIO_SetupRegisters(bool switchToForeground)
             [[fallthrough]];
         case BK4819_FILTER_BW_WIDE:
         case BK4819_FILTER_BW_NARROW:
+        case BK4819_FILTER_BW_NARROWER:
 #ifdef ENABLE_AM_FIX
             //				BK4819_SetFilterBandwidth(Bandwidth, gRxVfo->Modulation == MODULATION_AM && gSetting_AM_fix);
 				BK4819_SetFilterBandwidth(Bandwidth, true);
@@ -600,6 +598,7 @@ void RADIO_SetupRegisters(bool switchToForeground)
     // mic gain 0.5dB/step 0 to 31
     BK4819_WriteRegister(BK4819_REG_7D, 0xE940 | (gEeprom.MIC_SENSITIVITY_TUNING & 0x1f));
 
+    uint32_t Frequency;
 #ifdef ENABLE_NOAA
     if (!IS_NOAA_CHANNEL(gRxVfo->CHANNEL_SAVE) || !gIsNoaaMode)
 			Frequency = gRxVfo->pRX->Frequency;
@@ -628,8 +627,7 @@ void RADIO_SetupRegisters(bool switchToForeground)
                          (gEeprom.VOLUME_GAIN << 4) |     // AF Rx Gain-2
                          (gEeprom.DAC_GAIN    << 0));     // AF DAC Gain (after Gain-1 and Gain-2)
 
-
-    InterruptMask = BK4819_REG_3F_SQUELCH_FOUND | BK4819_REG_3F_SQUELCH_LOST;
+    uint16_t InterruptMask = BK4819_REG_3F_SQUELCH_FOUND | BK4819_REG_3F_SQUELCH_LOST;
 
 #ifdef ENABLE_NOAA
     if (!IS_NOAA_CHANNEL(gRxVfo->CHANNEL_SAVE))
@@ -720,12 +718,15 @@ void RADIO_SetupRegisters(bool switchToForeground)
     {
         BK4819_DisableVox();
     }
+
     // RX expander
     BK4819_SetCompander((gRxVfo->Modulation == MODULATION_FM && gRxVfo->Compander >= 2) ? gRxVfo->Compander : 0);
 
     BK4819_EnableDTMF();
     InterruptMask |= BK4819_REG_3F_DTMF_5TONE_FOUND;
+
     RADIO_SetupAGC(gRxVfo->Modulation == MODULATION_AM, false);
+
     // enable/disable BK4819 selected interrupts
 #ifdef ENABLE_MDC1200
     BK4819_enable_mdc1200_rx(true); //注意干扰
