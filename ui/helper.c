@@ -369,4 +369,53 @@ void UI_DisplayPopup(const char *string) {
 
 void UI_DisplayClear() {
     memset(gFrameBuffer, 0, sizeof(gFrameBuffer));
+
+}
+// GUI functions
+
+static void PutPixel(uint8_t x, uint8_t y, bool fill) {
+    UI_DrawPixelBuffer(gFrameBuffer, x, y, fill);
+}
+static void PutPixelStatus(uint8_t x, uint8_t y, bool fill) {
+    UI_DrawPixelBuffer(&gStatusLine, x, y, fill);
+}
+
+
+static void DrawVLine(int sy, int ey, int nx, bool fill) {
+    for (int i = sy; i <= ey; i++) {
+        if (i < 56 && nx < 128) {
+            PutPixel(nx, i, fill);
+        }
+    }
+}
+
+static void GUI_DisplaySmallest(const char *pString, uint8_t x, uint8_t y,
+                                bool statusbar, bool fill) {
+    uint8_t c;
+    uint8_t pixels;
+    const uint8_t *p = (const uint8_t *)pString;
+
+    while ((c = *p++) && c != '\0') {
+        c -= 0x20;
+#if ENABLE_CHINESE_FULL!=0
+        uint8_t read_gFont3x5[3];
+        EEPROM_ReadBuffer(0x0255C+c*3, read_gFont3x5, 3);
+        for (int i = 0; i < 3; ++i) {
+            pixels = read_gFont3x5[i];
+#else
+        for (int i = 0; i < 3; ++i) {
+            pixels = gFont3x5[c][i];
+#endif
+            for (int j = 0; j < 6; ++j) {
+                if (pixels & 1) {
+                    if (statusbar)
+                        PutPixelStatus(x + i, y + j, fill);
+                    else
+                        PutPixel(x + i, y + j, fill);
+                }
+                pixels >>= 1;
+            }
+        }
+        x += 4;
+    }
 }
