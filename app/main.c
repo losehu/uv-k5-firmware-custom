@@ -20,9 +20,7 @@
 #include "app/app.h"
 #include "app/chFrScanner.h"
 #include "app/common.h"
-#ifdef ENABLE_MESSENGER
-#include "app/messenger.h"
-#endif
+
 #ifdef ENABLE_FMRADIO
 #include "app/fm.h"
 #endif
@@ -517,15 +515,13 @@ static void MAIN_Key_MENU(const bool bKeyPressed, const bool bKeyHeld) {
     }
 
     if (!bKeyPressed && !gDTMF_InputMode) {    // menu key released
-
-#ifdef ENABLE_MESSENGER
         if (gWasFKeyPressed) {
-			hasNewMessage = 0;
-			gRequestDisplayScreen = DISPLAY_MSG;
-			return;
-		}
-#endif
+            gWasFKeyPressed = false;
+            gEeprom.BEEP_CONTROL = !gEeprom.BEEP_CONTROL;
+            gRequestSaveSettings = 1;
 
+            return;
+        }
         const bool bFlag = !gInputBoxIndex;
         gInputBoxIndex = 0;
 
@@ -622,19 +618,10 @@ static void MAIN_Key_UP_DOWN(bool bKeyPressed, bool bKeyHeld, int8_t Direction) 
     uint8_t Channel = gEeprom.ScreenChannel[gEeprom.TX_VFO];
 
     if (bKeyHeld || !bKeyPressed) {
-        if (!bKeyPressed) {
-            if (gWasFKeyPressed) {
-                gWasFKeyPressed = false;
-                gEeprom.BEEP_CONTROL = !gEeprom.BEEP_CONTROL;
-                gRequestSaveSettings = 1;
-
-                return;
-            }
-
-            if (gInputBoxIndex > 0)
+        if (gInputBoxIndex > 0)
             return;
 
-
+        if (!bKeyPressed) {
             if (!bKeyHeld||IS_FREQ_CHANNEL(Channel))
                 return;
 

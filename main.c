@@ -28,9 +28,7 @@
 #include "app/mdc1200.h"
 #include "app/uart.h"
 #include "string.h"
-#ifdef ENABLE_MESSENGER
-#include "app/messenger.h"
-#endif
+
 #ifdef ENABLE_AM_FIX
 #include "am_fix.h"
 #endif
@@ -162,9 +160,6 @@ void Main(void) {
     }
     BATTERY_GetReadings(false);
 
-#ifdef ENABLE_MESSENGER
-    MSG_Init();
-#endif
 
 #ifdef ENABLE_AM_FIX
     AM_fix_init();

@@ -18,7 +18,7 @@ const uint8_t BITMAP_POWERSAVE[8] =
 
         };
 
-const uint8_t BITMAP_TX[6] =
+const uint8_t BITMAP_TX[8] =
         {	// "TX"
                 0b00000000,
                 0b00000001,
@@ -26,30 +26,20 @@ const uint8_t BITMAP_TX[6] =
                 0b01111111,
                 0b00000001,
                 0b00000001,
-
+                0b00000000,
+                0b00000000
         };
-#ifdef ENABLE_MESSENGER
-const uint8_t BITMAP_NEWMSG[8] =
-{	// message icon
-	0b00000000,
-	0b01111110,
-	0b01000110,
-	0b01001010,
-	0b01010010,
-	0b01001010,
-	0b01000110,
-	0b01111110,
-};
-#endif
 
-const uint8_t BITMAP_RX[5] =
+const uint8_t BITMAP_RX[8] =
         {	// "RX"
                 0b00000000,
                 0b01111111,
                 0b00001001,
                 0b00011001,
                 0b01100110,
-
+                0b00000000,
+                0b00000000,
+                0b00000000
         };
 
 const uint8_t BITMAP_FM[10] =
@@ -313,27 +303,6 @@ const uint8_t BITMAP_ScanList2[6] =
                 0b01000010
         };
 
-const uint8_t BITMAP_t[6] =
-        {	// "t"
-                0b00000000,
-                0b00000100,
-                0b00000100,
-                0b00111111,
-                0b01000100,
-                0b00100100,
-
-        };
-
-const uint8_t BITMAP_1[6] =
-        {	// "1"
-                0b00000000,
-                0b00000000,
-                0b01000010,
-                0b01111111,
-                0b01000000,
-                0b00000000,
-
-        };
 const uint8_t BITMAP_compand[6] =
         {
                 0b00000000,

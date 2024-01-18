@@ -28,9 +28,7 @@ enum GUI_DisplayType_t
 #ifdef ENABLE_FMRADIO
     DISPLAY_FM,
 #endif
-#ifdef ENABLE_MESSENGER
-    DISPLAY_MSG,
-#endif
+
 #ifdef ENABLE_AIRCOPY
     DISPLAY_AIRCOPY,
 #endif

@@ -84,10 +84,13 @@ enum
 #ifdef ENABLE_ALARM
     MENU_AL_MOD,
 #endif
+#ifdef ENABLE_DTMF_CALLING
     MENU_ANI_ID,
+#endif
+#ifdef ENABLE_MDC1200
      MENU_MDC_ID,
 
-
+#endif
     MENU_UPCODE,
     MENU_DWCODE,
     MENU_PTT_ID,

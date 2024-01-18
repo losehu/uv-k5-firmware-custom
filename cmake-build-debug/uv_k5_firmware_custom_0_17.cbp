@@ -2223,12 +2223,6 @@
 		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/menu.h">
 			<Option target="uv_k5_firmware_custom_0_17"/>
 		</Unit>
-		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/messenger.c">
-			<Option target="uv_k5_firmware_custom_0_17"/>
-		</Unit>
-		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/messenger.h">
-			<Option target="uv_k5_firmware_custom_0_17"/>
-		</Unit>
 		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/scanner.c">
 			<Option target="uv_k5_firmware_custom_0_17"/>
 		</Unit>

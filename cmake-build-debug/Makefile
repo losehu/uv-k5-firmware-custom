@@ -8288,30 +8288,6 @@ ui/menu.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\uv_k5_firmware_custom_0_17.dir\build.make CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/menu.c.s
 .PHONY : ui/menu.c.s
 
-ui/messenger.obj: ui/messenger.c.obj
-.PHONY : ui/messenger.obj
-
-# target to build an object file
-ui/messenger.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\uv_k5_firmware_custom_0_17.dir\build.make CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/messenger.c.obj
-.PHONY : ui/messenger.c.obj
-
-ui/messenger.i: ui/messenger.c.i
-.PHONY : ui/messenger.i
-
-# target to preprocess a source file
-ui/messenger.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\uv_k5_firmware_custom_0_17.dir\build.make CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/messenger.c.i
-.PHONY : ui/messenger.c.i
-
-ui/messenger.s: ui/messenger.c.s
-.PHONY : ui/messenger.s
-
-# target to generate assembly for a file
-ui/messenger.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\uv_k5_firmware_custom_0_17.dir\build.make CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/messenger.c.s
-.PHONY : ui/messenger.c.s
-
 ui/scanner.obj: ui/scanner.c.obj
 .PHONY : ui/scanner.obj
 
@@ -9485,9 +9461,6 @@ help:
 	@echo ... ui/menu.obj
 	@echo ... ui/menu.i
 	@echo ... ui/menu.s
-	@echo ... ui/messenger.obj
-	@echo ... ui/messenger.i
-	@echo ... ui/messenger.s
 	@echo ... ui/scanner.obj
 	@echo ... ui/scanner.i
 	@echo ... ui/scanner.s

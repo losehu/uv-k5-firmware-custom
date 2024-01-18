@@ -947,12 +947,10 @@ else
                 const unsigned int len = strlen(gDTMF_RX_live);
                 const unsigned int idx = (len > (17 - 5)) ? len - (17 - 5) : 0;  // limit to last 'n' chars
 
-                if (gScreenToDisplay != DISPLAY_MAIN
-#ifdef ENABLE_DTMF_CALLING
-                    || gDTMF_CallState != DTMF_CALL_STATE_NONE
-#endif
-                        )
+                if (gScreenToDisplay != DISPLAY_MAIN ||
+                    gDTMF_CallState != DTMF_CALL_STATE_NONE)
                     return;
+
                 center_line = CENTER_LINE_DTMF_DEC;
 
                 sprintf(String, "DTMF %s", gDTMF_RX_live + idx);

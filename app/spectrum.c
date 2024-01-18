@@ -149,14 +149,14 @@ static void SetRegMenuValue(uint8_t st, bool add) {
 
 // GUI functions
 
- void PutPixel(uint8_t x, uint8_t y, bool fill) {
+static void PutPixel(uint8_t x, uint8_t y, bool fill) {
     UI_DrawPixelBuffer(gFrameBuffer, x, y, fill);
 }
- void PutPixelStatus(uint8_t x, uint8_t y, bool fill) {
+static void PutPixelStatus(uint8_t x, uint8_t y, bool fill) {
     UI_DrawPixelBuffer(&gStatusLine, x, y, fill);
 }
 
- void DrawVLine(int sy, int ey, int nx, bool fill) {
+static void DrawVLine(int sy, int ey, int nx, bool fill) {
     for (int i = sy; i <= ey; i++) {
         if (i < 56 && nx < 128) {
             PutPixel(nx, i, fill);
@@ -164,7 +164,7 @@ static void SetRegMenuValue(uint8_t st, bool add) {
     }
 }
 
- void GUI_DisplaySmallest(const char *pString, uint8_t x, uint8_t y,
+static void GUI_DisplaySmallest(const char *pString, uint8_t x, uint8_t y,
                                 bool statusbar, bool fill) {
     uint8_t c;
     uint8_t pixels;

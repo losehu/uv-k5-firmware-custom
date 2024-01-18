@@ -1227,8 +1227,6 @@ static void MENU_Key_0_to_9(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
     gBeepToPlay = BEEP_1KHZ_60MS_OPTIONAL;
     uint8_t now_menu = UI_MENU_GetCurrentMenuId();
     uint8_t end_index = now_menu == MENU_MEM_NAME ? MAX_EDIT_INDEX : 4;
-#ifdef ENABLE_MDC1200
-
     if ((now_menu == MENU_MEM_NAME || now_menu == MENU_MDC_ID) &&
         edit_index >= 0) {    // currently editing the channel name
 
@@ -1247,7 +1245,7 @@ static void MENU_Key_0_to_9(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
 
         return;
     }
-#endif
+
     INPUTBOX_Append(Key);
 
     gRequestDisplayScreen = DISPLAY_MENU;
@@ -1465,8 +1463,6 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld) {
 #endif
         return;
     }
-#ifdef ENABLE_MDC1200
-
     if (UI_MENU_GetCurrentMenuId() == MENU_MDC_ID && edit_index < 4) {    // editing the channel name characters
 
         if (++edit_index < 4)
@@ -1483,7 +1479,6 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld) {
         }
 
     }
-#endif
     if (UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME) {
         if (edit_index < 0) {    // enter channel name edit mode
             if (!RADIO_CheckValidChannel(gSubMenuSelection, false, 0))
@@ -1534,12 +1529,8 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld) {
         if (UI_MENU_GetCurrentMenuId() == MENU_RESET ||
             UI_MENU_GetCurrentMenuId() == MENU_MEM_CH ||
             UI_MENU_GetCurrentMenuId() == MENU_DEL_CH ||
-            UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME
-#ifdef ENABLE_MDC1200
-            ||  UI_MENU_GetCurrentMenuId() == MENU_MDC_ID
-#endif
-
-) {
+            UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME ||
+            UI_MENU_GetCurrentMenuId() == MENU_MDC_ID) {
             switch (gAskForConfirmation) {
                 case 0:
                     gAskForConfirmation = 1;
@@ -1653,10 +1644,7 @@ static void MENU_Key_UP_DOWN(bool bKeyPressed, bool bKeyHeld, int8_t Direction) 
                 gRequestDisplayScreen = DISPLAY_MENU;
             }
             return;
-        }
-#ifdef ENABLE_MDC1200
-
-        else if (UI_MENU_GetCurrentMenuId() == MENU_MDC_ID) {
+        } else if (UI_MENU_GetCurrentMenuId() == MENU_MDC_ID) {
             if (bKeyPressed && edit_index < 4) {
                 char c = edit[edit_index] + Direction;
                 if (c < '0')c = 'F';
@@ -1671,7 +1659,6 @@ static void MENU_Key_UP_DOWN(bool bKeyPressed, bool bKeyHeld, int8_t Direction) 
             }
             return;
         }
-#endif
     }
     if (!bKeyHeld) {
         if (!bKeyPressed)

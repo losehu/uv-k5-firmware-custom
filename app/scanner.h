@@ -54,11 +54,6 @@ void SCANNER_Stop(void);
 void SCANNER_TimeSlice10ms(void);
 void SCANNER_TimeSlice500ms(void);
 bool SCANNER_IsScanning(void);
- void DrawVLine(int sy, int ey, int nx, bool fill);
- void GUI_DisplaySmallest(const char *pString, uint8_t x, uint8_t y,
-                                bool statusbar, bool fill);
- void PutPixelStatus(uint8_t x, uint8_t y, bool fill) ;
- void PutPixel(uint8_t x, uint8_t y, bool fill);
 
 #endif
 

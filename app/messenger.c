@@ -1,6 +1,8 @@
 #ifdef ENABLE_MESSENGER
 
 #include <string.h>
+#include "app/spectrum.h"
+
 #include "driver/keyboard.h"
 #include "driver/st7565.h"
 #include "driver/bk4819.h"
@@ -15,7 +17,9 @@
 #include "driver/system.h"
 #include "app/messenger.h"
 #include "ui/ui.h"
-
+#include "stdbool.h"
+bool        stop_mdc_rx=0;
+bool stop_mdc_tx=0;
 #if defined(ENABLE_UART)
 	#include "driver/uart.h"
 #endif
@@ -46,7 +50,7 @@ unsigned char numberOfNumsAssignedToKey[9] = { 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 
 char cMessage[TX_MSG_LENGTH];
 char lastcMessage[TX_MSG_LENGTH];
-char rxMessage[2][MAX_RX_MSG_LENGTH + 2];
+char rxMessage[4][MAX_RX_MSG_LENGTH + 2];
 unsigned char cIndex = 0;
 unsigned char prevKey = 0, prevLetter = 0;
 KeyboardType keyboardType = UPPERCASE;
@@ -532,11 +536,11 @@ void MSG_EnableRX(const bool enable) {
 void moveUP(char (*rxMessages)[MAX_RX_MSG_LENGTH + 2]) {
     // Shift existing lines up
     strcpy(rxMessages[0], rxMessages[1]);
-//	strcpy(rxMessages[1], rxMessages[2]);
-//	strcpy(rxMessages[2], rxMessages[3]);
+	strcpy(rxMessages[1], rxMessages[2]);
+	strcpy(rxMessages[2], rxMessages[3]);
 
     // Insert the new line at the last position
-	memset(rxMessages[1], 0, sizeof(rxMessages[1]));
+	memset(rxMessages[3], 0, sizeof(rxMessages[3]));
 }
 
 void MSG_Send(const char txMessage[TX_MSG_LENGTH], bool bServiceMessage) {
@@ -544,7 +548,7 @@ void MSG_Send(const char txMessage[TX_MSG_LENGTH], bool bServiceMessage) {
 	if ( msgStatus != READY ) return;
 
 	if ( strlen(txMessage) > 0 && (TX_freq_check(gCurrentVfo->pTX->Frequency) == 0) ) {
-
+        stop_mdc_tx=1;
 		msgStatus = SENDING;
 
 		RADIO_SetVfoState(VFO_STATE_NORMAL);
@@ -577,12 +581,12 @@ void MSG_Send(const char txMessage[TX_MSG_LENGTH], bool bServiceMessage) {
 		SYSTEM_DelayMs(100);
 
 		BK4819_ExitTxMute();
-		
+
 		MSG_FSKSendData();
 
 		//SYSTEM_DelayMs(100);
 
-		APP_EndTransmission(true);
+		APP_EndTransmission();
 		RADIO_SetVfoState(VFO_STATE_NORMAL);
 
 		BK4819_ToggleGpioOut(BK4819_GPIO5_PIN1_RED, false);
@@ -590,7 +594,7 @@ void MSG_Send(const char txMessage[TX_MSG_LENGTH], bool bServiceMessage) {
 		MSG_EnableRX(true);
 		if (!bServiceMessage) {
 			moveUP(rxMessage);
-			sprintf(rxMessage[1], "> %s", txMessage);
+			sprintf(rxMessage[3], "> %s", txMessage);
 			memset(lastcMessage, 0, sizeof(lastcMessage));
 			memcpy(lastcMessage, txMessage, TX_MSG_LENGTH);
 			cIndex = 0;
@@ -600,12 +604,9 @@ void MSG_Send(const char txMessage[TX_MSG_LENGTH], bool bServiceMessage) {
 		}
 		msgStatus = READY;
 
-	}
-	#ifdef ENABLE_WARING_BEEP
-    else {
+	} else {
 		AUDIO_PlayBeep(BEEP_500HZ_60MS_DOUBLE_BEEP_OPTIONAL);
 	}
-    #endif
 }
 
 uint8_t validate_char( uint8_t rchar ) {
@@ -662,7 +663,7 @@ void MSG_StorePacket(const uint16_t interrupt_bits) {
 				// If the next 4 bytes are "RCVD", then it's a delivery notification
 				if (msgFSKBuffer[5] == 'R' && msgFSKBuffer[6] == 'C' && msgFSKBuffer[7] == 'V' && msgFSKBuffer[8] == 'D') {
 //					UART_printf("SVC<RCPT\r\n");
-					rxMessage[1][strlen(rxMessage[1])] = '+';
+					rxMessage[3][strlen(rxMessage[3])] = '+';
 					gUpdateStatus = true;
 					gUpdateDisplay = true;
 				}
@@ -670,11 +671,11 @@ void MSG_StorePacket(const uint16_t interrupt_bits) {
 			} else {
 				moveUP(rxMessage);
 				if (msgFSKBuffer[0] != 'M' || msgFSKBuffer[1] != 'S') {
-					snprintf(rxMessage[1], TX_MSG_LENGTH + 2, "? unknown msg format!");
+					snprintf(rxMessage[3], TX_MSG_LENGTH + 2, "? unknown msg format!");
 				}
 				else
 				{
-					snprintf(rxMessage[1], TX_MSG_LENGTH + 2, "< %s", &msgFSKBuffer[2]);
+					snprintf(rxMessage[3], TX_MSG_LENGTH + 2, "< %s", &msgFSKBuffer[2]);
 				}
 
 
@@ -696,7 +697,10 @@ void MSG_StorePacket(const uint16_t interrupt_bits) {
 		gFSKWriteIndex = 0;
 		// Transmit a message to the sender that we have received the message (Unless it's a service message)
 		if (msgFSKBuffer[0] == 'M' && msgFSKBuffer[1] == 'S' && msgFSKBuffer[2] != 0x1b) {
+
 			MSG_Send("\x1b\x1b\x1bRCVD", true);
+                    stop_mdc_rx=1;
+
 		}
 	}
 }
@@ -779,8 +783,16 @@ void  MSG_ProcessKeys(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
 
 		switch (Key)
 		{
-			case KEY_0...KEY_9:
-
+			case KEY_0:
+			case KEY_1:
+			case KEY_2:
+			case KEY_3:
+			case KEY_4:
+			case KEY_5:
+			case KEY_6:
+			case KEY_7:
+			case KEY_8:
+			case KEY_9:
 				if ( keyTickCounter > NEXT_CHAR_DELAY) {
 					prevKey = 0;
     				prevLetter = 0;
@@ -810,9 +822,7 @@ void  MSG_ProcessKeys(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
 				break;
 
 			default:
-#ifdef ENABLE_WARING_BEEP
 				AUDIO_PlayBeep(BEEP_500HZ_60MS_DOUBLE_BEEP_OPTIONAL);
-#endif
 				break;
 		}
 
@@ -824,10 +834,7 @@ void  MSG_ProcessKeys(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
 				MSG_Init();
 				break;
 			default:
-                #ifdef ENABLE_WARING_BEEP
 				AUDIO_PlayBeep(BEEP_500HZ_60MS_DOUBLE_BEEP_OPTIONAL);
-#endif
-
 				break;
 		}
 	}

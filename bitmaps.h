@@ -5,13 +5,12 @@
 #include <stdint.h>
 
 extern const uint8_t BITMAP_POWERSAVE[8];
-extern const uint8_t BITMAP_TX[6];
-extern const uint8_t BITMAP_RX[5];
+extern const uint8_t BITMAP_TX[8];
+extern const uint8_t BITMAP_RX[8];
 extern const uint8_t BITMAP_FM[10];
 extern const uint8_t BITMAP_BatteryLevel[2];
 extern const uint8_t BITMAP_BatteryLevel1[17];
-extern const uint8_t BITMAP_t[6] ;
-extern const uint8_t BITMAP_1[6] ;
+
 extern const uint8_t BITMAP_USB_C[9];
 
 extern const uint8_t BITMAP_KeyLock[6];
@@ -33,10 +32,6 @@ extern const uint8_t BITMAP_VoicePrompt[9];
 
 #ifdef ENABLE_NOAA
 extern const uint8_t BITMAP_NOAA[11];
-#endif
-#ifdef ENABLE_MESSENGER
-
-extern const uint8_t BITMAP_NEWMSG[8] ;
 #endif
 
 extern const uint8_t BITMAP_Antenna[5];
