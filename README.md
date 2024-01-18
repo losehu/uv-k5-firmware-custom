@@ -63,7 +63,7 @@
 * **前8K**基本不变
 * **0X1D00 ~ 0X1E00、0X1F90 ~ 0X1FF0** 22个MDC联系人，**0X1FFF**存放联系人数量
 * 每个联系人占用16B，前2B为MDC ID，后14B为联系人名
-* **0x1FFF** MDC ID
+* **0x1FFD~0x1FFE** MDC ID
 * 0x1FF8~0x1FFC 侧键功能
   
 
