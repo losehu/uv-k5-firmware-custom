@@ -218,7 +218,7 @@ static void SendVersion(void) {
 
     SendReply(&Reply, sizeof(Reply));
 }
-
+#ifdef ENABLE_BLOCK
 static bool IsBadChallenge(const uint32_t *pKey, const uint32_t *pIn, const uint32_t *pResponse) {
     unsigned int i;
     uint32_t IV[4];
@@ -236,7 +236,7 @@ static bool IsBadChallenge(const uint32_t *pKey, const uint32_t *pIn, const uint
 
     return false;
 }
-
+#endif
 static void CMD_0514(const uint8_t *pBuffer) {
     const CMD_0514_t *pCmd = (const CMD_0514_t *) pBuffer;
 

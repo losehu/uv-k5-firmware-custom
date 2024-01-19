@@ -36,6 +36,7 @@ void MSG_Init();
 void MSG_ProcessKeys(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld);
 void MSG_Send(const char txMessage[TX_MSG_LENGTH], bool bServiceMessage);
 extern unsigned char cIndex ;
+//extern bool stop_mdc_rx;
 
 #endif
 

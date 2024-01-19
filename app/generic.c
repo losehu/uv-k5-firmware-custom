@@ -114,21 +114,9 @@ void GENERIC_Key_PTT(bool bKeyPressed)
         if (gCurrentFunction == FUNCTION_TRANSMIT)
         {	// we are transmitting .. stop
 
-            if (gFlagEndTransmission)
-            {
-                FUNCTION_Select(FUNCTION_FOREGROUND);
-            }
-            else
-            {
-                APP_EndTransmission();
 
-                if (gEeprom.REPEATER_TAIL_TONE_ELIMINATION == 0)
-                    FUNCTION_Select(FUNCTION_FOREGROUND);
-                else
-                    gRTTECountdown = gEeprom.REPEATER_TAIL_TONE_ELIMINATION * 10;
-            }
+                APP_EndTransmission(SerialConfigInProgress());
 
-            gFlagEndTransmission = false;
 
 #ifdef ENABLE_VOX
             gVOX_NoiseDetected = false;

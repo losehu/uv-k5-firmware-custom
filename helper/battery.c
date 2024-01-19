@@ -180,9 +180,13 @@ void BATTERY_TimeSlice500ms(void)
     // not transmitting
 
     if (lowBatteryCountdown < lowBatteryPeriod) {
+#ifdef    ENABLE_WARNING
+
         if (lowBatteryCountdown == lowBatteryPeriod-1 && !gChargingWithTypeC && !gLowBatteryConfirmed) {
+
             AUDIO_PlayBeep(BEEP_500HZ_60MS_DOUBLE_BEEP);
         }
+#endif
         return;
     }
 

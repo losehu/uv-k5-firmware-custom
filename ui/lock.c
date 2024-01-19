@@ -104,7 +104,10 @@ void UI_DisplayLock(void)
 
 								if ((gEeprom.POWER_ON_PASSWORD) == Password)
 								{
+#ifdef    ENABLE_WARNING
+
 									AUDIO_PlayBeep(BEEP_1KHZ_60MS_OPTIONAL);
+#endif
 									return;
 								}
 
@@ -112,9 +115,10 @@ void UI_DisplayLock(void)
 
 								Beep = BEEP_500HZ_60MS_DOUBLE_BEEP_OPTIONAL;
 							}
+#ifdef    ENABLE_WARNING
 
 							AUDIO_PlayBeep(Beep);
-
+#endif
 							gUpdateDisplay = true;
 							break;
 
@@ -124,9 +128,11 @@ void UI_DisplayLock(void)
 								gInputBox[--gInputBoxIndex] = 10;
 								gUpdateDisplay = true;
 							}
+#ifdef    ENABLE_WARNING
 
 							AUDIO_PlayBeep(BEEP_1KHZ_60MS_OPTIONAL);
 
+#endif
 						default:
 							break;
 					}

@@ -1271,7 +1271,7 @@ void UI_ShowChineseMenu() {
     show_move_flag = 1;
 
 #if ENABLE_CHINESE_FULL==4
-    UI_PrintStringSmall(name/*MenuList[gMenuCursor].name*/, size_menu < 48 ? (48 - size_menu) / 2 : 0, 0, 0);
+    UI_PrintStringSmall(name, size_menu < 48 ? (48 - size_menu) / 2 : 0, 0, 0);
 #else
     UI_PrintStringSmall(MenuList[gMenuCursor].name, size_menu < 48 ? (48 - size_menu) / 2 : 0, 0, 0);
 

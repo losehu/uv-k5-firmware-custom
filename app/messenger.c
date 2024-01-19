@@ -15,7 +15,7 @@
 #include "driver/system.h"
 #include "app/messenger.h"
 #include "ui/ui.h"
-
+#include "stdbool.h"
 #if defined(ENABLE_UART)
 	#include "driver/uart.h"
 #endif
@@ -25,7 +25,7 @@ typedef enum MsgStatus {
   	SENDING,
   	RECEIVING,
 } MsgStatus;
-
+//bool stop_mdc_rx=0;
 const uint8_t MSG_BUTTON_STATE_HELD = 1 << 1;
 
 const uint8_t MSG_BUTTON_EVENT_SHORT =  0;
@@ -582,8 +582,8 @@ void MSG_Send(const char txMessage[TX_MSG_LENGTH], bool bServiceMessage) {
 
 		//SYSTEM_DelayMs(100);
 
-//		APP_EndTransmission(true);
-APP_EndTransmission();
+		APP_EndTransmission(true);
+
 		RADIO_SetVfoState(VFO_STATE_NORMAL);
 
 		BK4819_ToggleGpioOut(BK4819_GPIO5_PIN1_RED, false);
@@ -601,9 +601,13 @@ APP_EndTransmission();
 		}
 		msgStatus = READY;
 
-	} else {
+	}
+    #ifdef    ENABLE_WARNING
+
+    else {
 		AUDIO_PlayBeep(BEEP_500HZ_60MS_DOUBLE_BEEP_OPTIONAL);
 	}
+    #endif
 }
 
 uint8_t validate_char( uint8_t rchar ) {
@@ -694,6 +698,7 @@ void MSG_StorePacket(const uint16_t interrupt_bits) {
 		gFSKWriteIndex = 0;
 		// Transmit a message to the sender that we have received the message (Unless it's a service message)
 		if (msgFSKBuffer[0] == 'M' && msgFSKBuffer[1] == 'S' && msgFSKBuffer[2] != 0x1b) {
+//            stop_mdc_rx=1;
 			MSG_Send("\x1b\x1b\x1bRCVD", true);
 		}
 	}
@@ -701,8 +706,9 @@ void MSG_StorePacket(const uint16_t interrupt_bits) {
 
 void MSG_Init() {
 	memset(rxMessage, 0, sizeof(rxMessage));
-	memset(cMessage, 0, sizeof(cMessage));
-	memset(lastcMessage, 0, sizeof(lastcMessage));
+//	memset(cMessage, 0, sizeof(cMessage));
+//	memset(lastcMessage, 0, sizeof(lastcMessage));
+    lastcMessage[0]=0;cMessage[0]=0;
 	hasNewMessage = 0;
 	msgStatus = READY;
 	prevKey = 0;
@@ -777,16 +783,7 @@ void  MSG_ProcessKeys(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
 
 		switch (Key)
 		{
-			case KEY_0:
-			case KEY_1:
-			case KEY_2:
-			case KEY_3:
-			case KEY_4:
-			case KEY_5:
-			case KEY_6:
-			case KEY_7:
-			case KEY_8:
-			case KEY_9:
+			case KEY_0...KEY_9:
 				if ( keyTickCounter > NEXT_CHAR_DELAY) {
 					prevKey = 0;
     				prevLetter = 0;
@@ -816,7 +813,10 @@ void  MSG_ProcessKeys(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
 				break;
 
 			default:
+                #ifdef    ENABLE_WARNING
+
 				AUDIO_PlayBeep(BEEP_500HZ_60MS_DOUBLE_BEEP_OPTIONAL);
+                #endif
 				break;
 		}
 
@@ -828,7 +828,9 @@ void  MSG_ProcessKeys(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
 				MSG_Init();
 				break;
 			default:
+#ifdef    ENABLE_WARNING
 				AUDIO_PlayBeep(BEEP_500HZ_60MS_DOUBLE_BEEP_OPTIONAL);
+#endif
 				break;
 		}
 	}

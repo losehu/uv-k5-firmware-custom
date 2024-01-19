@@ -28,7 +28,7 @@
 #include "app/mdc1200.h"
 #include "app/uart.h"
 #include "string.h"
-
+#include "app/messenger.h"
 #ifdef ENABLE_AM_FIX
 #include "am_fix.h"
 #endif

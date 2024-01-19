@@ -13,7 +13,9 @@
  *     See the License for the specific language governing permissions and
  *     limitations under the License.
  */
-
+#ifdef ENABLE_MESSENGER
+#include "app/messenger.h"
+#endif
 #include <string.h>
 
 #include "app/chFrScanner.h"
@@ -63,7 +65,14 @@ void UI_DisplayStatus()
 	}
 	x += sizeof(BITMAP_NOAA);
 #endif
-
+#ifdef ENABLE_MESSENGER
+    if (hasNewMessage > 0) { // New Message indicator
+		if (hasNewMessage == 1)
+			memcpy(line + x, BITMAP_NEWMSG, sizeof(BITMAP_NEWMSG));
+		x1 = x + sizeof(BITMAP_NEWMSG);
+	}
+	x += sizeof(BITMAP_NEWMSG);
+#endif
 #ifdef ENABLE_DTMF_CALLING
     if (gSetting_KILLED) {
 		memset(line + x, 0xFF, 10);

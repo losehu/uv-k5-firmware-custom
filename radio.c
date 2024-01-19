@@ -993,7 +993,10 @@ void RADIO_PrepareTX(void)
 #ifdef ENABLE_DTMF_CALLING
         gDTMF_ReplyState = DTMF_REPLY_NONE;
 #endif
+#ifdef    ENABLE_WARNING
+
         AUDIO_PlayBeep(BEEP_500HZ_60MS_DOUBLE_BEEP_OPTIONAL);
+#endif
         return;
     }
 
