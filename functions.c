@@ -26,7 +26,9 @@
 #include "bsp/dp32g030/gpio.h"
 #include "dcs.h"
 #include "driver/backlight.h"
-
+#ifdef ENABLE_MESSENGER
+#include "app/messenger.h"
+#endif
 #if defined(ENABLE_FMRADIO)
 #include "driver/bk1080.h"
 #endif
@@ -143,6 +145,11 @@ void FUNCTION_Transmit() {
 #ifdef ENABLE_MDC1200
     BK4819_enable_mdc1200_rx(false);
 #endif
+#ifdef ENABLE_MESSENGER
+    MSG_EnableRX(false);
+#endif
+
+
     BK4819_DisableDTMF();
 
 #ifdef ENABLE_DTMF_CALLING

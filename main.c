@@ -112,6 +112,9 @@ void Main(void) {
 
 //    SETTINGS_WriteBuildOptions();
     SETTINGS_LoadCalibration();
+#ifdef ENABLE_MESSENGER
+    MSG_Init();
+#endif
 #ifdef ENABLE_MDC1200
     MDC1200_init();
 #endif

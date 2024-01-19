@@ -19,26 +19,40 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+
 //#define test 0
 void UI_GenerateChannelString(char *pString, const uint8_t Channel);
+
 void UI_GenerateChannelStringEx(char *pString, const bool bShowPrefix, const uint8_t ChannelNumber);
+
 void UI_PrintStringSmall(const char *pString, uint8_t Start, uint8_t End, uint8_t Line);
-void UI_PrintCharSmall(char character, uint8_t Start, uint8_t Line) ;
+
+void UI_PrintCharSmall(char character, uint8_t Start, uint8_t Line);
+
 uint8_t is_chn(uint8_t num);
-bool CHINESE_JUDGE(char *name,uint8_t len);
+
+bool CHINESE_JUDGE(char *name, uint8_t len);
+
 void UI_DisplayClear();
 
 
 void UI_PrintStringSmallBuffer(const char *pString, uint8_t *buffer);
+
 void UI_DisplayFrequency(const char *string, uint8_t X, uint8_t Y, bool center);
+
 void UI_DrawPixelBuffer(uint8_t (*buffer)[128], uint8_t x, uint8_t y, bool black);
 
 void UI_DisplayPopup(const char *string);
+
 #endif
-static void GUI_DisplaySmallest(const char *pString, uint8_t x, uint8_t y,   bool statusbar, bool fill) ;
-static void PutPixelStatus(uint8_t x, uint8_t y, bool fill) ;
-static void PutPixel(uint8_t x, uint8_t y, bool fill) ;
-static void DrawVLine(int sy, int ey, int nx, bool fill) ;
+
+void GUI_DisplaySmallest(const char *pString, uint8_t x, uint8_t y, bool statusbar, bool fill);
+
+void PutPixelStatus(uint8_t x, uint8_t y, bool fill);
+
+void PutPixel(uint8_t x, uint8_t y, bool fill);
+
+void DrawVLine(int sy, int ey, int nx, bool fill);
 
 //void UI_DrawPixel(uint8_t x, uint8_t y, bool black);
 //void UI_DrawLine(int16_t x1, int16_t y1, int16_t x2, int16_t y2, bool black);

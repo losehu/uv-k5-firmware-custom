@@ -18,7 +18,7 @@ const uint8_t BITMAP_POWERSAVE[8] =
 
         };
 
-const uint8_t BITMAP_TX[8] =
+const uint8_t BITMAP_TX[6] =
         {	// "TX"
                 0b00000000,
                 0b00000001,
@@ -26,20 +26,20 @@ const uint8_t BITMAP_TX[8] =
                 0b01111111,
                 0b00000001,
                 0b00000001,
-                0b00000000,
-                0b00000000
+//                0b00000000,
+//                0b00000000
         };
 
-const uint8_t BITMAP_RX[8] =
+const uint8_t BITMAP_RX[5] =
         {	// "RX"
                 0b00000000,
                 0b01111111,
                 0b00001001,
                 0b00011001,
                 0b01100110,
-                0b00000000,
-                0b00000000,
-                0b00000000
+//                0b00000000,
+//                0b00000000,
+//                0b00000000
         };
 
 const uint8_t BITMAP_FM[10] =
@@ -283,14 +283,14 @@ const uint8_t BITMAP_VFO_NotDefault[8] =
                 0b00001000
         };
 
-const uint8_t BITMAP_ScanList1[6] =
+const uint8_t BITMAP_ScanList1[5] =
         {	// 'I' symbol
                 0b00000000,
                 0b00000000,
                 0b01000010,
                 0b01111110,
                 0b01000010,
-                0b00000000
+//                0b00000000
         };
 
 const uint8_t BITMAP_ScanList2[6] =
@@ -322,3 +322,39 @@ const uint8_t BITMAP_SEND[13] =
         {
                 0x03, 0x03, 0x7F, 0x7F, 0x03, 0x03,0X00, 0x63, 0x77, 0x1C, 0x1C, 0x77, 0x63
         };
+
+
+#ifdef ENABLE_MESSENGER
+const uint8_t BITMAP_NEWMSG[8] =
+{	// message icon
+	0b00000000,
+	0b01111110,
+	0b01000110,
+	0b01001010,
+	0b01010010,
+	0b01001010,
+	0b01000110,
+	0b01111110,
+};
+const uint8_t BITMAP_t[6] =
+        {	// "t"
+                0b00000000,
+                0b00000100,
+                0b00000100,
+                0b00111111,
+                0b01000100,
+                0b00100100,
+
+        };
+
+const uint8_t BITMAP_1[6] =
+        {	// "1"
+                0b00000000,
+                0b00000000,
+                0b01000010,
+                0b01111111,
+                0b01000000,
+                0b00000000,
+
+        };
+#endif

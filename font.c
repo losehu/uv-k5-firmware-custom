@@ -139,7 +139,7 @@ const uint8_t gFontSmall[95-1][6] =
         };
 
 
-#ifdef ENABLE_SPECTRUM
+
 const uint8_t gFont3x5[][3] =
 	{
 		{0x00, 0x00, 0x00}, //  32 - space
@@ -240,7 +240,7 @@ const uint8_t gFont3x5[][3] =
 		{0x12, 0x17, 0x12}, // 127 - plusminus
 
 	};
-#endif
+
 #endif
 #if  ENABLE_CHINESE_FULL ==0
 const uint8_t gFontChinese_out[2261]={

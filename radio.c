@@ -37,7 +37,9 @@
 #include "radio.h"
 #include "settings.h"
 #include "ui/menu.h"
-
+#ifdef ENABLE_MESSENGER
+#include "app/messenger.h"
+#endif
 VFO_Info_t    *gTxVfo;
 VFO_Info_t    *gRxVfo;
 VFO_Info_t    *gCurrentVfo;
@@ -725,6 +727,12 @@ void RADIO_SetupRegisters(bool switchToForeground)
     InterruptMask |= BK4819_REG_3F_DTMF_5TONE_FOUND;
     RADIO_SetupAGC(gRxVfo->Modulation == MODULATION_AM, false);
     // enable/disable BK4819 selected interrupts
+
+        //OK?
+#ifdef ENABLE_MESSENGER
+    MSG_EnableRX(true);
+	InterruptMask |= BK4819_REG_3F_FSK_RX_SYNC | BK4819_REG_3F_FSK_RX_FINISHED | BK4819_REG_3F_FSK_FIFO_ALMOST_FULL | BK4819_REG_3F_FSK_TX_FINISHED;
+#endif
 #ifdef ENABLE_MDC1200
     BK4819_enable_mdc1200_rx(true);
 		InterruptMask |= BK4819_REG_3F_FSK_RX_SYNC | BK4819_REG_3F_FSK_RX_FINISHED | BK4819_REG_3F_FSK_FIFO_ALMOST_FULL;

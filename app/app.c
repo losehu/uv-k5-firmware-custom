@@ -64,12 +64,20 @@
 #if defined(ENABLE_OVERLAY)
 #include "sram-overlay.h"
 #endif
+#ifdef ENABLE_MESSENGER
+#include "app/messenger.h"
+#endif
 #include "ui/battery.h"
 #include "ui/inputbox.h"
 #include "ui/main.h"
 #include "ui/menu.h"
 #include "ui/status.h"
 #include "ui/ui.h"
+
+#ifdef ENABLE_MESSENGER_NOTIFICATION
+bool gPlayMSGRing = false;
+uint8_t gPlayMSGRingCount = 0;
+#endif
 static bool flagSaveVfo;
 static bool flagSaveSettings;
 static bool flagSaveChannel;
@@ -81,6 +89,9 @@ void (*ProcessKeysFunctions[])(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) 
 
 #ifdef ENABLE_FMRADIO
         [DISPLAY_FM] = &FM_ProcessKeys,
+#endif
+#ifdef ENABLE_MESSENGER
+        [DISPLAY_MSG] = &MSG_ProcessKeys,
 #endif
 
 #ifdef ENABLE_AIRCOPY
@@ -723,6 +734,10 @@ static void CheckRadioInterrupts(void)
          MDC1200_process_rx(  interrupt_status_bits);
 
 #endif
+         //ok
+#ifdef ENABLE_MESSENGER
+        MSG_StorePacket(interrupt_status_bits);
+#endif
     }
 }
 void APP_EndTransmission(void)
@@ -1117,6 +1132,9 @@ void APP_TimeSlice10ms(void)
 {
     gNextTimeslice = false;
     gFlashLightBlinkCounter++;
+#ifdef ENABLE_MESSENGER
+    keyTickCounter++;
+#endif
 #ifdef ENABLE_BOOT_BEEPS
     if (boot_counter_10ms > 0 && (boot_counter_10ms % 25) == 0) {
 		AUDIO_PlayBeep(BEEP_880HZ_40MS_OPTIONAL);
@@ -1297,6 +1315,26 @@ void APP_TimeSlice500ms(void)
 {
     gNextTimeslice_500ms = false;
     bool exit_menu = false;
+#ifdef ENABLE_MESSENGER_NOTIFICATION
+    if (gPlayMSGRing) {
+		gPlayMSGRingCount = 5;
+		gPlayMSGRing = false;
+	}
+	if (gPlayMSGRingCount > 0) {
+		AUDIO_PlayBeep(BEEP_880HZ_200MS);
+		gPlayMSGRingCount--;
+	}
+#endif
+
+#ifdef ENABLE_MESSENGER
+    if (hasNewMessage > 0) {
+		if (hasNewMessage == 1) {
+			hasNewMessage = 2;
+		} else if (hasNewMessage == 2) {
+			hasNewMessage = 1;
+		}
+	}
+#endif
 
     // Skipped authentic device check
 

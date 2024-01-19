@@ -1,8 +1,6 @@
 #ifdef ENABLE_MESSENGER
 
 #include <string.h>
-#include "app/spectrum.h"
-
 #include "driver/keyboard.h"
 #include "driver/st7565.h"
 #include "driver/bk4819.h"
@@ -17,9 +15,7 @@
 #include "driver/system.h"
 #include "app/messenger.h"
 #include "ui/ui.h"
-#include "stdbool.h"
-bool        stop_mdc_rx=0;
-bool stop_mdc_tx=0;
+
 #if defined(ENABLE_UART)
 	#include "driver/uart.h"
 #endif
@@ -548,7 +544,7 @@ void MSG_Send(const char txMessage[TX_MSG_LENGTH], bool bServiceMessage) {
 	if ( msgStatus != READY ) return;
 
 	if ( strlen(txMessage) > 0 && (TX_freq_check(gCurrentVfo->pTX->Frequency) == 0) ) {
-        stop_mdc_tx=1;
+
 		msgStatus = SENDING;
 
 		RADIO_SetVfoState(VFO_STATE_NORMAL);
@@ -581,12 +577,13 @@ void MSG_Send(const char txMessage[TX_MSG_LENGTH], bool bServiceMessage) {
 		SYSTEM_DelayMs(100);
 
 		BK4819_ExitTxMute();
-
+		
 		MSG_FSKSendData();
 
 		//SYSTEM_DelayMs(100);
 
-		APP_EndTransmission();
+//		APP_EndTransmission(true);
+APP_EndTransmission();
 		RADIO_SetVfoState(VFO_STATE_NORMAL);
 
 		BK4819_ToggleGpioOut(BK4819_GPIO5_PIN1_RED, false);
@@ -697,10 +694,7 @@ void MSG_StorePacket(const uint16_t interrupt_bits) {
 		gFSKWriteIndex = 0;
 		// Transmit a message to the sender that we have received the message (Unless it's a service message)
 		if (msgFSKBuffer[0] == 'M' && msgFSKBuffer[1] == 'S' && msgFSKBuffer[2] != 0x1b) {
-
 			MSG_Send("\x1b\x1b\x1bRCVD", true);
-                    stop_mdc_rx=1;
-
 		}
 	}
 }

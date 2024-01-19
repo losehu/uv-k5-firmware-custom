@@ -44,7 +44,9 @@
 #include "ui/inputbox.h"
 #include "ui/ui.h"
 #include <stdlib.h>
-
+#ifdef ENABLE_MESSENGER
+#include "app/messenger.h"
+#endif
 void toggle_chan_scanlist(void) {    // toggle the selected channels scanlist setting
     if (SCANNER_IsScanning())
         return;
@@ -515,13 +517,16 @@ static void MAIN_Key_MENU(const bool bKeyPressed, const bool bKeyHeld) {
     }
 
     if (!bKeyPressed && !gDTMF_InputMode) {    // menu key released
-        if (gWasFKeyPressed) {
-            gWasFKeyPressed = false;
-            gEeprom.BEEP_CONTROL = !gEeprom.BEEP_CONTROL;
-            gRequestSaveSettings = 1;
 
-            return;
-        }
+#ifdef ENABLE_MESSENGER
+        if (gWasFKeyPressed) {
+			hasNewMessage = 0;
+			gRequestDisplayScreen = DISPLAY_MSG;
+			return;
+		}
+#endif
+
+
         const bool bFlag = !gInputBoxIndex;
         gInputBoxIndex = 0;
 
@@ -622,6 +627,15 @@ static void MAIN_Key_UP_DOWN(bool bKeyPressed, bool bKeyHeld, int8_t Direction) 
             return;
 
         if (!bKeyPressed) {
+
+            if (gWasFKeyPressed) {
+                gWasFKeyPressed = false;
+                gEeprom.BEEP_CONTROL = !gEeprom.BEEP_CONTROL;
+                gRequestSaveSettings = 1;
+
+                return;
+            }
+
             if (!bKeyHeld||IS_FREQ_CHANNEL(Channel))
                 return;
 

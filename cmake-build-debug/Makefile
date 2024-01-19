@@ -416,6 +416,30 @@ app/menu.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\uv_k5_firmware_custom_0_17.dir\build.make CMakeFiles/uv_k5_firmware_custom_0_17.dir/app/menu.c.s
 .PHONY : app/menu.c.s
 
+app/messenger.obj: app/messenger.c.obj
+.PHONY : app/messenger.obj
+
+# target to build an object file
+app/messenger.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\uv_k5_firmware_custom_0_17.dir\build.make CMakeFiles/uv_k5_firmware_custom_0_17.dir/app/messenger.c.obj
+.PHONY : app/messenger.c.obj
+
+app/messenger.i: app/messenger.c.i
+.PHONY : app/messenger.i
+
+# target to preprocess a source file
+app/messenger.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\uv_k5_firmware_custom_0_17.dir\build.make CMakeFiles/uv_k5_firmware_custom_0_17.dir/app/messenger.c.i
+.PHONY : app/messenger.c.i
+
+app/messenger.s: app/messenger.c.s
+.PHONY : app/messenger.s
+
+# target to generate assembly for a file
+app/messenger.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\uv_k5_firmware_custom_0_17.dir\build.make CMakeFiles/uv_k5_firmware_custom_0_17.dir/app/messenger.c.s
+.PHONY : app/messenger.c.s
+
 app/scanner.obj: app/scanner.c.obj
 .PHONY : app/scanner.obj
 
@@ -8288,6 +8312,30 @@ ui/menu.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\uv_k5_firmware_custom_0_17.dir\build.make CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/menu.c.s
 .PHONY : ui/menu.c.s
 
+ui/messenger.obj: ui/messenger.c.obj
+.PHONY : ui/messenger.obj
+
+# target to build an object file
+ui/messenger.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\uv_k5_firmware_custom_0_17.dir\build.make CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/messenger.c.obj
+.PHONY : ui/messenger.c.obj
+
+ui/messenger.i: ui/messenger.c.i
+.PHONY : ui/messenger.i
+
+# target to preprocess a source file
+ui/messenger.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\uv_k5_firmware_custom_0_17.dir\build.make CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/messenger.c.i
+.PHONY : ui/messenger.c.i
+
+ui/messenger.s: ui/messenger.c.s
+.PHONY : ui/messenger.s
+
+# target to generate assembly for a file
+ui/messenger.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\uv_k5_firmware_custom_0_17.dir\build.make CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/messenger.c.s
+.PHONY : ui/messenger.c.s
+
 ui/scanner.obj: ui/scanner.c.obj
 .PHONY : ui/scanner.obj
 
@@ -8477,6 +8525,9 @@ help:
 	@echo ... app/menu.obj
 	@echo ... app/menu.i
 	@echo ... app/menu.s
+	@echo ... app/messenger.obj
+	@echo ... app/messenger.i
+	@echo ... app/messenger.s
 	@echo ... app/scanner.obj
 	@echo ... app/scanner.i
 	@echo ... app/scanner.s
@@ -9461,6 +9512,9 @@ help:
 	@echo ... ui/menu.obj
 	@echo ... ui/menu.i
 	@echo ... ui/menu.s
+	@echo ... ui/messenger.obj
+	@echo ... ui/messenger.i
+	@echo ... ui/messenger.s
 	@echo ... ui/scanner.obj
 	@echo ... ui/scanner.i
 	@echo ... ui/scanner.s

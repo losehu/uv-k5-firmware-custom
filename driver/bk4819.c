@@ -332,6 +332,7 @@ void BK4819_PlayRoger(void)
 {
     if (gEeprom.ROGER == ROGER_MODE_ROGER||gEeprom.ROGER==ROGER_MODE_MDC_HEAD_ROGER)
         BK4819_PlayRogerNormal();
+#ifdef ENABLE_MDC1200
     else
     if (gEeprom.ROGER == ROGER_MODE_MDC_END||gEeprom.ROGER==ROGER_MODE_MDC_BOTH) {
 
@@ -343,6 +344,7 @@ void BK4819_PlayRoger(void)
 			BK4819_stop_tones(true);
 #endif
     }
+#endif
 }
 int8_t BK4819_GetRxGain_dB(void)
 {
