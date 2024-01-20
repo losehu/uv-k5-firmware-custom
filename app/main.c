@@ -618,35 +618,33 @@ static void MAIN_Key_STAR(bool bKeyPressed, bool bKeyHeld) {
 
     gUpdateStatus = true;
 }
-
 static void MAIN_Key_UP_DOWN(bool bKeyPressed, bool bKeyHeld, int8_t Direction) {
     uint8_t Channel = gEeprom.ScreenChannel[gEeprom.TX_VFO];
+    if (gWasFKeyPressed) {
+        gWasFKeyPressed = false;
+        gEeprom.BEEP_CONTROL = !gEeprom.BEEP_CONTROL;
+        gRequestSaveSettings = 1;
 
-    if (bKeyHeld || !bKeyPressed) {
+        return;
+    }
+    if (bKeyHeld || !bKeyPressed) { // key held or released
+
         if (gInputBoxIndex > 0)
-            return;
+            return; // leave if input box active
 
         if (!bKeyPressed) {
 
-            if (gWasFKeyPressed) {
-                gWasFKeyPressed = false;
-                gEeprom.BEEP_CONTROL = !gEeprom.BEEP_CONTROL;
-                gRequestSaveSettings = 1;
 
+            if (!bKeyHeld || IS_FREQ_CHANNEL(Channel))
                 return;
-            }
-
-            if (!bKeyHeld||IS_FREQ_CHANNEL(Channel))
-                return;
-
-
+            // if released long button press and not in freq mode
 #ifdef ENABLE_VOICE
-            AUDIO_SetDigitVoice(0, gTxVfo->CHANNEL_SAVE + 1);
-            gAnotherVoiceID = (VOICE_ID_t)0xFE;
+            AUDIO_SetDigitVoice(0, gTxVfo->CHANNEL_SAVE + 1); // say channel number
+			gAnotherVoiceID = (VOICE_ID_t)0xFE;
 #endif
-
             return;
         }
+
     } else {
         if (gInputBoxIndex > 0) {
             gBeepToPlay = BEEP_500HZ_60MS_DOUBLE_BEEP_OPTIONAL;
@@ -716,7 +714,6 @@ static void MAIN_Key_UP_DOWN(bool bKeyPressed, bool bKeyHeld, int8_t Direction) 
 
     gPttWasReleased = true;
 }
-
 void MAIN_ProcessKeys(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
 #ifdef ENABLE_FMRADIO
     if (gFmRadioMode && Key != KEY_PTT && Key != KEY_EXIT)
