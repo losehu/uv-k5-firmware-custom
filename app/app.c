@@ -735,17 +735,13 @@ static void CheckRadioInterrupts(void)
 #endif
 
         //ok
-#ifdef ENABLE_MESSENGER
-        MSG_StorePacket(interrupts.__raw);
-#endif
-        #ifdef ENABLE_MDC1200
-//        #ifdef ENABLE_MESSENGER
-//
-//        if(!stop_mdc_rx)
-//            #endif
 
-        MDC1200_process_rx(  interrupts.__raw);
+#if defined(ENABLE_MESSENGER) || defined(ENABLE_MDC1200)
+        solve_sign(interrupts.__raw);
 #endif
+
+
+
     }
 }
 

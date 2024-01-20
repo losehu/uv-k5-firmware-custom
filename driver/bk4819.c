@@ -13,7 +13,7 @@
  *     See the License for the specific language governing permissions and
  *     limitations under the License.
  */
-
+#include "app/messenger.h"
 #include <stdint.h>
 #include <stdio.h>
 
@@ -1941,214 +1941,6 @@ void BK4819_stop_tones(const bool tx)
 	SYSTEM_DelayMs(1);
 }
 
-void BK4819_enable_mdc1200_rx(const bool enable)
-	{
-		// REG_70
-		//
-		// <15>    0 TONE-1
-		//         1 = enable
-		//         0 = disable
-		//
-		// <14:8>  0 TONE-1 gain
-		//
-		// <7>     0 TONE-2
-		//         1 = enable
-		//         0 = disable
-		//
-		// <6:0>   0 TONE-2 / FSK gain
-		//         0 ~ 127
-		//
-		// enable tone-2, set gain
-
-		// REG_72
-		//
-		// <15:0>  0x2854 TONE-2 / FSK frequency control word
-		//         = freq(Hz) * 10.32444 for XTAL 13M / 26M or
-		//         = freq(Hz) * 10.48576 for XTAL 12.8M / 19.2M / 25.6M / 38.4M
-		//
-		// tone-2 = 1200Hz
-
-		// REG_58
-		//
-		// <15:13> 1 FSK TX mode selection
-		//         0 = FSK 1.2K and FSK 2.4K TX .. no tones, direct FM
-		//         1 = FFSK 1200 / 1800 TX
-		//         2 = ???
-		//         3 = FFSK 1200 / 2400 TX
-		//         4 = ???
-		//         5 = NOAA SAME TX
-		//         6 = ???
-		//         7 = ???
-		//
-		// <12:10> 0 FSK RX mode selection
-		//         0 = FSK 1.2K, FSK 2.4K RX and NOAA SAME RX .. no tones, direct FM
-		//         1 = ???
-		//         2 = ???
-		//         3 = ???
-		//         4 = FFSK 1200 / 2400 RX
-		//         5 = ???
-		//         6 = ???
-		//         7 = FFSK 1200 / 1800 RX
-		//
-		// <9:8>   0 FSK RX gain
-		//         0 ~ 3
-		//
-		// <7:6>   0 ???
-		//         0 ~ 3
-		//
-		// <5:4>   0 FSK preamble type selection
-		//         0 = 0xAA or 0x55 due to the MSB of FSK sync byte 0
-		//         1 = ???
-		//         2 = 0x55
-		//         3 = 0xAA
-		//
-		// <3:1>   1 FSK RX bandwidth setting
-		//         0 = FSK 1.2K .. no tones, direct FM
-		//         1 = FFSK 1200 / 1800
-		//         2 = NOAA SAME RX
-		//         3 = ???
-		//         4 = FSK 2.4K and FFSK 1200 / 2400
-		//         5 = ???
-		//         6 = ???
-		//         7 = ???
-		//
-		// <0>     1 FSK enable
-		//         0 = disable
-		//         1 = enable
-
-		// REG_5C
-		//
-		// <15:7>  ???
-		//
-		// <6>     1 CRC option enable
-		//         0 = disable
-		//         1 = enable
-		//
-		// <5:0>   ???
-		//
-		// disable CRC
-
-		// REG_5D
-		//
-		// set the packet size
-
-		if (enable)
-		{
-			const uint16_t fsk_reg59 =
-				(0u << 15) |   // 1 = clear TX FIFO
-				(0u << 14) |   // 1 = clear RX FIFO
-				(0u << 13) |   // 1 = scramble
-				(0u << 12) |   // 1 = enable RX
-				(0u << 11) |   // 1 = enable TX
-				(0u << 10) |   // 1 = invert data when RX
-				(0u <<  9) |   // 1 = invert data when TX
-				(0u <<  8) |   // ???
-				(0u <<  4) |   // 0 ~ 15 preamble length selection .. mdc1200 does not send bit reversals :(
-				(1u <<  3) |   // 0/1 sync length selection
-				(0u <<  0);    // 0 ~ 7  ???
-
-			BK4819_WriteRegister(0x70,
-				( 0u << 15) |    // 0
-				( 0u <<  8) |    // 0
-				( 1u <<  7) |    // 1
-				(96u <<  0));    // 96
-
-			BK4819_WriteRegister(0x72, scale_freq(1200));
-
-			BK4819_WriteRegister(0x58,
-				(1u << 13) |		// 1 FSK TX mode selection
-									//   0 = FSK 1.2K and FSK 2.4K TX .. no tones, direct FM
-									//   1 = FFSK 1200 / 1800 TX
-									//   2 = ???
-									//   3 = FFSK 1200 / 2400 TX
-									//   4 = ???
-									//   5 = NOAA SAME TX
-									//   6 = ???
-									//   7 = ???
-									//
-				(7u << 10) |		// 0 FSK RX mode selection
-									//   0 = FSK 1.2K, FSK 2.4K RX and NOAA SAME RX .. no tones, direct FM
-									//   1 = ???
-									//   2 = ???
-									//   3 = ???
-									//   4 = FFSK 1200 / 2400 RX
-									//   5 = ???
-									//   6 = ???
-									//   7 = FFSK 1200 / 1800 RX
-									//
-				(3u << 8) |			// 0 FSK RX gain
-									//   0 ~ 3
-									//
-				(0u << 6) |			// 0 ???
-									//   0 ~ 3
-									//
-				(0u << 4) |			// 0 FSK preamble type selection
-									//   0 = 0xAA or 0x55 due to the MSB of FSK sync byte 0
-									//   1 = ???
-									//   2 = 0x55
-									//   3 = 0xAA
-									//
-				(1u << 1) |			// 1 FSK RX bandwidth setting
-									//   0 = FSK 1.2K .. no tones, direct FM
-									//   1 = FFSK 1200 / 1800
-									//   2 = NOAA SAME RX
-									//   3 = ???
-									//   4 = FSK 2.4K and FFSK 1200 / 2400
-									//   5 = ???
-									//   6 = ???
-									//   7 = ???
-									//
-				(1u << 0));			// 1 FSK enable
-									//   0 = disable
-									//   1 = enable
-
-			// REG_5A .. bytes 0 & 1 sync pattern
-			//
-			// <15:8> sync byte 0
-			// < 7:0> sync byte 1
-//			BK4819_WriteRegister(0x5A, ((uint16_t)mdc1200_sync_suc_xor[0] << 8) | (mdc1200_sync_suc_xor[1] << 0));
-			BK4819_WriteRegister(0x5A, ((uint16_t)mdc1200_sync_suc_xor[1] << 8) | (mdc1200_sync_suc_xor[2] << 0));
-
-			// REG_5B .. bytes 2 & 3 sync pattern
-			//
-			// <15:8> sync byte 2
-			// < 7:0> sync byte 3
-//			BK4819_WriteRegister(0x5B, ((uint16_t)mdc1200_sync_suc_xor[2] << 8) | (mdc1200_sync_suc_xor[3] << 0));
-			BK4819_WriteRegister(0x5B, ((uint16_t)mdc1200_sync_suc_xor[3] << 8) | (mdc1200_sync_suc_xor[4] << 0));
-
-			// disable CRC
-			BK4819_WriteRegister(0x5C, 0x5625);   // 01010110 0 0 100101
-//			BK4819_WriteRegister(0x5C, 0xAA30);   // 10101010 0 0 110000
-
-			// set the almost full threshold
-			BK4819_WriteRegister(0x5E, (64u << 3) | (1u << 0));  // 0 ~ 127, 0 ~ 7
-
-			{	// packet size .. sync + 14 bytes - size of a single mdc1200 packet
-//				uint16_t size = 1 + (MDC1200_FEC_K * 2);
-				uint16_t size = 0 + (MDC1200_FEC_K * 2);
-//				size -= (fsk_reg59 & (1u << 3)) ? 4 : 2;
-				size = ((size + 1) / 2) * 2;             // round up to even, else FSK RX doesn't work
-				BK4819_WriteRegister(0x5D, ((size - 1) << 8));
-			}
-
-			// clear FIFO's then enable RX
-			BK4819_WriteRegister(0x59, (1u << 15) | (1u << 14) | fsk_reg59);
-			BK4819_WriteRegister(0x59, (1u << 12) | fsk_reg59);
-
-			// clear interrupt flags
-			BK4819_WriteRegister(0x02, 0);
-
-//			BK4819_RX_TurnOn();
-
-			// enable interrupts
-//			BK4819_WriteRegister(0x3F, BK4819_ReadRegister(0x3F) | BK4819_REG_3F_FSK_RX_SYNC | BK4819_REG_3F_FSK_RX_FINISHED | BK4819_REG_3F_FSK_FIFO_ALMOST_FULL);
-		}
-		else
-		{
-			BK4819_WriteRegister(0x70, 0);
-			BK4819_WriteRegister(0x58, 0);
-		}
-	}
 
 	void BK4819_send_MDC1200(const uint8_t op, const uint8_t arg, const uint16_t id, const bool long_preamble)
 	{
@@ -2459,3 +2251,219 @@ void BK4819_enable_mdc1200_rx(const bool enable)
 		BK4819_WriteRegister(0x50, 0x3B20);  // 0011 1011 0010 0000
 	}
 #endif
+
+void enable_msg_rx(const bool enable)
+{
+    // REG_70
+    //
+    // <15>    0 TONE-1
+    //         1 = enable
+    //         0 = disable
+    //
+    // <14:8>  0 TONE-1 gain
+    //
+    // <7>     0 TONE-2
+    //         1 = enable
+    //         0 = disable
+    //
+    // <6:0>   0 TONE-2 / FSK gain
+    //         0 ~ 127
+    //
+    // enable tone-2, set gain
+
+    // REG_72
+    //
+    // <15:0>  0x2854 TONE-2 / FSK frequency control word
+    //         = freq(Hz) * 10.32444 for XTAL 13M / 26M or
+    //         = freq(Hz) * 10.48576 for XTAL 12.8M / 19.2M / 25.6M / 38.4M
+    //
+    // tone-2 = 1200Hz
+
+    // REG_58
+    //
+    // <15:13> 1 FSK TX mode selection
+    //         0 = FSK 1.2K and FSK 2.4K TX .. no tones, direct FM
+    //         1 = FFSK 1200 / 1800 TX
+    //         2 = ???
+    //         3 = FFSK 1200 / 2400 TX
+    //         4 = ???
+    //         5 = NOAA SAME TX
+    //         6 = ???
+    //         7 = ???
+    //
+    // <12:10> 0 FSK RX mode selection
+    //         0 = FSK 1.2K, FSK 2.4K RX and NOAA SAME RX .. no tones, direct FM
+    //         1 = ???
+    //         2 = ???
+    //         3 = ???
+    //         4 = FFSK 1200 / 2400 RX
+    //         5 = ???
+    //         6 = ???
+    //         7 = FFSK 1200 / 1800 RX
+    //
+    // <9:8>   0 FSK RX gain
+    //         0 ~ 3
+    //
+    // <7:6>   0 ???
+    //         0 ~ 3
+    //
+    // <5:4>   0 FSK preamble type selection
+    //         0 = 0xAA or 0x55 due to the MSB of FSK sync byte 0
+    //         1 = ???
+    //         2 = 0x55
+    //         3 = 0xAA
+    //
+    // <3:1>   1 FSK RX bandwidth setting
+    //         0 = FSK 1.2K .. no tones, direct FM
+    //         1 = FFSK 1200 / 1800
+    //         2 = NOAA SAME RX
+    //         3 = ???
+    //         4 = FSK 2.4K and FFSK 1200 / 2400
+    //         5 = ???
+    //         6 = ???
+    //         7 = ???
+    //
+    // <0>     1 FSK enable
+    //         0 = disable
+    //         1 = enable
+
+    // REG_5C
+    //
+    // <15:7>  ???
+    //
+    // <6>     1 CRC option enable
+    //         0 = disable
+    //         1 = enable
+    //
+    // <5:0>   ???
+    //
+    // disable CRC
+
+    // REG_5D
+    //
+    // set the packet size
+
+    if (enable)
+    {
+        const uint16_t fsk_reg59 =
+                (0u << 15) |   // 1 = clear TX FIFO
+                (0u << 14) |   // 1 = clear RX FIFO
+                (0u << 13) |   // 1 = scramble
+                (0u << 12) |   // 1 = enable RX
+                (0u << 11) |   // 1 = enable TX
+                (0u << 10) |   // 1 = invert data when RX
+                (0u <<  9) |   // 1 = invert data when TX
+                (0u <<  8) |   // ???
+                (0u <<  4) |   // 0 ~ 15 preamble length selection .. mdc1200 does not send bit reversals :(
+                (1u <<  3) |   // 0/1 sync length selection
+                (0u <<  0);    // 0 ~ 7  ???
+
+        BK4819_WriteRegister(0x70,
+                             ( 0u << 15) |    // 0
+                             ( 0u <<  8) |    // 0
+                             ( 1u <<  7) |    // 1
+                             (96u <<  0));    // 96
+
+        BK4819_WriteRegister(0x72, scale_freq(1200));
+
+        BK4819_WriteRegister(0x58,
+                             (1u << 13) |		// 1 FSK TX mode selection
+                             //   0 = FSK 1.2K and FSK 2.4K TX .. no tones, direct FM
+                             //   1 = FFSK 1200 / 1800 TX
+                             //   2 = ???
+                             //   3 = FFSK 1200 / 2400 TX
+                             //   4 = ???
+                             //   5 = NOAA SAME TX
+                             //   6 = ???
+                             //   7 = ???
+                             //
+                             (7u << 10) |		// 0 FSK RX mode selection
+                             //   0 = FSK 1.2K, FSK 2.4K RX and NOAA SAME RX .. no tones, direct FM
+                             //   1 = ???
+                             //   2 = ???
+                             //   3 = ???
+                             //   4 = FFSK 1200 / 2400 RX
+                             //   5 = ???
+                             //   6 = ???
+                             //   7 = FFSK 1200 / 1800 RX
+                             //
+                             (3u << 8) |			// 0 FSK RX gain
+                             //   0 ~ 3
+                             //
+                             (0u << 6) |			// 0 ???
+                             //   0 ~ 3
+                             //
+                             (0u << 4) |			// 0 FSK preamble type selection
+                             //   0 = 0xAA or 0x55 due to the MSB of FSK sync byte 0
+                             //   1 = ???
+                             //   2 = 0x55
+                             //   3 = 0xAA
+                             //
+                             (1u << 1) |			// 1 FSK RX bandwidth setting
+                             //   0 = FSK 1.2K .. no tones, direct FM
+                             //   1 = FFSK 1200 / 1800
+                             //   2 = NOAA SAME RX
+                             //   3 = ???
+                             //   4 = FSK 2.4K and FFSK 1200 / 2400
+                             //   5 = ???
+                             //   6 = ???
+                             //   7 = ???
+                             //
+                             (1u << 0));			// 1 FSK enable
+        //   0 = disable
+        //   1 = enable
+
+        // REG_5A .. bytes 0 & 1 sync pattern
+        //
+        // <15:8> sync byte 0
+        // < 7:0> sync byte 1
+//			BK4819_WriteRegister(0x5A, ((uint16_t)mdc1200_sync_suc_xor[0] << 8) | (mdc1200_sync_suc_xor[1] << 0));
+        BK4819_WriteRegister(0x5A,0x7240); //0x7240
+
+        // REG_5B .. bytes 2 & 3 sync pattern
+        //
+        // <15:8> sync byte 2
+        // < 7:0> sync byte 3
+//			BK4819_WriteRegister(0x5B, ((uint16_t)mdc1200_sync_suc_xor[2] << 8) | (mdc1200_sync_suc_xor[3] << 0));
+        BK4819_WriteRegister(0x5B, 0x99a7);//0x99a7
+
+        // disable CRC
+        BK4819_WriteRegister(0x5C, 0x5625);   // 01010110 0 0 100101
+//			BK4819_WriteRegister(0x5C, 0xAA30);   // 10101010 0 0 110000
+
+        // set the almost full threshold
+        BK4819_WriteRegister(0x5E, (64u << 3) | (1u << 0));  // 0 ~ 127, 0 ~ 7
+
+//			{	// packet size .. sync + 14 bytes - size of a single mdc1200 packet
+////				uint16_t size = 1 + (MDC1200_FEC_K * 2);
+//				uint16_t size = 0 + (MDC1200_FEC_K * 2);
+////				size -= (fsk_reg59 & (1u << 3)) ? 4 : 2;
+//				size = ((size + 1) / 2) * 2;             // round up to even, else FSK RX doesn't work
+//				BK4819_WriteRegister(0x5D, ((size - 1) << 8));
+//			}
+        {	// packet size .. sync + 14 bytes - size of a single packet
+
+            uint16_t size = 52;
+            // size -= (fsk_reg59 & (1u << 3)) ? 4 : 2;
+            size = (((size + 1) / 2) * 2) + 2;             // round up to even, else FSK RX doesn't work
+            BK4819_WriteRegister(0x5D, (size << 8));
+        }
+
+        // clear FIFO's then enable RX
+        BK4819_WriteRegister(0x59, (1u << 15) | (1u << 14) | fsk_reg59);
+        BK4819_WriteRegister(0x59, (1u << 12) | fsk_reg59);
+
+        // clear interrupt flags
+        BK4819_WriteRegister(0x02, 0);
+
+//			BK4819_RX_TurnOn();
+
+        // enable interrupts
+//			BK4819_WriteRegister(0x3F, BK4819_ReadRegister(0x3F) | BK4819_REG_3F_FSK_RX_SYNC | BK4819_REG_3F_FSK_RX_FINISHED | BK4819_REG_3F_FSK_FIFO_ALMOST_FULL);
+    }
+    else
+    {
+        BK4819_WriteRegister(0x70, 0);
+        BK4819_WriteRegister(0x58, 0);
+    }
+}

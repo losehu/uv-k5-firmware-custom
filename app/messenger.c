@@ -1,5 +1,5 @@
 #ifdef ENABLE_MESSENGER
-
+#include "app/mdc1200.h"
 #include <string.h>
 #include "driver/keyboard.h"
 #include "driver/st7565.h"
@@ -15,6 +15,7 @@
 #include "driver/system.h"
 #include "app/messenger.h"
 #include "ui/ui.h"
+#include "driver/uart.h"
 #include "stdbool.h"
 #if defined(ENABLE_UART)
 	#include "driver/uart.h"
@@ -234,14 +235,14 @@ void MSG_FSKSendData() {
 	// <15:8> 0x55 FSK Sync Byte 0 (Sync Byte 0 first, then 1,2,3)
 	// <7:0>  0x55 FSK Sync Byte 1
 	//
-	BK4819_WriteRegister(BK4819_REG_5A, 0x5555);                   // bytes 1 & 2
+	BK4819_WriteRegister(BK4819_REG_5A, 0x7240);                   // bytes 1 & 2
 
 	// REG_5B
 	//
 	// <15:8> 0x55 FSK Sync Byte 2 (Sync Byte 0 first, then 1,2,3)
 	// <7:0>  0xAA FSK Sync Byte 3
 	//
-	BK4819_WriteRegister(BK4819_REG_5B, 0x55AA);                   // bytes 2 & 3
+	BK4819_WriteRegister(BK4819_REG_5B, 0x99a7);                   // bytes 2 & 3
 
 	// CRC setting (plus other stuff we don't know what)
 	//
@@ -310,221 +311,6 @@ void MSG_FSKSendData() {
 
 }
 
-void MSG_EnableRX(const bool enable) {
-
-	if (enable) {
-		// REG_70
-		//
-		// <15>    0 TONE-1
-		//         1 = enable
-		//         0 = disable
-		//
-		// <14:8>  0 TONE-1 gain
-		//
-		// <7>     0 TONE-2
-		//         1 = enable
-		//         0 = disable
-		//
-		// <6:0>   0 TONE-2 / FSK gain
-		//         0 ~ 127
-		//
-		// enable tone-2, set gain
-
-		// REG_72
-		//
-		// <15:0>  0x2854 TONE-2 / FSK frequency control word
-		//         = freq(Hz) * 10.32444 for XTAL 13M / 26M or
-		//         = freq(Hz) * 10.48576 for XTAL 12.8M / 19.2M / 25.6M / 38.4M
-		//
-		// tone-2 = 1200Hz
-
-		// REG_58
-		//
-		// <15:13> 1 FSK TX mode selection
-		//         0 = FSK 1.2K and FSK 2.4K TX .. no tones, direct FM
-		//         1 = FFSK 1200 / 1800 TX
-		//         2 = ???
-		//         3 = FFSK 1200 / 2400 TX
-		//         4 = ???
-		//         5 = NOAA SAME TX
-		//         6 = ???
-		//         7 = ???
-		//
-		// <12:10> 0 FSK RX mode selection
-		//         0 = FSK 1.2K, FSK 2.4K RX and NOAA SAME RX .. no tones, direct FM
-		//         1 = ???
-		//         2 = ???
-		//         3 = ???
-		//         4 = FFSK 1200 / 2400 RX
-		//         5 = ???
-		//         6 = ???
-		//         7 = FFSK 1200 / 1800 RX
-		//
-		// <9:8>   0 FSK RX gain
-		//         0 ~ 3
-		//
-		// <7:6>   0 ???
-		//         0 ~ 3
-		//
-		// <5:4>   0 FSK preamble type selection
-		//         0 = 0xAA or 0x55 due to the MSB of FSK sync byte 0
-		//         1 = ???
-		//         2 = 0x55
-		//         3 = 0xAA
-		//
-		// <3:1>   1 FSK RX bandwidth setting
-		//         0 = FSK 1.2K .. no tones, direct FM
-		//         1 = FFSK 1200 / 1800
-		//         2 = NOAA SAME RX
-		//         3 = ???
-		//         4 = FSK 2.4K and FFSK 1200 / 2400
-		//         5 = ???
-		//         6 = ???
-		//         7 = ???
-		//
-		// <0>     1 FSK enable
-		//         0 = disable
-		//         1 = enable
-
-		// REG_5C
-		//
-		// <15:7>  ???
-		//
-		// <6>     1 CRC option enable
-		//         0 = disable
-		//         1 = enable
-		//
-		// <5:0>   ???
-		//
-		// disable CRC
-
-		// REG_5D
-		//
-		// set the packet size
-
-		const uint16_t fsk_reg59 =
-			(0u << 15) |   // 1 = clear TX FIFO
-			(0u << 14) |   // 1 = clear RX FIFO
-			(0u << 13) |   // 1 = scramble
-			(0u << 12) |   // 1 = enable RX
-			(0u << 11) |   // 1 = enable TX
-			(0u << 10) |   // 1 = invert data when RX
-			(0u <<  9) |   // 1 = invert data when TX
-			(0u <<  8) |   // ???
-			(0u <<  4) |   // 0 ~ 15 preamble length selection ..
-			(1u <<  3) |   // 0/1 sync length selection
-			(0u <<  0);    // 0 ~ 7  ???
-
-		// REG_70
-		//
-		// <15>   0 Enable TONE1
-		//        1 = Enable
-		//        0 = Disable
-		//
-		// <14:8> 0 TONE1 tuning gain
-		//        0 ~ 127
-		//
-		// <7>    0 Enable TONE2
-		//        1 = Enable
-		//        0 = Disable
-		//
-		// <6:0>  0 TONE2/FSK tuning gain
-		//        0 ~ 127
-		//
-		BK4819_WriteRegister(BK4819_REG_70,
-			( 0u << 15) |    // 0
-			( 0u <<  8) |    // 0
-			( 1u <<  7) |    // 1
-			(96u <<  0));    // 96
-
-		// Tone2 baudrate 1200
-		BK4819_WriteRegister(BK4819_REG_72, TONE2_FREQ);
-
-		BK4819_WriteRegister(BK4819_REG_58,
-			(1u << 13) |		// 1 FSK TX mode selection
-								//   0 = FSK 1.2K and FSK 2.4K TX .. no tones, direct FM
-								//   1 = FFSK 1200 / 1800 TX
-								//   2 = ???
-								//   3 = FFSK 1200 / 2400 TX
-								//   4 = ???
-								//   5 = NOAA SAME TX
-								//   6 = ???
-								//   7 = ???
-								//
-			(7u << 10) |		// 0 FSK RX mode selection
-								//   0 = FSK 1.2K, FSK 2.4K RX and NOAA SAME RX .. no tones, direct FM
-								//   1 = ???
-								//   2 = ???
-								//   3 = ???
-								//   4 = FFSK 1200 / 2400 RX
-								//   5 = ???
-								//   6 = ???
-								//   7 = FFSK 1200 / 1800 RX
-								//
-			(3u << 8) |			// 0 FSK RX gain
-								//   0 ~ 3
-								//
-			(0u << 6) |			// 0 ???
-								//   0 ~ 3
-								//
-			(0u << 4) |			// 0 FSK preamble type selection
-								//   0 = 0xAA or 0x55 due to the MSB of FSK sync byte 0
-								//   1 = ???
-								//   2 = 0x55
-								//   3 = 0xAA
-								//
-			(1u << 1) |			// 1 FSK RX bandwidth setting
-								//   0 = FSK 1.2K .. no tones, direct FM
-								//   1 = FFSK 1200 / 1800
-								//   2 = NOAA SAME RX
-								//   3 = ???
-								//   4 = FSK 2.4K and FFSK 1200 / 2400
-								//   5 = ???
-								//   6 = ???
-								//   7 = ???
-								//
-			(1u << 0));			// 1 FSK enable
-								//   0 = disable
-								//   1 = enable
-
-		// REG_5A .. bytes 0 & 1 sync pattern
-		//
-		// <15:8> sync byte 0
-		// < 7:0> sync byte 1
-		BK4819_WriteRegister(BK4819_REG_5A, 0x5555);
-
-		// REG_5B .. bytes 2 & 3 sync pattern
-		//
-		// <15:8> sync byte 2
-		// < 7:0> sync byte 3
-		BK4819_WriteRegister(BK4819_REG_5B, 0x55AA);
-
-		// disable CRC
-		BK4819_WriteRegister(BK4819_REG_5C, 0x5625);
-		// BK4819_WriteRegister(BK4819_REG_5C, 0xAA30);   // 10101010 0 0 110000
-
-		// set the almost full threshold
-		BK4819_WriteRegister(BK4819_REG_5E, (64u << 3) | (1u << 0));  // 0 ~ 127, 0 ~ 7
-
-		{	// packet size .. sync + 14 bytes - size of a single packet
-
-			uint16_t size = (MSG_HEADER_LENGTH + MAX_RX_MSG_LENGTH);
-			// size -= (fsk_reg59 & (1u << 3)) ? 4 : 2;
-			size = (((size + 1) / 2) * 2) + 2;             // round up to even, else FSK RX doesn't work
-			BK4819_WriteRegister(BK4819_REG_5D, (size << 8));
-		}
-
-		// clear FIFO's then enable RX
-		BK4819_WriteRegister(BK4819_REG_59, (1u << 15) | (1u << 14) | fsk_reg59);
-		BK4819_WriteRegister(BK4819_REG_59, (1u << 12) | fsk_reg59);
-
-		BK4819_WriteRegister(BK4819_REG_02, 0);
-
-	} else {
-		BK4819_WriteRegister(BK4819_REG_70, 0);
-		BK4819_WriteRegister(BK4819_REG_58, 0);
-	}
-}
 
 
 // -----------------------------------------------------
@@ -588,7 +374,7 @@ void MSG_Send(const char txMessage[TX_MSG_LENGTH], bool bServiceMessage) {
 
 		BK4819_ToggleGpioOut(BK4819_GPIO5_PIN1_RED, false);
 
-		MSG_EnableRX(true);
+		enable_msg_rx(true);
 		if (!bServiceMessage) {
 			moveUP(rxMessage);
 			sprintf(rxMessage[3], "> %s", txMessage);
@@ -616,93 +402,153 @@ uint8_t validate_char( uint8_t rchar ) {
 	}
 	return 32;
 }
+void solve_sign(const uint16_t interrupt_bits) {
 
-void MSG_StorePacket(const uint16_t interrupt_bits) {
 
-	//const uint16_t rx_sync_flags   = BK4819_ReadRegister(BK4819_REG_0B);
+    //const uint16_t rx_sync_flags   = BK4819_ReadRegister(BK4819_REG_0B);
 
-	const bool rx_sync             = (interrupt_bits & BK4819_REG_02_FSK_RX_SYNC) ? true : false;
-	const bool rx_fifo_almost_full = (interrupt_bits & BK4819_REG_02_FSK_FIFO_ALMOST_FULL) ? true : false;
-	const bool rx_finished         = (interrupt_bits & BK4819_REG_02_FSK_RX_FINISHED) ? true : false;
+    const bool rx_sync             = (interrupt_bits & BK4819_REG_02_FSK_RX_SYNC) ? true : false;
+    const bool rx_fifo_almost_full = (interrupt_bits & BK4819_REG_02_FSK_FIFO_ALMOST_FULL) ? true : false;
+    const bool rx_finished         = (interrupt_bits & BK4819_REG_02_FSK_RX_FINISHED) ? true : false;
 
-	//UART_printf("\nMSG : S%i, F%i, E%i | %i", rx_sync, rx_fifo_almost_full, rx_finished, interrupt_bits);
+    const uint16_t rx_sync_flags = BK4819_ReadRegister(0x0B);
+    const uint16_t fsk_reg59 = BK4819_ReadRegister(0x59) & ~((1u << 15) | (1u << 14) | (1u << 12) | (1u << 11));
+    const bool rx_sync_neg = (rx_sync_flags & (1u << 7)) ? true : false;
 
-	if (rx_sync) {
-		gFSKWriteIndex = 0;
-		memset(msgFSKBuffer, 0, sizeof(msgFSKBuffer));
-		msgStatus = RECEIVING;
-	}
+    if (rx_sync) {
+#ifdef ENABLE_MESSENGER
 
-	if (rx_fifo_almost_full && msgStatus == RECEIVING) {
+        gFSKWriteIndex = 0;
+        memset(msgFSKBuffer, 0, sizeof(msgFSKBuffer));
+        msgStatus = RECEIVING;
 
-		const uint16_t count = BK4819_ReadRegister(BK4819_REG_5E) & (7u << 0);  // almost full threshold
-		for (uint16_t i = 0; i < count; i++) {
-			const uint16_t word = BK4819_ReadRegister(BK4819_REG_5F);
-			if (gFSKWriteIndex < sizeof(msgFSKBuffer))
-				msgFSKBuffer[gFSKWriteIndex++] = validate_char((word >> 0) & 0xff);
-			if (gFSKWriteIndex < sizeof(msgFSKBuffer))
-				msgFSKBuffer[gFSKWriteIndex++] = validate_char((word >> 8) & 0xff);
-		}
+#endif
+#ifdef ENABLE_MDC1200
+        mdc1200_rx_buffer_index = 0;
 
-		SYSTEM_DelayMs(10);
+        {
+            memset(mdc1200_rx_buffer, 0, sizeof(mdc1200_rx_buffer));
+            for (int  i = 0; i < sizeof(mdc1200_sync_suc_xor); i++)
+                mdc1200_rx_buffer[mdc1200_rx_buffer_index++] = mdc1200_sync_suc_xor[i] ^ (rx_sync_neg ? 0xFF : 0x00);
+        }
+#endif
+    }
 
-	}
+    if (rx_fifo_almost_full  ) {
+        const uint16_t count = BK4819_ReadRegister(BK4819_REG_5E) & (7u << 0);  // almost full threshold
+        uint16_t read_reg[count];
+        #ifdef ENABLE_MDC1200
 
-	if (rx_finished) {
+        {
 
-		const uint16_t fsk_reg59 = BK4819_ReadRegister(BK4819_REG_59) & ~((1u << 15) | (1u << 14) | (1u << 12) | (1u << 11));
+            // fetch received packet data
+            for (int i = 0; i < count; i++) {
+                read_reg[i]=BK4819_ReadRegister(0x5F);
+                const uint16_t word =read_reg[i] ^ (rx_sync_neg ? 0xFFFF : 0x0000);
 
-		BK4819_WriteRegister(BK4819_REG_59, (1u << 15) | (1u << 14) | fsk_reg59);
-		BK4819_WriteRegister(BK4819_REG_59, (1u << 12) | fsk_reg59);
-		msgStatus = READY;
 
-		if (gFSKWriteIndex > 2) {
+                if (mdc1200_rx_buffer_index < sizeof(mdc1200_rx_buffer))
+                    mdc1200_rx_buffer[mdc1200_rx_buffer_index++] = (word >> 0) & 0xff;
 
-			// If there's three 0x1b bytes, then it's a service message
-			if (msgFSKBuffer[2] == 0x1b && msgFSKBuffer[3] == 0x1b && msgFSKBuffer[4] == 0x1b) {
-			#ifdef ENABLE_MESSENGER_DELIVERY_NOTIFICATION
-				// If the next 4 bytes are "RCVD", then it's a delivery notification
+                if (mdc1200_rx_buffer_index < sizeof(mdc1200_rx_buffer))
+                    mdc1200_rx_buffer[mdc1200_rx_buffer_index++] = (word >> 8) & 0xff;
+            }
+
+
+            if (mdc1200_rx_buffer_index >= sizeof(mdc1200_rx_buffer)) {
+//                BK4819_WriteRegister(0x59, (1u << 15) | (1u << 14) | fsk_reg59);
+//                BK4819_WriteRegister(0x59, (1u << 12) | fsk_reg59);
+
+                if (MDC1200_process_rx_data(
+                        mdc1200_rx_buffer,
+                        mdc1200_rx_buffer_index,
+                        &mdc1200_op,
+                        &mdc1200_arg,
+                        &mdc1200_unit_id)) {
+                    mdc1200_rx_ready_tick_500ms = 2 * 5;  // 6 second MDC display time
+                    gUpdateDisplay = true;
+
+                }
+
+                mdc1200_rx_buffer_index = 0;
+            }
+
+        }
+        #endif
+#ifdef ENABLE_MESSENGER
+        if(msgStatus == RECEIVING) {
+            for (uint16_t i = 0; i < count; i++) {
+                const uint16_t word = read_reg[i];
+                if (gFSKWriteIndex < sizeof(msgFSKBuffer))
+                    msgFSKBuffer[gFSKWriteIndex++] = validate_char((word >> 0) & 0xff);
+                if (gFSKWriteIndex < sizeof(msgFSKBuffer))
+                    msgFSKBuffer[gFSKWriteIndex++] = validate_char((word >> 8) & 0xff);
+            }
+
+            SYSTEM_DelayMs(10);
+        }
+#endif
+    }
+
+    if (rx_finished) {
+
+        const uint16_t fsk_reg59 = BK4819_ReadRegister(BK4819_REG_59) & ~((1u << 15) | (1u << 14) | (1u << 12) | (1u << 11));
+
+        BK4819_WriteRegister(BK4819_REG_59, (1u << 15) | (1u << 14) | fsk_reg59);
+        BK4819_WriteRegister(BK4819_REG_59, (1u << 12) | fsk_reg59);
+#ifdef ENABLE_MESSENGER
+
+        msgStatus = READY;
+
+        if (gFSKWriteIndex > 2) {
+
+            // If there's three 0x1b bytes, then it's a service message
+            if (msgFSKBuffer[2] == 0x1b && msgFSKBuffer[3] == 0x1b && msgFSKBuffer[4] == 0x1b) {
+#ifdef ENABLE_MESSENGER_DELIVERY_NOTIFICATION
+                // If the next 4 bytes are "RCVD", then it's a delivery notification
 				if (msgFSKBuffer[5] == 'R' && msgFSKBuffer[6] == 'C' && msgFSKBuffer[7] == 'V' && msgFSKBuffer[8] == 'D') {
 //					UART_printf("SVC<RCPT\r\n");
 					rxMessage[3][strlen(rxMessage[3])] = '+';
 					gUpdateStatus = true;
 					gUpdateDisplay = true;
 				}
-			#endif
-			} else {
-				moveUP(rxMessage);
-				if (msgFSKBuffer[0] != 'M' || msgFSKBuffer[1] != 'S') {
-					snprintf(rxMessage[3], TX_MSG_LENGTH + 2, "? unknown msg format!");
-				}
-				else
-				{
-					snprintf(rxMessage[3], TX_MSG_LENGTH + 2, "< %s", &msgFSKBuffer[2]);
-				}
+#endif
+            } else {
+                moveUP(rxMessage);
+                if (msgFSKBuffer[0] != 'M' || msgFSKBuffer[1] != 'S') {
+                    snprintf(rxMessage[3], TX_MSG_LENGTH + 2, "? unknown msg format!");
+                }
+                else
+                {
+                    snprintf(rxMessage[3], TX_MSG_LENGTH + 2, "< %s", &msgFSKBuffer[2]);
+                }
 
 
 
-				if ( gScreenToDisplay != DISPLAY_MSG ) {
-					hasNewMessage = 1;
-					gUpdateStatus = true;
-					gUpdateDisplay = true;
-			#ifdef ENABLE_MESSENGER_NOTIFICATION
-					gPlayMSGRing = true;
-			#endif
-				}
-				else {
-					gUpdateDisplay = true;
-				}
-			}
-		}
+                if ( gScreenToDisplay != DISPLAY_MSG ) {
+                    hasNewMessage = 1;
+                    gUpdateStatus = true;
+                    gUpdateDisplay = true;
+#ifdef ENABLE_MESSENGER_NOTIFICATION
+                    gPlayMSGRing = true;
+#endif
+                }
+                else {
+                    gUpdateDisplay = true;
+                }
+            }
+        }
 
-		gFSKWriteIndex = 0;
-		// Transmit a message to the sender that we have received the message (Unless it's a service message)
-		if (msgFSKBuffer[0] == 'M' && msgFSKBuffer[1] == 'S' && msgFSKBuffer[2] != 0x1b) {
+        gFSKWriteIndex = 0;
+        // Transmit a message to the sender that we have received the message (Unless it's a service message)
+        if (msgFSKBuffer[0] == 'M' && msgFSKBuffer[1] == 'S' && msgFSKBuffer[2] != 0x1b) {
 //            stop_mdc_rx=1;
-			MSG_Send("\x1b\x1b\x1bRCVD", true);
-		}
-	}
+            MSG_Send("\x1b\x1b\x1bRCVD", true);
+        }
+#endif
+    }
 }
+
 
 void MSG_Init() {
 	memset(rxMessage, 0, sizeof(rxMessage));

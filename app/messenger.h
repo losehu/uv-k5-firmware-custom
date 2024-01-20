@@ -30,13 +30,12 @@ extern char rxMessage[4][MAX_RX_MSG_LENGTH + 2];
 extern uint8_t hasNewMessage;
 extern uint8_t keyTickCounter;
 
-void MSG_EnableRX(const bool enable);
-void MSG_StorePacket(const uint16_t interrupt_bits);
 void MSG_Init();
 void MSG_ProcessKeys(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld);
 void MSG_Send(const char txMessage[TX_MSG_LENGTH], bool bServiceMessage);
 extern unsigned char cIndex ;
 //extern bool stop_mdc_rx;
+void solve_sign(const uint16_t interrupt_bits) ;
 
 #endif
 

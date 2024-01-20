@@ -729,12 +729,13 @@ void RADIO_SetupRegisters(bool switchToForeground)
     // enable/disable BK4819 selected interrupts
 
         //OK?
-#ifdef ENABLE_MESSENGER
-    MSG_EnableRX(true);
-	InterruptMask |= BK4819_REG_3F_FSK_RX_SYNC | BK4819_REG_3F_FSK_RX_FINISHED | BK4819_REG_3F_FSK_FIFO_ALMOST_FULL | BK4819_REG_3F_FSK_TX_FINISHED;
+#if defined(ENABLE_MESSENGER) || defined(ENABLE_MDC1200)
+    enable_msg_rx(true);
 #endif
-#ifdef ENABLE_MDC1200
-    BK4819_enable_mdc1200_rx(true);
+#ifdef ENABLE_MESSENGER
+	InterruptMask |= BK4819_REG_3F_FSK_RX_SYNC | BK4819_REG_3F_FSK_RX_FINISHED | BK4819_REG_3F_FSK_FIFO_ALMOST_FULL | BK4819_REG_3F_FSK_TX_FINISHED;
+
+#elif defined(ENABLE_MDC1200)
 		InterruptMask |= BK4819_REG_3F_FSK_RX_SYNC | BK4819_REG_3F_FSK_RX_FINISHED | BK4819_REG_3F_FSK_FIFO_ALMOST_FULL;
 #endif
     BK4819_WriteRegister(BK4819_REG_3F, InterruptMask);

@@ -11,7 +11,7 @@ uint16_t MDC_ID = 0X542B;
 const uint8_t mdc1200_pre_amble[] = {0x00, 0x00, 0x00};
 const uint8_t mdc1200_sync[5] = {0x07, 0x09, 0x2a, 0x44, 0x6f};
 
-uint8_t mdc1200_sync_suc_xor[sizeof(mdc1200_sync)];
+const uint8_t mdc1200_sync_suc_xor[5]={0xfb,0x72,0x40,0x99,0xa7};
 
 
 #if 1
@@ -437,83 +437,11 @@ uint8_t mdc1200_op;
 uint8_t mdc1200_arg;
 uint16_t mdc1200_unit_id;
 uint8_t mdc1200_rx_ready_tick_500ms;
-void MDC1200_process_rx(const uint16_t interrupt_bits) {
-
-    const uint16_t rx_sync_flags = BK4819_ReadRegister(0x0B);
-    const uint16_t fsk_reg59 = BK4819_ReadRegister(0x59) & ~((1u << 15) | (1u << 14) | (1u << 12) | (1u << 11));
-
-    const bool rx_sync = (interrupt_bits & BK4819_REG_02_FSK_RX_SYNC) ? true : false;
-    const bool rx_sync_neg = (rx_sync_flags & (1u << 7)) ? true : false;
-    const bool rx_fifo_almost_full = (interrupt_bits & BK4819_REG_02_FSK_FIFO_ALMOST_FULL) ? true : false;
-    const bool rx_finished = (interrupt_bits & BK4819_REG_02_FSK_RX_FINISHED) ? true : false;
-
-
-    if (rx_sync) {
-        mdc1200_rx_buffer_index = 0;
-
-        {
-            unsigned int i;
-            memset(mdc1200_rx_buffer, 0, sizeof(mdc1200_rx_buffer));
-            for (i = 0; i < sizeof(mdc1200_sync_suc_xor); i++)
-                mdc1200_rx_buffer[mdc1200_rx_buffer_index++] = mdc1200_sync_suc_xor[i] ^ (rx_sync_neg ? 0xFF : 0x00);
-        }
-
-
-    }
-
-    if (rx_fifo_almost_full) {
-        unsigned int i;
-        const unsigned int count = BK4819_ReadRegister(0x5E) & (7u << 0);  // almost full threshold
-
-
-        // fetch received packet data
-        for (i = 0; i < count; i++) {
-            const uint16_t word = BK4819_ReadRegister(0x5F) ^ (rx_sync_neg ? 0xFFFF : 0x0000);
-
-
-            if (mdc1200_rx_buffer_index < sizeof(mdc1200_rx_buffer))
-                mdc1200_rx_buffer[mdc1200_rx_buffer_index++] = (word >> 0) & 0xff;
-
-            if (mdc1200_rx_buffer_index < sizeof(mdc1200_rx_buffer))
-                mdc1200_rx_buffer[mdc1200_rx_buffer_index++] = (word >> 8) & 0xff;
-        }
-
-
-        if (mdc1200_rx_buffer_index >= sizeof(mdc1200_rx_buffer)) {
-            BK4819_WriteRegister(0x59, (1u << 15) | (1u << 14) | fsk_reg59);
-            BK4819_WriteRegister(0x59, (1u << 12) | fsk_reg59);
-
-            if (MDC1200_process_rx_data(
-                    mdc1200_rx_buffer,
-                    mdc1200_rx_buffer_index,
-                    &mdc1200_op,
-                    &mdc1200_arg,
-                    &mdc1200_unit_id)) {
-                mdc1200_rx_ready_tick_500ms = 2 * 5;  // 6 second MDC display time
-                gUpdateDisplay = true;
-
-            }
-
-            mdc1200_rx_buffer_index = 0;
-        }
-    }
-
-    if (rx_finished) {
-        mdc1200_rx_buffer_index = 0;
-
-
-        BK4819_WriteRegister(0x59, (1u << 15) | (1u << 14) | fsk_reg59);
-        BK4819_WriteRegister(0x59, (1u << 12) | fsk_reg59);
-
-
-    }
-
-}
 
 
 void MDC1200_init(void) {
     memcpy(mdc1200_sync_suc_xor, mdc1200_sync, sizeof(mdc1200_sync));
-    xor_modulation(mdc1200_sync_suc_xor, sizeof(mdc1200_sync_suc_xor));
+//    xor_modulation(mdc1200_sync_suc_xor, sizeof(mdc1200_sync_suc_xor));
 
     MDC1200_reset_rx();
 }
