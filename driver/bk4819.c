@@ -16,7 +16,7 @@
 #include "app/messenger.h"
 #include <stdint.h>
 #include <stdio.h>
-
+#include "string.h"
 #include "settings.h"
 #include "../audio.h"
 #include "../bsp/dp32g030/gpio.h"
@@ -2465,5 +2465,152 @@ void enable_msg_rx(const bool enable)
     {
         BK4819_WriteRegister(0x70, 0);
         BK4819_WriteRegister(0x58, 0);
+    }
+}
+
+void solve_sign(const uint16_t interrupt_bits) {
+
+
+    //const uint16_t rx_sync_flags   = BK4819_ReadRegister(BK4819_REG_0B);
+
+    const bool rx_sync             = (interrupt_bits & BK4819_REG_02_FSK_RX_SYNC) ? true : false;
+    const bool rx_fifo_almost_full = (interrupt_bits & BK4819_REG_02_FSK_FIFO_ALMOST_FULL) ? true : false;
+    const bool rx_finished         = (interrupt_bits & BK4819_REG_02_FSK_RX_FINISHED) ? true : false;
+
+    const uint16_t rx_sync_flags = BK4819_ReadRegister(0x0B);
+    const uint16_t fsk_reg59 = BK4819_ReadRegister(0x59) & ~((1u << 15) | (1u << 14) | (1u << 12) | (1u << 11));
+    const bool rx_sync_neg = (rx_sync_flags & (1u << 7)) ? true : false;
+
+    if (rx_sync) {
+#ifdef ENABLE_MESSENGER
+
+        gFSKWriteIndex = 0;
+        memset(msgFSKBuffer, 0, sizeof(msgFSKBuffer));
+        msgStatus = RECEIVING;
+
+#endif
+#ifdef ENABLE_MDC1200
+        mdc1200_rx_buffer_index = 0;
+
+        {
+            memset(mdc1200_rx_buffer, 0, sizeof(mdc1200_rx_buffer));
+            for (int  i = 0; i < sizeof(mdc1200_sync_suc_xor); i++)
+                mdc1200_rx_buffer[mdc1200_rx_buffer_index++] = mdc1200_sync_suc_xor[i] ^ (rx_sync_neg ? 0xFF : 0x00);
+        }
+#endif
+    }
+
+    if (rx_fifo_almost_full  ) {
+        const uint16_t count = BK4819_ReadRegister(BK4819_REG_5E) & (7u << 0);  // almost full threshold
+        uint16_t read_reg[count];
+#ifdef ENABLE_MDC1200
+
+        {
+
+            // fetch received packet data
+            for (int i = 0; i < count; i++) {
+                read_reg[i]=BK4819_ReadRegister(0x5F);
+                const uint16_t word =read_reg[i] ^ (rx_sync_neg ? 0xFFFF : 0x0000);
+
+
+                if (mdc1200_rx_buffer_index < sizeof(mdc1200_rx_buffer))
+                    mdc1200_rx_buffer[mdc1200_rx_buffer_index++] = (word >> 0) & 0xff;
+
+                if (mdc1200_rx_buffer_index < sizeof(mdc1200_rx_buffer))
+                    mdc1200_rx_buffer[mdc1200_rx_buffer_index++] = (word >> 8) & 0xff;
+            }
+
+
+            if (mdc1200_rx_buffer_index >= sizeof(mdc1200_rx_buffer)) {
+//                BK4819_WriteRegister(0x59, (1u << 15) | (1u << 14) | fsk_reg59);
+//                BK4819_WriteRegister(0x59, (1u << 12) | fsk_reg59);
+
+                if (MDC1200_process_rx_data(
+                        mdc1200_rx_buffer,
+                        mdc1200_rx_buffer_index,
+                        &mdc1200_op,
+                        &mdc1200_arg,
+                        &mdc1200_unit_id)) {
+                    mdc1200_rx_ready_tick_500ms = 2 * 5;  // 6 second MDC display time
+                    gUpdateDisplay = true;
+
+                }
+
+                mdc1200_rx_buffer_index = 0;
+            }
+
+        }
+#endif
+#ifdef ENABLE_MESSENGER
+        if(msgStatus == RECEIVING) {
+            for (uint16_t i = 0; i < count; i++) {
+                const uint16_t word = read_reg[i];
+                if (gFSKWriteIndex < sizeof(msgFSKBuffer))
+                    msgFSKBuffer[gFSKWriteIndex++] = validate_char((word >> 0) & 0xff);
+                if (gFSKWriteIndex < sizeof(msgFSKBuffer))
+                    msgFSKBuffer[gFSKWriteIndex++] = validate_char((word >> 8) & 0xff);
+            }
+
+            SYSTEM_DelayMs(10);
+        }
+#endif
+    }
+
+    if (rx_finished) {
+
+        const uint16_t fsk_reg59 = BK4819_ReadRegister(BK4819_REG_59) & ~((1u << 15) | (1u << 14) | (1u << 12) | (1u << 11));
+
+        BK4819_WriteRegister(BK4819_REG_59, (1u << 15) | (1u << 14) | fsk_reg59);
+        BK4819_WriteRegister(BK4819_REG_59, (1u << 12) | fsk_reg59);
+#ifdef ENABLE_MESSENGER
+
+        msgStatus = READY;
+
+        if (gFSKWriteIndex > 2) {
+
+            // If there's three 0x1b bytes, then it's a service message
+            if (msgFSKBuffer[2] == 0x1b && msgFSKBuffer[3] == 0x1b && msgFSKBuffer[4] == 0x1b) {
+#ifdef ENABLE_MESSENGER_DELIVERY_NOTIFICATION
+                // If the next 4 bytes are "RCVD", then it's a delivery notification
+				if (msgFSKBuffer[5] == 'R' && msgFSKBuffer[6] == 'C' && msgFSKBuffer[7] == 'V' && msgFSKBuffer[8] == 'D') {
+//					UART_printf("SVC<RCPT\r\n");
+					rxMessage[3][strlen(rxMessage[3])] = '+';
+					gUpdateStatus = true;
+					gUpdateDisplay = true;
+				}
+#endif
+            } else {
+                moveUP(rxMessage);
+                if (msgFSKBuffer[0] != 'M' || msgFSKBuffer[1] != 'S') {
+                    snprintf(rxMessage[3], TX_MSG_LENGTH + 2, "? unknown msg format!");
+                }
+                else
+                {
+                    snprintf(rxMessage[3], TX_MSG_LENGTH + 2, "< %s", &msgFSKBuffer[2]);
+                }
+
+
+
+                if ( gScreenToDisplay != DISPLAY_MSG ) {
+                    hasNewMessage = 1;
+                    gUpdateStatus = true;
+                    gUpdateDisplay = true;
+#ifdef ENABLE_MESSENGER_NOTIFICATION
+                    gPlayMSGRing = true;
+#endif
+                }
+                else {
+                    gUpdateDisplay = true;
+                }
+            }
+        }
+
+        gFSKWriteIndex = 0;
+        // Transmit a message to the sender that we have received the message (Unless it's a service message)
+        if (msgFSKBuffer[0] == 'M' && msgFSKBuffer[1] == 'S' && msgFSKBuffer[2] != 0x1b) {
+//            stop_mdc_rx=1;
+            MSG_Send("\x1b\x1b\x1bRCVD", true);
+        }
+#endif
     }
 }

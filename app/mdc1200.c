@@ -430,7 +430,7 @@ bool MDC1200_process_rx_data(
     return false;
 }
 
-uint8_t mdc1200_rx_buffer[sizeof(mdc1200_sync_suc_xor) + (MDC1200_FEC_K * 2)];
+uint8_t mdc1200_rx_buffer[5 + (MDC1200_FEC_K * 2)];
 unsigned int mdc1200_rx_buffer_index = 0;
 
 uint8_t mdc1200_op;
