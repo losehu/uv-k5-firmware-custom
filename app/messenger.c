@@ -20,6 +20,7 @@
 #include "driver/uart.h"
 #endif
 #ifdef ENABLE_MESSENGER
+bool stop_mdc_flag=0;
 
 
 
@@ -325,7 +326,7 @@ void moveUP(char (*rxMessages)[MAX_RX_MSG_LENGTH + 2]) {
 void MSG_Send(const char txMessage[TX_MSG_LENGTH], bool bServiceMessage) {
 
 	if ( msgStatus != READY ) return;
-
+    stop_mdc_flag=1;
 	if ( strlen(txMessage) > 0 && (TX_freq_check(gCurrentVfo->pTX->Frequency) == 0) ) {
 
 		msgStatus = SENDING;
@@ -391,6 +392,7 @@ void MSG_Send(const char txMessage[TX_MSG_LENGTH], bool bServiceMessage) {
 		AUDIO_PlayBeep(BEEP_500HZ_60MS_DOUBLE_BEEP_OPTIONAL);
 	}
     #endif
+    stop_mdc_flag=0;
 }
 
 uint8_t validate_char( uint8_t rchar ) {
@@ -641,34 +643,32 @@ void solve_sign(const uint16_t interrupt_bits) {
 #ifdef ENABLE_MESSENGER_DELIVERY_NOTIFICATION
                 // If the next 4 bytes are "RCVD", then it's a delivery notification
 				if (msgFSKBuffer[5] == 'R' && msgFSKBuffer[6] == 'C' && msgFSKBuffer[7] == 'V' && msgFSKBuffer[8] == 'D') {
-//					UART_printf("SVC<RCPT\r\n");
 					rxMessage[3][strlen(rxMessage[3])] = '+';
 					gUpdateStatus = true;
 					gUpdateDisplay = true;
 				}
 #endif
             } else {
-                moveUP(rxMessage);
-                if (msgFSKBuffer[0] != 'M' || msgFSKBuffer[1] != 'S') {
-                    snprintf(rxMessage[3], TX_MSG_LENGTH + 2, "? unknown msg format!");
-                }
-                else
+                bool show_flag=0;
+                if (msgFSKBuffer[0] == 'M' && msgFSKBuffer[1] == 'S')
                 {
+                    moveUP(rxMessage);
+                    show_flag=1;
                     snprintf(rxMessage[3], TX_MSG_LENGTH + 2, "< %s", &msgFSKBuffer[2]);
                 }
 
-
-
-                if ( gScreenToDisplay != DISPLAY_MSG ) {
-                    hasNewMessage = 1;
-                    gUpdateStatus = true;
-                    gUpdateDisplay = true;
-#ifdef ENABLE_MESSENGER_NOTIFICATION
-                    gPlayMSGRing = true;
-#endif
-                }
-                else {
-                    gUpdateDisplay = true;
+                if(show_flag){
+                    if ( gScreenToDisplay != DISPLAY_MSG ) {
+                        hasNewMessage = 1;
+                        gUpdateStatus = true;
+                        gUpdateDisplay = true;
+    #ifdef ENABLE_MESSENGER_NOTIFICATION
+                        gPlayMSGRing = true;
+    #endif
+                    }
+                    else {
+                        gUpdateDisplay = true;
+                    }
                 }
             }
         }

@@ -199,8 +199,12 @@ enable_msg_rx(false);
     DTMF_Reply();
 #ifdef ENABLE_MDC1200
 
-    if (gEeprom.ROGER == ROGER_MODE_MDC_HEAD || gEeprom.ROGER == ROGER_MODE_MDC_BOTH ||
-        gEeprom.ROGER == ROGER_MODE_MDC_HEAD_ROGER) {
+    if ((gEeprom.ROGER == ROGER_MODE_MDC_HEAD || gEeprom.ROGER == ROGER_MODE_MDC_BOTH ||gEeprom.ROGER == ROGER_MODE_MDC_HEAD_ROGER)
+#ifdef ENABLE_MESSENGER
+    &&!stop_mdc_flag
+#endif
+
+        ) {
         BK4819_send_MDC1200(1, 0x80, gEeprom.MDC1200_ID, true);
 
 #ifdef ENABLE_MDC1200_SIDE_BEEP

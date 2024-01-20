@@ -44,6 +44,7 @@ extern uint8_t msgFSKBuffer[MSG_HEADER_LENGTH + MAX_RX_MSG_LENGTH];
 void moveUP(char (*rxMessages)[MAX_RX_MSG_LENGTH + 2]) ;
 
 extern MsgStatus msgStatus ;
+extern bool stop_mdc_flag;
 
 #endif
 void solve_sign(const uint16_t interrupt_bits) ;
