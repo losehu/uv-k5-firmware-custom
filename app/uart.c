@@ -87,6 +87,7 @@ typedef struct {
     uint8_t Size;
     uint8_t Padding;
     uint32_t Timestamp;
+    uint8_t ADD[2];
 } CMD_051B_t;
 typedef struct {
     Header_t Header;
@@ -282,8 +283,9 @@ static void CMD_051B(const uint8_t *pBuffer) {
 
     if (!bLocked)
 #endif
+        if(pCmd->Header.ID==0x051B)
         EEPROM_ReadBuffer(pCmd->Offset, Reply.Data.Data, pCmd->Size);
-
+        else  EEPROM_ReadBuffer(((pCmd->Offset) << 16) + ((pCmd->ADD[1]) << 8) + (pCmd->ADD[0]), Reply.Data.Data, pCmd->Size);
     SendReply(&Reply, pCmd->Size + 8);
 }
 
@@ -292,7 +294,6 @@ static void CMD_051D(const uint8_t *pBuffer) {
     REPLY_051D_t Reply;
     bool bReloadEeprom;
 #ifdef ENABLE_BLOCK
-
     bool bIsLocked;
 #endif
     if (pCmd->Timestamp != Timestamp)
@@ -318,8 +319,8 @@ static void CMD_051D(const uint8_t *pBuffer) {
     if (!bIsLocked) {
 #endif
 
-    unsigned int i;
-        for (i = 0; i < (pCmd->Size / 8); i++) {
+
+        for ( unsigned int i = 0; i < (pCmd->Size / 8); i++) {
             const uint16_t Offset = pCmd->Offset + (i * 8U);
 #ifdef ENABLE_BLOCK
 
@@ -327,7 +328,6 @@ static void CMD_051D(const uint8_t *pBuffer) {
                 if (!gIsLocked)
 #endif
 
-            bReloadEeprom = true;
 #ifdef ENABLE_BLOCK
 
             if ((Offset < 0x0E98 || Offset >= 0x0EA0) || !bIsInLockScreen || pCmd->bAllowPassword)
@@ -337,7 +337,8 @@ static void CMD_051D(const uint8_t *pBuffer) {
 
         }
 
-        if (bReloadEeprom)
+
+
             SETTINGS_InitEEPROM();
 #ifdef ENABLE_BLOCK
 
@@ -607,40 +608,24 @@ static void CMD_0538(const uint8_t *pBuffer)//write
 {
     const CMD_051D_t *pCmd = (const CMD_051D_t *) pBuffer;
     REPLY_051D_t Reply;
-
     if (pCmd->Timestamp != Timestamp)
         return;
-
     gSerialConfigCountDown_500ms = 12; // 6 sec
-
-
 #ifdef ENABLE_FMRADIO
     gFmRadioCountdown_500ms = fm_radio_countdown_500ms;
 #endif
-
     Reply.Header.ID = 0x051E;
     Reply.Header.Size = sizeof(Reply.Data);
     Reply.Data.Offset = pCmd->Offset;
-
     int add=((pCmd->Size) - 2)%8;
         for ( int i = 0; i < ((pCmd->Size) - 2) / 8+(add==0?0:1); i++) {
             const uint32_t Offset = ((pCmd->Offset) << 16) + ((pCmd->Data[1]) << 8) + (pCmd->Data[0]) + (i * 8U);
-
-
-
-
                 if(add&&i==((pCmd->Size) - 2) / 8+(add==0?0:1)-1)
                     EEPROM_WriteBuffer(Offset, &pCmd->Data[i * 8U + 2], add);
                 else
-                EEPROM_WriteBuffer(Offset, &pCmd->Data[i * 8U + 2], 8);
-
-
+                    EEPROM_WriteBuffer(Offset, &pCmd->Data[i * 8U + 2], 8);
         }
-
-
             SETTINGS_InitEEPROM();
-
-
     SendReply(&Reply, sizeof(Reply));
 }
 #endif
@@ -663,7 +648,7 @@ void UART_HandleCommand(void) {
     switch (UART_Command.Header.ID) {
 #if ENABLE_CHINESE_FULL==4
         case 0x052B://read
-            CMD_052B(UART_Command.Buffer);
+            CMD_051B(UART_Command.Buffer);
             break;
         case 0x0538://write
             CMD_0538(UART_Command.Buffer);
