@@ -52,12 +52,30 @@ void UI_DisplayScanner(void)
 
          sprintf(String, 模拟亚音":%u.%uHz", gScanCssResultCode_all/10, gScanCssResultCode_all% 10);
 #else
-      sprintf(String, 模拟亚音":%u.%uHz", CTCSS_Options[gScanCssResultCode] / 10, CTCSS_Options[gScanCssResultCode] % 10);
+#if ENABLE_CHINESE_FULL==0
+        sprintf(String, 模拟亚音":%u.%uHz", CTCSS_Options[gScanCssResultCode] / 10, CTCSS_Options[gScanCssResultCode] % 10);
+
+#else
+            uint8_t read_tmp[2];
+        EEPROM_ReadBuffer(0x02C00+gScanCssResultCode*2, read_tmp, 2);
+        uint16_t CTCSS_Options_read=read_tmp[0]|(read_tmp[1]<<8);
+              sprintf(String, 模拟亚音":%u.%uHz", CTCSS_Options_read/ 10,CTCSS_Options_read % 10);
+
+
+#endif
 #endif
         pPrintStr = String;
     } else {
 //数字亚音
-    sprintf(String, 数字亚音":D%03oN", DCS_Options[gScanCssResultCode]);
+#if ENABLE_CHINESE_FULL == 0
+        sprintf(String, 数字亚音":D%03oN", DCS_Options[gScanCssResultCode]);
+#else
+            uint8_t read_tmp[2];
+            EEPROM_ReadBuffer(0x02C64+(gScanCssResultCode)*2, read_tmp, 2);
+            uint16_t DCS_Options_read=read_tmp[0]|(read_tmp[1]<<8);
+            sprintf(String, 数字亚音":D%03oN",DCS_Options_read);
+#endif
+
         pPrintStr = String;
     }
     UI_PrintStringSmall(pPrintStr, 2, 0, 3);

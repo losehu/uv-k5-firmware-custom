@@ -261,13 +261,13 @@ void RADIO_ConfigureChannel(const unsigned int VFO, const unsigned int configure
                 break;
 
             case CODE_TYPE_CONTINUOUS_TONE:
-                if (tmp > (ARRAY_SIZE(CTCSS_Options) - 1))
+                if (tmp > (50 - 1))
                     tmp = 0;
                 break;
 
             case CODE_TYPE_DIGITAL:
             case CODE_TYPE_REVERSE_DIGITAL:
-                if (tmp > (ARRAY_SIZE(DCS_Options) - 1))
+                if (tmp > (104 - 1))
                     tmp = 0;
                 break;
         }
@@ -283,13 +283,13 @@ void RADIO_ConfigureChannel(const unsigned int VFO, const unsigned int configure
                 break;
 
             case CODE_TYPE_CONTINUOUS_TONE:
-                if (tmp > (ARRAY_SIZE(CTCSS_Options) - 1))
+                if (tmp > (50 - 1))
                     tmp = 0;
                 break;
 
             case CODE_TYPE_DIGITAL:
             case CODE_TYPE_REVERSE_DIGITAL:
-                if (tmp > (ARRAY_SIZE(DCS_Options) - 1))
+                if (tmp > (104 - 1))
                     tmp = 0;
                 break;
         }
@@ -656,8 +656,16 @@ void RADIO_SetupRegisters(bool switchToForeground)
                     break;
 
                 case CODE_TYPE_CONTINUOUS_TONE:
-                    BK4819_SetCTCSSFrequency(CTCSS_Options[Code]);
 
+#if ENABLE_CHINESE_FULL==0
+                    BK4819_SetCTCSSFrequency(CTCSS_Options[Code]);
+#else
+                    uint8_t read_tmp[2];
+        EEPROM_ReadBuffer(0x02C00+(Code)*2, read_tmp, 2);
+        uint16_t CTCSS_Options_read=read_tmp[0]|(read_tmp[1]<<8);
+                    BK4819_SetCTCSSFrequency(CTCSS_Options_read);
+
+#endif
                     //#ifndef ENABLE_CTCSS_TAIL_PHASE_SHIFT
                     BK4819_SetTailDetection(550);		// QS's 55Hz tone method
                     //#else
@@ -844,7 +852,16 @@ void RADIO_SetTxParameters(void)
             break;
 
         case CODE_TYPE_CONTINUOUS_TONE:
+#if ENABLE_CHINESE_FULL==0
             BK4819_SetCTCSSFrequency(CTCSS_Options[gCurrentVfo->pTX->Code]);
+#else
+            uint8_t read_tmp[2];
+        EEPROM_ReadBuffer(0x02C00+(gCurrentVfo->pTX->Code)*2, read_tmp, 2);
+        uint16_t CTCSS_Options_read=read_tmp[0]|(read_tmp[1]<<8);
+            BK4819_SetCTCSSFrequency(CTCSS_Options_read);
+
+#endif
+
             break;
 
         case CODE_TYPE_DIGITAL:

@@ -655,10 +655,32 @@ void UI_DisplayMenu(void) {
 
 #endif
 
+
+
+
+#if ENABLE_CHINESE_FULL == 0
             else if (gSubMenuSelection < 105)
                 sprintf(String, "D%03oN", DCS_Options[gSubMenuSelection - 1]);
             else
                 sprintf(String, "D%03oI", DCS_Options[gSubMenuSelection - 105]);
+#else
+
+               else if (gSubMenuSelection < 105)
+                   {
+                     uint8_t read_tmp[2];
+            EEPROM_ReadBuffer(0x02C64+(gSubMenuSelection - 1)*2, read_tmp, 2);
+            uint16_t DCS_Options_read=read_tmp[0]|(read_tmp[1]<<8);
+                sprintf(String, "D%03oN", DCS_Options_read);
+                }
+            else{
+                  uint8_t read_tmp[2];
+            EEPROM_ReadBuffer(0x02C64+(gSubMenuSelection - 105)*2, read_tmp, 2);
+            uint16_t DCS_Options_read=read_tmp[0]|(read_tmp[1]<<8);
+                sprintf(String, "D%03oI",DCS_Options_read);
+                }
+
+#endif
+
             break;
 
         case MENU_R_CTCS:
@@ -674,9 +696,19 @@ void UI_DisplayMenu(void) {
 
 #endif
 
-            else
+            else {
+#if ENABLE_CHINESE_FULL == 0
                 sprintf(String, "%u.%uHz", CTCSS_Options[gSubMenuSelection - 1] / 10,
                         CTCSS_Options[gSubMenuSelection - 1] % 10);
+#else
+                uint8_t read_tmp[2];
+            EEPROM_ReadBuffer(0x02C00+(gSubMenuSelection - 1)*2, read_tmp, 2);
+            uint16_t CTCSS_Options_read=read_tmp[0]|(read_tmp[1]<<8);
+            sprintf(String, "%u.%uHz", CTCSS_Options_read / 10,CTCSS_Options_read % 10);
+
+#endif
+            }
+
             break;
         }
 

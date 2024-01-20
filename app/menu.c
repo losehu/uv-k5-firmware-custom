@@ -195,13 +195,13 @@ int MENU_GetLimits(uint8_t menu_id, int32_t *pMin, int32_t *pMax) {
         case MENU_T_DCS:
             *pMin = 0;
             *pMax = 208;
-            //*pMax = (ARRAY_SIZE(DCS_Options) * 2);
+            //*pMax = (104 * 2);
             break;
 
         case MENU_R_CTCS:
         case MENU_T_CTCS:
             *pMin = 0;
-            *pMax = ARRAY_SIZE(CTCSS_Options);
+            *pMax = 50;
             break;
 #ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
 
