@@ -576,7 +576,7 @@ void solve_sign(const uint16_t interrupt_bits) {
         uint16_t read_reg[count];
 #ifdef ENABLE_MDC1200
 
-        {
+
 
             // fetch received packet data
             for (int i = 0; i < count; i++) {
@@ -589,6 +589,14 @@ void solve_sign(const uint16_t interrupt_bits) {
 
                 if (mdc1200_rx_buffer_index < sizeof(mdc1200_rx_buffer))
                     mdc1200_rx_buffer[mdc1200_rx_buffer_index++] = (word >> 8) & 0xff;
+
+                #ifdef ENABLE_MESSENGER
+
+                if (gFSKWriteIndex < sizeof(msgFSKBuffer))
+                    msgFSKBuffer[gFSKWriteIndex++] = validate_char(( read_reg[i] >> 0) & 0xff);
+                if (gFSKWriteIndex < sizeof(msgFSKBuffer))
+                    msgFSKBuffer[gFSKWriteIndex++] = validate_char(( read_reg[i] >> 8) & 0xff);
+                #endif
             }
 
 
@@ -602,28 +610,24 @@ void solve_sign(const uint16_t interrupt_bits) {
                         &mdc1200_arg,
                         &mdc1200_unit_id)) {
                     mdc1200_rx_ready_tick_500ms = 2 * 5;  // 6 second MDC display time
-                    gUpdateDisplay = true;
+//                    gUpdateDisplay = true;
 
                 }
 
                 mdc1200_rx_buffer_index = 0;
             }
 
-        }
-#endif
-#ifdef ENABLE_MESSENGER
-        if(msgStatus == RECEIVING) {
-            for (uint16_t i = 0; i < count; i++) {
-                const uint16_t word = read_reg[i];
-                if (gFSKWriteIndex < sizeof(msgFSKBuffer))
-                    msgFSKBuffer[gFSKWriteIndex++] = validate_char((word >> 0) & 0xff);
-                if (gFSKWriteIndex < sizeof(msgFSKBuffer))
-                    msgFSKBuffer[gFSKWriteIndex++] = validate_char((word >> 8) & 0xff);
-            }
 
-            SYSTEM_DelayMs(10);
-        }
 #endif
+//#ifdef ENABLE_MESSENGER
+//        if(msgStatus == RECEIVING) {
+//            for (uint16_t i = 0; i < count; i++) {
+//
+//            }
+//
+//            SYSTEM_DelayMs(10);
+//        }
+//#endif
     }
 
     if (rx_finished) {
@@ -645,7 +649,7 @@ void solve_sign(const uint16_t interrupt_bits) {
 				if (msgFSKBuffer[5] == 'R' && msgFSKBuffer[6] == 'C' && msgFSKBuffer[7] == 'V' && msgFSKBuffer[8] == 'D') {
 					rxMessage[3][strlen(rxMessage[3])] = '+';
 					gUpdateStatus = true;
-					gUpdateDisplay = true;
+//					gUpdateDisplay = true;
 				}
 #endif
             } else {
@@ -655,30 +659,30 @@ void solve_sign(const uint16_t interrupt_bits) {
                     moveUP(rxMessage);
                     show_flag=1;
                     snprintf(rxMessage[3], TX_MSG_LENGTH + 2, "< %s", &msgFSKBuffer[2]);
+                     // Transmit a message to the sender that we have received the message (Unless it's a service message)
+                    MSG_Send("\x1b\x1b\x1bRCVD", true);
                 }
 
                 if(show_flag){
                     if ( gScreenToDisplay != DISPLAY_MSG ) {
                         hasNewMessage = 1;
                         gUpdateStatus = true;
-                        gUpdateDisplay = true;
+//                        gUpdateDisplay = true;
     #ifdef ENABLE_MESSENGER_NOTIFICATION
                         gPlayMSGRing = true;
     #endif
                     }
-                    else {
-                        gUpdateDisplay = true;
-                    }
+//                    else {
+//                        gUpdateDisplay = true;
+//                    }
                 }
             }
+
         }
 
         gFSKWriteIndex = 0;
-        // Transmit a message to the sender that we have received the message (Unless it's a service message)
-        if (msgFSKBuffer[0] == 'M' && msgFSKBuffer[1] == 'S' && msgFSKBuffer[2] != 0x1b) {
-//            stop_mdc_rx=1;
-            MSG_Send("\x1b\x1b\x1bRCVD", true);
-        }
+
 #endif
     }
+    gUpdateDisplay = true;
 }

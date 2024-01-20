@@ -64,7 +64,7 @@ ENABLE_MESSENGER              			?=1
 ENABLE_MESSENGER_DELIVERY_NOTIFICATION	?= 1
 ENABLE_MESSENGER_NOTIFICATION			?= 1
 #############################################################
-PACKED_FILE_SUFFIX = LOSEHU118
+PACKED_FILE_SUFFIX = TEST
 ifeq ($(ENABLE_CHINESE_FULL),1)
     $(info font1)
     PACKED_FILE_SUFFIX = font1
@@ -317,6 +317,10 @@ endif
 ifeq ($(ENABLE_MDC1200),1)
     CFLAGS  += -DENABLE_MDC1200
 endif
+ifeq ($(ENABLE_WARNING),1)
+    CFLAGS  += -DENABLE_WARNING
+endif
+
 ifeq ($(ENABLE_DOCK),1)
     CFLAGS  += -DENABLE_DOCK
 endif
