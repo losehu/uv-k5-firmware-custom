@@ -38,7 +38,7 @@ ENABLE_SQUELCH_MORE_SENSITIVE ?= 1
 ENABLE_FASTER_CHANNEL_SCAN    ?= 1
 ENABLE_RSSI_BAR               ?= 1
 ENABLE_COPY_CHAN_TO_VFO       ?= 1
-ENABLE_SPECTRUM               ?= 1
+ENABLE_SPECTRUM               ?= 0
 ENABLE_REDUCE_LOW_MID_TX_POWER?= 0
 ENABLE_BYP_RAW_DEMODULATORS   ?= 0
 ENABLE_BLMIN_TMP_OFF          ?= 0
@@ -50,7 +50,7 @@ ENABLE_MDC1200_CONTACT        ?= 1
 ENABLE_UART_RW_BK_REGS 		  ?= 0
 ENABLE_AUDIO_BAR_DEFAULT      ?= 0
 ENABLE_EEPROM_TYPE        	   = 0 #0:1*1Mib 1:2*2Mib 2:2*1Mib
-ENABLE_CHINESE_FULL 		   = 4
+ENABLE_CHINESE_FULL 		   = 0
 ENABLE_DOCK 		          ?= 0
 ENABLE_CUSTOM_SIDEFUNCTIONS   ?= 1
 ENABLE_SIDEFUNCTIONS_SEND     ?= 1
@@ -59,10 +59,10 @@ ENABLE_BLOCK                  ?= 0
 ENABLE_AM_FIX_SHOW_DATA       ?= 0
 ENABLE_AGC_SHOW_DATA          ?= 0
 ENABLE_TIMER		          ?= 0
-ENABLE_WARNING 					?=0
+ENABLE_WARNING 				  ?=1
 ENABLE_MESSENGER              			?=1
 ENABLE_MESSENGER_DELIVERY_NOTIFICATION	?= 1
-ENABLE_MESSENGER_NOTIFICATION			?= 0
+ENABLE_MESSENGER_NOTIFICATION			?= 1
 #############################################################
 PACKED_FILE_SUFFIX = LOSEHU118
 ifeq ($(ENABLE_CHINESE_FULL),1)
@@ -119,12 +119,8 @@ OBJS =
 # Startup files
 OBJS += start.o
 OBJS += init.o
-ifeq ($(ENABLE_MESSENGER),1)
-	OBJS += ui/messenger.o
-endif
-ifeq ($(ENABLE_MESSENGER),1)
-	OBJS += app/messenger.o
-endif
+OBJS += ui/messenger.o
+OBJS += app/messenger.o
 
 ifeq ($(ENABLE_OVERLAY),1)
 	OBJS += sram-overlay.o

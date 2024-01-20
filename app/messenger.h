@@ -1,12 +1,12 @@
 #ifndef APP_MSG_H
 #define APP_MSG_H
 
-#ifdef ENABLE_MESSENGER
-
 #include <stdbool.h>
 #include <stdint.h>
 #include <string.h>
 #include "driver/keyboard.h"
+#ifdef ENABLE_MESSENGER
+
 
 typedef enum KeyboardType {
 	UPPERCASE,
@@ -14,7 +14,11 @@ typedef enum KeyboardType {
   	NUMERIC,
   	END_TYPE_KBRD
 } KeyboardType;
-
+typedef enum MsgStatus {
+	READY,
+  	SENDING,
+  	RECEIVING,
+} MsgStatus;
 enum { 
 	TX_MSG_LENGTH = 30,
 	MSG_HEADER_LENGTH = 20,
@@ -22,6 +26,7 @@ enum {
 };
 //const uint8_t TX_MSG_LENGTH = 30;
 //const uint8_t MAX_RX_MSG_LENGTH = TX_MSG_LENGTH + 2;
+uint8_t validate_char( uint8_t rchar ) ;
 
 extern KeyboardType keyboardType;
 extern uint16_t gErrorsDuringMSG;
@@ -35,7 +40,12 @@ void MSG_ProcessKeys(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld);
 void MSG_Send(const char txMessage[TX_MSG_LENGTH], bool bServiceMessage);
 extern unsigned char cIndex ;
 //extern bool stop_mdc_rx;
+extern uint8_t msgFSKBuffer[MSG_HEADER_LENGTH + MAX_RX_MSG_LENGTH];
+void moveUP(char (*rxMessages)[MAX_RX_MSG_LENGTH + 2]) ;
+
+extern MsgStatus msgStatus ;
 
 #endif
+void solve_sign(const uint16_t interrupt_bits) ;
 
 #endif
