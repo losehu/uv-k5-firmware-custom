@@ -271,7 +271,7 @@ static void CMD_051B(const uint8_t *pBuffer) {
     gFmRadioCountdown_500ms = fm_radio_countdown_500ms;
 #endif
 
-    memset(&Reply, 0, sizeof(Reply));
+//    memset(&Reply, 0, sizeof(Reply));
     Reply.Header.ID = 0x051C;
     Reply.Header.Size = pCmd->Size + 4;
     Reply.Data.Offset = pCmd->Offset;
@@ -591,7 +591,7 @@ static void CMD_052B(const uint8_t *pBuffer)//read
     gFmRadioCountdown_500ms = fm_radio_countdown_500ms;
 #endif
 
-    memset(&Reply, 0, sizeof(Reply));
+//    memset(&Reply, 0, sizeof(Reply));
     Reply.Header.ID = 0x051C;
     Reply.Header.Size = pCmd->Size + 4;
     Reply.Data.Offset = pCmd->Offset;
