@@ -68,7 +68,7 @@ void UI_DisplayStatus()
 #ifdef ENABLE_MESSENGER
     if (hasNewMessage > 0) { // New Message indicator
 		if (hasNewMessage == 1)
-			memcpy(line + x, BITMAP_NEWMSG, sizeof(BITMAP_NEWMSG));
+			memcpy(line + x+1, BITMAP_NEWMSG, sizeof(BITMAP_NEWMSG));
 		x1 = x + sizeof(BITMAP_NEWMSG);
 	}
 	x += sizeof(BITMAP_NEWMSG);
@@ -121,7 +121,7 @@ void UI_DisplayStatus()
             if(gDualWatchActive)
                 memcpy(line + x + (dw==1?0:2), BITMAP_TDR1, sizeof(BITMAP_TDR1) - (dw==1?0:5));
             else
-                memcpy(line + x + 3, BITMAP_TDR2, sizeof(BITMAP_TDR2));
+                memcpy(line + x + 3+1, BITMAP_TDR2, sizeof(BITMAP_TDR2));
         }
         else if(dw == 2) { // XB - crossband
             memcpy(line + x + 2, BITMAP_XB, sizeof(BITMAP_XB));

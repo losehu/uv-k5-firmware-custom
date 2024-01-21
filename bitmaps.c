@@ -204,9 +204,9 @@ const uint8_t BITMAP_TDR1[16] =
                 0b01000110
         };
 
-const uint8_t BITMAP_TDR2[10] =
+const uint8_t BITMAP_TDR2[9] =
         {	// "><" .. DW on hold
-                0b00000000,
+//                0b00000000,
                 0b00100010,
                 0b00110110,
                 0b00011100,
@@ -259,9 +259,9 @@ const uint8_t BITMAP_Antenna[5] =
                 0b00000011
         };
 
-const uint8_t BITMAP_VFO_Default[8] =
+const uint8_t BITMAP_VFO_Default[7] =
         {
-                0b00000000,
+//                0b00000000,
                 0b01111111,
                 0b01111111,
                 0b00111110,
@@ -271,9 +271,9 @@ const uint8_t BITMAP_VFO_Default[8] =
                 0b00001000
         };
 
-const uint8_t BITMAP_VFO_NotDefault[8] =
+const uint8_t BITMAP_VFO_NotDefault[7] =
         {
-                0b00000000,
+//                0b00000000,
                 0b01000001,
                 0b01000001,
                 0b00100010,
@@ -283,19 +283,19 @@ const uint8_t BITMAP_VFO_NotDefault[8] =
                 0b00001000
         };
 
-const uint8_t BITMAP_ScanList1[5] =
+const uint8_t BITMAP_ScanList1[3] =
         {	// 'I' symbol
-                0b00000000,
-                0b00000000,
+//                0b00000000,
+//                0b00000000,
                 0b01000010,
                 0b01111110,
                 0b01000010,
 //                0b00000000
         };
 
-const uint8_t BITMAP_ScanList2[6] =
+const uint8_t BITMAP_ScanList2[5] =
         {	// 'II' symbol
-                0b00000000,
+//                0b00000000,
                 0b01000010,
                 0b01111110,
                 0b01000010,
@@ -303,9 +303,9 @@ const uint8_t BITMAP_ScanList2[6] =
                 0b01000010
         };
 
-const uint8_t BITMAP_compand[6] =
+const uint8_t BITMAP_compand[5] =
         {
-                0b00000000,
+//                0b00000000,
                 0b00111100,
                 0b01000010,
                 0b01000010,
@@ -325,9 +325,9 @@ const uint8_t BITMAP_SEND[13] =
 
 
 #ifdef ENABLE_MESSENGER
-const uint8_t BITMAP_NEWMSG[8] =
+const uint8_t BITMAP_NEWMSG[7] =
 {	// message icon
-	0b00000000,
+//	0b00000000,
 	0b01111110,
 	0b01000110,
 	0b01001010,

@@ -548,7 +548,7 @@ void UI_DisplayMenu(void) {
     //const void *BITMAP_CurrentIndicator = BITMAP_MARKER;
 
     if (gIsInSubMenu)
-        memmove(gFrameBuffer[2] + 40, BITMAP_VFO_Default, sizeof(BITMAP_VFO_Default));
+        memmove(gFrameBuffer[2] + 41, BITMAP_VFO_Default, sizeof(BITMAP_VFO_Default));
 
     // draw the menu index number/count绘制菜单索引号/总数 ：
     sprintf(String, "%2u/%u", 1 + gMenuCursor, gMenuListCount);

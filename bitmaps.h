@@ -24,7 +24,7 @@ extern const uint8_t BITMAP_VOX[18];
 extern const uint8_t BITMAP_XB[12];
 
 extern const uint8_t BITMAP_TDR1[16];
-extern const uint8_t BITMAP_TDR2[10];
+extern const uint8_t BITMAP_TDR2[9];
 
 #ifdef ENABLE_VOICE
 extern const uint8_t BITMAP_VoicePrompt[9];
@@ -36,19 +36,19 @@ extern const uint8_t BITMAP_NOAA[11];
 
 extern const uint8_t BITMAP_Antenna[5];
 
-extern const uint8_t BITMAP_VFO_Default[8];
-extern const uint8_t BITMAP_VFO_NotDefault[8];
+extern const uint8_t BITMAP_VFO_Default[7];
+extern const uint8_t BITMAP_VFO_NotDefault[7];
 
-extern const uint8_t BITMAP_ScanList1[5];
-extern const uint8_t BITMAP_ScanList2[6];
+extern const uint8_t BITMAP_ScanList1[3];
+extern const uint8_t BITMAP_ScanList2[5];
 
-extern const uint8_t BITMAP_compand[6];
+extern const uint8_t BITMAP_compand[5];
 extern const uint8_t BITMAP_RECV[13] ;
 extern const uint8_t BITMAP_SEND[13] ;
 #ifdef ENABLE_MESSENGER
 
 extern const uint8_t BITMAP_1[6] ;
 extern const uint8_t BITMAP_t[6] ;
-extern const uint8_t BITMAP_NEWMSG[8] ;
+extern const uint8_t BITMAP_NEWMSG[7] ;
 #endif
 #endif

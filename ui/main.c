@@ -464,13 +464,13 @@ if (!gDTMF_InputMode) {
 
             // highlight the selected/used VFO with a marker
             if (isMainVFO)
-                memcpy(p_line0 + 0, BITMAP_VFO_Default, sizeof(BITMAP_VFO_Default));
+                memcpy(p_line0 + 1, BITMAP_VFO_Default, sizeof(BITMAP_VFO_Default));
         } else // active TX VFO
         {    // highlight the selected/used VFO with a marker
             if (isMainVFO)
-                memcpy(p_line0 + 0, BITMAP_VFO_Default, sizeof(BITMAP_VFO_Default));
+                memcpy(p_line0 + 1, BITMAP_VFO_Default, sizeof(BITMAP_VFO_Default));
             else
-                memcpy(p_line0 + 0, BITMAP_VFO_NotDefault, sizeof(BITMAP_VFO_NotDefault));
+                memcpy(p_line0 + 1, BITMAP_VFO_NotDefault, sizeof(BITMAP_VFO_NotDefault));
         }
 
         if (gCurrentFunction == FUNCTION_TRANSMIT) {    // transmitting
@@ -582,12 +582,12 @@ if (!gDTMF_InputMode) {
                 const ChannelAttributes_t att = gMR_ChannelAttributes[gEeprom.ScreenChannel[vfo_num]];
                 if (att.scanlist1) {
 #if ENABLE_CHINESE_FULL != 4
-                    memcpy(p_line0 + 113, BITMAP_ScanList1, sizeof(BITMAP_ScanList1));
+                    memcpy(p_line0 + 115, BITMAP_ScanList1, sizeof(BITMAP_ScanList1));
 #else
                     if(IS_MR_CHANNEL(gEeprom.ScreenChannel[vfo_num])      )
-                        memcpy(gFrameBuffer[line + 2] + 113, BITMAP_ScanList1, sizeof(BITMAP_ScanList1));
+                        memcpy(gFrameBuffer[line + 2] + 115, BITMAP_ScanList1, sizeof(BITMAP_ScanList1));
                     else
-                        memcpy(p_line0 + 113, BITMAP_ScanList1, sizeof(BITMAP_ScanList1));
+                        memcpy(p_line0 + 115, BITMAP_ScanList1, sizeof(BITMAP_ScanList1));
 #endif
 
                 }
@@ -596,12 +596,12 @@ if (!gDTMF_InputMode) {
 
                 if (att.scanlist2) {
 #if ENABLE_CHINESE_FULL != 4
-                    memcpy(p_line0 + 120, BITMAP_ScanList2, sizeof(BITMAP_ScanList2));
+                    memcpy(p_line0 + 121, BITMAP_ScanList2, sizeof(BITMAP_ScanList2));
 #else
                     if(IS_MR_CHANNEL(gEeprom.ScreenChannel[vfo_num])        )
-                    memcpy(gFrameBuffer[line + 2] + 120, BITMAP_ScanList2, sizeof(BITMAP_ScanList2));
+                    memcpy(gFrameBuffer[line + 2] + 121, BITMAP_ScanList2, sizeof(BITMAP_ScanList2));
             else
-                        memcpy(p_line0 + 120, BITMAP_ScanList2, sizeof(BITMAP_ScanList2));
+                        memcpy(p_line0 + 121, BITMAP_ScanList2, sizeof(BITMAP_ScanList2));
 #endif
 
     }
@@ -610,7 +610,7 @@ if (!gDTMF_InputMode) {
                 // compander symbol
 #ifndef ENABLE_BIG_FREQ
                 if (att.compander)
-                    memcpy(p_line0 + 120 + LCD_WIDTH, BITMAP_compand, sizeof(BITMAP_compand));
+                    memcpy(p_line0 + 121 + LCD_WIDTH, BITMAP_compand, sizeof(BITMAP_compand));
 #else
                 // TODO:  // find somewhere else to put the symbol
 #endif
@@ -698,9 +698,9 @@ if (!gDTMF_InputMode) {
                 if (att.compander)
 
 #ifdef ENABLE_BIG_FREQ
-                    memcpy(p_line0 + 120, BITMAP_compand, sizeof(BITMAP_compand));
+                    memcpy(p_line0 + 121, BITMAP_compand, sizeof(BITMAP_compand));
 #else
-                    memcpy(p_line0 + 120 + LCD_WIDTH, BITMAP_compand, sizeof(BITMAP_compand));
+                    memcpy(p_line0 + 121 + LCD_WIDTH, BITMAP_compand, sizeof(BITMAP_compand));
 #endif
             }
         }
