@@ -25,7 +25,7 @@ jobs: #定义工作流程
         run: git config --global --add safe.directory /__w/uv-k5-firmware-chinese/uv-k5-firmware-chinese
 
       - name: Make #执行 make 命令
-        run: make both  #编译项目
+        run: make   #编译项目
 
       - name: size #计算 firmware 大小
         run: arm-none-eabi-size firmware #使用 arm-none-eabi-size 命令计算固件大小
