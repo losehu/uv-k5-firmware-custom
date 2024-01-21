@@ -144,7 +144,7 @@ void FUNCTION_Transmit() {
     // if DTMF is enabled when TX'ing, it changes the TX audio filtering !! .. 1of11
 
 #if defined(ENABLE_MESSENGER) || defined(ENABLE_MDC1200)
-enable_msg_rx(false);
+    enable_msg_rx(false);
 #endif
 
 
@@ -198,11 +198,11 @@ enable_msg_rx(false);
 
     DTMF_Reply();
 #ifdef ENABLE_MDC1200
-
-    if ((gEeprom.ROGER == ROGER_MODE_MDC_HEAD || gEeprom.ROGER == ROGER_MODE_MDC_BOTH ||gEeprom.ROGER == ROGER_MODE_MDC_HEAD_ROGER)
 #ifdef ENABLE_MESSENGER
-    &&!stop_mdc_flag
+    if(!stop_mdc_flag){
 #endif
+    if ((gEeprom.ROGER == ROGER_MODE_MDC_HEAD || gEeprom.ROGER == ROGER_MODE_MDC_BOTH ||gEeprom.ROGER == ROGER_MODE_MDC_HEAD_ROGER)
+
 
         ) {
         BK4819_send_MDC1200(1, 0x80, gEeprom.MDC1200_ID, true);
@@ -216,7 +216,9 @@ enable_msg_rx(false);
 #endif
     if (gCurrentVfo->DTMF_PTT_ID_TX_MODE == PTT_ID_APOLLO)
         BK4819_PlaySingleTone(2525, 250, 0, gEeprom.DTMF_SIDE_TONE);
-
+#ifdef ENABLE_MESSENGER
+    }
+#endif
 #if defined(ENABLE_ALARM) || defined(ENABLE_TX1750)
     if (gAlarmState != ALARM_STATE_OFF) {
 #ifdef ENABLE_TX1750

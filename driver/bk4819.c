@@ -14,6 +14,7 @@
  *     limitations under the License.
  */
 #include "app/messenger.h"
+#include "app/messenger.h"
 #include <stdint.h>
 #include "app/app.h"
 #include "ui/ui.h"
@@ -333,14 +334,15 @@ void BK4819_InitAGC(bool amModulation)
 
 void BK4819_PlayRoger(void)
 {
+#ifdef ENABLE_MESSENGER
+       if(stop_mdc_flag) return;
+#endif
     if (gEeprom.ROGER == ROGER_MODE_ROGER||gEeprom.ROGER==ROGER_MODE_MDC_HEAD_ROGER)
         BK4819_PlayRogerNormal();
 #ifdef ENABLE_MDC1200
     else
     if ((gEeprom.ROGER == ROGER_MODE_MDC_END||gEeprom.ROGER==ROGER_MODE_MDC_BOTH)
-#ifdef ENABLE_MESSENGER
-    &&!stop_mdc_flag
-#endif
+
 
     ) {
 

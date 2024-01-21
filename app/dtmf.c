@@ -13,7 +13,7 @@
  *     See the License for the specific language governing permissions and
  *     limitations under the License.
  */
-
+#include "app/messenger.h"
 #include <string.h>
 #include <stdio.h>   // NULL
 
@@ -475,35 +475,41 @@ gCurrentVfo->DTMF_PTT_ID_TX_MODE == PTT_ID_TX_DOWN)
 
 void DTMF_SendEndOfTransmission(void)
 {
-    if (gCurrentVfo->DTMF_PTT_ID_TX_MODE == PTT_ID_APOLLO) {
-        BK4819_PlaySingleTone(2475, 250, 28, gEeprom.DTMF_SIDE_TONE);
-    }
+#ifdef  ENABLE_MESSENGER
 
-    if ((gCurrentVfo->DTMF_PTT_ID_TX_MODE == PTT_ID_TX_DOWN || gCurrentVfo->DTMF_PTT_ID_TX_MODE == PTT_ID_BOTH)
-#ifdef ENABLE_DTMF_CALLING
-        && gDTMF_CallState == DTMF_CALL_STATE_NONE
+    if(!stop_mdc_flag) {
 #endif
-            ) {	// end-of-tx
-        if (gEeprom.DTMF_SIDE_TONE)
-        {
-            AUDIO_AudioPathOn();
-            gEnableSpeaker = true;
-            SYSTEM_DelayMs(60);
+        if (gCurrentVfo->DTMF_PTT_ID_TX_MODE == PTT_ID_APOLLO) {
+            BK4819_PlaySingleTone(2475, 250, 28, gEeprom.DTMF_SIDE_TONE);
+        } else if ((gCurrentVfo->DTMF_PTT_ID_TX_MODE == PTT_ID_TX_DOWN ||
+                    gCurrentVfo->DTMF_PTT_ID_TX_MODE == PTT_ID_BOTH)
+#ifdef ENABLE_DTMF_CALLING
+            && gDTMF_CallState == DTMF_CALL_STATE_NONE
+#endif
+                ) {    // end-of-tx
+            if (gEeprom.DTMF_SIDE_TONE) {
+                AUDIO_AudioPathOn();
+                gEnableSpeaker = true;
+                SYSTEM_DelayMs(60);
+            }
+
+            BK4819_EnterDTMF_TX(gEeprom.DTMF_SIDE_TONE);
+
+            BK4819_PlayDTMFString(
+                    gEeprom.DTMF_DOWN_CODE,
+                    0,
+                    gEeprom.DTMF_FIRST_CODE_PERSIST_TIME,
+                    gEeprom.DTMF_HASH_CODE_PERSIST_TIME,
+                    gEeprom.DTMF_CODE_PERSIST_TIME,
+                    gEeprom.DTMF_CODE_INTERVAL_TIME);
+
+            AUDIO_AudioPathOff();
+            gEnableSpeaker = false;
         }
+#ifdef  ENABLE_MESSENGER
 
-        BK4819_EnterDTMF_TX(gEeprom.DTMF_SIDE_TONE);
-
-        BK4819_PlayDTMFString(
-                gEeprom.DTMF_DOWN_CODE,
-                0,
-                gEeprom.DTMF_FIRST_CODE_PERSIST_TIME,
-                gEeprom.DTMF_HASH_CODE_PERSIST_TIME,
-                gEeprom.DTMF_CODE_PERSIST_TIME,
-                gEeprom.DTMF_CODE_INTERVAL_TIME);
-
-        AUDIO_AudioPathOff();
-        gEnableSpeaker = false;
     }
+#endif
 
     BK4819_ExitDTMF_TX(true);
 }
