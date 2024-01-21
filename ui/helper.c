@@ -275,7 +275,7 @@ void UI_PrintStringSmallBuffer(const char *pString, uint8_t *buffer) {
             if (index < 94)
 {
             uint8_t read_gFontSmall[6];
-            EEPROM_ReadBuffer(0x26BFC+index*6, read_gFontSmall, 6);
+            EEPROM_ReadBuffer(0x267C+index*6, read_gFontSmall, 6);
                 memcpy(buffer + (i * (char_width + 1)) + 1, &read_gFontSmall, char_width);
                 }
 #else
