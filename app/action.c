@@ -102,8 +102,8 @@ void (*action_opt_table[])(void) = {
         [ACTION_OPT_D_DCD] = &ACTION_D_DCD,
         [ACTION_OPT_WIDTH] = &ACTION_WIDTH,
 #ifdef ENABLE_SIDEFUNCTIONS_SEND
-		[ACTION_OPT_SEND_A] = &ACTION_SEND_A,
-		[ACTION_OPT_SEND_B] = &ACTION_SEND_B
+		[ACTION_OPT_SEND_CURRENT] = &ACTION_SEND_CURRENT,
+		[ACTION_OPT_SEND_OTHER] = &ACTION_SEND_OTHER
 #endif
 };
 
@@ -330,9 +330,9 @@ void ACTION_Handle(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld)
 		funcShort = funcLong;
 		
 #ifdef ENABLE_SIDEFUNCTIONS_SEND
-		if(funcShort == ACTION_OPT_SEND_A || funcShort == ACTION_OPT_SEND_B){
+		if(funcShort == ACTION_OPT_SEND_CURRENT || funcShort == ACTION_OPT_SEND_OTHER){
 			gFlagLastVfo = gEeprom.TX_VFO;
-			gEeprom.TX_VFO = funcShort == ACTION_OPT_SEND_A ? 0 : 1;
+			gEeprom.TX_VFO = funcShort == ACTION_OPT_SEND_CURRENT ? gFlagLastVfo : !gFlagLastVfo;
 			gFlagReconfigureVfos  = true;
 			gFlagStopTX = true;
 			GENERIC_Key_PTT(bKeyPressed);
@@ -562,6 +562,6 @@ void ACTION_D_DCD(void)
 }
 
 #ifdef ENABLE_SIDEFUNCTIONS_SEND
-void ACTION_SEND_A(void){return;}
-void ACTION_SEND_B(void){return;}
+void ACTION_SEND_CURRENT(void){return;}
+void ACTION_SEND_OTHER(void){return;}
 #endif
