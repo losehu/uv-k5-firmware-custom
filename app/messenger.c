@@ -589,11 +589,13 @@ void solve_sign(const uint16_t interrupt_bits) {
 
                 if (mdc1200_rx_buffer_index < sizeof(mdc1200_rx_buffer))
                     mdc1200_rx_buffer[mdc1200_rx_buffer_index++] = (word >> 8) & 0xff;
+#ifdef ENABLE_MESSENGER
 
                   if (gFSKWriteIndex < sizeof(msgFSKBuffer))
                     msgFSKBuffer[gFSKWriteIndex++] = validate_char((read_reg[i]  >> 0) & 0xff);
                 if (gFSKWriteIndex < sizeof(msgFSKBuffer))
                     msgFSKBuffer[gFSKWriteIndex++] = validate_char((read_reg[i]  >> 8) & 0xff);
+#endif
             }
 
 

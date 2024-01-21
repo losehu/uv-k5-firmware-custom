@@ -527,6 +527,13 @@ ifdef MY_PYTHON
     HAS_CRCMOD := $(shell $(MY_PYTHON) -c "import crcmod" 2>&1)
 endif
 
+full:clean
+	$(RM) *.bin
+	$(MAKE) build ENABLE_CHINESE_FULL=0
+	$(MAKE) build ENABLE_CHINESE_FULL=4
+	$(MAKE) build ENABLE_CHINESE_FULL=4 ENABLE_GB2312=1
+
+
 build:clean $(TARGET)
 	$(OBJCOPY) -O binary $(TARGET) $(TARGET).bin
 ifndef MY_PYTHON
@@ -543,18 +550,7 @@ else
 endif
 	$(SIZE) $(TARGET)
 
-full:
-	$(RM) *.bin
-	$(MAKE) build ENABLE_CHINESE_FULL=0
-	$(MAKE) build ENABLE_CHINESE_FULL=1
-	$(MAKE) build ENABLE_CHINESE_FULL=2
-	$(MAKE) build ENABLE_CHINESE_FULL=3
-	$(MAKE) build ENABLE_CHINESE_FULL=4
-both:
-	$(RM) *.bin
-#	$(MAKE) build ENABLE_CHINESE_FULL=0
-	$(MAKE) build ENABLE_CHINESE_FULL=4
-	$(MAKE) build ENABLE_CHINESE_FULL=4 ENABLE_GB2312=1
+
 
 
 all:
