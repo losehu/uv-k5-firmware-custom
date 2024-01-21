@@ -29,7 +29,7 @@
 :: Do the compile
 ::
 make clean
-make build
+make full
 
 :: pyinstaller --onefile ./MDC_WRITE/main.py
 :: If you have python installed, you can create a 'packed' .bin from the compiled firmware.bin file.

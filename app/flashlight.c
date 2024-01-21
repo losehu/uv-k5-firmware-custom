@@ -47,20 +47,30 @@ void FlashlightTimeSlice()
 
 void ACTION_FlashLight(void)
 {
-	switch (gFlashLightState) {
-		case FLASHLIGHT_OFF:
-			gFlashLightState++;
-			GPIO_SetBit(&GPIOC->DATA, GPIOC_PIN_FLASHLIGHT);
-			break;
-		case FLASHLIGHT_ON:
-		case FLASHLIGHT_BLINK:
-			gFlashLightState++;
-			break;
-		case FLASHLIGHT_SOS:
-		default:
-			gFlashLightState = 0;
-			GPIO_ClearBit(&GPIOC->DATA, GPIOC_PIN_FLASHLIGHT);
-	}
+    if(gFlashLightState)
+        {
+        GPIO_ClearBit(&GPIOC->DATA, GPIOC_PIN_FLASHLIGHT);
+gFlashLightState=0;
+
+        }else
+            {
+        GPIO_SetBit(&GPIOC->DATA, GPIOC_PIN_FLASHLIGHT);
+        gFlashLightState=1;
+            }
+//	switch (gFlashLightState) {
+//		case FLASHLIGHT_OFF:
+//			gFlashLightState++;
+//			GPIO_SetBit(&GPIOC->DATA, GPIOC_PIN_FLASHLIGHT);
+//			break;
+//		case FLASHLIGHT_ON:
+////		case FLASHLIGHT_BLINK:
+//			gFlashLightState++;
+//			break;
+////		case FLASHLIGHT_SOS:
+//		default:
+//			gFlashLightState = 0;
+//			GPIO_ClearBit(&GPIOC->DATA, GPIOC_PIN_FLASHLIGHT);
+//	}
 }
 
 #endif

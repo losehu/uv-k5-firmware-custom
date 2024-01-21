@@ -457,7 +457,9 @@ const char gSubMenu_SCRAMBLER[][7] =
 const t_sidefunction SIDEFUNCTIONS[] =
         {
                {关闭, ACTION_OPT_NONE},
+#ifdef ENABLE_FLASHLIGHT
                {手电, ACTION_OPT_FLASHLIGHT},
+#endif
                {切换发射功率, ACTION_OPT_POWER},
                {监听, ACTION_OPT_MONITOR},
                {扫描, ACTION_OPT_SCAN},

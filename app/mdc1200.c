@@ -440,7 +440,7 @@ uint8_t mdc1200_rx_ready_tick_500ms;
 
 
 void MDC1200_init(void) {
-    memcpy(mdc1200_sync_suc_xor, mdc1200_sync, sizeof(mdc1200_sync));
+//    memcpy(mdc1200_sync_suc_xor, mdc1200_sync, sizeof(mdc1200_sync));
 //    xor_modulation(mdc1200_sync_suc_xor, sizeof(mdc1200_sync_suc_xor));
 
     MDC1200_reset_rx();
@@ -471,11 +471,13 @@ void mdc1200_update_contact_num()
 }
 bool mdc1200_contact_find(uint16_t mdc_id, char *contact) {
     mdc1200_update_contact_num();
-    uint8_t add = 0;
+    uint16_t add = 0x1D00;
     for (uint8_t i = 0; i < contact_num; i++) {
         uint8_t read_once[16]={0};
-        if ((i & 3) == 0 && i) add++;
-        EEPROM_ReadBuffer(MDC_ADD[add] +((i&3) <<4), read_once, 16);
+//        if ((i & 3) == 0 && i) add++;
+        add+=16;
+        if(i==16)add=0X1F90;
+        EEPROM_ReadBuffer(add +((i&3) <<4), read_once, 16);
         if (mdc_id == (uint16_t) (read_once[1] | (read_once[0] << 8))) {
             for (int j = 0; j < 14; ++j) {
                 if(read_once[2+j]<' '||read_once[2+j]>'~')
@@ -489,27 +491,5 @@ bool mdc1200_contact_find(uint16_t mdc_id, char *contact) {
     }
     return false;
 }
-//uint8_t A[64];
-//    memset(A,'A',6*16);
-//    for (int i = MDC_ADD1; i < MDC_ADD1+64; ++i) {
-//        EEPROM_WriteBuffer(i,&A[i-MDC_ADD1]);
-//    }
-//
-//    for (int i = MDC_ADD2+72; i <MDC_ADD2+64; ++i) {
-//        EEPROM_WriteBuffer(i,&A[i-MDC_ADD2]);
-//    }
-//    for (int i =MDC_ADD3; i < MDC_ADD3+64; ++i) {
-//        EEPROM_WriteBuffer(i,&A[i-MDC_ADD3]);
-//    }
-//    for (int i =MDC_ADD4; i < MDC_ADD4+64; ++i) {
-//        EEPROM_WriteBuffer(i,&A[i-MDC_ADD4]);
-//    }
-//    EEPROM_ReadBuffer(MDC_ADD1, A, sizeof(A));
-//    UART_Send(A,64);
-//    EEPROM_ReadBuffer(MDC_ADD2, A, sizeof(A));
-//    UART_Send(A,64);
-//    EEPROM_ReadBuffer(MDC_ADD3, A, sizeof(A));
-//    UART_Send(A,64);
-//    EEPROM_ReadBuffer(MDC_ADD4, A, sizeof(A));
-//    UART_Send(A,64);
+
 #endif
