@@ -10,11 +10,11 @@
 using namespace std;
 #define IS_BIT_SET(byte, bit) ((byte>>bit) & (1))
 
-ifstream file("../ALL_IN.txt"); // Ìæ»»³ÉÄãµÄÎÄ¼þÃû»òÂ·¾¶
-//ifstream file("../CHINESE7000_OUT.txt"); // Ìæ»»³ÉÄãµÄÎÄ¼þÃû»òÂ·¾¶
+ifstream file("../ALL_IN.txt"); // ï¿½æ»»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½
+//ifstream file("../CHINESE7000_OUT.txt"); // ï¿½æ»»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½
 ofstream outFile("../name_tmp.txt");
 ofstream out_chinese_array("../chinese_array.txt");
-ofstream output_file("../chinses_map.txt"); // ÎÄ¼þÃû¿ÉÒÔ¸ù¾ÝÄãµÄÐèÒª¸ü¸Ä
+ofstream output_file("../chinses_map.txt"); // ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½
 string names[10000];
 unsigned char chinese[10000][2];
 unsigned char english[1000];
@@ -25,7 +25,7 @@ int init_file() {
     if (file.is_open()) {
         string line;
         while (getline(file, line)) {
-            // ¶Ô¶ÁÈ¡µÄÃ¿Ò»ÐÐÖ´ÐÐ²Ù×÷£¬ÀýÈç´òÓ¡µ½¿ØÖÆÌ¨
+            // ï¿½Ô¶ï¿½È¡ï¿½ï¿½Ã¿Ò»ï¿½ï¿½Ö´ï¿½Ð²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¨
             names[lines] = line;
             lines++;
 
@@ -33,7 +33,7 @@ int init_file() {
 
         file.close();
     } else {
-        cout << "ÎÞ·¨´ò¿ªÎÄ¼þ" << endl;
+        cout << "ï¿½Þ·ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½" << endl;
     }
     return lines;
 
@@ -47,7 +47,7 @@ map<array<unsigned char, 2>, unsigned int> map_str;
 map<array<unsigned char, 2>, unsigned int> all_code;
 
 bool isGBKChineseCharacter(const string &str, size_t index) {
-    // ¼ì²éGBK±àÂëµÄ×Ö·ûÊÇ·ñÎªºº×Ö
+    // ï¿½ï¿½ï¿½GBKï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½Ç·ï¿½Îªï¿½ï¿½ï¿½ï¿½
     if (index < str.size() - 1) {
         unsigned char firstByte = static_cast<unsigned char>(str[index]);
         unsigned char secondByte = static_cast<unsigned char>(str[index + 1]);
@@ -90,9 +90,9 @@ void removeNullStrings(const std::string &inputFile, const std::string &outputFi
 
 void set_bit(uint8_t *value, uint8_t bit_position, uint8_t bit_value) {
     if (bit_value == 0) {
-        *value = *value & ~(1 << bit_position); // ½«Ö¸¶¨Î»ÉèÖÃÎª 0
+        *value = *value & ~(1 << bit_position); // ï¿½ï¿½Ö¸ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½Îª 0
     } else {
-        *value = *value | (1 << bit_position);  // ½«Ö¸¶¨Î»ÉèÖÃÎª 1
+        *value = *value | (1 << bit_position);  // ï¿½ï¿½Ö¸ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½Îª 1
     }
 }
 
@@ -128,7 +128,7 @@ bool check_font(unsigned char *font1,unsigned char *font2)
 {
     return (memcmp(font1,font2,CHN_FONT_WIDTH*2)==0);
 }
-void back_font(int num_show, unsigned char *font) { //Ñ¹Ëõ×ªÏÔ´æÏÔÊ¾
+void back_font(int num_show, unsigned char *font) { //Ñ¹ï¿½ï¿½×ªï¿½Ô´ï¿½ï¿½ï¿½Ê¾
     unsigned int local = CHN_FONT_HIGH * CHN_FONT_WIDTH * num_show / 8;
     unsigned int local_bit = (CHN_FONT_HIGH * CHN_FONT_WIDTH * num_show) % 8;
     unsigned char now_font[CHN_FONT_WIDTH * 2] = {0};
@@ -163,10 +163,10 @@ int main() {
     if (!outFile.is_open()) {
         return -5;
     }
-    // Ð´ÈëÄÚÈÝµ½ÎÄ¼þ
+    // Ð´ï¿½ï¿½ï¿½ï¿½ï¿½Ýµï¿½ï¿½Ä¼ï¿½
 
 
-//        // ¹Ø±ÕÎÄ¼þÁ÷
+//        // ï¿½Ø±ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½
 //    outFile << "Hello, this is some text.\n";
 //    outFile << "This is a new line.";
 
@@ -182,7 +182,7 @@ int main() {
 
                 if (map_str.find(tmp) != map_str.end()) {
                 } else {
-                    // Èç¹û²»ÔÚÓ³ÉäÖÐ£¬Ìí¼ÓÐÂµÄ¼ü²¢ÉèÖÃ³öÏÖ´ÎÊýÎª1
+                    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó³ï¿½ï¿½ï¿½Ð£ï¿½ï¿½ï¿½ï¿½ï¿½ÂµÄ¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã³ï¿½ï¿½Ö´ï¿½ï¿½ï¿½Îª1
                     map_str[tmp] = num_chinese;
                     //   cout<<num_chinese<<":"<<tmp[0]<< tmp[1]<<endl;
 
@@ -192,14 +192,14 @@ int main() {
 
                     num_chinese++;
                 }
-                j++; // Ìø¹ýÏÂÒ»¸ö×Ö½Ú£¬ÒòÎªºº×ÖÕ¼Á½¸ö×Ö½Ú
+                j++; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ö½Ú£ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½Õ¼ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½
 
             } else {
 
                 if (en_flag[names[i][j]]) {
 
                 } else {
-                    //         Èç¹û²»ÔÚÓ³ÉäÖÐ£¬Ìí¼ÓÐÂµÄ¼ü²¢ÉèÖÃ³öÏÖ´ÎÊýÎª1
+                    //         ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó³ï¿½ï¿½ï¿½Ð£ï¿½ï¿½ï¿½ï¿½ï¿½ÂµÄ¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã³ï¿½ï¿½Ö´ï¿½ï¿½ï¿½Îª1
                     en_flag[names[i][j]] = true;
                     english[num_english] = names[i][j];
                     num_english++;
@@ -217,7 +217,7 @@ int main() {
 
     vector<pair<array<unsigned char, 2>, int>> vec(map_str.begin(), map_str.end());
 
-    // Ê¹ÓÃ×Ô¶¨ÒåµÄ±È½Ïº¯Êý°´ÖµÅÅÐò
+    // Ê¹ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½Ä±È½Ïºï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½
     sort(vec.begin(), vec.end(), sortByValue);
     en_flag['\n'] = true;
     en_flag[' '] = true;
@@ -225,7 +225,7 @@ int main() {
     for (int i = '!'; i <= '~'; i++) {
         en_flag[i] = true;
     }
-    // Êä³öÅÅÐòºóµÄ¼üÖµ¶Ô
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½Öµï¿½ï¿½
     int now_code = 0x8000;
     for (const auto &pair: vec) {
         // cout << "{" << static_cast<int>(pair.first[0]) << ", " << static_cast<int>(pair.first[1]) << "} : " << pair.second << endl;
@@ -260,7 +260,7 @@ int main() {
                 unsigned char byte2 = value & 0xFF;
 
                 outFile << "\\x" << std::hex << std::setw(2) << std::setfill('0') << std::uppercase << (int) byte1;
-                outFile.flush(); // Ë¢ÐÂ»º³åÇø£¬È·±£²»»»ÐÐ
+                outFile.flush(); // Ë¢ï¿½Â»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 // Outputting byte2 as a character other than '\x00'
                 if (byte2 == 0x00) {
@@ -297,7 +297,7 @@ int main() {
 
     int now_byte_index = 0;
     int now_bit_index = 0;
-    for (int k = 0; k < CHN_FONT_NUM; k++) {//Ñ¹Ëõ
+    for (int k = 0; k < CHN_FONT_NUM; k++) {//Ñ¹ï¿½ï¿½
         unsigned char bitmap[CHN_FONT_HIGH][CHN_FONT_WIDTH] = {0};
         for (int i = 0; i < CHN_FONT_WIDTH * 2; i++) {
             if (i < CHN_FONT_WIDTH) {
@@ -347,7 +347,7 @@ int main() {
 
 #
     out_chinese_array<<"const uint8_t gFontChinese_out1["<<111590<<"]={"<<endl;
-    for (int i = 0; i < 40960; i++) {
+    for (int i = 0; i < 111590; i++) {
         out_chinese_array << "0X" << hex << setw(2) << setfill('0') << uppercase << (int) gFontChinese_out[i]<<",";
         if(i%20==0&&i!=0)out_chinese_array<<endl;
     }

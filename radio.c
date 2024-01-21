@@ -557,7 +557,7 @@ void RADIO_SetupRegisters(bool switchToForeground)
     BK4819_FilterBandwidth_t Bandwidth = gRxVfo->CHANNEL_BANDWIDTH;
     uint16_t                 InterruptMask;
     uint32_t                 Frequency;
-
+    uint8_t read_tmp[2];
     AUDIO_AudioPathOff();
 
     gEnableSpeaker = false;
@@ -660,7 +660,6 @@ void RADIO_SetupRegisters(bool switchToForeground)
 #if ENABLE_CHINESE_FULL==0
                     BK4819_SetCTCSSFrequency(CTCSS_Options[Code]);
 #else
-                    uint8_t read_tmp[2];
         EEPROM_ReadBuffer(0x02C00+(Code)*2, read_tmp, 2);
         uint16_t CTCSS_Options_read=read_tmp[0]|(read_tmp[1]<<8);
                     BK4819_SetCTCSSFrequency(CTCSS_Options_read);
@@ -801,8 +800,9 @@ void RADIO_ConfigureNOAA(void)
 
 void RADIO_SetTxParameters(void)
 {
-    BK4819_FilterBandwidth_t Bandwidth = gCurrentVfo->CHANNEL_BANDWIDTH;
+    uint8_t read_tmp[2];
 
+    BK4819_FilterBandwidth_t Bandwidth = gCurrentVfo->CHANNEL_BANDWIDTH;
     AUDIO_AudioPathOff();
 
     gEnableSpeaker = false;
@@ -855,7 +855,7 @@ void RADIO_SetTxParameters(void)
 #if ENABLE_CHINESE_FULL==0
             BK4819_SetCTCSSFrequency(CTCSS_Options[gCurrentVfo->pTX->Code]);
 #else
-            uint8_t read_tmp[2];
+
         EEPROM_ReadBuffer(0x02C00+(gCurrentVfo->pTX->Code)*2, read_tmp, 2);
         uint16_t CTCSS_Options_read=read_tmp[0]|(read_tmp[1]<<8);
             BK4819_SetCTCSSFrequency(CTCSS_Options_read);

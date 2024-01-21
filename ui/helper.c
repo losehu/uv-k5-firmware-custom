@@ -217,7 +217,7 @@ void UI_PrintStringSmall(const char *pString, uint8_t Start, uint8_t End, uint8_
 
             unsigned int local = (CHN_FONT_HIGH * CHN_FONT_WIDTH * true_char[i]) / 8;
             unsigned int local_bit =(CHN_FONT_HIGH * CHN_FONT_WIDTH * true_char[i]) % 8;
-            EEPROM_ReadBuffer(local+0x02A00,tmp,17);
+            EEPROM_ReadBuffer(local+0x02E00,tmp,17);
             local=0;
             for (unsigned char k = 0; k < CHN_FONT_WIDTH * 2; ++k) {
                 unsigned char j_end = 8;
@@ -235,7 +235,7 @@ void UI_PrintStringSmall(const char *pString, uint8_t Start, uint8_t End, uint8_
             }
 #else
 
-            EEPROM_ReadBuffer(true_char[i]*22+0x02A00,gFontChinese,22);
+            EEPROM_ReadBuffer(true_char[i]*22+0x02E00,gFontChinese,22);
 #endif
 #else
 
