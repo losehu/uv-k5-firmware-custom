@@ -323,7 +323,7 @@ void moveUP(char (*rxMessages)[MAX_RX_MSG_LENGTH + 2]) {
 	memset(rxMessages[3], 0, sizeof(rxMessages[3]));
 }
 
-void MSG_Send(const char txMessage[TX_MSG_LENGTH], bool bServiceMessage) {
+void MSG_Send(const char *txMessage, bool bServiceMessage) {
 
 	if ( msgStatus != READY ) return;
     stop_mdc_flag=1;
@@ -376,8 +376,9 @@ void MSG_Send(const char txMessage[TX_MSG_LENGTH], bool bServiceMessage) {
 		if (!bServiceMessage) {
 			moveUP(rxMessage);
 			sprintf(rxMessage[3], "> %s", txMessage);
-			memset(lastcMessage, 0, sizeof(lastcMessage));
+//			memset(lastcMessage, 0, sizeof(lastcMessage));
 			memcpy(lastcMessage, txMessage, TX_MSG_LENGTH);
+            lastcMessage[TX_MSG_LENGTH]=0;
 			cIndex = 0;
 			prevKey = 0;
 			prevLetter = 0;

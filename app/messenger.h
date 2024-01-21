@@ -37,7 +37,7 @@ extern uint8_t keyTickCounter;
 
 void MSG_Init();
 void MSG_ProcessKeys(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld);
-void MSG_Send(const char txMessage[TX_MSG_LENGTH], bool bServiceMessage);
+void MSG_Send(const char *txMessage, bool bServiceMessage);
 extern unsigned char cIndex ;
 //extern bool stop_mdc_rx;
 extern uint8_t msgFSKBuffer[MSG_HEADER_LENGTH + MAX_RX_MSG_LENGTH];
