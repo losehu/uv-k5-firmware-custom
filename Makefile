@@ -12,7 +12,7 @@ ENABLE_LTO                    ?= 1
 # ---- STOCK QUANSHENG FERATURES ----
 ENABLE_UART                   ?= 1
 ENABLE_AIRCOPY                ?= 0
-ENABLE_FMRADIO                ?=1
+ENABLE_FMRADIO                ?= 1
 ENABLE_NOAA                   ?= 0
 ENABLE_VOICE                  ?= 0
 ENABLE_VOX                    ?= 1
@@ -47,23 +47,23 @@ ENABLE_MDC1200                ?= 1
 ENABLE_MDC1200_SHOW_OP_ARG    ?= 0
 ENABLE_MDC1200_SIDE_BEEP      ?= 0
 ENABLE_MDC1200_CONTACT        ?= 1
-ENABLE_UART_RW_BK_REGS 		  ?= 0
+ENABLE_UART_RW_BK_REGS 	      ?= 0
 ENABLE_AUDIO_BAR_DEFAULT      ?= 0
-ENABLE_EEPROM_TYPE        	   = 0
-ENABLE_CHINESE_FULL 		   = 4
-ENABLE_DOCK 		          ?= 0
+ENABLE_EEPROM_TYPE             = 0
+ENABLE_CHINESE_FULL 	       = 4
+ENABLE_DOCK 		      ?= 0
 ENABLE_CUSTOM_SIDEFUNCTIONS   ?= 1
 ENABLE_SIDEFUNCTIONS_SEND     ?= 1
 ENABLE_BLOCK                  ?= 0
-ENABLE_GB2312				   = 0
+ENABLE_GB2312		       = 0
 # ---- DEBUGGING ----
 ENABLE_AM_FIX_SHOW_DATA       ?= 0
 ENABLE_AGC_SHOW_DATA          ?= 0
-ENABLE_TIMER		          ?= 0
-ENABLE_WARNING 				  ?= 1
-ENABLE_MESSENGER              			?=1
+ENABLE_TIMER		      ?= 0
+ENABLE_WARNING 		      ?= 1
+ENABLE_MESSENGER              ?= 1
 ENABLE_MESSENGER_DELIVERY_NOTIFICATION	?= 1
-ENABLE_MESSENGER_NOTIFICATION			?= 1
+ENABLE_MESSENGER_NOTIFICATION		?= 1
 #############################################################
 PACKED_FILE_SUFFIX = LOSEHU118
 ifeq ($(ENABLE_CHINESE_FULL),1)
