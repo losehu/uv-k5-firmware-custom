@@ -424,8 +424,8 @@ void rotate_font(const char *filename1, const char *filename2)
 
 	for (unsigned int i = 0; i < data.size(); )
 	{
-		char s[1024];
-		memset(s, 0, sizeof(s));
+		char s[1024]={0};
+//		memset(s, 0, sizeof(s));
 
 //		for (unsigned int k = 0; k < 8 && i < data.size(); k++)
 		for (unsigned int k = 0; k < 7 && i < data.size(); k++)

@@ -20,8 +20,9 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="重构显示函数">
+    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="删除多余memset">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/utils/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,6 +119,12 @@
       </makefile>
       <method v="2" />
     </configuration>
+    <configuration name="both (1)" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
+      <makefile filename="$PROJECT_DIR$/Makefile" target="both" workingDirectory="" arguments="">
+        <envs />
+      </makefile>
+      <method v="2" />
+    </configuration>
     <configuration name="both" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile">
       <makefile filename="C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\Makefile" target="both" workingDirectory="" arguments="">
         <envs />
@@ -149,9 +156,10 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="" />
+      <option name="SDK_HOME" value="C:\Users\RUPC\AppData\Local\Programs\Python\Python38\python.exe" />
+      <option name="SDK_NAME" value="Python 3.8 (uv-k5-firmware-chinese)" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/写频脚本" />
-      <option name="IS_MODULE_SDK" value="true" />
+      <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
@@ -213,6 +221,7 @@
       <item itemvalue="Makefile 应用程序.uv_k5_firmware_custom_0_17" />
       <item itemvalue="Makefile 目标.Makefile" />
       <item itemvalue="Makefile 目标.both" />
+      <item itemvalue="Makefile 目标.both (1)" />
       <item itemvalue="Makefile 目标.all" />
       <item itemvalue="Makefile 目标.build" />
       <item itemvalue="Makefile 目标.clean" />
@@ -225,6 +234,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Makefile 目标.clean" />
+        <item itemvalue="Makefile 目标.full" />
+        <item itemvalue="Makefile 目标.both (1)" />
         <item itemvalue="Makefile 目标.build" />
       </list>
     </recent_temporary>
@@ -320,84 +331,10 @@
       <workItem from="1705576322177" duration="1171000" />
       <workItem from="1705717059704" duration="24481000" />
       <workItem from="1705804640277" duration="2364000" />
-      <workItem from="1705807362979" duration="320000" />
-    </task>
-    <task id="LOCAL-00082" summary="MDC联系人">
-      <created>1702137966114</created>
-      <option name="number" value="00082" />
-      <option name="presentableId" value="LOCAL-00082" />
-      <option name="project" value="LOCAL" />
-      <updated>1702137966114</updated>
-    </task>
-    <task id="LOCAL-00083" summary="MDC联系人">
-      <created>1702140031577</created>
-      <option name="number" value="00083" />
-      <option name="presentableId" value="LOCAL-00083" />
-      <option name="project" value="LOCAL" />
-      <updated>1702140031577</updated>
-    </task>
-    <task id="LOCAL-00084" summary="MDC联系人">
-      <created>1702140061105</created>
-      <option name="number" value="00084" />
-      <option name="presentableId" value="LOCAL-00084" />
-      <option name="project" value="LOCAL" />
-      <updated>1702140061106</updated>
-    </task>
-    <task id="LOCAL-00085" summary="MDC PY">
-      <created>1702141605728</created>
-      <option name="number" value="00085" />
-      <option name="presentableId" value="LOCAL-00085" />
-      <option name="project" value="LOCAL" />
-      <updated>1702141605728</updated>
-    </task>
-    <task id="LOCAL-00086" summary="赞助">
-      <created>1702793183140</created>
-      <option name="number" value="00086" />
-      <option name="presentableId" value="LOCAL-00086" />
-      <option name="project" value="LOCAL" />
-      <updated>1702793183141</updated>
-    </task>
-    <task id="LOCAL-00087" summary="110">
-      <created>1702798230173</created>
-      <option name="number" value="00087" />
-      <option name="presentableId" value="LOCAL-00087" />
-      <option name="project" value="LOCAL" />
-      <updated>1702798230173</updated>
-    </task>
-    <task id="LOCAL-00088" summary="中英文字符对齐">
-      <created>1702808870233</created>
-      <option name="number" value="00088" />
-      <option name="presentableId" value="LOCAL-00088" />
-      <option name="project" value="LOCAL" />
-      <updated>1702808870234</updated>
-    </task>
-    <task id="LOCAL-00089" summary="中英文字符对齐">
-      <created>1702809094564</created>
-      <option name="number" value="00089" />
-      <option name="presentableId" value="LOCAL-00089" />
-      <option name="project" value="LOCAL" />
-      <updated>1702809094564</updated>
-    </task>
-    <task id="LOCAL-00090" summary="支持中文编译选项ENABLE_CHINESE_FULL">
-      <created>1703085632523</created>
-      <option name="number" value="00090" />
-      <option name="presentableId" value="LOCAL-00090" />
-      <option name="project" value="LOCAL" />
-      <updated>1703085632524</updated>
-    </task>
-    <task id="LOCAL-00091" summary="支持中文编译选项ENABLE_CHINESE_FULL">
-      <created>1703085987589</created>
-      <option name="number" value="00091" />
-      <option name="presentableId" value="LOCAL-00091" />
-      <option name="project" value="LOCAL" />
-      <updated>1703085987589</updated>
-    </task>
-    <task id="LOCAL-00092" summary="支持中文编译选项ENABLE_CHINESE_FULL">
-      <created>1703086068756</created>
-      <option name="number" value="00092" />
-      <option name="presentableId" value="LOCAL-00092" />
-      <option name="project" value="LOCAL" />
-      <updated>1703086068756</updated>
+      <workItem from="1705807362979" duration="14667000" />
+      <workItem from="1705826929632" duration="7981000" />
+      <workItem from="1705845734802" duration="3217000" />
+      <workItem from="1705895156577" duration="43000" />
     </task>
     <task id="LOCAL-00093" summary="支持中文编译选项ENABLE_CHINESE_FULL">
       <created>1703086244415</created>
@@ -665,7 +602,84 @@
       <option name="project" value="LOCAL" />
       <updated>1705577225509</updated>
     </task>
-    <option name="localTasksCounter" value="131" />
+    <task id="LOCAL-00131" summary="修复MDC 短信显示">
+      <created>1705816281185</created>
+      <option name="number" value="00131" />
+      <option name="presentableId" value="LOCAL-00131" />
+      <option name="project" value="LOCAL" />
+      <updated>1705816281186</updated>
+    </task>
+    <task id="LOCAL-00132" summary="修改字库">
+      <created>1705816329489</created>
+      <option name="number" value="00132" />
+      <option name="presentableId" value="LOCAL-00132" />
+      <option name="project" value="LOCAL" />
+      <updated>1705816329489</updated>
+    </task>
+    <task id="LOCAL-00133" summary="IDE">
+      <created>1705817319306</created>
+      <option name="number" value="00133" />
+      <option name="presentableId" value="LOCAL-00133" />
+      <option name="project" value="LOCAL" />
+      <updated>1705817319307</updated>
+    </task>
+    <task id="LOCAL-00134" summary="修复字库地址">
+      <created>1705817343436</created>
+      <option name="number" value="00134" />
+      <option name="presentableId" value="LOCAL-00134" />
+      <option name="project" value="LOCAL" />
+      <updated>1705817343436</updated>
+    </task>
+    <task id="LOCAL-00135" summary="修复编译选项">
+      <created>1705819873508</created>
+      <option name="number" value="00135" />
+      <option name="presentableId" value="LOCAL-00135" />
+      <option name="project" value="LOCAL" />
+      <updated>1705819873509</updated>
+    </task>
+    <task id="LOCAL-00136" summary="精简代码，加入手电筒">
+      <created>1705824528954</created>
+      <option name="number" value="00136" />
+      <option name="presentableId" value="LOCAL-00136" />
+      <option name="project" value="LOCAL" />
+      <updated>1705824528954</updated>
+    </task>
+    <task id="LOCAL-00137" summary="github action">
+      <created>1705824779648</created>
+      <option name="number" value="00137" />
+      <option name="presentableId" value="LOCAL-00137" />
+      <option name="project" value="LOCAL" />
+      <updated>1705824779648</updated>
+    </task>
+    <task id="LOCAL-00138" summary="发短信关闭全部首尾音">
+      <created>1705827053401</created>
+      <option name="number" value="00138" />
+      <option name="presentableId" value="LOCAL-00138" />
+      <option name="project" value="LOCAL" />
+      <updated>1705827053401</updated>
+    </task>
+    <task id="LOCAL-00139" summary="简化bitmaps">
+      <created>1705831459712</created>
+      <option name="number" value="00139" />
+      <option name="presentableId" value="LOCAL-00139" />
+      <option name="project" value="LOCAL" />
+      <updated>1705831459712</updated>
+    </task>
+    <task id="LOCAL-00140" summary="修复warning">
+      <created>1705847122773</created>
+      <option name="number" value="00140" />
+      <option name="presentableId" value="LOCAL-00140" />
+      <option name="project" value="LOCAL" />
+      <updated>1705847122773</updated>
+    </task>
+    <task id="LOCAL-00141" summary="删除多余memset">
+      <created>1705848378046</created>
+      <option name="number" value="00141" />
+      <option name="presentableId" value="LOCAL-00141" />
+      <option name="project" value="LOCAL" />
+      <updated>1705848378046</updated>
+    </task>
+    <option name="localTasksCounter" value="142" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -692,17 +706,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="赞助更新" />
-    <MESSAGE value="减少eeprom延时" />
-    <MESSAGE value="MDC ID地址改为0X1FFD~0X1FFE" />
-    <MESSAGE value="TEST" />
-    <MESSAGE value="适配2*2Mb Eerpom" />
-    <MESSAGE value="修改ENABLE_SQUELCH_MORE_SENSITIVE 选项" />
-    <MESSAGE value="MDC ID地址改回原来的" />
-    <MESSAGE value="DTMF CALL延时（存疑）" />
-    <MESSAGE value="修复信道名显示" />
-    <MESSAGE value="同时编译多个版本" />
-    <MESSAGE value="修复收音机缺失文字" />
     <MESSAGE value="更新README" />
     <MESSAGE value="修改docker编译" />
     <MESSAGE value="4M TEST" />
@@ -717,7 +720,18 @@
     <MESSAGE value="makefile" />
     <MESSAGE value="回档" />
     <MESSAGE value="重构显示函数" />
-    <option name="LAST_COMMIT_MESSAGE" value="重构显示函数" />
+    <MESSAGE value="修复MDC 短信显示" />
+    <MESSAGE value="修改字库" />
+    <MESSAGE value="IDE" />
+    <MESSAGE value="修复字库地址" />
+    <MESSAGE value="修复编译选项" />
+    <MESSAGE value="精简代码，加入手电筒" />
+    <MESSAGE value="github action" />
+    <MESSAGE value="发短信关闭全部首尾音" />
+    <MESSAGE value="简化bitmaps" />
+    <MESSAGE value="修复warning" />
+    <MESSAGE value="删除多余memset" />
+    <option name="LAST_COMMIT_MESSAGE" value="删除多余memset" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

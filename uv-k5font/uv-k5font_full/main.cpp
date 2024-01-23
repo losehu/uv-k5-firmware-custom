@@ -10,22 +10,23 @@
 using namespace std;
 #define IS_BIT_SET(byte, bit) ((byte>>bit) & (1))
 
-ifstream file("../ALL_IN.txt"); // �滻������ļ�����·��
-//ifstream file("../CHINESE7000_OUT.txt"); // �滻������ļ�����·��
+ifstream file("../ALL_IN.txt"); // ?�I????????????��??
+//ifstream file("../CHINESE7000_OUT.txt"); // ?�I????????????��??
 ofstream outFile("../name_tmp.txt");
-ofstream out_chinese_array("../chinese_array.txt");
-ofstream output_file("../chinses_map.txt"); // �ļ������Ը��������Ҫ����
+//ofstream out_chinese_array("../chinese_array.txt");
+ofstream out_chinese_array("../chinese_array.txt", std::ios::binary);
+ofstream output_file("../chinses_map.txt"); // ??????????????????????
 string names[10000];
 unsigned char chinese[10000][2];
 unsigned char english[1000];
 bool en_flag[256] = {false};
-
+#define CAL
 int init_file() {
     int lines = 0;
     if (file.is_open()) {
         string line;
         while (getline(file, line)) {
-            // �Զ�ȡ��ÿһ��ִ�в����������ӡ������̨
+            // ????????????��??????????????????
             names[lines] = line;
             lines++;
 
@@ -33,7 +34,7 @@ int init_file() {
 
         file.close();
     } else {
-        cout << "�޷����ļ�" << endl;
+        cout << "????????" << endl;
     }
     return lines;
 
@@ -47,7 +48,7 @@ map<array<unsigned char, 2>, unsigned int> map_str;
 map<array<unsigned char, 2>, unsigned int> all_code;
 
 bool isGBKChineseCharacter(const string &str, size_t index) {
-    // ���GBK������ַ��Ƿ�Ϊ����
+    // ???GBK????????????????
     if (index < str.size() - 1) {
         unsigned char firstByte = static_cast<unsigned char>(str[index]);
         unsigned char secondByte = static_cast<unsigned char>(str[index + 1]);
@@ -90,9 +91,9 @@ void removeNullStrings(const std::string &inputFile, const std::string &outputFi
 
 void set_bit(uint8_t *value, uint8_t bit_position, uint8_t bit_value) {
     if (bit_value == 0) {
-        *value = *value & ~(1 << bit_position); // ��ָ��λ����Ϊ 0
+        *value = *value & ~(1 << bit_position); // ?????��????? 0
     } else {
-        *value = *value | (1 << bit_position);  // ��ָ��λ����Ϊ 1
+        *value = *value | (1 << bit_position);  // ?????��????? 1
     }
 }
 
@@ -128,7 +129,7 @@ bool check_font(unsigned char *font1,unsigned char *font2)
 {
     return (memcmp(font1,font2,CHN_FONT_WIDTH*2)==0);
 }
-void back_font(int num_show, unsigned char *font) { //ѹ��ת�Դ���ʾ
+void back_font(int num_show, unsigned char *font) { //??????????
     unsigned int local = CHN_FONT_HIGH * CHN_FONT_WIDTH * num_show / 8;
     unsigned int local_bit = (CHN_FONT_HIGH * CHN_FONT_WIDTH * num_show) % 8;
     unsigned char now_font[CHN_FONT_WIDTH * 2] = {0};
@@ -163,10 +164,10 @@ int main() {
     if (!outFile.is_open()) {
         return -5;
     }
-    // д�����ݵ��ļ�
+    // ��??????????
 
 
-//        // �ر��ļ���
+//        // ????????
 //    outFile << "Hello, this is some text.\n";
 //    outFile << "This is a new line.";
 
@@ -182,7 +183,7 @@ int main() {
 
                 if (map_str.find(tmp) != map_str.end()) {
                 } else {
-                    // �������ӳ���У�����µļ������ó��ִ���Ϊ1
+                    // ???????????��?????????????��???????1
                     map_str[tmp] = num_chinese;
                     //   cout<<num_chinese<<":"<<tmp[0]<< tmp[1]<<endl;
 
@@ -192,14 +193,14 @@ int main() {
 
                     num_chinese++;
                 }
-                j++; // ������һ���ֽڣ���Ϊ����ռ�����ֽ�
+                j++; // ????????????????????????????
 
             } else {
 
                 if (en_flag[names[i][j]]) {
 
                 } else {
-                    //         �������ӳ���У�����µļ������ó��ִ���Ϊ1
+                    //         ???????????��?????????????��???????1
                     en_flag[names[i][j]] = true;
                     english[num_english] = names[i][j];
                     num_english++;
@@ -217,7 +218,7 @@ int main() {
 
     vector<pair<array<unsigned char, 2>, int>> vec(map_str.begin(), map_str.end());
 
-    // ʹ���Զ���ıȽϺ�����ֵ����
+    // ?????????????????????
     sort(vec.begin(), vec.end(), sortByValue);
     en_flag['\n'] = true;
     en_flag[' '] = true;
@@ -225,7 +226,7 @@ int main() {
     for (int i = '!'; i <= '~'; i++) {
         en_flag[i] = true;
     }
-    // ��������ļ�ֵ��
+    // ?????????????
     int now_code = 0x8000;
     for (const auto &pair: vec) {
         // cout << "{" << static_cast<int>(pair.first[0]) << ", " << static_cast<int>(pair.first[1]) << "} : " << pair.second << endl;
@@ -260,7 +261,7 @@ int main() {
                 unsigned char byte2 = value & 0xFF;
 
                 outFile << "\\x" << std::hex << std::setw(2) << std::setfill('0') << std::uppercase << (int) byte1;
-                outFile.flush(); // ˢ�»�������ȷ��������
+                outFile.flush(); // ???????????????????
 
 // Outputting byte2 as a character other than '\x00'
                 if (byte2 == 0x00) {
@@ -297,7 +298,7 @@ int main() {
 
     int now_byte_index = 0;
     int now_bit_index = 0;
-    for (int k = 0; k < CHN_FONT_NUM; k++) {//ѹ��
+    for (int k = 0; k < CHN_FONT_NUM; k++) {//???
         unsigned char bitmap[CHN_FONT_HIGH][CHN_FONT_WIDTH] = {0};
         for (int i = 0; i < CHN_FONT_WIDTH * 2; i++) {
             if (i < CHN_FONT_WIDTH) {
@@ -312,6 +313,20 @@ int main() {
             }
         }
 
+
+#ifdef CAL
+        for (int i = 0; i < CHN_FONT_HIGH; ++i) {
+            for (int j = 0; j < CHN_FONT_WIDTH; ++j) {
+                if(bitmap[i][j])
+                    set_bit(&gFontChinese_out[now_byte_index], now_bit_index, 1);
+                now_bit_index++;
+                if (now_bit_index == 8) {
+                    now_bit_index = 0;
+                    now_byte_index++;
+                }
+            }
+        }
+#else
         for (int i = 0; i < CHN_FONT_WIDTH; ++i) {
             for (int j = 0; j < 8; ++j) {
                 if (bitmap[j][i])
@@ -340,23 +355,25 @@ int main() {
         }
 
         back_font(k, gFontChinese_out);
-
+#endif
     }
 
+#ifndef CAL
 
 
-#
     out_chinese_array<<"const uint8_t gFontChinese_out1["<<111590<<"]={"<<endl;
     for (int i = 0; i < 111590; i++) {
         out_chinese_array << "0X" << hex << setw(2) << setfill('0') << uppercase << (int) gFontChinese_out[i]<<",";
         if(i%20==0&&i!=0)out_chinese_array<<endl;
     }
     out_chinese_array<<"};"<<endl;
-
-
+#else
+    cout<<now_byte_index<<endl;
+    out_chinese_array.write(reinterpret_cast<const char*>(gFontChinese_out), sizeof(gFontChinese_out));
+#endif
     out_chinese_array.close();
 
-
+cout<<"��"<<endl;
 }
 
 
