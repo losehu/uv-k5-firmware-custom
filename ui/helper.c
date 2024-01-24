@@ -215,8 +215,8 @@ void UI_PrintStringSmall(const char *pString, uint8_t Start, uint8_t End, uint8_
 #ifndef ENABLE_GB2312
             uint8_t tmp[17] = {0};
 
-            unsigned int local = (CHN_FONT_HIGH * CHN_FONT_WIDTH * true_char[i]) / 8;
-            unsigned int local_bit =(CHN_FONT_HIGH * CHN_FONT_WIDTH * true_char[i]) % 8;
+            unsigned int local = (CHN_FONT_HIGH * CHN_FONT_WIDTH * true_char[i]) >> 3;
+            unsigned int local_bit =(CHN_FONT_HIGH * CHN_FONT_WIDTH * true_char[i]) &7;
             EEPROM_ReadBuffer(local+0x02E00,tmp,17);
             local=0;
             for (unsigned char k = 0; k < CHN_FONT_WIDTH * 2; ++k) {

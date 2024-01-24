@@ -334,7 +334,7 @@ void MSG_Send(const char *txMessage, bool bServiceMessage) {
 		RADIO_SetVfoState(VFO_STATE_NORMAL);
 		BK4819_ToggleGpioOut(BK4819_GPIO5_PIN1_RED, true);
 
-		memset(msgFSKBuffer, 0, sizeof(msgFSKBuffer));
+//		memset(msgFSKBuffer, 0, sizeof(msgFSKBuffer));
 
 		// ? ToDo
 		// first 20 byte sync, msg type and ID
@@ -351,6 +351,7 @@ void MSG_Send(const char *txMessage, bool bServiceMessage) {
 		msgFSKBuffer[MAX_RX_MSG_LENGTH + 1] = 'D';
 		msgFSKBuffer[MAX_RX_MSG_LENGTH + 2] = '0';
 		msgFSKBuffer[(MSG_HEADER_LENGTH + MAX_RX_MSG_LENGTH) - 1] = '#';
+		msgFSKBuffer[(MSG_HEADER_LENGTH + MAX_RX_MSG_LENGTH) ] = '\0';
 
 		BK4819_DisableDTMF();
 
@@ -383,6 +384,7 @@ void MSG_Send(const char *txMessage, bool bServiceMessage) {
 			prevKey = 0;
 			prevLetter = 0;
 			memset(cMessage, 0, sizeof(cMessage));
+//            cMessage[0]='\0';
 		}
 		msgStatus = READY;
 
@@ -499,8 +501,9 @@ void  MSG_ProcessKeys(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
 				processBackspace();
 				break;
 			case KEY_UP:
-				memset(cMessage, 0, sizeof(cMessage));
+//				memset(cMessage, 0, sizeof(cMessage));
 				memcpy(cMessage, lastcMessage, TX_MSG_LENGTH);
+                cMessage[TX_MSG_LENGTH]='\0';
 				cIndex = strlen(cMessage);
 				break;
 			/*case KEY_DOWN:
@@ -557,7 +560,7 @@ void solve_sign(const uint16_t interrupt_bits) {
 #ifdef ENABLE_MESSENGER
 
         gFSKWriteIndex = 0;
-        memset(msgFSKBuffer, 0, sizeof(msgFSKBuffer));
+//        memset(msgFSKBuffer, 0, sizeof(msgFSKBuffer));
         msgStatus = RECEIVING;
 
 #endif
@@ -565,7 +568,7 @@ void solve_sign(const uint16_t interrupt_bits) {
         mdc1200_rx_buffer_index = 0;
 
         {
-            memset(mdc1200_rx_buffer, 0, sizeof(mdc1200_rx_buffer));
+//            memset(mdc1200_rx_buffer, 0, sizeof(mdc1200_rx_buffer));
             for (unsigned int  i = 0; i < sizeof(mdc1200_sync_suc_xor); i++)
                 mdc1200_rx_buffer[mdc1200_rx_buffer_index++] = mdc1200_sync_suc_xor[i] ^ (rx_sync_neg ? 0xFF : 0x00);
         }
@@ -598,7 +601,10 @@ void solve_sign(const uint16_t interrupt_bits) {
                     msgFSKBuffer[gFSKWriteIndex++] = validate_char((read_reg[i]  >> 8) & 0xff);
 #endif
             }
+            #ifdef ENABLE_MESSENGER
 
+            msgFSKBuffer[gFSKWriteIndex]='\0';
+#endif
 
             if (mdc1200_rx_buffer_index >= sizeof(mdc1200_rx_buffer)) {
 
@@ -632,7 +638,7 @@ void solve_sign(const uint16_t interrupt_bits) {
 
         msgStatus = READY;
 
-        if (gFSKWriteIndex > 2) {
+//        if (gFSKWriteIndex > 2) {
 
             // If there's three 0x1b bytes, then it's a service message
             if (msgFSKBuffer[2] == 0x1b && msgFSKBuffer[3] == 0x1b && msgFSKBuffer[4] == 0x1b) {
@@ -669,7 +675,7 @@ void solve_sign(const uint16_t interrupt_bits) {
                     }
                 }
             }
-        }
+//        }
 
         gFSKWriteIndex = 0;
 

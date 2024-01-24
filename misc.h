@@ -282,7 +282,6 @@ extern bool              g_VOX_Lost;
 extern bool                  g_SquelchLost;
 
 extern volatile uint16_t     gFlashLightBlinkCounter;
-extern bool                  gFlagEndTransmission;
 extern uint8_t               gNextMrChannel;
 extern ReceptionMode_t       gRxReceptionMode;
 
@@ -327,7 +326,7 @@ extern volatile bool     gScheduleFM;
 #endif
 extern uint8_t               gIsLocked;
 extern volatile uint8_t      boot_counter_10ms;
-
+extern unsigned int last_rx_vfo;
 int32_t NUMBER_AddWithWraparound(int32_t Base, int32_t Add, int32_t LowerLimit, int32_t UpperLimit);
 unsigned long StrToUL(const char * str);
 void FUNCTION_NOP();

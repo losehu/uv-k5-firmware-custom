@@ -750,7 +750,6 @@ void APP_EndTransmission(bool inmediately)
 {
     // back to RX mode
     RADIO_SendEndOfTransmission();
-    gFlagEndTransmission = true;
     if (gMonitor) {
         //turn the monitor back on
         gFlagReconfigureVfos = true;
@@ -800,21 +799,10 @@ static void HandleVox(void)
 
 		if (gCurrentFunction == FUNCTION_TRANSMIT && !gPttIsPressed && !gVOX_NoiseDetected)
 		{
-			if (gFlagEndTransmission)
-			{
-				//if (gCurrentFunction != FUNCTION_FOREGROUND)
-					FUNCTION_Select(FUNCTION_FOREGROUND);
-			}
-			else
-			{
+
 				APP_EndTransmission(false);
-
-
-			}
-
 			gUpdateStatus        = true;
 			gUpdateDisplay       = true;
-			gFlagEndTransmission = false;
 		}
 		return;
 	}

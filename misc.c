@@ -199,10 +199,9 @@ bool          g_VOX_Lost;
 #endif
 bool              g_SquelchLost;
 volatile uint16_t gFlashLightBlinkCounter;
-bool              gFlagEndTransmission;
 uint8_t           gNextMrChannel;
 ReceptionMode_t   gRxReceptionMode;
-
+unsigned int last_rx_vfo = -1;
 bool              gRxVfoIsActive;
 #ifdef ENABLE_ALARM
 uint8_t       gAlarmToneCounter;

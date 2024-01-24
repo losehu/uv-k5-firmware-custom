@@ -492,7 +492,7 @@ if (!gDTMF_InputMode) {
         } else {    // receiving .. show the RX symbol
             mode = VFO_MODE_RX;
             if (FUNCTION_IsRx() && gEeprom.RX_VFO == vfo_num) {
-
+                last_rx_vfo = vfo_num;
                 memcpy( gFrameBuffer[line + 0] + 14, BITMAP_RECV, sizeof(BITMAP_RECV));
 
             }
@@ -502,7 +502,7 @@ if (!gDTMF_InputMode) {
             const unsigned int x = 2;
             const bool inputting = gInputBoxIndex != 0 && gEeprom.TX_VFO == vfo_num;
             if (!inputting)
-                sprintf(String, "M%u", gEeprom.ScreenChannel[vfo_num] + 1);
+                last_rx_vfo == vfo_num ? sprintf(String, "M%u.", gEeprom.ScreenChannel[vfo_num] + 1) : sprintf(String, "M%u", gEeprom.ScreenChannel[vfo_num] + 1);
             else
                 sprintf(String, "M%.3s", INPUTBOX_GetAscii());  // show the input text
             UI_PrintStringSmall(String, x, 0, line + 1);
@@ -510,7 +510,7 @@ if (!gDTMF_InputMode) {
             // show the frequency band number
             const unsigned int x = 2;
             char *buf = gEeprom.VfoInfo[vfo_num].pRX->Frequency < _1GHz_in_KHz ? "" : "+";
-            sprintf(String, "F%u%s", 1 + gEeprom.ScreenChannel[vfo_num] - FREQ_CHANNEL_FIRST, buf);
+            last_rx_vfo == vfo_num ? sprintf(String, "F%u%s.", 1 + gEeprom.ScreenChannel[vfo_num] - FREQ_CHANNEL_FIRST, buf) : sprintf(String, "F%u%s", 1 + gEeprom.ScreenChannel[vfo_num] - FREQ_CHANNEL_FIRST, buf);
             UI_PrintStringSmall(String, x, 0, line + 1);
         }
 #ifdef ENABLE_NOAA

@@ -347,7 +347,7 @@ void Main(void) {
 
     while (1) {
 
-
+//        UART_Send("123ABC\r\n",6);
 //        BK4819_EnterTxMute();
 //        BK4819_SetAF(BK4819_AF_MUTE);
 //

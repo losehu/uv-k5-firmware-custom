@@ -21,7 +21,7 @@ void UI_DisplayMSG(void) {
 
 
 	UI_DisplayClear();
-	UI_PrintStringSmall("Messenger", 1, 127, 0);
+	UI_PrintStringSmall("MES", 1, 127, 0);
 
 
 
