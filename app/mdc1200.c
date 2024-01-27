@@ -474,8 +474,7 @@ bool mdc1200_contact_find(uint16_t mdc_id, char *contact) {
     uint16_t add = 0x1D00;
     for (uint8_t i = 0; i < contact_num; i++) {
         uint8_t read_once[16]={0};
-        add+=16;
-        if(add==0x1E00)add=0X1F90;
+
         EEPROM_ReadBuffer(add , read_once, 16);
         if (mdc_id == (uint16_t) (read_once[1] | (read_once[0] << 8))) {
             for (int j = 0; j < 14; ++j) {
@@ -487,6 +486,8 @@ bool mdc1200_contact_find(uint16_t mdc_id, char *contact) {
 
             return true;
         }
+                add+=16;
+        if(add==0x1E00)add=0X1F90;
     }
     return false;
 }
