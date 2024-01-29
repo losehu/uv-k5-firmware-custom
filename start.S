@@ -24,11 +24,11 @@
 	.global OVERLAY_Install
 	.global BOARD_FLASH_Init
 	.global BSS_Init
-	.global HandlerTIMER_BASE0
+	.global TIM0Handler
 
 	.global SystickHandler
 	.weak SystickHandler
-    .weak HandlerTIMER_BASE0
+    .weak TIM0Handler
 
 
 	.section .text.isr
