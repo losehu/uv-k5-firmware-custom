@@ -24,9 +24,12 @@
 	.global OVERLAY_Install
 	.global BOARD_FLASH_Init
 	.global BSS_Init
+	.global HandlerTIMER_BASE0
 
 	.global SystickHandler
 	.weak SystickHandler
+    .weak HandlerTIMER_BASE0
+
 
 	.section .text.isr
 
@@ -73,7 +76,7 @@ DMA:
 SARADC:
 	.long	HandlerSARADC + 1
 TIMER_BASE0:
-	.long	HandlerTIMER_BASE0 + 1
+	.long	TIM0Handler + 1
 TIMER_BASE1:
 	.long	HandlerTIMER_BASE1 + 1
 TIMER_PLUS0:
@@ -159,8 +162,8 @@ HandlerDMA:
 HandlerSARADC:
 	b	.
 
-HandlerTIMER_BASE0:
-	b	.
+TIM0Handler:
+	bx	lr
 
 HandlerTIMER_BASE1:
 	b	.

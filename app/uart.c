@@ -434,7 +434,7 @@ static void CMD_052F(const uint8_t *pBuffer) {
 #endif
 
     if (gCurrentFunction == FUNCTION_POWER_SAVE)
-        FUNCTION_Select(FUNCTION_FOREGROUND);
+        FUNCTION_Select(FUNCTION_FOREGROUND); //OK
 
     gSerialConfigCountDown_500ms = 12; // 6 sec
 

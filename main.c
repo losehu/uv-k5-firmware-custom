@@ -32,8 +32,11 @@
 #ifdef ENABLE_AM_FIX
 #include "am_fix.h"
 #endif
-#ifdef ENABLE_TIMER
 #include "bsp/dp32g030/timer.h"
+
+#ifdef ENABLE_TIMER
+#include "bsp/dp32g030/uart.h"
+
 #endif
 #include "audio.h"
 #include "board.h"
@@ -86,11 +89,86 @@ void Main(void) {
                           | SYSCON_DEV_CLK_GATE_SARADC_BITS_ENABLE
                           | SYSCON_DEV_CLK_GATE_CRC_BITS_ENABLE
                           | SYSCON_DEV_CLK_GATE_AES_BITS_ENABLE
-                          | SYSCON_DEV_CLK_GATE_PWM_PLUS0_BITS_ENABLE;
+                          | SYSCON_DEV_CLK_GATE_PWM_PLUS0_BITS_ENABLE
+    |(1<<12);
 
     SYSTICK_Init();
-    BOARD_Init();
+#ifdef ENABLE_TIMER
 
+
+    BOARD_PORTCON_Init();
+    BOARD_GPIO_Init();
+//    BACKLIGHT_InitHardware();
+//    BOARD_ADC_Init();
+    ST7565_Init();
+
+    TIM0_INIT();
+
+    memset(gStatusLine, 0, sizeof(gStatusLine));
+    UI_DisplayClear();
+    ST7565_BlitStatusLine();  // blank status line
+    ST7565_BlitFullScreen();
+    char str[20]={0}; // 分配一个足够大的字符串数组来存储转换后的字符串
+
+    while(1)
+    {
+
+
+        char str[6];
+        str[0] = (TIM0_CNT / 100000) + '0';
+        str[1] = (TIM0_CNT / 10000) % 10 + '0';
+        str[2] = (TIM0_CNT / 1000) %10+ '0';
+        str[3] = (TIM0_CNT / 100) %10+ '0';
+        str[4] = (TIM0_CNT / 10) % 10 + '0';
+        str[5] = (TIM0_CNT % 10) + '0';
+        str[6] = '\0'; // 添加字符串结束符
+        UI_DisplayClear();
+        ST7565_BlitStatusLine();  // blank status line
+        UI_PrintStringSmall(str, 0, 127, 2);
+
+        str[0] = (TIMERBASE0_LOW_CNT / 100000) + '0';
+        str[1] = (TIMERBASE0_LOW_CNT / 10000) % 10 + '0';
+        str[2] = (TIMERBASE0_LOW_CNT / 1000) %10+ '0';
+        str[3] = (TIMERBASE0_LOW_CNT / 100) %10+ '0';
+        str[4] = (TIMERBASE0_LOW_CNT / 10) % 10 + '0';
+        str[5] = (TIMERBASE0_LOW_CNT % 10) + '0';
+        str[6] = '\0'; // 添加字符串结束符
+        UI_PrintStringSmall(str, 0, 127, 3);
+
+
+        str[0] = (TIMERBASE0_HIGH_CNT / 100000) + '0';
+        str[1] = (TIMERBASE0_HIGH_CNT / 10000) % 10 + '0';
+        str[2] = (TIMERBASE0_HIGH_CNT / 1000) %10+ '0';
+        str[3] = (TIMERBASE0_HIGH_CNT / 100) %10+ '0';
+        str[4] = (TIMERBASE0_HIGH_CNT / 10) % 10 + '0';
+        str[5] = (TIMERBASE0_HIGH_CNT % 10) + '0';
+        str[6] = '\0'; // 添加字符串结束符
+        UI_PrintStringSmall(str, 0, 127, 4);
+
+        str[0] = (TIMERBASE0_IF / 100000) + '0';
+        str[1] = (TIMERBASE0_IF / 10000) % 10 + '0';
+        str[2] = (TIMERBASE0_IF / 1000) %10+ '0';
+        str[3] = (TIMERBASE0_IF / 100) %10+ '0';
+        str[4] = (TIMERBASE0_IF / 10) % 10 + '0';
+        str[5] = (TIMERBASE0_IF % 10) + '0';
+        str[6] = '\0'; // 添加字符串结束符
+        UI_PrintStringSmall(str, 0, 127, 5);
+
+
+
+        str[0] = (TIMERBASE0_IE / 100000) + '0';
+        str[1] = (TIMERBASE0_IE / 10000) % 10 + '0';
+        str[2] = (TIMERBASE0_IE / 1000) %10+ '0';
+        str[3] = (TIMERBASE0_IE / 100) %10+ '0';
+        str[4] = (TIMERBASE0_IE / 10) % 10 + '0';
+        str[5] = (TIMERBASE0_IE % 10) + '0';
+        str[6] = '\0'; // 添加字符串结束符
+        UI_PrintStringSmall(str, 0, 127, 6);
+
+        ST7565_BlitFullScreen();
+    }
+#endif
+    BOARD_Init();
 
     boot_counter_10ms = 250;   // 2.5 sec
 #ifdef ENABLE_UART
@@ -194,25 +272,7 @@ void Main(void) {
     gDebounceCounter = 0;
 //	}
 
-//    TIM0_INIT();
-//
-//    memset(gStatusLine, 0, sizeof(gStatusLine));
-//    UI_DisplayClear();
-//    ST7565_BlitStatusLine();  // blank status line
-//    ST7565_BlitFullScreen();
-//    char str[20]={0}; // 分配一个足够大的字符串数组来存储转换后的字符串
-//
-//    while(1)
-//{
-//
-//    str[0]=TIMERBASE0_LOW_CNT/100+'0';
-//    str[1]=TIMERBASE0_LOW_CNT/10%10+'0';
-//    str[2]=TIMERBASE0_LOW_CNT%10+'0';
-//       UI_PrintStringSmall(str, 0, 127, 3);
-//    ST7565_BlitFullScreen();
-//
-//
-//}
+
 //    memset(gStatusLine, 0, sizeof(gStatusLine));
 //    UI_DisplayClear();
 //    while(1)

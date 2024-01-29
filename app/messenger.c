@@ -367,7 +367,7 @@ void MSG_Send(const char *txMessage, bool bServiceMessage) {
 
 		//SYSTEM_DelayMs(100);
 
-		APP_EndTransmission(true);
+		APP_EndTransmission(true); //OK
 
 		RADIO_SetVfoState(VFO_STATE_NORMAL);
 

@@ -20,9 +20,17 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="删除多余memset">
+    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="修复MDC联系人">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/utils/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/app.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/messenger.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/messenger.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/uart.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/uart.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bsp/dp32g030/timer.h" beforeDir="false" afterPath="$PROJECT_DIR$/bsp/dp32g030/timer.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/timer.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/timer.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/start.S" beforeDir="false" afterPath="$PROJECT_DIR$/start.S" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/写频脚本/picture.py" beforeDir="false" afterPath="$PROJECT_DIR$/写频脚本/picture.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,7 +109,7 @@
       <recent name="C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\app" />
     </key>
   </component>
-  <component name="RunManager" selected="Shell Script.win docker">
+  <component name="RunManager" selected="Makefile 目标.build">
     <configuration name="uv_k5_firmware_custom_0_17" type="CLionNativeAppRunConfigurationType" nameIsGenerated="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="uv_k5_firmware_custom_0_17" TARGET_NAME="uv_k5_firmware_custom_0_17" CONFIG_NAME="Debug" version="1" RUN_TARGET_PROJECT_NAME="uv_k5_firmware_custom_0_17" RUN_TARGET_NAME="uv_k5_firmware_custom_0_17">
       <method v="2">
         <option name="CLION.COMPOUND.BUILD" enabled="true" />
@@ -157,7 +165,6 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="C:\Users\RUPC\AppData\Local\Programs\Python\Python38\python.exe" />
-      <option name="SDK_NAME" value="Python 3.8 (uv-k5-firmware-chinese)" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/写频脚本" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -221,22 +228,20 @@
       <item itemvalue="Makefile 应用程序.uv_k5_firmware_custom_0_17" />
       <item itemvalue="Makefile 目标.Makefile" />
       <item itemvalue="Makefile 目标.both" />
-      <item itemvalue="Makefile 目标.both (1)" />
       <item itemvalue="Makefile 目标.all" />
+      <item itemvalue="Makefile 目标.both (1)" />
       <item itemvalue="Makefile 目标.build" />
       <item itemvalue="Makefile 目标.clean" />
       <item itemvalue="Makefile 目标.full" />
       <item itemvalue="Python.picture" />
-      <item itemvalue="Shell Script.win docker" />
       <item itemvalue="Shell Script.linux docker" />
+      <item itemvalue="Shell Script.win docker" />
       <item itemvalue="Shell Script.win" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Makefile 目标.clean" />
-        <item itemvalue="Makefile 目标.full" />
-        <item itemvalue="Makefile 目标.both (1)" />
         <item itemvalue="Makefile 目标.build" />
+        <item itemvalue="Makefile 目标.clean" />
       </list>
     </recent_temporary>
   </component>
@@ -335,20 +340,10 @@
       <workItem from="1705826929632" duration="7981000" />
       <workItem from="1705845734802" duration="3217000" />
       <workItem from="1705895156577" duration="43000" />
-    </task>
-    <task id="LOCAL-00093" summary="支持中文编译选项ENABLE_CHINESE_FULL">
-      <created>1703086244415</created>
-      <option name="number" value="00093" />
-      <option name="presentableId" value="LOCAL-00093" />
-      <option name="project" value="LOCAL" />
-      <updated>1703086244415</updated>
-    </task>
-    <task id="LOCAL-00094" summary="中文">
-      <created>1703089517953</created>
-      <option name="number" value="00094" />
-      <option name="presentableId" value="LOCAL-00094" />
-      <option name="project" value="LOCAL" />
-      <updated>1703089517953</updated>
+      <workItem from="1706354684206" duration="9000" />
+      <workItem from="1706362074317" duration="438000" />
+      <workItem from="1706368095520" duration="709000" />
+      <workItem from="1706520288448" duration="15293000" />
     </task>
     <task id="LOCAL-00095" summary="中文">
       <created>1703238500842</created>
@@ -679,13 +674,30 @@
       <option name="project" value="LOCAL" />
       <updated>1705848378046</updated>
     </task>
-    <option name="localTasksCounter" value="142" />
+    <task id="LOCAL-00142" summary="修复MDC联系人显示">
+      <created>1706330301311</created>
+      <option name="number" value="00142" />
+      <option name="presentableId" value="LOCAL-00142" />
+      <option name="project" value="LOCAL" />
+      <updated>1706330301311</updated>
+    </task>
+    <task id="LOCAL-00143" summary="修复MDC联系人">
+      <created>1706330911634</created>
+      <option name="number" value="00143" />
+      <option name="presentableId" value="LOCAL-00143" />
+      <option name="project" value="LOCAL" />
+      <updated>1706330911634</updated>
+    </task>
+    <option name="localTasksCounter" value="144" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="UnknownFeatures">
+    <option featureType="com.intellij.facetType" implementationName="Python" />
+    <option featureType="com.intellij.configurationType" implementationName="MAKEFILE_TARGET_RUN_CONFIGURATION" />
+    <option featureType="com.intellij.configurationType" implementationName="CLionNativeAppRunConfigurationType" />
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.bat" />
   </component>
   <component name="VCPKGProject">
@@ -706,8 +718,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="更新README" />
-    <MESSAGE value="修改docker编译" />
     <MESSAGE value="4M TEST" />
     <MESSAGE value="信道长度" />
     <MESSAGE value="赞助" />
@@ -731,7 +741,9 @@
     <MESSAGE value="简化bitmaps" />
     <MESSAGE value="修复warning" />
     <MESSAGE value="删除多余memset" />
-    <option name="LAST_COMMIT_MESSAGE" value="删除多余memset" />
+    <MESSAGE value="修复MDC联系人显示" />
+    <MESSAGE value="修复MDC联系人" />
+    <option name="LAST_COMMIT_MESSAGE" value="修复MDC联系人" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

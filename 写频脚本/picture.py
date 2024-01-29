@@ -36,7 +36,7 @@ class MainWindow(QMainWindow):
         global cal_bin
         global turn_color
 
-        self.setWindowTitle("K5/K6开机图片V0.2")
+        self.setWindowTitle("K5/K6开机图片V0.4")
         self.setGeometry(100, 100, 50+20+256, 250)
 
         self.open_button = QPushButton("打开图片", self)
@@ -202,7 +202,7 @@ class MainWindow(QMainWindow):
             return False
         add=0x02080
         TYPE=0
-        with serial.Serial('COM4', 38400, timeout=1) as ser:
+        with serial.Serial(com_open, 38400, timeout=1) as ser:
             payload = b'\x14\x05' + b'\x04\x00' + b'\x82\x40\x74\x65'  # cmd_id + cmd_len (0+4) + unix timestamp LE
             crc = self.crc16_ccitt(payload)
             payload = payload + bytes([crc & 0xFF, ]) + bytes([crc >> 8, ])  # swap bytes of crc to get little endian

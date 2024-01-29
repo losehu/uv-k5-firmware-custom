@@ -191,7 +191,7 @@ static void HandleIncoming(void)
 			DTMF_clear_RX();
 #endif
         if (gCurrentFunction != FUNCTION_FOREGROUND) {
-            FUNCTION_Select(FUNCTION_FOREGROUND);
+            FUNCTION_Select(FUNCTION_FOREGROUND); //OK
             gUpdateDisplay = true;
         }
         return;
@@ -755,7 +755,7 @@ void APP_EndTransmission(bool inmediately)
         gFlagReconfigureVfos = true;
     }
     if (inmediately || gEeprom.REPEATER_TAIL_TONE_ELIMINATION == 0) {
-        FUNCTION_Select(FUNCTION_FOREGROUND);
+        FUNCTION_Select(FUNCTION_FOREGROUND);//OK
     } else {
         gRTTECountdown = gEeprom.REPEATER_TAIL_TONE_ELIMINATION * 10;
     }
@@ -812,7 +812,7 @@ static void HandleVox(void)
 		gVOX_NoiseDetected = true;
 
 		if (gCurrentFunction == FUNCTION_POWER_SAVE)
-			FUNCTION_Select(FUNCTION_FOREGROUND);
+			FUNCTION_Select(FUNCTION_FOREGROUND); //OK
 if (gCurrentFunction != FUNCTION_TRANSMIT && !SerialConfigInProgress())
 		{
 #ifdef ENABLE_DTMF_CALLING
@@ -1245,16 +1245,10 @@ gAlarmState = ALARM_STATE_SITE_ALARM;
 #endif
 
         // repeater tail tone elimination
-        if (gRTTECountdown > 0)
-        {
-            if (--gRTTECountdown == 0)
-            {
-                //if (gCurrentFunction != FUNCTION_FOREGROUND)
-                FUNCTION_Select(FUNCTION_FOREGROUND);
-
-                gUpdateStatus  = true;
-                gUpdateDisplay = true;
-            }
+        if (gRTTECountdown > 0 && gRTTECountdown-- == 0) {
+            FUNCTION_Select(FUNCTION_FOREGROUND); //OK
+            gUpdateStatus  = true;
+            gUpdateDisplay = true;
         }
     }
 
@@ -1570,7 +1564,7 @@ static void ALARM_Off(void)
 	gEnableSpeaker = false;
 
 if (gAlarmState == ALARM_STATE_TXALARM || gAlarmState == ALARM_STATE_TX1750) {
-    RADIO_SendEndOfTransmission();
+		APP_EndTransmission(false); //OK
 	}
 
 	gAlarmState = ALARM_STATE_OFF;
@@ -1600,7 +1594,7 @@ static void ProcessKey(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld)
     }
 
     if (gCurrentFunction == FUNCTION_POWER_SAVE)
-        FUNCTION_Select(FUNCTION_FOREGROUND);
+        FUNCTION_Select(FUNCTION_FOREGROUND); //OK
 
     gBatterySaveCountdown_10ms = battery_save_count_10ms;
 
@@ -1881,15 +1875,9 @@ static void ProcessKey(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld)
         else if ((!bKeyHeld && bKeyPressed) || (gAlarmState == ALARM_STATE_TX1750 && bKeyHeld && !bKeyPressed)) {
 			ALARM_Off();
 
-			if (gEeprom.REPEATER_TAIL_TONE_ELIMINATION == 0)
-				FUNCTION_Select(FUNCTION_FOREGROUND);
-			else
-				gRTTECountdown = gEeprom.REPEATER_TAIL_TONE_ELIMINATION * 10;
-
 			if (Key == KEY_PTT)
 				gPttWasPressed  = true;
-			else
-			if (!bKeyHeld)
+			else if (!bKeyHeld)
 				gPttWasReleased = true;
 		}
 #endif
