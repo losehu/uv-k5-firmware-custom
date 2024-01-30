@@ -1061,7 +1061,7 @@ void RADIO_PrepareTX(void)
     }
     gTxTimeoutReached    = false;
 
-    gRTTECountdown       = 0;
+    gRTTECountdown_10ms       = 0;
 
 #ifdef ENABLE_DTMF_CALLING
     gDTMF_ReplyState     = DTMF_REPLY_NONE;

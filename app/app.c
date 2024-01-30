@@ -757,7 +757,7 @@ void APP_EndTransmission(bool inmediately)
     if (inmediately || gEeprom.REPEATER_TAIL_TONE_ELIMINATION == 0) {
         FUNCTION_Select(FUNCTION_FOREGROUND);//OK
     } else {
-        gRTTECountdown = gEeprom.REPEATER_TAIL_TONE_ELIMINATION * 10;
+        gRTTECountdown_10ms = gEeprom.REPEATER_TAIL_TONE_ELIMINATION * 10;
     }
 }
 #ifdef ENABLE_VOX
@@ -1245,7 +1245,7 @@ gAlarmState = ALARM_STATE_SITE_ALARM;
 #endif
 
         // repeater tail tone elimination
-        if (gRTTECountdown > 0 && gRTTECountdown-- == 0) {
+        if (gRTTECountdown_10ms > 0 && gRTTECountdown_10ms-- == 0) {
             FUNCTION_Select(FUNCTION_FOREGROUND); //OK
             gUpdateStatus  = true;
             gUpdateDisplay = true;

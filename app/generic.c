@@ -165,7 +165,7 @@ void GENERIC_Key_PTT(bool bKeyPressed)
 		goto start_tx;	// listening to the FM radio .. start TX'ing
 #endif
 
-    if (gCurrentFunction == FUNCTION_TRANSMIT && gRTTECountdown == 0)
+    if (gCurrentFunction == FUNCTION_TRANSMIT && gRTTECountdown_10ms == 0)
     {	// already transmitting
         gInputBoxIndex = 0;
         return;

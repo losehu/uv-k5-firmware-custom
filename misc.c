@@ -141,7 +141,7 @@ volatile uint16_t gNOAA_Countdown_10ms;
 bool              gEnableSpeaker;
 uint8_t           gKeyInputCountdown = 0;
 uint8_t           gKeyLockCountdown;
-uint8_t           gRTTECountdown;
+uint8_t           gRTTECountdown_10ms;
 bool              bIsInLockScreen;
 uint8_t           gUpdateStatus;
 uint8_t           gFoundCTCSS;
