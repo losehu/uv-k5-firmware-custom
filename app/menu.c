@@ -1440,8 +1440,12 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld) {
         if (UI_MENU_GetCurrentMenuId() == MENU_DEL_CH || UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME)
             if (!RADIO_CheckValidChannel(gSubMenuSelection, false, 0))
                 return;  // invalid channel
-
-        if (UI_MENU_GetCurrentMenuId() == MENU_ANI_ID || UI_MENU_GetCurrentMenuId() == MENU_UPCODE|| UI_MENU_GetCurrentMenuId() == MENU_DWCODE)
+        if (UI_MENU_GetCurrentMenuId() == MENU_UPCODE
+            || UI_MENU_GetCurrentMenuId() == MENU_DWCODE
+#ifdef ENABLE_DTMF_CALLING
+            || UI_MENU_GetCurrentMenuId() == MENU_ANI_ID
+#endif
+                )
                 return;  // invalid
         gAskForConfirmation = 0;
         gIsInSubMenu = true;
