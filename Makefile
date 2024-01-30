@@ -59,13 +59,15 @@ ENABLE_GB2312				   = 0
 # ---- DEBUGGING ----
 ENABLE_AM_FIX_SHOW_DATA       ?= 0
 ENABLE_AGC_SHOW_DATA          ?= 0
-ENABLE_TIMER		          ?= 1
+ENABLE_TIMER		          ?= 0
+ENABLE_RTC		              ?= 0
+
 ENABLE_WARNING 				  ?= 1
 ENABLE_MESSENGER              			?=1
 ENABLE_MESSENGER_DELIVERY_NOTIFICATION	?= 1
 ENABLE_MESSENGER_NOTIFICATION			?= 1
 #############################################################
-PACKED_FILE_SUFFIX = LOSEHU118T
+PACKED_FILE_SUFFIX = LOSEHU119
 ifeq ($(ENABLE_CHINESE_FULL),1)
     $(info font1)
     PACKED_FILE_SUFFIX = font1
@@ -134,8 +136,12 @@ ifeq ($(ENABLE_OVERLAY),1)
 endif
 OBJS += external/printf/printf.o
 ifeq ($(ENABLE_TIMER),1)
-    OBJS += driver/timer.o
+    OBJS += driver/rtc.o
 endif
+ifeq ($(ENABLE_RTC),1)
+    OBJS += driver/rtc.o
+endif
+
 ifeq ($(ENABLE_MDC1200),1)
     OBJS += app/mdc1200.o
 endif
@@ -357,6 +363,10 @@ endif
 ifeq ($(ENABLE_TIMER),1)
     CFLAGS  += -DENABLE_TIMER
 endif
+ifeq ($(ENABLE_RTC),1)
+    CFLAGS  += -DENABLE_RTC
+endif
+
 ifeq ($(ENABLE_MDC1200_CONTACT),1)
     CFLAGS  += -DENABLE_MDC1200_CONTACT
 endif
