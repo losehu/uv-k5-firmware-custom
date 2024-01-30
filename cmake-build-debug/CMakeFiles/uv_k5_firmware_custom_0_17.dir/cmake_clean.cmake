@@ -671,6 +671,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/aircopy.c.obj.d"
   "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/battery.c.obj"
   "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/battery.c.obj.d"
+  "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/doppler.c.obj"
+  "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/doppler.c.obj.d"
   "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/fmradio.c.obj"
   "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/fmradio.c.obj.d"
   "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/helper.c.obj"

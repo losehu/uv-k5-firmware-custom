@@ -351,6 +351,9 @@
 		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/app/common.h">
 			<Option target="uv_k5_firmware_custom_0_17"/>
 		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/app/doppler.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
 		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/app/dtmf.c">
 			<Option target="uv_k5_firmware_custom_0_17"/>
 		</Unit>
@@ -2197,6 +2200,12 @@
 			<Option target="uv_k5_firmware_custom_0_17"/>
 		</Unit>
 		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/battery.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/doppler.c">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/doppler.h">
 			<Option target="uv_k5_firmware_custom_0_17"/>
 		</Unit>
 		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/fmradio.c">

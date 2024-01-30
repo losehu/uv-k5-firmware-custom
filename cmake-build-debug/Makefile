@@ -8192,6 +8192,30 @@ ui/battery.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\uv_k5_firmware_custom_0_17.dir\build.make CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/battery.c.s
 .PHONY : ui/battery.c.s
 
+ui/doppler.obj: ui/doppler.c.obj
+.PHONY : ui/doppler.obj
+
+# target to build an object file
+ui/doppler.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\uv_k5_firmware_custom_0_17.dir\build.make CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/doppler.c.obj
+.PHONY : ui/doppler.c.obj
+
+ui/doppler.i: ui/doppler.c.i
+.PHONY : ui/doppler.i
+
+# target to preprocess a source file
+ui/doppler.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\uv_k5_firmware_custom_0_17.dir\build.make CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/doppler.c.i
+.PHONY : ui/doppler.c.i
+
+ui/doppler.s: ui/doppler.c.s
+.PHONY : ui/doppler.s
+
+# target to generate assembly for a file
+ui/doppler.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\uv_k5_firmware_custom_0_17.dir\build.make CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/doppler.c.s
+.PHONY : ui/doppler.c.s
+
 ui/fmradio.obj: ui/fmradio.c.obj
 .PHONY : ui/fmradio.obj
 
@@ -9521,6 +9545,9 @@ help:
 	@echo ... ui/battery.obj
 	@echo ... ui/battery.i
 	@echo ... ui/battery.s
+	@echo ... ui/doppler.obj
+	@echo ... ui/doppler.i
+	@echo ... ui/doppler.s
 	@echo ... ui/fmradio.obj
 	@echo ... ui/fmradio.i
 	@echo ... ui/fmradio.s

@@ -339,6 +339,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/sram-overlay.c" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/sram-overlay.c.obj" "gcc" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/sram-overlay.c.obj.d"
   "C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/aircopy.c" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/aircopy.c.obj" "gcc" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/aircopy.c.obj.d"
   "C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/battery.c" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/battery.c.obj" "gcc" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/battery.c.obj.d"
+  "C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/doppler.c" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/doppler.c.obj" "gcc" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/doppler.c.obj.d"
   "C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/fmradio.c" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/fmradio.c.obj" "gcc" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/fmradio.c.obj.d"
   "C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/helper.c" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/helper.c.obj" "gcc" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/helper.c.obj.d"
   "C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/inputbox.c" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/inputbox.c.obj" "gcc" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/inputbox.c.obj.d"
