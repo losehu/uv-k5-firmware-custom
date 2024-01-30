@@ -29,15 +29,18 @@
 #include "app/uart.h"
 #include "string.h"
 #include "app/messenger.h"
+
 #ifdef ENABLE_AM_FIX
 #include "am_fix.h"
 #endif
-#include "bsp/dp32g030/timer.h"
+
+#include "bsp/dp32g030/rtc.h"
 
 #ifdef ENABLE_TIMER
 #include "bsp/dp32g030/uart.h"
-
+#include "bsp/dp32g030/timer.h"
 #endif
+
 #include "audio.h"
 #include "board.h"
 #include "misc.h"
@@ -74,8 +77,49 @@ void _putchar(__attribute__((unused)) char c) {
 #endif
 
 }
+#ifdef ENABLE_RTC
+void show_uint32(uint32_t num,uint8_t  line)
+{
+    char str[6] = {0};
 
+    str[0] = (num / 100000) + '0';
+    str[1] = (num / 10000) + '0';
+    str[2] = (num / 1000) % 10 + '0';
+    str[3] = (num / 100) % 10 + '0';
+    str[4] = (num / 10) % 10 + '0';
+    str[5] = (num % 10) + '0';
+    str[6] = '\0'; // 添加字符串结束符
+    UI_PrintStringSmall(str, 0, 127, line);
+    ST7565_BlitFullScreen();
+}
+// 定义位掩码
+#define SEC_TENS_RO_MASK 0x70 // 0b1110000
+#define SEC_ONES_RO_MASK 0x0F // 0b0001111
+#define MIN_TENS_RO_MASK 0x7000 // 0b0111 0000 0000 0000
+#define MIN_ONES_RO_MASK 0xf00 // 0b000 1111 0000 0000
 
+// 从寄存器值中提取十位数和个位数并计算十进制秒数
+uint32_t calculate_decimal_seconds(uint32_t register_value) {
+    // 提取十位数和个位数
+    uint32_t SEC_TENS_RO = (register_value & SEC_TENS_RO_MASK) >> 4;
+    uint32_t SEC_ONES_RO = register_value & SEC_ONES_RO_MASK;
+
+    // 计算十进制秒数
+    uint32_t decimal_seconds = SEC_TENS_RO * 10 + SEC_ONES_RO;
+
+    return decimal_seconds;
+}
+uint32_t calculate_decimal_min(uint32_t register_value) {
+    // 提取十位数和个位数
+    uint32_t SEC_TENS_RO = (register_value & MIN_TENS_RO_MASK) >> 12;
+    uint32_t SEC_ONES_RO = (register_value & MIN_ONES_RO_MASK)>>8;
+
+    // 计算十进制秒数
+    uint32_t decimal_seconds = SEC_TENS_RO * 10 + SEC_ONES_RO;
+
+    return decimal_seconds;
+}
+#endif
 void Main(void) {
     //BOOT_Mode_t  BootMode;
 
@@ -90,9 +134,32 @@ void Main(void) {
                           | SYSCON_DEV_CLK_GATE_CRC_BITS_ENABLE
                           | SYSCON_DEV_CLK_GATE_AES_BITS_ENABLE
                           | SYSCON_DEV_CLK_GATE_PWM_PLUS0_BITS_ENABLE
-    |(1<<12);
+                          | (1 << 12)
+                          | (1 << 22);
 
     SYSTICK_Init();
+#ifdef ENABLE_RTC
+
+    BOARD_PORTCON_Init();
+    BOARD_GPIO_Init();
+    ST7565_Init();
+    memset(gStatusLine, 0, sizeof(gStatusLine));
+    UI_DisplayClear();
+    ST7565_BlitStatusLine();  // blank status line
+    ST7565_BlitFullScreen();
+    char str[20] = {0}; // 分配一个足够大的字符串数组来存储转换后的字符串
+    RTC_INIT();
+
+    while (1) {
+         show_uint32((RTC_IF>>8)&0X01,0);
+        show_uint32(RTC_VALID&0X01,1);
+
+        show_uint32(calculate_decimal_seconds(RTC_TSTR),2);
+        show_uint32(calculate_decimal_min(RTC_TSTR),3);
+
+
+    }
+#endif
 #ifdef ENABLE_TIMER
 
 
@@ -141,7 +208,7 @@ void Main(void) {
         str[2] = (TIMERBASE0_HIGH_CNT / 1000) %10+ '0';
         str[3] = (TIMERBASE0_HIGH_CNT / 100) %10+ '0';
         str[4] = (TIMERBASE0_HIGH_CNT / 10) % 10 + '0';
-        str[5] = (TIMERBASE0_HIGH_CNT % 10) + '0';
+        str[5] = (TIMERBASE0_HIGH_CNT%10)+ '0';
         str[6] = '\0'; // 添加字符串结束符
         UI_PrintStringSmall(str, 0, 127, 4);
 
@@ -253,8 +320,8 @@ void Main(void) {
 
 //    gMenuListCount = 0;
 //    while (MenuList[gMenuListCount].name[0] != '\0') gMenuListCount++;
-#if ENABLE_CHINESE_FULL==0
-    gMenuListCount=52;
+#if ENABLE_CHINESE_FULL == 0
+    gMenuListCount = 52;
 #else
     gMenuListCount=53;
 #endif
@@ -321,13 +388,13 @@ void Main(void) {
 
     boot_counter_10ms = 250;
 
-    while (boot_counter_10ms > 0||(KEYBOARD_Poll() != KEY_INVALID)) {
+    while (boot_counter_10ms > 0 || (KEYBOARD_Poll() != KEY_INVALID)) {
 
         if (KEYBOARD_Poll() == KEY_EXIT
-            #if ENABLE_CHINESE_FULL==4
-        ||gEeprom.POWER_ON_DISPLAY_MODE == POWER_ON_DISPLAY_MODE_NONE
-            #endif
-        ) {    // halt boot beeps
+#if ENABLE_CHINESE_FULL == 4
+            ||gEeprom.POWER_ON_DISPLAY_MODE == POWER_ON_DISPLAY_MODE_NONE
+#endif
+                ) {    // halt boot beeps
             boot_counter_10ms = 0;
             break;
         }
