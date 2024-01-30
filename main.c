@@ -29,7 +29,9 @@
 #include "app/uart.h"
 #include "string.h"
 #include "app/messenger.h"
-
+#ifdef ENABLE_DOPPLER
+#include "app/doppler.h"
+#endif
 #ifdef ENABLE_AM_FIX
 #include "am_fix.h"
 #endif
@@ -77,6 +79,7 @@ void _putchar(__attribute__((unused)) char c) {
 #endif
 
 }
+
 #ifdef ENABLE_RTC
 void show_uint32(uint32_t num,uint8_t  line)
 {
@@ -120,6 +123,7 @@ uint32_t calculate_decimal_min(uint32_t register_value) {
     return decimal_seconds;
 }
 #endif
+
 void Main(void) {
     //BOOT_Mode_t  BootMode;
 
@@ -165,74 +169,21 @@ void Main(void) {
 
     BOARD_PORTCON_Init();
     BOARD_GPIO_Init();
-//    BACKLIGHT_InitHardware();
-//    BOARD_ADC_Init();
     ST7565_Init();
-
     TIM0_INIT();
-
     memset(gStatusLine, 0, sizeof(gStatusLine));
     UI_DisplayClear();
     ST7565_BlitStatusLine();  // blank status line
     ST7565_BlitFullScreen();
     char str[20]={0}; // 分配一个足够大的字符串数组来存储转换后的字符串
-
     while(1)
     {
-
-
         char str[6];
-        str[0] = (TIM0_CNT / 100000) + '0';
-        str[1] = (TIM0_CNT / 10000) % 10 + '0';
-        str[2] = (TIM0_CNT / 1000) %10+ '0';
-        str[3] = (TIM0_CNT / 100) %10+ '0';
-        str[4] = (TIM0_CNT / 10) % 10 + '0';
-        str[5] = (TIM0_CNT % 10) + '0';
-        str[6] = '\0'; // 添加字符串结束符
-        UI_DisplayClear();
-        ST7565_BlitStatusLine();  // blank status line
-        UI_PrintStringSmall(str, 0, 127, 2);
-
-        str[0] = (TIMERBASE0_LOW_CNT / 100000) + '0';
-        str[1] = (TIMERBASE0_LOW_CNT / 10000) % 10 + '0';
-        str[2] = (TIMERBASE0_LOW_CNT / 1000) %10+ '0';
-        str[3] = (TIMERBASE0_LOW_CNT / 100) %10+ '0';
-        str[4] = (TIMERBASE0_LOW_CNT / 10) % 10 + '0';
-        str[5] = (TIMERBASE0_LOW_CNT % 10) + '0';
-        str[6] = '\0'; // 添加字符串结束符
-        UI_PrintStringSmall(str, 0, 127, 3);
-
-
-        str[0] = (TIMERBASE0_HIGH_CNT / 100000) + '0';
-        str[1] = (TIMERBASE0_HIGH_CNT / 10000) % 10 + '0';
-        str[2] = (TIMERBASE0_HIGH_CNT / 1000) %10+ '0';
-        str[3] = (TIMERBASE0_HIGH_CNT / 100) %10+ '0';
-        str[4] = (TIMERBASE0_HIGH_CNT / 10) % 10 + '0';
-        str[5] = (TIMERBASE0_HIGH_CNT%10)+ '0';
-        str[6] = '\0'; // 添加字符串结束符
-        UI_PrintStringSmall(str, 0, 127, 4);
-
-        str[0] = (TIMERBASE0_IF / 100000) + '0';
-        str[1] = (TIMERBASE0_IF / 10000) % 10 + '0';
-        str[2] = (TIMERBASE0_IF / 1000) %10+ '0';
-        str[3] = (TIMERBASE0_IF / 100) %10+ '0';
-        str[4] = (TIMERBASE0_IF / 10) % 10 + '0';
-        str[5] = (TIMERBASE0_IF % 10) + '0';
-        str[6] = '\0'; // 添加字符串结束符
-        UI_PrintStringSmall(str, 0, 127, 5);
-
-
-
-        str[0] = (TIMERBASE0_IE / 100000) + '0';
-        str[1] = (TIMERBASE0_IE / 10000) % 10 + '0';
-        str[2] = (TIMERBASE0_IE / 1000) %10+ '0';
-        str[3] = (TIMERBASE0_IE / 100) %10+ '0';
-        str[4] = (TIMERBASE0_IE / 10) % 10 + '0';
-        str[5] = (TIMERBASE0_IE % 10) + '0';
-        str[6] = '\0'; // 添加字符串结束符
-        UI_PrintStringSmall(str, 0, 127, 6);
-
-        ST7565_BlitFullScreen();
+        show_uint32(TIM0_CNT,0);
+        show_uint32(TIMERBASE0_LOW_CNT,1);
+        show_uint32(TIMERBASE0_HIGH_CNT,2);
+        show_uint32(TIMERBASE0_IF,3);
+        show_uint32(TIMERBASE0_IE,4);
     }
 #endif
     BOARD_Init();
@@ -255,7 +206,6 @@ void Main(void) {
     SETTINGS_InitEEPROM();
 
 
-//    SETTINGS_WriteBuildOptions();
     SETTINGS_LoadCalibration();
 #ifdef ENABLE_MESSENGER
     MSG_Init();
@@ -268,36 +218,6 @@ void Main(void) {
     RADIO_ConfigureChannel(0, VFO_CONFIGURE_RELOAD);
     RADIO_ConfigureChannel(1, VFO_CONFIGURE_RELOAD);
 
-//uint32_t start_add=0x02A00;
-//    BACKLIGHT_TurnOn();
-//
-//    memset(gStatusLine, 0, sizeof(gStatusLine));
-//    UI_DisplayClear();
-//    ST7565_BlitStatusLine();  // blank status line
-//    ST7565_BlitFullScreen();
-//    for(uint32_t i=0;i<15;i++)
-//    {
-//        uint8_t size=128;
-//        EEPROM_WriteBuffer(start_add+i*size,gFontChinese_out+i*size+555, size);
-//        uint8_t B[size];
-//        EEPROM_ReadBuffer(start_add+i*size, B, size);
-//        if (memcmp(B, gFontChinese_out+i*size+555, size) != 0) {
-//            UI_PrintStringSmall("FAILED!", 0, 127, 4);
-//            ST7565_BlitStatusLine();  // blank status line
-//            ST7565_BlitFullScreen();
-//            UART_Send("FAILED!\n", 7);
-//            UART_Send(B,size);
-//            BACKLIGHT_TurnOff();
-//
-//            while (1);
-//        }
-//        UART_Send(B,size);
-//    }
-//    BACKLIGHT_TurnOn();
-//    UI_PrintStringSmall("OK ALL", 0, 127, 3);
-//    ST7565_BlitStatusLine();  // blank status line
-//    ST7565_BlitFullScreen();
-//    while(1)
 
     RADIO_SelectVfos();
 
@@ -308,81 +228,19 @@ void Main(void) {
     }
     BATTERY_GetReadings(false);
 
-
 #ifdef ENABLE_AM_FIX
     AM_fix_init();
 #endif
 
-    //BootMode = BOOT_GetMode();
-
-//	if (BootMode == BOOT_MODE_F_LOCK)
-//    gMenuListCount = 46;
-
-//    gMenuListCount = 0;
-//    while (MenuList[gMenuListCount].name[0] != '\0') gMenuListCount++;
 #if ENABLE_CHINESE_FULL == 0
     gMenuListCount = 52;
 #else
     gMenuListCount=53;
 #endif
-    // wait for user to release all butts before moving on
-//	if (/*!GPIO_CheckBit(&GPIOC->DATA, GPIOC_PIN_PTT) ||*/
-//	     KEYBOARD_Poll() != KEY_INVALID ||
-//		 BootMode != BOOT_MODE_NORMAL)
-//	{	// keys are pressed
-//		UI_DisplayReleaseKeys(BootMode);
-//    while (KEYBOARD_Poll() != KEY_INVALID)  // 500ms
-//    {
-//    }
+
     gKeyReading0 = KEY_INVALID;
     gKeyReading1 = KEY_INVALID;
     gDebounceCounter = 0;
-//	}
-
-
-//    memset(gStatusLine, 0, sizeof(gStatusLine));
-//    UI_DisplayClear();
-//    while(1)
-//    {
-//        char A[128];        char B[128];
-//
-//        memset(A,'A',sizeof (A));//0x20000 128K 0X40000 256K
-//        uint32_t ADD;
-//
-//#if ENABLE_EEPROM_TYPE==1
-//        ADD=0x50000;
-//#elif ENABLE_EEPROM_TYPE==2
-//        ADD=0x30000;
-//#endif
-//        EEPROM_WriteBuffer(ADD, A, 128);
-//        EEPROM_ReadBuffer(ADD, B, 128) ;
-//        if (memcmp(A,B,128)==0)
-//        {
-//#if ENABLE_EEPROM_TYPE==1
-//            UI_PrintStringSmall("Double 2Mb Eeprom", 0, 127, 2);
-//            UI_PrintStringSmall("Install OK!", 0, 127, 3);
-//
-//#elif ENABLE_EEPROM_TYPE==2
-//            UI_PrintStringSmall("Double 1Mb Eeprom", 0, 127, 2);
-//            UI_PrintStringSmall("Install OK!", 0, 127, 3);
-//#endif
-//            ST7565_BlitStatusLine();  // blank status line
-//            ST7565_BlitFullScreen();
-//        } else
-//        {
-//#if ENABLE_EEPROM_TYPE==1
-//            UI_PrintStringSmall("Double 2Mb Eeprom", 0, 127, 2);
-//            UI_PrintStringSmall("Install Failed!", 0, 127, 3);
-//
-//#elif ENABLE_EEPROM_TYPE==2
-//            UI_PrintStringSmall("Double 1Mb Eeprom", 0, 127, 2);
-//            UI_PrintStringSmall("Install Failed!", 0, 127, 3);
-//#endif
-//            ST7565_BlitStatusLine();  // blank status line
-//            ST7565_BlitFullScreen();
-//        }
-//
-//    }
     UI_DisplayWelcome();
 
 
@@ -445,57 +303,9 @@ void Main(void) {
 #ifdef ENABLE_NOAA
     RADIO_ConfigureNOAA();
 #endif
-//    int start_add=0x1EFFD;
-//    WRITE_SIZE = 11;
-//    uint32_t add=0;
-//    uint8_t data_write[8];
-//    memset(data_write,'Z',sizeof (data_write));
-//    EEPROM_WriteBuffer(start_add + add,data_write , WRITE_SIZE);
-//    uint8_t B[128];
-//    EEPROM_ReadBuffer(start_add + add, B, WRITE_SIZE);
-//    if (memcmp(B, data_write, WRITE_SIZE) != 0) {
-//
-//        UI_PrintStringSmall("FAILED!", 0, 127, 4);
-//
-//        ST7565_BlitStatusLine();  // blank status line
-//        ST7565_BlitFullScreen();
-//        UART_Send("FAILED!\n", 7);
-//        UART_Send(B, WRITE_SIZE);
-//    }else
-//    {
-//        UI_PrintStringSmall("OK", 0, 127, 3);
-//
-//        ST7565_BlitStatusLine();  // blank status line
-//        ST7565_BlitFullScreen();
-//        UART_Send("OK!\n", 7);
-//        UART_Send(B, WRITE_SIZE);
-//    }
-//    while (1);
+
 
     while (1) {
-
-//        UART_Send("123ABC\r\n",6);
-//        BK4819_EnterTxMute();
-//        BK4819_SetAF(BK4819_AF_MUTE);
-//
-//        BK4819_WriteRegister(BK4819_REG_70, BK4819_REG_70_ENABLE_TONE1 | (66u << BK4819_REG_70_SHIFT_TONE1_TUNING_GAIN));
-//
-//        BK4819_EnableTXLink();
-//        SYSTEM_DelayMs(50);
-//
-//
-//        BK4819_WriteRegister(BK4819_REG_71, (((uint32_t)500 * 1353245u) + (1u << 16)) >> 17);
-//
-//        BK4819_ExitTxMute();
-//        SYSTEM_DelayMs(800);
-//        BK4819_EnterTxMute();
-//
-//        BK4819_WriteRegister(BK4819_REG_70, 0x0000);
-//        BK4819_WriteRegister(BK4819_REG_30, 0xC1FE);   // 1 1 0000 0 1 1111 1 1 1 0
-
-
-
-
 
         APP_Update();
         if (gNextTimeslice) {

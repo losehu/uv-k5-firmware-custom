@@ -78,7 +78,9 @@
 #ifdef ENABLE_MESSENGER
 #include "app/messenger.h"
 #endif
-
+#ifdef ENABLE_DOPPLER
+#include "app/doppler.h"
+#endif
 #include "ui/battery.h"
 #include "ui/inputbox.h"
 #include "ui/main.h"
@@ -111,6 +113,7 @@ void (*ProcessKeysFunctions[])(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) 
 #ifdef ENABLE_AIRCOPY
         [DISPLAY_AIRCOPY] = &AIRCOPY_ProcessKeys,
 #endif
+
 };
 
 static_assert(ARRAY_SIZE(ProcessKeysFunctions) == DISPLAY_N_ELEM);

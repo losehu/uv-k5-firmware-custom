@@ -152,6 +152,8 @@ typedef struct PeakInfo {
 } PeakInfo;
 
 void APP_RunSpectrum(void);
+ void DrawStatus() ;
+extern bool DOPPLER_MODE;
 
 #endif /* ifndef SPECTRUM_H */
 

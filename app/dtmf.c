@@ -13,6 +13,9 @@
  *     See the License for the specific language governing permissions and
  *     limitations under the License.
  */
+#ifdef ENABLE_DOPPLER
+#include "app/doppler.h"
+#endif
 #include "app/messenger.h"
 #include <string.h>
 #include <stdio.h>   // NULL

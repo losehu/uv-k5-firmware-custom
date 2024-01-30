@@ -19,6 +19,7 @@
 #ifdef ENABLE_MESSENGER
 #include "ui/messenger.h"
 #endif
+
 #include "app/chFrScanner.h"
 #include "app/dtmf.h"
 #ifdef ENABLE_FMRADIO
@@ -61,6 +62,7 @@ void (*UI_DisplayFunctions[])(void) = {
 #ifdef ENABLE_AIRCOPY
         [DISPLAY_AIRCOPY] = &UI_DisplayAircopy,
 #endif
+
 };
 
 static_assert(ARRAY_SIZE(UI_DisplayFunctions) == DISPLAY_N_ELEM);

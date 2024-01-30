@@ -29,6 +29,9 @@
 #ifdef ENABLE_MESSENGER
 #include "app/messenger.h"
 #endif
+#ifdef ENABLE_DOPPLER
+#include "app/doppler.h"
+#endif
 #if defined(ENABLE_FMRADIO)
 #include "driver/bk1080.h"
 #endif

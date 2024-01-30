@@ -17,7 +17,7 @@
 #include "am_fix.h"
 #include "audio.h"
 #include "misc.h"
-#include "driver/eeprom.h"
+
 #ifdef ENABLE_SCAN_RANGES
 #include "chFrScanner.h"
 #endif
@@ -40,6 +40,7 @@ const uint16_t RSSI_MAX_VALUE = 65535;
 
 static uint32_t initialFreq;
 static char String[32];
+bool DOPPLER_MODE=0;
 
 bool isInitialized = false;
 bool isListening = true;
@@ -650,7 +651,7 @@ static void DrawSpectrum() {
     }
 }
 
-static void DrawStatus() {
+void DrawStatus() {
 #ifdef SPECTRUM_EXTRA_VALUES
     sprintf(String, "%d/%d P:%d T:%d", settings.dbMin, settings.dbMax,
           Rssi2DBm(peak.rssi), Rssi2DBm(settings.rssiTriggerLevel));
@@ -1036,6 +1037,7 @@ static void RenderStill() {
 
 static void Render() {
     UI_DisplayClear();
+
     switch (currentState) {
         case SPECTRUM:
             RenderSpectrum();
@@ -1241,9 +1243,14 @@ void APP_RunSpectrum() {
   }
   else
 #endif
-        currentFreq = initialFreq = gTxVfo->pRX->Frequency -
+//    if( DOPPLER_MODE) {
+////        currentFreq=43850000;
+//
+//    }else
+//    {
+    currentFreq = initialFreq = gTxVfo->pRX->Frequency -
                                 ((GetStepsCount() / 2) * GetScanStep());
-
+//    }
     BackupRegisters();
 
     isListening = true; // to turn off RX later
@@ -1262,8 +1269,17 @@ void APP_RunSpectrum() {
     memset(rssiHistory, 0, sizeof(rssiHistory));
 
     isInitialized = true;
+    if( DOPPLER_MODE) {
+        SetState(STILL);
+        TuneToPeak();
+        SetF(43850000);
 
+    }
     while (isInitialized) {
         Tick();
     }
 }
+
+
+
+

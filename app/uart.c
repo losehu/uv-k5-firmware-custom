@@ -292,7 +292,6 @@ static void CMD_051B(const uint8_t *pBuffer) {
 static void CMD_051D(const uint8_t *pBuffer) {
     const CMD_051D_t *pCmd = (const CMD_051D_t *) pBuffer;
     REPLY_051D_t Reply;
-    bool bReloadEeprom;
 #ifdef ENABLE_BLOCK
     bool bIsLocked;
 #endif
@@ -301,7 +300,6 @@ static void CMD_051D(const uint8_t *pBuffer) {
 
     gSerialConfigCountDown_500ms = 12; // 6 sec
 
-    bReloadEeprom = false;
 
 #ifdef ENABLE_FMRADIO
     gFmRadioCountdown_500ms = fm_radio_countdown_500ms;

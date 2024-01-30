@@ -16,6 +16,9 @@
 #ifdef ENABLE_MESSENGER
 #include "app/messenger.h"
 #endif
+#ifdef ENABLE_DOPPLER
+#include "app/doppler.h"
+#endif
 #include <string.h>
 
 #include "app/chFrScanner.h"

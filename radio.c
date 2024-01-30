@@ -40,6 +40,9 @@
 #ifdef ENABLE_MESSENGER
 #include "app/messenger.h"
 #endif
+#ifdef ENABLE_DOPPLER
+#include "app/doppler.h"
+#endif
 VFO_Info_t    *gTxVfo;
 VFO_Info_t    *gRxVfo;
 VFO_Info_t    *gCurrentVfo;
@@ -454,9 +457,9 @@ void RADIO_ConfigureSquelchAndOutputPower(VFO_Info_t *pInfo)
 		uint16_t glitch_close = pInfo->SquelchCloseGlitchThresh;
 		// make squelch more sensitive
 		// note that 'noise' and 'glitch' values are inverted compared to 'rssi' values
-		rssi_open   = (rssi_open   * 1) / 3;
-		noise_open  = (noise_open  * 3) / 1;
-		glitch_open = (glitch_open * 3) / 1;
+		rssi_open   = (rssi_open   * 1) / 2;
+		noise_open  = (noise_open  * 2) / 1;
+		glitch_open = (glitch_open * 2) / 1;
 
 
 		// ensure the 'close' threshold is lower than the 'open' threshold
