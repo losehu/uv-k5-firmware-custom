@@ -61,6 +61,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/i2c.c.obj.d"
   "CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/keyboard.c.obj"
   "CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/keyboard.c.obj.d"
+  "CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/rtc.c.obj"
+  "CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/rtc.c.obj.d"
   "CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/spi.c.obj"
   "CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/spi.c.obj.d"
   "CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/st7565.c.obj"

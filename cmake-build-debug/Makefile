@@ -872,6 +872,30 @@ driver/keyboard.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\uv_k5_firmware_custom_0_17.dir\build.make CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/keyboard.c.s
 .PHONY : driver/keyboard.c.s
 
+driver/rtc.obj: driver/rtc.c.obj
+.PHONY : driver/rtc.obj
+
+# target to build an object file
+driver/rtc.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\uv_k5_firmware_custom_0_17.dir\build.make CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/rtc.c.obj
+.PHONY : driver/rtc.c.obj
+
+driver/rtc.i: driver/rtc.c.i
+.PHONY : driver/rtc.i
+
+# target to preprocess a source file
+driver/rtc.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\uv_k5_firmware_custom_0_17.dir\build.make CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/rtc.c.i
+.PHONY : driver/rtc.c.i
+
+driver/rtc.s: driver/rtc.c.s
+.PHONY : driver/rtc.s
+
+# target to generate assembly for a file
+driver/rtc.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\uv_k5_firmware_custom_0_17.dir\build.make CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/rtc.c.s
+.PHONY : driver/rtc.c.s
+
 driver/spi.obj: driver/spi.c.obj
 .PHONY : driver/spi.obj
 
@@ -8582,6 +8606,9 @@ help:
 	@echo ... driver/keyboard.obj
 	@echo ... driver/keyboard.i
 	@echo ... driver/keyboard.s
+	@echo ... driver/rtc.obj
+	@echo ... driver/rtc.i
+	@echo ... driver/rtc.s
 	@echo ... driver/spi.obj
 	@echo ... driver/spi.i
 	@echo ... driver/spi.s

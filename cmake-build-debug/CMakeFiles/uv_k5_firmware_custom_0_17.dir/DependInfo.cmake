@@ -39,6 +39,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/gpio.c" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/gpio.c.obj" "gcc" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/gpio.c.obj.d"
   "C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/i2c.c" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/i2c.c.obj" "gcc" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/i2c.c.obj.d"
   "C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/keyboard.c" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/keyboard.c.obj" "gcc" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/keyboard.c.obj.d"
+  "C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/rtc.c" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/rtc.c.obj" "gcc" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/rtc.c.obj.d"
   "C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/spi.c" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/spi.c.obj" "gcc" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/spi.c.obj.d"
   "C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/st7565.c" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/st7565.c.obj" "gcc" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/st7565.c.obj.d"
   "C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/system.c" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/system.c.obj" "gcc" "CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/system.c.obj.d"

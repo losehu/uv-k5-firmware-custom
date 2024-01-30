@@ -817,4 +817,4 @@ add_executable(uv_k5_firmware_custom_0_17
         sram-overlay.c
         sram-overlay.h
         version.c
-        version.h chinese.h app/mdc1200.c app/mdc1200.c app/mdc1200.c app/mdc1200.c app/mdc1200.c app/mdc1200.c driver/timer.c bsp/dp32g030/timer.h Makefile ui/messenger.c app/messenger.c)
+        version.h chinese.h app/mdc1200.c app/mdc1200.c app/mdc1200.c app/mdc1200.c app/mdc1200.c app/mdc1200.c driver/timer.c bsp/dp32g030/timer.h Makefile ui/messenger.c app/messenger.c bsp/dp32g030/rtc.h driver/rtc.c)

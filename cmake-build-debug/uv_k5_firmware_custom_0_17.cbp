@@ -456,6 +456,9 @@
 		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/bsp/dp32g030/pwmplus.h">
 			<Option target="uv_k5_firmware_custom_0_17"/>
 		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/bsp/dp32g030/rtc.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
 		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/bsp/dp32g030/saradc.h">
 			<Option target="uv_k5_firmware_custom_0_17"/>
 		</Unit>
@@ -553,6 +556,9 @@
 			<Option target="uv_k5_firmware_custom_0_17"/>
 		</Unit>
 		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/keyboard.h">
+			<Option target="uv_k5_firmware_custom_0_17"/>
+		</Unit>
+		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/rtc.c">
 			<Option target="uv_k5_firmware_custom_0_17"/>
 		</Unit>
 		<Unit filename="C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/driver/spi.c">

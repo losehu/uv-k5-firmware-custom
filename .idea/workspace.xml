@@ -20,17 +20,8 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="修复MDC联系人">
+    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="修复定时器">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/app.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/messenger.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/messenger.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/uart.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/uart.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bsp/dp32g030/timer.h" beforeDir="false" afterPath="$PROJECT_DIR$/bsp/dp32g030/timer.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/driver/timer.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/timer.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/start.S" beforeDir="false" afterPath="$PROJECT_DIR$/start.S" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/写频脚本/picture.py" beforeDir="false" afterPath="$PROJECT_DIR$/写频脚本/picture.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -343,28 +334,8 @@
       <workItem from="1706354684206" duration="9000" />
       <workItem from="1706362074317" duration="438000" />
       <workItem from="1706368095520" duration="709000" />
-      <workItem from="1706520288448" duration="15293000" />
-    </task>
-    <task id="LOCAL-00095" summary="中文">
-      <created>1703238500842</created>
-      <option name="number" value="00095" />
-      <option name="presentableId" value="LOCAL-00095" />
-      <option name="project" value="LOCAL" />
-      <updated>1703238500843</updated>
-    </task>
-    <task id="LOCAL-00096" summary="中文">
-      <created>1703258782152</created>
-      <option name="number" value="00096" />
-      <option name="presentableId" value="LOCAL-00096" />
-      <option name="project" value="LOCAL" />
-      <updated>1703258782152</updated>
-    </task>
-    <task id="LOCAL-00097" summary="中文">
-      <created>1703412914805</created>
-      <option name="number" value="00097" />
-      <option name="presentableId" value="LOCAL-00097" />
-      <option name="project" value="LOCAL" />
-      <updated>1703412914805</updated>
+      <workItem from="1706520288448" duration="15904000" />
+      <workItem from="1706538744293" duration="305000" />
     </task>
     <task id="LOCAL-00098" summary="fix show">
       <created>1703482452046</created>
@@ -688,7 +659,28 @@
       <option name="project" value="LOCAL" />
       <updated>1706330911634</updated>
     </task>
-    <option name="localTasksCounter" value="144" />
+    <task id="LOCAL-00144" summary="定时器计数正常，但无法进入中断服务函数">
+      <created>1706538251206</created>
+      <option name="number" value="00144" />
+      <option name="presentableId" value="LOCAL-00144" />
+      <option name="project" value="LOCAL" />
+      <updated>1706538251206</updated>
+    </task>
+    <task id="LOCAL-00145" summary="使能NVIC">
+      <created>1706538766420</created>
+      <option name="number" value="00145" />
+      <option name="presentableId" value="LOCAL-00145" />
+      <option name="project" value="LOCAL" />
+      <updated>1706538766420</updated>
+    </task>
+    <task id="LOCAL-00146" summary="修复定时器">
+      <created>1706539065867</created>
+      <option name="number" value="00146" />
+      <option name="presentableId" value="LOCAL-00146" />
+      <option name="project" value="LOCAL" />
+      <updated>1706539065867</updated>
+    </task>
+    <option name="localTasksCounter" value="147" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -718,9 +710,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="4M TEST" />
-    <MESSAGE value="信道长度" />
-    <MESSAGE value="赞助" />
     <MESSAGE value="修改侧键" />
     <MESSAGE value="修复侧键与MDC联系人冲突" />
     <MESSAGE value="支持两个AT24C1024堆叠" />
@@ -743,7 +732,10 @@
     <MESSAGE value="删除多余memset" />
     <MESSAGE value="修复MDC联系人显示" />
     <MESSAGE value="修复MDC联系人" />
-    <option name="LAST_COMMIT_MESSAGE" value="修复MDC联系人" />
+    <MESSAGE value="定时器计数正常，但无法进入中断服务函数" />
+    <MESSAGE value="使能NVIC" />
+    <MESSAGE value="修复定时器" />
+    <option name="LAST_COMMIT_MESSAGE" value="修复定时器" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
