@@ -61,7 +61,8 @@ void RADIO_SendEndOfTransmission(void)
     DTMF_SendEndOfTransmission();
 
     // send the CTCSS/DCS tail tone - allows the receivers to mute the usual FM squelch tail/crash
-    RADIO_EnableCxCSS();
+    if(gEeprom.TAIL_TONE_ELIMINATION)
+        RADIO_SendCssTail();
     RADIO_SetupRegisters(false);
 }
 
@@ -1064,7 +1065,7 @@ void RADIO_PrepareTX(void)
 #endif
 }
 
-void RADIO_EnableCxCSS(void)
+void RADIO_SendCssTail(void)
 {
     switch (gCurrentVfo->pTX->CodeType) {
         case CODE_TYPE_DIGITAL:
@@ -1085,6 +1086,7 @@ void RADIO_PrepareCssTX(void)
 
     SYSTEM_DelayMs(200);
 
-    RADIO_EnableCxCSS();
+    if(gEeprom.TAIL_TONE_ELIMINATION)
+        RADIO_SendCssTail();
     RADIO_SetupRegisters(true);
 }
