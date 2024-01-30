@@ -18,9 +18,8 @@ uint32_t TIM0_CNT=0;
 void TIM0Handler(void);
 void TIM0Handler(void)
 {
-
     TIM0_CNT++;
-    TIMERBASE0_IF = 0x01 ;
+    TIMERBASE0_IF |= 0x01 ;
 
 }
 
