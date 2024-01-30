@@ -252,7 +252,7 @@ static void HandleReceive(void)
 
     uint8_t Mode = END_OF_RX_MODE_SKIP;
 
-    if (gFlagTailNoteEliminationComplete)
+    if (gFlagTailToneEliminationComplete)
     {
         Mode = END_OF_RX_MODE_END;
         goto Skip;
@@ -414,8 +414,8 @@ static void HandleReceive(void)
             {
                 AUDIO_AudioPathOff();
 
-                gTailNoteEliminationCountdown_10ms = 20;
-                gFlagTailNoteEliminationComplete   = false;
+                gTailToneEliminationCountdown_10ms = 20;
+                gFlagTailToneEliminationComplete   = false;
                 gEndOfRxDetectedMaybe = true;
                 gEnableSpeaker        = false;
             }

@@ -1461,7 +1461,7 @@ void BK4819_GenTail(uint8_t Tail)
     }
 }
 
-void BK4819_EnableCDCSS(void)
+void BK4819_PlayCDCSSTail(void)
 {
     BK4819_GenTail(0);     // CTC134
     //亚音
@@ -1470,7 +1470,7 @@ void BK4819_EnableCDCSS(void)
 
 }
 
-void BK4819_EnableCTCSS(void)
+void BK4819_PlayCTCSSTail(void)
 {
 #ifdef ENABLE_CTCSS_TAIL_PHASE_SHIFT
     //BK4819_GenTail(1);     // 120° phase shift

@@ -1069,10 +1069,10 @@ void RADIO_EnableCxCSS(void)
     switch (gCurrentVfo->pTX->CodeType) {
         case CODE_TYPE_DIGITAL:
         case CODE_TYPE_REVERSE_DIGITAL:
-            BK4819_EnableCDCSS();
+            BK4819_PlayCDCSSTail();
             break;
         default:
-            BK4819_EnableCTCSS();
+            BK4819_PlayCTCSSTail();
             break;
     }
 
