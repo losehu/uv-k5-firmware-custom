@@ -216,6 +216,7 @@ gBeepToPlay = BEEP_500HZ_60MS_DOUBLE_BEEP_OPTIONAL;
                 gRequestSaveVFO   = true;
                 gVfoConfigureMode = VFO_CONFIGURE_RELOAD;
 #elif defined(ENABLE_SPECTRUM)
+                DOPPLER_MODE=0;
                 APP_RunSpectrum();
                 gRequestDisplayScreen = DISPLAY_MAIN;
 #endif

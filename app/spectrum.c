@@ -40,7 +40,7 @@ const uint16_t RSSI_MAX_VALUE = 65535;
 
 static uint32_t initialFreq;
 static char String[32];
-bool DOPPLER_MODE=0;
+bool DOPPLER_MODE = 0;
 
 bool isInitialized = false;
 bool isListening = true;
@@ -93,10 +93,10 @@ uint16_t listenT = 0;
 
 RegisterSpec registerSpecs[] = {
         {},
-        {"LNAs", BK4819_REG_13, 8, 0b11, 1},
-        {"LNA", BK4819_REG_13, 5, 0b111, 1},
-        {"PGA", BK4819_REG_13, 0, 0b111, 1},
-        {"IF", BK4819_REG_3D, 0, 0xFFFF, 0x2aaa},
+        {"LNAs", BK4819_REG_13, 8, 0b11,   1},
+        {"LNA",  BK4819_REG_13, 5, 0b111,  1},
+        {"PGA",  BK4819_REG_13, 0, 0b111,  1},
+        {"IF",   BK4819_REG_3D, 0, 0xFFFF, 0x2aaa},
         // {"MIX", 0x13, 3, 0b11, 1}, // TODO: hidden
 };
 
@@ -122,9 +122,8 @@ static uint16_t GetRegMenuValue(uint8_t st) {
     return (BK4819_ReadRegister(s.num) >> s.offset) & s.mask;
 }
 
-void LockAGC()
-{
-    RADIO_SetupAGC(settings.modulationType==MODULATION_AM, lockAGC);
+void LockAGC() {
+    RADIO_SetupAGC(settings.modulationType == MODULATION_AM, lockAGC);
     lockAGC = true;
 }
 
@@ -132,7 +131,7 @@ static void SetRegMenuValue(uint8_t st, bool add) {
     uint16_t v = GetRegMenuValue(st);
     RegisterSpec s = registerSpecs[st];
 
-    if(s.num == BK4819_REG_13)
+    if (s.num == BK4819_REG_13)
         LockAGC();
 
     uint16_t reg = BK4819_ReadRegister(s.num);
@@ -182,7 +181,7 @@ static void ToggleAFBit(bool on) {
     BK4819_WriteRegister(BK4819_REG_47, reg);
 }
 
-static const BK4819_REGISTER_t registers_to_save[] ={
+static const BK4819_REGISTER_t registers_to_save[] = {
         BK4819_REG_30,
         BK4819_REG_37,
         BK4819_REG_3D,
@@ -192,17 +191,17 @@ static const BK4819_REGISTER_t registers_to_save[] ={
         BK4819_REG_7E,
 };
 
-static uint16_t registers_stack [sizeof(registers_to_save)];
+static uint16_t registers_stack[sizeof(registers_to_save)];
 
 static void BackupRegisters() {
-    for (uint32_t i = 0; i < ARRAY_SIZE(registers_to_save); i++){
+    for (uint32_t i = 0; i < ARRAY_SIZE(registers_to_save); i++) {
         registers_stack[i] = BK4819_ReadRegister(registers_to_save[i]);
     }
 }
 
 static void RestoreRegisters() {
 
-    for (uint32_t i = 0; i < ARRAY_SIZE(registers_to_save); i++){
+    for (uint32_t i = 0; i < ARRAY_SIZE(registers_to_save); i++) {
         BK4819_WriteRegister(registers_to_save[i], registers_stack[i]);
     }
 }
@@ -235,11 +234,11 @@ static void ResetPeak() {
 }
 
 bool IsCenterMode() { return settings.scanStepIndex < S_STEP_2_5kHz; }
+
 // scan step in 0.01khz
 uint16_t GetScanStep() { return scanStepValues[settings.scanStepIndex]; }
 
-uint16_t GetStepsCount()
-{
+uint16_t GetStepsCount() {
 #ifdef ENABLE_SCAN_RANGES
     if(gScanRangeStart) {
     return (gScanRangeStop - gScanRangeStart) / GetScanStep();
@@ -249,6 +248,7 @@ uint16_t GetStepsCount()
 }
 
 uint32_t GetBW() { return GetStepsCount() * GetScanStep(); }
+
 uint32_t GetFStart() {
     return IsCenterMode() ? currentFreq - (GetBW() >> 1) : currentFreq;
 }
@@ -389,8 +389,7 @@ static void UpdatePeakInfo() {
         UpdatePeakInfoForce();
 }
 
-static void SetRssiHistory(uint16_t idx, uint16_t rssi)
-{
+static void SetRssiHistory(uint16_t idx, uint16_t rssi) {
 #ifdef ENABLE_SCAN_RANGES
     if(scanInfo.measurementsCount > 128) {
     uint8_t i = (uint32_t)ARRAY_SIZE(rssiHistory) * 1000 / scanInfo.measurementsCount * idx / 1000;
@@ -403,8 +402,7 @@ static void SetRssiHistory(uint16_t idx, uint16_t rssi)
     rssiHistory[idx] = rssi;
 }
 
-static void Measure()
-{
+static void Measure() {
     uint16_t rssi = scanInfo.rssi = GetRssi();
     SetRssiHistory(scanInfo.i, rssi);
 }
@@ -507,6 +505,8 @@ static void ToggleModulation() {
 
     RelaunchScan();
     redrawScreen = true;
+   if(DOPPLER_MODE) redrawStatus = true;
+
 }
 
 static void ToggleListeningBW() {
@@ -516,6 +516,8 @@ static void ToggleListeningBW() {
         settings.listenBw++;
     }
     redrawScreen = true;
+    if(DOPPLER_MODE) redrawStatus = true;
+
 }
 
 static void ToggleBacklight() {
@@ -658,8 +660,22 @@ void DrawStatus() {
 #else
     sprintf(String, "%d/%d", settings.dbMin, settings.dbMax);
 #endif
-    GUI_DisplaySmallest(String, 0, 1, true, true);
+    if(DOPPLER_MODE) {
+        //TODO:UI绘制状态栏
+        memset(gStatusLine,0x7f,39);
+        GUI_DisplaySmallest("ISS WEIX1", 2, 1, true, false);
+        GUI_DisplaySmallest(String, 41+(settings.dbMax>-100?4:0), 1, true, true);
 
+        sprintf(String, "%3s", gModulationStr[settings.modulationType]);
+        GUI_DisplaySmallest(String, 41+39, 1, true, true);
+
+        sprintf(String, "%s", bwOptions[settings.listenBw]);
+        GUI_DisplaySmallest(String, 41+54-(settings.listenBw==0?8:0), 1, true, true);
+    }else
+    {
+        GUI_DisplaySmallest(String, 0, 1, true, true);
+
+    }
     BOARD_ADC_GetBatteryInfo(&gBatteryVoltages[gBatteryCheckCounter++ % 4],
                              &gBatteryCurrent);
 
@@ -683,16 +699,28 @@ void DrawStatus() {
             gStatusLine[i] = 0b00111110;
         }
     }
+
 }
 
 static void DrawF(uint32_t f) {
-    sprintf(String, "%u.%05u", f / 100000, f % 100000);
-    UI_PrintStringSmall(String, 8, 127, 0);
+    if(!DOPPLER_MODE) {
+        sprintf(String, "%u.%05u", f / 100000, f % 100000);
+       UI_PrintStringSmall(String, 8, 127, 0);
 
-    sprintf(String, "%3s", gModulationStr[settings.modulationType]);
-    GUI_DisplaySmallest(String, 116, 1, false, true);
-    sprintf(String, "%s", bwOptions[settings.listenBw]);
-    GUI_DisplaySmallest(String, 108, 7, false, true);
+
+        sprintf(String, "%3s", gModulationStr[settings.modulationType]);
+        GUI_DisplaySmallest(String, 116, 1, false, true);
+        sprintf(String, "%s", bwOptions[settings.listenBw]);
+        GUI_DisplaySmallest(String, 108, 7, false, true);
+    }else
+    {
+        //TODO:UI绘制
+        sprintf(String, "%u.%05u", f / 100000, f % 100000);
+        UI_DisplayFrequency(String, 8, 0, false);
+
+
+
+    }
 }
 
 static void DrawNums() {
@@ -896,18 +924,27 @@ void OnKeyDownStill(KEY_Code_t key) {
             UpdateDBMax(false);
             break;
         case KEY_UP:
-            if (menuState) {
-                SetRegMenuValue(menuState, true);
-                break;
+            if(!DOPPLER_MODE) {
+                if (menuState) {
+                    SetRegMenuValue(menuState, true);
+                    break;
+                }
+                UpdateCurrentFreqStill(true);
             }
-            UpdateCurrentFreqStill(true);
+            //TODO:切换卫星
+
             break;
         case KEY_DOWN:
-            if (menuState) {
-                SetRegMenuValue(menuState, false);
-                break;
+            if(!DOPPLER_MODE) {
+
+                if (menuState) {
+                    SetRegMenuValue(menuState, false);
+                    break;
+                }
+                UpdateCurrentFreqStill(false);
             }
-            UpdateCurrentFreqStill(false);
+            //TODO:切换卫星
+
             break;
         case KEY_STAR:
             UpdateRssiTriggerLevel(true);
@@ -916,7 +953,10 @@ void OnKeyDownStill(KEY_Code_t key) {
             UpdateRssiTriggerLevel(false);
             break;
         case KEY_5:
-            FreqInput();
+
+            if(!DOPPLER_MODE)FreqInput();
+            //TODO:设置时间
+
             break;
         case KEY_0:
             ToggleModulation();
@@ -931,6 +971,8 @@ void OnKeyDownStill(KEY_Code_t key) {
             ToggleBacklight();
             break;
         case KEY_PTT:
+            //TODO:发射
+
             // TODO: start transmit
             /* BK4819_ToggleGpioOut(BK4819_GPIO6_PIN2_GREEN, false);
             BK4819_ToggleGpioOut(BK4819_GPIO5_PIN1_RED, true); */
@@ -949,6 +991,9 @@ void OnKeyDownStill(KEY_Code_t key) {
                 lockAGC = false;
                 monitorMode = false;
                 RelaunchScan();
+                if (DOPPLER_MODE)DeInitSpectrum();
+
+
                 break;
             }
             menuState = 0;
@@ -958,7 +1003,9 @@ void OnKeyDownStill(KEY_Code_t key) {
     }
 }
 
-static void RenderFreqInput() { UI_PrintStringSmall(freqInputString, 2, 127, 0); }
+static void RenderFreqInput() {
+    UI_PrintStringSmall(freqInputString, 2, 127, 0);
+}
 
 static void RenderStatus() {
     memset(gStatusLine, 0, sizeof(gStatusLine));
@@ -982,11 +1029,11 @@ static void RenderStill() {
 
     memset(&gFrameBuffer[2][METER_PAD_LEFT], 0b00010000, 121);
 
-    for (int i = 0; i < 121; i+=5) {
+    for (int i = 0; i < 121; i += 5) {
         gFrameBuffer[2][i + METER_PAD_LEFT] = 0b00110000;
     }
 
-    for (int i = 0; i < 121; i+=10) {
+    for (int i = 0; i < 121; i += 10) {
         gFrameBuffer[2][i + METER_PAD_LEFT] = 0b01110000;
     }
 
@@ -1110,9 +1157,9 @@ static void UpdateScan() {
         return;
     }
 
-    if(scanInfo.measurementsCount < 128)
+    if (scanInfo.measurementsCount < 128)
         memset(&rssiHistory[scanInfo.measurementsCount], 0,
-               sizeof(rssiHistory) - scanInfo.measurementsCount*sizeof(rssiHistory[0]));
+               sizeof(rssiHistory) - scanInfo.measurementsCount * sizeof(rssiHistory[0]));
 
     redrawScreen = true;
     preventKeypress = false;
@@ -1215,7 +1262,7 @@ static void Tick() {
             UpdateStill();
         }
     }
-    if (redrawStatus || ++statuslineUpdateTimer > 4096) {
+    if (redrawStatus || ++statuslineUpdateTimer > 2048) {
         RenderStatus();
         redrawStatus = false;
         statuslineUpdateTimer = 0;
@@ -1243,14 +1290,9 @@ void APP_RunSpectrum() {
   }
   else
 #endif
-//    if( DOPPLER_MODE) {
-////        currentFreq=43850000;
-//
-//    }else
-//    {
+
     currentFreq = initialFreq = gTxVfo->pRX->Frequency -
                                 ((GetStepsCount() / 2) * GetScanStep());
-//    }
     BackupRegisters();
 
     isListening = true; // to turn off RX later
@@ -1269,10 +1311,12 @@ void APP_RunSpectrum() {
     memset(rssiHistory, 0, sizeof(rssiHistory));
 
     isInitialized = true;
-    if( DOPPLER_MODE) {
+    if (DOPPLER_MODE) {
         SetState(STILL);
         TuneToPeak();
+        //TODO:设置默认卫星频率
         SetF(43850000);
+
 
     }
     while (isInitialized) {

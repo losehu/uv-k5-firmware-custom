@@ -143,7 +143,7 @@ void Main(void) {
 
     SYSTICK_Init();
 #ifdef ENABLE_RTC
-
+//TODO:RTC完善读写、串口
     BOARD_PORTCON_Init();
     BOARD_GPIO_Init();
     ST7565_Init();
