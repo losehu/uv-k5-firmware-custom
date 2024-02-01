@@ -25,10 +25,12 @@
 	.global BOARD_FLASH_Init
 	.global BSS_Init
 	.global TIM0Handler
+	.global RTCHandler
 
 	.global SystickHandler
 	.weak SystickHandler
     .weak TIM0Handler
+    .weak RTCHandler
 
 
 	.section .text.isr
@@ -70,7 +72,7 @@ WWDT:
 IWDT:
 	.long	HandlerIWDT + 1
 RTC:
-	.long	HandlerRTC + 1
+	.long	RTCHandler + 1
 DMA:
 	.long	HandlerDMA + 1
 SARADC:
@@ -153,8 +155,8 @@ HandlerWWDT:
 HandlerIWDT:
 	b	.
 
-HandlerRTC:
-	b	.
+RTCHandler:
+	bx	lr
 
 HandlerDMA:
 	b	.

@@ -155,6 +155,7 @@ void APP_RunSpectrum(void);
 void DrawStatus(bool refresh) ;
 #ifdef ENABLE_DOPPLER
 extern bool DOPPLER_MODE;
+void RTCHandler();
 #endif
 #endif /* ifndef SPECTRUM_H */
 

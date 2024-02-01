@@ -62,6 +62,7 @@
 #ifdef ENABLE_UART
 #include "driver/uart.h"
 #endif
+#include "app/spectrum.h"
 
 #include "helper/battery.h"
 #include "helper/boot.h"
@@ -80,7 +81,7 @@ void _putchar(__attribute__((unused)) char c) {
 
 }
 
-#ifdef ENABLE_RTC
+#ifdef ENABLE_TIMER
 void show_uint32(uint32_t num,uint8_t  line)
 {
     char str[6] = {0};
@@ -95,33 +96,7 @@ void show_uint32(uint32_t num,uint8_t  line)
     UI_PrintStringSmall(str, 0, 127, line);
     ST7565_BlitFullScreen();
 }
-// 定义位掩码
-#define SEC_TENS_RO_MASK 0x70 // 0b1110000
-#define SEC_ONES_RO_MASK 0x0F // 0b0001111
-#define MIN_TENS_RO_MASK 0x7000 // 0b0111 0000 0000 0000
-#define MIN_ONES_RO_MASK 0xf00 // 0b000 1111 0000 0000
 
-// 从寄存器值中提取十位数和个位数并计算十进制秒数
-uint32_t calculate_decimal_seconds(uint32_t register_value) {
-    // 提取十位数和个位数
-    uint32_t SEC_TENS_RO = (register_value & SEC_TENS_RO_MASK) >> 4;
-    uint32_t SEC_ONES_RO = register_value & SEC_ONES_RO_MASK;
-
-    // 计算十进制秒数
-    uint32_t decimal_seconds = SEC_TENS_RO * 10 + SEC_ONES_RO;
-
-    return decimal_seconds;
-}
-uint32_t calculate_decimal_min(uint32_t register_value) {
-    // 提取十位数和个位数
-    uint32_t SEC_TENS_RO = (register_value & MIN_TENS_RO_MASK) >> 12;
-    uint32_t SEC_ONES_RO = (register_value & MIN_ONES_RO_MASK)>>8;
-
-    // 计算十进制秒数
-    uint32_t decimal_seconds = SEC_TENS_RO * 10 + SEC_ONES_RO;
-
-    return decimal_seconds;
-}
 #endif
 
 void Main(void) {
@@ -142,56 +117,14 @@ void Main(void) {
                           | (1 << 22);
 
     SYSTICK_Init();
-#ifdef ENABLE_RTC
-//TODO:RTC完善读写、串口
-    BOARD_PORTCON_Init();
-    BOARD_GPIO_Init();
-    ST7565_Init();
-    memset(gStatusLine, 0, sizeof(gStatusLine));
-    UI_DisplayClear();
-    ST7565_BlitStatusLine();  // blank status line
-    ST7565_BlitFullScreen();
-    char str[20] = {0}; // 分配一个足够大的字符串数组来存储转换后的字符串
-    RTC_INIT();
 
-    while (1) {
-         show_uint32((RTC_IF>>8)&0X01,0);
-        show_uint32(RTC_VALID&0X01,1);
-
-        show_uint32(calculate_decimal_seconds(RTC_TSTR),2);
-        show_uint32(calculate_decimal_min(RTC_TSTR),3);
-
-
-    }
-#endif
-#ifdef ENABLE_TIMER
-
-
-    BOARD_PORTCON_Init();
-    BOARD_GPIO_Init();
-    ST7565_Init();
-    TIM0_INIT();
-    memset(gStatusLine, 0, sizeof(gStatusLine));
-    UI_DisplayClear();
-    ST7565_BlitStatusLine();  // blank status line
-    ST7565_BlitFullScreen();
-    char str[20]={0}; // 分配一个足够大的字符串数组来存储转换后的字符串
-    while(1)
-    {
-        char str[6];
-        show_uint32(TIM0_CNT,0);
-        show_uint32(TIMERBASE0_LOW_CNT,1);
-        show_uint32(TIMERBASE0_HIGH_CNT,2);
-        show_uint32(TIMERBASE0_IF,3);
-        show_uint32(TIMERBASE0_IE,4);
-    }
-#endif
     BOARD_Init();
 
     boot_counter_10ms = 250;   // 2.5 sec
 #ifdef ENABLE_UART
     UART_Init();
 #endif
+
     SETTINGS_InitEEPROM();
 
 
@@ -213,7 +146,9 @@ void Main(void) {
 #ifdef ENABLE_MDC1200
     MDC1200_init();
 #endif
-
+#ifdef ENABLE_DOPPLER
+    RTC_INIT();
+#endif
 
     RADIO_ConfigureChannel(0, VFO_CONFIGURE_RELOAD);
     RADIO_ConfigureChannel(1, VFO_CONFIGURE_RELOAD);
@@ -241,6 +176,29 @@ void Main(void) {
     gKeyReading0 = KEY_INVALID;
     gKeyReading1 = KEY_INVALID;
     gDebounceCounter = 0;
+
+#ifdef ENABLE_TIMER
+
+
+    BOARD_PORTCON_Init();
+    BOARD_GPIO_Init();
+    ST7565_Init();
+    TIM0_INIT();
+    memset(gStatusLine, 0, sizeof(gStatusLine));
+    UI_DisplayClear();
+    ST7565_BlitStatusLine();  // blank status line
+    ST7565_BlitFullScreen();
+    char str[20]={0}; // 分配一个足够大的字符串数组来存储转换后的字符串
+    while(1)
+    {
+        char str[6];
+        show_uint32(TIM0_CNT,0);
+        show_uint32(TIMERBASE0_LOW_CNT,1);
+        show_uint32(TIMERBASE0_HIGH_CNT,2);
+        show_uint32(TIMERBASE0_IF,3);
+        show_uint32(TIMERBASE0_IE,4);
+    }
+#endif
     UI_DisplayWelcome();
 
 

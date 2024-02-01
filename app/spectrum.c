@@ -17,6 +17,7 @@
 #include "am_fix.h"
 #include "audio.h"
 #include "misc.h"
+uint32_t DOPPLER_CNT=0;
 
 //#define ENABLE_DOPPLER
 #ifdef ENABLE_SCAN_RANGES
@@ -42,6 +43,8 @@ const uint16_t RSSI_MAX_VALUE = 65535;
 static uint32_t initialFreq;
 static char String[32];
 #ifdef ENABLE_DOPPLER
+#include "bsp/dp32g030/rtc.h"
+
 bool DOPPLER_MODE = 0;
 #endif
 bool isInitialized = false;
@@ -100,7 +103,7 @@ RegisterSpec registerSpecs[] = {
         {"LNA",  BK4819_REG_13, 5, 0b111,  1},
         {"PGA",  BK4819_REG_13, 0, 0b111,  1},
         {"IF",   BK4819_REG_3D, 0, 0xFFFF, 0x2aaa},
-        // {"MIX", 0x13, 3, 0b11, 1}, // TODO: hidden
+        // {"MIX", 0x13, 3, 0b11, 1}, // '
 };
 
 uint16_t statuslineUpdateTimer = 0;
@@ -668,7 +671,7 @@ void DrawStatus(bool refresh) {
 #ifdef ENABLE_DOPPLER
 
     if (DOPPLER_MODE) {
-        //TODO:UI绘制状态栏
+        //UI绘制状态栏
         memset(gStatusLine, 0x7f, 39);
         GUI_DisplaySmallest("ISS WEIX1", 2, 1, true, false);
         GUI_DisplaySmallest(String, 42 + (settings.dbMax > -100 ? 4 : 0), 1, true, true);
@@ -715,7 +718,7 @@ void DrawStatus(bool refresh) {
 static void DrawF(uint32_t f) {
 #ifdef ENABLE_DOPPLER
     if (DOPPLER_MODE) {
-        //TODO:UI绘制
+        //UI绘制
         sprintf(String, "%u.%05u", f / 100000, f % 100000);
         UI_DisplayFrequency(String, 8, 0, false);
 
@@ -1076,7 +1079,7 @@ static void RenderStill() {
         }
     }
 
-//TODO:S表参数绘制
+//S表参数绘制
     int dbm = Rssi2DBm(scanInfo.rssi);
     uint8_t s = DBm2S(dbm);
     bool fill = true;
@@ -1129,15 +1132,15 @@ static void RenderStill() {
 
     if (DOPPLER_MODE) {
         //计数时间
-        sprintf(String, "%4d sec", 1261);
+        sprintf(String, "%4d sec", DOPPLER_CNT);
         GUI_DisplaySmallest(String, 90, DATA_LINE + 15, false, true);
         memset(&gFrameBuffer[6][80], 0b01000000, 45);
         //TODO:进度条更新 80~80+45-1
-        int process = 25;
+        int process = 45*200/200;
         gFrameBuffer[6][ 79] = 0b00111110;
-        gFrameBuffer[6][46 + 80] = 0b00111110;
-        for (int i = 0; i <= 45; i++) {
-            if (i <= process)
+        gFrameBuffer[6][45 + 80] = 0b00111110;
+        for (int i = 0; i < 45; i++) {
+            if (i < process)
                 gFrameBuffer[6][i + 80] = 0b00111110;
             else
                 gFrameBuffer[6][i + 80] = 0b00100010;
@@ -1146,8 +1149,9 @@ static void RenderStill() {
         //TODO:绘制上行频率
         sprintf(String, "UPLink:%4d.%5d", currentFreq / 100000, currentFreq % 100000);
         GUI_DisplaySmallest(String, 0, DATA_LINE + 15, false, true);
-        //TODO:绘制时间、进度条
-        GUI_DisplaySmallest("2024-01-30 16:01:22", 0, DATA_LINE + 23, false, true);
+
+        sprintf(String, "20%02d-%02d-%02d %02d:%02d:%02d",time[0],time[1],time[2],time[3],time[4],time[5] );
+        GUI_DisplaySmallest(String, 0, DATA_LINE + 23, false, true);
     }
 #endif
 
@@ -1398,7 +1402,12 @@ void APP_RunSpectrum() {
         Tick();
     }
 }
-
-
+void RTCHandler(void)
+{
+    DOPPLER_CNT++;
+if(DOPPLER_CNT==200)DOPPLER_CNT=0;
+    RTC_Get();
+    RTC_IF|=(1<<5);//清除中断标志位
+}
 
 

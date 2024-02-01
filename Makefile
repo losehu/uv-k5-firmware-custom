@@ -60,7 +60,6 @@ ENABLE_GB2312				   = 0
 ENABLE_AM_FIX_SHOW_DATA       ?= 0
 ENABLE_AGC_SHOW_DATA          ?= 0
 ENABLE_TIMER		          ?= 0
-ENABLE_RTC		              ?= 0
 
 ENABLE_WARNING 				  ?= 1
 ENABLE_MESSENGER              			?=0
@@ -148,7 +147,7 @@ OBJS += external/printf/printf.o
 ifeq ($(ENABLE_TIMER),1)
     OBJS += driver/rtc.o
 endif
-ifeq ($(ENABLE_RTC),1)
+ifeq ($(ENABLE_DOPPLER),1)
     OBJS += driver/rtc.o
 endif
 
@@ -376,9 +375,7 @@ endif
 ifeq ($(ENABLE_TIMER),1)
     CFLAGS  += -DENABLE_TIMER
 endif
-ifeq ($(ENABLE_RTC),1)
-    CFLAGS  += -DENABLE_RTC
-endif
+
 
 ifeq ($(ENABLE_MDC1200_CONTACT),1)
     CFLAGS  += -DENABLE_MDC1200_CONTACT

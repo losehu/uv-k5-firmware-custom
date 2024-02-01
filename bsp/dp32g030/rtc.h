@@ -31,6 +31,9 @@
 #define RTC_CNT (*(volatile uint32_t *)RTC_CNT_ADD) // 秒标当前计数值
 #define RTC_VALID (*(volatile uint32_t *)RTC_VALID_ADD) //当前时间有效标志寄存器
 void RTC_INIT(void);
+void RTC_Set( uint8_t time[6]);
+void RTC_Get();
 
+extern uint8_t time[6];
 
 #endif
