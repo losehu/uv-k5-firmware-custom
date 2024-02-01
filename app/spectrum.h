@@ -152,9 +152,10 @@ typedef struct PeakInfo {
 } PeakInfo;
 
 void APP_RunSpectrum(void);
- void DrawStatus() ;
+void DrawStatus(bool refresh) ;
+#ifdef ENABLE_DOPPLER
 extern bool DOPPLER_MODE;
-
+#endif
 #endif /* ifndef SPECTRUM_H */
 
 // vim: ft=c

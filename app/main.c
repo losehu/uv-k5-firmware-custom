@@ -216,7 +216,9 @@ gBeepToPlay = BEEP_500HZ_60MS_DOUBLE_BEEP_OPTIONAL;
                 gRequestSaveVFO   = true;
                 gVfoConfigureMode = VFO_CONFIGURE_RELOAD;
 #elif defined(ENABLE_SPECTRUM)
+#ifdef ENABLE_DOPPLER
                 DOPPLER_MODE=0;
+#endif
                 APP_RunSpectrum();
                 gRequestDisplayScreen = DISPLAY_MAIN;
 #endif
@@ -646,8 +648,8 @@ static void MAIN_Key_UP_DOWN(bool bKeyPressed, bool bKeyHeld, int8_t Direction) 
 #ifdef ENABLE_DOPPLER
         if (Direction==-1) {
             DOPPLER_MODE=1;
-                          APP_RunSpectrum();
-                gRequestDisplayScreen = DISPLAY_MAIN;
+            APP_RunSpectrum();
+            gRequestDisplayScreen = DISPLAY_MAIN;
         }
 #endif
         return;

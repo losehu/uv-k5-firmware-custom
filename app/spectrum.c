@@ -18,6 +18,7 @@
 #include "audio.h"
 #include "misc.h"
 
+//#define ENABLE_DOPPLER
 #ifdef ENABLE_SCAN_RANGES
 #include "chFrScanner.h"
 #endif
@@ -40,8 +41,9 @@ const uint16_t RSSI_MAX_VALUE = 65535;
 
 static uint32_t initialFreq;
 static char String[32];
+#ifdef ENABLE_DOPPLER
 bool DOPPLER_MODE = 0;
-
+#endif
 bool isInitialized = false;
 bool isListening = true;
 bool monitorMode = false;
@@ -77,7 +79,8 @@ SpectrumSettings settings = {.stepsCount = STEPS_64,
         .listenBw = BK4819_FILTER_BW_WIDE,
         .modulationType = false,
         .dbMin = -130,
-        .dbMax = -50};
+        .dbMax = -50//TODO:多普勒频谱参数分离
+};
 
 uint32_t fMeasure = 0;
 uint32_t currentFreq, tempFreq;
@@ -505,8 +508,9 @@ static void ToggleModulation() {
 
     RelaunchScan();
     redrawScreen = true;
-   if(DOPPLER_MODE) redrawStatus = true;
-
+#ifdef ENABLE_DOPPLER
+    if (DOPPLER_MODE) redrawStatus = true;
+#endif
 }
 
 static void ToggleListeningBW() {
@@ -516,8 +520,9 @@ static void ToggleListeningBW() {
         settings.listenBw++;
     }
     redrawScreen = true;
-    if(DOPPLER_MODE) redrawStatus = true;
-
+#ifdef ENABLE_DOPPLER
+    if (DOPPLER_MODE) redrawStatus = true;
+#endif
 }
 
 static void ToggleBacklight() {
@@ -626,7 +631,6 @@ static bool IsBlacklisted(uint16_t idx)
 #endif
 
 // Draw things
-
 // applied x2 to prevent initial rounding
 uint8_t Rssi2PX(uint16_t rssi, uint8_t pxMin, uint8_t pxMax) {
     const int DB_MIN = settings.dbMin << 1;
@@ -637,7 +641,8 @@ uint8_t Rssi2PX(uint16_t rssi, uint8_t pxMin, uint8_t pxMax) {
 
     int dbm = clamp(Rssi2DBm(rssi) << 1, DB_MIN, DB_MAX);
 
-    return ((dbm - DB_MIN) * PX_RANGE + DB_RANGE / 2) / DB_RANGE + pxMin;
+//    return ((dbm - DB_MIN) * PX_RANGE + DB_RANGE / 2) / DB_RANGE + pxMin;
+    return (dbm - DB_MIN) * PX_RANGE / DB_RANGE + pxMin;
 }
 
 uint8_t Rssi2Y(uint16_t rssi) {
@@ -653,29 +658,34 @@ static void DrawSpectrum() {
     }
 }
 
-void DrawStatus() {
+void DrawStatus(bool refresh) {
 #ifdef SPECTRUM_EXTRA_VALUES
     sprintf(String, "%d/%d P:%d T:%d", settings.dbMin, settings.dbMax,
           Rssi2DBm(peak.rssi), Rssi2DBm(settings.rssiTriggerLevel));
 #else
     sprintf(String, "%d/%d", settings.dbMin, settings.dbMax);
 #endif
-    if(DOPPLER_MODE) {
+#ifdef ENABLE_DOPPLER
+
+    if (DOPPLER_MODE) {
         //TODO:UI绘制状态栏
-        memset(gStatusLine,0x7f,39);
+        memset(gStatusLine, 0x7f, 39);
         GUI_DisplaySmallest("ISS WEIX1", 2, 1, true, false);
-        GUI_DisplaySmallest(String, 41+(settings.dbMax>-100?4:0), 1, true, true);
+        GUI_DisplaySmallest(String, 42 + (settings.dbMax > -100 ? 4 : 0), 1, true, true);
 
         sprintf(String, "%3s", gModulationStr[settings.modulationType]);
-        GUI_DisplaySmallest(String, 41+39, 1, true, true);
+        GUI_DisplaySmallest(String, 42 + 38, 1, true, true);
 
         sprintf(String, "%s", bwOptions[settings.listenBw]);
-        GUI_DisplaySmallest(String, 41+54-(settings.listenBw==0?8:0), 1, true, true);
-    }else
-    {
+        GUI_DisplaySmallest(String, 42 + 53 - (settings.listenBw == 0 ? 8 : 0), 1, true, true);
+    } else {
+#endif
         GUI_DisplaySmallest(String, 0, 1, true, true);
-
+#ifdef ENABLE_DOPPLER
     }
+#endif
+
+    if (!refresh)return;
     BOARD_ADC_GetBatteryInfo(&gBatteryVoltages[gBatteryCheckCounter++ % 4],
                              &gBatteryCurrent);
 
@@ -703,24 +713,26 @@ void DrawStatus() {
 }
 
 static void DrawF(uint32_t f) {
-    if(!DOPPLER_MODE) {
+#ifdef ENABLE_DOPPLER
+    if (DOPPLER_MODE) {
+        //TODO:UI绘制
         sprintf(String, "%u.%05u", f / 100000, f % 100000);
-       UI_PrintStringSmall(String, 8, 127, 0);
+        UI_DisplayFrequency(String, 8, 0, false);
+
+    } else {
+#endif
+        sprintf(String, "%u.%05u", f / 100000, f % 100000);
+        UI_PrintStringSmall(String, 8, 127, 0);
 
 
         sprintf(String, "%3s", gModulationStr[settings.modulationType]);
         GUI_DisplaySmallest(String, 116, 1, false, true);
         sprintf(String, "%s", bwOptions[settings.listenBw]);
         GUI_DisplaySmallest(String, 108, 7, false, true);
-    }else
-    {
-        //TODO:UI绘制
-        sprintf(String, "%u.%05u", f / 100000, f % 100000);
-        UI_DisplayFrequency(String, 8, 0, false);
-
-
-
+#ifdef ENABLE_DOPPLER
     }
+#endif
+
 }
 
 static void DrawNums() {
@@ -924,26 +936,29 @@ void OnKeyDownStill(KEY_Code_t key) {
             UpdateDBMax(false);
             break;
         case KEY_UP:
-            if(!DOPPLER_MODE) {
-                if (menuState) {
-                    SetRegMenuValue(menuState, true);
-                    break;
-                }
-                UpdateCurrentFreqStill(true);
+            if (menuState) {
+                SetRegMenuValue(menuState, true);
+                break;
             }
-            //TODO:切换卫星
-
+#ifdef ENABLE_DOPPLER
+            if (DOPPLER_MODE) {
+                //TODO:切换卫星
+            } else
+#endif
+                UpdateCurrentFreqStill(true);
             break;
         case KEY_DOWN:
-            if(!DOPPLER_MODE) {
 
-                if (menuState) {
-                    SetRegMenuValue(menuState, false);
-                    break;
-                }
-                UpdateCurrentFreqStill(false);
+            if (menuState) {
+                SetRegMenuValue(menuState, false);
+                break;
             }
-            //TODO:切换卫星
+#ifdef ENABLE_DOPPLER
+            if (DOPPLER_MODE) {
+                //TODO:切换卫星
+            } else
+#endif
+                UpdateCurrentFreqStill(false);
 
             break;
         case KEY_STAR:
@@ -953,9 +968,15 @@ void OnKeyDownStill(KEY_Code_t key) {
             UpdateRssiTriggerLevel(false);
             break;
         case KEY_5:
+#ifdef ENABLE_DOPPLER
+            if (DOPPLER_MODE) {
+                //TODO:设置时间
+            } else
+#endif
 
-            if(!DOPPLER_MODE)FreqInput();
-            //TODO:设置时间
+
+                FreqInput();
+
 
             break;
         case KEY_0:
@@ -991,7 +1012,10 @@ void OnKeyDownStill(KEY_Code_t key) {
                 lockAGC = false;
                 monitorMode = false;
                 RelaunchScan();
+
+#ifdef ENABLE_DOPPLER
                 if (DOPPLER_MODE)DeInitSpectrum();
+#endif
 
 
                 break;
@@ -1007,9 +1031,10 @@ static void RenderFreqInput() {
     UI_PrintStringSmall(freqInputString, 2, 127, 0);
 }
 
-static void RenderStatus() {
-    memset(gStatusLine, 0, sizeof(gStatusLine));
-    DrawStatus();
+static void RenderStatus(bool refresh) {
+
+    memset(gStatusLine, 0, refresh ? sizeof(gStatusLine) : 115);
+    DrawStatus(refresh);
     ST7565_BlitStatusLine();
 }
 
@@ -1023,44 +1048,60 @@ static void RenderSpectrum() {
 }
 
 static void RenderStill() {
-    DrawF(fMeasure);
-
-    const uint8_t METER_PAD_LEFT = 3;
-
-    memset(&gFrameBuffer[2][METER_PAD_LEFT], 0b00010000, 121);
-
-    for (int i = 0; i < 121; i += 5) {
-        gFrameBuffer[2][i + METER_PAD_LEFT] = 0b00110000;
+    DrawF(fMeasure);//绘制频率
+    uint8_t METER_PAD_LEFT = 3;
+    uint8_t P_WIDTH = 120;
+    uint8_t S_LINE = 25;
+    uint8_t S_X = 4;
+    uint8_t DBM_X = 22;
+#ifdef ENABLE_DOPPLER
+    if (DOPPLER_MODE) {
+        P_WIDTH = 50;
+        METER_PAD_LEFT = 70;
+        S_LINE = 18;
+        S_X = 58;
+        DBM_X = 6;
     }
+#endif
+    memset(&gFrameBuffer[2][METER_PAD_LEFT], 0b01000000, P_WIDTH);
 
-    for (int i = 0; i < 121; i += 10) {
-        gFrameBuffer[2][i + METER_PAD_LEFT] = 0b01110000;
+    for (int i = 0; i <= P_WIDTH; i += 5) { //小刻度
+        gFrameBuffer[2][i + METER_PAD_LEFT] = 0b01100000;
+
     }
-
-    uint8_t x = Rssi2PX(scanInfo.rssi, 0, 121);
-    for (int i = 0; i < x; ++i) {
+    uint8_t x = Rssi2PX(scanInfo.rssi, 0, P_WIDTH);//信号强度
+    for (int i = 0; i < x; i++) {
         if (i % 5) {
-            gFrameBuffer[2][i + METER_PAD_LEFT] |= 0b00000111;
+            gFrameBuffer[2][i + METER_PAD_LEFT] |= 0b00001110;
         }
     }
 
+//TODO:S表参数绘制
     int dbm = Rssi2DBm(scanInfo.rssi);
     uint8_t s = DBm2S(dbm);
-    sprintf(String, "S: %u", s);
-    GUI_DisplaySmallest(String, 4, 25, false, true);
-    sprintf(String, "%d dBm", dbm);
-    GUI_DisplaySmallest(String, 28, 25, false, true);
+    bool fill = true;
+#ifdef ENABLE_DOPPLER
+    if ((monitorMode || IsPeakOverLevel()) && DOPPLER_MODE) {
+        memset(gFrameBuffer[2] + DBM_X - 2, 0b11111110, 51);
+        fill = false;
+    }
+#endif
+    sprintf(String, "S%u", s);
+    GUI_DisplaySmallest(String, S_X, S_LINE, false, true);
+    sprintf(String, "%4d/%4ddBm", dbm, Rssi2DBm(settings.rssiTriggerLevel));
+    GUI_DisplaySmallest(String, DBM_X, S_LINE, false, fill);
 
     if (!monitorMode) {
-        uint8_t x = Rssi2PX(settings.rssiTriggerLevel, 0, 121);
+        uint8_t x = Rssi2PX(settings.rssiTriggerLevel, 0, P_WIDTH);
         gFrameBuffer[2][METER_PAD_LEFT + x] = 0b11111111;
     }
 
+    //增益参数
     const uint8_t PAD_LEFT = 4;
     const uint8_t CELL_WIDTH = 30;
     uint8_t offset = PAD_LEFT;
     uint8_t row = 4;
-
+    uint8_t DATA_LINE;
     for (int i = 0, idx = 1; idx <= 4; ++i, ++idx) {
         if (idx == 5) {
             row += 2;
@@ -1073,13 +1114,43 @@ static void RenderStill() {
                 gFrameBuffer[row + 1][j + offset] = 0xFF;
             }
         }
+        DATA_LINE = row * 8 + 2;
+#ifdef ENABLE_DOPPLER
+        if (DOPPLER_MODE)DATA_LINE -= 8;
+#endif
         sprintf(String, "%s", registerSpecs[idx].name);
-        GUI_DisplaySmallest(String, offset + 2, row * 8 + 2, false,
+        GUI_DisplaySmallest(String, offset + 2, DATA_LINE, false,
                             menuState != idx);
         sprintf(String, "%u", GetRegMenuValue(idx));
-        GUI_DisplaySmallest(String, offset + 2, (row + 1) * 8 + 1, false,
+        GUI_DisplaySmallest(String, offset + 2, DATA_LINE + 7, false,
                             menuState != idx);
     }
+#ifdef ENABLE_DOPPLER
+
+    if (DOPPLER_MODE) {
+        //计数时间
+        sprintf(String, "%4d sec", 1261);
+        GUI_DisplaySmallest(String, 90, DATA_LINE + 15, false, true);
+        memset(&gFrameBuffer[6][80], 0b01000000, 45);
+        //TODO:进度条更新 80~80+45-1
+        int process = 25;
+        gFrameBuffer[6][ 79] = 0b00111110;
+        gFrameBuffer[6][46 + 80] = 0b00111110;
+        for (int i = 0; i <= 45; i++) {
+            if (i <= process)
+                gFrameBuffer[6][i + 80] = 0b00111110;
+            else
+                gFrameBuffer[6][i + 80] = 0b00100010;
+
+        }
+        //TODO:绘制上行频率
+        sprintf(String, "UPLink:%4d.%5d", currentFreq / 100000, currentFreq % 100000);
+        GUI_DisplaySmallest(String, 0, DATA_LINE + 15, false, true);
+        //TODO:绘制时间、进度条
+        GUI_DisplaySmallest("2024-01-30 16:01:22", 0, DATA_LINE + 23, false, true);
+    }
+#endif
+
 }
 
 static void Render() {
@@ -1262,10 +1333,11 @@ static void Tick() {
             UpdateStill();
         }
     }
-    if (redrawStatus || ++statuslineUpdateTimer > 2048) {
-        RenderStatus();
+    if (redrawStatus || ++statuslineUpdateTimer > 4096) {
+        bool refresh = statuslineUpdateTimer > 4096;
+        RenderStatus(refresh);
         redrawStatus = false;
-        statuslineUpdateTimer = 0;
+        if (refresh)statuslineUpdateTimer = 0;
     }
     if (redrawScreen) {
         Render();
@@ -1309,16 +1381,19 @@ void APP_RunSpectrum() {
     RelaunchScan();
 
     memset(rssiHistory, 0, sizeof(rssiHistory));
-
     isInitialized = true;
+#ifdef ENABLE_DOPPLER
+    statuslineUpdateTimer = 4097;
+
     if (DOPPLER_MODE) {
         SetState(STILL);
         TuneToPeak();
         //TODO:设置默认卫星频率
         SetF(43850000);
 
-
+        currentFreq = 43847711;
     }
+#endif
     while (isInitialized) {
         Tick();
     }

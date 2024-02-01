@@ -67,7 +67,7 @@ ENABLE_MESSENGER              			?=0
 ENABLE_MESSENGER_DELIVERY_NOTIFICATION	?= 0
 ENABLE_MESSENGER_NOTIFICATION			?= 0
 
-ENABLE_DOPPLER 				?=1
+ENABLE_DOPPLER               =0
 #############################################################
 PACKED_FILE_SUFFIX = LOSEHU119
 ifeq ($(ENABLE_CHINESE_FULL),1)
@@ -86,6 +86,8 @@ ifeq ($(ENABLE_CHINESE_FULL),3)
 endif
 
 ifeq ($(ENABLE_CHINESE_FULL),4)
+    ENABLE_DOPPLER=1
+
     ifeq ($(ENABLE_GB2312),1)
         $(info H)
         ENABLE_CHINESE_FULL=4
@@ -105,6 +107,7 @@ ifeq ($(ENABLE_CHINESE_FULL),0)
 	ENABLE_MESSENGER              		=0
     ENABLE_MESSENGER_DELIVERY_NOTIFICATION	= 0
     ENABLE_MESSENGER_NOTIFICATION			= 0
+
     $(info Normal)
 endif
 
@@ -136,9 +139,7 @@ ifeq ($(ENABLE_MESSENGER),1)
 	OBJS += ui/messenger.o
 endif
 
-ifeq ($(ENABLE_DOPPLER),1)
-    OBJS += app/doppler.o
-endif
+
 
 ifeq ($(ENABLE_OVERLAY),1)
 	OBJS += sram-overlay.o
@@ -552,8 +553,8 @@ endif
 full:clean
 	$(RM) *.bin
 	$(MAKE) build ENABLE_CHINESE_FULL=0
-	$(MAKE) build ENABLE_CHINESE_FULL=4
-	$(MAKE) build ENABLE_CHINESE_FULL=4 ENABLE_GB2312=1
+	$(MAKE) build ENABLE_CHINESE_FULL=4 ENABLE_DOPPLER=1
+	$(MAKE) build ENABLE_CHINESE_FULL=4 ENABLE_GB2312=1  ENABLE_DOPPLER=1
 
 
 build:clean $(TARGET)
