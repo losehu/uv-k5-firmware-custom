@@ -32,21 +32,7 @@ void CRC_Init(void)
 
 }
 
-#ifdef ENABLE_MDC1200
-void CRC_InitReverse(void)
-	{
-		CRC_CR =
-			CRC_CR_CRC_EN_BITS_DISABLE          |
-			CRC_CR_INPUT_REV_BITS_NORMAL        |
-			CRC_CR_INPUT_INV_BITS_BIT_INVERTED  |
-			CRC_CR_OUTPUT_REV_BITS_REVERSED     |
-			CRC_CR_OUTPUT_INV_BITS_BIT_INVERTED |
-			CRC_CR_DATA_WIDTH_BITS_8            |
-			CRC_CR_CRC_SEL_BITS_CRC_16_CCITT;
 
-		CRC_IV = 0;
-	}
-#endif
 #define CRC16_XMODEM_POLY 0x1021
 
  uint16_t CRC_Calculate1( void *pBuffer, uint16_t Size)
@@ -68,20 +54,12 @@ void CRC_InitReverse(void)
     return crc;
 }
 
-//uint16_t CRC_Calculate( void *pBuffer, uint16_t Size) {
-//
-//		unsigned int   i;
-//		 uint8_t *data8 = ( uint8_t *)pBuffer;
-//		uint16_t       crc = 0;
-//		for (i = 0; i < Size; i++)
-//		{
-//			unsigned int k;
-//			crc ^= data8[i];
-//			for (k = 8; k > 0; k--)
-//				crc = (crc & 1u) ? (crc >> 1) ^ 0x8408 : crc >> 1;
-//		}
-//		return crc ^ 0xffff;
-//}
+uint16_t compute_crc(const void *data, const unsigned int data_len) {    // let the CPU's hardware do some work :)
+    uint16_t crc;
+    CRC_Init();
+    crc = CRC_Calculate(data, data_len);
+    return crc;
+}
 uint16_t CRC_Calculate(const void *buffer, const unsigned int size)
 {
     const uint8_t *data = (const uint8_t *)buffer;

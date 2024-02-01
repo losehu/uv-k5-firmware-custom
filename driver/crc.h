@@ -22,6 +22,7 @@
 void CRC_Init(void);
 uint16_t CRC_Calculate(const void *buffer, const unsigned int size);
 uint16_t CRC_Calculate1( void *pBuffer, uint16_t Size);
+uint16_t compute_crc(const void *data, const unsigned int data_len) ;    // let the CPU's hardware do some work :)
 
 void CRC_InitReverse(void);
 

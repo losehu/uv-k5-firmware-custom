@@ -12,7 +12,6 @@ void RTC_INIT() {
                | (0 << 24);//PRE_PERIOD=8s
     RTC_Set(time);
 
-    SYSTEM_DelayMs(1);
     NVIC_SetPriority(Interrupt2_IRQn, 0);
 
     RTC_IF |= (1 << 5);//清除中断标志位
@@ -20,7 +19,6 @@ void RTC_INIT() {
 
     RTC_CFG |= (1 << 2)//打开设置时间功能
                | (1 << 0);//RTC使能
-    SYSTEM_DelayMs(1);
 
     NVIC_EnableIRQ(Interrupt2_IRQn);
 

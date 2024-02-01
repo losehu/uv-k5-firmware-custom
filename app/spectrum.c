@@ -1395,7 +1395,6 @@ void APP_RunSpectrum() {
         TuneToPeak();
         //TODO:设置默认卫星频率
         SetF(43850000);
-
         currentFreq = 43847711;
     }
 #endif

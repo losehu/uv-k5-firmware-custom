@@ -14,67 +14,10 @@ const uint8_t mdc1200_sync[5] = {0x07, 0x09, 0x2a, 0x44, 0x6f};
 const uint8_t mdc1200_sync_suc_xor[5]={0xfb,0x72,0x40,0x99,0xa7};
 
 
-#if 1
 
-uint16_t compute_crc(const void *data, const unsigned int data_len) {    // let the CPU's hardware do some work :)
-    uint16_t crc;
-    CRC_InitReverse();
-    crc = CRC_Calculate(data, data_len);
-    CRC_Init();
-    return crc;
-}
 
-#elif 1
-uint16_t compute_crc( void *data, const unsigned int data_len) {    // let the CPU's hardware do some work :)
 
-    return CRC_Calculate(data, data_len);
-}
-//uint16_t compute_crc( void *data, const unsigned int data_len)
-//	{	// using the reverse computation and polynominal avoids having to reverse the bit order during and after
-//		unsigned int   i;
-//		 uint8_t *data8 = ( uint8_t *)data;
-//		uint16_t       crc = 0;
-//		for (i = 0; i < data_len; i++)
-//		{
-//			unsigned int k;
-//			crc ^= data8[i];
-//			for (k = 8; k > 0; k--)
-//				crc = (crc & 1u) ? (crc >> 1) ^ 0x8408 : crc >> 1;
-//		}
-//		return crc ^ 0xffff;
-//	}
 
-#else
-
-    uint16_t compute_crc(const void *data, const unsigned int data_len)
-    {
-        unsigned int   i;
-        const uint8_t *data8 = (const uint8_t *)data;
-        uint16_t       crc = 0;
-
-        for (i = 0; i < data_len; i++)
-        {
-            uint8_t mask;
-
-            // bit reverse each data byte
-            const uint8_t bits = bit_reverse_8(*data8++);
-
-            for (mask = 0x0080; mask != 0; mask >>= 1)
-            {
-                uint16_t msb = crc & 0x8000;
-                if (bits & mask)
-                    msb ^= 0x8000;
-                crc <<= 1;
-                if (msb)
-                    crc ^= 0x1021;
-            }
-        }
-
-        // bit reverse and invert the final CRC
-        return bit_reverse_16(crc) ^ 0xffff;
-    }
-
-#endif
 
 void error_correction(void *data) {    // can correct up to 3 or 4 corrupted bits (I think)
 
