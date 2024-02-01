@@ -13,6 +13,9 @@
  *     See the License for the specific language governing permissions and
  *     limitations under the License.
  */
+#ifdef ENABLE_DOPPLER
+#include "bsp/dp32g030/rtc.h"
+#endif
 #include "app/spectrum.h"
 #include "am_fix.h"
 #include "audio.h"
@@ -43,8 +46,6 @@ const uint16_t RSSI_MAX_VALUE = 65535;
 static uint32_t initialFreq;
 static char String[32];
 #ifdef ENABLE_DOPPLER
-#include "bsp/dp32g030/rtc.h"
-
 bool DOPPLER_MODE = 0;
 #endif
 bool isInitialized = false;
@@ -1402,6 +1403,7 @@ void APP_RunSpectrum() {
         Tick();
     }
 }
+#ifdef ENABLE_DOPPLER
 void RTCHandler(void)
 {
     DOPPLER_CNT++;
@@ -1409,5 +1411,5 @@ if(DOPPLER_CNT==200)DOPPLER_CNT=0;
     RTC_Get();
     RTC_IF|=(1<<5);//清除中断标志位
 }
-
+#endif
 
