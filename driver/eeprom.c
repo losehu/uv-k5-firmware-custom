@@ -21,7 +21,6 @@
 #include "driver/i2c.h"
 #include "driver/system.h"
 
-uint8_t WRITE_SIZE = 0;
 
 void EEPROM_ReadBuffer(uint32_t Address, void *pBuffer, uint8_t Size) {
     if (Size == 0)return;
@@ -29,13 +28,13 @@ void EEPROM_ReadBuffer(uint32_t Address, void *pBuffer, uint8_t Size) {
     I2C_Start();
 
     uint8_t IIC_ADD = 0xA0 | ((Address / 0x10000) << 1);
-#if ENABLE_EEPROM_TYPE==1
+#if ENABLE_EEPROM_TYPE == 1
     if (Address >= 0x40000)
         {IIC_ADD = 0xA8 | (((Address - 0x40000) / 0x10000) << 1);
 Address-=0x40000;
 
         }
-#elif ENABLE_EEPROM_4M==2
+#elif ENABLE_EEPROM_4M == 2
     if (Address >= 0x20000)
         {IIC_ADD = 0xA4 | (((Address - 0x20000) / 0x10000) << 1);
 Address-=0x20000;
@@ -61,20 +60,19 @@ void EEPROM_WriteBuffer(uint32_t Address, const void *pBuffer, uint8_t WRITE_SIZ
     uint8_t buffer[128];
     EEPROM_ReadBuffer(Address, buffer, WRITE_SIZE);
     if (memcmp(pBuffer, buffer, WRITE_SIZE) != 0) {
-        uint8_t IIC_ADD=0xA0 | ((Address / 0x10000) << 1);
+        uint8_t IIC_ADD = 0xA0 | ((Address / 0x10000) << 1);
         I2C_Start();
-#if ENABLE_EEPROM_TYPE==1
+#if ENABLE_EEPROM_TYPE == 1
         if(Address>=0x40000)
             IIC_ADD = 0xA8 | (((Address - 0x40000) / 0x10000) << 1);
-#elif ENABLE_EEPROM_TYPE==2
+#elif ENABLE_EEPROM_TYPE == 2
         if(Address>=0x20000)
             IIC_ADD = 0xA4 | (((Address - 0x20000) / 0x10000) << 1);
-
 #endif
         I2C_Write(IIC_ADD);
 
         I2C_Write((Address >> 8) & 0xFF);
-        I2C_Write((Address ) & 0xFF);
+        I2C_Write((Address) & 0xFF);
         I2C_WriteBuffer(pBuffer, WRITE_SIZE);
         I2C_Stop();
     }
@@ -83,3 +81,15 @@ void EEPROM_WriteBuffer(uint32_t Address, const void *pBuffer, uint8_t WRITE_SIZ
 }
 
 
+void EEPROM_Buffer_MORE(uint32_t Address, void *pBuffer, uint16_t WRITE_SIZE, uint8_t TYPE) {
+    uint16_t SUM_WRITE = 0;
+    while (WRITE_SIZE) {
+        uint16_t NOW_WRITE_SIZE = (WRITE_SIZE < 128 ? WRITE_SIZE : 128) - (Address & 0x7f);
+        WRITE_SIZE -= NOW_WRITE_SIZE;
+        if (TYPE) EEPROM_WriteBuffer(Address, pBuffer + SUM_WRITE, NOW_WRITE_SIZE);
+        else EEPROM_ReadBuffer(Address, pBuffer + SUM_WRITE, NOW_WRITE_SIZE);
+
+        SUM_WRITE += NOW_WRITE_SIZE;
+        Address += NOW_WRITE_SIZE;
+    }
+}

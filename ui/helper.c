@@ -419,3 +419,17 @@ void UI_DisplayClear() {
         x += 4;
     }
 }
+void show_uint32(uint32_t num,uint8_t  line)
+{
+    char str[6] = {0};
+
+    str[0] = (num / 100000) + '0';
+    str[1] = (num / 10000) + '0';
+    str[2] = (num / 1000) % 10 + '0';
+    str[3] = (num / 100) % 10 + '0';
+    str[4] = (num / 10) % 10 + '0';
+    str[5] = (num % 10) + '0';
+    str[6] = '\0'; // 添加字符串结束符
+    UI_PrintStringSmall(str, 0, 127, line);
+    ST7565_BlitFullScreen();
+}

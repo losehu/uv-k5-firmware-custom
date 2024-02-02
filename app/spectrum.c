@@ -439,9 +439,14 @@ static void UpdateRssiTriggerLevel(bool inc) {
 }
 
 static void UpdateDBMax(bool inc) {
+    uint8_t tmp=12;
+#ifdef ENBALE_DOPPLER
+   if(DOPPLER_MODE) tmp=10;
+#endif
+
     if (inc && settings.dbMax < 10) {
         settings.dbMax += 1;
-    } else if (!inc && settings.dbMax > settings.dbMin) {
+    } else if (!inc && settings.dbMax > tmp+settings.dbMin) {
         settings.dbMax -= 1;
     } else {
         return;
@@ -1137,7 +1142,7 @@ static void RenderStill() {
         GUI_DisplaySmallest(String, 90, DATA_LINE + 15, false, true);
         memset(&gFrameBuffer[6][80], 0b01000000, 45);
         //TODO:进度条更新 80~80+45-1
-        int process = 45*200/200;
+        int process = 45*DOPPLER_CNT/200;
         gFrameBuffer[6][ 79] = 0b00111110;
         gFrameBuffer[6][45 + 80] = 0b00111110;
         for (int i = 0; i < 45; i++) {
@@ -1367,9 +1372,10 @@ void APP_RunSpectrum() {
   }
   else
 #endif
-
-    currentFreq = initialFreq = gTxVfo->pRX->Frequency -
-                                ((GetStepsCount() / 2) * GetScanStep());
+    {
+        currentFreq = initialFreq = gTxVfo->pRX->Frequency -
+                                    ((GetStepsCount() / 2) * GetScanStep());
+    }
     BackupRegisters();
 
     isListening = true; // to turn off RX later
@@ -1396,6 +1402,7 @@ void APP_RunSpectrum() {
         //TODO:设置默认卫星频率
         SetF(43850000);
         currentFreq = 43847711;
+        settings.dbMin = -130;
     }
 #endif
     while (isInitialized) {
@@ -1405,7 +1412,7 @@ void APP_RunSpectrum() {
 #ifdef ENABLE_DOPPLER
 void RTCHandler(void)
 {
-    DOPPLER_CNT++;
+    DOPPLER_CNT+=4;
 if(DOPPLER_CNT==200)DOPPLER_CNT=0;
     RTC_Get();
     RTC_IF|=(1<<5);//清除中断标志位

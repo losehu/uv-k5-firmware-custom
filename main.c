@@ -13,6 +13,7 @@
  *     See the License for the specific language governing permissions and
  *     limitations under the License.
  */
+#include "app/doppler.h"
 #include "driver/uart.h"
 #include "string.h"
 #include <stdio.h>
@@ -81,23 +82,9 @@ void _putchar(__attribute__((unused)) char c) {
 
 }
 
-#ifdef ENABLE_TIMER
-void show_uint32(uint32_t num,uint8_t  line)
-{
-    char str[6] = {0};
 
-    str[0] = (num / 100000) + '0';
-    str[1] = (num / 10000) + '0';
-    str[2] = (num / 1000) % 10 + '0';
-    str[3] = (num / 100) % 10 + '0';
-    str[4] = (num / 10) % 10 + '0';
-    str[5] = (num % 10) + '0';
-    str[6] = '\0'; // 添加字符串结束符
-    UI_PrintStringSmall(str, 0, 127, line);
-    ST7565_BlitFullScreen();
-}
 
-#endif
+
 
 void Main(void) {
     //BOOT_Mode_t  BootMode;
@@ -261,8 +248,7 @@ void Main(void) {
 #ifdef ENABLE_NOAA
     RADIO_ConfigureNOAA();
 #endif
-
-
+    menuSatelliteScreen();
     while (1) {
 
         APP_Update();
