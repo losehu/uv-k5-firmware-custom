@@ -5303,20 +5303,20 @@ CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/rtc.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/rtc.c.s"
 	C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\driver\rtc.c -o CMakeFiles\uv_k5_firmware_custom_0_17.dir\driver\rtc.c.s
 
-CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/doppler.c.obj: CMakeFiles/uv_k5_firmware_custom_0_17.dir/flags.make
-CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/doppler.c.obj: CMakeFiles/uv_k5_firmware_custom_0_17.dir/includes_C.rsp
-CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/doppler.c.obj: C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/ui/doppler.c
-CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/doppler.c.obj: CMakeFiles/uv_k5_firmware_custom_0_17.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_350) "Building C object CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/doppler.c.obj"
-	C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/doppler.c.obj -MF CMakeFiles\uv_k5_firmware_custom_0_17.dir\ui\doppler.c.obj.d -o CMakeFiles\uv_k5_firmware_custom_0_17.dir\ui\doppler.c.obj -c C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\ui\doppler.c
+CMakeFiles/uv_k5_firmware_custom_0_17.dir/app/doppler.c.obj: CMakeFiles/uv_k5_firmware_custom_0_17.dir/flags.make
+CMakeFiles/uv_k5_firmware_custom_0_17.dir/app/doppler.c.obj: CMakeFiles/uv_k5_firmware_custom_0_17.dir/includes_C.rsp
+CMakeFiles/uv_k5_firmware_custom_0_17.dir/app/doppler.c.obj: C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/app/doppler.c
+CMakeFiles/uv_k5_firmware_custom_0_17.dir/app/doppler.c.obj: CMakeFiles/uv_k5_firmware_custom_0_17.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_350) "Building C object CMakeFiles/uv_k5_firmware_custom_0_17.dir/app/doppler.c.obj"
+	C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/uv_k5_firmware_custom_0_17.dir/app/doppler.c.obj -MF CMakeFiles\uv_k5_firmware_custom_0_17.dir\app\doppler.c.obj.d -o CMakeFiles\uv_k5_firmware_custom_0_17.dir\app\doppler.c.obj -c C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\app\doppler.c
 
-CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/doppler.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/doppler.c.i"
-	C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\ui\doppler.c > CMakeFiles\uv_k5_firmware_custom_0_17.dir\ui\doppler.c.i
+CMakeFiles/uv_k5_firmware_custom_0_17.dir/app/doppler.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/uv_k5_firmware_custom_0_17.dir/app/doppler.c.i"
+	C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\app\doppler.c > CMakeFiles\uv_k5_firmware_custom_0_17.dir\app\doppler.c.i
 
-CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/doppler.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/doppler.c.s"
-	C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\ui\doppler.c -o CMakeFiles\uv_k5_firmware_custom_0_17.dir\ui\doppler.c.s
+CMakeFiles/uv_k5_firmware_custom_0_17.dir/app/doppler.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/uv_k5_firmware_custom_0_17.dir/app/doppler.c.s"
+	C:\Qt\Qt5.14.2\Tools\mingw730_64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\app\doppler.c -o CMakeFiles\uv_k5_firmware_custom_0_17.dir\app\doppler.c.s
 
 # Object files for target uv_k5_firmware_custom_0_17
 uv_k5_firmware_custom_0_17_OBJECTS = \
@@ -5669,7 +5669,7 @@ uv_k5_firmware_custom_0_17_OBJECTS = \
 "CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/messenger.c.obj" \
 "CMakeFiles/uv_k5_firmware_custom_0_17.dir/app/messenger.c.obj" \
 "CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/rtc.c.obj" \
-"CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/doppler.c.obj"
+"CMakeFiles/uv_k5_firmware_custom_0_17.dir/app/doppler.c.obj"
 
 # External object files for target uv_k5_firmware_custom_0_17
 uv_k5_firmware_custom_0_17_EXTERNAL_OBJECTS =
@@ -6023,7 +6023,7 @@ uv_k5_firmware_custom_0_17.exe: CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver
 uv_k5_firmware_custom_0_17.exe: CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/messenger.c.obj
 uv_k5_firmware_custom_0_17.exe: CMakeFiles/uv_k5_firmware_custom_0_17.dir/app/messenger.c.obj
 uv_k5_firmware_custom_0_17.exe: CMakeFiles/uv_k5_firmware_custom_0_17.dir/driver/rtc.c.obj
-uv_k5_firmware_custom_0_17.exe: CMakeFiles/uv_k5_firmware_custom_0_17.dir/ui/doppler.c.obj
+uv_k5_firmware_custom_0_17.exe: CMakeFiles/uv_k5_firmware_custom_0_17.dir/app/doppler.c.obj
 uv_k5_firmware_custom_0_17.exe: CMakeFiles/uv_k5_firmware_custom_0_17.dir/build.make
 uv_k5_firmware_custom_0_17.exe: CMakeFiles/uv_k5_firmware_custom_0_17.dir/linkLibs.rsp
 uv_k5_firmware_custom_0_17.exe: CMakeFiles/uv_k5_firmware_custom_0_17.dir/objects1
