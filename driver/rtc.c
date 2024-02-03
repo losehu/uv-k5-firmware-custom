@@ -14,8 +14,7 @@ void RTC_INIT() {
 
     NVIC_SetPriority(Interrupt2_IRQn, 0);
 
-    RTC_IF |= (1 << 5);//清除中断标志位
-    RTC_IE |= (1 << 5);//使能半秒中断
+
 
     RTC_CFG |= (1 << 2)//打开设置时间功能
                | (1 << 0);//RTC使能

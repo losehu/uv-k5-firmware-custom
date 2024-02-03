@@ -107,6 +107,8 @@ void Main(void) {
 
     BOARD_Init();
 
+
+
     boot_counter_10ms = 250;   // 2.5 sec
 #ifdef ENABLE_UART
     UART_Init();
@@ -135,6 +137,7 @@ void Main(void) {
 #endif
 #ifdef ENABLE_DOPPLER
     RTC_INIT();
+    INIT_DOPPLER_DATA();
 #endif
 
     RADIO_ConfigureChannel(0, VFO_CONFIGURE_RELOAD);
@@ -248,7 +251,7 @@ void Main(void) {
 #ifdef ENABLE_NOAA
     RADIO_ConfigureNOAA();
 #endif
-    menuSatelliteScreen();
+
     while (1) {
 
         APP_Update();

@@ -16,11 +16,13 @@
 #ifdef ENABLE_DOPPLER
 #include "bsp/dp32g030/rtc.h"
 #endif
+
 #include "app/spectrum.h"
 #include "am_fix.h"
 #include "audio.h"
 #include "misc.h"
-uint32_t DOPPLER_CNT=0;
+
+uint32_t DOPPLER_CNT = 0;
 
 //#define ENABLE_DOPPLER
 #ifdef ENABLE_SCAN_RANGES
@@ -439,14 +441,14 @@ static void UpdateRssiTriggerLevel(bool inc) {
 }
 
 static void UpdateDBMax(bool inc) {
-    uint8_t tmp=12;
+    uint8_t tmp = 12;
 #ifdef ENBALE_DOPPLER
-   if(DOPPLER_MODE) tmp=10;
+    if(DOPPLER_MODE) tmp=10;
 #endif
 
     if (inc && settings.dbMax < 10) {
         settings.dbMax += 1;
-    } else if (!inc && settings.dbMax > tmp+settings.dbMin) {
+    } else if (!inc && settings.dbMax > tmp + settings.dbMin) {
         settings.dbMax -= 1;
     } else {
         return;
@@ -689,7 +691,7 @@ void DrawStatus(bool refresh) {
         GUI_DisplaySmallest(String, 42 + 53 - (settings.listenBw == 0 ? 8 : 0), 1, true, true);
     } else {
 #endif
-        GUI_DisplaySmallest(String, 0, 1, true, true);
+    GUI_DisplaySmallest(String, 0, 1, true, true);
 #ifdef ENABLE_DOPPLER
     }
 #endif
@@ -730,14 +732,14 @@ static void DrawF(uint32_t f) {
 
     } else {
 #endif
-        sprintf(String, "%u.%05u", f / 100000, f % 100000);
-        UI_PrintStringSmall(String, 8, 127, 0);
+    sprintf(String, "%u.%05u", f / 100000, f % 100000);
+    UI_PrintStringSmall(String, 8, 127, 0);
 
 
-        sprintf(String, "%3s", gModulationStr[settings.modulationType]);
-        GUI_DisplaySmallest(String, 116, 1, false, true);
-        sprintf(String, "%s", bwOptions[settings.listenBw]);
-        GUI_DisplaySmallest(String, 108, 7, false, true);
+    sprintf(String, "%3s", gModulationStr[settings.modulationType]);
+    GUI_DisplaySmallest(String, 116, 1, false, true);
+    sprintf(String, "%s", bwOptions[settings.listenBw]);
+    GUI_DisplaySmallest(String, 108, 7, false, true);
 #ifdef ENABLE_DOPPLER
     }
 #endif
@@ -954,7 +956,7 @@ void OnKeyDownStill(KEY_Code_t key) {
                 //TODO:切换卫星
             } else
 #endif
-                UpdateCurrentFreqStill(true);
+            UpdateCurrentFreqStill(true);
             break;
         case KEY_DOWN:
 
@@ -967,7 +969,7 @@ void OnKeyDownStill(KEY_Code_t key) {
                 //TODO:切换卫星
             } else
 #endif
-                UpdateCurrentFreqStill(false);
+            UpdateCurrentFreqStill(false);
 
             break;
         case KEY_STAR:
@@ -984,7 +986,7 @@ void OnKeyDownStill(KEY_Code_t key) {
 #endif
 
 
-                FreqInput();
+            FreqInput();
 
 
             break;
@@ -1356,6 +1358,12 @@ static void Tick() {
 }
 
 void APP_RunSpectrum() {
+#ifdef ENABLE_DOPPLER
+    if(DOPPLER_MODE){
+    RTC_IF |= (1 << 0);//清除中断标志位
+    RTC_IE |= (1 << 0);//使能秒中断
+    }
+#endif
     // TX here coz it always? set to active VFO
     vfo = gEeprom.TX_VFO;
     // set the current frequency in the middle of the display
@@ -1408,7 +1416,14 @@ void APP_RunSpectrum() {
     while (isInitialized) {
         Tick();
     }
+#ifdef ENABLE_DOPPLER
+    if(DOPPLER_MODE){
+    RTC_IE&=0xfffffffe;//关闭秒中断
+    }
+#endif
+
 }
+
 #ifdef ENABLE_DOPPLER
 void RTCHandler(void)
 {
