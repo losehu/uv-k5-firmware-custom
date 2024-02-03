@@ -14,7 +14,10 @@
  *     limitations under the License.
  */
 #ifdef ENABLE_DOPPLER
+
+#include "app/doppler.h"
 #include "bsp/dp32g030/rtc.h"
+
 #endif
 
 #include "app/spectrum.h"
@@ -44,7 +47,7 @@ struct FrequencyBandInfo {
 #define F_MAX frequencyBandTable[BAND_N_ELEM - 1].upper
 
 const uint16_t RSSI_MAX_VALUE = 65535;
-
+int32_t time_diff, time_diff1;
 static uint32_t initialFreq;
 static char String[32];
 #ifdef ENABLE_DOPPLER
@@ -681,7 +684,7 @@ void DrawStatus(bool refresh) {
     if (DOPPLER_MODE) {
         //UI绘制状态栏
         memset(gStatusLine, 0x7f, 39);
-        GUI_DisplaySmallest("ISS WEIX1", 2, 1, true, false);
+        GUI_DisplaySmallest(satellite.name, 2, 1, true, false);
         GUI_DisplaySmallest(String, 42 + (settings.dbMax > -100 ? 4 : 0), 1, true, true);
 
         sprintf(String, "%3s", gModulationStr[settings.modulationType]);
@@ -691,7 +694,7 @@ void DrawStatus(bool refresh) {
         GUI_DisplaySmallest(String, 42 + 53 - (settings.listenBw == 0 ? 8 : 0), 1, true, true);
     } else {
 #endif
-    GUI_DisplaySmallest(String, 0, 1, true, true);
+        GUI_DisplaySmallest(String, 0, 1, true, true);
 #ifdef ENABLE_DOPPLER
     }
 #endif
@@ -732,14 +735,14 @@ static void DrawF(uint32_t f) {
 
     } else {
 #endif
-    sprintf(String, "%u.%05u", f / 100000, f % 100000);
-    UI_PrintStringSmall(String, 8, 127, 0);
+        sprintf(String, "%u.%05u", f / 100000, f % 100000);
+        UI_PrintStringSmall(String, 8, 127, 0);
 
 
-    sprintf(String, "%3s", gModulationStr[settings.modulationType]);
-    GUI_DisplaySmallest(String, 116, 1, false, true);
-    sprintf(String, "%s", bwOptions[settings.listenBw]);
-    GUI_DisplaySmallest(String, 108, 7, false, true);
+        sprintf(String, "%3s", gModulationStr[settings.modulationType]);
+        GUI_DisplaySmallest(String, 116, 1, false, true);
+        sprintf(String, "%s", bwOptions[settings.listenBw]);
+        GUI_DisplaySmallest(String, 108, 7, false, true);
 #ifdef ENABLE_DOPPLER
     }
 #endif
@@ -956,7 +959,7 @@ void OnKeyDownStill(KEY_Code_t key) {
                 //TODO:切换卫星
             } else
 #endif
-            UpdateCurrentFreqStill(true);
+                UpdateCurrentFreqStill(true);
             break;
         case KEY_DOWN:
 
@@ -969,7 +972,7 @@ void OnKeyDownStill(KEY_Code_t key) {
                 //TODO:切换卫星
             } else
 #endif
-            UpdateCurrentFreqStill(false);
+                UpdateCurrentFreqStill(false);
 
             break;
         case KEY_STAR:
@@ -986,7 +989,7 @@ void OnKeyDownStill(KEY_Code_t key) {
 #endif
 
 
-            FreqInput();
+                FreqInput();
 
 
             break;
@@ -1106,7 +1109,6 @@ static void RenderStill() {
         uint8_t x = Rssi2PX(settings.rssiTriggerLevel, 0, P_WIDTH);
         gFrameBuffer[2][METER_PAD_LEFT + x] = 0b11111111;
     }
-
     //增益参数
     const uint8_t PAD_LEFT = 4;
     const uint8_t CELL_WIDTH = 30;
@@ -1114,10 +1116,10 @@ static void RenderStill() {
     uint8_t row = 4;
     uint8_t DATA_LINE;
     for (int i = 0, idx = 1; idx <= 4; ++i, ++idx) {
-        if (idx == 5) {
-            row += 2;
-            i = 0;
-        }
+//        if (idx == 5) {
+//            row += 2;
+//            i = 0;
+//        }
         offset = PAD_LEFT + i * CELL_WIDTH;
         if (menuState == idx) {
             for (int j = 0; j < CELL_WIDTH; ++j) {
@@ -1140,34 +1142,49 @@ static void RenderStill() {
 
     if (DOPPLER_MODE) {
         //计数时间
-        sprintf(String, "%4d sec", DOPPLER_CNT);
+        int process = 0;
+        if (time_diff >= 0)//还没来卫星
+        {
+            if (time_diff > 1000)//还早
+            {
+                strcpy(String, "Long");
+            } else//1000s以内
+            {
+                sprintf(String, "%4d sec", time_diff);
+                process = time_diff * 45 / 1000;
+            }
+        } else { //已经来了
+            //现在时间-卫星结束时间
+            if (time_diff1 >= 0)//已经过去了
+            {
+                strcpy(String, "Passed");
+            } else {
+                sprintf(String, "%4d sec", satellite.sum_time + time_diff);
+                process = (satellite.sum_time + time_diff) * 45 / satellite.sum_time;
+            }
+        }
         GUI_DisplaySmallest(String, 90, DATA_LINE + 15, false, true);
         memset(&gFrameBuffer[6][80], 0b01000000, 45);
         //TODO:进度条更新 80~80+45-1
-        int process = 45*DOPPLER_CNT/200;
-        gFrameBuffer[6][ 79] = 0b00111110;
+        gFrameBuffer[6][79] = 0b00111110;
         gFrameBuffer[6][45 + 80] = 0b00111110;
         for (int i = 0; i < 45; i++) {
             if (i < process)
                 gFrameBuffer[6][i + 80] = 0b00111110;
             else
                 gFrameBuffer[6][i + 80] = 0b00100010;
-
         }
         //TODO:绘制上行频率
         sprintf(String, "UPLink:%4d.%5d", currentFreq / 100000, currentFreq % 100000);
         GUI_DisplaySmallest(String, 0, DATA_LINE + 15, false, true);
-
-        sprintf(String, "20%02d-%02d-%02d %02d:%02d:%02d",time[0],time[1],time[2],time[3],time[4],time[5] );
+        sprintf(String, "20%02d-%02d-%02d %02d:%02d:%02d", time[0], time[1], time[2], time[3], time[4], time[5]);
         GUI_DisplaySmallest(String, 0, DATA_LINE + 23, false, true);
     }
 #endif
-
 }
 
 static void Render() {
     UI_DisplayClear();
-
     switch (currentState) {
         case SPECTRUM:
             RenderSpectrum();
@@ -1179,7 +1196,6 @@ static void Render() {
             RenderStill();
             break;
     }
-
     ST7565_BlitFullScreen();
 }
 
@@ -1359,9 +1375,9 @@ static void Tick() {
 
 void APP_RunSpectrum() {
 #ifdef ENABLE_DOPPLER
-    if(DOPPLER_MODE){
-    RTC_IF |= (1 << 0);//清除中断标志位
-    RTC_IE |= (1 << 0);//使能秒中断
+    if (DOPPLER_MODE) {
+        RTC_IF |= (1 << 0);//清除中断标志位
+        RTC_IE |= (1 << 0);//使能秒中断
     }
 #endif
     // TX here coz it always? set to active VFO
@@ -1417,20 +1433,23 @@ void APP_RunSpectrum() {
         Tick();
     }
 #ifdef ENABLE_DOPPLER
-    if(DOPPLER_MODE){
-    RTC_IE&=0xfffffffe;//关闭秒中断
+    if (DOPPLER_MODE) {
+        RTC_IE &= 0xfffffffe;//关闭秒中断
     }
 #endif
 
 }
 
 #ifdef ENABLE_DOPPLER
-void RTCHandler(void)
-{
-    DOPPLER_CNT+=4;
-if(DOPPLER_CNT==200)DOPPLER_CNT=0;
+
+void RTCHandler(void) {
+    DOPPLER_CNT += 4;
+    if (DOPPLER_CNT == 200)DOPPLER_CNT = 0;
     RTC_Get();
-    RTC_IF|=(1<<5);//清除中断标志位
+    time_diff = TIME_DIFF(satellite.start_time, time);//卫星开始时间-现在时间
+    time_diff1 = TIME_DIFF(time, satellite.end_time);
+    RTC_IF |= (1 << 5);//清除中断标志位
 }
+
 #endif
 

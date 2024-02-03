@@ -9,8 +9,10 @@ struct satellite_t
     uint16_t sum_time;
     uint16_t SEND_CTCSS;
     uint16_t RECV_CTCSS;
+
 };
 void INIT_DOPPLER_DATA();
+int32_t TIME_DIFF(uint8_t time1[6],uint8_t time2[6]);
 
 extern struct satellite_t satellite;
 #endif

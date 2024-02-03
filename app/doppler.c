@@ -37,3 +37,38 @@ void INIT_DOPPLER_DATA()
     memset(&satellite, 0, sizeof(satellite));
     EEPROM_ReadBuffer(0x02BA0,&satellite,sizeof(satellite) );
 }
+// 判断是否是闰年
+int is_leap_year(int year) {
+    return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+}
+
+// 计算某个月的天数
+int days_in_month(int year, int month) {
+    int days[] = {31, 28 + is_leap_year(year), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    return days[month - 1];
+}
+
+
+int32_t UNIX_TIME(uint8_t time2[2]) {
+    // 1970 年 1 月 1 日的年、月、日、时、分、秒
+    int32_t seconds = 0;
+    // 计算年份之间的秒数差
+    for (int year = 0; year < time2[0]; year++) {
+        seconds += (is_leap_year(year) ? 366 : 365) * 24 * 3600;
+    }
+    // 计算当年之内的秒数差
+    for (int month =1; month < time2[1]; month++) {
+        seconds += days_in_month(time2[1], month) * 24 * 3600;
+    }
+    // 计算当月之内的秒数差
+    seconds += time2[2]  * 24 * 3600;
+    seconds += time2[3]  * 3600;
+    seconds += time2[4]  * 60;
+    seconds += time2[5] ;
+    return seconds;
+}
+
+int32_t TIME_DIFF(uint8_t time1[6],uint8_t time2[6])
+{
+    return UNIX_TIME(time1)-UNIX_TIME(time2);
+}
