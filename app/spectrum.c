@@ -1229,80 +1229,81 @@ bool HandleUserInput() {
     kbd.current = GetKey();
 
 #ifdef ENABLE_DOPPLER
-if(currentState == STILL && DOPPLER_MODE ) {
-    if ( kbd.current == KEY_PTT && kbd.current != kbd.prev) {
-        //TODO:开始发射、发射频率
-        TX_ON = true;
-        UpdateStill();
+    if(currentState == STILL && DOPPLER_MODE ) {
+        if ( kbd.current == KEY_PTT && kbd.current != kbd.prev) {
+            //TODO:开始发射、发射频率
+            TX_ON = true;
+            UpdateStill();
 
-        BK4819_DisableDTMF();
-
-
-
-        uint32_t TX_FREQ=14550000;
-
-        uint8_t read_tmp[2];
-
-        AUDIO_AudioPathOff();
+            BK4819_DisableDTMF();
 
 
-        BK4819_ToggleGpioOut(BK4819_GPIO0_PIN28_RX_ENABLE, false);
+
+            uint32_t TX_FREQ=14550000;
+
+            uint8_t read_tmp[2];
+
+            AUDIO_AudioPathOff();
+
+
+            BK4819_ToggleGpioOut(BK4819_GPIO0_PIN28_RX_ENABLE, false);
 
 
 #ifdef ENABLE_AM_FIX
-				BK4819_SetFilterBandwidth(BK4819_FILTER_BW_WIDE, true);
+            BK4819_SetFilterBandwidth(BK4819_FILTER_BW_WIDE, true);
 #else
-                BK4819_SetFilterBandwidth(BK4819_FILTER_BW_WIDE, false);
+            BK4819_SetFilterBandwidth(BK4819_FILTER_BW_WIDE, false);
 #endif
 
 
-        BK4819_SetFrequency(TX_FREQ);
+            BK4819_SetFrequency(TX_FREQ);
 
-        // TX compressor
-        BK4819_SetCompander( 0);
+            // TX compressor
+            BK4819_SetCompander( 0);
 
-        BK4819_PrepareTransmit();
+            BK4819_PrepareTransmit();
 
-        SYSTEM_DelayMs(10);
+            SYSTEM_DelayMs(10);
 
-        BK4819_PickRXFilterPathBasedOnFrequency(TX_FREQ);
+            BK4819_PickRXFilterPathBasedOnFrequency(TX_FREQ);
 
-        BK4819_ToggleGpioOut(BK4819_GPIO1_PIN29_PA_ENABLE, true);
+            BK4819_ToggleGpioOut(BK4819_GPIO1_PIN29_PA_ENABLE, true);
 
-        SYSTEM_DelayMs(5);
-        FREQUENCY_Band_t  Band = FREQUENCY_GetBand(14550000);
+            SYSTEM_DelayMs(5);
+            FREQUENCY_Band_t  Band = FREQUENCY_GetBand(TX_FREQ);
 
-        uint8_t Txp[3];
-        EEPROM_ReadBuffer(0x1ED0 + (Band * 16) + (OUTPUT_POWER_HIGH * 3), Txp, 3);
-        uint8_t TXP_CalculatedSetting = FREQUENCY_CalculateOutputPower(
-                Txp[0],
-                Txp[1],
-                Txp[2],
-                frequencyBandTable[Band].lower,
-                (frequencyBandTable[Band].lower + frequencyBandTable[Band].upper) / 2,
-                frequencyBandTable[Band].upper,
-                TX_FREQ);
+            uint8_t Txp[3];
+            EEPROM_ReadBuffer(0x1ED0 + (Band * 16) + (OUTPUT_POWER_HIGH * 3), Txp, 3);
+            uint8_t TXP_CalculatedSetting = FREQUENCY_CalculateOutputPower(
+                    Txp[0],
+                    Txp[1],
+                    Txp[2],
+                    frequencyBandTable[Band].lower,
+                    (frequencyBandTable[Band].lower + frequencyBandTable[Band].upper) / 2,
+                    frequencyBandTable[Band].upper,
+                    TX_FREQ);
 
 
-        BK4819_SetupPowerAmplifier(TXP_CalculatedSetting, TX_FREQ);
+            BK4819_SetupPowerAmplifier(TXP_CalculatedSetting, TX_FREQ);
+//RADIO_SetTxParameters
+            SYSTEM_DelayMs(10);
+            //TODO:亚音
+//        BK4819_ExitSubAu();
+            BK4819_SetCTCSSFrequency(885);
 
-        SYSTEM_DelayMs(10);
-        //TODO:亚音
-        BK4819_SetCTCSSFrequency(885);
-        BK4819_ToggleGpioOut(BK4819_GPIO6_PIN2_GREEN, false);
-        BK4819_ToggleGpioOut(BK4819_GPIO5_PIN1_RED, true);
-        BK4819_DisableScramble();
-    } else if ( kbd.current == KEY_INVALID && kbd.prev == KEY_PTT) {
-        //TODO:停止发射
+            BK4819_ToggleGpioOut(BK4819_GPIO6_PIN2_GREEN, false);
+            BK4819_ToggleGpioOut(BK4819_GPIO5_PIN1_RED, true);
+            BK4819_DisableScramble();
+        } else if ( kbd.current == KEY_INVALID && kbd.prev == KEY_PTT) {
+            //TODO:停止发射
 
-        RADIO_SetupRegisters(false);
-        BK4819_ToggleGpioOut(BK4819_GPIO6_PIN2_GREEN, false);
-        BK4819_ToggleGpioOut(BK4819_GPIO5_PIN1_RED, false);
-        TX_ON = false;
-        UpdateStill();
+            BK4819_ToggleGpioOut(BK4819_GPIO6_PIN2_GREEN, false);
+            BK4819_ToggleGpioOut(BK4819_GPIO5_PIN1_RED, false);
+            TX_ON = false;
+            UpdateStill();
 
+        }
     }
-}
 #endif
     if (kbd.current != KEY_INVALID && kbd.current == kbd.prev) {
         if (kbd.counter < 16)
@@ -1526,8 +1527,16 @@ void APP_RunSpectrum() {
     }
 #endif
     while (isInitialized) {
-
+//#ifdef ENABLE_DOPPLER
+//
+//        if (DOPPLER_MODE) {
+//            satellite_data.DownLink=43850000;
+//            SetF(satellite_data.DownLink);
+//            currentFreq = satellite_data.DownLink;
+//        }
+//#endif
         Tick();
+
     }
 
 }
