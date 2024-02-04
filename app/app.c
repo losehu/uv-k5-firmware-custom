@@ -1100,11 +1100,12 @@ void APP_TimeSlice10ms(void) {
         AM_fix_10ms(gEeprom.RX_VFO);
     }
 #endif
-
 #ifdef ENABLE_UART
+
     if (UART_IsCommandAvailable()) {
 
         __disable_irq();
+
         UART_HandleCommand();
         __enable_irq();
     }

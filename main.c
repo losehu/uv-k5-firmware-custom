@@ -30,6 +30,7 @@
 #include "app/uart.h"
 #include "string.h"
 #include "app/messenger.h"
+
 #ifdef ENABLE_DOPPLER
 #include "app/doppler.h"
 #endif
@@ -63,6 +64,7 @@
 #ifdef ENABLE_UART
 #include "driver/uart.h"
 #endif
+
 #include "app/spectrum.h"
 
 #include "helper/battery.h"
@@ -81,9 +83,6 @@ void _putchar(__attribute__((unused)) char c) {
 #endif
 
 }
-
-
-
 
 
 void Main(void) {
@@ -106,7 +105,6 @@ void Main(void) {
     SYSTICK_Init();
 
     BOARD_Init();
-
 
 
     boot_counter_10ms = 250;   // 2.5 sec
@@ -251,7 +249,17 @@ void Main(void) {
 #ifdef ENABLE_NOAA
     RADIO_ConfigureNOAA();
 #endif
-
+//    uint8_t tmp[16] = {0};
+//
+//    EEPROM_WriteBuffer(0x1E200, tmp, 16);
+//    while (1) {
+//        EEPROM_ReadBuffer(0x1E200, &satellite_data, sizeof (satellite_data));
+//        show_uint32(satellite_data.UPLink,0);
+//        show_uint32(satellite_data.DownLink,1);
+//        SYSTEM_DelayMs(2000);
+//
+//
+//    }
     while (1) {
 
         APP_Update();

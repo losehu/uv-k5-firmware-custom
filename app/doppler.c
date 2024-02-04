@@ -74,14 +74,15 @@ int32_t UNIX_TIME(uint8_t time2[6]) {
 
 void READ_DATA(int32_t time_diff, int32_t time_diff1) {
     int32_t n = -time_diff;
-    if (time_diff <= 0 && time_diff1)//正在过境
+    if (time_diff <= 0 && time_diff1>=0)//正在过境
     {
 
         if ((n & 0x01) != 0)return;
         n = n >> 1;
     } else n = 0;
 
-    EEPROM_ReadBuffer(0x1E200 + (n << 3), &satellite_data, 8);
+    EEPROM_ReadBuffer(0x1E200 + (n << 3), &satellite_data, sizeof (satellite_data));
+
 //    AZ（-180~180，两位浮点，度）2B,EI（-180~180，两位浮点，度）2B,上行频率/10（正整数hz）4B、下行频率/10(正整数hz)4B、距离（两位浮点，km）3B：
 //    第1B~2B:AZ的数字部分，只有正，低位在前高位在后，
 //    低1~8位为AZ整数部分，8bit（0~180）

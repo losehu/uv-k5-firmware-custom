@@ -13,7 +13,7 @@
  *     See the License for the specific language governing permissions and
  *     limitations under the License.
  */
-//#define ENABLE_DOPPLER
+#define ENABLE_DOPPLER
 
 #ifdef ENABLE_DOPPLER
 
@@ -56,6 +56,7 @@ static char String[32];
 #ifdef ENABLE_DOPPLER
 bool DOPPLER_MODE = 0;
 #endif
+bool TX_ON=false;
 bool isInitialized = false;
 bool isListening = true;
 bool monitorMode = false;
@@ -91,7 +92,7 @@ SpectrumSettings settings = {.stepsCount = STEPS_64,
         .listenBw = BK4819_FILTER_BW_WIDE,
         .modulationType = false,
         .dbMin = -130,
-        .dbMax = -50//TODO:多普勒频谱参数分离
+        .dbMax = -50
 };
 
 uint32_t fMeasure = 0;
@@ -155,7 +156,6 @@ static void SetRegMenuValue(uint8_t st, bool add) {
     } else if (!add && v >= 0 + s.inc) {
         v -= s.inc;
     }
-    // TODO: use max value for bits count in max value, or reset by additional
     // mask in spec
     reg &= ~(s.mask << s.offset);
     BK4819_WriteRegister(s.num, reg | (v << s.offset));
@@ -981,7 +981,6 @@ void OnKeyDownStill(KEY_Code_t key) {
             }
 #ifdef ENABLE_DOPPLER
             if (!DOPPLER_MODE)
-
 #endif
                 UpdateCurrentFreqStill(false);
 
@@ -1018,17 +1017,7 @@ void OnKeyDownStill(KEY_Code_t key) {
             ToggleBacklight();
             break;
         case KEY_PTT:
-            //TODO:发射
-#ifdef ENABLE_DOPPLER
-            gFlagLastVfo = gEeprom.TX_VFO;
-            gEeprom.TX_VFO = funcShort == ACTION_OPT_SEND_CURRENT ? gFlagLastVfo : !gFlagLastVfo;
-            gFlagReconfigureVfos  = true;
-            gFlagStopTX = true;
-            GENERIC_Key_PTT(bKeyPressed);
-#endif
-            // TODO: start transmit
-            /* BK4819_ToggleGpioOut(BK4819_GPIO6_PIN2_GREEN, false);
-            BK4819_ToggleGpioOut(BK4819_GPIO5_PIN1_RED, true); */
+
             break;
         case KEY_MENU:
             if (menuState == ARRAY_SIZE(registerSpecs) - 1) {
@@ -1054,7 +1043,10 @@ void OnKeyDownStill(KEY_Code_t key) {
             }
             menuState = 0;
             break;
+
         default:
+
+
             break;
     }
 }
@@ -1062,7 +1054,16 @@ void OnKeyDownStill(KEY_Code_t key) {
 static void RenderFreqInput() {
     UI_PrintStringSmall(freqInputString, 2, 127, 0);
 }
+static void UpdateStill() {
+    Measure();
+    redrawScreen = true;
+    preventKeypress = false;
 
+    peak.rssi = scanInfo.rssi;
+    AutoTriggerLevel();
+
+    ToggleRX(!TX_ON&&(IsPeakOverLevel() || monitorMode));
+}
 static void RenderStatus(bool refresh) {
 
     memset(gStatusLine, 0, refresh ? sizeof(gStatusLine) : 115);
@@ -1078,10 +1079,12 @@ static void RenderSpectrum() {
     DrawF(peak.f);
     DrawNums();
 }
+
 #ifdef ENABLE_DOPPLER
+
 static void Draw_DOPPLER_Process(uint8_t DATA_LINE) {
     int process = 0;
-    if (time_diff >= 0)//还没来卫星
+    if (time_diff > 0)//还没来卫星
     {
         if (time_diff > 1000)//还早
         {
@@ -1111,8 +1114,9 @@ static void Draw_DOPPLER_Process(uint8_t DATA_LINE) {
             gFrameBuffer[6][i + 80] = 0b00100010;
     }
     sprintf(String, "20%02d-%02d-%02d %02d:%02d:%02d", time[0], time[1], time[2], time[3], time[4], time[5]);
-    GUI_DisplaySmallest(String, 0,  DATA_LINE + 23 , false, true);
+    GUI_DisplaySmallest(String, 0, DATA_LINE + 23, false, true);
 }
+
 #endif
 
 static void RenderStill() {
@@ -1196,7 +1200,7 @@ static void RenderStill() {
 
     if (DOPPLER_MODE) {
         Draw_DOPPLER_Process(26);
-        sprintf(String, "UPLink:%4d.%5d", satellite_data.UPLink / 100000, satellite_data.UPLink % 100000);
+        sprintf(String, "UPLink:%4d.%05d", satellite_data.UPLink / 100000, satellite_data.UPLink % 100000);
         GUI_DisplaySmallest(String, 0, DATA_LINE + 15, false, true);
 
     }
@@ -1224,17 +1228,93 @@ bool HandleUserInput() {
     kbd.prev = kbd.current;
     kbd.current = GetKey();
 
+#ifdef ENABLE_DOPPLER
+if(currentState == STILL && DOPPLER_MODE ) {
+    if ( kbd.current == KEY_PTT && kbd.current != kbd.prev) {
+        //TODO:开始发射、发射频率
+        TX_ON = true;
+        UpdateStill();
+
+        BK4819_DisableDTMF();
+
+
+
+        uint32_t TX_FREQ=14550000;
+
+        uint8_t read_tmp[2];
+
+        AUDIO_AudioPathOff();
+
+
+        BK4819_ToggleGpioOut(BK4819_GPIO0_PIN28_RX_ENABLE, false);
+
+
+#ifdef ENABLE_AM_FIX
+				BK4819_SetFilterBandwidth(BK4819_FILTER_BW_WIDE, true);
+#else
+                BK4819_SetFilterBandwidth(BK4819_FILTER_BW_WIDE, false);
+#endif
+
+
+        BK4819_SetFrequency(TX_FREQ);
+
+        // TX compressor
+        BK4819_SetCompander( 0);
+
+        BK4819_PrepareTransmit();
+
+        SYSTEM_DelayMs(10);
+
+        BK4819_PickRXFilterPathBasedOnFrequency(TX_FREQ);
+
+        BK4819_ToggleGpioOut(BK4819_GPIO1_PIN29_PA_ENABLE, true);
+
+        SYSTEM_DelayMs(5);
+        FREQUENCY_Band_t  Band = FREQUENCY_GetBand(14550000);
+
+        uint8_t Txp[3];
+        EEPROM_ReadBuffer(0x1ED0 + (Band * 16) + (OUTPUT_POWER_HIGH * 3), Txp, 3);
+        uint8_t TXP_CalculatedSetting = FREQUENCY_CalculateOutputPower(
+                Txp[0],
+                Txp[1],
+                Txp[2],
+                frequencyBandTable[Band].lower,
+                (frequencyBandTable[Band].lower + frequencyBandTable[Band].upper) / 2,
+                frequencyBandTable[Band].upper,
+                TX_FREQ);
+
+
+        BK4819_SetupPowerAmplifier(TXP_CalculatedSetting, TX_FREQ);
+
+        SYSTEM_DelayMs(10);
+        //TODO:亚音
+        BK4819_SetCTCSSFrequency(885);
+        BK4819_ToggleGpioOut(BK4819_GPIO6_PIN2_GREEN, false);
+        BK4819_ToggleGpioOut(BK4819_GPIO5_PIN1_RED, true);
+        BK4819_DisableScramble();
+    } else if ( kbd.current == KEY_INVALID && kbd.prev == KEY_PTT) {
+        //TODO:停止发射
+
+        RADIO_SetupRegisters(false);
+        BK4819_ToggleGpioOut(BK4819_GPIO6_PIN2_GREEN, false);
+        BK4819_ToggleGpioOut(BK4819_GPIO5_PIN1_RED, false);
+        TX_ON = false;
+        UpdateStill();
+
+    }
+}
+#endif
     if (kbd.current != KEY_INVALID && kbd.current == kbd.prev) {
         if (kbd.counter < 16)
             kbd.counter++;
         else
-            kbd.counter -= 3;
-        SYSTEM_DelayMs(20);
+            kbd.counter -= 2;
+        SYSTEM_DelayMs(5);
     } else {
         kbd.counter = 0;
     }
 
-    if (kbd.counter == 3 || kbd.counter == 16) {
+    if (kbd.counter == 2 || kbd.counter == 16) {
         switch (currentState) {
             case SPECTRUM:
                 OnKeyDown(kbd.current);
@@ -1297,16 +1377,6 @@ static void UpdateScan() {
 
 
 
-static void UpdateStill() {
-    Measure();
-    redrawScreen = true;
-    preventKeypress = false;
-
-    peak.rssi = scanInfo.rssi;
-    AutoTriggerLevel();
-
-    ToggleRX(IsPeakOverLevel() || monitorMode);
-}
 
 static void UpdateListening() {
     preventKeypress = false;
@@ -1386,8 +1456,6 @@ static void Tick() {
         }
 
 
-
-
     }
 
 
@@ -1404,7 +1472,7 @@ static void Tick() {
         redrawScreen = false;
     }
 }
-
+bool INT_FLAG=0;
 void APP_RunSpectrum() {
 
     // TX here coz it always? set to active VFO
@@ -1458,6 +1526,7 @@ void APP_RunSpectrum() {
     }
 #endif
     while (isInitialized) {
+
         Tick();
     }
 
