@@ -79,8 +79,7 @@ void READ_DATA(int32_t time_diff, int32_t time_diff1) {
         n = n / 3;
     else n = 0;
 
-    uint8_t tmp[16];
-    EEPROM_ReadBuffer(0x1E200 + (n << 4), tmp, 16);
+    EEPROM_ReadBuffer(0x1E200 + (n << 4), &satellite_data, 16);
 //    AZ（-180~180，两位浮点，度）2B,EI（-180~180，两位浮点，度）2B,上行频率/10（正整数hz）4B、下行频率/10(正整数hz)4B、距离（两位浮点，km）3B：
 //    第1B~2B:AZ的数字部分，只有正，低位在前高位在后，
 //    低1~8位为AZ整数部分，8bit（0~180）
@@ -95,10 +94,6 @@ void READ_DATA(int32_t time_diff, int32_t time_diff1) {
 //    第14B~15B:距离整数部分，只有正，如：6748.85，那么为6748
 //    第16B:距离浮点部分*100,只有正，如：6748.85，那么为85
 
-    satellite_data.AZ = ((tmp[4] & 0xf0) == 0xA0 ? 1.0f : -1.0f) * (tmp[0] + 0.01f * tmp[1]);
-    satellite_data.EI = ((tmp[4] & 0x0f) == 0x0A ? 1.0f : -1.0f) * (tmp[2] + 0.01f * tmp[3]);
-    satellite_data.UPLink = tmp[5] + (tmp[6] << 8) + (tmp[7] << 16) + (tmp[8] << 24);
-    satellite_data.DownLink = tmp[9] + (tmp[10] << 8) + (tmp[11] << 16) + (tmp[12] << 24);
-    satellite_data.DIS = tmp[13] + (tmp[14] << 8) + 0.01f * tmp[15];
+
 
 }

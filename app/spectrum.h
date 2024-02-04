@@ -88,6 +88,7 @@ typedef enum State {
     SPECTRUM,
     FREQ_INPUT,
     STILL,
+    STAR_SHOW,
 } State;
 
 typedef enum StepsCount {
