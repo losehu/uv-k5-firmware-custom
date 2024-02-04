@@ -1019,7 +1019,13 @@ void OnKeyDownStill(KEY_Code_t key) {
             break;
         case KEY_PTT:
             //TODO:发射
-
+#ifdef ENABLE_DOPPLER
+            gFlagLastVfo = gEeprom.TX_VFO;
+            gEeprom.TX_VFO = funcShort == ACTION_OPT_SEND_CURRENT ? gFlagLastVfo : !gFlagLastVfo;
+            gFlagReconfigureVfos  = true;
+            gFlagStopTX = true;
+            GENERIC_Key_PTT(bKeyPressed);
+#endif
             // TODO: start transmit
             /* BK4819_ToggleGpioOut(BK4819_GPIO6_PIN2_GREEN, false);
             BK4819_ToggleGpioOut(BK4819_GPIO5_PIN1_RED, true); */
@@ -1400,12 +1406,7 @@ static void Tick() {
 }
 
 void APP_RunSpectrum() {
-//#ifdef ENABLE_DOPPLER
-//    if (DOPPLER_MODE) {
-//        RTC_IF |= (1 << 0);//清除中断标志位
-//        RTC_IE |= (1 << 0);//使能秒中断
-//    }
-//#endif
+
     // TX here coz it always? set to active VFO
     vfo = gEeprom.TX_VFO;
     // set the current frequency in the middle of the display
@@ -1459,11 +1460,6 @@ void APP_RunSpectrum() {
     while (isInitialized) {
         Tick();
     }
-//#ifdef ENABLE_DOPPLER
-//    if (DOPPLER_MODE) {
-//        RTC_IE &= 0xfffffffe;//关闭秒中断
-//    }
-//#endif
 
 }
 

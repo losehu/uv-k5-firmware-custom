@@ -13,15 +13,9 @@ struct satellite_t
 };
 struct satellite_d
 {
-uint8_t AZ_I;
-uint8_t AZ_F;
-uint8_t EI_I;
-uint8_t EI_F;
-uint8_t SIGN;
+
 uint32_t UPLink;
 uint32_t DownLink;
-uint16_t DIS_I;
-uint8_t DIS_F;
 
 };
 void READ_DATA(int32_t time_diff, int32_t time_diff1) ;
@@ -29,7 +23,6 @@ void READ_DATA(int32_t time_diff, int32_t time_diff1) ;
 void INIT_DOPPLER_DATA();
 int32_t UNIX_TIME(uint8_t time2[6]) ;
 extern struct satellite_d satellite_data;
-extern uint8_t sate_state;
 
 extern struct satellite_t satellite;
 #endif
