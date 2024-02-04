@@ -3,7 +3,10 @@
 #include "driver/eeprom.h"
 #include "bsp/dp32g030/rtc.h"
 #include "ui/helper.h"
+
 struct satellite_t satellite;
+struct satellite_d satellite_data;
+
 //0x02BA0~0x2BA9 10B,卫星名称,首字符在前,最多9个英文，最后一个为'\0'
 //
 //
@@ -32,11 +35,11 @@ void uint16_to_uint8_array(uint16_t value, uint8_t array[2]) {
     array[1] = (value >> 8) & 0xFF; // 获取高8位
 }
 
-void INIT_DOPPLER_DATA()
-{
+void INIT_DOPPLER_DATA() {
     memset(&satellite, 0, sizeof(satellite));
-    EEPROM_ReadBuffer(0x02BA0,&satellite,sizeof(satellite) );
+    EEPROM_ReadBuffer(0x02BA0, &satellite, sizeof(satellite));
 }
+
 // 判断是否是闰年
 int is_leap_year(int year) {
     return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
@@ -49,26 +52,53 @@ int days_in_month(int year, int month) {
 }
 
 
-int32_t UNIX_TIME(uint8_t time2[2]) {
-    // 1970 年 1 月 1 日的年、月、日、时、分、秒
+int32_t UNIX_TIME(uint8_t time2[6]) {
+    // 2000 年 1 月 1 日的年、月、日、时、分、秒
     int32_t seconds = 0;
     // 计算年份之间的秒数差
     for (int year = 0; year < time2[0]; year++) {
         seconds += (is_leap_year(year) ? 366 : 365) * 24 * 3600;
     }
+
     // 计算当年之内的秒数差
-    for (int month =1; month < time2[1]; month++) {
+    for (int month = 1; month < time2[1]; month++) {
         seconds += days_in_month(time2[1], month) * 24 * 3600;
     }
     // 计算当月之内的秒数差
-    seconds += time2[2]  * 24 * 3600;
-    seconds += time2[3]  * 3600;
-    seconds += time2[4]  * 60;
-    seconds += time2[5] ;
+    seconds += time2[2] * 24 * 3600;
+    seconds += time2[3] * 3600;
+    seconds += time2[4] * 60;
+    seconds += time2[5];
     return seconds;
 }
 
-int32_t TIME_DIFF(uint8_t time1[6],uint8_t time2[6])
-{
-    return UNIX_TIME(time1)-UNIX_TIME(time2);
+void READ_DATA(int32_t time_diff, int32_t time_diff1) {
+    int32_t n = -time_diff;
+    if (n % 3 != 0)return;
+    if (time_diff <= 0 && time_diff1)//正在过境
+        n = n / 3;
+    else n = 0;
+
+    uint8_t tmp[16];
+    EEPROM_ReadBuffer(0x1E200 + (n << 4), tmp, 16);
+//    AZ（-180~180，两位浮点，度）2B,EI（-180~180，两位浮点，度）2B,上行频率/10（正整数hz）4B、下行频率/10(正整数hz)4B、距离（两位浮点，km）3B：
+//    第1B~2B:AZ的数字部分，只有正，低位在前高位在后，
+//    低1~8位为AZ整数部分，8bit（0~180）
+//    低9~16位为AZ浮点部分，8bit（0~99）
+//    如：-179.85，那么为10110011（179）01010101（85）
+//
+//    第3B~4B:EI的数字部分,与AZ同理
+//    第5B:AZ,EI的符号，低位在前高位在后，前4bit为AZ符号，后4bit为EI符号
+//    4bit为0XA时表示正，0XC表示负
+//    第6B~9B:上行频率/10,只有正,如:438.5MHZ，那么为438,500,00，都是低位在前，高位在后
+//    第10B~13B:下行频率/10,只有正,如:144.5MHZ，那么为144,500,00，都是低位在前，高位在后
+//    第14B~15B:距离整数部分，只有正，如：6748.85，那么为6748
+//    第16B:距离浮点部分*100,只有正，如：6748.85，那么为85
+
+    satellite_data.AZ = ((tmp[4] & 0xf0) == 0xA0 ? 1.0f : -1.0f) * (tmp[0] + 0.01f * tmp[1]);
+    satellite_data.EI = ((tmp[4] & 0x0f) == 0x0A ? 1.0f : -1.0f) * (tmp[2] + 0.01f * tmp[3]);
+    satellite_data.UPLink = tmp[5] + (tmp[6] << 8) + (tmp[7] << 16) + (tmp[8] << 24);
+    satellite_data.DownLink = tmp[9] + (tmp[10] << 8) + (tmp[11] << 16) + (tmp[12] << 24);
+    satellite_data.DIS = tmp[13] + (tmp[14] << 8) + 0.01f * tmp[15];
+
 }

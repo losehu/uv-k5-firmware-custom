@@ -9,10 +9,21 @@ struct satellite_t
     uint16_t sum_time;
     uint16_t SEND_CTCSS;
     uint16_t RECV_CTCSS;
-
+    uint16_t START_TIME_UNIX;
 };
+struct satellite_d
+{
+float AZ;
+float EI;
+uint32_t UPLink;
+uint32_t DownLink;
+float DIS;
+};
+void READ_DATA(int32_t time_diff, int32_t time_diff1) ;
+
 void INIT_DOPPLER_DATA();
-int32_t TIME_DIFF(uint8_t time1[6],uint8_t time2[6]);
+int32_t UNIX_TIME(uint8_t time2[6]) ;
+extern struct satellite_d satellite_data;
 
 extern struct satellite_t satellite;
 #endif

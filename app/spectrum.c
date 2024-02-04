@@ -13,6 +13,8 @@
  *     See the License for the specific language governing permissions and
  *     limitations under the License.
  */
+//#define ENABLE_DOPPLER
+
 #ifdef ENABLE_DOPPLER
 
 #include "app/doppler.h"
@@ -25,12 +27,13 @@
 #include "audio.h"
 #include "misc.h"
 
-uint32_t DOPPLER_CNT = 0;
 
 //#define ENABLE_DOPPLER
 #ifdef ENABLE_SCAN_RANGES
 #include "chFrScanner.h"
 #endif
+
+#include "driver/eeprom.h"
 
 #include "driver/backlight.h"
 #include "frequencies.h"
@@ -730,7 +733,8 @@ static void DrawF(uint32_t f) {
 #ifdef ENABLE_DOPPLER
     if (DOPPLER_MODE) {
         //UI绘制
-        sprintf(String, "%u.%05u", f / 100000, f % 100000);
+        sprintf(String, "%03u.%05u", f / 100000, f % 100000);
+
         UI_DisplayFrequency(String, 8, 0, false);
 
     } else {
@@ -955,9 +959,7 @@ void OnKeyDownStill(KEY_Code_t key) {
                 break;
             }
 #ifdef ENABLE_DOPPLER
-            if (DOPPLER_MODE) {
-                //TODO:切换卫星
-            } else
+            if (!DOPPLER_MODE)
 #endif
                 UpdateCurrentFreqStill(true);
             break;
@@ -968,9 +970,8 @@ void OnKeyDownStill(KEY_Code_t key) {
                 break;
             }
 #ifdef ENABLE_DOPPLER
-            if (DOPPLER_MODE) {
-                //TODO:切换卫星
-            } else
+            if (!DOPPLER_MODE)
+
 #endif
                 UpdateCurrentFreqStill(false);
 
@@ -1154,18 +1155,18 @@ static void RenderStill() {
                 process = time_diff * 45 / 1000;
             }
         } else { //已经来了
-            //现在时间-卫星结束时间
-            if (time_diff1 >= 0)//已经过去了
+            if (time_diff1 >= 0)//正在过境
             {
-                strcpy(String, "Passed");
-            } else {
                 sprintf(String, "%4d sec", satellite.sum_time + time_diff);
                 process = (satellite.sum_time + time_diff) * 45 / satellite.sum_time;
+            } else {
+                strcpy(String, "Passed");
             }
         }
+
+
         GUI_DisplaySmallest(String, 90, DATA_LINE + 15, false, true);
         memset(&gFrameBuffer[6][80], 0b01000000, 45);
-        //TODO:进度条更新 80~80+45-1
         gFrameBuffer[6][79] = 0b00111110;
         gFrameBuffer[6][45 + 80] = 0b00111110;
         for (int i = 0; i < 45; i++) {
@@ -1174,8 +1175,7 @@ static void RenderStill() {
             else
                 gFrameBuffer[6][i + 80] = 0b00100010;
         }
-        //TODO:绘制上行频率
-        sprintf(String, "UPLink:%4d.%5d", currentFreq / 100000, currentFreq % 100000);
+        sprintf(String, "UPLink:%4d.%5d", satellite_data.UPLink / 100000, satellite_data.UPLink % 100000);
         GUI_DisplaySmallest(String, 0, DATA_LINE + 15, false, true);
         sprintf(String, "20%02d-%02d-%02d %02d:%02d:%02d", time[0], time[1], time[2], time[3], time[4], time[5]);
         GUI_DisplaySmallest(String, 0, DATA_LINE + 23, false, true);
@@ -1424,8 +1424,9 @@ void APP_RunSpectrum() {
         SetState(STILL);
         TuneToPeak();
         //TODO:设置默认卫星频率
-        SetF(43850000);
-        currentFreq = 43847711;
+        satellite_data.DownLink=43850000;
+        SetF(satellite_data.DownLink);
+      currentFreq = satellite_data.DownLink;
         settings.dbMin = -130;
     }
 #endif
@@ -1443,12 +1444,20 @@ void APP_RunSpectrum() {
 #ifdef ENABLE_DOPPLER
 
 void RTCHandler(void) {
-    DOPPLER_CNT += 4;
-    if (DOPPLER_CNT == 200)DOPPLER_CNT = 0;
+
+
     RTC_Get();
-    time_diff = TIME_DIFF(satellite.start_time, time);//卫星开始时间-现在时间
-    time_diff1 = TIME_DIFF(time, satellite.end_time);
+    int32_t NOW_UNIX_TIME = UNIX_TIME(time);
+    time_diff = satellite.START_TIME_UNIX - NOW_UNIX_TIME; //卫星开始时间-现在时间
+    time_diff1 = satellite.sum_time + time_diff;//结束-开始+开始-现在
+//     if (time_diff<=0&&time_diff1)//正在过境
+//    {
+        READ_DATA(time_diff,time_diff1);
+//    }else          READ_DATA(0);
+
+//}
     RTC_IF |= (1 << 5);//清除中断标志位
+
 }
 
 #endif
