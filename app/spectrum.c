@@ -954,20 +954,6 @@ static void OnKeyDownFreqInput(uint8_t key) {
     }
 }
 
-#ifdef ENABLE_DOPPLER
-
-void OnKeyDownSTAR_SHOW(KEY_Code_t key) {
-    switch (key) {
-
-        case KEY_EXIT:
-            SetState(STILL);
-            break;
-        default:
-            break;
-    }
-}
-
-#endif
 
 void OnKeyDownStill(KEY_Code_t key) {
     switch (key) {
@@ -1009,7 +995,8 @@ void OnKeyDownStill(KEY_Code_t key) {
         case KEY_5:
 #ifdef ENABLE_DOPPLER
             if (DOPPLER_MODE) {
-                SetState(STAR_SHOW);
+
+
             } else
 #endif
 
@@ -1085,10 +1072,7 @@ static void RenderSpectrum() {
     DrawF(peak.f);
     DrawNums();
 }
-
 #ifdef ENABLE_DOPPLER
-bool flag = 0;
-
 static void Draw_DOPPLER_Process(uint8_t DATA_LINE) {
     int process = 0;
     if (time_diff >= 0)//还没来卫星
@@ -1121,595 +1105,8 @@ static void Draw_DOPPLER_Process(uint8_t DATA_LINE) {
             gFrameBuffer[6][i + 80] = 0b00100010;
     }
     sprintf(String, "20%02d-%02d-%02d %02d:%02d:%02d", time[0], time[1], time[2], time[3], time[4], time[5]);
-    GUI_DisplaySmallest(String, 0, flag == 0 ? DATA_LINE + 23 : 2, flag == 0 ? false : true, true);
-    flag = 0;
+    GUI_DisplaySmallest(String, 0,  DATA_LINE + 23 , false, true);
 }
-
-float my_sin(float x) {
-    float result = 0.0;
-    float term = x;
-    // 使用泰勒级数展开计算 sin(x)
-    for (int n = 1; n <= 10; ++n) {
-        result += term;
-        term = -term * x * x / ((2 * n) * (2 * n + 1));
-    }
-    return result;
-}
-
-float my_cos(float x) {
-
-    float result = 1.0;
-    float term = 1.0;
-    for (int i = 1; i <= 10; ++i) {
-        term *= (-1) * x * x / ((2 * i) * (2 * i - 1));
-        result += term;
-    }
-    return result;
-}
-float al=4.5f/3.0f;
-
-
-void printCircleCoordinates(int x, int y, int R) {
-    // 圆心坐标
-    int xc = x;
-    int yc = y;
-    int sum = 0;
-    // 每隔5度打印一个点的坐标
-    int last_x = 999, last_y = 999;
-    for (int angle = 0; angle <= 360; angle += 1) {
-        // 将角度转换为弧度
-        float radian = angle * 3.1415926 / 180.0;
-        // 计算圆上的点的坐标
-        int x_coord = xc + (int) (al*(R * my_cos(radian) + 0.5)); // 四舍五入
-        int y_coord = yc + (int) ((R * my_sin(radian) + 0.5));
-        if (last_x != x_coord || last_y != y_coord) {
-            PutPixel(x_coord, y_coord, true);
-        }
-        last_x=x_coord;
-        last_y=y_coord;
-
-    }
-}
-static void RenderSTARSHOW() {
-    memset(gStatusLine, 0, sizeof(gStatusLine));
-    flag = 1;
-    Draw_DOPPLER_Process(26);
-//TODO:绘制星图
-
-    sprintf(String, "AZ: %3d.%02d", satellite_data.AZ_I, satellite_data.AZ_F);
-    if ((satellite_data.SIGN & 0x0f) == 0x0a) String[3] = '-';
-    GUI_DisplaySmallest(String, 87, 8, false, true);
-
-    sprintf(String, "EI: %3d.%02d", satellite_data.EI_I, satellite_data.EI_F);
-    if ((satellite_data.SIGN & 0xf0) == 0xa0) String[3] = '-';
-    GUI_DisplaySmallest(String, 87, 16, false, true);
-
-    sprintf(String, "D:%5d.%02d", satellite_data.DIS_I, satellite_data.DIS_F);
-    GUI_DisplaySmallest(String, 87, 24, false, true);
-       uint8_t circle[231][2] = {
-            {83, 27},
-            {83, 28},
-            {83, 29},
-            {83, 30},
-            {82, 30},
-            {82, 31},
-            {82, 32},
-            {82, 33},
-            {82, 34},
-            {81, 34},
-            {81, 35},
-            {81, 36},
-            {80, 36},
-            {80, 37},
-            {80, 38},
-            {79, 38},
-            {79, 39},
-            {78, 39},
-            {78, 40},
-            {77, 40},
-            {77, 41},
-            {76, 42},
-            {75, 42},
-            {75, 43},
-            {74, 44},
-            {73, 44},
-            {73, 45},
-            {72, 45},
-            {71, 46},
-            {70, 46},
-            {70, 47},
-            {69, 47},
-            {68, 48},
-            {67, 48},
-            {67, 49},
-            {66, 49},
-            {65, 49},
-            {64, 50},
-            {63, 50},
-            {62, 51},
-            {61, 51},
-            {60, 51},
-            {59, 51},
-            {59, 52},
-            {58, 52},
-            {57, 52},
-            {56, 52},
-            {55, 53},
-            {54, 53},
-            {53, 53},
-            {52, 53},
-            {51, 53},
-            {50, 54},
-            {49, 54},
-            {48, 54},
-            {47, 54},
-            {46, 54},
-            {45, 54},
-            {44, 54},
-            {43, 54},
-            {42, 54},
-            {41, 54},
-            {40, 54},
-            {39, 54},
-            {38, 54},
-            {37, 54},
-            {36, 54},
-            {35, 53},
-            {34, 53},
-            {33, 53},
-            {32, 53},
-            {31, 53},
-            {30, 53},
-            {29, 52},
-            {28, 52},
-            {27, 52},
-            {26, 51},
-            {25, 51},
-            {24, 51},
-            {23, 50},
-            {22, 50},
-            {21, 50},
-            {21, 49},
-            {20, 49},
-            {19, 49},
-            {18, 48},
-            {17, 48},
-            {17, 47},
-            {16, 47},
-            {15, 46},
-            {14, 46},
-            {14, 45},
-            {13, 45},
-            {12, 44},
-            {11, 44},
-            {11, 43},
-            {10, 43},
-            {10, 42},
-            {9,  42},
-            {9,  41},
-            {8,  40},
-            {7,  40},
-            {7,  39},
-            {7,  38},
-            {6,  38},
-            {6,  37},
-            {5,  37},
-            {5,  36},
-            {5,  35},
-            {4,  34},
-            {4,  33},
-            {3,  32},
-            {3,  31},
-            {3,  30},
-            {3,  29},
-            {3,  28},
-            {3,  27},
-            {3,  26},
-            {3,  25},
-            {3,  24},
-            {3,  23},
-            {4,  22},
-            {4,  21},
-            {5,  20},
-            {5,  19},
-            {5,  18},
-            {6,  18},
-            {6,  17},
-            {7,  17},
-            {7,  16},
-            {7,  15},
-            {8,  15},
-            {8,  14},
-            {9,  14},
-            {9,  13},
-            {10, 13},
-            {10, 12},
-            {11, 12},
-            {11, 11},
-            {12, 11},
-            {13, 10},
-            {14, 10},
-            {14, 9},
-            {15, 9},
-            {16, 8},
-            {17, 8},
-            {17, 7},
-            {18, 7},
-            {19, 6},
-            {20, 6},
-            {21, 6},
-            {21, 5},
-            {22, 5},
-            {23, 5},
-            {24, 4},
-            {25, 4},
-            {26, 4},
-            {27, 3},
-            {28, 3},
-            {29, 3},
-            {30, 2},
-            {31, 2},
-            {32, 2},
-            {33, 2},
-            {34, 2},
-            {35, 2},
-            {36, 1},
-            {37, 1},
-            {38, 1},
-            {39, 1},
-            {40, 1},
-            {41, 1},
-            {42, 1},
-            {43, 1},
-            {44, 1},
-            {45, 1},
-            {46, 1},
-            {47, 1},
-            {48, 1},
-            {49, 1},
-            {50, 1},
-            {51, 2},
-            {52, 2},
-            {53, 2},
-            {54, 2},
-            {55, 2},
-            {56, 3},
-            {57, 3},
-            {58, 3},
-            {59, 3},
-            {59, 4},
-            {60, 4},
-            {61, 4},
-            {62, 4},
-            {63, 5},
-            {64, 5},
-            {65, 6},
-            {66, 6},
-            {67, 6},
-            {67, 7},
-            {68, 7},
-            {69, 8},
-            {70, 8},
-            {70, 9},
-            {71, 9},
-            {72, 10},
-            {73, 10},
-            {73, 11},
-            {74, 11},
-            {75, 12},
-            {75, 13},
-            {76, 13},
-            {77, 14},
-            {78, 15},
-            {78, 16},
-            {79, 16},
-            {79, 17},
-            {80, 17},
-            {80, 18},
-            {80, 19},
-            {81, 19},
-            {81, 20},
-            {81, 21},
-            {82, 21},
-            {82, 22},
-            {82, 23},
-            {82, 24},
-            {82, 25},
-            {83, 25},
-            {83, 26},
-            {83, 27},
-    };
-    uint8_t circle1[161][2] = {
-            {69, 27},
-            {69, 28},
-            {69, 29},
-            {69, 30},
-            {69, 31},
-            {68, 31},
-            {68, 32},
-            {68, 33},
-            {67, 33},
-            {67, 34},
-            {67, 35},
-            {66, 35},
-            {66, 36},
-            {65, 36},
-            {65, 37},
-            {64, 37},
-            {64, 38},
-            {63, 38},
-            {63, 39},
-            {62, 39},
-            {62, 40},
-            {61, 40},
-            {60, 40},
-            {60, 41},
-            {59, 41},
-            {58, 41},
-            {58, 42},
-            {57, 42},
-            {56, 42},
-            {56, 43},
-            {55, 43},
-            {54, 43},
-            {53, 43},
-            {53, 44},
-            {52, 44},
-            {51, 44},
-            {50, 44},
-            {49, 44},
-            {48, 45},
-            {47, 45},
-            {46, 45},
-            {45, 45},
-            {44, 45},
-            {43, 45},
-            {42, 45},
-            {41, 45},
-            {40, 45},
-            {39, 45},
-            {38, 45},
-            {37, 45},
-            {37, 44},
-            {36, 44},
-            {35, 44},
-            {34, 44},
-            {33, 44},
-            {32, 43},
-            {31, 43},
-            {30, 43},
-            {29, 42},
-            {28, 42},
-            {27, 42},
-            {27, 41},
-            {26, 41},
-            {25, 40},
-            {24, 40},
-            {24, 39},
-            {23, 39},
-            {22, 38},
-            {21, 38},
-            {21, 37},
-            {20, 37},
-            {20, 36},
-            {19, 35},
-            {19, 34},
-            {18, 34},
-            {18, 33},
-            {17, 32},
-            {17, 31},
-            {17, 30},
-            {16, 29},
-            {16, 28},
-            {16, 27},
-            {16, 26},
-            {17, 25},
-            {17, 24},
-            {17, 23},
-            {18, 22},
-            {18, 21},
-            {19, 21},
-            {19, 20},
-            {20, 19},
-            {20, 18},
-            {21, 18},
-            {21, 17},
-            {22, 17},
-            {23, 16},
-            {24, 16},
-            {24, 15},
-            {25, 15},
-            {26, 14},
-            {27, 14},
-            {27, 13},
-            {28, 13},
-            {29, 13},
-            {30, 12},
-            {31, 12},
-            {32, 12},
-            {33, 11},
-            {34, 11},
-            {35, 11},
-            {36, 11},
-            {37, 11},
-            {37, 10},
-            {38, 10},
-            {39, 10},
-            {40, 10},
-            {41, 10},
-            {42, 10},
-            {43, 10},
-            {44, 10},
-            {45, 10},
-            {46, 10},
-            {47, 10},
-            {48, 10},
-            {49, 11},
-            {50, 11},
-            {51, 11},
-            {52, 11},
-            {53, 11},
-            {53, 12},
-            {54, 12},
-            {55, 12},
-            {56, 12},
-            {56, 13},
-            {57, 13},
-            {58, 13},
-            {58, 14},
-            {59, 14},
-            {60, 14},
-            {60, 15},
-            {61, 15},
-            {62, 15},
-            {62, 16},
-            {63, 16},
-            {63, 17},
-            {64, 17},
-            {64, 18},
-            {65, 18},
-            {65, 19},
-            {66, 19},
-            {66, 20},
-            {67, 20},
-            {67, 21},
-            {67, 22},
-            {68, 22},
-            {68, 23},
-            {68, 24},
-            {69, 24},
-            {69, 25},
-            {69, 26},
-            {69, 27},
-
-    };
-    uint8_t circle2[82][2]
-            = {
-                    {56, 27},
-                    {56, 28},
-                    {56, 29},
-                    {55, 29},
-                    {55, 30},
-                    {55, 31},
-                    {54, 31},
-                    {54, 32},
-                    {53, 32},
-                    {53, 33},
-                    {52, 33},
-                    {51, 34},
-                    {50, 34},
-                    {50, 35},
-                    {49, 35},
-                    {48, 35},
-                    {47, 35},
-                    {47, 36},
-                    {46, 36},
-                    {45, 36},
-                    {44, 36},
-                    {43, 36},
-                    {42, 36},
-                    {41, 36},
-                    {40, 36},
-                    {39, 36},
-                    {39, 35},
-                    {38, 35},
-                    {37, 35},
-                    {36, 35},
-                    {36, 34},
-                    {35, 34},
-                    {34, 34},
-                    {34, 33},
-                    {33, 33},
-                    {32, 32},
-                    {32, 31},
-                    {31, 31},
-                    {31, 30},
-                    {30, 30},
-                    {30, 29},
-                    {30, 28},
-                    {30, 27},
-                    {30, 26},
-                    {30, 25},
-                    {31, 25},
-                    {31, 24},
-                    {32, 23},
-                    {33, 22},
-                    {34, 22},
-                    {34, 21},
-                    {35, 21},
-                    {36, 21},
-                    {36, 20},
-                    {37, 20},
-                    {38, 20},
-                    {39, 20},
-                    {39, 19},
-                    {40, 19},
-                    {41, 19},
-                    {42, 19},
-                    {43, 19},
-                    {44, 19},
-                    {45, 19},
-                    {46, 19},
-                    {47, 19},
-                    {47, 20},
-                    {48, 20},
-                    {49, 20},
-                    {50, 20},
-                    {50, 21},
-                    {51, 21},
-                    {52, 22},
-                    {53, 22},
-                    {53, 23},
-                    {54, 23},
-                    {54, 24},
-                    {55, 24},
-                    {55, 25},
-                    {55, 26},
-                    {56, 26},
-                    {56, 27},
-
-            };
-    for (int i = 0; i < 218; i++) {
-        PutPixel(circle[i][0], circle[i][1], true);
-    }
-    for (int i = 0; i < 161; i++) {
-        PutPixel(circle1[i][0], circle1[i][1], true);
-    }
-    for (int i = 0; i < 82; i++) {
-        PutPixel(circle2[i][0], circle2[i][1], true);
-    }
-    satellite_data.AZ_I=30;
-    satellite_data.AZ_F=0;
-    satellite_data.EI_I=60;
-    satellite_data.EI_F=0;//60520
-float L=(90-(satellite_data.EI_I+satellite_data.EI_F*0.01f))/90*27;
-float x=28.0f*al+L* my_cos((satellite_data.AZ_I+satellite_data.AZ_F*0.01f)/180*3.1415926);
-    float y=27.0f+L* my_sin((satellite_data.AZ_I+satellite_data.AZ_F*0.01f)/180*3.1415926);
-    for (int i = -1; i <=1; ++i) {
-        for (int j = -1; j <=1 ; ++j) {
-            PutPixel((int)x+i, (int )y+j, true);
-        }
-    }
-    printCircleCoordinates(28.0f*al, 27, 27);
-    printCircleCoordinates(28.0f*al, 27, 18);//161 231
-    printCircleCoordinates(28.0f*al, 27, 9); //82
-    if (time_diff <= 0 && time_diff1) {//卫星没来
-        satellite_data.AZ_I = 0;
-        satellite_data.AZ_F = 0;
-        satellite_data.EI_I = 0;
-        satellite_data.EI_F = 0;
-        satellite_data.DIS_I = 0;
-        satellite_data.DIS_F = 0;
-        satellite_data.SIGN = 0xaa; //58012
-    } else {
-
-    }
-
-
-
-    ST7565_BlitStatusLine();
-}
-
 #endif
 
 static void RenderStill() {
@@ -1812,11 +1209,7 @@ static void Render() {
         case STILL:
             RenderStill();
             break;
-#ifdef ENABLE_DOPPLER
-        case STAR_SHOW:
-            RenderSTARSHOW();
-            break;
-#endif
+
     }
     ST7565_BlitFullScreen();
 }
@@ -1846,12 +1239,7 @@ bool HandleUserInput() {
             case STILL:
                 OnKeyDownStill(kbd.current);
                 break;
-#ifdef ENABLE_DOPPLER
 
-            case STAR_SHOW:
-                OnKeyDownSTAR_SHOW(kbd.current);
-                break;
-#endif
         }
     }
 
@@ -1901,10 +1289,7 @@ static void UpdateScan() {
     newScanStart = true;
 }
 
-static void UpdateSTARTSHOW() {
-    redrawScreen = true;
-    preventKeypress = false;
-}
+
 
 static void UpdateStill() {
     Measure();
@@ -1993,19 +1378,14 @@ static void Tick() {
         } else if (currentState == STILL) {
             UpdateStill();
         }
-#ifdef ENABLE_DOPPLER
-        else if (currentState == STAR_SHOW) {
-            UpdateSTARTSHOW();
-        }
-#endif
+
+
+
+
     }
 
 
-    if (
-#ifdef ENABLE_DOPPLER
-currentState != STAR_SHOW &&
-#endif
-(redrawStatus || ++statuslineUpdateTimer > 4096)) {
+    if (redrawStatus || ++statuslineUpdateTimer > 4096) {
         bool refresh = statuslineUpdateTimer > 4096;
         RenderStatus(refresh);
         redrawStatus = false;
