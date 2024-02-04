@@ -20,10 +20,15 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="修复定时器">
-      <change afterPath="$PROJECT_DIR$/1" afterDir="false" />
+    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="修改多普勒eeprom">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/app.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/doppler.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/doppler.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/spectrum.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/spectrum.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/eeprom.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/eeprom.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment/sponsors.md" beforeDir="false" afterPath="$PROJECT_DIR$/payment/sponsors.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,7 +87,7 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/Makefile&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -102,10 +107,15 @@
       <recent name="C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\app" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.picture">
+  <component name="RunManager" selected="Makefile 目标.build">
     <configuration name="uv_k5_firmware_custom_0_17" type="CLionNativeAppRunConfigurationType" nameIsGenerated="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="uv_k5_firmware_custom_0_17" TARGET_NAME="uv_k5_firmware_custom_0_17" CONFIG_NAME="Debug" version="1" RUN_TARGET_PROJECT_NAME="uv_k5_firmware_custom_0_17" RUN_TARGET_NAME="uv_k5_firmware_custom_0_17">
       <method v="2">
         <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="Makefile" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile">
@@ -218,11 +228,24 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Makefile 应用程序.uv_k5_firmware_custom_0_17" />
+      <item itemvalue="Makefile 目标.Makefile" />
+      <item itemvalue="Makefile 目标.both" />
+      <item itemvalue="Makefile 目标.all" />
+      <item itemvalue="Makefile 目标.both (1)" />
+      <item itemvalue="Makefile 目标.build" />
+      <item itemvalue="Makefile 目标.clean" />
+      <item itemvalue="Makefile 目标.full" />
       <item itemvalue="Python.picture" />
       <item itemvalue="Shell Script.linux docker" />
       <item itemvalue="Shell Script.win docker" />
       <item itemvalue="Shell Script.win" />
     </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Makefile 目标.build" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -325,48 +348,8 @@
       <workItem from="1706520288448" duration="15904000" />
       <workItem from="1706538744293" duration="305000" />
       <workItem from="1706846894570" duration="18000" />
-    </task>
-    <task id="LOCAL-00098" summary="fix show">
-      <created>1703482452046</created>
-      <option name="number" value="00098" />
-      <option name="presentableId" value="LOCAL-00098" />
-      <option name="project" value="LOCAL" />
-      <updated>1703482452046</updated>
-    </task>
-    <task id="LOCAL-00099" summary="fix show">
-      <created>1703484154788</created>
-      <option name="number" value="00099" />
-      <option name="presentableId" value="LOCAL-00099" />
-      <option name="project" value="LOCAL" />
-      <updated>1703484154788</updated>
-    </task>
-    <task id="LOCAL-00100" summary="fix show">
-      <created>1703494863487</created>
-      <option name="number" value="00100" />
-      <option name="presentableId" value="LOCAL-00100" />
-      <option name="project" value="LOCAL" />
-      <updated>1703494863488</updated>
-    </task>
-    <task id="LOCAL-00101" summary="fix show">
-      <created>1703495896467</created>
-      <option name="number" value="00101" />
-      <option name="presentableId" value="LOCAL-00101" />
-      <option name="project" value="LOCAL" />
-      <updated>1703495896467</updated>
-    </task>
-    <task id="LOCAL-00102" summary="fix show">
-      <created>1703581336394</created>
-      <option name="number" value="00102" />
-      <option name="presentableId" value="LOCAL-00102" />
-      <option name="project" value="LOCAL" />
-      <updated>1703581336394</updated>
-    </task>
-    <task id="LOCAL-00103" summary="113">
-      <created>1704445475471</created>
-      <option name="number" value="00103" />
-      <option name="presentableId" value="LOCAL-00103" />
-      <option name="project" value="LOCAL" />
-      <updated>1704445475471</updated>
+      <workItem from="1706929020661" duration="17226000" />
+      <workItem from="1707013614727" duration="37216000" />
     </task>
     <task id="LOCAL-00104" summary="简化EEPROM驱动逻辑&#10;改为STLINK-SWD烧录">
       <created>1704446603814</created>
@@ -669,7 +652,49 @@
       <option name="project" value="LOCAL" />
       <updated>1706539065867</updated>
     </task>
-    <option name="localTasksCounter" value="147" />
+    <task id="LOCAL-00147" summary="重构多普勒">
+      <created>1706969427625</created>
+      <option name="number" value="00147" />
+      <option name="presentableId" value="LOCAL-00147" />
+      <option name="project" value="LOCAL" />
+      <updated>1706969427625</updated>
+    </task>
+    <task id="LOCAL-00148" summary="修复MDC1200编译选项">
+      <created>1707026226958</created>
+      <option name="number" value="00148" />
+      <option name="presentableId" value="LOCAL-00148" />
+      <option name="project" value="LOCAL" />
+      <updated>1707026226958</updated>
+    </task>
+    <task id="LOCAL-00149" summary="完善多普勒">
+      <created>1707027794918</created>
+      <option name="number" value="00149" />
+      <option name="presentableId" value="LOCAL-00149" />
+      <option name="project" value="LOCAL" />
+      <updated>1707027794918</updated>
+    </task>
+    <task id="LOCAL-00150" summary="星图绘制一半">
+      <created>1707038783515</created>
+      <option name="number" value="00150" />
+      <option name="presentableId" value="LOCAL-00150" />
+      <option name="project" value="LOCAL" />
+      <updated>1707038783515</updated>
+    </task>
+    <task id="LOCAL-00151" summary="删除星图">
+      <created>1707039390023</created>
+      <option name="number" value="00151" />
+      <option name="presentableId" value="LOCAL-00151" />
+      <option name="project" value="LOCAL" />
+      <updated>1707039390023</updated>
+    </task>
+    <task id="LOCAL-00152" summary="修改多普勒eeprom">
+      <created>1707042414491</created>
+      <option name="number" value="00152" />
+      <option name="presentableId" value="LOCAL-00152" />
+      <option name="project" value="LOCAL" />
+      <updated>1707042414491</updated>
+    </task>
+    <option name="localTasksCounter" value="153" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -699,12 +724,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="修改侧键" />
-    <MESSAGE value="修复侧键与MDC联系人冲突" />
-    <MESSAGE value="支持两个AT24C1024堆叠" />
-    <MESSAGE value="K缺失复位" />
-    <MESSAGE value="增加GB2312(H版本)" />
-    <MESSAGE value="无关的CLIONE IDE" />
     <MESSAGE value="makefile" />
     <MESSAGE value="回档" />
     <MESSAGE value="重构显示函数" />
@@ -724,7 +743,13 @@
     <MESSAGE value="定时器计数正常，但无法进入中断服务函数" />
     <MESSAGE value="使能NVIC" />
     <MESSAGE value="修复定时器" />
-    <option name="LAST_COMMIT_MESSAGE" value="修复定时器" />
+    <MESSAGE value="重构多普勒" />
+    <MESSAGE value="修复MDC1200编译选项" />
+    <MESSAGE value="完善多普勒" />
+    <MESSAGE value="星图绘制一半" />
+    <MESSAGE value="删除星图" />
+    <MESSAGE value="修改多普勒eeprom" />
+    <option name="LAST_COMMIT_MESSAGE" value="修改多普勒eeprom" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
