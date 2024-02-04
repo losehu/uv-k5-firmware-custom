@@ -182,14 +182,18 @@ int MENU_GetLimits(uint8_t menu_id, int32_t *pMin, int32_t *pMax) {
 
         case MENU_ROGER:
             *pMin = 0;
+#ifndef ENABLE_MDC1200
+            *pMax =1;
+#else
             *pMax = ARRAY_SIZE(gSubMenu_ROGER) - 1;
+#endif
             break;
-#if ENABLE_CHINESE_FULL==4
+#if ENABLE_CHINESE_FULL == 4
 
-        case MENU_PONMSG:
-            *pMin = 0;
-            *pMax = ARRAY_SIZE(gSubMenu_PONMSG) - 1;
-            break;
+            case MENU_PONMSG:
+                *pMin = 0;
+                *pMax = ARRAY_SIZE(gSubMenu_PONMSG) - 1;
+                break;
 #endif
         case MENU_R_DCS:
         case MENU_T_DCS:
@@ -205,10 +209,10 @@ int MENU_GetLimits(uint8_t menu_id, int32_t *pMin, int32_t *pMax) {
             break;
 #ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
 
-		case MENU_W_N:
-			*pMin = 0;
-			*pMax = ARRAY_SIZE(gSubMenu_W_N) - 1;
-			break;
+            case MENU_W_N:
+                *pMin = 0;
+                *pMax = ARRAY_SIZE(gSubMenu_W_N) - 1;
+                break;
 #endif
 #ifdef ENABLE_ALARM
             case MENU_AL_MOD:
@@ -251,7 +255,7 @@ int MENU_GetLimits(uint8_t menu_id, int32_t *pMin, int32_t *pMax) {
 #ifdef ENABLE_DTMF_CALLING
 #ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
 
-            	case MENU_D_DCD:
+            case MENU_D_DCD:
 #endif
 #endif
         case MENU_D_LIVE_DEC:
@@ -369,27 +373,27 @@ int MENU_GetLimits(uint8_t menu_id, int32_t *pMin, int32_t *pMax) {
             break;
 
 #ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
-		case MENU_F1SHRT:
-		case MENU_F2SHRT:
-            *pMin = 0;
+            case MENU_F1SHRT:
+            case MENU_F2SHRT:
+                *pMin = 0;
 
 #ifdef ENABLE_SIDEFUNCTIONS_SEND
-            *pMax = gSubMenu_SIDEFUNCTIONS_size-3;
+                *pMax = gSubMenu_SIDEFUNCTIONS_size-3;
 
 #else
-			*pMax =gSubMenu_SIDEFUNCTIONS_size-1;
+                *pMax =gSubMenu_SIDEFUNCTIONS_size-1;
 
 #endif
-             break;
-        case MENU_F1LONG:
-		case MENU_F2LONG:
-		case MENU_MLONG:
-			*pMin = 0;
+                 break;
+            case MENU_F1LONG:
+            case MENU_F2LONG:
+            case MENU_MLONG:
+                *pMin = 0;
 
 
-			*pMax = gSubMenu_SIDEFUNCTIONS_size-1;
+                *pMax = gSubMenu_SIDEFUNCTIONS_size-1;
 
-			break;
+                break;
 #endif
 
         default:
@@ -409,7 +413,7 @@ void MENU_AcceptSetting(void) {
         else if (gSubMenuSelection > Max) gSubMenuSelection = Max;
     }
     char a = gSubMenuSelection;//UART_Send(a,1);
-    UART_Send((uint8_t * ) & a, 1);
+    UART_Send((uint8_t *) &a, 1);
 
     switch (UI_MENU_GetCurrentMenuId()) {
         default:
@@ -488,10 +492,10 @@ void MENU_AcceptSetting(void) {
             return;
 #ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
 
-		case MENU_W_N:
-			gTxVfo->CHANNEL_BANDWIDTH = gSubMenuSelection;
-			gRequestSaveChannel       = 1;
-			return;
+            case MENU_W_N:
+                gTxVfo->CHANNEL_BANDWIDTH = gSubMenuSelection;
+                gRequestSaveChannel       = 1;
+                return;
 #endif
         case MENU_SCR:
             gTxVfo->SCRAMBLING_TYPE = gSubMenuSelection;
@@ -522,17 +526,15 @@ void MENU_AcceptSetting(void) {
             return;
 #ifdef ENABLE_MDC1200
             case MENU_MDC_ID:
-//                for (int i = 3; i >= 0; i--) {
-//                    if (edit[i] != ' ' && edit[i] != '_' && edit[i] != 0x00 && edit[i] != 0xff)
-//                        break;
-//                    edit[i] = ' ';
-//			}
+#ifdef ENABLE_MDC1200_EDIT
         gEeprom.MDC1200_ID=extractHex(edit);
+#endif
+
             return;
 #endif
         case MENU_MEM_NAME:
             // trailing trim
-            for (int i = MAX_EDIT_INDEX-1; i >= 0; i--) {
+            for (int i = MAX_EDIT_INDEX - 1; i >= 0; i--) {
                 if (edit[i] != ' ' && edit[i] != '_' && edit[i] != 0x00 && edit[i] != 0xff)
                     break;
                 edit[i] = ' ';
@@ -690,14 +692,14 @@ void MENU_AcceptSetting(void) {
 //			gSetting_battery_text = gSubMenuSelection;
 //			break;
 #ifdef ENABLE_DTMF_CALLING
-        #ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
+#ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
 
-            		case MENU_D_DCD:
-            			gTxVfo->DTMF_DECODING_ENABLE = gSubMenuSelection;
-            			DTMF_clear_RX();
-            			gRequestSaveChannel = 1;
-            			return;
-        #endif
+            case MENU_D_DCD:
+                gTxVfo->DTMF_DECODING_ENABLE = gSubMenuSelection;
+                DTMF_clear_RX();
+                gRequestSaveChannel = 1;
+                return;
+#endif
 #endif
         case MENU_D_LIVE_DEC:
             gSetting_live_DTMF_decoder = gSubMenuSelection;
@@ -721,11 +723,11 @@ void MENU_AcceptSetting(void) {
                 }
                 return;
 #endif
-#if ENABLE_CHINESE_FULL==4
+#if ENABLE_CHINESE_FULL == 4
 
-		case MENU_PONMSG:
-			gEeprom.POWER_ON_DISPLAY_MODE = gSubMenuSelection;
-			break;
+            case MENU_PONMSG:
+                gEeprom.POWER_ON_DISPLAY_MODE = gSubMenuSelection;
+                break;
 #endif
         case MENU_ROGER:
             gEeprom.ROGER = gSubMenuSelection;
@@ -826,21 +828,21 @@ void MENU_AcceptSetting(void) {
             break;
 
 #ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
-        case MENU_F1SHRT:
-        case MENU_F1LONG:
-        case MENU_F2SHRT:
-        case MENU_F2LONG:
-        case MENU_MLONG:
-            {
-                uint8_t * fun[]= {
-                    &gEeprom.KEY_1_SHORT_PRESS_ACTION,
-                    &gEeprom.KEY_1_LONG_PRESS_ACTION,
-                    &gEeprom.KEY_2_SHORT_PRESS_ACTION,
-                    &gEeprom.KEY_2_LONG_PRESS_ACTION,
-                    &gEeprom.KEY_M_LONG_PRESS_ACTION};
-                *fun[UI_MENU_GetCurrentMenuId()-MENU_F1SHRT] = gSubMenu_SIDEFUNCTIONS[gSubMenuSelection].id;
-            }
-            break;
+            case MENU_F1SHRT:
+            case MENU_F1LONG:
+            case MENU_F2SHRT:
+            case MENU_F2LONG:
+            case MENU_MLONG:
+                {
+                    uint8_t * fun[]= {
+                        &gEeprom.KEY_1_SHORT_PRESS_ACTION,
+                        &gEeprom.KEY_1_LONG_PRESS_ACTION,
+                        &gEeprom.KEY_2_SHORT_PRESS_ACTION,
+                        &gEeprom.KEY_2_LONG_PRESS_ACTION,
+                        &gEeprom.KEY_M_LONG_PRESS_ACTION};
+                    *fun[UI_MENU_GetCurrentMenuId()-MENU_F1SHRT] = gSubMenu_SIDEFUNCTIONS[gSubMenuSelection].id;
+                }
+                break;
 #endif
 
     }
@@ -937,9 +939,9 @@ void MENU_ShowCurrentSetting(void) {
             break;
 #ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
 
-		case MENU_W_N:
-			gSubMenuSelection = gTxVfo->CHANNEL_BANDWIDTH;
-			break;
+            case MENU_W_N:
+                gSubMenuSelection = gTxVfo->CHANNEL_BANDWIDTH;
+                break;
 #endif
         case MENU_SCR:
             gSubMenuSelection = gTxVfo->SCRAMBLING_TYPE;
@@ -1094,23 +1096,23 @@ void MENU_ShowCurrentSetting(void) {
 //			gSubMenuSelection = gSetting_battery_text;
 //			return;
 #ifdef ENABLE_DTMF_CALLING
-        #ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
+#ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
 
-            		case MENU_D_DCD:
-            			gSubMenuSelection = gTxVfo->DTMF_DECODING_ENABLE;
-            			break;
-        #endif
-                    case MENU_D_LIST:
-                        gSubMenuSelection = gDTMF_chosen_contact + 1;
-                        break;
+            case MENU_D_DCD:
+                gSubMenuSelection = gTxVfo->DTMF_DECODING_ENABLE;
+                break;
+#endif
+            case MENU_D_LIST:
+                gSubMenuSelection = gDTMF_chosen_contact + 1;
+                break;
 #endif
         case MENU_D_LIVE_DEC:
             gSubMenuSelection = gSetting_live_DTMF_decoder;
             break;
-#if ENABLE_CHINESE_FULL==4
-		case MENU_PONMSG:
-			gSubMenuSelection = gEeprom.POWER_ON_DISPLAY_MODE;
-			break;
+#if ENABLE_CHINESE_FULL == 4
+            case MENU_PONMSG:
+                gSubMenuSelection = gEeprom.POWER_ON_DISPLAY_MODE;
+                break;
 #endif
         case MENU_ROGER:
             gSubMenuSelection = gEeprom.ROGER;
@@ -1185,29 +1187,29 @@ void MENU_ShowCurrentSetting(void) {
             break;
 
 #ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
-		case MENU_F1SHRT:
-		case MENU_F1LONG:
-		case MENU_F2SHRT:
-		case MENU_F2LONG:
-		case MENU_MLONG:
-		{
-			uint8_t * fun[]= {
-				&gEeprom.KEY_1_SHORT_PRESS_ACTION,
-				&gEeprom.KEY_1_LONG_PRESS_ACTION,
-				&gEeprom.KEY_2_SHORT_PRESS_ACTION,
-				&gEeprom.KEY_2_LONG_PRESS_ACTION,
-				&gEeprom.KEY_M_LONG_PRESS_ACTION};
-			uint8_t id = *fun[UI_MENU_GetCurrentMenuId()-MENU_F1SHRT];
+            case MENU_F1SHRT:
+            case MENU_F1LONG:
+            case MENU_F2SHRT:
+            case MENU_F2LONG:
+            case MENU_MLONG:
+            {
+                uint8_t * fun[]= {
+                    &gEeprom.KEY_1_SHORT_PRESS_ACTION,
+                    &gEeprom.KEY_1_LONG_PRESS_ACTION,
+                    &gEeprom.KEY_2_SHORT_PRESS_ACTION,
+                    &gEeprom.KEY_2_LONG_PRESS_ACTION,
+                    &gEeprom.KEY_M_LONG_PRESS_ACTION};
+                uint8_t id = *fun[UI_MENU_GetCurrentMenuId()-MENU_F1SHRT];
 
-			for(int i = 0; i <gSubMenu_SIDEFUNCTIONS_size; i++) {
-				if(gSubMenu_SIDEFUNCTIONS[i].id==id) {
-					gSubMenuSelection = i;
-					break;
-				}
+                for(int i = 0; i <gSubMenu_SIDEFUNCTIONS_size; i++) {
+                    if(gSubMenu_SIDEFUNCTIONS[i].id==id) {
+                        gSubMenuSelection = i;
+                        break;
+                    }
 
-			}
-			break;
-		}
+                }
+                break;
+            }
 #endif
 
         default:
@@ -1226,13 +1228,19 @@ static void MENU_Key_0_to_9(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
 
     gBeepToPlay = BEEP_1KHZ_60MS_OPTIONAL;
     uint8_t now_menu = UI_MENU_GetCurrentMenuId();
+#ifdef ENABLE_MDC1200_EDIT
     uint8_t end_index = now_menu == MENU_MEM_NAME ? MAX_EDIT_INDEX : 4;
-
-    if ((now_menu == MENU_MEM_NAME
-         #ifdef ENABLE_MDC1200
-    || now_menu == MENU_MDC_ID
+#else
+    uint8_t end_index = MAX_EDIT_INDEX;
 #endif
-    ) &&
+    if ((now_menu == MENU_MEM_NAME
+#ifdef ENABLE_MDC1200
+#ifdef ENABLE_MDC1200_EDIT
+                || now_menu == MENU_MDC_ID
+#endif
+
+#endif
+        ) &&
         edit_index >= 0) {    // currently editing the channel name
 
         if (edit_index < end_index) {
@@ -1264,6 +1272,10 @@ static void MENU_Key_0_to_9(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
 
                 if (Value > 0 && Value <= gMenuListCount) {
                     gMenuCursor = Value - 1;
+#ifndef ENABLE_MDC1200
+                    if (gMenuCursor + 1 >= 26)gMenuCursor++;
+
+#endif
                     gFlagRefreshSetting = true;
                     return;
                 }
@@ -1278,6 +1290,10 @@ static void MENU_Key_0_to_9(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
                 Value = gInputBox[0];
                 if (Value > 0 && Value <= gMenuListCount) {
                     gMenuCursor = Value - 1;
+#ifndef ENABLE_MDC1200
+                    if (gMenuCursor + 1 >= 26)gMenuCursor++;
+
+#endif
                     gFlagRefreshSetting = true;
                     return;
                 }
@@ -1426,27 +1442,26 @@ static void MENU_Key_EXIT(bool bKeyPressed, bool bKeyHeld) {
 static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld) {
     if (bKeyHeld || !bKeyPressed)
         return;
-
     gBeepToPlay = BEEP_1KHZ_60MS_OPTIONAL;
     gRequestDisplayScreen = DISPLAY_MENU;
-
     if (!gIsInSubMenu) {
 #ifdef ENABLE_VOICE
         if (UI_MENU_GetCurrentMenuId() != MENU_SCR)
             gAnotherVoiceID = MenuList[gMenuCursor].voice_id;
 #endif
-
-
         if (UI_MENU_GetCurrentMenuId() == MENU_DEL_CH || UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME)
             if (!RADIO_CheckValidChannel(gSubMenuSelection, false, 0))
                 return;  // invalid channel
         if (UI_MENU_GetCurrentMenuId() == MENU_UPCODE
             || UI_MENU_GetCurrentMenuId() == MENU_DWCODE
-#ifdef ENABLE_DTMF_CALLING
+            #ifdef ENABLE_DTMF_CALLING
             || UI_MENU_GetCurrentMenuId() == MENU_ANI_ID
+            #endif
+            #ifndef ENABLE_MDC1200_EDIT
+            || UI_MENU_GetCurrentMenuId() == MENU_MDC_ID
 #endif
                 )
-                return;  // invalid
+            return;  // invalid
         gAskForConfirmation = 0;
         gIsInSubMenu = true;
 
@@ -1456,23 +1471,18 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld) {
             edit_index = -1;
         }
 #ifdef ENABLE_MDC1200
+#ifdef ENABLE_MDC1200_EDIT
         if (UI_MENU_GetCurrentMenuId() == MENU_MDC_ID)
     {
-
                 edit_index = 0;
-
             memmove(edit_original, edit, sizeof(edit_original));
-
-
-
     }
-
-
-
+#endif
 #endif
         return;
     }
 #ifdef ENABLE_MDC1200
+#ifdef ENABLE_MDC1200_EDIT
 
     if (UI_MENU_GetCurrentMenuId() == MENU_MDC_ID && edit_index < 4) {    // editing the channel name characters
 
@@ -1490,6 +1500,8 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld) {
         }
 
     }
+#endif
+
 #endif
     if (UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME) {
         if (edit_index < 0) {    // enter channel name edit mode
@@ -1543,10 +1555,14 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld) {
             UI_MENU_GetCurrentMenuId() == MENU_DEL_CH ||
             UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME
 #ifdef ENABLE_MDC1200
+#ifdef ENABLE_MDC1200_EDIT
+
             ||
 UI_MENU_GetCurrentMenuId() == MENU_MDC_ID
-            #endif
-) {
+#endif
+#endif
+
+                ) {
             switch (gAskForConfirmation) {
                 case 0:
                     gAskForConfirmation = 1;
@@ -1662,7 +1678,7 @@ static void MENU_Key_UP_DOWN(bool bKeyPressed, bool bKeyHeld, int8_t Direction) 
             return;
         }
 #ifdef ENABLE_MDC1200
-
+#ifdef ENABLE_MDC1200_EDIT
         else if (UI_MENU_GetCurrentMenuId() == MENU_MDC_ID) {
             if (bKeyPressed && edit_index < 4) {
                 char c = edit[edit_index] + Direction;
@@ -1679,6 +1695,8 @@ static void MENU_Key_UP_DOWN(bool bKeyPressed, bool bKeyHeld, int8_t Direction) 
             return;
         }
 #endif
+#endif
+
     }
     if (!bKeyHeld) {
         if (!bKeyPressed)
@@ -1695,8 +1713,12 @@ static void MENU_Key_UP_DOWN(bool bKeyPressed, bool bKeyHeld, int8_t Direction) 
     }
 
     if (!gIsInSubMenu) {
+        uint8_t last_num = gMenuCursor;
         gMenuCursor = NUMBER_AddWithWraparound(gMenuCursor, -Direction, 0, gMenuListCount - 1);
-
+#ifndef ENABLE_MDC1200
+        if (last_num + 1 < 26 && gMenuCursor + 1 == 26)gMenuCursor++;
+        else if (last_num + 1 == 27 && gMenuCursor + 1 == 26)gMenuCursor--;
+#endif
         gFlagRefreshSetting = true;
 
         gRequestDisplayScreen = DISPLAY_MENU;
