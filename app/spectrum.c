@@ -13,7 +13,7 @@
  *     See the License for the specific language governing permissions and
  *     limitations under the License.
  */
-#define ENABLE_DOPPLER
+//#define ENABLE_DOPPLER
 
 #ifdef ENABLE_DOPPLER
 
@@ -454,11 +454,15 @@ uint16_t GetRssi() {
 }
 
 static void ToggleRX(bool on) {
-    if(isTransmitting&&on)return;
+//    if(isTransmitting&&on)return;
+
+
     isListening = on;
     if (on) {
         ToggleTX(false);
     }
+
+
     RADIO_SetupAGC(on, lockAGC);
     BK4819_ToggleGpioOut(BK4819_GPIO6_PIN2_GREEN, on);
 
