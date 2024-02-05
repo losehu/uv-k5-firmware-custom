@@ -200,7 +200,42 @@ static void ToggleTX(bool on) {
     BK4819_ToggleGpioOut(BK4819_GPIO5_PIN1_RED, on);
 
     if (on) {
+        ToggleAudio(false);
+        fMeasure=14550000;
+        SetTxF( fMeasure,true);
 
+
+
+        RegBackupSet(BK4819_REG_51, 0x0000);
+
+
+        // *******************************
+        // output power
+
+        FREQUENCY_Band_t  Band = FREQUENCY_GetBand(fMeasure);
+        uint8_t Txp[3];
+        EEPROM_ReadBuffer(0x1ED0 + (Band * 16) + (OUTPUT_POWER_HIGH * 3), Txp, 3);
+
+
+        uint8_t TXP_CalculatedSetting = FREQUENCY_CalculateOutputPower(
+                Txp[0],
+                Txp[1],
+                Txp[2],
+                frequencyBandTable[Band].lower,
+                (frequencyBandTable[Band].lower + frequencyBandTable[Band].upper) / 2,
+                frequencyBandTable[Band].upper,
+                fMeasure);
+
+        BK4819_SetupPowerAmplifier(TXP_CalculatedSetting,
+                                   fMeasure);
+
+
+
+        SYSTEM_DelayMs(10);
+
+//                BK4819_ExitSubAu();
+//TODO:亚音
+        BK4819_SetCTCSSFrequency(885);
 
 
     } else {
