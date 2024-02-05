@@ -198,22 +198,12 @@ static void ToggleTX(bool on) {
     }
 
     BK4819_ToggleGpioOut(BK4819_GPIO5_PIN1_RED, on);
-    BK4819_ToggleGpioOut(BK4819_GPIO6_PIN2_GREEN, !on);
+//    BK4819_ToggleGpioOut(BK4819_GPIO6_PIN2_GREEN, !on);
 
     if (on) {
         ToggleAudio(false);
         fMeasure=14550000;
         SetTxF( fMeasure,true);
-
-
-        BK4819_SetFrequency(fMeasure);
-        BK4819_PickRXFilterPathBasedOnFrequency(fMeasure);
-        uint16_t reg = BK4819_ReadRegister(BK4819_REG_30);
-        BK4819_WriteRegister(BK4819_REG_30, 0);
-        BK4819_WriteRegister(BK4819_REG_30, reg);
-
-        BK4819_WriteRegister(BK4819_REG_30, 0x0200); // from radtel-rt-890-oefw
-        BK4819_WriteRegister(BK4819_REG_30, reg);
 
 
 
@@ -226,8 +216,36 @@ static void ToggleTX(bool on) {
         BK4819_WriteRegister(BK4819_REG_30, 0xC1FE);
         RegBackupSet(BK4819_REG_51, 0x0000);
 
-        BK4819_SetupPowerAmplifier(gCurrentVfo->TXP_CalculatedSetting,
-                                   gCurrentVfo->pTX->Frequency);
+
+        // *******************************
+        // output power
+
+        FREQUENCY_Band_t  Band = FREQUENCY_GetBand(fMeasure);
+        uint8_t Txp[3];
+        EEPROM_ReadBuffer(0x1ED0 + (Band * 16) + (OUTPUT_POWER_HIGH * 3), Txp, 3);
+
+
+       uint8_t TXP_CalculatedSetting = FREQUENCY_CalculateOutputPower(
+                Txp[0],
+                Txp[1],
+                Txp[2],
+                frequencyBandTable[Band].lower,
+                (frequencyBandTable[Band].lower + frequencyBandTable[Band].upper) / 2,
+                frequencyBandTable[Band].upper,
+                fMeasure);
+
+        BK4819_SetupPowerAmplifier(TXP_CalculatedSetting,
+                                   fMeasure);
+
+
+
+        SYSTEM_DelayMs(10);
+
+//                BK4819_ExitSubAu();
+
+                BK4819_SetCTCSSFrequency(885);
+
+
     } else {
 
 
@@ -250,19 +268,7 @@ static void ToggleTX(bool on) {
 //TODO:发射频率
         fMeasure = 43850000;
 
-        BK4819_SetFrequency(fMeasure);
-        BK4819_PickRXFilterPathBasedOnFrequency(fMeasure);
-        uint16_t reg = BK4819_ReadRegister(BK4819_REG_30);
-        BK4819_WriteRegister(BK4819_REG_30, 0);
-        BK4819_WriteRegister(BK4819_REG_30, reg);
-
-
-
-
-
-        BK4819_WriteRegister(BK4819_REG_30, 0x0200); // from radtel-rt-890-oefw
-        BK4819_WriteRegister(BK4819_REG_30, reg);
-
+        SetTxF(fMeasure, true);
     }
     BK4819_ToggleGpioOut(BK4819_GPIO0_PIN28_RX_ENABLE, !on);
     BK4819_ToggleGpioOut(BK4819_GPIO1_PIN29_PA_ENABLE, on);
@@ -1328,8 +1334,8 @@ static void RenderStill() {
         offset = PAD_LEFT + i * CELL_WIDTH;
         if (menuState == idx) {
             for (int j = 0; j < CELL_WIDTH; ++j) {
-                gFrameBuffer[row][j + offset] = 0xFF;
-                gFrameBuffer[row + 1][j + offset] = 0xFF;
+                gFrameBuffer[3][j + offset] = 0xFF;
+                gFrameBuffer[3 + 1][j + offset] = 0xFF;
             }
         }
         DATA_LINE = row * 8 + 2;
