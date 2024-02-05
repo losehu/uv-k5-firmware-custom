@@ -20,15 +20,11 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="修改多普勒eeprom">
+    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="IDE赞助">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/app.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/doppler.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/doppler.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/spectrum.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/spectrum.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/driver/eeprom.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/eeprom.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment/sponsors.md" beforeDir="false" afterPath="$PROJECT_DIR$/payment/sponsors.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.c" beforeDir="false" afterPath="$PROJECT_DIR$/settings.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,11 +107,6 @@
     <configuration name="uv_k5_firmware_custom_0_17" type="CLionNativeAppRunConfigurationType" nameIsGenerated="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="uv_k5_firmware_custom_0_17" TARGET_NAME="uv_k5_firmware_custom_0_17" CONFIG_NAME="Debug" version="1" RUN_TARGET_PROJECT_NAME="uv_k5_firmware_custom_0_17" RUN_TARGET_NAME="uv_k5_firmware_custom_0_17">
       <method v="2">
         <option name="CLION.COMPOUND.BUILD" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="Makefile" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile">
@@ -349,21 +340,8 @@
       <workItem from="1706538744293" duration="305000" />
       <workItem from="1706846894570" duration="18000" />
       <workItem from="1706929020661" duration="17226000" />
-      <workItem from="1707013614727" duration="37216000" />
-    </task>
-    <task id="LOCAL-00104" summary="简化EEPROM驱动逻辑&#10;改为STLINK-SWD烧录">
-      <created>1704446603814</created>
-      <option name="number" value="00104" />
-      <option name="presentableId" value="LOCAL-00104" />
-      <option name="project" value="LOCAL" />
-      <updated>1704446603814</updated>
-    </task>
-    <task id="LOCAL-00105" summary="赞助更新">
-      <created>1704447222941</created>
-      <option name="number" value="00105" />
-      <option name="presentableId" value="LOCAL-00105" />
-      <option name="project" value="LOCAL" />
-      <updated>1704447222941</updated>
+      <workItem from="1707013614727" duration="40568000" />
+      <workItem from="1707106340612" duration="10364000" />
     </task>
     <task id="LOCAL-00106" summary="减少eeprom延时">
       <created>1704451604305</created>
@@ -694,7 +672,21 @@
       <option name="project" value="LOCAL" />
       <updated>1707042414491</updated>
     </task>
-    <option name="localTasksCounter" value="153" />
+    <task id="LOCAL-00153" summary="修复中断eeprom冲突">
+      <created>1707058095589</created>
+      <option name="number" value="00153" />
+      <option name="presentableId" value="LOCAL-00153" />
+      <option name="project" value="LOCAL" />
+      <updated>1707058095589</updated>
+    </task>
+    <task id="LOCAL-00154" summary="IDE赞助">
+      <created>1707058107103</created>
+      <option name="number" value="00154" />
+      <option name="presentableId" value="LOCAL-00154" />
+      <option name="project" value="LOCAL" />
+      <updated>1707058107103</updated>
+    </task>
+    <option name="localTasksCounter" value="155" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -724,8 +716,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="makefile" />
-    <MESSAGE value="回档" />
     <MESSAGE value="重构显示函数" />
     <MESSAGE value="修复MDC 短信显示" />
     <MESSAGE value="修改字库" />
@@ -749,7 +739,9 @@
     <MESSAGE value="星图绘制一半" />
     <MESSAGE value="删除星图" />
     <MESSAGE value="修改多普勒eeprom" />
-    <option name="LAST_COMMIT_MESSAGE" value="修改多普勒eeprom" />
+    <MESSAGE value="修复中断eeprom冲突" />
+    <MESSAGE value="IDE赞助" />
+    <option name="LAST_COMMIT_MESSAGE" value="IDE赞助" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

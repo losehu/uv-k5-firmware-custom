@@ -39,13 +39,36 @@
 #include "frequencies.h"
 #include "ui/helper.h"
 #include "ui/main.h"
+static void ToggleRX(bool on) ;
 
 struct FrequencyBandInfo {
     uint32_t lower;
     uint32_t upper;
     uint32_t middle;
 };
+int Mid(uint16_t *array, uint8_t n) {
+    int32_t sum = 0;
+    for (int i = 0; i < n; ++i) {
+        sum += array[i];
+    }
+    return sum / n;
+}
 
+static void UpdateBatteryInfo() {
+    for (uint8_t i = 0; i < 4; i++) {
+        BOARD_ADC_GetBatteryInfo(&gBatteryVoltages[i], &gBatteryCurrent);
+    }
+
+    uint16_t voltage = Mid(gBatteryVoltages, ARRAY_SIZE(gBatteryVoltages));
+    gBatteryDisplayLevel = 0;
+
+    for (int i = ARRAY_SIZE(gBatteryCalibration) - 1; i >= 0; --i) {
+        if (gBatteryCalibration[i] < voltage) {
+            gBatteryDisplayLevel = i + 1;
+            break;
+        }
+    }
+}
 #define F_MIN frequencyBandTable[0].lower
 #define F_MAX frequencyBandTable[BAND_N_ELEM - 1].upper
 
@@ -56,7 +79,7 @@ static char String[32];
 #ifdef ENABLE_DOPPLER
 bool DOPPLER_MODE = 0;
 #endif
-bool TX_ON=false;
+bool TX_ON = false;
 bool isInitialized = false;
 bool isListening = true;
 bool monitorMode = false;
@@ -117,6 +140,8 @@ RegisterSpec registerSpecs[] = {
 };
 
 uint16_t statuslineUpdateTimer = 0;
+VfoState_t txAllowState;
+bool isTransmitting = false;
 
 static uint8_t DBm2S(int dbm) {
     uint8_t i = 0;
@@ -128,7 +153,120 @@ static uint8_t DBm2S(int dbm) {
     }
     return i;
 }
+uint16_t registersVault[128] = {0};
 
+static void RegBackupSet(uint8_t num, uint16_t value) {
+    registersVault[num] = BK4819_ReadRegister(num);
+    BK4819_WriteRegister(num, value);
+}
+static void RegRestore(uint8_t num) {
+    BK4819_WriteRegister(num, registersVault[num]);
+}
+
+static void ToggleAudio(bool on) {
+    if (on == audioState) {
+        return;
+    }
+    audioState = on;
+    if (on) {
+        AUDIO_AudioPathOn();
+    } else {
+        AUDIO_AudioPathOff();
+    }
+}
+
+void SetTxF(uint32_t f, bool precise) {
+    BK4819_PickRXFilterPathBasedOnFrequency(f);
+    BK4819_SetFrequency(f);
+    uint16_t reg = BK4819_ReadRegister(BK4819_REG_30);
+    if (precise) {
+        BK4819_WriteRegister(BK4819_REG_30, 0x0200); // from radtel-rt-890-oefw
+    } else {
+        BK4819_WriteRegister(BK4819_REG_30, reg & ~BK4819_REG_30_ENABLE_VCO_CALIB);
+    }
+    BK4819_WriteRegister(BK4819_REG_30, reg);
+}
+
+
+static void ToggleTX(bool on) {
+    if (isTransmitting == on) {
+        return;
+    }
+    isTransmitting = on;
+    if (on) {
+        ToggleRX(false);
+    }
+
+    BK4819_ToggleGpioOut(BK4819_GPIO5_PIN1_RED, on);
+    BK4819_ToggleGpioOut(BK4819_GPIO6_PIN2_GREEN, !on);
+
+    if (on) {
+        ToggleAudio(false);
+        fMeasure=14550000;
+        SetTxF( fMeasure,true);
+
+
+        BK4819_SetFrequency(fMeasure);
+        BK4819_PickRXFilterPathBasedOnFrequency(fMeasure);
+        uint16_t reg = BK4819_ReadRegister(BK4819_REG_30);
+        BK4819_WriteRegister(BK4819_REG_30, 0);
+        BK4819_WriteRegister(BK4819_REG_30, reg);
+
+        BK4819_WriteRegister(BK4819_REG_30, 0x0200); // from radtel-rt-890-oefw
+        BK4819_WriteRegister(BK4819_REG_30, reg);
+
+
+
+        RegBackupSet(BK4819_REG_47, 0x6040);
+        RegBackupSet(BK4819_REG_7E, 0x302E);
+        RegBackupSet(BK4819_REG_50, 0x3B20);
+        RegBackupSet(BK4819_REG_37, 0x1D0F);
+        RegBackupSet(BK4819_REG_52, 0x028F);
+        RegBackupSet(BK4819_REG_30, 0x0000);
+        BK4819_WriteRegister(BK4819_REG_30, 0xC1FE);
+        RegBackupSet(BK4819_REG_51, 0x0000);
+
+        BK4819_SetupPowerAmplifier(gCurrentVfo->TXP_CalculatedSetting,
+                                   gCurrentVfo->pTX->Frequency);
+    } else {
+
+
+        BK4819_GenTail(4); // CTC55
+        BK4819_WriteRegister(BK4819_REG_51, 0x904A);
+
+
+
+        SYSTEM_DelayMs(200);
+        BK4819_SetupPowerAmplifier(0, 0);
+
+        RegRestore(BK4819_REG_51);
+        BK4819_WriteRegister(BK4819_REG_30, 0);
+        RegRestore(BK4819_REG_30);
+        RegRestore(BK4819_REG_52);
+        RegRestore(BK4819_REG_37);
+        RegRestore(BK4819_REG_50);
+        RegRestore(BK4819_REG_7E);
+        RegRestore(BK4819_REG_47);
+//TODO:发射频率
+        fMeasure = 43850000;
+
+        BK4819_SetFrequency(fMeasure);
+        BK4819_PickRXFilterPathBasedOnFrequency(fMeasure);
+        uint16_t reg = BK4819_ReadRegister(BK4819_REG_30);
+        BK4819_WriteRegister(BK4819_REG_30, 0);
+        BK4819_WriteRegister(BK4819_REG_30, reg);
+
+
+
+
+
+        BK4819_WriteRegister(BK4819_REG_30, 0x0200); // from radtel-rt-890-oefw
+        BK4819_WriteRegister(BK4819_REG_30, reg);
+
+    }
+    BK4819_ToggleGpioOut(BK4819_GPIO0_PIN28_RX_ENABLE, !on);
+    BK4819_ToggleGpioOut(BK4819_GPIO1_PIN29_PA_ENABLE, on);
+}
 static int Rssi2DBm(uint16_t rssi) {
     return (rssi / 2) - 160 + dBmCorrTable[gRxVfo->Band];
 }
@@ -197,13 +335,16 @@ static void ToggleAFBit(bool on) {
 }
 
 static const BK4819_REGISTER_t registers_to_save[] = {
-        BK4819_REG_30,
-        BK4819_REG_37,
-        BK4819_REG_3D,
-        BK4819_REG_43,
-        BK4819_REG_47,
-        BK4819_REG_48,
-        BK4819_REG_7E,
+//        BK4819_REG_30,
+//        BK4819_REG_37,
+//        BK4819_REG_3D,
+//        BK4819_REG_43,
+//        BK4819_REG_47,
+//        BK4819_REG_48,
+//        BK4819_REG_7E,
+
+        0x13, 0x30, 0x31, 0x37, 0x3D, 0x40, 0x43, 0x47, 0x48, 0x7D, 0x7E,
+
 };
 
 static uint16_t registers_stack[sizeof(registers_to_save)];
@@ -237,6 +378,11 @@ static void SetF(uint32_t f) {
     uint16_t reg = BK4819_ReadRegister(BK4819_REG_30);
     BK4819_WriteRegister(BK4819_REG_30, 0);
     BK4819_WriteRegister(BK4819_REG_30, reg);
+
+
+
+
+
 }
 
 // Spectrum related
@@ -301,21 +447,12 @@ uint16_t GetRssi() {
     return rssi;
 }
 
-static void ToggleAudio(bool on) {
-    if (on == audioState) {
-        return;
-    }
-    audioState = on;
-    if (on) {
-        AUDIO_AudioPathOn();
-    } else {
-        AUDIO_AudioPathOff();
-    }
-}
-
 static void ToggleRX(bool on) {
+    if(isTransmitting&&on)return;
     isListening = on;
-
+    if (on) {
+        ToggleTX(false);
+    }
     RADIO_SetupAGC(on, lockAGC);
     BK4819_ToggleGpioOut(BK4819_GPIO6_PIN2_GREEN, on);
 
@@ -954,7 +1091,6 @@ static void OnKeyDownFreqInput(uint8_t key) {
     }
 }
 
-
 void OnKeyDownStill(KEY_Code_t key) {
     switch (key) {
         case KEY_3:
@@ -1017,7 +1153,15 @@ void OnKeyDownStill(KEY_Code_t key) {
             ToggleBacklight();
             break;
         case KEY_PTT:
-
+            // start transmit
+            UpdateBatteryInfo();
+            if (gBatteryDisplayLevel == 6) {
+                txAllowState = VFO_STATE_VOLTAGE_HIGH;
+            } else {
+                txAllowState = VFO_STATE_NORMAL;
+                ToggleTX(true);
+            }
+            redrawScreen = true;
             break;
         case KEY_MENU:
             if (menuState == ARRAY_SIZE(registerSpecs) - 1) {
@@ -1054,7 +1198,9 @@ void OnKeyDownStill(KEY_Code_t key) {
 static void RenderFreqInput() {
     UI_PrintStringSmall(freqInputString, 2, 127, 0);
 }
+
 static void UpdateStill() {
+    if(TX_ON)return;
     Measure();
     redrawScreen = true;
     preventKeypress = false;
@@ -1062,8 +1208,9 @@ static void UpdateStill() {
     peak.rssi = scanInfo.rssi;
     AutoTriggerLevel();
 
-    ToggleRX(!TX_ON&&(IsPeakOverLevel() || monitorMode));
+    ToggleRX( (IsPeakOverLevel() || monitorMode));
 }
+
 static void RenderStatus(bool refresh) {
 
     memset(gStatusLine, 0, refresh ? sizeof(gStatusLine) : 115);
@@ -1227,92 +1374,20 @@ static void Render() {
 bool HandleUserInput() {
     kbd.prev = kbd.current;
     kbd.current = GetKey();
-
-#ifdef ENABLE_DOPPLER
-    if(currentState == STILL && DOPPLER_MODE ) {
-        if ( kbd.current == KEY_PTT && kbd.current != kbd.prev) {
-            //TODO:开始发射、发射频率
-            TX_ON = true;
-            UpdateStill();
-
-            BK4819_DisableDTMF();
-
-
-
-            uint32_t TX_FREQ=14550000;
-
-            uint8_t read_tmp[2];
-
-            AUDIO_AudioPathOff();
-
-
-            BK4819_ToggleGpioOut(BK4819_GPIO0_PIN28_RX_ENABLE, false);
-
-
-#ifdef ENABLE_AM_FIX
-            BK4819_SetFilterBandwidth(BK4819_FILTER_BW_WIDE, true);
-#else
-            BK4819_SetFilterBandwidth(BK4819_FILTER_BW_WIDE, false);
-#endif
-
-
-            BK4819_SetFrequency(TX_FREQ);
-
-            // TX compressor
-            BK4819_SetCompander( 0);
-
-            BK4819_PrepareTransmit();
-
-            SYSTEM_DelayMs(10);
-
-            BK4819_PickRXFilterPathBasedOnFrequency(TX_FREQ);
-
-            BK4819_ToggleGpioOut(BK4819_GPIO1_PIN29_PA_ENABLE, true);
-
-            SYSTEM_DelayMs(5);
-            FREQUENCY_Band_t  Band = FREQUENCY_GetBand(TX_FREQ);
-
-            uint8_t Txp[3];
-            EEPROM_ReadBuffer(0x1ED0 + (Band * 16) + (OUTPUT_POWER_HIGH * 3), Txp, 3);
-            uint8_t TXP_CalculatedSetting = FREQUENCY_CalculateOutputPower(
-                    Txp[0],
-                    Txp[1],
-                    Txp[2],
-                    frequencyBandTable[Band].lower,
-                    (frequencyBandTable[Band].lower + frequencyBandTable[Band].upper) / 2,
-                    frequencyBandTable[Band].upper,
-                    TX_FREQ);
-
-
-            BK4819_SetupPowerAmplifier(TXP_CalculatedSetting, TX_FREQ);
-//RADIO_SetTxParameters
-            SYSTEM_DelayMs(10);
-            //TODO:亚音
-//        BK4819_ExitSubAu();
-            BK4819_SetCTCSSFrequency(885);
-
-            BK4819_ToggleGpioOut(BK4819_GPIO6_PIN2_GREEN, false);
-            BK4819_ToggleGpioOut(BK4819_GPIO5_PIN1_RED, true);
-            BK4819_DisableScramble();
-        } else if ( kbd.current == KEY_INVALID && kbd.prev == KEY_PTT) {
-            //TODO:停止发射
-
-            BK4819_ToggleGpioOut(BK4819_GPIO6_PIN2_GREEN, false);
-            BK4819_ToggleGpioOut(BK4819_GPIO5_PIN1_RED, false);
-            TX_ON = false;
-            UpdateStill();
-
+    if (kbd.current == KEY_INVALID) {
+        kbd.counter = 0;
+        if (isTransmitting) {
+            ToggleTX(false);
         }
+        return true;
     }
-#endif
+
     if (kbd.current != KEY_INVALID && kbd.current == kbd.prev) {
         if (kbd.counter < 16)
             kbd.counter++;
         else
             kbd.counter -= 2;
         SYSTEM_DelayMs(5);
-    } else {
-        kbd.counter = 0;
     }
 
     if (kbd.counter == 2 || kbd.counter == 16) {
@@ -1375,8 +1450,6 @@ static void UpdateScan() {
 
     newScanStart = true;
 }
-
-
 
 
 static void UpdateListening() {
@@ -1473,7 +1546,9 @@ static void Tick() {
         redrawScreen = false;
     }
 }
-bool INT_FLAG=0;
+
+bool INT_FLAG = 0;
+
 void APP_RunSpectrum() {
 
     // TX here coz it always? set to active VFO
