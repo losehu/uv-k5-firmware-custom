@@ -39,13 +39,15 @@
 #include "frequencies.h"
 #include "ui/helper.h"
 #include "ui/main.h"
-static void ToggleRX(bool on) ;
+
+static void ToggleRX(bool on);
 
 struct FrequencyBandInfo {
     uint32_t lower;
     uint32_t upper;
     uint32_t middle;
 };
+
 int Mid(uint16_t *array, uint8_t n) {
     int32_t sum = 0;
     for (int i = 0; i < n; ++i) {
@@ -69,6 +71,7 @@ static void UpdateBatteryInfo() {
         }
     }
 }
+
 #define F_MIN frequencyBandTable[0].lower
 #define F_MAX frequencyBandTable[BAND_N_ELEM - 1].upper
 
@@ -153,12 +156,14 @@ static uint8_t DBm2S(int dbm) {
     }
     return i;
 }
+
 uint16_t registersVault[128] = {0};
 
 static void RegBackupSet(uint8_t num, uint16_t value) {
     registersVault[num] = BK4819_ReadRegister(num);
     BK4819_WriteRegister(num, value);
 }
+
 static void RegRestore(uint8_t num) {
     BK4819_WriteRegister(num, registersVault[num]);
 }
@@ -200,142 +205,52 @@ static void ToggleTX(bool on) {
     BK4819_ToggleGpioOut(BK4819_GPIO5_PIN1_RED, on);
 
     if (on) {
-        fMeasure=14550000;
+        fMeasure = 14550000;
 
 
-
-            {
-                uint16_t                 InterruptMask;
-                uint32_t                 Frequency;
-                uint8_t read_tmp[2];
-                AUDIO_AudioPathOff();
-
-
-
-                BK4819_ToggleGpioOut(BK4819_GPIO6_PIN2_GREEN, false);
-
-
-                BK4819_SetFilterBandwidth(0, false);
-
-
-                BK4819_ToggleGpioOut(BK4819_GPIO5_PIN1_RED, false);
-
-                BK4819_SetupPowerAmplifier(0, 0);
-
-                BK4819_ToggleGpioOut(BK4819_GPIO1_PIN29_PA_ENABLE, false);
-
-                while (1)
-                {
-                    const uint16_t Status = BK4819_ReadRegister(BK4819_REG_0C);
-                    if ((Status & 1u) == 0) // INTERRUPT REQUEST
-                        break;
-
-                    BK4819_WriteRegister(BK4819_REG_02, 0);
-                    SYSTEM_DelayMs(1);
-                }
-                BK4819_WriteRegister(BK4819_REG_3F, 0);
-
-                // mic gain 0.5dB/step 0 to 31
-                BK4819_WriteRegister(BK4819_REG_7D, 0xE940 | (gEeprom.MIC_SENSITIVITY_TUNING & 0x1f));
-
-                Frequency =fMeasure;
-
-                BK4819_SetFrequency(Frequency);
-//
-//                BK4819_SetupSquelch(
-//                        gRxVfo->SquelchOpenRSSIThresh,    gRxVfo->SquelchCloseRSSIThresh,
-//                        gRxVfo->SquelchOpenNoiseThresh,   gRxVfo->SquelchCloseNoiseThresh,
-//                        gRxVfo->SquelchCloseGlitchThresh, gRxVfo->SquelchOpenGlitchThresh);
-
-                BK4819_PickRXFilterPathBasedOnFrequency(Frequency);
-
-                // what does this in do ?
-                BK4819_ToggleGpioOut(BK4819_GPIO0_PIN28_RX_ENABLE, true);
-
-                // AF RX Gain and DAC
-                //BK4819_WriteRegister(BK4819_REG_48, 0xB3A8);  // 1011 00 111010 1000
-                BK4819_WriteRegister(BK4819_REG_48,
-                                     (11u << 12)                 |     // ??? .. 0 ~ 15, doesn't seem to make any difference
-                                     ( 0u << 10)                 |     // AF Rx Gain-1
-                                     (gEeprom.VOLUME_GAIN << 4) |     // AF Rx Gain-2
-                                     (gEeprom.DAC_GAIN    << 0));     // AF DAC Gain (after Gain-1 and Gain-2)
-
-
-                InterruptMask = BK4819_REG_3F_SQUELCH_FOUND | BK4819_REG_3F_SQUELCH_LOST;
-
-
-
-                        uint8_t CodeType = gRxVfo->pRX->CodeType;
-                        uint8_t Code     = gRxVfo->pRX->Code;
-
-                        switch (CodeType)
-                        {
-                            default:
-                            case CODE_TYPE_OFF:
-                                BK4819_SetCTCSSFrequency(670);
-
-                                //#ifndef ENABLE_CTCSS_TAIL_PHASE_SHIFT
-                                BK4819_SetTailDetection(550);		// QS's 55Hz tone method
-                                //#else
-                                //	BK4819_SetTailDetection(670);       // 67Hz
-                                //#endif
-
-                                InterruptMask = BK4819_REG_3F_CxCSS_TAIL | BK4819_REG_3F_SQUELCH_FOUND | BK4819_REG_3F_SQUELCH_LOST;
-                                break;
-
-                            case CODE_TYPE_CONTINUOUS_TONE:
-
-#if ENABLE_CHINESE_FULL==0
-                                BK4819_SetCTCSSFrequency(CTCSS_Options[Code]);
-#else
-                                EEPROM_ReadBuffer(0x02C00+(Code)*2, read_tmp, 2);
-        uint16_t CTCSS_Options_read=read_tmp[0]|(read_tmp[1]<<8);
-                    BK4819_SetCTCSSFrequency(CTCSS_Options_read);
-
-#endif
-                                //#ifndef ENABLE_CTCSS_TAIL_PHASE_SHIFT
-                                BK4819_SetTailDetection(550);		// QS's 55Hz tone method
-                                //#else
-                                //	BK4819_SetTailDetection(CTCSS_Options[Code]);
-                                //#endif
-
-                                InterruptMask = 0
-                                                | BK4819_REG_3F_CxCSS_TAIL
-                                                | BK4819_REG_3F_CTCSS_FOUND
-                                                | BK4819_REG_3F_CTCSS_LOST
-                                                | BK4819_REG_3F_SQUELCH_FOUND
-                                                | BK4819_REG_3F_SQUELCH_LOST;
-
-                                break;
-
-
-                        }
-
-
-                            BK4819_DisableScramble();
-
-
-
-                // RX expander
-                BK4819_SetCompander( 0);
-
-                BK4819_EnableDTMF();
-                InterruptMask |= BK4819_REG_3F_DTMF_5TONE_FOUND;
-                RADIO_SetupAGC(gRxVfo->Modulation == MODULATION_AM, false);
-
-                BK4819_WriteRegister(BK4819_REG_3F, InterruptMask);
+        {
+            uint16_t InterruptMask;
+            AUDIO_AudioPathOff();
+            BK4819_ToggleGpioOut(BK4819_GPIO6_PIN2_GREEN, false);
+            BK4819_SetFilterBandwidth(0, false);
+            BK4819_ToggleGpioOut(BK4819_GPIO5_PIN1_RED, false);
+            BK4819_SetupPowerAmplifier(0, 0);
+            BK4819_ToggleGpioOut(BK4819_GPIO1_PIN29_PA_ENABLE, false);
+            while (1) {
+                const uint16_t Status = BK4819_ReadRegister(BK4819_REG_0C);
+                if ((Status & 1u) == 0) // INTERRUPT REQUEST
+                    break;
+                BK4819_WriteRegister(BK4819_REG_02, 0);
+                SYSTEM_DelayMs(1);
+            }
+            BK4819_WriteRegister(BK4819_REG_3F, 0);
+            BK4819_SetFrequency(fMeasure);
+            BK4819_PickRXFilterPathBasedOnFrequency(fMeasure);
+            // what does this in do ?
+            BK4819_ToggleGpioOut(BK4819_GPIO0_PIN28_RX_ENABLE, true);
+            BK4819_WriteRegister(BK4819_REG_48,
+                                 (11u << 12) |     // ??? .. 0 ~ 15, doesn't seem to make any difference
+                                 (0u << 10) |     // AF Rx Gain-1
+                                 (gEeprom.VOLUME_GAIN << 4) |     // AF Rx Gain-2
+                                 (gEeprom.DAC_GAIN << 0));     // AF DAC Gain (after Gain-1 and Gain-2)
+            InterruptMask = BK4819_REG_3F_SQUELCH_FOUND | BK4819_REG_3F_SQUELCH_LOST;
+            BK4819_SetCTCSSFrequency(885);
+            BK4819_SetTailDetection(550);        // QS's 55Hz tone method
+            InterruptMask = 0
+                            | BK4819_REG_3F_CxCSS_TAIL
+                            | BK4819_REG_3F_CTCSS_FOUND
+                            | BK4819_REG_3F_CTCSS_LOST
+                            | BK4819_REG_3F_SQUELCH_FOUND
+                            | BK4819_REG_3F_SQUELCH_LOST;
+            BK4819_DisableScramble();
+            BK4819_SetCompander(0);
+            BK4819_WriteRegister(BK4819_REG_3F, InterruptMask);
         }
 
 
+        RADIO_PrepareTX();
 
-
-
-
-
-
-            RADIO_PrepareTX();
-
-            // *******************************
+        // *******************************
         // output power
 //
 //        FREQUENCY_Band_t  Band = FREQUENCY_GetBand(fMeasure);
@@ -374,6 +289,7 @@ static void ToggleTX(bool on) {
     BK4819_ToggleGpioOut(BK4819_GPIO0_PIN28_RX_ENABLE, !on);
     BK4819_ToggleGpioOut(BK4819_GPIO1_PIN29_PA_ENABLE, on);
 }
+
 static int Rssi2DBm(uint16_t rssi) {
     return (rssi / 2) - 160 + dBmCorrTable[gRxVfo->Band];
 }
@@ -485,9 +401,6 @@ static void SetF(uint32_t f) {
     uint16_t reg = BK4819_ReadRegister(BK4819_REG_30);
     BK4819_WriteRegister(BK4819_REG_30, 0);
     BK4819_WriteRegister(BK4819_REG_30, reg);
-
-
-
 
 
 }
@@ -974,7 +887,7 @@ void DrawStatus(bool refresh) {
         GUI_DisplaySmallest(String, 42 + 53 - (settings.listenBw == 0 ? 8 : 0), 1, true, true);
     } else {
 #endif
-        GUI_DisplaySmallest(String, 0, 1, true, true);
+    GUI_DisplaySmallest(String, 0, 1, true, true);
 #ifdef ENABLE_DOPPLER
     }
 #endif
@@ -994,14 +907,14 @@ static void DrawF(uint32_t f) {
 
     } else {
 #endif
-        sprintf(String, "%u.%05u", f / 100000, f % 100000);
-        UI_PrintStringSmall(String, 8, 127, 0);
+    sprintf(String, "%u.%05u", f / 100000, f % 100000);
+    UI_PrintStringSmall(String, 8, 127, 0);
 
 
-        sprintf(String, "%3s", gModulationStr[settings.modulationType]);
-        GUI_DisplaySmallest(String, 116, 1, false, true);
-        sprintf(String, "%s", bwOptions[settings.listenBw]);
-        GUI_DisplaySmallest(String, 108, 7, false, true);
+    sprintf(String, "%3s", gModulationStr[settings.modulationType]);
+    GUI_DisplaySmallest(String, 116, 1, false, true);
+    sprintf(String, "%s", bwOptions[settings.listenBw]);
+    GUI_DisplaySmallest(String, 108, 7, false, true);
 #ifdef ENABLE_DOPPLER
     }
 #endif
@@ -1219,7 +1132,7 @@ void OnKeyDownStill(KEY_Code_t key) {
 #ifdef ENABLE_DOPPLER
             if (!DOPPLER_MODE)
 #endif
-                UpdateCurrentFreqStill(true);
+            UpdateCurrentFreqStill(true);
             break;
         case KEY_DOWN:
 
@@ -1230,7 +1143,7 @@ void OnKeyDownStill(KEY_Code_t key) {
 #ifdef ENABLE_DOPPLER
             if (!DOPPLER_MODE)
 #endif
-                UpdateCurrentFreqStill(false);
+            UpdateCurrentFreqStill(false);
 
             break;
         case KEY_STAR:
@@ -1248,7 +1161,7 @@ void OnKeyDownStill(KEY_Code_t key) {
 #endif
 
 
-                FreqInput();
+            FreqInput();
 
 
             break;
@@ -1256,7 +1169,7 @@ void OnKeyDownStill(KEY_Code_t key) {
 #ifdef ENABLE_DOPPLER
             if(!DOPPLER_MODE)
 #endif
-             ToggleModulation();
+            ToggleModulation();
             break;
         case KEY_6:
 #ifdef ENABLE_DOPPLER
@@ -1272,17 +1185,17 @@ void OnKeyDownStill(KEY_Code_t key) {
             break;
         case KEY_PTT:
 #ifdef ENABLE_DOPPLER
-if (DOPPLER_MODE) {
-// start transmit
-            UpdateBatteryInfo();
-            if (gBatteryDisplayLevel == 6) {
-                txAllowState = VFO_STATE_VOLTAGE_HIGH;
-            } else {
-                txAllowState = VFO_STATE_NORMAL;
-                ToggleTX(true);
-            }
-            redrawScreen = true;
-            }
+            if (DOPPLER_MODE) {
+            // start transmit
+                        UpdateBatteryInfo();
+                        if (gBatteryDisplayLevel == 6) {
+                            txAllowState = VFO_STATE_VOLTAGE_HIGH;
+                        } else {
+                            txAllowState = VFO_STATE_NORMAL;
+                            ToggleTX(true);
+                        }
+                        redrawScreen = true;
+                        }
 #endif
             break;
         case KEY_MENU:
@@ -1322,7 +1235,7 @@ static void RenderFreqInput() {
 }
 
 static void UpdateStill() {
-    if(TX_ON)return;
+    if (TX_ON)return;
     Measure();
     redrawScreen = true;
     preventKeypress = false;
@@ -1330,7 +1243,7 @@ static void UpdateStill() {
     peak.rssi = scanInfo.rssi;
     AutoTriggerLevel();
 
-    ToggleRX( (IsPeakOverLevel() || monitorMode));
+    ToggleRX((IsPeakOverLevel() || monitorMode));
 }
 
 static void RenderStatus(bool refresh) {
