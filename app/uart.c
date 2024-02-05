@@ -623,13 +623,14 @@ static void CMD_0538(const uint8_t *pBuffer)//write
 
         for ( int i = 0; i < ((pCmd->Size) - 2) / 8+(add==0?0:1); i++) {
             const uint32_t Offset = ((pCmd->Offset) << 16) + ((pCmd->Data[1]) << 8) + (pCmd->Data[0]) + (i * 8U);
-#ifdef ENABLE_DOPPLER
-            if(Offset>=0x90000)
-                {
-                memcpy(time,pCmd->Data[i * 8U + 2],6);
-                continue;
-                }
-#endif
+//#ifdef ENABLE_DOPPLER
+//            if(Offset>=0x90000)
+//                {
+//                memcpy(time,pCmd->Data[i * 8U + 2],6);
+//                RTC_Set(time);
+//                continue;
+//                }
+//#endif
                 if(add&&i==((pCmd->Size) - 2) / 8+(add==0?0:1)-1)
                     EEPROM_WriteBuffer(Offset, &pCmd->Data[i * 8U + 2], add);
                 else

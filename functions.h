@@ -18,7 +18,7 @@
 #define FUNCTIONS_H
 
 #include <stdint.h>
-
+#include "stdbool.h"
 enum FUNCTION_Type_t
 {
 	FUNCTION_FOREGROUND = 0,  // ???
@@ -34,9 +34,9 @@ enum FUNCTION_Type_t
 typedef enum FUNCTION_Type_t FUNCTION_Type_t;
 
 extern FUNCTION_Type_t       gCurrentFunction;
-
 void FUNCTION_Init(void);
 void FUNCTION_Select(FUNCTION_Type_t Function);
 bool FUNCTION_IsRx();
+void FUNCTION_Transmit();
 #endif
 

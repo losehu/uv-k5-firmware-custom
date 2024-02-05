@@ -133,7 +133,10 @@ void Main(void) {
 #ifdef ENABLE_MDC1200
     MDC1200_init();
 #endif
+//    char name[10]="START6789";
+//    EEPROM_WriteBuffer(0x02BA0,name,10);
 #ifdef ENABLE_DOPPLER
+
     RTC_INIT();
     INIT_DOPPLER_DATA();
 #endif

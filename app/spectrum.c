@@ -13,7 +13,10 @@
  *     See the License for the specific language governing permissions and
  *     limitations under the License.
  */
-//#define ENABLE_DOPPLER
+#define ENABLE_DOPPLER
+
+#include "functions.h"
+#include "stdbool.h"
 
 #ifdef ENABLE_DOPPLER
 
@@ -159,13 +162,18 @@ static uint8_t DBm2S(int dbm) {
 
 uint16_t registersVault[128] = {0};
 
-static void RegBackupSet(uint8_t num, uint16_t value) {
-    registersVault[num] = BK4819_ReadRegister(num);
-    BK4819_WriteRegister(num, value);
+static void RegBackup() {
+    for (int i = 0; i < 128; ++i) {
+        registersVault[i] = BK4819_ReadRegister(i);
+
+    }
 }
 
-static void RegRestore(uint8_t num) {
-    BK4819_WriteRegister(num, registersVault[num]);
+static void RegRestore() {
+    for (int i = 0; i < 128; ++i) {
+        BK4819_WriteRegister(i, registersVault[i]);
+
+    }
 }
 
 static void ToggleAudio(bool on) {
@@ -205,85 +213,48 @@ static void ToggleTX(bool on) {
     BK4819_ToggleGpioOut(BK4819_GPIO5_PIN1_RED, on);
 
     if (on) {
+        //TODO:发射频率
         fMeasure = 14550000;
 
+        AUDIO_AudioPathOff();
 
-        {
-            uint16_t InterruptMask;
-            AUDIO_AudioPathOff();
-            BK4819_ToggleGpioOut(BK4819_GPIO6_PIN2_GREEN, false);
-            BK4819_SetFilterBandwidth(0, false);
-            BK4819_ToggleGpioOut(BK4819_GPIO5_PIN1_RED, false);
-            BK4819_SetupPowerAmplifier(0, 0);
-            BK4819_ToggleGpioOut(BK4819_GPIO1_PIN29_PA_ENABLE, false);
-            while (1) {
-                const uint16_t Status = BK4819_ReadRegister(BK4819_REG_0C);
-                if ((Status & 1u) == 0) // INTERRUPT REQUEST
-                    break;
-                BK4819_WriteRegister(BK4819_REG_02, 0);
-                SYSTEM_DelayMs(1);
-            }
-            BK4819_WriteRegister(BK4819_REG_3F, 0);
-            BK4819_SetFrequency(fMeasure);
-            BK4819_PickRXFilterPathBasedOnFrequency(fMeasure);
-            // what does this in do ?
-            BK4819_ToggleGpioOut(BK4819_GPIO0_PIN28_RX_ENABLE, true);
-            BK4819_WriteRegister(BK4819_REG_48,
-                                 (11u << 12) |     // ??? .. 0 ~ 15, doesn't seem to make any difference
-                                 (0u << 10) |     // AF Rx Gain-1
-                                 (gEeprom.VOLUME_GAIN << 4) |     // AF Rx Gain-2
-                                 (gEeprom.DAC_GAIN << 0));     // AF DAC Gain (after Gain-1 and Gain-2)
-            InterruptMask = BK4819_REG_3F_SQUELCH_FOUND | BK4819_REG_3F_SQUELCH_LOST;
-            BK4819_SetCTCSSFrequency(885);
-            BK4819_SetTailDetection(550);        // QS's 55Hz tone method
-            InterruptMask = 0
-                            | BK4819_REG_3F_CxCSS_TAIL
-                            | BK4819_REG_3F_CTCSS_FOUND
-                            | BK4819_REG_3F_CTCSS_LOST
-                            | BK4819_REG_3F_SQUELCH_FOUND
-                            | BK4819_REG_3F_SQUELCH_LOST;
-            BK4819_DisableScramble();
-            BK4819_SetCompander(0);
-            BK4819_WriteRegister(BK4819_REG_3F, InterruptMask);
-        }
+        SetTxF(fMeasure, true);
+        RegBackup();
+
+        BK4819_WriteRegister(BK4819_REG_47, 0x6040);
+        BK4819_WriteRegister(BK4819_REG_7E, 0x302E);
+        BK4819_WriteRegister(BK4819_REG_50, 0x3B20);
+        BK4819_WriteRegister(BK4819_REG_37, 0x1D0F);
+        BK4819_WriteRegister(BK4819_REG_52, 0x028F);
+        BK4819_WriteRegister(BK4819_REG_30, 0x0000);
+        BK4819_WriteRegister(BK4819_REG_30, 0xC1FE);
+
+        BK4819_WriteRegister(BK4819_REG_51, 0x9033);
+        //TODO:亚音
+        BK4819_SetCTCSSFrequency(885);
+
+        //功率
+        FREQUENCY_Band_t Band = FREQUENCY_GetBand(fMeasure);
+        uint8_t Txp[3];
+        EEPROM_ReadBuffer(0x1ED0 + (Band * 16) + (OUTPUT_POWER_HIGH * 3), Txp, 3);
+        BK4819_SetupPowerAmplifier(Txp[2], fMeasure);
 
 
-        RADIO_PrepareTX();
-
-        // *******************************
-        // output power
-//
-//        FREQUENCY_Band_t  Band = FREQUENCY_GetBand(fMeasure);
-//        uint8_t Txp[3];
-//        EEPROM_ReadBuffer(0x1ED0 + (Band * 16) + (OUTPUT_POWER_HIGH * 3), Txp, 3);
-//
-//        BK4819_SetupPowerAmplifier(Txp[2],
-//                                   fMeasure);
-//
-//
-////                BK4819_ExitSubAu();
-////TODO:亚音
-//        BK4819_SetCTCSSFrequency(885);
-
-
+#if defined(ENABLE_MESSENGER) || defined(ENABLE_MDC1200)
+        enable_msg_rx(false);
+#endif
+        //DTMF
+        BK4819_DisableDTMF();
+        //加密
+        BK4819_DisableScramble();
     } else {
-
         BK4819_GenTail(4); // CTC55
         BK4819_WriteRegister(BK4819_REG_51, 0x904A);
-        SYSTEM_DelayMs(200);
+//        SYSTEM_DelayMs(200);
         BK4819_SetupPowerAmplifier(0, 0);
-
-        RegRestore(BK4819_REG_51);
-        BK4819_WriteRegister(BK4819_REG_30, 0);
-        RegRestore(BK4819_REG_30);
-        RegRestore(BK4819_REG_52);
-        RegRestore(BK4819_REG_37);
-        RegRestore(BK4819_REG_50);
-        RegRestore(BK4819_REG_7E);
-        RegRestore(BK4819_REG_47);
+        RegRestore();
 //TODO:发射频率
         fMeasure = 43850000;
-
         SetTxF(fMeasure, true);
     }
     BK4819_ToggleGpioOut(BK4819_GPIO0_PIN28_RX_ENABLE, !on);
@@ -473,7 +444,7 @@ static void ToggleRX(bool on) {
 
     isListening = on;
 #ifdef ENABLE_DOPPLER
-    if (DOPPLER_MODE&&on) {
+    if (DOPPLER_MODE && on) {
         ToggleTX(false);
     }
 
@@ -887,7 +858,7 @@ void DrawStatus(bool refresh) {
         GUI_DisplaySmallest(String, 42 + 53 - (settings.listenBw == 0 ? 8 : 0), 1, true, true);
     } else {
 #endif
-    GUI_DisplaySmallest(String, 0, 1, true, true);
+        GUI_DisplaySmallest(String, 0, 1, true, true);
 #ifdef ENABLE_DOPPLER
     }
 #endif
@@ -907,14 +878,14 @@ static void DrawF(uint32_t f) {
 
     } else {
 #endif
-    sprintf(String, "%u.%05u", f / 100000, f % 100000);
-    UI_PrintStringSmall(String, 8, 127, 0);
+        sprintf(String, "%u.%05u", f / 100000, f % 100000);
+        UI_PrintStringSmall(String, 8, 127, 0);
 
 
-    sprintf(String, "%3s", gModulationStr[settings.modulationType]);
-    GUI_DisplaySmallest(String, 116, 1, false, true);
-    sprintf(String, "%s", bwOptions[settings.listenBw]);
-    GUI_DisplaySmallest(String, 108, 7, false, true);
+        sprintf(String, "%3s", gModulationStr[settings.modulationType]);
+        GUI_DisplaySmallest(String, 116, 1, false, true);
+        sprintf(String, "%s", bwOptions[settings.listenBw]);
+        GUI_DisplaySmallest(String, 108, 7, false, true);
 #ifdef ENABLE_DOPPLER
     }
 #endif
@@ -1132,7 +1103,7 @@ void OnKeyDownStill(KEY_Code_t key) {
 #ifdef ENABLE_DOPPLER
             if (!DOPPLER_MODE)
 #endif
-            UpdateCurrentFreqStill(true);
+                UpdateCurrentFreqStill(true);
             break;
         case KEY_DOWN:
 
@@ -1143,7 +1114,7 @@ void OnKeyDownStill(KEY_Code_t key) {
 #ifdef ENABLE_DOPPLER
             if (!DOPPLER_MODE)
 #endif
-            UpdateCurrentFreqStill(false);
+                UpdateCurrentFreqStill(false);
 
             break;
         case KEY_STAR:
@@ -1161,21 +1132,21 @@ void OnKeyDownStill(KEY_Code_t key) {
 #endif
 
 
-            FreqInput();
+                FreqInput();
 
 
             break;
         case KEY_0:
 #ifdef ENABLE_DOPPLER
-            if(!DOPPLER_MODE)
+            if (!DOPPLER_MODE)
 #endif
-            ToggleModulation();
+                ToggleModulation();
             break;
         case KEY_6:
 #ifdef ENABLE_DOPPLER
-            if(!DOPPLER_MODE)
+            if (!DOPPLER_MODE)
 #endif
-            ToggleListeningBW();
+                ToggleListeningBW();
             break;
         case KEY_SIDE1:
             monitorMode = !monitorMode;
@@ -1186,16 +1157,9 @@ void OnKeyDownStill(KEY_Code_t key) {
         case KEY_PTT:
 #ifdef ENABLE_DOPPLER
             if (DOPPLER_MODE) {
-            // start transmit
-                        UpdateBatteryInfo();
-                        if (gBatteryDisplayLevel == 6) {
-                            txAllowState = VFO_STATE_VOLTAGE_HIGH;
-                        } else {
-                            txAllowState = VFO_STATE_NORMAL;
-                            ToggleTX(true);
-                        }
-                        redrawScreen = true;
-                        }
+                ToggleTX(true);
+                redrawScreen = true;
+            }
 #endif
             break;
         case KEY_MENU:
@@ -1629,7 +1593,7 @@ void APP_RunSpectrum() {
     statuslineUpdateTimer = 4097;
 
     if (DOPPLER_MODE) {
-        settings.listenBw=0;
+        settings.listenBw = 0;
         settings.modulationType = MODULATION_FM;
         SetState(STILL);
         TuneToPeak();

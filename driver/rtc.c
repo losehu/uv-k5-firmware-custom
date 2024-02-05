@@ -3,6 +3,7 @@
 //
 #include "bsp/dp32g030/rtc.h"
 #include "ARMCM0.h"
+#include "driver/eeprom.h"
 #include "driver/system.h"
 uint8_t time[6]={24, 2, 2, 18, 11, 00};
 void RTC_INIT() {
@@ -10,6 +11,10 @@ void RTC_INIT() {
     RTC_PRE |= (32768 - 1)//PRE_ROUND=32768HZ-1
                | (0 << 20)//DECIMAL=0
                | (0 << 24);//PRE_PERIOD=8s
+//    RTC_Set(time);
+
+    EEPROM_ReadBuffer(0X2BC0,time,6);
+
     RTC_Set(time);
 
     NVIC_SetPriority(Interrupt2_IRQn, 0);
@@ -27,6 +32,8 @@ void RTC_INIT() {
 }
 
 void RTC_Set(uint8_t time[6]) {
+
+
 
     RTC_DR = (2 << 24)//day 2
              | (time[0] / 10 << 20)//YEAR TEN

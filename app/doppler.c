@@ -6,7 +6,7 @@
 
 struct satellite_t satellite;
 struct satellite_d satellite_data;
-
+bool DOPPLER_FLAG=true;
 //0x02BA0~0x2BA9 10B,卫星名称,首字符在前,最多9个英文，最后一个为'\0'
 //
 //
@@ -38,6 +38,20 @@ void uint16_to_uint8_array(uint16_t value, uint8_t array[2]) {
 void INIT_DOPPLER_DATA() {
     memset(&satellite, 0, sizeof(satellite));
     EEPROM_ReadBuffer(0x02BA0, &satellite, sizeof(satellite));
+    if (satellite.name[9] != 0 ||
+        !(satellite.name[0] >= 32 && satellite.name[0] <= 126)
+            ) {
+        DOPPLER_FLAG = 0;
+        return;
+    }
+
+    for (int i = strlen(satellite.name); i < 10; i++)
+        if (satellite.name[i] != 0) {
+            DOPPLER_FLAG = 0;
+            return;
+        }
+
+
 }
 
 // 判断是否是闰年
@@ -74,14 +88,14 @@ int32_t UNIX_TIME(uint8_t time2[6]) {
 
 void READ_DATA(int32_t time_diff, int32_t time_diff1) {
     int32_t n = -time_diff;
-    if (time_diff <= 0 && time_diff1>=0)//正在过境
+    if (time_diff <= 0 && time_diff1 >= 0)//正在过境
     {
 
         if ((n & 0x01) != 0)return;
         n = n >> 1;
     } else n = 0;
 
-    EEPROM_ReadBuffer(0x1E200 + (n << 3), &satellite_data, sizeof (satellite_data));
+    EEPROM_ReadBuffer(0x1E200 + (n << 3), &satellite_data, sizeof(satellite_data));
 
 //    AZ（-180~180，两位浮点，度）2B,EI（-180~180，两位浮点，度）2B,上行频率/10（正整数hz）4B、下行频率/10(正整数hz)4B、距离（两位浮点，km）3B：
 //    第1B~2B:AZ的数字部分，只有正，低位在前高位在后，
