@@ -164,10 +164,10 @@ static void RegRestore(uint8_t num) {
 }
 
 static void ToggleAudio(bool on) {
-    if (on == audioState) {
-        return;
-    }
-    audioState = on;
+//    if (on == audioState) {
+//        return;
+//    }
+//    audioState = on;
     if (on) {
         AUDIO_AudioPathOn();
     } else {
@@ -207,13 +207,6 @@ static void ToggleTX(bool on) {
 
 
 
-        RegBackupSet(BK4819_REG_47, 0x6040);
-        RegBackupSet(BK4819_REG_7E, 0x302E);
-        RegBackupSet(BK4819_REG_50, 0x3B20);
-        RegBackupSet(BK4819_REG_37, 0x1D0F);
-        RegBackupSet(BK4819_REG_52, 0x028F);
-        RegBackupSet(BK4819_REG_30, 0x0000);
-        BK4819_WriteRegister(BK4819_REG_30, 0xC1FE);
         RegBackupSet(BK4819_REG_51, 0x0000);
 
 
@@ -242,18 +235,14 @@ static void ToggleTX(bool on) {
         SYSTEM_DelayMs(10);
 
 //                BK4819_ExitSubAu();
-
+//TODO:亚音
                 BK4819_SetCTCSSFrequency(885);
 
 
     } else {
 
-
         BK4819_GenTail(4); // CTC55
         BK4819_WriteRegister(BK4819_REG_51, 0x904A);
-
-
-
         SYSTEM_DelayMs(200);
         BK4819_SetupPowerAmplifier(0, 0);
 
@@ -458,11 +447,12 @@ static void ToggleRX(bool on) {
 
 
     isListening = on;
-    if (on) {
+#ifdef ENABLE_DOPPLER
+    if (DOPPLER_MODE&&on) {
         ToggleTX(false);
     }
 
-
+#endif
     RADIO_SetupAGC(on, lockAGC);
     BK4819_ToggleGpioOut(BK4819_GPIO6_PIN2_GREEN, on);
 
@@ -1151,7 +1141,10 @@ void OnKeyDownStill(KEY_Code_t key) {
 
             break;
         case KEY_0:
-            ToggleModulation();
+#ifdef ENABLE_DOPPLER
+            if(!DOPPLER_MODE)
+#endif
+             ToggleModulation();
             break;
         case KEY_6:
             ToggleListeningBW();
@@ -1608,6 +1601,7 @@ void APP_RunSpectrum() {
     statuslineUpdateTimer = 4097;
 
     if (DOPPLER_MODE) {
+        settings.modulationType = MODULATION_FM;
         SetState(STILL);
         TuneToPeak();
         //TODO:设置默认卫星频率
