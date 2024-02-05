@@ -200,42 +200,155 @@ static void ToggleTX(bool on) {
     BK4819_ToggleGpioOut(BK4819_GPIO5_PIN1_RED, on);
 
     if (on) {
-        ToggleAudio(false);
         fMeasure=14550000;
-        SetTxF( fMeasure,true);
 
 
 
-        RegBackupSet(BK4819_REG_51, 0x0000);
+            {
+                uint16_t                 InterruptMask;
+                uint32_t                 Frequency;
+                uint8_t read_tmp[2];
+                AUDIO_AudioPathOff();
 
 
-        // *******************************
+
+                BK4819_ToggleGpioOut(BK4819_GPIO6_PIN2_GREEN, false);
+
+
+                BK4819_SetFilterBandwidth(0, false);
+
+
+                BK4819_ToggleGpioOut(BK4819_GPIO5_PIN1_RED, false);
+
+                BK4819_SetupPowerAmplifier(0, 0);
+
+                BK4819_ToggleGpioOut(BK4819_GPIO1_PIN29_PA_ENABLE, false);
+
+                while (1)
+                {
+                    const uint16_t Status = BK4819_ReadRegister(BK4819_REG_0C);
+                    if ((Status & 1u) == 0) // INTERRUPT REQUEST
+                        break;
+
+                    BK4819_WriteRegister(BK4819_REG_02, 0);
+                    SYSTEM_DelayMs(1);
+                }
+                BK4819_WriteRegister(BK4819_REG_3F, 0);
+
+                // mic gain 0.5dB/step 0 to 31
+                BK4819_WriteRegister(BK4819_REG_7D, 0xE940 | (gEeprom.MIC_SENSITIVITY_TUNING & 0x1f));
+
+                Frequency =fMeasure;
+
+                BK4819_SetFrequency(Frequency);
+//
+//                BK4819_SetupSquelch(
+//                        gRxVfo->SquelchOpenRSSIThresh,    gRxVfo->SquelchCloseRSSIThresh,
+//                        gRxVfo->SquelchOpenNoiseThresh,   gRxVfo->SquelchCloseNoiseThresh,
+//                        gRxVfo->SquelchCloseGlitchThresh, gRxVfo->SquelchOpenGlitchThresh);
+
+                BK4819_PickRXFilterPathBasedOnFrequency(Frequency);
+
+                // what does this in do ?
+                BK4819_ToggleGpioOut(BK4819_GPIO0_PIN28_RX_ENABLE, true);
+
+                // AF RX Gain and DAC
+                //BK4819_WriteRegister(BK4819_REG_48, 0xB3A8);  // 1011 00 111010 1000
+                BK4819_WriteRegister(BK4819_REG_48,
+                                     (11u << 12)                 |     // ??? .. 0 ~ 15, doesn't seem to make any difference
+                                     ( 0u << 10)                 |     // AF Rx Gain-1
+                                     (gEeprom.VOLUME_GAIN << 4) |     // AF Rx Gain-2
+                                     (gEeprom.DAC_GAIN    << 0));     // AF DAC Gain (after Gain-1 and Gain-2)
+
+
+                InterruptMask = BK4819_REG_3F_SQUELCH_FOUND | BK4819_REG_3F_SQUELCH_LOST;
+
+
+
+                        uint8_t CodeType = gRxVfo->pRX->CodeType;
+                        uint8_t Code     = gRxVfo->pRX->Code;
+
+                        switch (CodeType)
+                        {
+                            default:
+                            case CODE_TYPE_OFF:
+                                BK4819_SetCTCSSFrequency(670);
+
+                                //#ifndef ENABLE_CTCSS_TAIL_PHASE_SHIFT
+                                BK4819_SetTailDetection(550);		// QS's 55Hz tone method
+                                //#else
+                                //	BK4819_SetTailDetection(670);       // 67Hz
+                                //#endif
+
+                                InterruptMask = BK4819_REG_3F_CxCSS_TAIL | BK4819_REG_3F_SQUELCH_FOUND | BK4819_REG_3F_SQUELCH_LOST;
+                                break;
+
+                            case CODE_TYPE_CONTINUOUS_TONE:
+
+#if ENABLE_CHINESE_FULL==0
+                                BK4819_SetCTCSSFrequency(CTCSS_Options[Code]);
+#else
+                                EEPROM_ReadBuffer(0x02C00+(Code)*2, read_tmp, 2);
+        uint16_t CTCSS_Options_read=read_tmp[0]|(read_tmp[1]<<8);
+                    BK4819_SetCTCSSFrequency(CTCSS_Options_read);
+
+#endif
+                                //#ifndef ENABLE_CTCSS_TAIL_PHASE_SHIFT
+                                BK4819_SetTailDetection(550);		// QS's 55Hz tone method
+                                //#else
+                                //	BK4819_SetTailDetection(CTCSS_Options[Code]);
+                                //#endif
+
+                                InterruptMask = 0
+                                                | BK4819_REG_3F_CxCSS_TAIL
+                                                | BK4819_REG_3F_CTCSS_FOUND
+                                                | BK4819_REG_3F_CTCSS_LOST
+                                                | BK4819_REG_3F_SQUELCH_FOUND
+                                                | BK4819_REG_3F_SQUELCH_LOST;
+
+                                break;
+
+
+                        }
+
+
+                            BK4819_DisableScramble();
+
+
+
+                // RX expander
+                BK4819_SetCompander( 0);
+
+                BK4819_EnableDTMF();
+                InterruptMask |= BK4819_REG_3F_DTMF_5TONE_FOUND;
+                RADIO_SetupAGC(gRxVfo->Modulation == MODULATION_AM, false);
+
+                BK4819_WriteRegister(BK4819_REG_3F, InterruptMask);
+        }
+
+
+
+
+
+
+
+
+            RADIO_PrepareTX();
+
+            // *******************************
         // output power
-
-        FREQUENCY_Band_t  Band = FREQUENCY_GetBand(fMeasure);
-        uint8_t Txp[3];
-        EEPROM_ReadBuffer(0x1ED0 + (Band * 16) + (OUTPUT_POWER_HIGH * 3), Txp, 3);
-
-
-        uint8_t TXP_CalculatedSetting = FREQUENCY_CalculateOutputPower(
-                Txp[0],
-                Txp[1],
-                Txp[2],
-                frequencyBandTable[Band].lower,
-                (frequencyBandTable[Band].lower + frequencyBandTable[Band].upper) / 2,
-                frequencyBandTable[Band].upper,
-                fMeasure);
-
-        BK4819_SetupPowerAmplifier(TXP_CalculatedSetting,
-                                   fMeasure);
-
-
-
-        SYSTEM_DelayMs(10);
-
-//                BK4819_ExitSubAu();
-//TODO:亚音
-        BK4819_SetCTCSSFrequency(885);
+//
+//        FREQUENCY_Band_t  Band = FREQUENCY_GetBand(fMeasure);
+//        uint8_t Txp[3];
+//        EEPROM_ReadBuffer(0x1ED0 + (Band * 16) + (OUTPUT_POWER_HIGH * 3), Txp, 3);
+//
+//        BK4819_SetupPowerAmplifier(Txp[2],
+//                                   fMeasure);
+//
+//
+////                BK4819_ExitSubAu();
+////TODO:亚音
+//        BK4819_SetCTCSSFrequency(885);
 
 
     } else {
