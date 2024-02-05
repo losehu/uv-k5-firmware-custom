@@ -1163,7 +1163,9 @@ void OnKeyDownStill(KEY_Code_t key) {
             ToggleBacklight();
             break;
         case KEY_PTT:
-            // start transmit
+#ifdef ENABLE_DOPPLER
+if (DOPPLER_MODE) {
+// start transmit
             UpdateBatteryInfo();
             if (gBatteryDisplayLevel == 6) {
                 txAllowState = VFO_STATE_VOLTAGE_HIGH;
@@ -1172,6 +1174,8 @@ void OnKeyDownStill(KEY_Code_t key) {
                 ToggleTX(true);
             }
             redrawScreen = true;
+            }
+#endif
             break;
         case KEY_MENU:
             if (menuState == ARRAY_SIZE(registerSpecs) - 1) {
@@ -1386,9 +1390,11 @@ bool HandleUserInput() {
     kbd.current = GetKey();
     if (kbd.current == KEY_INVALID) {
         kbd.counter = 0;
-        if (isTransmitting) {
+#ifdef ENABLE_DOPPLER
+        if (DOPPLER_MODE && isTransmitting) {
             ToggleTX(false);
         }
+#endif
         return true;
     }
 
