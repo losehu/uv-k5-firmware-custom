@@ -12,7 +12,7 @@ ENABLE_LTO                    ?= 1
 # ---- STOCK QUANSHENG FERATURES ----
 ENABLE_UART                   ?= 1
 ENABLE_AIRCOPY                ?= 0
-ENABLE_FMRADIO                ?= 0
+ENABLE_FMRADIO                ?= 1
 ENABLE_NOAA                   ?= 0
 ENABLE_VOICE                  ?= 0
 ENABLE_VOX                    ?= 1
@@ -47,7 +47,7 @@ ENABLE_MDC1200                ?= 1
 ENABLE_MDC1200_SHOW_OP_ARG    = 0
 ENABLE_MDC1200_SIDE_BEEP      = 0
 ENABLE_MDC1200_CONTACT        = 1
-ENABLE_MDC1200_EDIT			  = 0
+ENABLE_MDC1200_EDIT			  = 1
 ENABLE_UART_RW_BK_REGS 		  ?= 0
 ENABLE_AUDIO_BAR_DEFAULT      ?= 0
 ENABLE_EEPROM_TYPE        	   = 0
@@ -69,7 +69,7 @@ ENABLE_MESSENGER_NOTIFICATION			?= 0
 
 ENABLE_DOPPLER               =0
 #############################################################
-PACKED_FILE_SUFFIX = LOSEHU119
+PACKED_FILE_SUFFIX = LOSEHU120
 ifeq ($(ENABLE_CHINESE_FULL),1)
     $(info font1)
     PACKED_FILE_SUFFIX = font1
@@ -562,7 +562,7 @@ endif
 
 full:clean
 	$(RM) *.bin
-	$(MAKE) build ENABLE_CHINESE_FULL=0
+	$(MAKE) build ENABLE_CHINESE_FULL=0 ENABLE_MDC1200_EDIT=1
 	$(MAKE) build ENABLE_CHINESE_FULL=4 ENABLE_DOPPLER=1
 	$(MAKE) build ENABLE_CHINESE_FULL=4 ENABLE_GB2312=1  ENABLE_DOPPLER=1
 

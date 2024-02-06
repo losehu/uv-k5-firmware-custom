@@ -264,6 +264,7 @@ typedef struct {
     BLMIN_STAT_t		  BACKLIGHT_MIN_STAT;
 #endif
     uint8_t               BACKLIGHT_MAX;
+
     BATTERY_Type_t		  BATTERY_TYPE;
 #ifdef ENABLE_RSSI_BAR
     uint8_t               S0_LEVEL;
@@ -289,4 +290,6 @@ void SETTINGS_SaveChannel(uint8_t Channel, uint8_t VFO, const VFO_Info_t *pVFO, 
 void SETTINGS_SaveBatteryCalibration(const uint16_t * batteryCalibration);
 void SETTINGS_UpdateChannel(uint8_t channel, const VFO_Info_t *pVFO, bool keep);
 void SETTINGS_WriteBuildOptions(void);
+extern int               key_dir;
+
 #endif

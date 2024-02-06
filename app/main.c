@@ -51,7 +51,6 @@
 #ifdef ENABLE_DOPPLER
 #include "app/doppler.h"
 #endif
-
 void toggle_chan_scanlist(void) {    // toggle the selected channels scanlist setting
     if (SCANNER_IsScanning())
         return;
@@ -438,7 +437,13 @@ static void MAIN_Key_DIGITS(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
 
 static void MAIN_Key_EXIT(bool bKeyPressed, bool bKeyHeld) {
 
-
+#include "app/menu.h"
+    if (turn_flag) {
+        turn_flag = false;
+        key_dir*=-1;
+        gRequestSaveSettings=true;
+        return;
+    }
     if (!bKeyHeld && bKeyPressed) {    // exit key pressed
 
 
@@ -505,8 +510,8 @@ static void MAIN_Key_EXIT(bool bKeyPressed, bool bKeyHeld) {
     }
 
 }
-
 static void MAIN_Key_MENU(const bool bKeyPressed, const bool bKeyHeld) {
+
     if (bKeyPressed && !bKeyHeld)
         // menu key pressed
         gBeepToPlay = BEEP_1KHZ_60MS_OPTIONAL;

@@ -36,6 +36,7 @@ static const uint32_t gDefaultFrequencyTable[] =
         };
 
 EEPROM_Config_t gEeprom={0};
+ int               key_dir;
 
 void SETTINGS_InitEEPROM(void)
 {
@@ -58,7 +59,7 @@ void SETTINGS_InitEEPROM(void)
     // 0E78..0E7F
     EEPROM_ReadBuffer(0x0E78, Data, 8);
     gEeprom.BACKLIGHT_MAX 		  = (Data[0] & 0xF) <= 10 ? (Data[0] & 0xF) : 10;
-    //gEeprom.BACKLIGHT_MIN 		  = (Data[0] >> 4) < gEeprom.BACKLIGHT_MAX ? (Data[0] >> 4) : 0;
+    key_dir 		  = (Data[0] >> 4) !=0xA ? -1 : 1;
 #ifdef ENABLE_BLMIN_TMP_OFF
     gEeprom.BACKLIGHT_MIN_STAT	  = BLMIN_STAT_ON;
 #endif
@@ -525,7 +526,9 @@ void SETTINGS_SaveSettings(void)
     State[7] = gEeprom.MIC_SENSITIVITY;
     EEPROM_WriteBuffer(0x0E70, State,8);
 
-    State[0] = (/*gEeprom.BACKLIGHT_MIN*/0 << 4) + gEeprom.BACKLIGHT_MAX;
+//   		  = (Data[0] >> 4) ==0xA ? -1 : 1;
+
+    State[0] = ( key_dir ==-1?0xB0:0xA0 ) + gEeprom.BACKLIGHT_MAX;
     State[1] = gEeprom.CHANNEL_DISPLAY_MODE;
     State[2] = gEeprom.CROSS_BAND_RX_TX;
     State[3] = gEeprom.BATTERY_SAVE;

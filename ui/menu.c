@@ -550,8 +550,9 @@ void UI_DisplayMenu(void) {
 
     if (gIsInSubMenu)
         memmove(gFrameBuffer[2] + 41, BITMAP_VFO_Default, sizeof(BITMAP_VFO_Default));
-uint8_t add=1;
 #ifndef ENABLE_MDC1200
+    uint8_t add=1;
+
     if(gMenuCursor+1>=26)
         add=0;
 

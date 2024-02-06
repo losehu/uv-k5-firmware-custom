@@ -36,7 +36,7 @@
 #include "settings.h"
 #include "ui/inputbox.h"
 #include "ui/ui.h"
-
+bool             turn_flag=0;
 void GENERIC_Key_F(bool bKeyPressed, bool bKeyHeld)
 {
     if (gInputBoxIndex > 0)
@@ -69,7 +69,7 @@ void GENERIC_Key_F(bool bKeyPressed, bool bKeyHeld)
 #endif
 
             gWasFKeyPressed = !gWasFKeyPressed; // toggle F function
-
+            turn_flag=1;
             if (gWasFKeyPressed)
                 gKeyInputCountdown = key_input_timeout_500ms;
 

@@ -21,6 +21,7 @@
 
 void GENERIC_Key_F(bool bKeyPressed, bool bKeyHeld);
 void GENERIC_Key_PTT(bool bKeyPressed);
+extern bool turn_flag;
 
 #endif
 

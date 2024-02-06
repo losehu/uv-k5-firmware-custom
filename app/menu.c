@@ -85,6 +85,7 @@ void writeXtalFreqCal(const int32_t value, const bool update_eeprom)
 }
 #endif
 
+
 void MENU_StartCssScan(void) {
     SCANNER_Start(true);
     gUpdateStatus = true;
@@ -1713,8 +1714,10 @@ static void MENU_Key_UP_DOWN(bool bKeyPressed, bool bKeyHeld, int8_t Direction) 
     }
 
     if (!gIsInSubMenu) {
+#ifndef ENABLE_MDC1200
         uint8_t last_num = gMenuCursor;
-        gMenuCursor = NUMBER_AddWithWraparound(gMenuCursor, -Direction, 0, gMenuListCount - 1);
+#endif
+        gMenuCursor = NUMBER_AddWithWraparound(gMenuCursor, key_dir*Direction, 0, gMenuListCount - 1);
 #ifndef ENABLE_MDC1200
         if (last_num + 1 < 26 && gMenuCursor + 1 == 26)gMenuCursor++;
         else if (last_num + 1 == 27 && gMenuCursor + 1 == 26)gMenuCursor--;

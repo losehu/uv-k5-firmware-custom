@@ -5,7 +5,7 @@
 #include "ARMCM0.h"
 #include "driver/eeprom.h"
 #include "driver/system.h"
-uint8_t time[6]={24, 2, 2, 18, 11, 00};
+uint8_t time[6];
 void RTC_INIT() {
 
     RTC_PRE |= (32768 - 1)//PRE_ROUND=32768HZ-1

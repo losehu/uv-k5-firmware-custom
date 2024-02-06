@@ -13,7 +13,7 @@
  *     See the License for the specific language governing permissions and
  *     limitations under the License.
  */
-#define ENABLE_DOPPLER
+//#define ENABLE_DOPPLER
 
 #include "functions.h"
 #include "stdbool.h"
@@ -172,7 +172,6 @@ static void RegBackup() {
 static void RegRestore() {
     for (int i = 0; i < 128; ++i) {
         BK4819_WriteRegister(i, registersVault[i]);
-
     }
 }
 
@@ -200,7 +199,7 @@ void SetTxF(uint32_t f, bool precise) {
     BK4819_WriteRegister(BK4819_REG_30, reg);
 }
 
-
+#ifdef ENABLE_DOPPLER
 static void ToggleTX(bool on) {
     if (isTransmitting == on) {
         return;
@@ -213,8 +212,7 @@ static void ToggleTX(bool on) {
     BK4819_ToggleGpioOut(BK4819_GPIO5_PIN1_RED, on);
 
     if (on) {
-        //TODO:发射频率
-        fMeasure = 14550000;
+        fMeasure = satellite_data.UPLink;
 
         AUDIO_AudioPathOff();
 
@@ -228,10 +226,13 @@ static void ToggleTX(bool on) {
         BK4819_WriteRegister(BK4819_REG_52, 0x028F);
         BK4819_WriteRegister(BK4819_REG_30, 0x0000);
         BK4819_WriteRegister(BK4819_REG_30, 0xC1FE);
-
         BK4819_WriteRegister(BK4819_REG_51, 0x9033);
-        //TODO:亚音
-        BK4819_SetCTCSSFrequency(885);
+
+        //亚音
+        if (satellite.SEND_CTCSS == 0)
+            BK4819_ExitSubAu();
+        else
+            BK4819_SetCTCSSFrequency(satellite.SEND_CTCSS);
 
         //功率
         FREQUENCY_Band_t Band = FREQUENCY_GetBand(fMeasure);
@@ -254,12 +255,13 @@ static void ToggleTX(bool on) {
         BK4819_SetupPowerAmplifier(0, 0);
         RegRestore();
 //TODO:发射频率
-        fMeasure = 43850000;
+        fMeasure = satellite_data.DownLink;
         SetTxF(fMeasure, true);
     }
     BK4819_ToggleGpioOut(BK4819_GPIO0_PIN28_RX_ENABLE, !on);
     BK4819_ToggleGpioOut(BK4819_GPIO1_PIN29_PA_ENABLE, on);
 }
+#endif
 
 static int Rssi2DBm(uint16_t rssi) {
     return (rssi / 2) - 160 + dBmCorrTable[gRxVfo->Band];
@@ -1235,21 +1237,23 @@ static void Draw_DOPPLER_Process(uint8_t DATA_LINE) {
         if (time_diff > 1000)//还早
         {
             strcpy(String, "Long");
+
         } else//1000s以内
         {
-            sprintf(String, "%4d sec", time_diff);
+            sprintf(String, "-%4d sec", time_diff);
             process = time_diff * 45 / 1000;
         }
     } else { //已经来了
         if (time_diff1 >= 0)//正在过境
         {
-            sprintf(String, "%4d sec", satellite.sum_time + time_diff);
-            process = (satellite.sum_time + time_diff) * 45 / satellite.sum_time;
+            sprintf(String, "+%4d sec", satellite.sum_time + time_diff);
+            process = 45 - (satellite.sum_time + time_diff) * 45 / satellite.sum_time;
         } else {
+
             strcpy(String, "Passed");
         }
     }
-    GUI_DisplaySmallest(String, 90, DATA_LINE + 15, false, true);
+    GUI_DisplaySmallest(String, 85, DATA_LINE + 15, false, true);
     memset(&gFrameBuffer[6][80], 0b01000000, 45);
     gFrameBuffer[6][79] = 0b00111110;
     gFrameBuffer[6][45 + 80] = 0b00111110;
@@ -1260,7 +1264,7 @@ static void Draw_DOPPLER_Process(uint8_t DATA_LINE) {
             gFrameBuffer[6][i + 80] = 0b00100010;
     }
     sprintf(String, "20%02d-%02d-%02d %02d:%02d:%02d", time[0], time[1], time[2], time[3], time[4], time[5]);
-    GUI_DisplaySmallest(String, 0, DATA_LINE + 23, false, true);
+    GUI_DisplaySmallest(String, 1, DATA_LINE + 23, false, true);
 }
 
 #endif
@@ -1346,8 +1350,15 @@ static void RenderStill() {
 
     if (DOPPLER_MODE) {
         Draw_DOPPLER_Process(26);
-        sprintf(String, "UPLink:%4d.%05d", satellite_data.UPLink / 100000, satellite_data.UPLink % 100000);
-        GUI_DisplaySmallest(String, 0, DATA_LINE + 15, false, true);
+        bool flag = true;
+        if (!isTransmitting)
+            sprintf(String, "UPLink:%4d.%05d", satellite_data.UPLink / 100000, satellite_data.UPLink % 100000);
+        else {
+            memset(gFrameBuffer[5], 0x7f, 77);
+            flag = false;
+            sprintf(String, "DownLink:%4d.%05d", satellite_data.DownLink / 100000, satellite_data.DownLink % 100000);
+        }
+        GUI_DisplaySmallest(String, 1, DATA_LINE + 15, false, flag);
 
     }
 #endif
@@ -1597,10 +1608,8 @@ void APP_RunSpectrum() {
         settings.modulationType = MODULATION_FM;
         SetState(STILL);
         TuneToPeak();
-        //TODO:设置默认卫星频率
-        satellite_data.DownLink = 43850000;
-        SetF(satellite_data.DownLink);
-        currentFreq = satellite_data.DownLink;
+
+
         settings.dbMin = -130;
     }
 #endif
@@ -1613,6 +1622,14 @@ void APP_RunSpectrum() {
 //            currentFreq = satellite_data.DownLink;
 //        }
 //#endif
+#ifdef ENABLE_DOPPLER
+        if (DOPPLER_MODE) {
+            if (!isTransmitting) {
+                SetF(satellite_data.DownLink);
+                currentFreq = satellite_data.DownLink;
+            }
+        }
+#endif
         Tick();
 
     }

@@ -10,7 +10,7 @@ struct satellite_t
     uint16_t sum_time;
     uint16_t SEND_CTCSS;
     uint16_t RECV_CTCSS;
-    uint16_t START_TIME_UNIX;
+    uint32_t START_TIME_UNIX;
 };
 struct satellite_d
 {

@@ -79,7 +79,7 @@ int32_t UNIX_TIME(uint8_t time2[6]) {
         seconds += days_in_month(time2[1], month) * 24 * 3600;
     }
     // 计算当月之内的秒数差
-    seconds += time2[2] * 24 * 3600;
+    seconds += (time2[2]-1) * 24 * 3600;
     seconds += time2[3] * 3600;
     seconds += time2[4] * 60;
     seconds += time2[5];
