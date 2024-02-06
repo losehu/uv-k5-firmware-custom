@@ -1401,9 +1401,12 @@ bool HandleUserInput() {
         if (kbd.counter < 16)
             kbd.counter++;
         else
-            kbd.counter -= 2;
-        SYSTEM_DelayMs(5);
+            kbd.counter -= 3;
+        SYSTEM_DelayMs(20);
+    } else {
+        kbd.counter = 0;
     }
+
 
     if (kbd.counter == 2 || kbd.counter == 16) {
         switch (currentState) {
