@@ -212,6 +212,7 @@ static void ToggleTX(bool on) {
     BK4819_ToggleGpioOut(BK4819_GPIO5_PIN1_RED, on);
 
     if (on) {
+        TX_ON=1;
         fMeasure = satellite_data.UPLink;
 
         AUDIO_AudioPathOff();
@@ -257,6 +258,8 @@ static void ToggleTX(bool on) {
 //TODO:发射频率
         fMeasure = satellite_data.DownLink;
         SetTxF(fMeasure, true);
+                TX_ON=0;
+
     }
     BK4819_ToggleGpioOut(BK4819_GPIO0_PIN28_RX_ENABLE, !on);
     BK4819_ToggleGpioOut(BK4819_GPIO1_PIN29_PA_ENABLE, on);
@@ -1623,12 +1626,11 @@ void APP_RunSpectrum() {
 //        }
 //#endif
 #ifdef ENABLE_DOPPLER
-        if (DOPPLER_MODE) {
-            if (!isTransmitting) {
+            if (DOPPLER_MODE&&!isTransmitting&&currentFreq!=satellite_data.DownLink) {
                 SetF(satellite_data.DownLink);
                 currentFreq = satellite_data.DownLink;
             }
-        }
+
 #endif
         Tick();
 
