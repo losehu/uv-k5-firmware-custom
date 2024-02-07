@@ -36,7 +36,7 @@
 #define TEMP2 (*(volatile uint32_t *)(0x40000800u+0x24u))
 
 void RTC_INIT(void);
-void RTC_Set( uint8_t time[6]);
+void RTC_Set( );
 void RTC_Get();
 
 extern uint8_t time[6];

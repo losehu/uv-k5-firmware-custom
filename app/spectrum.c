@@ -425,11 +425,11 @@ static void DeInitSpectrum() {
     isInitialized = false;
 }
 
-uint8_t GetBWRegValueForScan() {
+static uint8_t GetBWRegValueForScan() {
     return scanStepBWRegValues[settings.scanStepIndex];
 }
 
-uint16_t GetRssi() {
+static uint16_t GetRssi() {
     // SYSTICK_DelayUs(800);
     // testing autodelay based on Glitch value
     while ((BK4819_ReadRegister(0x63) & 0b11111111) >= 255) {
@@ -791,7 +791,7 @@ static bool IsBlacklisted(uint16_t idx)
 
 // Draw things
 // applied x2 to prevent initial rounding
-uint8_t Rssi2PX(uint16_t rssi, uint8_t pxMin, uint8_t pxMax) {
+static uint8_t Rssi2PX(uint16_t rssi, uint8_t pxMin, uint8_t pxMax) {
     const int DB_MIN = settings.dbMin << 1;
     const int DB_MAX = settings.dbMax << 1;
     const int DB_RANGE = DB_MAX - DB_MIN;
@@ -843,7 +843,7 @@ static void DrawPower() {
     }
 }
 
-void DrawStatus( ) {
+static void DrawStatus( ) {
 
 #ifdef SPECTRUM_EXTRA_VALUES
     sprintf(String, "%d/%d P:%d T:%d", settings.dbMin, settings.dbMax,
@@ -1081,15 +1081,11 @@ static void OnKeyDownFreqInput(uint8_t key) {
     if(DOPPLER_MODE)
    {
 
-//        100000
-        //123012
-         RTC_TR = ((tempFreq/1000000) << 20) //h十位
-             | ((tempFreq/100000%10) << 16)//h个位
-             | ((tempFreq/10000%10) << 12)//min十位
-             | ((tempFreq/1000%10)  << 8)//min个位
-             | ((tempFreq/100%10)  << 4)//sec十位
-             | ((tempFreq/10%10)   << 0);//sec个位
-              RTC_CFG |= (1 << 2);//打开设置时间功能
+
+time[3]=tempFreq/100000;
+time[4]=(tempFreq/1000)%100;
+time[5]=(tempFreq/10)%100;
+                RTC_Set();
              SetState(previousState);
 
         break;
@@ -1415,7 +1411,7 @@ bool HandleUserInput() {
             ToggleTX(false);
         }
 #endif
-        return true;
+//        return true;
     }
 
     if (kbd.current != KEY_INVALID && kbd.current == kbd.prev) {
@@ -1585,7 +1581,6 @@ static void Tick() {
     }
 }
 
-bool INT_FLAG = 0;
 
 void APP_RunSpectrum() {
 

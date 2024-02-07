@@ -17,7 +17,7 @@ void RTC_INIT() {
 
     EEPROM_ReadBuffer(0X2BC0,time,6);
 
-    RTC_Set(time);
+    RTC_Set();
 
     NVIC_SetPriority(Interrupt2_IRQn, 0);
 
@@ -26,8 +26,8 @@ void RTC_INIT() {
         RTC_IF |= (1 << 0);//清除中断标志位
         RTC_IE |= (1 << 0);//使能秒中断
 
-    RTC_CFG |= (1 << 2)//打开设置时间功能
-               | (1 << 0);//RTC使能
+    RTC_CFG |= //(1 << 2)|//打开设置时间功能
+                (1 << 0);//RTC使能
 
     NVIC_EnableIRQ(Interrupt2_IRQn);
 
@@ -35,7 +35,7 @@ void RTC_INIT() {
 
 }
 
-void RTC_Set(uint8_t time[6]) {
+void RTC_Set() {
 
 
 
@@ -52,6 +52,8 @@ void RTC_Set(uint8_t time[6]) {
              | (time[4] % 10 << 8)//min个位
              | (time[5] / 10 << 4)//sec十位
              | (time[5] % 10 << 0);//sec个位
+    RTC_CFG |= (1 << 2);//打开设置时间功能
+
 }
 
 void RTC_Get() {
