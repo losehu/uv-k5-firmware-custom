@@ -750,9 +750,9 @@ static void UpdateFreqInput(KEY_Code_t key) {
     }
 
     uint32_t base = 100000; // 1MHz in BK units
-#ifdef ENABLE_DOPPLER
-    if(DOPPLER_MODE)base=1;
-#endif
+//#ifdef ENABLE_DOPPLER
+//    if(DOPPLER_MODE)base=1;
+//#endif
     for (int i = dotIndex - 1; i >= 0; --i) {
         tempFreq += (freqInputArr[i] ) * base;
         base *= 10;
@@ -1080,13 +1080,15 @@ static void OnKeyDownFreqInput(uint8_t key) {
 #ifdef ENABLE_DOPPLER
     if(DOPPLER_MODE)
    {
+
+//        100000
         //123012
-         RTC_TR = ((time[3]/10) << 20) //h十位
-             | ((time[3]%10) << 16)//h个位
-             | ((tempFreq/1000) << 12)//min十位
-             | ((tempFreq/100) % 10 << 8)//min个位
-             | ((tempFreq%100) / 10 << 4)//sec十位
-             | ((tempFreq%10)   << 0);//sec个位
+         RTC_TR = ((tempFreq/1000000) << 20) //h十位
+             | ((tempFreq/100000%10) << 16)//h个位
+             | ((tempFreq/10000%10) << 12)//min十位
+             | ((tempFreq/1000%10)  << 8)//min个位
+             | ((tempFreq/100%10)  << 4)//sec十位
+             | ((tempFreq/10%10)   << 0);//sec个位
               RTC_CFG |= (1 << 2);//打开设置时间功能
              SetState(previousState);
 
