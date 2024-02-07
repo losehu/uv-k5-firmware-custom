@@ -69,7 +69,7 @@ ENABLE_MESSENGER_NOTIFICATION			?= 0
 
 ENABLE_DOPPLER               =0
 #############################################################
-PACKED_FILE_SUFFIX = LOSEHU121
+PACKED_FILE_SUFFIX = LOSEHU122
 ifeq ($(ENABLE_CHINESE_FULL),1)
     $(info font1)
     PACKED_FILE_SUFFIX = font1
