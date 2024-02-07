@@ -30,6 +30,11 @@
 #define RTC_TSDR (*(volatile uint32_t *)RTC_TSDR_ADD) // 当前日期寄存器
 #define RTC_CNT (*(volatile uint32_t *)RTC_CNT_ADD) // 秒标当前计数值
 #define RTC_VALID (*(volatile uint32_t *)RTC_VALID_ADD) //当前时间有效标志寄存器
+#define RC_FREQ_DELTA (*(volatile uint32_t *)(0x40000000u+0x78u))
+#define TRIM_RCLF (*(volatile uint32_t *)(0x40000800u+0x34u))
+#define TEMP1 (*(volatile uint32_t *)(0x40000800u+0x20u))
+#define TEMP2 (*(volatile uint32_t *)(0x40000800u+0x24u))
+
 void RTC_INIT(void);
 void RTC_Set( uint8_t time[6]);
 void RTC_Get();

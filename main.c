@@ -99,7 +99,7 @@ void Main(void) {
                           | SYSCON_DEV_CLK_GATE_CRC_BITS_ENABLE
                           | SYSCON_DEV_CLK_GATE_AES_BITS_ENABLE
                           | SYSCON_DEV_CLK_GATE_PWM_PLUS0_BITS_ENABLE
-                          | (1 << 12)
+//                          | (1 << 12)
                           | (1 << 22);
 
     SYSTICK_Init();
@@ -253,7 +253,6 @@ void Main(void) {
     RADIO_ConfigureNOAA();
 #endif
 //    uint8_t tmp[16] = {0};
-//
 //    EEPROM_WriteBuffer(0x1E200, tmp, 16);
 //    while (1) {
 //        EEPROM_ReadBuffer(0x1E200, &satellite_data, sizeof (satellite_data));
@@ -263,6 +262,8 @@ void Main(void) {
 //
 //
 //    }
+
+
     while (1) {
 
         APP_Update();

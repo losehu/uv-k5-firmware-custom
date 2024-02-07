@@ -743,22 +743,25 @@ static void UpdateFreqInput(KEY_Code_t key) {
     for (int i = 0; i < 10; ++i) {
         if (i < freqInputIndex) {
             digitKey = freqInputArr[i];
-            freqInputString[i] = digitKey <= KEY_9 ? '0' + digitKey - KEY_0 : '.';
+            freqInputString[i] = digitKey <= KEY_9 ? '0' + digitKey  : '.';
         } else {
             freqInputString[i] = '-';
         }
     }
 
     uint32_t base = 100000; // 1MHz in BK units
+#ifdef ENABLE_DOPPLER
+    if(DOPPLER_MODE)base=1;
+#endif
     for (int i = dotIndex - 1; i >= 0; --i) {
-        tempFreq += (freqInputArr[i] - KEY_0) * base;
+        tempFreq += (freqInputArr[i] ) * base;
         base *= 10;
     }
 
     base = 10000; // 0.1MHz in BK units
     if (dotIndex < freqInputIndex) {
         for (int i = dotIndex + 1; i < freqInputIndex; ++i) {
-            tempFreq += (freqInputArr[i] - KEY_0) * base;
+            tempFreq += (freqInputArr[i] ) * base;
             base /= 10;
         }
     }
@@ -840,7 +843,7 @@ static void DrawPower() {
     }
 }
 
-void DrawStatus(bool refresh) {
+void DrawStatus( ) {
 
 #ifdef SPECTRUM_EXTRA_VALUES
     sprintf(String, "%d/%d P:%d T:%d", settings.dbMin, settings.dbMax,
@@ -868,7 +871,6 @@ void DrawStatus(bool refresh) {
     }
 #endif
 
-    if (!refresh)return;
     DrawPower();
 
 }
@@ -1075,6 +1077,22 @@ static void OnKeyDownFreqInput(uint8_t key) {
             UpdateFreqInput(key);
             break;
         case KEY_MENU:
+#ifdef ENABLE_DOPPLER
+    if(DOPPLER_MODE)
+   {
+        //123012
+         RTC_TR = ((time[3]/10) << 20) //h十位
+             | ((time[3]%10) << 16)//h个位
+             | ((tempFreq/1000) << 12)//min十位
+             | ((tempFreq/100) % 10 << 8)//min个位
+             | ((tempFreq%100) / 10 << 4)//sec十位
+             | ((tempFreq%10)   << 0);//sec个位
+              RTC_CFG |= (1 << 2);//打开设置时间功能
+             SetState(previousState);
+
+        break;
+       }
+#endif
             if (tempFreq < F_MIN || tempFreq > F_MAX) {
                 break;
             }
@@ -1129,12 +1147,12 @@ void OnKeyDownStill(KEY_Code_t key) {
             UpdateRssiTriggerLevel(false);
             break;
         case KEY_5:
-#ifdef ENABLE_DOPPLER
-            if (DOPPLER_MODE) {
-
-
-            } else
-#endif
+//#ifdef ENABLE_DOPPLER
+//            if (DOPPLER_MODE) {
+//
+//
+//            } else
+//#endif
 
 
                 FreqInput();
@@ -1201,6 +1219,7 @@ void OnKeyDownStill(KEY_Code_t key) {
 
 static void RenderFreqInput() {
     UI_PrintStringSmall(freqInputString, 2, 127, 0);
+//    show_uint32(tempFreq,3);
 }
 
 static void UpdateStill() {
@@ -1215,10 +1234,10 @@ static void UpdateStill() {
     ToggleRX((IsPeakOverLevel() || monitorMode));
 }
 
-static void RenderStatus(bool refresh) {
+static void RenderStatus( ) {
 
-    memset(gStatusLine, 0, refresh ? sizeof(gStatusLine) : 115);
-    DrawStatus(refresh);
+    memset(gStatusLine, 0, sizeof(gStatusLine) );
+    DrawStatus();
     ST7565_BlitStatusLine();
 }
 
@@ -1552,10 +1571,9 @@ static void Tick() {
 
 
     if (redrawStatus || ++statuslineUpdateTimer > 4096) {
-        bool refresh = statuslineUpdateTimer > 4096;
-        RenderStatus(refresh);
+        RenderStatus();
         redrawStatus = false;
-        if (refresh)statuslineUpdateTimer = 0;
+       statuslineUpdateTimer = 0;
     }
 
 

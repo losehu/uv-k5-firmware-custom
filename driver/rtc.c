@@ -5,13 +5,15 @@
 #include "ARMCM0.h"
 #include "driver/eeprom.h"
 #include "driver/system.h"
+#include "ui/helper.h"
 uint8_t time[6];
 void RTC_INIT() {
 
-    RTC_PRE |= (32768 - 1)//PRE_ROUND=32768HZ-1
+    uint32_t correct_freq=32768 - 1+((RC_FREQ_DELTA&(0x400)>>10)?1:-1)*RC_FREQ_DELTA&(0x3ff);
+    RTC_PRE |= correct_freq//PRE_ROUND=32768HZ-1
                | (0 << 20)//DECIMAL=0
                | (0 << 24);//PRE_PERIOD=8s
-//    RTC_Set(time);
+
 
     EEPROM_ReadBuffer(0X2BC0,time,6);
 
@@ -28,6 +30,8 @@ void RTC_INIT() {
                | (1 << 0);//RTC使能
 
     NVIC_EnableIRQ(Interrupt2_IRQn);
+
+
 
 }
 
