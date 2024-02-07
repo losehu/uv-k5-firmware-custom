@@ -51,7 +51,7 @@
 
 
 # Eeprom分布说明
-[Eeprom分布说明](https://github.com/losehu/uv-k5-firmware-chinese/doc/README.md)
+[Eeprom分布说明](https://github.com/losehu/uv-k5-firmware-chinese/blob/main/doc/README.md)
 
 
 # 示例
