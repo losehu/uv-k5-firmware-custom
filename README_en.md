@@ -1,6 +1,6 @@
 **Read this in other languages: [English](README_en.md), [中文](README.md).**
 
-**Language Versions: [English](README_en.md), [中文](README.md).**
+**语言版本: [English](README_en.md), [中文](README.md).**
 
 # Multi-functional K5/6 Firmware
 
