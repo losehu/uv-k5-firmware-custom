@@ -1,5 +1,3 @@
-Here's the translation:
-
 **Read this in other languages: [English](README_en.md), [中文](README.md).**
 
 **Language Versions: [English](README_en.md), [中文](README.md).**

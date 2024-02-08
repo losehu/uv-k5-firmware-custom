@@ -1,4 +1,5 @@
 **Read this in other languages: [English](README_en.md), [中文](README.md).**
+
 **语言版本: [English](README_en.md), [中文](README.md).**
 
 # 多功能的K5/6固件
@@ -76,7 +77,7 @@
 
 | 编译选项                           | 描述                                                   |
 |--------------------------------|------------------------------------------------------|
-| 🧰 **泉盛基本功能**                  | https://github.com/egzumer/uv-k5-firmware-custom     |
+| 🧰 **泉盛基本功能**                  | [Quansheng Basic Functions](https://github.com/egzumer/uv-k5-firmware-custom)    |
 | ENABLE_UART                    | 串口，没有这个,你就不能通过PC配置无线电！                               |
 | ENABLE_AIRCOPY                 | AirCopy无线复制                                          |
 | ENABLE_FMRADIO                 | 收音机功能                                                |
@@ -113,18 +114,18 @@
 | ENABLE_CUSTOM_SIDEFUNCTIONS    | 自定义侧键功能                                              |
 | ENABLE_SIDEFUNCTIONS_SEND      | 自定义侧键功能（侧键发射功能）                                      |
 | ENABLE_AUDIO_BAR_DEFAULT       | 默认语音条样式                                              |
-| 📡 **自动多普勒**                   | https://github.com/losehu/uv-k5-firmware-custom      |
+| 📡 **自动多普勒**                   |[Automatic Doppler](https://github.com/losehu/uv-k5-firmware-custom)      |
 | ENABLE_DOPPLER             | 自动多普勒功能                                              |
-| 📧 **短信**                              | https://github.com/joaquimorg/uv-k5-firmware-custom  |
+| 📧 **短信**                              | [SMS](https://github.com/joaquimorg/uv-k5-firmware-custom)     |
 | ENABLE_MESSENGER                       | 发送和接收短文本消息（按键 = `F` + `MENU`）                        |
 | ENABLE_MESSENGER_DELIVERY_NOTIFICATION | 如果收到消息，则向发送方发送通知                                     |
 | ENABLE_MESSENGER_NOTIFICATION          | 在收到消息时播放声音                                           |
-| 📱 **MDC1200**                         | https://github.com/OneOfEleven/uv-k5-firmware-custom |
+| 📱 **MDC1200**                         | [MDC1200](https://github.com/OneOfEleven/uv-k5-firmware-custom)    |
 | ENABLE_MDC1200                         | MDC1200发送功能                                          |
 | ENABLE_MDC1200_SHOW_OP_ARG             | MDC显示首尾音参数                                           |
 | ENABLE_MDC1200_SIDE_BEEP               | MDC侧音                                                |
 | ENABLE_MDC1200_CONTACT                 | MDC联系人                                               |
-| 🎛️ **DOCK**                           | https://github.com/nicsure/QuanshengDock             |
+| 🎛️ **DOCK**                           | [DOCK](https://github.com/nicsure/QuanshengDock)             |
 | ENABLE_DOCK                            | 允许通过电脑控制手台，无屏幕显示！                                    |
 | 🚫 **调试**                              |                                                      |
 | ENABLE_AM_FIX_SHOW_DATA                | 显示AM修复的调试数据                                          |
