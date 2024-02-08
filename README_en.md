@@ -2,6 +2,18 @@
 
 **语言版本: [English](README_en.md), [中文](README.md).**
 
+# some advice for HAM outside of China who are using the K5
+**In China, about 2000 K5 devices have retained the larger-capacity EEPROM chip, such as the M24M02. We moved many constants to the EEPROM to gain more flash space.It works very well.**
+
+**Replacing the EEPROM is relatively simple, and many people without prior experience have successfully completed the operation. However, please make sure to back up your calibration files!**
+
+**By replacing it, you may be able to achieve:**
+* Display and input in any language (implemented)
+* Automatic Doppler frequency shift function (implemented)
+* Custom boot-up images (implemented)
+* Custom SSTV images (guess)
+* ......
+* More available flash allows for additional custom features(about 1.5K?).
 # Multi-functional K5/6 Firmware
 
 This firmware is based on modifications and merges of multiple open-source firmware, featuring the most diverse
