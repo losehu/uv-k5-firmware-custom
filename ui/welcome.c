@@ -69,8 +69,8 @@ void UI_DisplayWelcome(void) {
     EEPROM_ReadBuffer(0x0EC0, WelcomeString1, 16);
 
 #endif
-        UI_PrintStringSmall(   WelcomeString0, 0, 127, 0);
-        UI_PrintStringSmall(      WelcomeString1, 0, 127, 2);
+    UI_PrintStringSmall(WelcomeString0, 0, 127, 0);
+    UI_PrintStringSmall(WelcomeString1, 0, 127, 2);
     sprintf(WelcomeString1, "%u.%02uV %u%%",
             gBatteryVoltageAverage / 100,
             gBatteryVoltageAverage % 100,

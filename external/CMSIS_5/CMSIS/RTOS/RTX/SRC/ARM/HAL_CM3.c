@@ -39,146 +39,263 @@
 /*--------------------------- rt_set_PSP ------------------------------------*/
 
 __asm void rt_set_PSP (U32 stack) {
-        MSR     PSP,R0
-        BX      LR
+MSR PSP, R0
+BX LR
 }
 
 
 /*--------------------------- rt_get_PSP ------------------------------------*/
 
 __asm U32 rt_get_PSP (void) {
-        MRS     R0,PSP
-        BX      LR
+MRS R0, PSP
+BX LR
 }
 
 
 /*--------------------------- os_set_env ------------------------------------*/
 
 __asm void os_set_env (void) {
-   /* Switch to Unprivileged/Privileged Thread mode, use PSP. */
-        MOV     R0,SP                   ; PSP = MSP
-        MSR     PSP,R0
-        LDR     R0,=__cpp(&os_flags)
-        LDRB    R0,[R0]
-        LSLS    R0,#31
-        MOVNE   R0,#0x02                ; Privileged Thread mode, use PSP
-        MOVEQ   R0,#0x03                ; Unprivileged Thread mode, use PSP
-        MSR     CONTROL,R0
-        BX      LR
+/* Switch to Unprivileged/Privileged Thread mode, use PSP. */
+MOV R0, SP;
+PSP = MSP
+MSR PSP, R0
+LDR R0,
+=__cpp(&os_flags)
+LDRB R0,
+[R0]
+LSLS R0,
+#31
+MOVNE R0,
+#0x02;
+Privileged Thread
+mode,
+use PSP
+MOVEQ R0,
+#0x03;
+Unprivileged Thread
+mode,
+use PSP
+MSR CONTROL, R0
+BX LR
 
-        ALIGN
+ALIGN
 }
 
 
 /*--------------------------- _alloc_box ------------------------------------*/
 
 __asm void *_alloc_box (void *box_mem) {
-   /* Function wrapper for Unprivileged/Privileged mode. */
-        LDR     R12,=__cpp(rt_alloc_box)
-        MRS     R3,IPSR
-        LSLS    R3,#24
-        BXNE    R12
-        MRS     R3,CONTROL
-        LSLS    R3,#31
-        BXEQ    R12
-        SVC     0
-        BX      LR
+/* Function wrapper for Unprivileged/Privileged mode. */
+LDR R12,
+=
+__cpp(rt_alloc_box)
+MRS R3, IPSR
+LSLS R3,
+#24
+BXNE R12
+MRS R3, CONTROL
+LSLS R3,
+#31
+BXEQ R12
+SVC     0
+BX LR
 
-        ALIGN
+ALIGN
 }
 
 
 /*--------------------------- _free_box -------------------------------------*/
 
 __asm U32 _free_box (void *box_mem, void *box) {
-   /* Function wrapper for Unprivileged/Privileged mode. */
-        LDR     R12,=__cpp(rt_free_box)
-        MRS     R3,IPSR
-        LSLS    R3,#24
-        BXNE    R12
-        MRS     R3,CONTROL
-        LSLS    R3,#31
-        BXEQ    R12
-        SVC     0
-        BX      LR
+/* Function wrapper for Unprivileged/Privileged mode. */
+LDR R12,
+=
+__cpp(rt_free_box)
+MRS R3, IPSR
+LSLS R3,
+#24
+BXNE R12
+MRS R3, CONTROL
+LSLS R3,
+#31
+BXEQ R12
+SVC     0
+BX LR
 
-        ALIGN
+ALIGN
 }
 
 
 /*-------------------------- SVC_Handler ------------------------------------*/
 
 __asm void SVC_Handler (void) {
-        PRESERVE8
+PRESERVE8
 
-        IMPORT  SVC_Count
-        IMPORT  SVC_Table
-        IMPORT  rt_stk_check
+        IMPORT
+SVC_Count
+        IMPORT
+SVC_Table
+        IMPORT
+rt_stk_check
 
 #ifdef  IFX_XMC4XXX
-        EXPORT  SVC_Handler_Veneer
-SVC_Handler_Veneer        
+EXPORT  SVC_Handler_Veneer
+SVC_Handler_Veneer
 #endif
 
-        MRS     R0,PSP                  ; Read PSP
-        LDR     R1,[R0,#24]             ; Read Saved PC from Stack
-        LDRB    R1,[R1,#-2]             ; Load SVC Number
-        CBNZ    R1,SVC_User
+        MRS
+R0,
+PSP;
+Read PSP
+LDR R1,
+[R0,#24];
+Read Saved
+PC from
+Stack
+        LDRB
+R1,[R1,#-2];
+Load SVC
+Number
+        CBNZ
+R1,
+SVC_User
 
-        LDM     R0,{R0-R3,R12}          ; Read R0-R3,R12 from stack
-        BLX     R12                     ; Call SVC Function 
+        LDM
+R0,{
+R0-R3,R12};
+Read R0
+-R3,
+R12 from
+stack
+        BLX
+R12;
+Call SVC
+Function
 
-        MRS     R12,PSP                 ; Read PSP
-        STM     R12,{R0-R2}             ; Store return values
+        MRS
+R12,
+PSP;
+Read PSP
+STM R12,
+{
+R0-R2}; Store return
+values
 
-        LDR     R3,=__cpp(&os_tsk)
-        LDM     R3,{R1,R2}              ; os_tsk.run, os_tsk.next
-        CMP     R1,R2
-        BEQ     SVC_Exit                ; no task switch
+        LDR
+R3,=
 
-        CBZ     R1,SVC_Next             ; Runtask deleted?
-        STMDB   R12!,{R4-R11}           ; Save Old context
-        STR     R12,[R1,#TCB_TSTACK]    ; Update os_tsk.run->tsk_stack
+__cpp(
 
-        PUSH    {R2,R3}
-        BL      rt_stk_check            ; Check for Stack overflow
-        POP     {R2,R3}
+&os_tsk)
+LDM R3,
+{
+R1,R2}; os_tsk.run, os_tsk.
+next
+        CMP
+R1,
+R2
+        BEQ
+SVC_Exit;
+no task
+switch
+
+CBZ R1, SVC_Next;
+Runtask deleted
+?
+STMDB R12
+!,{
+R4-R11};
+Save Old
+context
+        STR
+R12,[R1,#TCB_TSTACK];
+Update os_tsk
+.run->
+tsk_stack
+
+        PUSH{R2, R3}
+BL rt_stk_check;
+Check for
+Stack overflow
+POP     {
+R2,R3}
 
 SVC_Next
-        STR     R2,[R3]                 ; os_tsk.run = os_tsk.next
+        STR
+R2,[R3]; os_tsk.
+run = os_tsk.next
 
-        LDR     R12,[R2,#TCB_TSTACK]    ; os_tsk.next->tsk_stack
-        LDMIA   R12!,{R4-R11}           ; Restore New Context
-        MSR     PSP,R12                 ; Write PSP
+LDR R12,
+[R2,#TCB_TSTACK]; os_tsk.next->
+tsk_stack
+        LDMIA
+R12!,{
+R4-R11};
+Restore New
+Context
+        MSR
+PSP,
+R12;
+Write PSP
 
 SVC_Exit
-        MVN     LR,#:NOT:0xFFFFFFFD     ; set EXC_RETURN value
+        MVN
+LR,#:NOT:0xFFFFFFFD;
+set EXC_RETURN
+value
 #ifdef  IFX_XMC4XXX
-        PUSH    {LR}
-        POP     {PC}
+PUSH    {LR}
+POP     {PC}
 #else
-        BX      LR
+        BX
+LR
 #endif
 
-        /*------------------- User SVC ------------------------------*/
+/*------------------- User SVC ------------------------------*/
 
 SVC_User
-        PUSH    {R4,LR}                 ; Save Registers
-        LDR     R2,=SVC_Count
-        LDR     R2,[R2]
-        CMP     R1,R2
-        BHI     SVC_Done                ; Overflow
+PUSH    {
+R4,LR};
+Save Registers
+LDR R2,
+=
+SVC_Count
+        LDR
+R2,[R2]
+CMP R1, R2
+BHI SVC_Done;
+Overflow
 
-        LDR     R4,=SVC_Table-4
-        LDR     R4,[R4,R1,LSL #2]       ; Load SVC Function Address
+        LDR
+R4,=SVC_Table-4
+LDR R4,
+[R4,R1,LSL #2];
+Load SVC
+Function Address
 
-        LDM     R0,{R0-R3,R12}          ; Read R0-R3,R12 from stack
-        BLX     R4                      ; Call SVC Function
+LDM R0,
+{
+R0-R3,R12};
+Read R0
+-R3,
+R12 from
+stack
+        BLX
+R4;
+Call SVC
+Function
 
-        MRS     R12,PSP
-        STM     R12,{R0-R3}             ; Function return values
-SVC_Done
-        POP     {R4,PC}                 ; RETI
+        MRS
+R12,
+PSP
+        STM
+R12,{
+R0-R3}; Function return
+values
+        SVC_Done
+POP     {
+R4,PC};
+RETI
 
         ALIGN
 }
@@ -187,75 +304,122 @@ SVC_Done
 /*-------------------------- PendSV_Handler ---------------------------------*/
 
 __asm void PendSV_Handler (void) {
-        PRESERVE8
+PRESERVE8
 
 #ifdef  IFX_XMC4XXX
-        EXPORT  PendSV_Handler_Veneer
-PendSV_Handler_Veneer        
+EXPORT  PendSV_Handler_Veneer
+PendSV_Handler_Veneer
 #endif
 
-        BL      __cpp(rt_pop_req)
+        BL
+__cpp(rt_pop_req)
 
 Sys_Switch
-        LDR     R3,=__cpp(&os_tsk)
-        LDM     R3,{R1,R2}              ; os_tsk.run, os_tsk.next
-        CMP     R1,R2
-        BEQ     Sys_Exit
+        LDR
+R3,=
 
-        MRS     R12,PSP                 ; Read PSP
-        STMDB   R12!,{R4-R11}           ; Save Old context
-        STR     R12,[R1,#TCB_TSTACK]    ; Update os_tsk.run->tsk_stack
+__cpp(
 
-        PUSH    {R2,R3}
-        BL      rt_stk_check            ; Check for Stack overflow
-        POP     {R2,R3}
+&os_tsk)
+LDM R3,
+{
+R1,R2}; os_tsk.run, os_tsk.
+next
+        CMP
+R1,
+R2
+        BEQ
+Sys_Exit
 
-        STR     R2,[R3]                 ; os_tsk.run = os_tsk.next
+        MRS
+R12,
+PSP;
+Read PSP
+STMDB R12
+!,{
+R4-R11};
+Save Old
+context
+        STR
+R12,[R1,#TCB_TSTACK];
+Update os_tsk
+.run->
+tsk_stack
 
-        LDR     R12,[R2,#TCB_TSTACK]    ; os_tsk.next->tsk_stack
-        LDMIA   R12!,{R4-R11}           ; Restore New Context
-        MSR     PSP,R12                 ; Write PSP
+        PUSH{R2, R3}
+BL rt_stk_check;
+Check for
+Stack overflow
+POP     {
+R2,R3}
+
+STR R2,
+[R3]; os_tsk.
+run = os_tsk.next
+
+LDR R12,
+[R2,#TCB_TSTACK]; os_tsk.next->
+tsk_stack
+        LDMIA
+R12!,{
+R4-R11};
+Restore New
+Context
+        MSR
+PSP,
+R12;
+Write PSP
 
 Sys_Exit
-        MVN     LR,#:NOT:0xFFFFFFFD     ; set EXC_RETURN value
+        MVN
+LR,#:NOT:0xFFFFFFFD;
+set EXC_RETURN
+value
 #ifdef  IFX_XMC4XXX
-        PUSH    {LR}
-        POP     {PC}
+PUSH    {LR}
+POP     {PC}
 #else
-        BX      LR                      ; Return to Thread Mode
+        BX
+LR;
+Return to
+Thread Mode
 #endif
 
-        ALIGN
+ALIGN
 }
 
 
 /*-------------------------- SysTick_Handler --------------------------------*/
 
 __asm void SysTick_Handler (void) {
-        PRESERVE8
+PRESERVE8
 
 #ifdef  IFX_XMC4XXX
-        EXPORT  SysTick_Handler_Veneer
-SysTick_Handler_Veneer        
+EXPORT  SysTick_Handler_Veneer
+SysTick_Handler_Veneer
 #endif
 
-        BL      __cpp(rt_systick)
-        B       Sys_Switch
+        BL
+__cpp(rt_systick)
+B Sys_Switch
 
-        ALIGN
+ALIGN
 }
 
 
 /*-------------------------- OS_Tick_Handler --------------------------------*/
 
 __asm void OS_Tick_Handler (void) {
-        PRESERVE8
+PRESERVE8
 
-        BL      __cpp(os_tick_irqack)
-        BL      __cpp(rt_systick)
-        B       Sys_Switch
+        BL
+__cpp(os_tick_irqack)
 
-        ALIGN
+BL __cpp(rt_systick)
+
+B Sys_Switch
+
+ALIGN
 }
 
 

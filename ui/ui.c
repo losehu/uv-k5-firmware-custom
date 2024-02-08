@@ -16,23 +16,28 @@
 #include "../misc.h"
 #include <assert.h>
 #include <string.h>
+
 #ifdef ENABLE_MESSENGER
 #include "ui/messenger.h"
 #endif
 
 #include "app/chFrScanner.h"
 #include "app/dtmf.h"
+
 #ifdef ENABLE_FMRADIO
-	#include "app/fm.h"
+#include "app/fm.h"
 #endif
+
 #include "driver/keyboard.h"
 #include "misc.h"
+
 #ifdef ENABLE_AIRCOPY
-	#include "ui/aircopy.h"
+#include "ui/aircopy.h"
 #endif
 #ifdef ENABLE_FMRADIO
-	#include "ui/fmradio.h"
+#include "ui/fmradio.h"
 #endif
+
 #include "ui/inputbox.h"
 #include "ui/main.h"
 #include "ui/menu.h"
@@ -42,9 +47,9 @@
 GUI_DisplayType_t gScreenToDisplay;
 GUI_DisplayType_t gRequestDisplayScreen = DISPLAY_INVALID;
 
-uint8_t           gAskForConfirmation;
-bool              gAskToSave;
-bool              gAskToDelete;
+uint8_t gAskForConfirmation;
+bool gAskToSave;
+bool gAskToDelete;
 
 
 void (*UI_DisplayFunctions[])(void) = {
@@ -67,37 +72,34 @@ void (*UI_DisplayFunctions[])(void) = {
 
 static_assert(ARRAY_SIZE(UI_DisplayFunctions) == DISPLAY_N_ELEM);
 
-void GUI_DisplayScreen(void)
-{
+void GUI_DisplayScreen(void) {
     if (gScreenToDisplay != DISPLAY_INVALID) {
         UI_DisplayFunctions[gScreenToDisplay]();
     }
 }
 
-void GUI_SelectNextDisplay(GUI_DisplayType_t Display)
-{
-	if (Display == DISPLAY_INVALID)
-		return;
+void GUI_SelectNextDisplay(GUI_DisplayType_t Display) {
+    if (Display == DISPLAY_INVALID)
+        return;
 
-	if (gScreenToDisplay != Display)
-	{
-		DTMF_clear_input_box();
+    if (gScreenToDisplay != Display) {
+        DTMF_clear_input_box();
 
-		gInputBoxIndex       = 0;
-		gIsInSubMenu         = false;
-		gCssBackgroundScan         = false;
-		gScanStateDir        = SCAN_OFF;
-		#ifdef ENABLE_FMRADIO
-			gFM_ScanState    = FM_SCAN_OFF;
-		#endif
-		gAskForConfirmation  = 0;
-		gAskToSave           = false;
-		gAskToDelete         = false;
-		gWasFKeyPressed      = false;
+        gInputBoxIndex = 0;
+        gIsInSubMenu = false;
+        gCssBackgroundScan = false;
+        gScanStateDir = SCAN_OFF;
+#ifdef ENABLE_FMRADIO
+        gFM_ScanState    = FM_SCAN_OFF;
+#endif
+        gAskForConfirmation = 0;
+        gAskToSave = false;
+        gAskToDelete = false;
+        gWasFKeyPressed = false;
 
-		gUpdateStatus        = true;
-	}
+        gUpdateStatus = true;
+    }
 
-	gScreenToDisplay = Display;
-	gUpdateDisplay   = true;
+    gScreenToDisplay = Display;
+    gUpdateDisplay = true;
 }

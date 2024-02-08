@@ -17,8 +17,9 @@
 #include <string.h>
 
 #ifdef ENABLE_AIRCOPY
-	#include "app/aircopy.h"
+#include "app/aircopy.h"
 #endif
+
 #include "bsp/dp32g030/gpio.h"
 #include "driver/bk4819.h"
 #include "driver/keyboard.h"
@@ -31,40 +32,36 @@
 #include "ui/menu.h"
 #include "ui/ui.h"
 
-BOOT_Mode_t BOOT_GetMode(void)
-{
-	unsigned int i;
-	KEY_Code_t   Keys[2];
+BOOT_Mode_t BOOT_GetMode(void) {
+    unsigned int i;
+    KEY_Code_t Keys[2];
 
-	for (i = 0; i < 2; i++)
-	{
+    for (i = 0; i < 2; i++) {
 
-		Keys[i] = KEYBOARD_Poll();
-		SYSTEM_DelayMs(20);
-	}
+        Keys[i] = KEYBOARD_Poll();
+        SYSTEM_DelayMs(20);
+    }
 
-	if (Keys[0] == Keys[1])
-	{
-		gKeyReading0 = Keys[0];
-		gKeyReading1 = Keys[0];
+    if (Keys[0] == Keys[1]) {
+        gKeyReading0 = Keys[0];
+        gKeyReading1 = Keys[0];
 
-		gDebounceCounter = 2;
+        gDebounceCounter = 2;
 
-		if (Keys[0] == KEY_SIDE1)
-			return BOOT_MODE_F_LOCK;
+        if (Keys[0] == KEY_SIDE1)
+            return BOOT_MODE_F_LOCK;
 
-		#ifdef ENABLE_AIRCOPY
-			if (Keys[0] == KEY_SIDE2)
-				return BOOT_MODE_AIRCOPY;
-		#endif
-	}
+#ifdef ENABLE_AIRCOPY
+        if (Keys[0] == KEY_SIDE2)
+            return BOOT_MODE_AIRCOPY;
+#endif
+    }
 
-	return BOOT_MODE_NORMAL;
+    return BOOT_MODE_NORMAL;
 }
 
-void BOOT_ProcessMode(/*BOOT_Mode_t Mode*/)
-{
-return;
+void BOOT_ProcessMode(/*BOOT_Mode_t Mode*/) {
+    return;
 //
 //	if (Mode == BOOT_MODE_F_LOCK)
 //	{

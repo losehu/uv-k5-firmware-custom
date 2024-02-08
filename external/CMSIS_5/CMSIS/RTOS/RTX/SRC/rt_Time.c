@@ -43,40 +43,40 @@ U32 os_time;
 
 /*--------------------------- rt_time_get -----------------------------------*/
 
-U32 rt_time_get (void) {
-  /* Get system time tick */
-  return (os_time);
+U32 rt_time_get(void) {
+    /* Get system time tick */
+    return (os_time);
 }
 
 
 /*--------------------------- rt_dly_wait -----------------------------------*/
 
-void rt_dly_wait (U16 delay_time) {
-  /* Delay task by "delay_time" */
-  rt_block (delay_time, WAIT_DLY);
+void rt_dly_wait(U16 delay_time) {
+    /* Delay task by "delay_time" */
+    rt_block(delay_time, WAIT_DLY);
 }
 
 
 /*--------------------------- rt_itv_set ------------------------------------*/
 
-void rt_itv_set (U16 interval_time) {
-  /* Set interval length and define start of first interval */
-  os_tsk.run->interval_time = interval_time;
-  os_tsk.run->delta_time = interval_time + (U16)os_time;
+void rt_itv_set(U16 interval_time) {
+    /* Set interval length and define start of first interval */
+    os_tsk.run->interval_time = interval_time;
+    os_tsk.run->delta_time = interval_time + (U16) os_time;
 }
 
 
 /*--------------------------- rt_itv_wait -----------------------------------*/
 
-void rt_itv_wait (void) {
-  /* Wait for interval end and define start of next one */
-  U16 delta;
+void rt_itv_wait(void) {
+    /* Wait for interval end and define start of next one */
+    U16 delta;
 
-  delta = os_tsk.run->delta_time - (U16)os_time;
-  os_tsk.run->delta_time += os_tsk.run->interval_time;
-  if ((delta & 0x8000U) == 0U) {
-    rt_block (delta, WAIT_ITV);
-  }
+    delta = os_tsk.run->delta_time - (U16) os_time;
+    os_tsk.run->delta_time += os_tsk.run->interval_time;
+    if ((delta & 0x8000U) == 0U) {
+        rt_block(delta, WAIT_ITV);
+    }
 }
 
 /*----------------------------------------------------------------------------

@@ -152,6 +152,7 @@ typedef struct PeakInfo {
 } PeakInfo;
 
 void APP_RunSpectrum(void);
+
 #ifdef ENABLE_DOPPLER
 extern bool DOPPLER_MODE;
 void RTCHandler();

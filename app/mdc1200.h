@@ -5,7 +5,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#define MDC1200_FEC_K   7     	// R=1/2 K=7 convolutional coder
+#define MDC1200_FEC_K   7        // R=1/2 K=7 convolutional coder
 
 // 0x00 (0x81) emergency alarm
 // 0x20 (0x00) emergency alarm ack
@@ -76,36 +76,46 @@
 // 2300 1234 [general ack - not same as permission to PTT]
 
 enum mdc1200_op_code_e {
-    MDC1200_OP_CODE_PTT_ID         = 0x01,
-    MDC1200_OP_CODE_POST_ID        = 0x01,
+    MDC1200_OP_CODE_PTT_ID = 0x01,
+    MDC1200_OP_CODE_POST_ID = 0x01,
     MDC1200_OP_CODE_REMOTE_MONITOR = 0x11,
-    MDC1200_OP_CODE_STATUS_REQ     = 0x22,
-    MDC1200_OP_CODE_RADIO_ENABLE   = 0x2B,
-    MDC1200_OP_CODE_RADIO_DISABLE  = 0x2B,
-    MDC1200_OP_CODE_CALL_ALERT     = 0x35,
-    MDC1200_OP_CODE_STS_XX         = 0x46,
-    MDC1200_OP_CODE_MSG_XX         = 0x47,
-    MDC1200_OP_CODE_RADIO_CHECK    = 0x63
+    MDC1200_OP_CODE_STATUS_REQ = 0x22,
+    MDC1200_OP_CODE_RADIO_ENABLE = 0x2B,
+    MDC1200_OP_CODE_RADIO_DISABLE = 0x2B,
+    MDC1200_OP_CODE_CALL_ALERT = 0x35,
+    MDC1200_OP_CODE_STS_XX = 0x46,
+    MDC1200_OP_CODE_MSG_XX = 0x47,
+    MDC1200_OP_CODE_RADIO_CHECK = 0x63
 };
 typedef enum mdc1200_op_code_e mdc1200_op_code_t;
 
 extern const uint8_t mdc1200_sync[5];
 extern const uint8_t mdc1200_sync_suc_xor[5];
 
-extern uint8_t  mdc1200_op;
-extern uint8_t  mdc1200_arg;
+extern uint8_t mdc1200_op;
+extern uint8_t mdc1200_arg;
 extern uint16_t mdc1200_unit_id;
-bool mdc1200_contact_find(uint16_t mdc_id, char *contact) ;
-extern uint8_t mdc1200_rx_buffer[5+ (MDC1200_FEC_K * 2)];
-extern unsigned int mdc1200_rx_buffer_index ;
-bool MDC1200_process_rx_data(const void *buffer,const unsigned int size,uint8_t *op,uint8_t *arg,uint16_t *unit_id);
-extern uint8_t  mdc1200_rx_ready_tick_500ms;
-unsigned int   MDC1200_encode_single_packet(void *data, const uint8_t op, const uint8_t arg, const uint16_t unit_id);
-void           MDC1200_reset_rx(void);
-void           MDC1200_init(void);
+
+bool mdc1200_contact_find(uint16_t mdc_id, char *contact);
+
+extern uint8_t mdc1200_rx_buffer[5 + (MDC1200_FEC_K * 2)];
+extern unsigned int mdc1200_rx_buffer_index;
+
+bool MDC1200_process_rx_data(const void *buffer, const unsigned int size, uint8_t *op, uint8_t *arg, uint16_t *unit_id);
+
+extern uint8_t mdc1200_rx_ready_tick_500ms;
+
+unsigned int MDC1200_encode_single_packet(void *data, const uint8_t op, const uint8_t arg, const uint16_t unit_id);
+
+void MDC1200_reset_rx(void);
+
+void MDC1200_init(void);
+
 extern uint16_t MDC_ID;
+
 uint16_t extractHex(const char *str);
-extern uint16_t MDC_ADD[6] ;
+
+extern uint16_t MDC_ADD[6];
 #define MDC_NUM_ADD 0X1FFF
 #define MAX_CONTACT_NUM 22
 extern uint8_t contact_num;

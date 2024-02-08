@@ -551,12 +551,12 @@ void UI_DisplayMenu(void) {
     if (gIsInSubMenu)
         memmove(gFrameBuffer[2] + 41, BITMAP_VFO_Default, sizeof(BITMAP_VFO_Default));
 #ifndef ENABLE_MDC1200
-    uint8_t add=1;
+    uint8_t add = 1;
 
-    if(gMenuCursor+1>=26)
-        add=0;
+    if (gMenuCursor + 1 >= 26)
+        add = 0;
 
-    sprintf(String, "%2u/%u", add + gMenuCursor, gMenuListCount-1);
+    sprintf(String, "%2u/%u", add + gMenuCursor, gMenuListCount - 1);
 
 #else
     sprintf(String, "%2u/%u", 1 + gMenuCursor, gMenuListCount);
@@ -863,14 +863,14 @@ void UI_DisplayMenu(void) {
                     sprintf(String, "%04X", gEeprom.MDC1200_ID); // %04X确保输出是4个字符长度的十六进制数
                     UI_PrintStringSmall(String, menu_item_x1, menu_item_x2, 3);//4
 
-                    #ifdef ENABLE_MDC1200_EDIT
+#ifdef ENABLE_MDC1200_EDIT
 
                     edit_index = -1;
                     edit[0]=String[0];
                     edit[1]=String[1];
                     edit[2]=String[2];
                     edit[3]=String[3];
-                    #endif
+#endif
 #ifdef ENABLE_MDC1200_EDIT
                     }
 #endif
@@ -1262,10 +1262,10 @@ void UI_DisplayMenu(void) {
     if ((UI_MENU_GetCurrentMenuId() == MENU_RESET ||
          UI_MENU_GetCurrentMenuId() == MENU_MEM_CH ||
          UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME ||
-#ifdef ENABLE_MDC1200_EDIT
+         #ifdef ENABLE_MDC1200_EDIT
 
-UI_MENU_GetCurrentMenuId() == MENU_MDC_ID ||
-#endif
+         UI_MENU_GetCurrentMenuId() == MENU_MDC_ID ||
+         #endif
          UI_MENU_GetCurrentMenuId() == MENU_DEL_CH) && gAskForConfirmation) {    // display confirmation
         char *pPrintStr = (gAskForConfirmation == 1) ? "SURE?" : "WAIT!";
         if ((UI_MENU_GetCurrentMenuId() == MENU_MEM_CH || UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME ||

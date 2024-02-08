@@ -20,6 +20,7 @@
 #include <stdbool.h>
 
 bool UART_IsCommandAvailable(void);
+
 void UART_HandleCommand(void);
 
 #endif

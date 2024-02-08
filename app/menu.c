@@ -184,7 +184,7 @@ int MENU_GetLimits(uint8_t menu_id, int32_t *pMin, int32_t *pMax) {
         case MENU_ROGER:
             *pMin = 0;
 #ifndef ENABLE_MDC1200
-            *pMax =1;
+            *pMax = 1;
 #else
             *pMax = ARRAY_SIZE(gSubMenu_ROGER) - 1;
 #endif
@@ -1717,7 +1717,7 @@ static void MENU_Key_UP_DOWN(bool bKeyPressed, bool bKeyHeld, int8_t Direction) 
 #ifndef ENABLE_MDC1200
         uint8_t last_num = gMenuCursor;
 #endif
-        gMenuCursor = NUMBER_AddWithWraparound(gMenuCursor, key_dir*Direction, 0, gMenuListCount - 1);
+        gMenuCursor = NUMBER_AddWithWraparound(gMenuCursor, key_dir * Direction, 0, gMenuListCount - 1);
 #ifndef ENABLE_MDC1200
         if (last_num + 1 < 26 && gMenuCursor + 1 == 26)gMenuCursor++;
         else if (last_num + 1 == 27 && gMenuCursor + 1 == 26)gMenuCursor--;

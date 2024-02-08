@@ -21,24 +21,32 @@
 
 //static void ACTION_FlashLight(void)
 void ACTION_Power(void);
+
 void ACTION_Monitor(void);
+
 void ACTION_Scan(bool bRestart);
+
 #ifdef ENABLE_VOX
-	void ACTION_Vox(void);
+void ACTION_Vox(void);
 #endif
 
 #ifdef ENABLE_FMRADIO
-	void ACTION_FM(void);
+void ACTION_FM(void);
 #endif
+
 void ACTION_SwitchDemodul(void);
+
 void ACTION_SwitchWidth(void);
+
 void ACTION_SwitchDTMFDecode(void);
 
 
 #ifdef ENABLE_BLMIN_TMP_OFF
 void ACTION_BlminTmpOff(void);
 #endif
+
 void ACTION_D_DCD(void);
+
 void ACTION_WIDTH(void);
 
 void ACTION_Handle(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld);

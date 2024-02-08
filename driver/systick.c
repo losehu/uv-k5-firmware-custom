@@ -17,16 +17,16 @@
 #include "ARMCM0.h"
 #include "systick.h"
 #include "../misc.h"
+
 // 0x20000324
 static uint32_t gTickMultiplier;
 
-void SYSTICK_Init(void)
-{
-	SysTick_Config(480000);
-	gTickMultiplier = 48;
+void SYSTICK_Init(void) {
+    SysTick_Config(480000);
+    gTickMultiplier = 48;
 }
-void SYSTICK_DelayUs(uint32_t Delay)
-{
+
+void SYSTICK_DelayUs(uint32_t Delay) {
     const uint32_t ticks = Delay * gTickMultiplier;
     uint32_t elapsed_ticks = 0;
     uint32_t Start = SysTick->LOAD;
@@ -38,7 +38,7 @@ void SYSTICK_DelayUs(uint32_t Delay)
             Current = SysTick->VAL;
         } while (Current == Previous);
 
-        uint32_t Delta = ((Current < Previous) ? - Current : Start - Current);
+        uint32_t Delta = ((Current < Previous) ? -Current : Start - Current);
 
         elapsed_ticks += Delta + Previous;
 
@@ -46,12 +46,11 @@ void SYSTICK_DelayUs(uint32_t Delay)
     } while (elapsed_ticks < ticks);
 }
 
-void SYSTICK_Delay250ns(const uint32_t Delay)
-{
+void SYSTICK_Delay250ns(const uint32_t Delay) {
     const uint32_t ticks = (Delay * gTickMultiplier) >> 2;
-    uint32_t i           = 0;
-    uint32_t Start       = SysTick->LOAD;
-    uint32_t Previous    = SysTick->VAL;
+    uint32_t i = 0;
+    uint32_t Start = SysTick->LOAD;
+    uint32_t Previous = SysTick->VAL;
 
     do {
         uint32_t Delta;

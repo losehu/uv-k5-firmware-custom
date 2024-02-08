@@ -28,8 +28,7 @@
 uint8_t gStatusLine[LCD_WIDTH];
 uint8_t gFrameBuffer[FRAME_LINES][LCD_WIDTH];
 
-static void DrawLine(uint8_t column, uint8_t line, const uint8_t * lineBuffer, unsigned size_defVal)
-{
+static void DrawLine(uint8_t column, uint8_t line, const uint8_t *lineBuffer, unsigned size_defVal) {
     ST7565_SelectColumnAndLine(column + 4, line);
     GPIO_SetBit(&GPIOB->DATA, GPIOB_PIN_ST7565_A0);
     for (unsigned i = 0; i < size_defVal; i++) {
@@ -39,39 +38,37 @@ static void DrawLine(uint8_t column, uint8_t line, const uint8_t * lineBuffer, u
     SPI_WaitForUndocumentedTxFifoStatusBit();
 }
 
-void ST7565_DrawLine(const unsigned int Column, const unsigned int Line, const uint8_t *pBitmap, const unsigned int Size)
-{
+void
+ST7565_DrawLine(const unsigned int Column, const unsigned int Line, const uint8_t *pBitmap, const unsigned int Size) {
     SPI_ToggleMasterMode(&SPI0->CR, false);
     DrawLine(Column, Line, pBitmap, Size);
     SPI_ToggleMasterMode(&SPI0->CR, true);
 }
 
-void ST7565_BlitFullScreen(void)
-{
+void ST7565_BlitFullScreen(void) {
     SPI_ToggleMasterMode(&SPI0->CR, false);
     ST7565_WriteByte(0x40);
     for (unsigned line = 0; line < FRAME_LINES; line++) {
-        DrawLine(0, line+1, gFrameBuffer[line], LCD_WIDTH);
+        DrawLine(0, line + 1, gFrameBuffer[line], LCD_WIDTH);
     }
     SPI_ToggleMasterMode(&SPI0->CR, true);
 }
-void ST7565_BlitLine(unsigned line)
-{
+
+void ST7565_BlitLine(unsigned line) {
     SPI_ToggleMasterMode(&SPI0->CR, false);
     ST7565_WriteByte(0x40);    // start line ?
-    DrawLine(0, line+1, gFrameBuffer[line], LCD_WIDTH);
+    DrawLine(0, line + 1, gFrameBuffer[line], LCD_WIDTH);
     SPI_ToggleMasterMode(&SPI0->CR, true);
 }
-void ST7565_BlitStatusLine(void)
-{	// the top small text line on the display
+
+void ST7565_BlitStatusLine(void) {    // the top small text line on the display
     SPI_ToggleMasterMode(&SPI0->CR, false);
     ST7565_WriteByte(0x40);    // start line ?
     DrawLine(0, 0, gStatusLine, LCD_WIDTH);
     SPI_ToggleMasterMode(&SPI0->CR, true);
 }
 
-void ST7565_FillScreen(uint8_t value)
-{
+void ST7565_FillScreen(uint8_t value) {
     SPI_ToggleMasterMode(&SPI0->CR, false);
     for (unsigned i = 0; i < 8; i++) {
         DrawLine(0, i, NULL, value);
@@ -129,30 +126,29 @@ const uint8_t ST7565_CMD_SET_START_LINE = 0x40;
 const uint8_t ST7565_CMD_DISPLAY_ON_OFF = 0xAE;
 
 uint8_t cmds[] = {
-        ST7565_CMD_BIAS_SELECT | 0, 			// Select bias setting: 1/9
-        ST7565_CMD_COM_DIRECTION  | (0 << 3), 	// Set output direction of COM: normal
-        ST7565_CMD_SEG_DIRECTION | 1, 			// Set scan direction of SEG: reverse
-        ST7565_CMD_INVERSE_DISPLAY | 0, 		// Inverse Display: false
-        ST7565_CMD_ALL_PIXEL_ON | 0, 			// All Pixel ON: false - normal display
+        ST7565_CMD_BIAS_SELECT | 0,            // Select bias setting: 1/9
+        ST7565_CMD_COM_DIRECTION | (0 << 3),    // Set output direction of COM: normal
+        ST7565_CMD_SEG_DIRECTION | 1,            // Set scan direction of SEG: reverse
+        ST7565_CMD_INVERSE_DISPLAY | 0,        // Inverse Display: false
+        ST7565_CMD_ALL_PIXEL_ON | 0,            // All Pixel ON: false - normal display
         ST7565_CMD_REGULATION_RATIO | (4 << 0), // Regulation Ratio 5.0
 
-        ST7565_CMD_SET_EV,						// Set contrast
+        ST7565_CMD_SET_EV,                        // Set contrast
         31,
 
-        ST7565_CMD_POWER_CIRCUIT | 0b111,		// Built-in power circuit ON/OFF: VB=1 VR=1 VF=1
-        ST7565_CMD_SET_START_LINE | 0,			// Set Start Line: 0
-        ST7565_CMD_DISPLAY_ON_OFF | 1,			// Display ON/OFF: ON
+        ST7565_CMD_POWER_CIRCUIT | 0b111,        // Built-in power circuit ON/OFF: VB=1 VR=1 VF=1
+        ST7565_CMD_SET_START_LINE | 0,            // Set Start Line: 0
+        ST7565_CMD_DISPLAY_ON_OFF | 1,            // Display ON/OFF: ON
 };
 
-void ST7565_Init(void)
-{
+void ST7565_Init(void) {
     SPI0_Init();
     ST7565_HardwareReset();
     SPI_ToggleMasterMode(&SPI0->CR, false);
     ST7565_WriteByte(ST7565_CMD_SOFTWARE_RESET);   // software reset
     SYSTEM_DelayMs(120);
 
-    for(uint8_t i = 0; i < 8; i++)
+    for (uint8_t i = 0; i < 8; i++)
         ST7565_WriteByte(cmds[i]);
 
     ST7565_WriteByte(ST7565_CMD_POWER_CIRCUIT | 0b011);   // VB=0 VR=1 VF=1
@@ -160,7 +156,7 @@ void ST7565_Init(void)
     ST7565_WriteByte(ST7565_CMD_POWER_CIRCUIT | 0b110);   // VB=1 VR=1 VF=0
     SYSTEM_DelayMs(1);
 
-    for(uint8_t i = 0; i < 4; i++) // why 4 times?
+    for (uint8_t i = 0; i < 4; i++) // why 4 times?
         ST7565_WriteByte(ST7565_CMD_POWER_CIRCUIT | 0b111);   // VB=1 VR=1 VF=1
 
     SYSTEM_DelayMs(40);
@@ -173,17 +169,15 @@ void ST7565_Init(void)
     ST7565_FillScreen(0x00);
 }
 
-void ST7565_FixInterfGlitch(void)
-{
+void ST7565_FixInterfGlitch(void) {
     SPI_ToggleMasterMode(&SPI0->CR, false);
-    for(uint8_t i = 0; i < ARRAY_SIZE(cmds); i++)
+    for (uint8_t i = 0; i < ARRAY_SIZE(cmds); i++)
         ST7565_WriteByte(cmds[i]);
     SPI_WaitForUndocumentedTxFifoStatusBit();
     SPI_ToggleMasterMode(&SPI0->CR, true);
 }
 
-void ST7565_HardwareReset(void)
-{
+void ST7565_HardwareReset(void) {
     GPIO_SetBit(&GPIOB->DATA, GPIOB_PIN_ST7565_RES);
     SYSTEM_DelayMs(1);
     GPIO_ClearBit(&GPIOB->DATA, GPIOB_PIN_ST7565_RES);
@@ -192,8 +186,7 @@ void ST7565_HardwareReset(void)
     SYSTEM_DelayMs(120);
 }
 
-void ST7565_SelectColumnAndLine(uint8_t Column, uint8_t Line)
-{
+void ST7565_SelectColumnAndLine(uint8_t Column, uint8_t Line) {
     GPIO_ClearBit(&GPIOB->DATA, GPIOB_PIN_ST7565_A0);
     while ((SPI0->FIFOST & SPI_FIFOST_TFF_MASK) != SPI_FIFOST_TFF_BITS_NOT_FULL) {}
     SPI0->WDR = Line + 176;
@@ -204,8 +197,7 @@ void ST7565_SelectColumnAndLine(uint8_t Column, uint8_t Line)
     SPI_WaitForUndocumentedTxFifoStatusBit();
 }
 
-void ST7565_WriteByte(uint8_t Value)
-{
+void ST7565_WriteByte(uint8_t Value) {
     GPIO_ClearBit(&GPIOB->DATA, GPIOB_PIN_ST7565_A0);
     while ((SPI0->FIFOST & SPI_FIFOST_TFF_MASK) != SPI_FIFOST_TFF_BITS_NOT_FULL) {}
     SPI0->WDR = Value;

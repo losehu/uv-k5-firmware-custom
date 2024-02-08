@@ -24,17 +24,17 @@
 #include "ui/menu.h"
 #include "ui/ui.h"
 
-uint16_t          gBatteryCalibration[6];
-uint16_t          gBatteryCurrentVoltage;
-uint16_t          gBatteryCurrent;
-uint16_t          gBatteryVoltages[4];
-uint16_t          gBatteryVoltageAverage;
-uint8_t           gBatteryDisplayLevel;
-bool              gChargingWithTypeC;
-bool              gLowBatteryBlink;
-bool              gLowBattery;
-bool              gLowBatteryConfirmed;
-uint16_t          gBatteryCheckCounter;
+uint16_t gBatteryCalibration[6];
+uint16_t gBatteryCurrentVoltage;
+uint16_t gBatteryCurrent;
+uint16_t gBatteryVoltages[4];
+uint16_t gBatteryVoltageAverage;
+uint8_t gBatteryDisplayLevel;
+bool gChargingWithTypeC;
+bool gLowBatteryBlink;
+bool gLowBattery;
+bool gLowBatteryConfirmed;
+uint16_t gBatteryCheckCounter;
 
 typedef enum {
     BATTERY_LOW_INACTIVE,
@@ -43,8 +43,8 @@ typedef enum {
 } BatteryLow_t;
 
 
-uint16_t          lowBatteryCountdown;
-const uint16_t 	  lowBatteryPeriod = 30;
+uint16_t lowBatteryCountdown;
+const uint16_t lowBatteryPeriod = 30;
 
 volatile uint16_t gPowerSave_10ms;
 
@@ -52,22 +52,22 @@ volatile uint16_t gPowerSave_10ms;
 const uint16_t Voltage2PercentageTable[][7][2] = {
         [BATTERY_TYPE_1600_MAH] = {
                 {828, 100},
-                {814, 97 },
-                {760, 25 },
-                {729, 6  },
-                {630, 0  },
-                {0,   0  },
-                {0,   0  },
+                {814, 97},
+                {760, 25},
+                {729, 6},
+                {630, 0},
+                {0,   0},
+                {0,   0},
         },
 
         [BATTERY_TYPE_2200_MAH] = {
                 {832, 100},
-                {813, 95 },
-                {740, 60 },
-                {707, 21 },
-                {682, 5  },
-                {630, 0  },
-                {0,   0  },
+                {813, 95},
+                {740, 60},
+                {707, 21},
+                {682, 5},
+                {630, 0},
+                {0,   0},
         },
 };
 
@@ -75,8 +75,7 @@ static_assert(ARRAY_SIZE(Voltage2PercentageTable[BATTERY_TYPE_1600_MAH]) ==
               ARRAY_SIZE(Voltage2PercentageTable[BATTERY_TYPE_2200_MAH]));
 
 
-unsigned int BATTERY_VoltsToPercent(const unsigned int voltage_10mV)
-{
+unsigned int BATTERY_VoltsToPercent(const unsigned int voltage_10mV) {
     const uint16_t (*crv)[2] = Voltage2PercentageTable[gEeprom.BATTERY_TYPE];
     const int mulipl = 1000;
     for (unsigned int i = 1; i < ARRAY_SIZE(Voltage2PercentageTable[BATTERY_TYPE_2200_MAH]); i++) {
@@ -91,23 +90,23 @@ unsigned int BATTERY_VoltsToPercent(const unsigned int voltage_10mV)
     return 0;
 }
 
-void BATTERY_GetReadings(const bool bDisplayBatteryLevel)
-{
-    const uint8_t  PreviousBatteryLevel = gBatteryDisplayLevel;
-    const uint16_t Voltage              = (gBatteryVoltages[0] + gBatteryVoltages[1] + gBatteryVoltages[2] + gBatteryVoltages[3]) / 4;
+void BATTERY_GetReadings(const bool bDisplayBatteryLevel) {
+    const uint8_t PreviousBatteryLevel = gBatteryDisplayLevel;
+    const uint16_t Voltage =
+            (gBatteryVoltages[0] + gBatteryVoltages[1] + gBatteryVoltages[2] + gBatteryVoltages[3]) / 4;
 
     gBatteryVoltageAverage = (Voltage * 760) / gBatteryCalibration[3];
 
-    if(gBatteryVoltageAverage > 890)
+    if (gBatteryVoltageAverage > 890)
         gBatteryDisplayLevel = 7; // battery overvoltage
-    else if(gBatteryVoltageAverage < 630)
+    else if (gBatteryVoltageAverage < 630)
         gBatteryDisplayLevel = 0; // battery critical
     else {
         gBatteryDisplayLevel = 1;
-        const uint8_t levels[] = {5,17,41,65,88};
+        const uint8_t levels[] = {5, 17, 41, 65, 88};
         uint8_t perc = BATTERY_VoltsToPercent(gBatteryVoltageAverage);
-        for(uint8_t i = 6; i >= 1; i--){
-            if (perc > levels[i-2]) {
+        for (uint8_t i = 6; i >= 1; i--) {
+            if (perc > levels[i - 2]) {
                 gBatteryDisplayLevel = i;
                 break;
             }
@@ -118,21 +117,16 @@ void BATTERY_GetReadings(const bool bDisplayBatteryLevel)
     if ((gScreenToDisplay == DISPLAY_MENU))
         gUpdateDisplay = true;
 
-    if (gBatteryCurrent < 501)
-    {
-        if (gChargingWithTypeC)
-        {
-            gUpdateStatus  = true;
+    if (gBatteryCurrent < 501) {
+        if (gChargingWithTypeC) {
+            gUpdateStatus = true;
             gUpdateDisplay = true;
         }
 
         gChargingWithTypeC = false;
-    }
-    else
-    {
-        if (!gChargingWithTypeC)
-        {
-            gUpdateStatus  = true;
+    } else {
+        if (!gChargingWithTypeC) {
+            gUpdateStatus = true;
             gUpdateDisplay = true;
             BACKLIGHT_TurnOn();
         }
@@ -140,31 +134,26 @@ void BATTERY_GetReadings(const bool bDisplayBatteryLevel)
         gChargingWithTypeC = true;
     }
 
-    if (PreviousBatteryLevel != gBatteryDisplayLevel)
-    {
-        if(gBatteryDisplayLevel > 2)
+    if (PreviousBatteryLevel != gBatteryDisplayLevel) {
+        if (gBatteryDisplayLevel > 2)
             gLowBatteryConfirmed = false;
-        else if (gBatteryDisplayLevel < 2)
-        {
+        else if (gBatteryDisplayLevel < 2) {
             gLowBattery = true;
-        }
-        else
-        {
+        } else {
             gLowBattery = false;
 
             if (bDisplayBatteryLevel)
                 UI_DisplayBattery(gBatteryDisplayLevel, gLowBatteryBlink);
         }
 
-        if(!gLowBatteryConfirmed)
+        if (!gLowBatteryConfirmed)
             gUpdateDisplay = true;
 
         lowBatteryCountdown = 0;
     }
 }
 
-void BATTERY_TimeSlice500ms(void)
-{
+void BATTERY_TimeSlice500ms(void) {
     if (!gLowBattery) {
         return;
     }

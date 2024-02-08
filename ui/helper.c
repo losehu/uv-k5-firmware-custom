@@ -178,7 +178,8 @@ void UI_PrintStringSmall(const char *pString, uint8_t Start, uint8_t End, uint8_
                         uint8_t gFontSmall_More[12] = {0};
                         for (int j = 0; j < 12; ++j) {
                             if (j < 6) gFontSmall_More[j] = (gFontSmall[index][j] & 0x1F) << 3;//00011111
-                             else gFontSmall_More[j] = (gFontSmall[index][j - 6] & 0XE0) >> 5;//|(0xFB& *(pFb1+ now_pixel + 1+j-6));//11100000
+                            else gFontSmall_More[j] = (gFontSmall[index][j - 6] & 0XE0)
+                                        >> 5;//|(0xFB& *(pFb1+ now_pixel + 1+j-6));//11100000
                         }
                         memcpy(pFb + now_pixel + 1, &gFontSmall_More[0], 6);
                         memcpy(pFb1 + now_pixel + 1, &gFontSmall_More[6], 6);
@@ -271,7 +272,7 @@ void UI_PrintStringSmallBuffer(const char *pString, uint8_t *buffer) {
     for (i = 0; i < strlen(pString); i++) {
         if (pString[i] > ' ') {
             const unsigned int index = (unsigned int) pString[i] - ' ' - 1;
-#if ENABLE_CHINESE_FULL==4
+#if ENABLE_CHINESE_FULL == 4
             if (index < 94)
 {
             uint8_t read_gFontSmall[6];
@@ -300,7 +301,7 @@ void UI_DisplayFrequency(const char *string, uint8_t X, uint8_t Y, bool center) 
         if (bCanDisplay || c != ' ') {
             bCanDisplay = true;
             if (c >= '0' && c <= '9' + 1) {
-#if ENABLE_CHINESE_FULL==4
+#if ENABLE_CHINESE_FULL == 4
                 uint8_t  read_gFontBigDigits[20];
                 EEPROM_ReadBuffer(0x02480+20*(c-'0'), read_gFontBigDigits, 20);
 
@@ -373,15 +374,16 @@ void UI_DisplayClear() {
 }
 // GUI functions
 
- void PutPixel(uint8_t x, uint8_t y, bool fill) {
+void PutPixel(uint8_t x, uint8_t y, bool fill) {
     UI_DrawPixelBuffer(gFrameBuffer, x, y, fill);
 }
- void PutPixelStatus(uint8_t x, uint8_t y, bool fill) {
+
+void PutPixelStatus(uint8_t x, uint8_t y, bool fill) {
     UI_DrawPixelBuffer(&gStatusLine, x, y, fill);
 }
 
 
- void DrawVLine(int sy, int ey, int nx, bool fill) {
+void DrawVLine(int sy, int ey, int nx, bool fill) {
     for (int i = sy; i <= ey; i++) {
         if (i < 56 && nx < 128) {
             PutPixel(nx, i, fill);
@@ -389,15 +391,15 @@ void UI_DisplayClear() {
     }
 }
 
- void GUI_DisplaySmallest(const char *pString, uint8_t x, uint8_t y,
-                                bool statusbar, bool fill) {
+void GUI_DisplaySmallest(const char *pString, uint8_t x, uint8_t y,
+                         bool statusbar, bool fill) {
     uint8_t c;
     uint8_t pixels;
-    const uint8_t *p = (const uint8_t *)pString;
+    const uint8_t *p = (const uint8_t *) pString;
 
     while ((c = *p++) && c != '\0') {
         c -= 0x20;
-#if ENABLE_CHINESE_FULL!=0
+#if ENABLE_CHINESE_FULL != 0
         uint8_t read_gFont3x5[3];
         EEPROM_ReadBuffer(0x0255C+c*3, read_gFont3x5, 3);
         for (int i = 0; i < 3; ++i) {
@@ -419,8 +421,8 @@ void UI_DisplayClear() {
         x += 4;
     }
 }
-void show_uint32(uint32_t num,uint8_t  line)
-{
+
+void show_uint32(uint32_t num, uint8_t line) {
     char str[6] = {0};
 
     str[0] = (num / 100000) + '0';

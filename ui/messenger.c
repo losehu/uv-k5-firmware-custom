@@ -14,22 +14,22 @@
 #include "ui/inputbox.h"
 #include "ui/ui.h"
 #ifdef ENABLE_DOCK
-	#include "app/uart.h"
+#include "app/uart.h"
 #endif
 
 void UI_DisplayMSG(void) {
 
 
-	UI_DisplayClear();
-	UI_PrintStringSmall("MES", 1, 127, 0);
+    UI_DisplayClear();
+    UI_PrintStringSmall("MES", 1, 127, 0);
 
 
 
-	uint8_t mPos = 8;
-	const uint8_t mLine = 7;
-	for (int i = 0; i < 4; ++i) {
-		GUI_DisplaySmallest(rxMessage[i], 2, mPos, false, true);
-		mPos += mLine;
+    uint8_t mPos = 8;
+    const uint8_t mLine = 7;
+    for (int i = 0; i < 4; ++i) {
+        GUI_DisplaySmallest(rxMessage[i], 2, mPos, false, true);
+        mPos += mLine;
     }
 
 
@@ -47,14 +47,14 @@ const uint8_t *p;
     cMessage[cIndex]='_';
     cMessage[cIndex+1]='\0';
 
-	GUI_DisplaySmallest(cMessage, 5, 48, false, true);
+    GUI_DisplaySmallest(cMessage, 5, 48, false, true);
     cMessage[cIndex]='\0';
 
 
 
 
 
-	ST7565_BlitFullScreen();
+    ST7565_BlitFullScreen();
 }
 
 #endif

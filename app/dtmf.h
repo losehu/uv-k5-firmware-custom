@@ -62,21 +62,21 @@ enum DTMF_CallMode_t {
 };
 
 enum {  // seconds
-    DTMF_HOLD_MIN =  5,
+    DTMF_HOLD_MIN = 5,
     DTMF_HOLD_MAX = 60
 };
 
 typedef enum DTMF_CallMode_t DTMF_CallMode_t;
 
-extern char              gDTMF_String[15];
+extern char gDTMF_String[15];
 
-extern char              gDTMF_InputBox[15];
-extern uint8_t           gDTMF_InputBox_Index;
-extern bool              gDTMF_InputMode;
-extern uint8_t           gDTMF_PreviousIndex;
+extern char gDTMF_InputBox[15];
+extern uint8_t gDTMF_InputBox_Index;
+extern bool gDTMF_InputMode;
+extern uint8_t gDTMF_PreviousIndex;
 
-extern char              gDTMF_RX_live[20];
-extern uint8_t           gDTMF_RX_live_timeout;
+extern char gDTMF_RX_live[20];
+extern uint8_t gDTMF_RX_live_timeout;
 
 #ifdef ENABLE_DTMF_CALLING
 extern char              gDTMF_RX[17];
@@ -101,11 +101,17 @@ extern uint8_t           gDTMF_TxStopCountdown_500ms;
 extern DTMF_ReplyState_t gDTMF_ReplyState;
 
 bool DTMF_ValidateCodes(char *pCode, const unsigned int size);
+
 char DTMF_GetCharacter(const unsigned int code);
+
 void DTMF_clear_input_box(void);
+
 void DTMF_Append(const char vode);
+
 bool DTMF_Reply();
+
 void DTMF_SendEndOfTransmission(void);
+
 #ifdef ENABLE_DTMF_CALLING
 void DTMF_clear_RX(void);
 DTMF_CallMode_t DTMF_CheckGroupCall(const char *pDTMF, const unsigned int size);

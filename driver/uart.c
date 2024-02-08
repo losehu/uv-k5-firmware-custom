@@ -23,8 +23,7 @@
 static bool UART_IsLogEnabled;
 uint8_t UART_DMA_Buffer[256];
 
-void UART_Init(void)
-{
+void UART_Init(void) {
     uint32_t Delta;
     uint32_t Positive;
     uint32_t Frequency;
@@ -48,8 +47,8 @@ void UART_Init(void)
 
     DMA_CTR = (DMA_CTR & ~DMA_CTR_DMAEN_MASK) | DMA_CTR_DMAEN_BITS_DISABLE;
 
-    DMA_CH0->MSADDR = (uint32_t)(uintptr_t)&UART1->RDR;
-    DMA_CH0->MDADDR = (uint32_t)(uintptr_t)UART_DMA_Buffer;
+    DMA_CH0->MSADDR = (uint32_t) (uintptr_t) &UART1->RDR;
+    DMA_CH0->MDADDR = (uint32_t) (uintptr_t) UART_DMA_Buffer;
     DMA_CH0->MOD = 0
                    // Source
                    | DMA_CH_MOD_MS_ADDMOD_BITS_NONE
@@ -58,8 +57,7 @@ void UART_Init(void)
                    // Destination
                    | DMA_CH_MOD_MD_ADDMOD_BITS_INCREMENT
                    | DMA_CH_MOD_MD_SIZE_BITS_8BIT
-                   | DMA_CH_MOD_MD_SEL_BITS_SRAM
-            ;
+                   | DMA_CH_MOD_MD_SEL_BITS_SRAM;
     DMA_INTEN = 0;
     DMA_INTST = 0
                 | DMA_INTST_CH0_TC_INTST_BITS_SET
@@ -69,14 +67,12 @@ void UART_Init(void)
                 | DMA_INTST_CH0_THC_INTST_BITS_SET
                 | DMA_INTST_CH1_THC_INTST_BITS_SET
                 | DMA_INTST_CH2_THC_INTST_BITS_SET
-                | DMA_INTST_CH3_THC_INTST_BITS_SET
-            ;
+                | DMA_INTST_CH3_THC_INTST_BITS_SET;
     DMA_CH0->CTR = 0
                    | DMA_CH_CTR_CH_EN_BITS_ENABLE
                    | ((0xFF << DMA_CH_CTR_LENGTH_SHIFT) & DMA_CH_CTR_LENGTH_MASK)
                    | DMA_CH_CTR_LOOP_BITS_ENABLE
-                   | DMA_CH_CTR_PRI_BITS_MEDIUM
-            ;
+                   | DMA_CH_CTR_PRI_BITS_MEDIUM;
     UART1->IF = UART_IF_RXTO_BITS_SET;
 
     DMA_CTR = (DMA_CTR & ~DMA_CTR_DMAEN_MASK) | DMA_CTR_DMAEN_BITS_ENABLE;
@@ -84,9 +80,8 @@ void UART_Init(void)
     UART1->CTRL |= UART_CTRL_UARTEN_BITS_ENABLE;
 }
 
-void UART_Send(const void *pBuffer, uint32_t Size)
-{
-    const uint8_t *pData = (const uint8_t *)pBuffer;
+void UART_Send(const void *pBuffer, uint32_t Size) {
+    const uint8_t *pData = (const uint8_t *) pBuffer;
     uint32_t i;
 
     for (i = 0; i < Size; i++) {
@@ -96,8 +91,7 @@ void UART_Send(const void *pBuffer, uint32_t Size)
     }
 }
 
-void UART_LogSend(const void *pBuffer, uint32_t Size)
-{
+void UART_LogSend(const void *pBuffer, uint32_t Size) {
     if (UART_IsLogEnabled) {
         UART_Send(pBuffer, Size);
     }

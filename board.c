@@ -19,6 +19,7 @@
 #ifdef ENABLE_FMRADIO
 #include "app/fm.h"
 #endif
+
 #include "board.h"
 #include "bsp/dp32g030/gpio.h"
 #include "bsp/dp32g030/portcon.h"
@@ -26,6 +27,7 @@
 #include "bsp/dp32g030/syscon.h"
 #include "driver/adc.h"
 #include "driver/backlight.h"
+
 #ifdef ENABLE_FMRADIO
 #include "driver/bk1080.h"
 #endif
@@ -40,26 +42,26 @@
 #include "helper/battery.h"
 #include "misc.h"
 #include "settings.h"
+
 #if defined(ENABLE_OVERLAY)
 #include "sram-overlay.h"
 #endif
 
 #if defined(ENABLE_OVERLAY)
 void BOARD_FLASH_Init(void)
-	{
-		FLASH_Init(FLASH_READ_MODE_1_CYCLE);
-		FLASH_ConfigureTrimValues();
-		SYSTEM_ConfigureClocks();
+    {
+        FLASH_Init(FLASH_READ_MODE_1_CYCLE);
+        FLASH_ConfigureTrimValues();
+        SYSTEM_ConfigureClocks();
 
-		overlay_FLASH_MainClock       = 48000000;
-		overlay_FLASH_ClockMultiplier = 48;
+        overlay_FLASH_MainClock       = 48000000;
+        overlay_FLASH_ClockMultiplier = 48;
 
-		FLASH_Init(FLASH_READ_MODE_2_CYCLE);
-	}
+        FLASH_Init(FLASH_READ_MODE_2_CYCLE);
+    }
 #endif
 
-void BOARD_GPIO_Init(void)
-{
+void BOARD_GPIO_Init(void) {
     GPIOA->DIR |= 0
                   // A7 = UART1 TX default as OUTPUT from bootloader!
                   // A8 = UART1 RX default as INPUT from bootloader!
@@ -70,8 +72,7 @@ void BOARD_GPIO_Init(void)
                   // Key pad + Voice chip
                   | GPIO_DIR_12_BITS_OUTPUT
                   // Key pad + Voice chip
-                  | GPIO_DIR_13_BITS_OUTPUT
-            ;
+                  | GPIO_DIR_13_BITS_OUTPUT;
     GPIOA->DIR &= ~(0
                     // Key pad
                     | GPIO_DIR_3_MASK // INPUT
@@ -89,8 +90,7 @@ void BOARD_GPIO_Init(void)
                   | GPIO_DIR_11_BITS_OUTPUT
                   // B14 = SWD_CLK assumed INPUT by default
                   // BK1080
-                  | GPIO_DIR_15_BITS_OUTPUT
-            ;
+                  | GPIO_DIR_15_BITS_OUTPUT;
     GPIOC->DIR |= 0
                   // BK4819 SCN
                   | GPIO_DIR_0_BITS_OUTPUT
@@ -101,8 +101,7 @@ void BOARD_GPIO_Init(void)
                   // Flash light
                   | GPIO_DIR_3_BITS_OUTPUT
                   // Speaker
-                  | GPIO_DIR_4_BITS_OUTPUT
-            ;
+                  | GPIO_DIR_4_BITS_OUTPUT;
     GPIOC->DIR &= ~(0
                     // PTT button
                     | GPIO_DIR_5_MASK // INPUT
@@ -113,8 +112,7 @@ void BOARD_GPIO_Init(void)
 #endif
 }
 
-void BOARD_PORTCON_Init(void)
-{
+void BOARD_PORTCON_Init(void) {
     // PORT A pin selection
 
     PORTCON_PORTA_SEL0 &= ~(0
@@ -137,8 +135,7 @@ void BOARD_PORTCON_Init(void)
                           // Key pad
                           | PORTCON_PORTA_SEL0_A6_BITS_GPIOA6
                           // UART1 TX, wasn't cleared in previous step / relying on default value!
-                          | PORTCON_PORTA_SEL0_A7_BITS_UART1_TX
-            ;
+                          | PORTCON_PORTA_SEL0_A7_BITS_UART1_TX;
 
     PORTCON_PORTA_SEL1 &= ~(0
                             // Key pad + I2C
@@ -164,8 +161,7 @@ void BOARD_PORTCON_Init(void)
                           // Key pad + Voice chip
                           | PORTCON_PORTA_SEL1_A13_BITS_GPIOA13
                           // Battery Current, wasn't cleared in previous step / relying on default value!
-                          | PORTCON_PORTA_SEL1_A14_BITS_SARADC_CH9
-            ;
+                          | PORTCON_PORTA_SEL1_A14_BITS_SARADC_CH9;
 
     // PORT B pin selection
 
@@ -175,8 +171,7 @@ void BOARD_PORTCON_Init(void)
     );
     PORTCON_PORTB_SEL0 |= 0
                           // SPI0 SSN
-                          | PORTCON_PORTB_SEL0_B7_BITS_SPI0_SSN
-            ;
+                          | PORTCON_PORTB_SEL0_B7_BITS_SPI0_SSN;
 
     PORTCON_PORTB_SEL1 &= ~(0
                             // ST7565
@@ -236,8 +231,7 @@ void BOARD_PORTCON_Init(void)
                         | PORTCON_PORTA_IE_A6_BITS_ENABLE
                         // A7 = UART1 TX disabled by default
                         // UART1 RX
-                        | PORTCON_PORTA_IE_A8_BITS_ENABLE
-            ;
+                        | PORTCON_PORTA_IE_A8_BITS_ENABLE;
     PORTCON_PORTA_IE &= ~(0
                           // Keypad + I2C
                           | PORTCON_PORTA_IE_A10_MASK
@@ -257,8 +251,7 @@ void BOARD_PORTCON_Init(void)
                         // Keypad
                         | PORTCON_PORTA_PU_A5_BITS_ENABLE
                         // Keypad
-                        | PORTCON_PORTA_PU_A6_BITS_ENABLE
-            ;
+                        | PORTCON_PORTA_PU_A6_BITS_ENABLE;
     PORTCON_PORTA_PU &= ~(0
                           // Keypad + I2C
                           | PORTCON_PORTA_PU_A10_MASK
@@ -297,8 +290,7 @@ void BOARD_PORTCON_Init(void)
                         // Keypad
                         | PORTCON_PORTA_OD_A5_BITS_ENABLE
                         // Keypad
-                        | PORTCON_PORTA_OD_A6_BITS_ENABLE
-            ;
+                        | PORTCON_PORTA_OD_A6_BITS_ENABLE;
     PORTCON_PORTA_OD &= ~(0
                           // Keypad + I2C
                           | PORTCON_PORTA_OD_A10_MASK
@@ -313,8 +305,7 @@ void BOARD_PORTCON_Init(void)
     // PORT B pin configuration
 
     PORTCON_PORTB_IE |= 0
-                        | PORTCON_PORTB_IE_B14_BITS_ENABLE
-            ;
+                        | PORTCON_PORTB_IE_B14_BITS_ENABLE;
     PORTCON_PORTB_IE &= ~(0
                           // Back light
                           | PORTCON_PORTB_IE_B6_MASK
@@ -372,15 +363,13 @@ void BOARD_PORTCON_Init(void)
 
     PORTCON_PORTB_OD |= 0
                         // SWD CLK
-                        | PORTCON_PORTB_OD_B14_BITS_ENABLE
-            ;
+                        | PORTCON_PORTB_OD_B14_BITS_ENABLE;
 
     // PORT C pin configuration
 
     PORTCON_PORTC_IE |= 0
                         // PTT button
-                        | PORTCON_PORTC_IE_C5_BITS_ENABLE
-            ;
+                        | PORTCON_PORTC_IE_C5_BITS_ENABLE;
     PORTCON_PORTC_IE &= ~(0
                           // BK4819 SCN
                           | PORTCON_PORTC_IE_C0_MASK
@@ -396,8 +385,7 @@ void BOARD_PORTCON_Init(void)
 
     PORTCON_PORTC_PU |= 0
                         // PTT button
-                        | PORTCON_PORTC_PU_C5_BITS_ENABLE
-            ;
+                        | PORTCON_PORTC_PU_C5_BITS_ENABLE;
     PORTCON_PORTC_PU &= ~(0
                           // BK4819 SCN
                           | PORTCON_PORTC_PU_C0_MASK
@@ -450,45 +438,41 @@ void BOARD_PORTCON_Init(void)
                         // Speaker
                         | PORTCON_PORTC_OD_C4_BITS_DISABLE
                         // PTT button
-                        | PORTCON_PORTC_OD_C5_BITS_ENABLE
-            ;
+                        | PORTCON_PORTC_OD_C5_BITS_ENABLE;
 }
 
-void BOARD_ADC_Init(void)
-{
+void BOARD_ADC_Init(void) {
     ADC_Config_t Config;
 
-    Config.CLK_SEL            = SYSCON_CLK_SEL_W_SARADC_SMPL_VALUE_DIV2;
-    Config.CH_SEL             = ADC_CH4 | ADC_CH9;
-    Config.AVG                = SARADC_CFG_AVG_VALUE_8_SAMPLE;
-    Config.CONT               = SARADC_CFG_CONT_VALUE_SINGLE;
-    Config.MEM_MODE           = SARADC_CFG_MEM_MODE_VALUE_CHANNEL;
-    Config.SMPL_CLK           = SARADC_CFG_SMPL_CLK_VALUE_INTERNAL;
-    Config.SMPL_WIN           = SARADC_CFG_SMPL_WIN_VALUE_15_CYCLE;
-    Config.SMPL_SETUP         = SARADC_CFG_SMPL_SETUP_VALUE_1_CYCLE;
-    Config.ADC_TRIG           = SARADC_CFG_ADC_TRIG_VALUE_CPU;
-    Config.CALIB_KD_VALID     = SARADC_CALIB_KD_VALID_VALUE_YES;
+    Config.CLK_SEL = SYSCON_CLK_SEL_W_SARADC_SMPL_VALUE_DIV2;
+    Config.CH_SEL = ADC_CH4 | ADC_CH9;
+    Config.AVG = SARADC_CFG_AVG_VALUE_8_SAMPLE;
+    Config.CONT = SARADC_CFG_CONT_VALUE_SINGLE;
+    Config.MEM_MODE = SARADC_CFG_MEM_MODE_VALUE_CHANNEL;
+    Config.SMPL_CLK = SARADC_CFG_SMPL_CLK_VALUE_INTERNAL;
+    Config.SMPL_WIN = SARADC_CFG_SMPL_WIN_VALUE_15_CYCLE;
+    Config.SMPL_SETUP = SARADC_CFG_SMPL_SETUP_VALUE_1_CYCLE;
+    Config.ADC_TRIG = SARADC_CFG_ADC_TRIG_VALUE_CPU;
+    Config.CALIB_KD_VALID = SARADC_CALIB_KD_VALID_VALUE_YES;
     Config.CALIB_OFFSET_VALID = SARADC_CALIB_OFFSET_VALID_VALUE_YES;
-    Config.DMA_EN             = SARADC_CFG_DMA_EN_VALUE_DISABLE;
-    Config.IE_CHx_EOC         = SARADC_IE_CHx_EOC_VALUE_NONE;
-    Config.IE_FIFO_FULL       = SARADC_IE_FIFO_FULL_VALUE_DISABLE;
-    Config.IE_FIFO_HFULL      = SARADC_IE_FIFO_HFULL_VALUE_DISABLE;
+    Config.DMA_EN = SARADC_CFG_DMA_EN_VALUE_DISABLE;
+    Config.IE_CHx_EOC = SARADC_IE_CHx_EOC_VALUE_NONE;
+    Config.IE_FIFO_FULL = SARADC_IE_FIFO_FULL_VALUE_DISABLE;
+    Config.IE_FIFO_HFULL = SARADC_IE_FIFO_HFULL_VALUE_DISABLE;
 
     ADC_Configure(&Config);
     ADC_Enable();
     ADC_SoftReset();
 }
 
-void BOARD_ADC_GetBatteryInfo(uint16_t *pVoltage, uint16_t *pCurrent)
-{
+void BOARD_ADC_GetBatteryInfo(uint16_t *pVoltage, uint16_t *pCurrent) {
     ADC_Start();
     while (!ADC_CheckEndOfConversion(ADC_CH9)) {}
     *pVoltage = ADC_GetValue(ADC_CH4);
     *pCurrent = ADC_GetValue(ADC_CH9);
 }
 
-void BOARD_Init(void)
-{
+void BOARD_Init(void) {
     BOARD_PORTCON_Init();
     BOARD_GPIO_Init();
     BACKLIGHT_InitHardware();

@@ -81,6 +81,7 @@
 #ifdef ENABLE_DOPPLER
 #include "app/doppler.h"
 #endif
+
 #include "ui/battery.h"
 #include "ui/inputbox.h"
 #include "ui/main.h"

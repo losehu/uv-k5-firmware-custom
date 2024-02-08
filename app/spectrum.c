@@ -743,7 +743,7 @@ static void UpdateFreqInput(KEY_Code_t key) {
     for (int i = 0; i < 10; ++i) {
         if (i < freqInputIndex) {
             digitKey = freqInputArr[i];
-            freqInputString[i] = digitKey <= KEY_9 ? '0' + digitKey  : '.';
+            freqInputString[i] = digitKey <= KEY_9 ? '0' + digitKey : '.';
         } else {
             freqInputString[i] = '-';
         }
@@ -754,14 +754,14 @@ static void UpdateFreqInput(KEY_Code_t key) {
 //    if(DOPPLER_MODE)base=1;
 //#endif
     for (int i = dotIndex - 1; i >= 0; --i) {
-        tempFreq += (freqInputArr[i] ) * base;
+        tempFreq += (freqInputArr[i]) * base;
         base *= 10;
     }
 
     base = 10000; // 0.1MHz in BK units
     if (dotIndex < freqInputIndex) {
         for (int i = dotIndex + 1; i < freqInputIndex; ++i) {
-            tempFreq += (freqInputArr[i] ) * base;
+            tempFreq += (freqInputArr[i]) * base;
             base /= 10;
         }
     }
@@ -843,7 +843,7 @@ static void DrawPower() {
     }
 }
 
-static void DrawStatus( ) {
+static void DrawStatus() {
 
 #ifdef SPECTRUM_EXTRA_VALUES
     sprintf(String, "%d/%d P:%d T:%d", settings.dbMin, settings.dbMax,
@@ -866,7 +866,7 @@ static void DrawStatus( ) {
         GUI_DisplaySmallest(String, 42 + 53 - (settings.listenBw == 0 ? 8 : 0), 1, true, true);
     } else {
 #endif
-        GUI_DisplaySmallest(String, 0, 1, true, true);
+    GUI_DisplaySmallest(String, 0, 1, true, true);
 #ifdef ENABLE_DOPPLER
     }
 #endif
@@ -885,14 +885,14 @@ static void DrawF(uint32_t f) {
 
     } else {
 #endif
-        sprintf(String, "%u.%05u", f / 100000, f % 100000);
-        UI_PrintStringSmall(String, 8, 127, 0);
+    sprintf(String, "%u.%05u", f / 100000, f % 100000);
+    UI_PrintStringSmall(String, 8, 127, 0);
 
 
-        sprintf(String, "%3s", gModulationStr[settings.modulationType]);
-        GUI_DisplaySmallest(String, 116, 1, false, true);
-        sprintf(String, "%s", bwOptions[settings.listenBw]);
-        GUI_DisplaySmallest(String, 108, 7, false, true);
+    sprintf(String, "%3s", gModulationStr[settings.modulationType]);
+    GUI_DisplaySmallest(String, 116, 1, false, true);
+    sprintf(String, "%s", bwOptions[settings.listenBw]);
+    GUI_DisplaySmallest(String, 108, 7, false, true);
 #ifdef ENABLE_DOPPLER
     }
 #endif
@@ -1078,18 +1078,18 @@ static void OnKeyDownFreqInput(uint8_t key) {
             break;
         case KEY_MENU:
 #ifdef ENABLE_DOPPLER
-    if(DOPPLER_MODE)
-   {
+            if(DOPPLER_MODE)
+           {
 
 
-time[3]=tempFreq/100000;
-time[4]=(tempFreq/1000)%100;
-time[5]=(tempFreq/10)%100;
-                RTC_Set();
-             SetState(previousState);
+        time[3]=tempFreq/100000;
+        time[4]=(tempFreq/1000)%100;
+        time[5]=(tempFreq/10)%100;
+                        RTC_Set();
+                     SetState(previousState);
 
-        break;
-       }
+                break;
+               }
 #endif
             if (tempFreq < F_MIN || tempFreq > F_MAX) {
                 break;
@@ -1124,7 +1124,7 @@ void OnKeyDownStill(KEY_Code_t key) {
 #ifdef ENABLE_DOPPLER
             if (!DOPPLER_MODE)
 #endif
-                UpdateCurrentFreqStill(true);
+            UpdateCurrentFreqStill(true);
             break;
         case KEY_DOWN:
 
@@ -1135,7 +1135,7 @@ void OnKeyDownStill(KEY_Code_t key) {
 #ifdef ENABLE_DOPPLER
             if (!DOPPLER_MODE)
 #endif
-                UpdateCurrentFreqStill(false);
+            UpdateCurrentFreqStill(false);
 
             break;
         case KEY_STAR:
@@ -1153,7 +1153,7 @@ void OnKeyDownStill(KEY_Code_t key) {
 //#endif
 
 
-                FreqInput();
+            FreqInput();
 
 
             break;
@@ -1161,13 +1161,13 @@ void OnKeyDownStill(KEY_Code_t key) {
 #ifdef ENABLE_DOPPLER
             if (!DOPPLER_MODE)
 #endif
-                ToggleModulation();
+            ToggleModulation();
             break;
         case KEY_6:
 #ifdef ENABLE_DOPPLER
             if (!DOPPLER_MODE)
 #endif
-                ToggleListeningBW();
+            ToggleListeningBW();
             break;
         case KEY_SIDE1:
             monitorMode = !monitorMode;
@@ -1232,9 +1232,9 @@ static void UpdateStill() {
     ToggleRX((IsPeakOverLevel() || monitorMode));
 }
 
-static void RenderStatus( ) {
+static void RenderStatus() {
 
-    memset(gStatusLine, 0, sizeof(gStatusLine) );
+    memset(gStatusLine, 0, sizeof(gStatusLine));
     DrawStatus();
     ST7565_BlitStatusLine();
 }
@@ -1571,7 +1571,7 @@ static void Tick() {
     if (redrawStatus || ++statuslineUpdateTimer > 4096) {
         RenderStatus();
         redrawStatus = false;
-       statuslineUpdateTimer = 0;
+        statuslineUpdateTimer = 0;
     }
 
 
@@ -1644,10 +1644,10 @@ void APP_RunSpectrum() {
 //        }
 //#endif
 #ifdef ENABLE_DOPPLER
-            if (DOPPLER_MODE&&!isTransmitting&&currentFreq!=satellite_data.DownLink) {
-                SetF(satellite_data.DownLink);
-                currentFreq = satellite_data.DownLink;
-            }
+        if (DOPPLER_MODE&&!isTransmitting&&currentFreq!=satellite_data.DownLink) {
+            SetF(satellite_data.DownLink);
+            currentFreq = satellite_data.DownLink;
+        }
 
 #endif
         Tick();

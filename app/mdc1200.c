@@ -6,17 +6,13 @@
 #include "misc.h"
 #include <string.h>
 #include "driver/eeprom.h"
+
 uint16_t MDC_ID = 0X542B;
 
 const uint8_t mdc1200_pre_amble[] = {0x00, 0x00, 0x00};
 const uint8_t mdc1200_sync[5] = {0x07, 0x09, 0x2a, 0x44, 0x6f};
 
-const uint8_t mdc1200_sync_suc_xor[5]={0xfb,0x72,0x40,0x99,0xa7};
-
-
-
-
-
+const uint8_t mdc1200_sync_suc_xor[5] = {0xfb, 0x72, 0x40, 0x99, 0xa7};
 
 
 void error_correction(void *data) {    // can correct up to 3 or 4 corrupted bits (I think)
@@ -404,6 +400,7 @@ uint16_t extractHex(const char *str) {
     }
     return result;
 }
+
 #ifdef  ENABLE_MDC1200_CONTACT
 uint8_t contact_num=0;
 uint16_t MDC_ADD[6] = {0x1D00, 0x1D40, 0x1D80,0x1DC0,0X1F90,0X1FD0};//SHIT ADDRESS COMBINE :(

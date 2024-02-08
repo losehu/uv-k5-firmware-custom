@@ -39,13 +39,13 @@
 
 /*--------------------------- rt_sem_init -----------------------------------*/
 
-void rt_sem_init (OS_ID semaphore, U16 token_count) {
-  /* Initialize a semaphore */
-  P_SCB p_SCB = semaphore;
+void rt_sem_init(OS_ID semaphore, U16 token_count) {
+    /* Initialize a semaphore */
+    P_SCB p_SCB = semaphore;
 
-  p_SCB->cb_type = SCB;
-  p_SCB->p_lnk  = NULL;
-  p_SCB->tokens = token_count;
+    p_SCB->cb_type = SCB;
+    p_SCB->p_lnk = NULL;
+    p_SCB->tokens = token_count;
 }
 
 
@@ -82,90 +82,87 @@ OS_RESULT rt_sem_delete (OS_ID semaphore) {
 
 /*--------------------------- rt_sem_send -----------------------------------*/
 
-OS_RESULT rt_sem_send (OS_ID semaphore) {
-  /* Return a token to semaphore */
-  P_SCB p_SCB = semaphore;
-  P_TCB p_TCB;
+OS_RESULT rt_sem_send(OS_ID semaphore) {
+    /* Return a token to semaphore */
+    P_SCB p_SCB = semaphore;
+    P_TCB p_TCB;
 
-  if (p_SCB->p_lnk != NULL) {
-    /* A task is waiting for token */
-    p_TCB = rt_get_first ((P_XCB)p_SCB);
+    if (p_SCB->p_lnk != NULL) {
+        /* A task is waiting for token */
+        p_TCB = rt_get_first((P_XCB) p_SCB);
 #ifdef __CMSIS_RTOS
-    rt_ret_val(p_TCB, 1U);
+        rt_ret_val(p_TCB, 1U);
 #else
-    rt_ret_val(p_TCB, OS_R_SEM);
+        rt_ret_val(p_TCB, OS_R_SEM);
 #endif
-    rt_rmv_dly (p_TCB);
-    rt_dispatch (p_TCB);
-  }
-  else {
-    /* Store token. */
-    p_SCB->tokens++;
-  }
-  return (OS_R_OK);
+        rt_rmv_dly(p_TCB);
+        rt_dispatch(p_TCB);
+    } else {
+        /* Store token. */
+        p_SCB->tokens++;
+    }
+    return (OS_R_OK);
 }
 
 
 /*--------------------------- rt_sem_wait -----------------------------------*/
 
-OS_RESULT rt_sem_wait (OS_ID semaphore, U16 timeout) {
-  /* Obtain a token; possibly wait for it */
-  P_SCB p_SCB = semaphore;
+OS_RESULT rt_sem_wait(OS_ID semaphore, U16 timeout) {
+    /* Obtain a token; possibly wait for it */
+    P_SCB p_SCB = semaphore;
 
-  if (p_SCB->tokens) {
-    p_SCB->tokens--;
-    return (OS_R_OK);
-  }
-  /* No token available: wait for one */
-  if (timeout == 0U) {
+    if (p_SCB->tokens) {
+        p_SCB->tokens--;
+        return (OS_R_OK);
+    }
+    /* No token available: wait for one */
+    if (timeout == 0U) {
+        return (OS_R_TMO);
+    }
+    if (p_SCB->p_lnk != NULL) {
+        rt_put_prio((P_XCB) p_SCB, os_tsk.run);
+    } else {
+        p_SCB->p_lnk = os_tsk.run;
+        os_tsk.run->p_lnk = NULL;
+        os_tsk.run->p_rlnk = (P_TCB) p_SCB;
+    }
+    rt_block(timeout, WAIT_SEM);
     return (OS_R_TMO);
-  }
-  if (p_SCB->p_lnk != NULL) {
-    rt_put_prio ((P_XCB)p_SCB, os_tsk.run);
-  }
-  else {
-    p_SCB->p_lnk = os_tsk.run;
-    os_tsk.run->p_lnk = NULL;
-    os_tsk.run->p_rlnk = (P_TCB)p_SCB;
-  }
-  rt_block(timeout, WAIT_SEM);
-  return (OS_R_TMO);
 }
 
 
 /*--------------------------- isr_sem_send ----------------------------------*/
 
-void isr_sem_send (OS_ID semaphore) {
-  /* Same function as "os_sem_send", but to be called by ISRs */
-  P_SCB p_SCB = semaphore;
+void isr_sem_send(OS_ID semaphore) {
+    /* Same function as "os_sem_send", but to be called by ISRs */
+    P_SCB p_SCB = semaphore;
 
-  rt_psq_enq (p_SCB, 0U);
-  rt_psh_req ();
+    rt_psq_enq(p_SCB, 0U);
+    rt_psh_req();
 }
 
 
 /*--------------------------- rt_sem_psh ------------------------------------*/
 
-void rt_sem_psh (P_SCB p_CB) {
-  /* Check if task has to be waken up */
-  P_TCB p_TCB;
+void rt_sem_psh(P_SCB p_CB) {
+    /* Check if task has to be waken up */
+    P_TCB p_TCB;
 
-  if (p_CB->p_lnk != NULL) {
-    /* A task is waiting for token */
-    p_TCB = rt_get_first ((P_XCB)p_CB);
-    rt_rmv_dly (p_TCB);
-    p_TCB->state   = READY;
+    if (p_CB->p_lnk != NULL) {
+        /* A task is waiting for token */
+        p_TCB = rt_get_first((P_XCB) p_CB);
+        rt_rmv_dly(p_TCB);
+        p_TCB->state = READY;
 #ifdef __CMSIS_RTOS
-    rt_ret_val(p_TCB, 1U);
+        rt_ret_val(p_TCB, 1U);
 #else
-    rt_ret_val(p_TCB, OS_R_SEM);
+        rt_ret_val(p_TCB, OS_R_SEM);
 #endif
-    rt_put_prio (&os_rdy, p_TCB);
-  }
-  else {
-    /* Store token */
-    p_CB->tokens++;
-  }
+        rt_put_prio(&os_rdy, p_TCB);
+    } else {
+        /* Store token */
+        p_CB->tokens++;
+    }
 }
 
 /*----------------------------------------------------------------------------

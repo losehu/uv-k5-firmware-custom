@@ -5,9 +5,9 @@
 #include "misc.h"
 #include "settings.h"
 
-int8_t            gScanStateDir;
-bool              gScanKeepResult;
-bool              gScanPauseMode;
+int8_t gScanStateDir;
+bool gScanKeepResult;
+bool gScanPauseMode;
 
 #ifdef ENABLE_SCAN_RANGES
 uint32_t          gScanRangeStart;
@@ -22,16 +22,16 @@ typedef enum {
     SCAN_NEXT_NUM
 } scan_next_chan_t;
 
-scan_next_chan_t	currentScanList;
-uint32_t            initialFrqOrChan;
-uint8_t           	initialCROSS_BAND_RX_TX;
-uint32_t            lastFoundFrqOrChan;
+scan_next_chan_t currentScanList;
+uint32_t initialFrqOrChan;
+uint8_t initialCROSS_BAND_RX_TX;
+uint32_t lastFoundFrqOrChan;
 
 static void NextFreqChannel(void);
+
 static void NextMemChannel(void);
 
-void CHFRSCANNER_Start(const bool storeBackupSettings, const int8_t scan_direction)
-{
+void CHFRSCANNER_Start(const bool storeBackupSettings, const int8_t scan_direction) {
     if (storeBackupSettings) {
         initialCROSS_BAND_RX_TX = gEeprom.CROSS_BAND_RX_TX;
         gEeprom.CROSS_BAND_RX_TX = CROSS_BAND_OFF;
@@ -40,20 +40,17 @@ void CHFRSCANNER_Start(const bool storeBackupSettings, const int8_t scan_directi
 
     RADIO_SelectVfos();
 
-    gNextMrChannel   = gRxVfo->CHANNEL_SAVE;
+    gNextMrChannel = gRxVfo->CHANNEL_SAVE;
     currentScanList = SCAN_NEXT_CHAN_SCANLIST1;
-    gScanStateDir    = scan_direction;
+    gScanStateDir = scan_direction;
 
-    if (IS_MR_CHANNEL(gNextMrChannel))
-    {	// channel mode
+    if (IS_MR_CHANNEL(gNextMrChannel)) {    // channel mode
         if (storeBackupSettings) {
             initialFrqOrChan = gRxVfo->CHANNEL_SAVE;
             lastFoundFrqOrChan = initialFrqOrChan;
         }
         NextMemChannel();
-    }
-    else
-    {	// frequency mode
+    } else {    // frequency mode
         if (storeBackupSettings) {
             initialFrqOrChan = gRxVfo->freq_config_RX.Frequency;
             lastFoundFrqOrChan = initialFrqOrChan;
@@ -62,57 +59,49 @@ void CHFRSCANNER_Start(const bool storeBackupSettings, const int8_t scan_directi
     }
 
     gScanPauseDelayIn_10ms = scan_pause_delay_in_2_10ms;
-    gScheduleScanListen    = false;
-    gRxReceptionMode       = RX_MODE_NONE;
-    gScanPauseMode         = false;
+    gScheduleScanListen = false;
+    gRxReceptionMode = RX_MODE_NONE;
+    gScanPauseMode = false;
 }
 
-void CHFRSCANNER_ContinueScanning(void)
-{
-    if (IS_FREQ_CHANNEL(gNextMrChannel))
-    {
+void CHFRSCANNER_ContinueScanning(void) {
+    if (IS_FREQ_CHANNEL(gNextMrChannel)) {
         if (gCurrentFunction == FUNCTION_INCOMING)
             APP_StartListening(gMonitor ? FUNCTION_MONITOR : FUNCTION_RECEIVE);
         else
             NextFreqChannel();  // switch to next frequency
-    }
-    else
-    {
+    } else {
         if (gCurrentCodeType == CODE_TYPE_OFF && gCurrentFunction == FUNCTION_INCOMING)
             APP_StartListening(gMonitor ? FUNCTION_MONITOR : FUNCTION_RECEIVE);
         else
             NextMemChannel();    // switch to next channel
     }
 
-    gScanPauseMode      = false;
-    gRxReceptionMode    = RX_MODE_NONE;
+    gScanPauseMode = false;
+    gRxReceptionMode = RX_MODE_NONE;
     gScheduleScanListen = false;
 }
 
-void CHFRSCANNER_Found(void)
-{
-    switch (gEeprom.SCAN_RESUME_MODE)
-    {
+void CHFRSCANNER_Found(void) {
+    switch (gEeprom.SCAN_RESUME_MODE) {
         case SCAN_RESUME_TO:
-            if (!gScanPauseMode)
-            {
+            if (!gScanPauseMode) {
                 gScanPauseDelayIn_10ms = scan_pause_delay_in_1_10ms;
-                gScheduleScanListen    = false;
-                gScanPauseMode         = true;
+                gScheduleScanListen = false;
+                gScanPauseMode = true;
             }
             break;
 
         case SCAN_RESUME_CO:
         case SCAN_RESUME_SE:
             gScanPauseDelayIn_10ms = 0;
-            gScheduleScanListen    = false;
+            gScheduleScanListen = false;
             break;
     }
 
     if (IS_MR_CHANNEL(gRxVfo->CHANNEL_SAVE)) { //memory scan
         lastFoundFrqOrChan = gRxVfo->CHANNEL_SAVE;
-    }
-    else { // frequency scan
+    } else { // frequency scan
         lastFoundFrqOrChan = gRxVfo->freq_config_RX.Frequency;
     }
 
@@ -120,9 +109,8 @@ void CHFRSCANNER_Found(void)
     gScanKeepResult = true;
 }
 
-void CHFRSCANNER_Stop(void)
-{
-    if(initialCROSS_BAND_RX_TX != CROSS_BAND_OFF) {
+void CHFRSCANNER_Stop(void) {
+    if (initialCROSS_BAND_RX_TX != CROSS_BAND_OFF) {
         gEeprom.CROSS_BAND_RX_TX = initialCROSS_BAND_RX_TX;
         initialCROSS_BAND_RX_TX = CROSS_BAND_OFF;
     }
@@ -132,20 +120,19 @@ void CHFRSCANNER_Stop(void)
     const uint32_t chFr = gScanKeepResult ? lastFoundFrqOrChan : initialFrqOrChan;
     const bool channelChanged = chFr != initialFrqOrChan;
     if (IS_MR_CHANNEL(gNextMrChannel)) {
-        gEeprom.MrChannel[gEeprom.RX_VFO]     = chFr;
+        gEeprom.MrChannel[gEeprom.RX_VFO] = chFr;
         gEeprom.ScreenChannel[gEeprom.RX_VFO] = chFr;
         RADIO_ConfigureChannel(gEeprom.RX_VFO, VFO_CONFIGURE_RELOAD);
 
-        if(channelChanged) {
+        if (channelChanged) {
             SETTINGS_SaveVfoIndices();
             gUpdateStatus = true;
         }
-    }
-    else {
+    } else {
         gRxVfo->freq_config_RX.Frequency = chFr;
         RADIO_ApplyOffset(gRxVfo);
         RADIO_ConfigureSquelchAndOutputPower(gRxVfo);
-        if(channelChanged) {
+        if (channelChanged) {
             SETTINGS_SaveChannel(gRxVfo->CHANNEL_SAVE, gEeprom.RX_VFO, gRxVfo, 1);
         }
     }
@@ -154,13 +141,12 @@ void CHFRSCANNER_Stop(void)
     gUpdateDisplay = true;
 }
 
-static void NextFreqChannel(void)
-{
+static void NextFreqChannel(void) {
 #ifdef ENABLE_SCAN_RANGES
     if(gScanRangeStart) {
-		gRxVfo->freq_config_RX.Frequency = APP_SetFreqByStepAndLimits(gRxVfo, gScanStateDir, gScanRangeStart, gScanRangeStop);
+        gRxVfo->freq_config_RX.Frequency = APP_SetFreqByStepAndLimits(gRxVfo, gScanStateDir, gScanRangeStart, gScanRangeStop);
     }
-	else
+    else
 #endif
     gRxVfo->freq_config_RX.Frequency = APP_SetFrequencyByStep(gRxVfo, gScanStateDir);
 
@@ -174,42 +160,35 @@ static void NextFreqChannel(void)
     gScanPauseDelayIn_10ms = scan_pause_delay_in_6_10ms;
 #endif
 
-    gUpdateDisplay     = true;
+    gUpdateDisplay = true;
 }
 
-static void NextMemChannel(void)
-{
+static void NextMemChannel(void) {
     static unsigned int prev_mr_chan = 0;
-    const bool          enabled      = (gEeprom.SCAN_LIST_DEFAULT < 2) ? gEeprom.SCAN_LIST_ENABLED[gEeprom.SCAN_LIST_DEFAULT] : true;
-    const int           chan1        = (gEeprom.SCAN_LIST_DEFAULT < 2) ? gEeprom.SCANLIST_PRIORITY_CH1[gEeprom.SCAN_LIST_DEFAULT] : -1;
-    const int           chan2        = (gEeprom.SCAN_LIST_DEFAULT < 2) ? gEeprom.SCANLIST_PRIORITY_CH2[gEeprom.SCAN_LIST_DEFAULT] : -1;
-    const unsigned int  prev_chan    = gNextMrChannel;
-    unsigned int        chan         = 0;
+    const bool enabled = (gEeprom.SCAN_LIST_DEFAULT < 2) ? gEeprom.SCAN_LIST_ENABLED[gEeprom.SCAN_LIST_DEFAULT] : true;
+    const int chan1 = (gEeprom.SCAN_LIST_DEFAULT < 2) ? gEeprom.SCANLIST_PRIORITY_CH1[gEeprom.SCAN_LIST_DEFAULT] : -1;
+    const int chan2 = (gEeprom.SCAN_LIST_DEFAULT < 2) ? gEeprom.SCANLIST_PRIORITY_CH2[gEeprom.SCAN_LIST_DEFAULT] : -1;
+    const unsigned int prev_chan = gNextMrChannel;
+    unsigned int chan = 0;
 
-    if (enabled)
-    {
-        switch (currentScanList)
-        {
+    if (enabled) {
+        switch (currentScanList) {
             case SCAN_NEXT_CHAN_SCANLIST1:
                 prev_mr_chan = gNextMrChannel;
 
-                if (chan1 >= 0)
-                {
-                    if (RADIO_CheckValidChannel(chan1, false, 0))
-                    {
+                if (chan1 >= 0) {
+                    if (RADIO_CheckValidChannel(chan1, false, 0)) {
                         currentScanList = SCAN_NEXT_CHAN_SCANLIST1;
-                        gNextMrChannel   = chan1;
+                        gNextMrChannel = chan1;
                         break;
                     }
                 }
                 [[fallthrough]];
             case SCAN_NEXT_CHAN_SCANLIST2:
-                if (chan2 >= 0)
-                {
-                    if (RADIO_CheckValidChannel(chan2, false, 0))
-                    {
+                if (chan2 >= 0) {
+                    if (RADIO_CheckValidChannel(chan2, false, 0)) {
                         currentScanList = SCAN_NEXT_CHAN_SCANLIST2;
-                        gNextMrChannel   = chan2;
+                        gNextMrChannel = chan2;
                         break;
                     }
                 }
@@ -233,26 +212,24 @@ static void NextMemChannel(void)
             default:
             case SCAN_NEXT_CHAN_MR:
                 currentScanList = SCAN_NEXT_CHAN_MR;
-                gNextMrChannel   = prev_mr_chan;
-                chan             = 0xff;
+                gNextMrChannel = prev_mr_chan;
+                chan = 0xff;
                 break;
         }
     }
 
-    if (!enabled || chan == 0xff)
-    {
-        chan = RADIO_FindNextChannel(gNextMrChannel + gScanStateDir, gScanStateDir, (gEeprom.SCAN_LIST_DEFAULT < 2) ? true : false, gEeprom.SCAN_LIST_DEFAULT);
-        if (chan == 0xFF)
-        {	// no valid channel found
+    if (!enabled || chan == 0xff) {
+        chan = RADIO_FindNextChannel(gNextMrChannel + gScanStateDir, gScanStateDir,
+                                     (gEeprom.SCAN_LIST_DEFAULT < 2) ? true : false, gEeprom.SCAN_LIST_DEFAULT);
+        if (chan == 0xFF) {    // no valid channel found
             chan = MR_CHANNEL_FIRST;
         }
 
         gNextMrChannel = chan;
     }
 
-    if (gNextMrChannel != prev_chan)
-    {
-        gEeprom.MrChannel[    gEeprom.RX_VFO] = gNextMrChannel;
+    if (gNextMrChannel != prev_chan) {
+        gEeprom.MrChannel[gEeprom.RX_VFO] = gNextMrChannel;
         gEeprom.ScreenChannel[gEeprom.RX_VFO] = gNextMrChannel;
 
         RADIO_ConfigureChannel(gEeprom.RX_VFO, VFO_CONFIGURE_RELOAD);

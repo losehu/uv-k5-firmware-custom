@@ -19,12 +19,15 @@
 #ifdef ENABLE_DOPPLER
 #include "app/doppler.h"
 #endif
+
 #include <string.h>
 
 #include "app/chFrScanner.h"
+
 #ifdef ENABLE_FMRADIO
 #include "app/fm.h"
 #endif
+
 #include "app/scanner.h"
 #include "bitmaps.h"
 #include "driver/keyboard.h"
@@ -39,23 +42,20 @@
 #include "ui/ui.h"
 #include "ui/status.h"
 
-void UI_DisplayStatus()
-{
+void UI_DisplayStatus() {
     gUpdateStatus = false;
     memset(gStatusLine, 0, sizeof(gStatusLine));
 
-    uint8_t     *line = gStatusLine;
-    unsigned int x    = 0;
+    uint8_t *line = gStatusLine;
+    unsigned int x = 0;
     // **************
 
     // POWER-SAVE indicator
     if (gCurrentFunction == FUNCTION_TRANSMIT) {
         memcpy(line + x, BITMAP_TX, sizeof(BITMAP_TX));
-    }
-    else if (FUNCTION_IsRx()) {
+    } else if (FUNCTION_IsRx()) {
         memcpy(line + x, BITMAP_RX, sizeof(BITMAP_RX));
-    }
-    else if (gCurrentFunction == FUNCTION_POWER_SAVE) {
+    } else if (gCurrentFunction == FUNCTION_POWER_SAVE) {
         memcpy(line + x, BITMAP_POWERSAVE, sizeof(BITMAP_POWERSAVE));
     }
     x += 8;
@@ -63,44 +63,49 @@ void UI_DisplayStatus()
 
 #ifdef ENABLE_NOAA
     if (gIsNoaaMode) { // NOASS SCAN indicator
-		memcpy(line + x, BITMAP_NOAA, sizeof(BITMAP_NOAA));
-		x1 = x + sizeof(BITMAP_NOAA);
-	}
-	x += sizeof(BITMAP_NOAA);
+        memcpy(line + x, BITMAP_NOAA, sizeof(BITMAP_NOAA));
+        x1 = x + sizeof(BITMAP_NOAA);
+    }
+    x += sizeof(BITMAP_NOAA);
 #endif
 #ifdef ENABLE_MESSENGER
     if (hasNewMessage > 0) { // New Message indicator
-		if (hasNewMessage == 1)
-			memcpy(line + x+1, BITMAP_NEWMSG, sizeof(BITMAP_NEWMSG));
-		x1 = x + sizeof(BITMAP_NEWMSG);
-	}
-	x += sizeof(BITMAP_NEWMSG);
+        if (hasNewMessage == 1)
+            memcpy(line + x+1, BITMAP_NEWMSG, sizeof(BITMAP_NEWMSG));
+        x1 = x + sizeof(BITMAP_NEWMSG);
+    }
+    x += sizeof(BITMAP_NEWMSG);
 #endif
 #ifdef ENABLE_DTMF_CALLING
     if (gSetting_KILLED) {
-		memset(line + x, 0xFF, 10);
-		x1 = x + 10;
-	}
-	else
+        memset(line + x, 0xFF, 10);
+        x1 = x + 10;
+    }
+    else
 #endif
 #ifdef ENABLE_FMRADIO
     if (gFmRadioMode) { // FM indicator
-		memcpy(line + x, BITMAP_FM, sizeof(BITMAP_FM));
-		x1 = x + sizeof(BITMAP_FM);
-	}
-	else
+        memcpy(line + x, BITMAP_FM, sizeof(BITMAP_FM));
+        x1 = x + sizeof(BITMAP_FM);
+    }
+    else
 #endif
     { // SCAN indicator
         if (gScanStateDir != SCAN_OFF || SCANNER_IsScanning()) {
-            char * s = "";
+            char *s = "";
             if (IS_MR_CHANNEL(gNextMrChannel) && !SCANNER_IsScanning()) { // channel mode
-                switch(gEeprom.SCAN_LIST_DEFAULT) {
-                    case 0: s = "1"; break;
-                    case 1: s = "2"; break;
-                    case 2: s = "*"; break;
+                switch (gEeprom.SCAN_LIST_DEFAULT) {
+                    case 0:
+                        s = "1";
+                        break;
+                    case 1:
+                        s = "2";
+                        break;
+                    case 2:
+                        s = "*";
+                        break;
                 }
-            }
-            else {	// frequency mode
+            } else {    // frequency mode
                 s = "S";
             }
             UI_PrintStringSmallBuffer(s, line + x + 1);
@@ -111,22 +116,21 @@ void UI_DisplayStatus()
 
 #ifdef ENABLE_VOICE
     // VOICE indicator
-	if (gEeprom.VOICE_PROMPT != VOICE_PROMPT_OFF){
-		memcpy(line + x, BITMAP_VoicePrompt, sizeof(BITMAP_VoicePrompt));
-		x1 = x + sizeof(BITMAP_VoicePrompt);
-	}
-	x += sizeof(BITMAP_VoicePrompt);
+    if (gEeprom.VOICE_PROMPT != VOICE_PROMPT_OFF){
+        memcpy(line + x, BITMAP_VoicePrompt, sizeof(BITMAP_VoicePrompt));
+        x1 = x + sizeof(BITMAP_VoicePrompt);
+    }
+    x += sizeof(BITMAP_VoicePrompt);
 #endif
 
-    if(!SCANNER_IsScanning()) {
+    if (!SCANNER_IsScanning()) {
         uint8_t dw = (gEeprom.DUAL_WATCH != DUAL_WATCH_OFF) + (gEeprom.CROSS_BAND_RX_TX != CROSS_BAND_OFF) * 2;
-        if(dw == 1 || dw == 3) { // DWR - dual watch + respond
-            if(gDualWatchActive)
-                memcpy(line + x + (dw==1?0:2), BITMAP_TDR1, sizeof(BITMAP_TDR1) - (dw==1?0:5));
+        if (dw == 1 || dw == 3) { // DWR - dual watch + respond
+            if (gDualWatchActive)
+                memcpy(line + x + (dw == 1 ? 0 : 2), BITMAP_TDR1, sizeof(BITMAP_TDR1) - (dw == 1 ? 0 : 5));
             else
-                memcpy(line + x + 3+1, BITMAP_TDR2, sizeof(BITMAP_TDR2));
-        }
-        else if(dw == 2) { // XB - crossband
+                memcpy(line + x + 3 + 1, BITMAP_TDR2, sizeof(BITMAP_TDR2));
+        } else if (dw == 2) { // XB - crossband
             memcpy(line + x + 2, BITMAP_XB, sizeof(BITMAP_XB));
         }
     }
@@ -134,11 +138,11 @@ void UI_DisplayStatus()
 
 #ifdef ENABLE_VOX
     // VOX indicator
-	if (gEeprom.VOX_SWITCH) {
-		memcpy(line + x, BITMAP_VOX, sizeof(BITMAP_VOX));
-		x1 = x + sizeof(BITMAP_VOX) + 1;
-	}
-	x += sizeof(BITMAP_VOX) + 1;
+    if (gEeprom.VOX_SWITCH) {
+        memcpy(line + x, BITMAP_VOX, sizeof(BITMAP_VOX));
+        x1 = x + sizeof(BITMAP_VOX) + 1;
+    }
+    x += sizeof(BITMAP_VOX) + 1;
 #endif
 
     x = MAX(x1, 61u);
@@ -148,15 +152,14 @@ void UI_DisplayStatus()
         memcpy(line + x, BITMAP_KeyLock, sizeof(BITMAP_KeyLock));
         x += sizeof(BITMAP_KeyLock);
         x1 = x;
-    }
-    else if (gWasFKeyPressed) {
+    } else if (gWasFKeyPressed) {
         memcpy(line + x, BITMAP_F_Key, sizeof(BITMAP_F_Key));
         x += sizeof(BITMAP_F_Key);
         x1 = x;
     }
 
-    {	// battery voltage or percentage
-        char         s[8] = "";
+    {    // battery voltage or percentage
+        char s[8] = "";
         unsigned int x2 = LCD_WIDTH - sizeof(BITMAP_BatteryLevel1) - 0;
 
         if (gChargingWithTypeC)
@@ -174,7 +177,7 @@ void UI_DisplayStatus()
 //            }
 //
 //            case 2:		// percentage
-                sprintf(s, "%u%%", BATTERY_VoltsToPercent(gBatteryVoltageAverage));
+        sprintf(s, "%u%%", BATTERY_VoltsToPercent(gBatteryVoltageAverage));
 //                break;
 //        }
 

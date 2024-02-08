@@ -36,11 +36,11 @@
 #include "settings.h"
 #include "ui/inputbox.h"
 #include "ui/ui.h"
-bool             turn_flag=0;
-void GENERIC_Key_F(bool bKeyPressed, bool bKeyHeld)
-{
-    if (gInputBoxIndex > 0)
-    {
+
+bool turn_flag = 0;
+
+void GENERIC_Key_F(bool bKeyPressed, bool bKeyHeld) {
+    if (gInputBoxIndex > 0) {
         if (!bKeyHeld && bKeyPressed) // short pressed
             gBeepToPlay = BEEP_500HZ_60MS_DOUBLE_BEEP_OPTIONAL;
         return;
@@ -48,7 +48,8 @@ void GENERIC_Key_F(bool bKeyPressed, bool bKeyHeld)
 
     if (bKeyHeld || !bKeyPressed) // held or released
     {
-        if (bKeyHeld || bKeyPressed) // held or pressed (cannot be held and not pressed I guess, so it checks only if HELD?)
+        if (bKeyHeld ||
+            bKeyPressed) // held or pressed (cannot be held and not pressed I guess, so it checks only if HELD?)
         {
             if (!bKeyHeld) // won't ever pass
                 return;
@@ -57,31 +58,29 @@ void GENERIC_Key_F(bool bKeyPressed, bool bKeyHeld)
                 return;
 
             COMMON_KeypadLockToggle();
-        }
-        else // released
+        } else // released
         {
 #ifdef ENABLE_FMRADIO
             if ((gFmRadioMode || gScreenToDisplay != DISPLAY_MAIN) && gScreenToDisplay != DISPLAY_FM)
-					return;
+                    return;
 #else
             if (gScreenToDisplay != DISPLAY_MAIN)
                 return;
 #endif
 
             gWasFKeyPressed = !gWasFKeyPressed; // toggle F function
-            turn_flag=1;
+            turn_flag = 1;
             if (gWasFKeyPressed)
                 gKeyInputCountdown = key_input_timeout_500ms;
 
 #ifdef ENABLE_VOICE
             if (!gWasFKeyPressed)
-					gAnotherVoiceID = VOICE_ID_CANCEL;
+                    gAnotherVoiceID = VOICE_ID_CANCEL;
 #endif
 
             gUpdateStatus = true;
         }
-    }
-    else // short pressed
+    } else // short pressed
     {
 
 #ifdef ENABLE_FMRADIO
@@ -94,28 +93,25 @@ void GENERIC_Key_F(bool bKeyPressed, bool bKeyHeld)
 
 #ifdef ENABLE_FMRADIO
         if (gFM_ScanState == FM_SCAN_OFF) // not scanning
-			{
-				gBeepToPlay = BEEP_1KHZ_60MS_OPTIONAL;
-				return;
-			}
+            {
+                gBeepToPlay = BEEP_1KHZ_60MS_OPTIONAL;
+                return;
+            }
 #endif
 
-        gBeepToPlay     = BEEP_440HZ_500MS;
+        gBeepToPlay = BEEP_440HZ_500MS;
 
         gPttWasReleased = true;
     }
 }
 
-void GENERIC_Key_PTT(bool bKeyPressed)
-{
+void GENERIC_Key_PTT(bool bKeyPressed) {
     gInputBoxIndex = 0;
-    if (!bKeyPressed || SerialConfigInProgress())
-    {	// PTT released
-        if (gCurrentFunction == FUNCTION_TRANSMIT)
-        {	// we are transmitting .. stop
+    if (!bKeyPressed || SerialConfigInProgress()) {    // PTT released
+        if (gCurrentFunction == FUNCTION_TRANSMIT) {    // we are transmitting .. stop
 
 
-                APP_EndTransmission(SerialConfigInProgress());
+            APP_EndTransmission(SerialConfigInProgress());
 
 
 #ifdef ENABLE_VOX
@@ -134,39 +130,35 @@ void GENERIC_Key_PTT(bool bKeyPressed)
     // PTT pressed
 
 
-    if (SCANNER_IsScanning())
-    {	// CTCSS/CDCSS scanning .. stop
+    if (SCANNER_IsScanning()) {    // CTCSS/CDCSS scanning .. stop
         SCANNER_Stop();
         goto cancel_tx;
     }
 
-    if (gScanStateDir != SCAN_OFF)
-    {	// frequency/channel scanning . .stop
+    if (gScanStateDir != SCAN_OFF) {    // frequency/channel scanning . .stop
         CHFRSCANNER_Stop();
         goto cancel_tx;
     }
 
 
-
 #ifdef ENABLE_FMRADIO
     if (gFM_ScanState != FM_SCAN_OFF)
-	{	// FM radio is scanning .. stop
-		FM_PlayAndUpdate();
-		#ifdef ENABLE_VOICE
-			gAnotherVoiceID = VOICE_ID_SCANNING_STOP;
-		#endif
-		gRequestDisplayScreen = DISPLAY_FM;
-		goto cancel_tx;
-	}
+    {	// FM radio is scanning .. stop
+        FM_PlayAndUpdate();
+#ifdef ENABLE_VOICE
+            gAnotherVoiceID = VOICE_ID_SCANNING_STOP;
+#endif
+        gRequestDisplayScreen = DISPLAY_FM;
+        goto cancel_tx;
+    }
 #endif
 
 #ifdef ENABLE_FMRADIO
     if (gScreenToDisplay == DISPLAY_FM)
-		goto start_tx;	// listening to the FM radio .. start TX'ing
+        goto start_tx;	// listening to the FM radio .. start TX'ing
 #endif
 
-    if (gCurrentFunction == FUNCTION_TRANSMIT && gRTTECountdown_10ms == 0)
-    {	// already transmitting
+    if (gCurrentFunction == FUNCTION_TRANSMIT && gRTTECountdown_10ms == 0) {    // already transmitting
         gInputBoxIndex = 0;
         return;
     }
@@ -176,12 +168,11 @@ void GENERIC_Key_PTT(bool bKeyPressed)
 
 
     if (!gDTMF_InputMode && gDTMF_InputBox_Index == 0)
-        goto start_tx;	// wasn't entering a DTMF code .. start TX'ing (maybe)
+        goto start_tx;    // wasn't entering a DTMF code .. start TX'ing (maybe)
 
     // was entering a DTMF string
 
-    if (gDTMF_InputBox_Index > 0 || gDTMF_PreviousIndex > 0)
-    {	// going to transmit a DTMF string
+    if (gDTMF_InputBox_Index > 0 || gDTMF_PreviousIndex > 0) {    // going to transmit a DTMF string
 
         if (gDTMF_InputBox_Index == 0 && gDTMF_PreviousIndex > 0)
             gDTMF_InputBox_Index = gDTMF_PreviousIndex;           // use the previous DTMF string
@@ -191,13 +182,13 @@ void GENERIC_Key_PTT(bool bKeyPressed)
 
 #ifdef ENABLE_DTMF_CALLING
         // append our DTMF ID to the inputted DTMF code -
-		//  IF the user inputted code is exactly 3 digits long and D-DCD is enabled
-		if (gDTMF_InputBox_Index == 3 && gTxVfo->DTMF_DECODING_ENABLE > 0)
-			gDTMF_CallMode = DTMF_CheckGroupCall(gDTMF_InputBox, 3);
-		else
-			gDTMF_CallMode = DTMF_CALL_MODE_DTMF;
+        //  IF the user inputted code is exactly 3 digits long and D-DCD is enabled
+        if (gDTMF_InputBox_Index == 3 && gTxVfo->DTMF_DECODING_ENABLE > 0)
+            gDTMF_CallMode = DTMF_CheckGroupCall(gDTMF_InputBox, 3);
+        else
+            gDTMF_CallMode = DTMF_CALL_MODE_DTMF;
 
-		gDTMF_State      = DTMF_STATE_0;
+        gDTMF_State      = DTMF_STATE_0;
 #endif
         // remember the DTMF string
         gDTMF_PreviousIndex = gDTMF_InputBox_Index;
@@ -213,8 +204,7 @@ void GENERIC_Key_PTT(bool bKeyPressed)
     goto done;
 
     cancel_tx:
-    if (gPttIsPressed)
-    {
+    if (gPttIsPressed) {
         gPttWasPressed = true;
     }
 
@@ -228,6 +218,6 @@ void GENERIC_Key_PTT(bool bKeyPressed)
         // 1of11 .. don't close the menu
         gRequestDisplayScreen = DISPLAY_MAIN;
     }
-    gUpdateStatus  = true;
+    gUpdateStatus = true;
     gUpdateDisplay = true;
 }

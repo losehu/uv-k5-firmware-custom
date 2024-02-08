@@ -30,59 +30,59 @@
 #include "chinese.h"
 void UI_DisplayFM(void)
 {
-	char String[16] = {0};
-	char *pPrintStr = String;
+    char String[16] = {0};
+    char *pPrintStr = String;
 UI_DisplayClear();
-	UI_PrintStringSmall("FM", 0, 127, 0);
+    UI_PrintStringSmall("FM", 0, 127, 0);
 
-	if (gAskToSave) {
-		pPrintStr = 存置问;
-	} else if (gAskToDelete) {
-		pPrintStr = 删除问;
-	} else if (gFM_ScanState == FM_SCAN_OFF) {
-		if (gEeprom.FM_IsMrMode) {
-			sprintf(String, "MR(CH%02u)", gEeprom.FM_SelectedChannel + 1);
-			pPrintStr = String;
-		} else {
-			pPrintStr = "VFO";
-			for (unsigned int i = 0; i < 20; i++) {
-				if (gEeprom.FM_FrequencyPlaying == gFM_Channels[i]) {
-					sprintf(String, "VFO(CH%02u)", i + 1);
-					pPrintStr = String;
-					break;
-				}
-			}
-		}
-	} else if (gFM_AutoScan) {
-		sprintf(String, "A-SCAN(%u)", gFM_ChannelPosition + 1);
-		pPrintStr = String;
-	} else {
-		pPrintStr = "M-SCAN";
-	}
+    if (gAskToSave) {
+        pPrintStr = 存置问;
+    } else if (gAskToDelete) {
+        pPrintStr = 删除问;
+    } else if (gFM_ScanState == FM_SCAN_OFF) {
+        if (gEeprom.FM_IsMrMode) {
+            sprintf(String, "MR(CH%02u)", gEeprom.FM_SelectedChannel + 1);
+            pPrintStr = String;
+        } else {
+            pPrintStr = "VFO";
+            for (unsigned int i = 0; i < 20; i++) {
+                if (gEeprom.FM_FrequencyPlaying == gFM_Channels[i]) {
+                    sprintf(String, "VFO(CH%02u)", i + 1);
+                    pPrintStr = String;
+                    break;
+                }
+            }
+        }
+    } else if (gFM_AutoScan) {
+        sprintf(String, "A-SCAN(%u)", gFM_ChannelPosition + 1);
+        pPrintStr = String;
+    } else {
+        pPrintStr = "M-SCAN";
+    }
 
-	UI_PrintStringSmall(pPrintStr, 0, 127, 2);
+    UI_PrintStringSmall(pPrintStr, 0, 127, 2);
 
-	memset(String, 0, sizeof(String));
-	if (gAskToSave || (gEeprom.FM_IsMrMode && gInputBoxIndex > 0)) {
-		UI_GenerateChannelString(String, gFM_ChannelPosition);
-	} else if (gAskToDelete) {
-		sprintf(String, "CH-%02u", gEeprom.FM_SelectedChannel + 1);
-	} else {
-		if (gInputBoxIndex == 0) {
-			sprintf(String, "%3d.%d", gEeprom.FM_FrequencyPlaying / 10, gEeprom.FM_FrequencyPlaying % 10);
-		} else {
-			const char * ascii = INPUTBOX_GetAscii();
-			sprintf(String, "%.3s.%.1s",ascii, ascii + 3);
-		}
+    memset(String, 0, sizeof(String));
+    if (gAskToSave || (gEeprom.FM_IsMrMode && gInputBoxIndex > 0)) {
+        UI_GenerateChannelString(String, gFM_ChannelPosition);
+    } else if (gAskToDelete) {
+        sprintf(String, "CH-%02u", gEeprom.FM_SelectedChannel + 1);
+    } else {
+        if (gInputBoxIndex == 0) {
+            sprintf(String, "%3d.%d", gEeprom.FM_FrequencyPlaying / 10, gEeprom.FM_FrequencyPlaying % 10);
+        } else {
+            const char * ascii = INPUTBOX_GetAscii();
+            sprintf(String, "%.3s.%.1s",ascii, ascii + 3);
+        }
 
-		UI_DisplayFrequency(String, 32, 4, gInputBoxIndex == 0);
-		ST7565_BlitFullScreen();
-		return;
-	}
+        UI_DisplayFrequency(String, 32, 4, gInputBoxIndex == 0);
+        ST7565_BlitFullScreen();
+        return;
+    }
 
-	UI_PrintStringSmall(String, 0, 127, 4);
+    UI_PrintStringSmall(String, 0, 127, 4);
 
-	ST7565_BlitFullScreen();
+    ST7565_BlitFullScreen();
 }
 
 #endif

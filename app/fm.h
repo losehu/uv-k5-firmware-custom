@@ -25,7 +25,7 @@
 #define FM_CHANNEL_DOWN	0xFF
 
 enum {
-	FM_SCAN_OFF = 0U,
+    FM_SCAN_OFF = 0U,
 };
 extern bool              FM_EXIT_FLAG;
 
