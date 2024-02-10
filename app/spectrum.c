@@ -302,13 +302,6 @@ static void SetRegMenuValue(uint8_t st, bool add) {
 
 // Utility functions
 
-KEY_Code_t GetKey() {
-    KEY_Code_t btn = KEYBOARD_Poll();
-    if (btn == KEY_INVALID && !GPIO_CheckBit(&GPIOC->DATA, GPIOC_PIN_PTT)) {
-        btn = KEY_PTT;
-    }
-    return btn;
-}
 
 static int clamp(int v, int min, int max) {
     return v <= min ? min : (v >= max ? max : v);
@@ -1401,7 +1394,7 @@ static void Render() {
     ST7565_BlitFullScreen();
 }
 
-bool HandleUserInput() {
+static void HandleUserInput() {
     kbd.prev = kbd.current;
     kbd.current = GetKey();
     if (kbd.current == KEY_INVALID) {
@@ -1440,7 +1433,6 @@ bool HandleUserInput() {
         }
     }
 
-    return true;
 }
 
 static void Scan() {

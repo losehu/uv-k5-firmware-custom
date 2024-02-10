@@ -165,3 +165,11 @@ KEY_Code_t KEYBOARD_Poll(void) {
 
     return Key;
 }
+
+KEY_Code_t GetKey() {
+    KEY_Code_t btn = KEYBOARD_Poll();
+    if (btn == KEY_INVALID && !GPIO_CheckBit(&GPIOC->DATA, GPIOC_PIN_PTT)) {
+        btn = KEY_PTT;
+    }
+    return btn;
+}

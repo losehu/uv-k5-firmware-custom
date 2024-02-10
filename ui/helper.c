@@ -212,10 +212,7 @@ void UI_PrintStringSmall(const char *pString, uint8_t Start, uint8_t End, uint8_
 
 #if ENABLE_CHINESE_FULL != 0
             true_char[i]=true_char[i]<0XD8A1?((true_char[i]-0xB0A0)>>8)*94+((true_char[i]-0xB0A0)&0xff)-1:((true_char[i]-0xB0A0)>>8)*94+((true_char[i]-0xB0A0)& 0xFF)-6;
-
-#ifndef ENABLE_GB2312
             uint8_t tmp[17] = {0};
-
             unsigned int local = (CHN_FONT_HIGH * CHN_FONT_WIDTH * true_char[i]) >> 3;
             unsigned int local_bit =(CHN_FONT_HIGH * CHN_FONT_WIDTH * true_char[i]) &7;
             EEPROM_ReadBuffer(local+0x02E00,tmp,17);
@@ -234,10 +231,7 @@ void UI_PrintStringSmall(const char *pString, uint8_t Start, uint8_t End, uint8_
                     }
                 }
             }
-#else
 
-            EEPROM_ReadBuffer(true_char[i]*22+0x02E00,gFontChinese,22);
-#endif
 #else
 
 
@@ -426,7 +420,7 @@ void show_uint32(uint32_t num, uint8_t line) {
     char str[6] = {0};
 
     str[0] = (num / 100000) + '0';
-    str[1] = (num / 10000) + '0';
+    str[1] = (num / 10000)%10 + '0';
     str[2] = (num / 1000) % 10 + '0';
     str[3] = (num / 100) % 10 + '0';
     str[4] = (num / 10) % 10 + '0';

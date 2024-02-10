@@ -817,4 +817,4 @@ add_executable(uv_k5_firmware_custom_0_17
         sram-overlay.c
         sram-overlay.h
         version.c
-        version.h chinese.h app/mdc1200.c app/mdc1200.c app/mdc1200.c app/mdc1200.c app/mdc1200.c app/mdc1200.c driver/timer.c bsp/dp32g030/timer.h Makefile ui/messenger.c app/messenger.c bsp/dp32g030/rtc.h driver/rtc.c app/doppler.h ui/messenger.h app/doppler.c driver/rtc.c driver/rtc.c app/doppler.c app/doppler.c app/doppler.c app/doppler.c app/doppler.c)
+        version.h chinese.h app/pinyin.c app/pinyin.h app/mdc1200.c app/mdc1200.c app/mdc1200.c app/mdc1200.c app/mdc1200.c app/mdc1200.c driver/timer.c bsp/dp32g030/timer.h Makefile ui/messenger.c app/messenger.c bsp/dp32g030/rtc.h driver/rtc.c app/doppler.h ui/messenger.h app/doppler.c driver/rtc.c driver/rtc.c app/doppler.c app/doppler.c app/doppler.c app/doppler.c app/doppler.c)

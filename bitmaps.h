@@ -51,4 +51,10 @@ extern const uint8_t BITMAP_1[6] ;
 extern const uint8_t BITMAP_t[6] ;
 extern const uint8_t BITMAP_NEWMSG[7] ;
 #endif
+#ifdef ENABLE_PINYIN
+extern const uint8_t BITMAP_ARRAY_DOWN[5] ;
+extern const uint8_t BITMAP_ARRAY_UP[5] ;
+extern const uint8_t BITMAP_CN[7] ;
+
+#endif
 #endif

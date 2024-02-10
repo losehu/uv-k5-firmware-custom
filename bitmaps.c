@@ -358,3 +358,32 @@ const uint8_t BITMAP_1[6] =
 
         };
 #endif
+#ifdef ENABLE_PINYIN
+const uint8_t BITMAP_ARRAY_DOWN[5] =
+        {
+                0b00000011,
+                0b00001111,
+                0b00011111,
+                0b00001111,
+                0b00000011
+        };
+const uint8_t BITMAP_ARRAY_UP[5] =
+        {
+                0b01100000,
+                0b01111000,
+                0b01111110,
+                0b01111000,
+                0b01100000
+        };
+ const uint8_t BITMAP_CN[7] ={
+                0b00111100,
+                0b00100100,
+                0b00100100,
+                0b11111111,
+                0b00100100,
+                0b00100100,
+                0b00111100,
+
+};
+
+#endif

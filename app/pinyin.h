@@ -5,4 +5,6 @@
 #ifndef UV_K5_FIRMWARE_CHINESE_PINYN_H
 #define UV_K5_FIRMWARE_CHINESE_PINYN_H
 #include "stdint.h"
+void PINYIN();
+
 #endif //UV_K5_FIRMWARE_CHINESE_PINYN_H

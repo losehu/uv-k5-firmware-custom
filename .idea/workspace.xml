@@ -20,13 +20,16 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="时间校准">
+    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="拼音检索">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/spectrum.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/spectrum.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/spectrum.h" beforeDir="false" afterPath="$PROJECT_DIR$/app/spectrum.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bsp/dp32g030/rtc.h" beforeDir="false" afterPath="$PROJECT_DIR$/bsp/dp32g030/rtc.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/driver/rtc.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/rtc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/pinyin.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/pinyin.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/pinyin.h" beforeDir="false" afterPath="$PROJECT_DIR$/app/pinyin.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bitmaps.c" beforeDir="false" afterPath="$PROJECT_DIR$/bitmaps.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bitmaps.h" beforeDir="false" afterPath="$PROJECT_DIR$/bitmaps.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/helper.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/helper.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,10 +85,11 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;TODO_SCOPE&quot;: &quot;所有位置&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/doc&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -98,14 +102,14 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\doc" />
       <recent name="C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese" />
       <recent name="C:\Users\RUPC\Desktop\UV-K6\新建文件夹\uv-k5-firmware-chinese" />
       <recent name="C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\uv-k5font" />
       <recent name="C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\MDC_WRITE" />
-      <recent name="C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\app" />
     </key>
   </component>
-  <component name="RunManager" selected="Shell Script.win docker">
+  <component name="RunManager" selected="Makefile 目标.build">
     <configuration name="uv_k5_firmware_custom_0_17" type="CLionNativeAppRunConfigurationType" nameIsGenerated="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="uv_k5_firmware_custom_0_17" TARGET_NAME="uv_k5_firmware_custom_0_17" CONFIG_NAME="Debug" version="1" RUN_TARGET_PROJECT_NAME="uv_k5_firmware_custom_0_17" RUN_TARGET_NAME="uv_k5_firmware_custom_0_17">
       <method v="2">
         <option name="CLION.COMPOUND.BUILD" enabled="true" />
@@ -344,69 +348,8 @@
       <workItem from="1706929020661" duration="17226000" />
       <workItem from="1707013614727" duration="40568000" />
       <workItem from="1707106340612" duration="20588000" />
-    </task>
-    <task id="LOCAL-00111" summary="适配2*2Mb Eerpom">
-      <created>1704876296069</created>
-      <option name="number" value="00111" />
-      <option name="presentableId" value="LOCAL-00111" />
-      <option name="project" value="LOCAL" />
-      <updated>1704876296069</updated>
-    </task>
-    <task id="LOCAL-00112" summary="修改ENABLE_SQUELCH_MORE_SENSITIVE 选项">
-      <created>1704876392887</created>
-      <option name="number" value="00112" />
-      <option name="presentableId" value="LOCAL-00112" />
-      <option name="project" value="LOCAL" />
-      <updated>1704876392887</updated>
-    </task>
-    <task id="LOCAL-00113" summary="MDC ID地址改回原来的">
-      <created>1704877354792</created>
-      <option name="number" value="00113" />
-      <option name="presentableId" value="LOCAL-00113" />
-      <option name="project" value="LOCAL" />
-      <updated>1704877354792</updated>
-    </task>
-    <task id="LOCAL-00114" summary="DTMF CALL延时（存疑）">
-      <created>1704879331739</created>
-      <option name="number" value="00114" />
-      <option name="presentableId" value="LOCAL-00114" />
-      <option name="project" value="LOCAL" />
-      <updated>1704879331739</updated>
-    </task>
-    <task id="LOCAL-00115" summary="修复信道名显示">
-      <created>1704887484602</created>
-      <option name="number" value="00115" />
-      <option name="presentableId" value="LOCAL-00115" />
-      <option name="project" value="LOCAL" />
-      <updated>1704887484602</updated>
-    </task>
-    <task id="LOCAL-00116" summary="同时编译多个版本">
-      <created>1704888346767</created>
-      <option name="number" value="00116" />
-      <option name="presentableId" value="LOCAL-00116" />
-      <option name="project" value="LOCAL" />
-      <updated>1704888346767</updated>
-    </task>
-    <task id="LOCAL-00117" summary="修复收音机缺失文字">
-      <created>1704888729393</created>
-      <option name="number" value="00117" />
-      <option name="presentableId" value="LOCAL-00117" />
-      <option name="project" value="LOCAL" />
-      <updated>1704888729393</updated>
-    </task>
-    <task id="LOCAL-00118" summary="修复收音机缺失文字">
-      <created>1704888827675</created>
-      <option name="number" value="00118" />
-      <option name="presentableId" value="LOCAL-00118" />
-      <option name="project" value="LOCAL" />
-      <updated>1704888827675</updated>
-    </task>
-    <task id="LOCAL-00119" summary="更新README">
-      <created>1704889055543</created>
-      <option name="number" value="00119" />
-      <option name="presentableId" value="LOCAL-00119" />
-      <option name="project" value="LOCAL" />
-      <updated>1704889055543</updated>
+      <workItem from="1707404920856" duration="929000" />
+      <workItem from="1707446735186" duration="13060000" />
     </task>
     <task id="LOCAL-00120" summary="修改docker编译">
       <created>1704891380381</created>
@@ -688,7 +631,70 @@
       <option name="project" value="LOCAL" />
       <updated>1707129015663</updated>
     </task>
-    <option name="localTasksCounter" value="160" />
+    <task id="LOCAL-00160" summary="格式化">
+      <created>1707397777145</created>
+      <option name="number" value="00160" />
+      <option name="presentableId" value="LOCAL-00160" />
+      <option name="project" value="LOCAL" />
+      <updated>1707397777145</updated>
+    </task>
+    <task id="LOCAL-00161" summary="输入法说明">
+      <created>1707402453716</created>
+      <option name="number" value="00161" />
+      <option name="presentableId" value="LOCAL-00161" />
+      <option name="project" value="LOCAL" />
+      <updated>1707402453716</updated>
+    </task>
+    <task id="LOCAL-00162" summary="更新说明">
+      <created>1707402825458</created>
+      <option name="number" value="00162" />
+      <option name="presentableId" value="LOCAL-00162" />
+      <option name="project" value="LOCAL" />
+      <updated>1707402825458</updated>
+    </task>
+    <task id="LOCAL-00163" summary="双语readme">
+      <created>1707403982861</created>
+      <option name="number" value="00163" />
+      <option name="presentableId" value="LOCAL-00163" />
+      <option name="project" value="LOCAL" />
+      <updated>1707403982861</updated>
+    </task>
+    <task id="LOCAL-00164" summary="readme">
+      <created>1707404101453</created>
+      <option name="number" value="00164" />
+      <option name="presentableId" value="LOCAL-00164" />
+      <option name="project" value="LOCAL" />
+      <updated>1707404101453</updated>
+    </task>
+    <task id="LOCAL-00165" summary="readme">
+      <created>1707404151323</created>
+      <option name="number" value="00165" />
+      <option name="presentableId" value="LOCAL-00165" />
+      <option name="project" value="LOCAL" />
+      <updated>1707404151323</updated>
+    </task>
+    <task id="LOCAL-00166" summary="赞助">
+      <created>1707404248664</created>
+      <option name="number" value="00166" />
+      <option name="presentableId" value="LOCAL-00166" />
+      <option name="project" value="LOCAL" />
+      <updated>1707404248664</updated>
+    </task>
+    <task id="LOCAL-00167" summary="README_en">
+      <created>1707405825734</created>
+      <option name="number" value="00167" />
+      <option name="presentableId" value="LOCAL-00167" />
+      <option name="project" value="LOCAL" />
+      <updated>1707405825734</updated>
+    </task>
+    <task id="LOCAL-00168" summary="拼音检索">
+      <created>1707451924252</created>
+      <option name="number" value="00168" />
+      <option name="presentableId" value="LOCAL-00168" />
+      <option name="project" value="LOCAL" />
+      <updated>1707451924252</updated>
+    </task>
+    <option name="localTasksCounter" value="169" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -718,14 +724,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="修复字库地址" />
-    <MESSAGE value="修复编译选项" />
-    <MESSAGE value="精简代码，加入手电筒" />
-    <MESSAGE value="github action" />
-    <MESSAGE value="发短信关闭全部首尾音" />
-    <MESSAGE value="简化bitmaps" />
-    <MESSAGE value="修复warning" />
-    <MESSAGE value="删除多余memset" />
     <MESSAGE value="修复MDC联系人显示" />
     <MESSAGE value="修复MDC联系人" />
     <MESSAGE value="定时器计数正常，但无法进入中断服务函数" />
@@ -743,7 +741,15 @@
     <MESSAGE value="增加发射亚音" />
     <MESSAGE value="修复编译错误" />
     <MESSAGE value="时间校准" />
-    <option name="LAST_COMMIT_MESSAGE" value="时间校准" />
+    <MESSAGE value="格式化" />
+    <MESSAGE value="输入法说明" />
+    <MESSAGE value="更新说明" />
+    <MESSAGE value="双语readme" />
+    <MESSAGE value="readme" />
+    <MESSAGE value="赞助" />
+    <MESSAGE value="README_en" />
+    <MESSAGE value="拼音检索" />
+    <option name="LAST_COMMIT_MESSAGE" value="拼音检索" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

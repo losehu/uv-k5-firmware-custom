@@ -51,6 +51,7 @@ extern uint16_t   gDebounceCounter;
 extern bool       gWasFKeyPressed;
 
 KEY_Code_t KEYBOARD_Poll(void);
+KEY_Code_t GetKey() ;
 #ifdef ENABLE_DOCK
 extern KEY_Code_t gSimulateKey;
 	extern KEY_Code_t gSimulateHold;

@@ -12,7 +12,7 @@ ENABLE_LTO                    ?= 1
 # ---- STOCK QUANSHENG FERATURES ----
 ENABLE_UART                   ?= 1
 ENABLE_AIRCOPY                ?= 0
-ENABLE_FMRADIO                ?= 1
+ENABLE_FMRADIO                ?= 0
 ENABLE_NOAA                   ?= 0
 ENABLE_VOICE                  ?= 0
 ENABLE_VOX                    ?= 1
@@ -56,7 +56,7 @@ ENABLE_DOCK 		          ?= 0
 ENABLE_CUSTOM_SIDEFUNCTIONS   ?= 1
 ENABLE_SIDEFUNCTIONS_SEND     ?= 1
 ENABLE_BLOCK                  ?= 0
-ENABLE_GB2312				   = 0
+ENABLE_PINYIN 				   ?=1
 # ---- DEBUGGING ----
 ENABLE_AM_FIX_SHOW_DATA       ?= 0
 ENABLE_AGC_SHOW_DATA          ?= 0
@@ -88,10 +88,9 @@ endif
 ifeq ($(ENABLE_CHINESE_FULL),4)
     ENABLE_DOPPLER=1
 
-    ifeq ($(ENABLE_GB2312),1)
+    ifeq ($(ENABLE_PINYIN),1)
         $(info H)
         ENABLE_CHINESE_FULL=4
-        CFLAGS += -DENABLE_GB2312
         PACKED_FILE_SUFFIX := $(PACKED_FILE_SUFFIX)H
     else
         $(info K)
@@ -157,7 +156,9 @@ endif
 ifeq ($(ENABLE_DOPPLER),1)
     OBJS += driver/rtc.o
 endif
-
+ifeq ($(ENABLE_PINYIN),1)
+    OBJS += app/pinyin.o
+endif
 ifeq ($(ENABLE_MDC1200),1)
     OBJS += app/mdc1200.o
 endif
@@ -354,11 +355,12 @@ endif
 ifeq ($(ENABLE_WARNING),1)
     CFLAGS  += -DENABLE_WARNING
 endif
-ifeq ($(ENABLE_GB2312),1)
-    CFLAGS  += -DENABLE_GB2312
-endif
+
 ifeq ($(ENABLE_DOCK),1)
     CFLAGS  += -DENABLE_DOCK
+endif
+ifeq ($(ENABLE_PINYIN),1)
+	CFLAGS += -DENABLE_PINYIN
 endif
 ifeq ($(ENABLE_BLOCK),1)
 	CFLAGS += -DENABLE_BLOCK
@@ -564,7 +566,6 @@ full:clean
 	$(RM) *.bin
 	$(MAKE) build ENABLE_CHINESE_FULL=0 ENABLE_MDC1200_EDIT=1
 	$(MAKE) build ENABLE_CHINESE_FULL=4 ENABLE_DOPPLER=1
-	$(MAKE) build ENABLE_CHINESE_FULL=4 ENABLE_GB2312=1  ENABLE_DOPPLER=1
 
 
 build:clean $(TARGET)

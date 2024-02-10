@@ -60,7 +60,7 @@
 #include "driver/gpio.h"
 #include "driver/system.h"
 #include "driver/systick.h"
-
+#include "app/pinyin.h"
 #ifdef ENABLE_UART
 #include "driver/uart.h"
 #endif
@@ -163,7 +163,7 @@ void Main(void) {
 #else
     gMenuListCount=53;
 #endif
-
+    PINYIN();
     gKeyReading0 = KEY_INVALID;
     gKeyReading1 = KEY_INVALID;
     gDebounceCounter = 0;
