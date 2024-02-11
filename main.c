@@ -163,7 +163,6 @@ void Main(void) {
 #else
     gMenuListCount=53;
 #endif
-    PINYIN();
     gKeyReading0 = KEY_INVALID;
     gKeyReading1 = KEY_INVALID;
     gDebounceCounter = 0;

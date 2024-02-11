@@ -102,38 +102,7 @@ uint8_t EN_SELECT=0;
 char * EN_LIST;
 
 static void IN_EN(uint8_t key) {
-    switch (key) {
-        case KEY_1:
 
-            break;
-        case KEY_2:
-            if(EN_SELECT)
-            {
-
-            }else
-            {
-                strcpy(input,"1a 2b 3c 4A 5B 6C");
-                EN_LIST=
-            }
-            break;
-        case KEY_3:
-            break;
-        case KEY_4:
-            break;
-        case KEY_5:
-            break;
-        case KEY_6:
-            break;
-        case KEY_7:
-            break;
-        case KEY_8:
-            break;
-        case KEY_9:
-            break;
-    }
-}
-
-static void IN_NUM(uint8_t key) {
     switch (key) {
         case KEY_1...KEY_9:
             if(edit_index<MAX_EDIT_INDEX) {
@@ -142,14 +111,26 @@ static void IN_NUM(uint8_t key) {
             }
             break;
         case KEY_STAR:
-        case KEY_EXIT:
-           if(edit_index) {
-               sum_pxl-=7;
-               edit_index--;
-           }
+            if(edit_index) {
+                sum_pxl-=7;
+                edit_index--;
+            }
+            break;
+        case KEY_UP:
+//            if(edit[edit_index]>)
+            break;
+        case KEY_DOWN:
             break;
     }
     edit[edit_index] = '\0';
+
+}
+
+static void IN_NUM(uint8_t key) {
+    switch (key) {
+
+
+    }
 
 
 }
@@ -157,13 +138,12 @@ static void IN_NUM(uint8_t key) {
 static void OnKeyIN(uint8_t key) {
     switch (key) {
         case KEY_0 :
-            INPUT_MODE = INPUT_MODE == 2 ? 0 : INPUT_MODE + 1;
+            INPUT_MODE = 1- INPUT_MODE;
             break;
 
         default:
             if (INPUT_MODE == 1)IN_PINYIN(key);
             else if (INPUT_MODE == 0) IN_EN(key);
-            else IN_NUM(key);
             break;
     }
 
@@ -263,8 +243,7 @@ void SHOW_SCREEN() {
     SHOW_INPUT();
     if (PINYIN_MODE) SHOW_CHOOSE();
     if (INPUT_MODE == 1)memcpy(&gFrameBuffer[0][120], BITMAP_CN, 7);
-    else if (INPUT_MODE == 0) UI_PrintStringSmall("A", 120, 0, 0);
-    else if (INPUT_MODE == 2) UI_PrintStringSmall("1", 120, 0, 0);
+    else  UI_PrintStringSmall("A", 120, 0, 0);
 
     ST7565_BlitFullScreen();
 
@@ -282,9 +261,9 @@ void PINYIN() {
 //    UI_PrintStringSmall("1你2她3我4脏5其6把",0,0,5);
 
 
-    while (1) {
-        HandleUserInput();
-        SHOW_SCREEN();
-    }
+//    while (1) {
+//        HandleUserInput();
+//        SHOW_SCREEN();
+//    }
 
 }

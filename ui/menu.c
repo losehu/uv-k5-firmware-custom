@@ -878,7 +878,7 @@ void UI_DisplayMenu(void) {
                 break;
             }
 #endif
-        case MENU_MEM_NAME: {
+        case MENU_MEM_NAME: { //输入法显示
             const bool valid = RADIO_CheckValidChannel(gSubMenuSelection, false, 1);
 
             UI_GenerateChannelStringEx(String, valid, gSubMenuSelection);

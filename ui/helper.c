@@ -68,7 +68,7 @@ void UI_GenerateChannelString(char *pString, const uint8_t Channel) {
 
 bool CHINESE_JUDGE(char *name, uint8_t len) {
     for (int i = 0; i < len; i++)
-        if (name[i] >= 0x80 && name[i] <= 0x9b && i != len - 1 && name[i + 1] != 0)return 1;
+        if (name[i] >= 0x80 && i != len - 1 && name[i + 1] != 0)return 1;
 
     return 0;
 }
