@@ -897,21 +897,62 @@ void UI_DisplayMenu(void) {
                     show_move_flag=1;
 #endif
                     UI_PrintStringSmall(pPrintStr, menu_item_x1 - 12, menu_item_x2, 3);
-#if ENABLE_CHINESE_FULL == 4
+                }
 
-                    } else if (CHINESE_JUDGE(tmp_name, strlen(tmp_name))) {
+
+#if ENABLE_CHINESE_FULL == 4 && !defined(ENABLE_PINYIN)
+                    else if (CHINESE_JUDGE(tmp_name, strlen(tmp_name))) {
                     edit_index = -1;
                 }else if (!CHINESE_JUDGE(tmp_name, strlen(tmp_name))) {    // show the channel name being edited
 #else
-                } else {
+                else {
 #endif
 
+
+#if ENABLE_CHINESE_FULL == 4
+                    show_move_flag=1;
+#endif
                     UI_PrintStringSmall(edit, menu_item_x1 - 12, menu_item_x2, 3);
 
-                    if (edit_index < MAX_EDIT_INDEX)
-                        UI_PrintStringSmall("^", menu_item_x1 - 12 + 7 * edit_index +
-                                                 (((menu_item_x2 - menu_item_x1 + 12) - (7 * MAX_EDIT_INDEX)) + 1) / 2,
-                                            0, 4);  // show the cursor
+                    if (edit_index < MAX_EDIT_INDEX) {
+#if ENABLE_CHINESE_FULL == 4
+                        show_move_flag=1;
+#endif
+
+#ifdef ENABLE_PINYIN
+                        uint8_t sum_pxl = 0;
+                        uint8_t cnt_chn=0;
+                        for (int j = 0; j < edit_index; j++) {
+                            if (isChineseChar(edit[j], j, MAX_EDIT_INDEX))
+                                {
+                                sum_pxl += 13;
+                            j++;
+                            cnt_chn++;
+                            }
+                            else
+                                sum_pxl += 7;
+                        }
+                        uint8_t add_point=isChineseChar(edit[edit_index], edit_index, MAX_EDIT_INDEX)?6:3;
+                         gFrameBuffer[4][menu_item_x1 - 12 + sum_pxl +
+                                        (((menu_item_x2 - menu_item_x1 + 12) - (7 * (MAX_EDIT_INDEX-2*cnt_chn)+13*cnt_chn)) + 1) / 2 + add_point] |=
+                                3 << 6;
+                        gFrameBuffer[4][menu_item_x1 - 12 + sum_pxl +
+                                        (((menu_item_x2 - menu_item_x1 + 12) - (7 * (MAX_EDIT_INDEX-2*cnt_chn)+13*cnt_chn))  + 1) / 2 + add_point+1] |=
+                                3 << 6;
+#else
+                        gFrameBuffer[4][menu_item_x1 - 12 + 7*edit_index +
+                                        (((menu_item_x2 - menu_item_x1 + 12) - (7 * MAX_EDIT_INDEX)) + 1) / 2 + 3] |=
+                                3 << 6;
+                        gFrameBuffer[4][menu_item_x1 - 12 + 7*edit_index +
+                                        (((menu_item_x2 - menu_item_x1 + 12) - (7 * MAX_EDIT_INDEX)) + 1) / 2 + 4] |=
+                                3 << 6;
+
+#endif
+
+//                        UI_PrintStringSmall("^", menu_item_x1 - 12 + 7 * edit_index +
+//                                                 (((menu_item_x2 - menu_item_x1 + 12) - (7 * MAX_EDIT_INDEX)) + 1) / 2,
+//                                            0, 4);  // show the cursor
+                    }
                 }
 
                 if (!gAskForConfirmation) {    // show the frequency so that the user knows the channels frequency

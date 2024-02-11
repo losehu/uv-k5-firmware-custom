@@ -1465,7 +1465,10 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld) {
             return;  // invalid
         gAskForConfirmation = 0;
         gIsInSubMenu = true;
-
+if( UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME)
+{
+    //输入法参数初始化
+}
 //		if (UI_MENU_GetCurrentMenuId() != MENU_D_LIST)
         {
             gInputBoxIndex = 0;
@@ -1512,34 +1515,41 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld) {
             SETTINGS_FetchChannelName(edit, gSubMenuSelection);
             // pad the channel name out with '_'
             edit_index = strlen(edit);
-#if ENABLE_CHINESE_FULL != 4
-            while (edit_index < MAX_EDIT_INDEX)edit[edit_index++] = '_';
-            edit[edit_index] = 0;
-            edit_index = 0;  // 'edit_index' is going to be used as the cursor position
+//#if ENABLE_CHINESE_FULL != 4
+//            while (edit_index < MAX_EDIT_INDEX)edit[edit_index++] = '_';
+//            edit[edit_index] = 0;
+//            edit_index = 0;  // 'edit_index' is going to be used as the cursor position
 
-#else
-            if(!CHINESE_JUDGE(edit,edit_index))
-            {
+//#else
+//            if(!CHINESE_JUDGE(edit,edit_index))
+//            {
                 while (edit_index < MAX_EDIT_INDEX)edit[edit_index++] = '_';
                 edit[edit_index] = 0;
                 edit_index = 0;  // 'edit_index' is going to be used as the cursor position
 
-            }else
-                {
-                        gIsInSubMenu = false;
-   return;
-                }
+//            }else
+//                {
+//                        gIsInSubMenu = false;
+//   return;
+//                }
 
-#endif
+//#endif
 
             // make a copy so we can test for change when exiting the menu item
             memcpy(edit_original, edit, sizeof(edit_original));
             return;
         } else if (edit_index >= 0 && edit_index < MAX_EDIT_INDEX) {    // editing the channel name characters
 
-            if (++edit_index < MAX_EDIT_INDEX)
-                return;    // next char
 
+
+                if (edit_index+1 < MAX_EDIT_INDEX) {
+#ifdef ENABLE_PINYIN
+                    if (isChineseChar(edit[edit_index], edit_index, MAX_EDIT_INDEX))
+                        edit_index++;
+#endif
+                        edit_index++;
+                    return;    // next char
+                }
             // exit
             if (memcmp(edit_original, edit, sizeof(edit_original)) == 0) {    // no change - drop it
                 gFlagAcceptSetting = false;

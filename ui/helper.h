@@ -45,6 +45,7 @@ void UI_DrawPixelBuffer(uint8_t (*buffer)[128], uint8_t x, uint8_t y, bool black
 void UI_DisplayPopup(const char *string);
 
 #endif
+bool isChineseChar(char a ,uint8_t now_index,uint8_t sum_index) ;
 
 void GUI_DisplaySmallest(const char *pString, uint8_t x, uint8_t y, bool statusbar, bool fill);
 

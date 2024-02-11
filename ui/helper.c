@@ -50,7 +50,10 @@ uint8_t is_chn(uint8_t num) {
 
 #endif
 }
-
+bool isChineseChar(char a ,uint8_t now_index,uint8_t sum_index) {
+    if((uint8_t)a>=0x80&&now_index<sum_index) return 1;
+    return 0;
+}
 void UI_GenerateChannelString(char *pString, const uint8_t Channel) {
     unsigned int i;
 
@@ -68,10 +71,11 @@ void UI_GenerateChannelString(char *pString, const uint8_t Channel) {
 
 bool CHINESE_JUDGE(char *name, uint8_t len) {
     for (int i = 0; i < len; i++)
-        if (name[i] >= 0x80 && i != len - 1 && name[i + 1] != 0)return 1;
+        if ((uint8_t)name[i] >= 0x80 && i != len - 1 && name[i + 1] != 0)return 1;
 
     return 0;
 }
+
 
 void UI_GenerateChannelStringEx(char *pString, const bool bShowPrefix, const uint8_t ChannelNumber) {
     if (gInputBoxIndex > 0) {

@@ -385,5 +385,10 @@ const uint8_t BITMAP_ARRAY_UP[5] =
                 0b00111100,
 
 };
+ const uint8_t BITMAP_POINT[2] ={
+                0b0000011,
+                0b00110000,
 
+
+};
 #endif
