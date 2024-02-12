@@ -156,9 +156,7 @@ endif
 ifeq ($(ENABLE_DOPPLER),1)
     OBJS += driver/rtc.o
 endif
-ifeq ($(ENABLE_PINYIN),1)
-    OBJS += app/pinyin.o
-endif
+
 ifeq ($(ENABLE_MDC1200),1)
     OBJS += app/mdc1200.o
 endif

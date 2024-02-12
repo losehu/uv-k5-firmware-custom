@@ -19,6 +19,7 @@
 #include "driver/st7565.h"
 #include "external/printf/printf.h"
 #include "font.h"
+#include "ui/menu.h"
 #include "ui/helper.h"
 #include "ui/inputbox.h"
 #include "misc.h"
@@ -128,6 +129,9 @@ void UI_PrintStringSmall(const char *pString, uint8_t Start, uint8_t End, uint8_
 #if ENABLE_CHINESE_FULL == 0
         Length = Length > 7 ? 7 : Length;
 #else
+        #ifdef ENABLE_PINYIN == 0
+        if(PINYIN_NUM==0)
+            #endif
         Length = Length > 14 ? 14 : Length;
 
 #endif

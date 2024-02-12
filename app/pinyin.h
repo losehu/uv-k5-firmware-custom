@@ -7,4 +7,5 @@
 #include "stdint.h"
 void PINYIN();
 
+extern char pinyin_show[22];
 #endif //UV_K5_FIRMWARE_CHINESE_PINYN_H

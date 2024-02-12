@@ -1229,7 +1229,7 @@ static void MENU_Key_0_to_9(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
 
     gBeepToPlay = BEEP_1KHZ_60MS_OPTIONAL;
     uint8_t now_menu = UI_MENU_GetCurrentMenuId();
-#ifdef ENABLE_MDC1200_EDIT //输入法数字输入
+#ifdef ENABLE_MDC1200_EDIT //输入法数字
     uint8_t end_index = now_menu == MENU_MEM_NAME ? MAX_EDIT_INDEX : 4;
 #else
     uint8_t end_index = MAX_EDIT_INDEX;
@@ -1239,18 +1239,64 @@ static void MENU_Key_0_to_9(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
 #ifdef ENABLE_MDC1200_EDIT
                 || now_menu == MENU_MDC_ID
 #endif
-
 #endif
         ) &&
         edit_index >= 0) {    // currently editing the channel name
 
         if (edit_index < end_index) {
-            if (Key <= KEY_9) {
-                edit[edit_index] = '0' + Key - KEY_0;
 
-                if (++edit_index >= end_index) {    // exit edit
-                    gFlagAcceptSetting = false;
-                    gAskForConfirmation = 1;
+            if (Key <= KEY_9) {
+#ifdef ENABLE_PINYIN
+                if (PINYIN_MODE && edit_index + 1 < end_index) {
+                    if(PINYIN_NUM==0){
+                    if (PINYIN_INPUT == 0) //显示字母
+                    {
+                        if (Key >= 2 && Key <= 9 && pinyin_index <= 5) {
+                            PINYIN_INPUT = 1;
+                            key_index = Key;
+                        } else if (Key == 1 && pinyin_index) {
+                            pinyin_index--;
+                            pinyin_input[pinyin_index] = '\0';
+                        }
+                    } else if (PINYIN_INPUT == 1)//选择字母
+                    {
+                        PINYIN_INPUT = 0;
+                        if (Key && Key <= strlen(key_excel[key_index - 2])) {
+                            pinyin_input[pinyin_index++] = key_excel[key_index - 2][Key - 1];
+                            pinyin_input[pinyin_index] = 0;
+                        }
+                    }
+                    }else
+                        {
+
+                            if(Key&&Key<=(PINYIN_NUM-PINYIN_PAGE*6)>6?6:(PINYIN_NUM-PINYIN_PAGE*6))
+                                {
+
+                                    EEPROM_ReadBuffer(PINYIN_ADD+PINYIN_PAGE*6*2+(Key-1)*2,edit+edit_index,2);
+                                    edit_index+=2;
+                                    PINYIN_NUM=0;
+                                    PINYIN_PAGE=0;
+                                    PINYIN_INPUT=0;
+                                    pinyin_index=0;
+                                    memset(pinyin_input,0,sizeof(pinyin_input));
+                                }
+                        }
+                } else
+#endif
+                {
+#ifdef ENABLE_PINYIN
+
+                    if(isChineseChar(edit[edit_index],edit_index,MAX_EDIT_INDEX))
+                    {
+                        edit[edit_index+1]='_';
+                    }
+#endif
+                    edit[edit_index] = '0' + Key - KEY_0;
+
+                    if (++edit_index >= end_index) {    // exit edit
+                        gFlagAcceptSetting = false;
+                        gAskForConfirmation = 1;
+                    }
                 }
 
                 gRequestDisplayScreen = DISPLAY_MENU;
@@ -1391,7 +1437,38 @@ static void MENU_Key_0_to_9(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
 static void MENU_Key_EXIT(bool bKeyPressed, bool bKeyHeld) {
     if (bKeyHeld || !bKeyPressed)
         return;
+#ifdef  ENABLE_PINYIN
+    if (UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME) { //输入法exit
 
+        if (PINYIN_MODE) {
+            if (PINYIN_INPUT == 1) {
+                PINYIN_INPUT = 0;
+            } else if (PINYIN_INPUT == 0) {
+                if (PINYIN_NUM)PINYIN_NUM = 0;
+                else {
+
+                    if (pinyin_index) {
+                        pinyin_index--;
+                        pinyin_input[pinyin_index] = '\0';
+
+                    } else {
+                        PINYIN_MODE = 0;
+                    }
+                }
+            }
+                            return;
+
+        } else {
+            if (pinyin_index == 0) {
+                edit_index = -1;
+                return;
+
+            }
+
+        }
+
+    }
+#endif
     gBeepToPlay = BEEP_1KHZ_60MS_OPTIONAL;
 
     if (!gCssBackgroundScan) {
@@ -1465,10 +1542,19 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld) {
             return;  // invalid
         gAskForConfirmation = 0;
         gIsInSubMenu = true;
-if( UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME)
-{
-    //输入法参数初始化
-}
+#ifdef ENABLE_PINYIN
+        if( UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME)
+        {
+            //输入法参数初始化menu
+            PINYIN_MODE=0;
+ PINYIN_INPUT=0;
+ pinyin_index=0;
+       PINYIN_NUM=0;
+       PINYIN_PAGE=0;
+       memset(pinyin_input,0,sizeof(pinyin_input));
+
+        }
+#endif
 //		if (UI_MENU_GetCurrentMenuId() != MENU_D_LIST)
         {
             gInputBoxIndex = 0;
@@ -1507,7 +1593,7 @@ if( UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME)
 #endif
 
 #endif
-    if (UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME) { //输入法
+    if (UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME) { //输入法MENU
         if (edit_index < 0) {    // enter channel name edit mode
             if (!RADIO_CheckValidChannel(gSubMenuSelection, false, 0))
                 return;
@@ -1515,41 +1601,41 @@ if( UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME)
             SETTINGS_FetchChannelName(edit, gSubMenuSelection);
             // pad the channel name out with '_'
             edit_index = strlen(edit);
-//#if ENABLE_CHINESE_FULL != 4
-//            while (edit_index < MAX_EDIT_INDEX)edit[edit_index++] = '_';
-//            edit[edit_index] = 0;
-//            edit_index = 0;  // 'edit_index' is going to be used as the cursor position
-
-//#else
-//            if(!CHINESE_JUDGE(edit,edit_index))
-//            {
-                while (edit_index < MAX_EDIT_INDEX)edit[edit_index++] = '_';
-                edit[edit_index] = 0;
-                edit_index = 0;  // 'edit_index' is going to be used as the cursor position
-
-//            }else
-//                {
-//                        gIsInSubMenu = false;
-//   return;
-//                }
-
-//#endif
-
-            // make a copy so we can test for change when exiting the menu item
+            while (edit_index < MAX_EDIT_INDEX)edit[edit_index++] = '_';
+            edit[edit_index] = 0;
+            edit_index = 0;  // 'edit_index' is going to be used as the cursor position
             memcpy(edit_original, edit, sizeof(edit_original));
             return;
         } else if (edit_index >= 0 && edit_index < MAX_EDIT_INDEX) {    // editing the channel name characters
 
 
 
-                if (edit_index+1 < MAX_EDIT_INDEX) {
+            if (edit_index + 1 < MAX_EDIT_INDEX) {
+
 #ifdef ENABLE_PINYIN
-                    if (isChineseChar(edit[edit_index], edit_index, MAX_EDIT_INDEX))
-                        edit_index++;
+                if(PINYIN_MODE==0)
+                {
+                if (isChineseChar(edit[edit_index], edit_index, MAX_EDIT_INDEX))
+                    edit_index++;
 #endif
-                        edit_index++;
-                    return;    // next char
-                }
+                edit_index++;
+#ifdef ENABLE_PINYIN
+                }else
+                    {
+                        if(pinyin_index)
+                            {
+                            PINYIN_PAGE=0;
+                                    PINYIN_NUM=0;
+                                    PINYIN_INPUT=0;
+                            PINYIN_ADD=0;
+                                PINYIN_NUM=pinyin_search(pinyin_input,pinyin_index,&PINYIN_ADD);
+                                if(PINYIN_ADD<0x21900||PINYIN_ADD>0x250F6) //无效拼音
+                                    PINYIN_NUM=0;
+                            }
+                    }
+#endif
+                return;    // next char
+            }
             // exit
             if (memcmp(edit_original, edit, sizeof(edit_original)) == 0) {    // no change - drop it
                 gFlagAcceptSetting = false;
@@ -1630,16 +1716,28 @@ static void MENU_Key_STAR(const bool bKeyPressed, const bool bKeyHeld) {
         return;
 
     gBeepToPlay = BEEP_1KHZ_60MS_OPTIONAL;
-//输入法模式切换
+//输入法星模式切换
     if (UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME && edit_index >= 0) {    // currently editing the channel name
-
         if (edit_index < MAX_EDIT_INDEX) {
-            edit[edit_index] = '-';
+#ifndef ENABLE_PINYIN
 
+            edit[edit_index] = '-';
             if (++edit_index >= MAX_EDIT_INDEX) {    // exit edit
                 gFlagAcceptSetting = false;
                 gAskForConfirmation = 1;
             }
+#else
+            if (edit_index + 1 < MAX_EDIT_INDEX) {
+                PINYIN_MODE = 1 - PINYIN_MODE;
+                if (PINYIN_MODE == 1)//刚进入中文输入
+                {
+                    PINYIN_NUM=0;
+                } else//刚退中文输入
+                {
+
+                }
+            }
+#endif
 
             gRequestDisplayScreen = DISPLAY_MENU;
         }
@@ -1674,9 +1772,27 @@ static void MENU_Key_UP_DOWN(bool bKeyPressed, bool bKeyHeld, int8_t Direction) 
     uint8_t VFO;
     uint8_t Channel;
     bool bCheckScanList;
-    if (gIsInSubMenu && edit_index >= 0) { //输入法
+    if (gIsInSubMenu && edit_index >= 0) { //输入法UP DOWN
         if (UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME) {    // change the character
             if (bKeyPressed && edit_index < MAX_EDIT_INDEX) {
+#ifdef ENABLE_PINYIN
+                if(PINYIN_MODE==1)
+                    {
+                    if(PINYIN_NUM)
+                        {
+                        if(PINYIN_NUM>(PINYIN_PAGE+1)*6&&Direction==-1)PINYIN_PAGE++;
+                        else  if(PINYIN_PAGE>0&&Direction==1)PINYIN_PAGE--;
+                        }
+                    return;
+                    }
+#endif
+                if (isChineseChar(edit[edit_index], edit_index, MAX_EDIT_INDEX)) {
+                    edit[edit_index + 1] = '_';
+                    edit[edit_index] = '_';
+
+                }
+
+
                 const char unwanted[] = "$%&!\"':;?^`|{}";
                 char c = edit[edit_index] + Direction;
                 unsigned int i = 0;
@@ -1686,7 +1802,7 @@ static void MENU_Key_UP_DOWN(bool bKeyPressed, bool bKeyHeld, int8_t Direction) 
                         i = 0;
                     }
                 }
-                edit[edit_index] = (c < 32) ? 126 : (c > 126) ? 32 : c;
+                edit[edit_index] = ((uint8_t) c < 32) ? 126 : ((uint8_t) c > 126) ? 32 : c;
 
                 gRequestDisplayScreen = DISPLAY_MENU;
             }
