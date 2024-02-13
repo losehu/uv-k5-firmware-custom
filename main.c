@@ -60,7 +60,6 @@
 #include "driver/gpio.h"
 #include "driver/system.h"
 #include "driver/systick.h"
-#include "app/pinyin.h"
 #ifdef ENABLE_UART
 #include "driver/uart.h"
 #endif

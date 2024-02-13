@@ -22,14 +22,17 @@
   <component name="ChangeListManager">
     <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="拼音检索">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/pinyin.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/pinyin.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/pinyin.h" beforeDir="false" afterPath="$PROJECT_DIR$/app/pinyin.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bitmaps.c" beforeDir="false" afterPath="$PROJECT_DIR$/bitmaps.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bitmaps.h" beforeDir="false" afterPath="$PROJECT_DIR$/bitmaps.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/menu.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/menu.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/pinyin.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/pinyin.h" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment/sponsors.md" beforeDir="false" afterPath="$PROJECT_DIR$/payment/sponsors.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/helper.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/helper.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/helper.h" beforeDir="false" afterPath="$PROJECT_DIR$/ui/helper.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/menu.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/menu.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/menu.h" beforeDir="false" afterPath="$PROJECT_DIR$/ui/menu.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/ui.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/ui.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -350,6 +353,7 @@
       <workItem from="1707106340612" duration="20588000" />
       <workItem from="1707404920856" duration="929000" />
       <workItem from="1707446735186" duration="13060000" />
+      <workItem from="1707790916015" duration="13479000" />
     </task>
     <task id="LOCAL-00120" summary="修改docker编译">
       <created>1704891380381</created>

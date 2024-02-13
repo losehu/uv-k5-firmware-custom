@@ -35,6 +35,8 @@
 #include "ui/menu.h"
 #include "ui/ui.h"
 #include "chinese.h"
+#ifdef ENABLE_PINYIN
+
 uint32_t PINYIN_ADD=0;
 uint8_t PINYIN_NUM=0;
 uint8_t PINYIN_MODE = 0;
@@ -53,6 +55,7 @@ char key_excel[8][5] = {
         "tuv",
         "wxyz"
 };
+#endif
 void insertNewline(char a[], int index, int len) {
 
     if (index < 0 || index >= len || len >= 63) {
@@ -892,6 +895,7 @@ void UI_DisplayMenu(void) {
                     edit[1]=String[1];
                     edit[2]=String[2];
                     edit[3]=String[3];
+                      edit[4]='\0';
 #endif
 #ifdef ENABLE_MDC1200_EDIT
                     }
@@ -962,6 +966,7 @@ void UI_DisplayMenu(void) {
                                         (((menu_item_x2 - menu_item_x1 + 12) - (7 * (MAX_EDIT_INDEX-2*cnt_chn)+13*cnt_chn))  + 1) / 2 + add_point+1] |=
                                 3 << 6;
 #else
+//                        memset(&gFrameBuffer[4][menu_item_x1 - 12 + 7*edit_index + (((menu_item_x2 - menu_item_x1 + 12) - (7 * MAX_EDIT_INDEX)) + 1) / 2 + 3],3<<6,2 );
                         gFrameBuffer[4][menu_item_x1 - 12 + 7*edit_index +
                                         (((menu_item_x2 - menu_item_x1 + 12) - (7 * MAX_EDIT_INDEX)) + 1) / 2 + 3] |=
                                 3 << 6;
@@ -1010,6 +1015,8 @@ memcpy(&gFrameBuffer[0][120], BITMAP_CN, 7);
 
                     }
                 }
+//                sprintf(String,"%d",edit_index);
+//                UI_PrintStringSmall(String, 0, 0, 4);
 
                 if (!gAskForConfirmation) {    // show the frequency so that the user knows the channels frequency
                     sprintf(String, "%u.%05u", frequency / 100000, frequency % 100000);
@@ -1425,7 +1432,7 @@ void UI_ShowChineseMenu() {
 
 }
 
-
+#ifdef ENABLE_PINYIN
 uint8_t pinyin_cmp(uint8_t *a, uint8_t *b) {
     for (int i = 0; i < 6; i++) {
         if (a[i] > b[i]) return 1;
@@ -1459,3 +1466,4 @@ uint8_t pinyin_search(uint8_t *target, uint8_t size, uint32_t *add) {
     }
     return 255; // 如果未找到目标元素，返回-1
 }
+#endif

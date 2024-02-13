@@ -87,6 +87,9 @@ void GUI_SelectNextDisplay(GUI_DisplayType_t Display) {
 
         gInputBoxIndex = 0;
         gIsInSubMenu = false;
+#ifdef ENABLE_PINYIN
+        PINYIN_MODE=0;
+#endif
         gCssBackgroundScan = false;
         gScanStateDir = SCAN_OFF;
 #ifdef ENABLE_FMRADIO

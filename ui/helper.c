@@ -423,6 +423,7 @@ void GUI_DisplaySmallest(const char *pString, uint8_t x, uint8_t y,
         x += 4;
     }
 }
+#ifdef ENABLE_TIMER
 
 void show_uint32(uint32_t num, uint8_t line) {
     char str[6] = {0};
@@ -437,3 +438,4 @@ void show_uint32(uint32_t num, uint8_t line) {
     UI_PrintStringSmall(str, 0, 127, line);
     ST7565_BlitFullScreen();
 }
+#endif
