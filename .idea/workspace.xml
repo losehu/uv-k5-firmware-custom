@@ -20,13 +20,9 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="完善输入法">
+    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="修复空格bug">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/menu.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/menu.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/helper.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/helper.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/helper.h" beforeDir="false" afterPath="$PROJECT_DIR$/ui/helper.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/menu.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/menu.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -348,14 +344,7 @@
       <workItem from="1707106340612" duration="20588000" />
       <workItem from="1707404920856" duration="929000" />
       <workItem from="1707446735186" duration="13060000" />
-      <workItem from="1707790916015" duration="21716000" />
-    </task>
-    <task id="LOCAL-00121" summary="赞助">
-      <created>1704891973032</created>
-      <option name="number" value="00121" />
-      <option name="presentableId" value="LOCAL-00121" />
-      <option name="project" value="LOCAL" />
-      <updated>1704891973032</updated>
+      <workItem from="1707790916015" duration="22794000" />
     </task>
     <task id="LOCAL-00122" summary="4M TEST">
       <created>1704898312561</created>
@@ -693,7 +682,14 @@
       <option name="project" value="LOCAL" />
       <updated>1707806355484</updated>
     </task>
-    <option name="localTasksCounter" value="170" />
+    <task id="LOCAL-00170" summary="修复空格bug">
+      <created>1707815516972</created>
+      <option name="number" value="00170" />
+      <option name="presentableId" value="LOCAL-00170" />
+      <option name="project" value="LOCAL" />
+      <updated>1707815516972</updated>
+    </task>
+    <option name="localTasksCounter" value="171" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -723,7 +719,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="修复MDC联系人" />
     <MESSAGE value="定时器计数正常，但无法进入中断服务函数" />
     <MESSAGE value="使能NVIC" />
     <MESSAGE value="修复定时器" />
@@ -748,7 +743,8 @@
     <MESSAGE value="README_en" />
     <MESSAGE value="拼音检索" />
     <MESSAGE value="完善输入法" />
-    <option name="LAST_COMMIT_MESSAGE" value="完善输入法" />
+    <MESSAGE value="修复空格bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="修复空格bug" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

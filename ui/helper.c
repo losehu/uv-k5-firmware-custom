@@ -168,7 +168,6 @@ void UI_PrintStringSmall(const char *pString, uint8_t Start, uint8_t End, uint8_
             sum_pixel += 13;
         }
     }
-#define ENABLE_CHINESE_FULL 4
     if (End > Start)
         Start += (((End - Start) - (sum_pixel)) + 1) / 2;
     uint8_t *pFb = gFrameBuffer[Line] + Start;

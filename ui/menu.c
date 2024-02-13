@@ -1016,11 +1016,11 @@ memcpy(&gFrameBuffer[0][120], BITMAP_CN, 7);
 
                     }
                 }
-                sprintf(String,"%d",edit_index);
-                UI_PrintStringSmall(String, 0, 0, 4);
-
-                sprintf(String,"%d",edit[2]);
-                UI_PrintStringSmall(String, 0, 0, 3);
+//                sprintf(String,"%d",edit_index);
+//                UI_PrintStringSmall(String, 0, 0, 4);
+//
+//                sprintf(String,"%d",edit[2]);
+//                UI_PrintStringSmall(String, 0, 0, 3);
 
 
                 if (!gAskForConfirmation) {    // show the frequency so that the user knows the channels frequency
