@@ -1954,11 +1954,25 @@ void MENU_ProcessKeys(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
                 if (!bKeyHeld && bKeyPressed) {
                     gBeepToPlay = BEEP_1KHZ_60MS_OPTIONAL;
                     if (edit_index < MAX_EDIT_INDEX) {
+
+#ifdef ENABLE_PINYIN
+                        if (isChineseChar(edit[edit_index], edit_index, MAX_EDIT_INDEX)) {
+                            edit[edit_index + 1] = '_';
+
+                        }
+#endif
+
                         edit[edit_index] = ' ';
+
+
+
                         if (++edit_index >= MAX_EDIT_INDEX) {    // exit edit
                             gFlagAcceptSetting = false;
                             gAskForConfirmation = 1;
                         }
+
+
+
                         gRequestDisplayScreen = DISPLAY_MENU;
                     }
                 }

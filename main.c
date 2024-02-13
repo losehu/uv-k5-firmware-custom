@@ -261,7 +261,12 @@ void Main(void) {
 //
 //    }
 
-
+//while(1)
+//{
+//    UI_PrintStringSmall("\xB3\xA1 _", 0, 0, 3);
+//    ST7565_BlitFullScreen();
+//
+//}
     while (1) {
 
         APP_Update();

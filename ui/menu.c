@@ -967,6 +967,7 @@ void UI_DisplayMenu(void) {
                                 3 << 6;
 #else
 //                        memset(&gFrameBuffer[4][menu_item_x1 - 12 + 7*edit_index + (((menu_item_x2 - menu_item_x1 + 12) - (7 * MAX_EDIT_INDEX)) + 1) / 2 + 3],3<<6,2 );
+
                         gFrameBuffer[4][menu_item_x1 - 12 + 7*edit_index +
                                         (((menu_item_x2 - menu_item_x1 + 12) - (7 * MAX_EDIT_INDEX)) + 1) / 2 + 3] |=
                                 3 << 6;
@@ -1015,8 +1016,12 @@ memcpy(&gFrameBuffer[0][120], BITMAP_CN, 7);
 
                     }
                 }
-//                sprintf(String,"%d",edit_index);
-//                UI_PrintStringSmall(String, 0, 0, 4);
+                sprintf(String,"%d",edit_index);
+                UI_PrintStringSmall(String, 0, 0, 4);
+
+                sprintf(String,"%d",edit[2]);
+                UI_PrintStringSmall(String, 0, 0, 3);
+
 
                 if (!gAskForConfirmation) {    // show the frequency so that the user knows the channels frequency
                     sprintf(String, "%u.%05u", frequency / 100000, frequency % 100000);
@@ -1319,18 +1324,17 @@ memcpy(&gFrameBuffer[0][120], BITMAP_CN, 7);
         } else {
             UI_PrintStringSmall(pPrintStr, menu_item_x1 - 12, menu_item_x2, 4);
 
-
-            if (IS_MR_CHANNEL(gEeprom.SCANLIST_PRIORITY_CH1[i])) {
-                sprintf(String, "PRI%d:%u", 1, gEeprom.SCANLIST_PRIORITY_CH1[i] + 1);
-                UI_PrintStringSmall(String, menu_item_x1 - 12, menu_item_x2, 3);
-            }
-
+//
+//            if (IS_MR_CHANNEL(gEeprom.SCANLIST_PRIORITY_CH1[i])) {
+//                sprintf(String, "PRI%d:%u", 1, gEeprom.SCANLIST_PRIORITY_CH1[i] + 1);
+//                UI_PrintStringSmall(String, menu_item_x1 - 12, menu_item_x2, 3);
+//            }
+//
 //            if (IS_MR_CHANNEL(gEeprom.SCANLIST_PRIORITY_CH2[i])) {
-//                sprintf(String, "PRI2:%u", gEeprom.SCANLIST_PRIORITY_CH2[i] + 1);
-            if (IS_MR_CHANNEL(gEeprom.SCANLIST_PRIORITY_CH2[i])) {
-                sprintf(String, "PRI%d:%u", 2, gEeprom.SCANLIST_PRIORITY_CH2[i] + 1);
-                UI_PrintStringSmall(String, menu_item_x1 - 12, menu_item_x2, 6);
-            }
+//                sprintf(String, "PRI%d:%u", 2, gEeprom.SCANLIST_PRIORITY_CH2[i] + 1);
+//                UI_PrintStringSmall(String, menu_item_x1 - 12, menu_item_x2, 6);
+//            }
+
         }
     }
 

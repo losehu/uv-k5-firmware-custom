@@ -54,9 +54,7 @@ void PutPixelStatus(uint8_t x, uint8_t y, bool fill);
 void PutPixel(uint8_t x, uint8_t y, bool fill);
 
 void DrawVLine(int sy, int ey, int nx, bool fill);
-#ifdef ENABLE_TIMER
 void show_uint32(uint32_t num,uint8_t  line);
-#endif
 //void UI_DrawPixel(uint8_t x, uint8_t y, bool black);
 //void UI_DrawLine(int16_t x1, int16_t y1, int16_t x2, int16_t y2, bool black);
 //

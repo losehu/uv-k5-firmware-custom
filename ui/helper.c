@@ -31,12 +31,12 @@
 #endif
 #define IS_BIT_SET(byte, bit) ((byte>>bit) & (1))
 
-void set_bit(uint8_t *value, uint8_t bit_position, uint8_t bit_value) {
-    if (bit_value == 0) {
-        *value = *value & ~(1 << bit_position);
-    } else {
+void set_bit(uint8_t *value, uint8_t bit_position) {
+//    if (bit_value == 0) {
+//        *value = *value & ~(1 << bit_position);
+//    } else {
         *value = *value | (1 << bit_position);
-    }
+//    }
 }
 
 uint8_t is_chn(uint8_t num) {
@@ -168,10 +168,9 @@ void UI_PrintStringSmall(const char *pString, uint8_t Start, uint8_t End, uint8_
             sum_pixel += 13;
         }
     }
-
+#define ENABLE_CHINESE_FULL 4
     if (End > Start)
         Start += (((End - Start) - (sum_pixel)) + 1) / 2;
-//    if(Start+sum_pixel>=128)Start=128-sum_pixel;
     uint8_t *pFb = gFrameBuffer[Line] + Start;
     uint8_t *pFb1 = gFrameBuffer[Line + 1] + Start;
     uint8_t now_pixel = 0;
@@ -213,10 +212,10 @@ void UI_PrintStringSmall(const char *pString, uint8_t Start, uint8_t End, uint8_
 
 #endif
                 now_pixel += 7;
-            } else if (pString[i] == ' ')
+            } else if (true_char[i] == ' ')
                 now_pixel += 7;
         } else {
-            uint8_t gFontChinese[22] = {0};
+//            uint8_t gFontChinese[22] = {0};
 
 #if ENABLE_CHINESE_FULL != 0
             true_char[i]=true_char[i]<0XD8A1?((true_char[i]-0xB0A0)>>8)*94+((true_char[i]-0xB0A0)&0xff)-1:((true_char[i]-0xB0A0)>>8)*94+((true_char[i]-0xB0A0)& 0xFF)-6;
@@ -231,7 +230,11 @@ void UI_PrintStringSmall(const char *pString, uint8_t Start, uint8_t End, uint8_
                     j_end = CHN_FONT_HIGH - 8;
                 for (unsigned char j = 0; j < j_end; ++j) {
                     if (IS_BIT_SET(tmp[local], local_bit))
-                        set_bit(&gFontChinese[k], j, 1);
+//                        set_bit(&gFontChinese[k], j, 1);
+                    if(k<CHN_FONT_WIDTH)                         set_bit(pFb + now_pixel + 1+k, j);
+
+                        else set_bit(pFb1 + now_pixel + 1+k-CHN_FONT_WIDTH, j);
+
                     local_bit++;
                     if (local_bit == 8) {
                         local_bit = 0;
@@ -241,8 +244,6 @@ void UI_PrintStringSmall(const char *pString, uint8_t Start, uint8_t End, uint8_
             }
 
 #else
-
-
             unsigned int local = (CHN_FONT_HIGH * CHN_FONT_WIDTH * true_char[i]) / 8;
             unsigned int local_bit = (CHN_FONT_HIGH * CHN_FONT_WIDTH * true_char[i]) % 8;
             for (unsigned char k = 0; k < CHN_FONT_WIDTH * 2; ++k) {
@@ -251,7 +252,13 @@ void UI_PrintStringSmall(const char *pString, uint8_t Start, uint8_t End, uint8_
                     j_end = CHN_FONT_HIGH - 8;
                 for (unsigned char j = 0; j < j_end; ++j) {
                     if (IS_BIT_SET(gFontChinese_out[local], local_bit))
-                        set_bit(&gFontChinese[k], j, 1);
+//                        set_bit(&gFontChinese[k], j, 1);
+
+                    //                        set_bit(&gFontChinese[k], j, 1);
+
+                        if(k<CHN_FONT_WIDTH)                         set_bit(pFb + now_pixel + 1+k, j);
+                        else set_bit(pFb1 + now_pixel + 1+k-CHN_FONT_WIDTH, j);
+
                     local_bit++;
                     if (local_bit == 8) {
                         local_bit = 0;
@@ -259,9 +266,10 @@ void UI_PrintStringSmall(const char *pString, uint8_t Start, uint8_t End, uint8_
                     }
                 }
             }
+//            memcpy(pFb + now_pixel + 1, &gFontChinese[0], 11);
+//            memcpy(pFb1 + now_pixel + 1, &gFontChinese[11], 11);
 #endif
-            memcpy(pFb + now_pixel + 1, &gFontChinese[0], 11);
-            memcpy(pFb1 + now_pixel + 1, &gFontChinese[11], 11);
+
             now_pixel += 13;
         }
     }
@@ -423,7 +431,6 @@ void GUI_DisplaySmallest(const char *pString, uint8_t x, uint8_t y,
         x += 4;
     }
 }
-#ifdef ENABLE_TIMER
 
 void show_uint32(uint32_t num, uint8_t line) {
     char str[6] = {0};
@@ -438,4 +445,3 @@ void show_uint32(uint32_t num, uint8_t line) {
     UI_PrintStringSmall(str, 0, 127, line);
     ST7565_BlitFullScreen();
 }
-#endif
