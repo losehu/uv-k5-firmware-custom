@@ -12,7 +12,7 @@ ENABLE_LTO                    ?= 1
 # ---- STOCK QUANSHENG FERATURES ----
 ENABLE_UART                   ?= 1
 ENABLE_AIRCOPY                ?= 0
-ENABLE_FMRADIO                ?= 1
+ENABLE_FMRADIO                ?= 0
 ENABLE_NOAA                   ?= 0
 ENABLE_VOICE                  ?= 0
 ENABLE_VOX                    ?= 1
@@ -43,11 +43,11 @@ ENABLE_REDUCE_LOW_MID_TX_POWER?= 0
 ENABLE_BYP_RAW_DEMODULATORS   ?= 0
 ENABLE_BLMIN_TMP_OFF          ?= 0
 ENABLE_SCAN_RANGES            ?= 1
-ENABLE_MDC1200                = 0
+ENABLE_MDC1200                = 1
 ENABLE_MDC1200_SHOW_OP_ARG    = 0
 ENABLE_MDC1200_SIDE_BEEP      = 0
-ENABLE_MDC1200_CONTACT        = 0
-ENABLE_MDC1200_EDIT			  = 0
+ENABLE_MDC1200_CONTACT        = 1
+ENABLE_MDC1200_EDIT			  = 1
 ENABLE_UART_RW_BK_REGS 		  ?= 0
 ENABLE_AUDIO_BAR_DEFAULT      ?= 0
 ENABLE_EEPROM_TYPE        	   = 0
@@ -56,18 +56,18 @@ ENABLE_DOCK 		          ?= 0
 ENABLE_CUSTOM_SIDEFUNCTIONS   ?= 1
 ENABLE_SIDEFUNCTIONS_SEND     ?= 1
 ENABLE_BLOCK                  ?= 0
-ENABLE_PINYIN 				   =0
+ENABLE_PINYIN 				   =1
 # ---- DEBUGGING ----
 ENABLE_AM_FIX_SHOW_DATA       ?= 0
 ENABLE_AGC_SHOW_DATA          ?= 0
 ENABLE_TIMER		          ?= 0
 
 ENABLE_WARNING 				  ?= 1
-ENABLE_MESSENGER              			?=0
-ENABLE_MESSENGER_DELIVERY_NOTIFICATION	?= 0
-ENABLE_MESSENGER_NOTIFICATION			?= 0
+ENABLE_MESSENGER              			?=1
+ENABLE_MESSENGER_DELIVERY_NOTIFICATION	?= 1
+ENABLE_MESSENGER_NOTIFICATION			?= 1
 
-ENABLE_DOPPLER               =0
+ENABLE_DOPPLER               =1
 #############################################################
 PACKED_FILE_SUFFIX = LOSEHU123
 

@@ -94,10 +94,7 @@
 #include "ui/status.h"
 #include "ui/ui.h"
 
-#ifdef ENABLE_MESSENGER_NOTIFICATION
-bool gPlayMSGRing = false;
-uint8_t gPlayMSGRingCount = 0;
-#endif
+
 
 void EEPROM_ReadBuffer(uint32_t Address, void *pBuffer, uint8_t Size) {
 

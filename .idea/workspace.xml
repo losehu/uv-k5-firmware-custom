@@ -20,10 +20,11 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="修复空格bug">
+    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="123">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/menu.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/menu.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/eeprom.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/eeprom.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +104,7 @@
       <recent name="C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\MDC_WRITE" />
     </key>
   </component>
-  <component name="RunManager" selected="Shell Script.win docker">
+  <component name="RunManager" selected="Makefile 目标.build">
     <configuration name="uv_k5_firmware_custom_0_17" type="CLionNativeAppRunConfigurationType" nameIsGenerated="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="uv_k5_firmware_custom_0_17" TARGET_NAME="uv_k5_firmware_custom_0_17" CONFIG_NAME="Debug" version="1" RUN_TARGET_PROJECT_NAME="uv_k5_firmware_custom_0_17" RUN_TARGET_NAME="uv_k5_firmware_custom_0_17">
       <method v="2">
         <option name="CLION.COMPOUND.BUILD" enabled="true" />
@@ -344,14 +345,8 @@
       <workItem from="1707106340612" duration="20588000" />
       <workItem from="1707404920856" duration="929000" />
       <workItem from="1707446735186" duration="13060000" />
-      <workItem from="1707790916015" duration="22794000" />
-    </task>
-    <task id="LOCAL-00122" summary="4M TEST">
-      <created>1704898312561</created>
-      <option name="number" value="00122" />
-      <option name="presentableId" value="LOCAL-00122" />
-      <option name="project" value="LOCAL" />
-      <updated>1704898312561</updated>
+      <workItem from="1707790916015" duration="25191000" />
+      <workItem from="1707882284502" duration="1312000" />
     </task>
     <task id="LOCAL-00123" summary="信道长度">
       <created>1704898326550</created>
@@ -689,7 +684,14 @@
       <option name="project" value="LOCAL" />
       <updated>1707815516972</updated>
     </task>
-    <option name="localTasksCounter" value="171" />
+    <task id="LOCAL-00171" summary="123">
+      <created>1707816727348</created>
+      <option name="number" value="00171" />
+      <option name="presentableId" value="LOCAL-00171" />
+      <option name="project" value="LOCAL" />
+      <updated>1707816727348</updated>
+    </task>
+    <option name="localTasksCounter" value="172" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -719,7 +721,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="定时器计数正常，但无法进入中断服务函数" />
     <MESSAGE value="使能NVIC" />
     <MESSAGE value="修复定时器" />
     <MESSAGE value="重构多普勒" />
@@ -744,7 +745,8 @@
     <MESSAGE value="拼音检索" />
     <MESSAGE value="完善输入法" />
     <MESSAGE value="修复空格bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="修复空格bug" />
+    <MESSAGE value="123" />
+    <option name="LAST_COMMIT_MESSAGE" value="123" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
