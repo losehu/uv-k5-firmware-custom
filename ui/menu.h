@@ -261,7 +261,7 @@ uint32_t formatInt(uint32_t number) ;//数字转拼音编码
 extern char num_excel[8][5] ;
 bool judge_belong(uint32_t a,uint32_t b);//拼音归属判断
 
-int32_t sear_pinyin_code(uint32_t target,uint8_t *pinyin_num,uint8_t *not_found);//返回拼音索引0~213，以及是否找到
+uint8_t sear_pinyin_code(uint32_t target,uint8_t *pinyin_num,uint8_t *found);//返回拼音索引0~213，以及是否找到
 uint32_t get_num(const char *a) ;//拼音转数字
 
 
@@ -276,5 +276,9 @@ extern uint8_t INPUT_SELECT;//选择的按键
 extern uint8_t INPUT_MODE_LAST;
 extern uint32_t PINYIN_CODE;
 extern uint32_t PINYIN_CODE_INDEX;
+extern uint8_t PINYIN_SEARCH_INDEX;
+extern uint8_t PINYIN_SEARCH_FOUND;
+extern uint8_t PINYIN_SEARCH_NUM;
+extern uint8_t PINYIN_SEARCH_PAGE;
 #endif
 #endif

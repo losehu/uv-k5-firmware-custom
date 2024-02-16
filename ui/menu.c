@@ -904,6 +904,7 @@ void UI_DisplayMenu(void) {
                     show_move_flag=1;
 #endif
                     UI_PrintStringSmall(pPrintStr, menu_item_x1 - 12, menu_item_x2, 3);
+
                 }
 
 //
@@ -965,8 +966,14 @@ void UI_DisplayMenu(void) {
                         else if (INPUT_MODE == 2) UI_PrintStringSmall("1", 0, 0, 3);
                         else if (INPUT_MODE == 3) UI_PrintStringSmall("*", 0, 0, 3);
                         if (INPUT_MODE == 0) {
-                            sprintf(String,"%d",PINYIN_CODE);
+                            sprintf(String, "%d", PINYIN_CODE);
                             UI_PrintStringSmall(String, 0, 0, 2);
+
+
+                            if (INPUT_STAGE == 1)//显示拼音
+                            {
+
+                            }
                         } else if (INPUT_MODE == 1) {
                             if (INPUT_STAGE == 1) {
                                 char tmp[22] = {0};
@@ -1422,7 +1429,11 @@ uint8_t INPUT_MODE_LAST = 0;
 uint8_t INPUT_MODE = 0;//0中文 1英文 2数字、符号
 uint8_t INPUT_STAGE = 0;//中文：0 还没输入，不显示拼音和汉字 1输入了
 uint32_t PINYIN_CODE = 0;
-uint32_t PINYIN_CODE_INDEX = 0;
+uint32_t PINYIN_CODE_INDEX = 100000;
+uint8_t PINYIN_SEARCH_INDEX = 0;
+uint8_t PINYIN_SEARCH_FOUND = 0;
+uint8_t PINYIN_SEARCH_NUM = 0;
+uint8_t PINYIN_SEARCH_PAGE = 0;
 //英语：0 未选字 1选字
 //数字：0正常模式 1按了上下的轮询模式，需要按MENU确定
 char input1[22];
@@ -1478,14 +1489,14 @@ bool judge_belong(uint32_t a, uint32_t b)//拼音归属判断
         b = b - b / i * i;
 
     }
-    return false;
+    return true;
 }
 
-int32_t sear_pinyin_code(uint32_t target, uint8_t *pinyin_num, uint8_t *not_found)//返回拼音索引0~213，以及是否找到
+uint8_t sear_pinyin_code(uint32_t target, uint8_t *pinyin_num, uint8_t *found)//返回拼音索引0~213，以及是否找到
 {
     int left = 0;
     int right = 213;
-    *not_found = 1; // 初始设定未找到
+    *found = 0; // 初始设定未找到
 
     while (left <= right) {
         int mid = left + (right - left) / 2;
@@ -1494,7 +1505,7 @@ int32_t sear_pinyin_code(uint32_t target, uint8_t *pinyin_num, uint8_t *not_foun
         uint32_t mid_num = tmp[0] | tmp[1] << 8 | tmp[2] << 16 | tmp[3] << 24;
         *pinyin_num = tmp[4];
         if (mid_num == target) {
-            *not_found = 0; // 找到了
+            *found = 1; // 找到了
             return mid;
         } else if (target < mid_num) {
             right = mid - 1;
@@ -1505,12 +1516,17 @@ int32_t sear_pinyin_code(uint32_t target, uint8_t *pinyin_num, uint8_t *not_foun
 
     // 找不到目标值，返回比目标值大一个的值
     if (left <= 213) {
-        return left;
+        uint8_t tmp[5];
+        EEPROM_ReadBuffer(left * 128 + 0x20000, tmp, 5);
+        uint32_t left_num = tmp[0] | tmp[1] << 8 | tmp[2] << 16 | tmp[3] << 24;
 
-    } else {
-        *not_found = 1; // 仍然未找到
-        return -1;
+
+        if (judge_belong(target, left_num)) {
+            return left;
+        }
     }
+    return 255;
+
 }
 
 #endif

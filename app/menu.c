@@ -1251,10 +1251,26 @@ static void MENU_Key_0_to_9(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
 #ifdef ENABLE_PINYIN
                     if (INPUT_MODE == 0) {
 //拼音输入
-                        if (INPUT_STAGE == 0 && Key >= 2) {
-                            PINYIN_CODE = Key * PINYIN_CODE_INDEX;
+                        if (Key >= 2 && PINYIN_CODE_INDEX && INPUT_STAGE <= 1) {
+                            uint32_t tmp = PINYIN_CODE;
+                            PINYIN_CODE += Key * PINYIN_CODE_INDEX;
                             PINYIN_CODE_INDEX /= 10;
-                            INPUT_STAGE =1;
+                            if (INPUT_STAGE == 0) {
+                                INPUT_STAGE = 1;
+                                PINYIN_SEARCH_PAGE = 0;
+                            }
+                            PINYIN_SEARCH_INDEX = sear_pinyin_code(PINYIN_CODE, &PINYIN_SEARCH_NUM,
+                                                                   &PINYIN_SEARCH_FOUND);
+                            if (PINYIN_SEARCH_INDEX == 255 && PINYIN_SEARCH_FOUND == 0) {
+                                PINYIN_CODE = tmp;
+                                PINYIN_CODE_INDEX *= 10;
+                                if (PINYIN_CODE_INDEX == 100000)INPUT_STAGE = 0;
+
+
+                            }
+
+                        } else if (INPUT_STAGE == 2) {
+
                         }
 
                     } else if (INPUT_MODE == 1) {
@@ -1436,10 +1452,17 @@ static void MENU_Key_EXIT(bool bKeyPressed, bool bKeyHeld) {
     if (bKeyHeld || !bKeyPressed)
         return;
     if (UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME && gIsInSubMenu == true && edit_index >= 0) {
-        if(INPUT_MODE==0&&INPUT_STAGE==1&&PINYIN_CODE>0)
-        {
-            PINYIN_CODE=PINYIN_CODE-PINYIN_CODE/(PINYIN_CODE_INDEX*100)*(PINYIN_CODE_INDEX*100);
-        }else
+        if (INPUT_MODE == 0 && INPUT_STAGE == 1 && PINYIN_CODE > 0) {
+//            543000
+//            100 10000
+            if (PINYIN_CODE_INDEX != 0) {
+                PINYIN_CODE = PINYIN_CODE / (PINYIN_CODE_INDEX * 100) * (PINYIN_CODE_INDEX * 100);
+                PINYIN_CODE_INDEX *= 10;
+            } else {
+                PINYIN_CODE = PINYIN_CODE-PINYIN_CODE%10;
+                PINYIN_CODE_INDEX= 1;
+            }
+        } else
             edit_index = -1;
         return;
     }
@@ -1505,13 +1528,26 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld) {
     gBeepToPlay = BEEP_1KHZ_60MS_OPTIONAL;
     gRequestDisplayScreen = DISPLAY_MENU;
 #ifdef ENABLE_PINYIN
-    if (UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME && edit_index == -1) {
-        //输入法参数初始化menu
-        INPUT_MODE = 0;
-        INPUT_SELECT = 0;
-        INPUT_STAGE = 0;
-        INPUT_MODE_LAST = 0;
+    if (UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME) {
+        if (edit_index == -1) {
+            //输入法参数初始化menu
+            INPUT_MODE = 0;
+            INPUT_SELECT = 0;
+            INPUT_STAGE = 0;
+            INPUT_MODE_LAST = 0;
+            PINYIN_CODE = 0;
+            PINYIN_CODE_INDEX = 100000;
+        }
+        if (gIsInSubMenu) {
+            if (INPUT_MODE == 0) {
+                if (INPUT_STAGE == 1) {
+                    INPUT_STAGE++;
+                    return;
+                }
+            }
+        }
     }
+
 #endif
     if (!gIsInSubMenu) {
 #ifdef ENABLE_VOICE
@@ -1711,6 +1747,7 @@ static void MENU_Key_STAR(const bool bKeyPressed, const bool bKeyHeld) {
                 PINYIN_CODE = 0;
                 PINYIN_CODE_INDEX = 100000;
             }
+            INPUT_STAGE = 0;
 #endif
 
             gRequestDisplayScreen = DISPLAY_MENU;

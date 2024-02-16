@@ -20,12 +20,9 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="删除古早输入法">
+    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="新输入法">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/menu.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/menu.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/helper.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/helper.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/helper.h" beforeDir="false" afterPath="$PROJECT_DIR$/ui/helper.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/menu.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/menu.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/menu.h" beforeDir="false" afterPath="$PROJECT_DIR$/ui/menu.h" afterDir="false" />
     </list>
@@ -351,14 +348,7 @@
       <workItem from="1707790916015" duration="25191000" />
       <workItem from="1707882284502" duration="1312000" />
       <workItem from="1707981652965" duration="1172000" />
-      <workItem from="1708050279658" duration="19603000" />
-    </task>
-    <task id="LOCAL-00128" summary="K缺失复位">
-      <created>1705324600397</created>
-      <option name="number" value="00128" />
-      <option name="presentableId" value="LOCAL-00128" />
-      <option name="project" value="LOCAL" />
-      <updated>1705324600397</updated>
+      <workItem from="1708050279658" duration="27775000" />
     </task>
     <task id="LOCAL-00129" summary="回档">
       <created>1705576662066</created>
@@ -696,7 +686,14 @@
       <option name="project" value="LOCAL" />
       <updated>1708062484768</updated>
     </task>
-    <option name="localTasksCounter" value="177" />
+    <task id="LOCAL-00177" summary="新输入法">
+      <created>1708087021232</created>
+      <option name="number" value="00177" />
+      <option name="presentableId" value="LOCAL-00177" />
+      <option name="project" value="LOCAL" />
+      <updated>1708087021232</updated>
+    </task>
+    <option name="localTasksCounter" value="178" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -726,7 +723,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="重构多普勒" />
     <MESSAGE value="修复MDC1200编译选项" />
     <MESSAGE value="完善多普勒" />
     <MESSAGE value="星图绘制一半" />
@@ -751,7 +747,8 @@
     <MESSAGE value="赞助" />
     <MESSAGE value="makefile" />
     <MESSAGE value="删除古早输入法" />
-    <option name="LAST_COMMIT_MESSAGE" value="删除古早输入法" />
+    <MESSAGE value="新输入法" />
+    <option name="LAST_COMMIT_MESSAGE" value="新输入法" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
