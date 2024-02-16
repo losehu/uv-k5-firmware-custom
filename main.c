@@ -60,6 +60,7 @@
 #include "driver/gpio.h"
 #include "driver/system.h"
 #include "driver/systick.h"
+
 #ifdef ENABLE_UART
 #include "driver/uart.h"
 #endif
@@ -250,23 +251,8 @@ void Main(void) {
 #ifdef ENABLE_NOAA
     RADIO_ConfigureNOAA();
 #endif
-//    uint8_t tmp[16] = {0};
-//    EEPROM_WriteBuffer(0x1E200, tmp, 16);
-//    while (1) {
-//        EEPROM_ReadBuffer(0x1E200, &satellite_data, sizeof (satellite_data));
-//        show_uint32(satellite_data.UPLink,0);
-//        show_uint32(satellite_data.DownLink,1);
-//        SYSTEM_DelayMs(2000);
-//
-//
-//    }
 
-//while(1)
-//{
-//    UI_PrintStringSmall("\xB3\xA1 _", 0, 0, 3);
-//    ST7565_BlitFullScreen();
-//
-//}
+
     while (1) {
 
         APP_Update();

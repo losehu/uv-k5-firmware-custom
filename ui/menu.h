@@ -29,8 +29,7 @@ typedef struct {
 #if ENABLE_CHINESE_FULL==0
     const char name[7]; // 使用指针而不是固定长度数组
 
-//    const char name[14]; // 使用指针而不是固定长度数组
-//#else
+
 #endif
 } t_menu_item;
 
@@ -257,5 +256,25 @@ uint8_t pinyin_cmp(uint8_t *a, uint8_t *b) ;
 int UI_MENU_GetCurrentMenuId();
 uint8_t UI_MENU_GetMenuIdx(uint8_t id);
 void UI_ShowChineseMenu(void) ;
+#ifdef ENABLE_PINYIN
+uint32_t formatInt(uint32_t number) ;//数字转拼音编码
+extern char num_excel[8][5] ;
+bool judge_belong(uint32_t a,uint32_t b);//拼音归属判断
 
+int32_t sear_pinyin_code(uint32_t target,uint8_t *pinyin_num,uint8_t *not_found);//返回拼音索引0~213，以及是否找到
+uint32_t get_num(const char *a) ;//拼音转数字
+
+
+
+extern uint8_t INPUT_MODE;//0中文 1英文 2数字、符号
+extern uint8_t INPUT_STAGE;//中文：0 还没输入，不显示拼音和汉字 1输入了
+//英语：0 未选字 1选字
+//数字：0正常模式 1按了上下的轮询模式，需要按MENU确定
+extern char input1[22];
+extern char input2[22];
+extern uint8_t INPUT_SELECT;//选择的按键
+extern uint8_t INPUT_MODE_LAST;
+extern uint32_t PINYIN_CODE;
+extern uint32_t PINYIN_CODE_INDEX;
+#endif
 #endif

@@ -128,11 +128,11 @@ void UI_PrintStringSmall(const char *pString, uint8_t Start, uint8_t End, uint8_
     if (show_move_flag) {
 #if ENABLE_CHINESE_FULL == 0
         Length = Length > 7 ? 7 : Length;
-#else
-        #ifdef ENABLE_PINYIN == 0
-//        if(PINYIN_NUM==0) //拼音判断
-            #endif
-        Length = Length > 14 ? 14 : Length;
+//#else
+//        #ifdef ENABLE_PINYIN == 0
+////        if(PINYIN_NUM==0) //拼音判断
+//            #endif
+//        Length = Length > 14 ? 14 : Length;
 
 #endif
         flag_move = 1;
