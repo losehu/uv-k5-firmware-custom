@@ -12,7 +12,7 @@ ENABLE_LTO                    ?= 1
 # ---- STOCK QUANSHENG FERATURES ----
 ENABLE_UART                   ?= 1
 ENABLE_AIRCOPY                ?= 0
-ENABLE_FMRADIO                ?= 1
+ENABLE_FMRADIO                ?= 0
 ENABLE_NOAA                   ?= 0
 ENABLE_VOICE                  ?= 0
 ENABLE_VOX                    ?= 1
@@ -56,7 +56,7 @@ ENABLE_DOCK 		          ?= 0
 ENABLE_CUSTOM_SIDEFUNCTIONS   ?= 1
 ENABLE_SIDEFUNCTIONS_SEND     ?= 1
 ENABLE_BLOCK                  ?= 0
-ENABLE_PINYIN 				   =0
+ENABLE_PINYIN 				   =1
 # ---- DEBUGGING ----
 ENABLE_AM_FIX_SHOW_DATA       ?= 0
 ENABLE_AGC_SHOW_DATA          ?= 0

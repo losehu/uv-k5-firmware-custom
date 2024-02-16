@@ -257,16 +257,5 @@ uint8_t pinyin_cmp(uint8_t *a, uint8_t *b) ;
 int UI_MENU_GetCurrentMenuId();
 uint8_t UI_MENU_GetMenuIdx(uint8_t id);
 void UI_ShowChineseMenu(void) ;
-#ifdef ENABLE_PINYIN
 
-extern uint8_t PINYIN_MODE ;
-extern uint8_t PINYIN_INPUT;
-extern uint8_t key_index;
-extern uint32_t PINYIN_ADD;
-extern uint8_t PINYIN_NUM;
-extern uint8_t pinyin_index;
-extern char pinyin_input[7];
-extern char key_excel[8][5];
-extern uint8_t PINYIN_PAGE;
-#endif
 #endif

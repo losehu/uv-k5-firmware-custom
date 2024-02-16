@@ -1246,50 +1246,9 @@ static void MENU_Key_0_to_9(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
         if (edit_index < end_index) {
 
             if (Key <= KEY_9) {
-#ifdef ENABLE_PINYIN
-                if (PINYIN_MODE && edit_index + 1 < end_index) {
-                    if(PINYIN_NUM==0){
-                    if (PINYIN_INPUT == 0) //显示字母
-                    {
-                        if (Key >= 2 && Key <= 9 && pinyin_index <= 5) {
-                            PINYIN_INPUT = 1;
-                            key_index = Key;
-                        }
 
-                    } else if (PINYIN_INPUT == 1)//选择字母
-                    {
-                        PINYIN_INPUT = 0;
-                        if (Key && Key <= strlen(key_excel[key_index - 2])) {
-                            pinyin_input[pinyin_index++] = key_excel[key_index - 2][Key - 1];
-                            pinyin_input[pinyin_index] = 0;
-                        }
-                    }
-                    }else
-                        {
-
-                            if(Key&&Key<=(PINYIN_NUM-PINYIN_PAGE*6)>6?6:(PINYIN_NUM-PINYIN_PAGE*6))
-                                {
-                                    if(isChineseChar(edit[edit_index+1],edit_index+1,MAX_EDIT_INDEX)&&!isChineseChar(edit[edit_index],edit_index,MAX_EDIT_INDEX))
-                                        edit[edit_index+2]='_';
-                                    EEPROM_ReadBuffer(PINYIN_ADD+PINYIN_PAGE*6*2+(Key-1)*2,edit+edit_index,2);
-                                    edit_index+=2;
-                                    PINYIN_NUM=0;
-                                    PINYIN_PAGE=0;
-                                    PINYIN_INPUT=0;
-                                    pinyin_index=0;
-                                    memset(pinyin_input,0,sizeof(pinyin_input));
-                                }
-                        }
-                } else
-#endif
                 {
-#ifdef ENABLE_PINYIN
 
-                    if(isChineseChar(edit[edit_index],edit_index,MAX_EDIT_INDEX))
-                    {
-                        edit[edit_index+1]='_';
-                    }
-#endif
                     edit[edit_index] = '0' + Key ;
 
                     if (++edit_index >= end_index) {    // exit edit
@@ -1439,29 +1398,7 @@ static void MENU_Key_EXIT(bool bKeyPressed, bool bKeyHeld) {
 #ifdef  ENABLE_PINYIN
     if (UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME&&gAskForConfirmation==0) { //输入法exit
 
-        if (PINYIN_MODE) {
-            if (PINYIN_INPUT == 1) {
-                PINYIN_INPUT = 0;
-            } else if (PINYIN_INPUT == 0) {
-                if (PINYIN_NUM)PINYIN_NUM = 0;
-                else {
 
-                    if (pinyin_index) {
-                        pinyin_index--;
-                        pinyin_input[pinyin_index] = '\0';
-
-                    } else {
-                        PINYIN_MODE = 0;
-                    }
-                }
-            }
-                            return;
-        } else {
-            if (pinyin_index == 0&&edit_index!=-1) {
-                edit_index = -1;
-                return;
-            }
-        }
     }
 #endif
     gBeepToPlay = BEEP_1KHZ_60MS_OPTIONAL;
@@ -1541,12 +1478,7 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld) {
         if( UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME)
         {
             //输入法参数初始化menu
-            PINYIN_MODE=0;
- PINYIN_INPUT=0;
- pinyin_index=0;
-       PINYIN_NUM=0;
-       PINYIN_PAGE=0;
-       memset(pinyin_input,0,sizeof(pinyin_input));
+
 
         }
 #endif
@@ -1606,36 +1538,13 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld) {
         } else if (edit_index >= 0 && edit_index < MAX_EDIT_INDEX) {    // editing the channel name characters
 
 #ifdef ENABLE_PINYIN
-            if(PINYIN_MODE==0||(PINYIN_MODE==1&&pinyin_index==0&&PINYIN_INPUT==0))
+//            if(PINYIN_MODE==0||(PINYIN_MODE==1&&pinyin_index==0&&PINYIN_INPUT==0))
 #endif
                 edit_index++;
             if (edit_index  < MAX_EDIT_INDEX) {
 
 #ifdef ENABLE_PINYIN
-                if(PINYIN_MODE==0||(PINYIN_MODE==1&&pinyin_index==0&&PINYIN_INPUT==0))
-                {
-                if (isChineseChar(edit[edit_index-1], edit_index-1, MAX_EDIT_INDEX))
-                    edit_index++;
-#endif
 
-#ifdef ENABLE_PINYIN
-                if(edit_index < MAX_EDIT_INDEX)return;
-                }else
-                    {
-                        if(pinyin_index)
-                            {
-                            PINYIN_PAGE=0;
-                                    PINYIN_NUM=0;
-                                    PINYIN_INPUT=0;
-                            PINYIN_ADD=0;
-                                PINYIN_NUM=pinyin_search(pinyin_input,pinyin_index,&PINYIN_ADD);
-                                if(PINYIN_ADD<0x21900||PINYIN_ADD>0x250F6) //无效拼音
-                                    PINYIN_NUM=0;
-                                                  // next char
-
-                            }
-                          return;
-                    }
 #else
 return ;
 #endif
@@ -1654,9 +1563,9 @@ return ;
 
         }
     }
-#ifdef ENABLE_PINYIN
+#ifdef ENABLE_PINYIN //退出输入模式
 
-    PINYIN_MODE=0;
+//    PINYIN_MODE=0;
 #endif
     // exiting the sub menu
 
@@ -1736,17 +1645,17 @@ static void MENU_Key_STAR(const bool bKeyPressed, const bool bKeyHeld) {
                 gFlagAcceptSetting = false;
                 gAskForConfirmation = 1;
             }
-#else
-            if (edit_index + 1 < MAX_EDIT_INDEX&&gIsInSubMenu) {
-                PINYIN_MODE = 1 - PINYIN_MODE;
-                if (PINYIN_MODE == 1)//刚进入中文输入
-                {
-                    PINYIN_NUM=0;
-                } else//刚退中文输入
-                {
-
-                }
-            }
+#else //输入法星模式切换
+//            if (edit_index + 1 < MAX_EDIT_INDEX&&gIsInSubMenu) {
+//                PINYIN_MODE = 1 - PINYIN_MODE;
+//                if (PINYIN_MODE == 1)//刚进入中文输入
+//                {
+//                    PINYIN_NUM=0;
+//                } else//刚退中文输入
+//                {
+//
+//                }
+//            }
 #endif
 
             gRequestDisplayScreen = DISPLAY_MENU;
@@ -1785,16 +1694,16 @@ static void MENU_Key_UP_DOWN(bool bKeyPressed, bool bKeyHeld, int8_t Direction) 
     if (gIsInSubMenu && edit_index >= 0) { //输入法UP DOWN
         if (UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME) {    // change the character
             if (bKeyPressed && edit_index < MAX_EDIT_INDEX) {
-#ifdef ENABLE_PINYIN
-                if(PINYIN_MODE==1)
-                    {
-                    if(PINYIN_NUM)
-                        {
-                        if(PINYIN_NUM>(PINYIN_PAGE+1)*6&&Direction==-1)PINYIN_PAGE++;
-                        else  if(PINYIN_PAGE>0&&Direction==1)PINYIN_PAGE--;
-                        }
-                    return;
-                    }
+#ifdef ENABLE_PINYIN//拼音上下
+//                if(PINYIN_MODE==1)
+//                    {
+//                    if(PINYIN_NUM)
+//                        {
+//                        if(PINYIN_NUM>(PINYIN_PAGE+1)*6&&Direction==-1)PINYIN_PAGE++;
+//                        else  if(PINYIN_PAGE>0&&Direction==1)PINYIN_PAGE--;
+//                        }
+//                    return;
+//                    }
 #endif
                 if (isChineseChar(edit[edit_index], edit_index, MAX_EDIT_INDEX)) {
                     edit[edit_index + 1] = '_';

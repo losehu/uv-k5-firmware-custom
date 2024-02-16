@@ -35,27 +35,7 @@
 #include "ui/menu.h"
 #include "ui/ui.h"
 #include "chinese.h"
-#ifdef ENABLE_PINYIN
 
-uint32_t PINYIN_ADD=0;
-uint8_t PINYIN_NUM=0;
-uint8_t PINYIN_MODE = 0;
- uint8_t PINYIN_INPUT=0;
-uint8_t PINYIN_PAGE=0;
- uint8_t key_index=0;
- uint8_t pinyin_index=0;
- char pinyin_input[7]={0};
-char key_excel[8][5] = {
-        "abc",
-        "def",
-        "ghi",
-        "jkl",
-        "mno",
-        "pqrs",
-        "tuv",
-        "wxyz"
-};
-#endif
 void insertNewline(char a[], int index, int len) {
 
     if (index < 0 || index >= len || len >= 63) {
@@ -581,12 +561,12 @@ void UI_DisplayMenu(void) {
 #else
     sprintf(String, "%2u/%u", 1 + gMenuCursor, gMenuListCount);
 #endif
-#ifdef ENABLE_PINYIN
-    if( PINYIN_MODE==0)
+#ifdef ENABLE_PINYIN //拼音取消显示
+//    if( PINYIN_MODE==0)
 #endif
     UI_PrintStringSmall(String, 2, 0, 6);
-#ifdef ENABLE_PINYIN
-    if(PINYIN_MODE==0)
+#ifdef ENABLE_PINYIN//拼音取消显示
+//    if(PINYIN_MODE==0)
 #endif
     UI_ShowChineseMenu();
 
@@ -927,6 +907,7 @@ void UI_DisplayMenu(void) {
 
 
 #if ENABLE_CHINESE_FULL == 4 && !defined(ENABLE_PINYIN)
+
                     else if (CHINESE_JUDGE(tmp_name, strlen(tmp_name))) {
                     edit_index = -1;
                 }else if (!CHINESE_JUDGE(tmp_name, strlen(tmp_name))) {    // show the channel name being edited
@@ -952,7 +933,7 @@ void UI_DisplayMenu(void) {
                             if (isChineseChar(edit[j], j, MAX_EDIT_INDEX))
                                 {
                                 sum_pxl += 13;
-                            j++;
+                               j++;
                             cnt_chn++;
                             }
                             else
@@ -966,7 +947,6 @@ void UI_DisplayMenu(void) {
                                         (((menu_item_x2 - menu_item_x1 + 12) - (7 * (MAX_EDIT_INDEX-2*cnt_chn)+13*cnt_chn))  + 1) / 2 + add_point+1] |=
                                 3 << 6;
 #else
-//                        memset(&gFrameBuffer[4][menu_item_x1 - 12 + 7*edit_index + (((menu_item_x2 - menu_item_x1 + 12) - (7 * MAX_EDIT_INDEX)) + 1) / 2 + 3],3<<6,2 );
 
                         gFrameBuffer[4][menu_item_x1 - 12 + 7*edit_index +
                                         (((menu_item_x2 - menu_item_x1 + 12) - (7 * MAX_EDIT_INDEX)) + 1) / 2 + 3] |=
@@ -977,41 +957,8 @@ void UI_DisplayMenu(void) {
 
 #endif
 
-#ifdef ENABLE_PINYIN
-   if(PINYIN_MODE)
-       {
-       if(PINYIN_INPUT==1)//显示待选字母
-       {
-           if(strlen(key_excel[key_index - 2])==4)
-           {
-               sprintf(String,"1.%c 2.%c 3.%c 4.%c",key_excel[key_index - 2][0],key_excel[key_index - 2][1],key_excel[key_index - 2][2],key_excel[key_index - 2][3]);
-           }else{
-               sprintf(String,"1.%c 2.%c 3.%c",key_excel[key_index - 2][0],key_excel[key_index - 2][1],key_excel[key_index - 2][2]);
-           }
-           UI_PrintStringSmall(String, 127-strlen(key_excel[key_index - 2])*4*7,0,  1);
-       }
-           UI_PrintStringSmall(pinyin_input, menu_item_x1 - 12, menu_item_x2, 0);
-memcpy(&gFrameBuffer[0][120], BITMAP_CN, 7);
+#ifdef ENABLE_PINYIN //拼音显示
 
-        if(PINYIN_NUM)
-            {
-                char a[13];
-
-                uint8_t pinyin_show_num=(PINYIN_NUM-PINYIN_PAGE*6)>6?6:(PINYIN_NUM-PINYIN_PAGE*6);
-    EEPROM_ReadBuffer(PINYIN_ADD+PINYIN_PAGE*6*2,a,pinyin_show_num*2);
-                for (int j = 0; j <pinyin_show_num ; j++) {
-                    String[j*3]=j+'1';
-                    String[j*3+1]=a[j*2];
-                    String[j*3+2]=a[j*2+1];
-                }
-                String[pinyin_show_num*3]='\0';
-                show_move_flag=1;
-    UI_PrintStringSmall(String,0,0,5);
-    if((PINYIN_PAGE+1)*6<PINYIN_NUM)memcpy(&gFrameBuffer[6][123] , BITMAP_ARRAY_DOWN, 5);
-     if(PINYIN_PAGE>=1)memcpy(&gFrameBuffer[5][123], BITMAP_ARRAY_UP, 5);
-
-            }
-       }else UI_PrintStringSmall("A", 120, 0, 0);
 #endif
 
                     }
@@ -1026,7 +973,7 @@ memcpy(&gFrameBuffer[0][120], BITMAP_CN, 7);
                 if (!gAskForConfirmation) {    // show the frequency so that the user knows the channels frequency
                     sprintf(String, "%u.%05u", frequency / 100000, frequency % 100000);
 #ifdef ENABLE_PINYIN
-                    if(PINYIN_MODE==0)
+//                    if(PINYIN_MODE==0) //非拼音显示
 #endif
                     {
                         show_move_flag=1;
@@ -1436,38 +1383,3 @@ void UI_ShowChineseMenu() {
 
 }
 
-#ifdef ENABLE_PINYIN
-uint8_t pinyin_cmp(uint8_t *a, uint8_t *b) {
-    for (int i = 0; i < 6; i++) {
-        if (a[i] > b[i]) return 1;
-        else if (a[i] < b[i]) return 0;
-    }
-    return 2;
-}
-
-uint8_t pinyin_search(uint8_t *target, uint8_t size, uint32_t *add) {
-    int low = 0;
-    int high = 398;
-    uint8_t target_all[6];
-    memset(target_all, ' ', 6);
-    memcpy(target_all, target, size);
-    while (low <= high) {
-        int mid = low + (high - low) / 2;
-        uint8_t tmp[11];
-        EEPROM_ReadBuffer(0x20000 + mid * 16, tmp, 11);
-
-
-        uint8_t cmp = pinyin_cmp(tmp, target_all);
-
-        if (cmp == 2) {
-            *add = tmp[7] | (tmp[8] << 8) | (tmp[9] << 16) | (tmp[10] << 24);
-            return tmp[6];
-        } else if (cmp == 0) {
-            low = mid + 1;
-        } else {
-            high = mid - 1;
-        }
-    }
-    return 255; // 如果未找到目标元素，返回-1
-}
-#endif
