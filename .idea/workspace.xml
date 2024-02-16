@@ -20,15 +20,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="makefile">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/menu.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/menu.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/helper.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/helper.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/menu.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/menu.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/menu.h" beforeDir="false" afterPath="$PROJECT_DIR$/ui/menu.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/ui.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/ui.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/ui.h" beforeDir="false" afterPath="$PROJECT_DIR$/ui/ui.h" afterDir="false" />
-    </list>
+    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="删除古早输入法" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -351,14 +343,7 @@
       <workItem from="1707790916015" duration="25191000" />
       <workItem from="1707882284502" duration="1312000" />
       <workItem from="1707981652965" duration="1172000" />
-      <workItem from="1708050279658" duration="2600000" />
-    </task>
-    <task id="LOCAL-00125" summary="修改侧键">
-      <created>1705147244740</created>
-      <option name="number" value="00125" />
-      <option name="presentableId" value="LOCAL-00125" />
-      <option name="project" value="LOCAL" />
-      <updated>1705147244740</updated>
+      <workItem from="1708050279658" duration="2910000" />
     </task>
     <task id="LOCAL-00126" summary="修复侧键与MDC联系人冲突">
       <created>1705154185626</created>
@@ -696,7 +681,14 @@
       <option name="project" value="LOCAL" />
       <updated>1707982237768</updated>
     </task>
-    <option name="localTasksCounter" value="174" />
+    <task id="LOCAL-00174" summary="删除古早输入法">
+      <created>1708062194185</created>
+      <option name="number" value="00174" />
+      <option name="presentableId" value="LOCAL-00174" />
+      <option name="project" value="LOCAL" />
+      <updated>1708062194186</updated>
+    </task>
+    <option name="localTasksCounter" value="175" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -726,7 +718,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="修复定时器" />
     <MESSAGE value="重构多普勒" />
     <MESSAGE value="修复MDC1200编译选项" />
     <MESSAGE value="完善多普勒" />
@@ -751,7 +742,8 @@
     <MESSAGE value="123" />
     <MESSAGE value="赞助" />
     <MESSAGE value="makefile" />
-    <option name="LAST_COMMIT_MESSAGE" value="makefile" />
+    <MESSAGE value="删除古早输入法" />
+    <option name="LAST_COMMIT_MESSAGE" value="删除古早输入法" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
