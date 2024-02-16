@@ -905,7 +905,7 @@ void UI_DisplayMenu(void) {
                     UI_PrintStringSmall(pPrintStr, menu_item_x1 - 12, menu_item_x2, 3);
                 }
 
-
+//
 #if ENABLE_CHINESE_FULL == 4 && !defined(ENABLE_PINYIN)
 
                     else if (CHINESE_JUDGE(tmp_name, strlen(tmp_name))) {
