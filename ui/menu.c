@@ -929,17 +929,25 @@ void UI_DisplayMenu(void) {
 //#endif
 
 #ifdef ENABLE_PINYIN
+                        for (int j = 0; j < MAX_EDIT_INDEX; ++j) {
+                            if(edit[j]>=0xb0&&j!=MAX_EDIT_INDEX-1)
+                            {
+                                edit_chn[j]=1;
+                                j++;
+                                edit_chn[j]=2;
+                            }else edit_chn[j]=0;
+                        }
                         uint8_t sum_pxl = 0;
                         uint8_t cnt_chn = 0;
                         for (int j = 0; j < edit_index; j++) {
-                            if (isChineseChar(edit[j], j, MAX_EDIT_INDEX)) {
+                            if (edit_chn[j]==1) {
                                 sum_pxl += 13;
                                 j++;
                                 cnt_chn++;
                             } else
                                 sum_pxl += 7;
                         }
-                        uint8_t add_point = isChineseChar(edit[edit_index], edit_index, MAX_EDIT_INDEX) ? 6 : 3;
+                        uint8_t add_point = edit_chn[edit_index]==1? 6 : 3;
                         gFrameBuffer[4][menu_item_x1 - 12 + sum_pxl +
                                         (((menu_item_x2 - menu_item_x1 + 12) -
                                           (7 * (MAX_EDIT_INDEX - 2 * cnt_chn) + 13 * cnt_chn)) + 1) / 2 + add_point] |=
@@ -961,18 +969,62 @@ void UI_DisplayMenu(void) {
 #endif
 
 #ifdef ENABLE_PINYIN //拼音显示
+
                         if (INPUT_MODE == 0)memcpy(&gFrameBuffer[3][0], BITMAP_CN, 7);
                         else if (INPUT_MODE == 1) UI_PrintStringSmall("A", 0, 0, 3);
                         else if (INPUT_MODE == 2) UI_PrintStringSmall("1", 0, 0, 3);
                         else if (INPUT_MODE == 3) UI_PrintStringSmall("*", 0, 0, 3);
                         if (INPUT_MODE == 0) {
-                            sprintf(String, "%d", PINYIN_CODE);
-                            UI_PrintStringSmall(String, 0, 0, 2);
+                            sprintf(String, "%06d", PINYIN_CODE);
+//                            UI_PrintStringSmall(String, 0, 0, 2);
+                            GUI_DisplaySmallest(String,0,18,0,1);
+                            uint8_t tmp[12];
 
 
-                            if (INPUT_STAGE == 1)//显示拼音
+                            if (INPUT_STAGE >= 1)//显示拼音
                             {
 
+
+                                if (PINYIN_SEARCH_MODE == 1)//准确的组合
+                                {
+
+                                    uint8_t HAVE_PINYIN =
+                                            PINYIN_NOW_NUM - PINYIN_NUM_SELECT / 3 * 3 > 3 ? 3 : PINYIN_NOW_NUM -
+                                                                                                 PINYIN_NUM_SELECT / 3 *
+                                                                                                 3;//目前有多少个拼音
+                                    for (int j = 0; j < HAVE_PINYIN; ++j) {
+                                        EEPROM_ReadBuffer(
+                                                PINYIN_NOW_INDEX * 128 + 0X20000 + 16 + PINYIN_NUM_SELECT / 3 * 3 * 16 +
+                                                j * 16, tmp, 11);
+                                        memcpy(String + 6 * j, tmp, 6);//0 1 2 3 4 5
+                                    }
+
+                                    String[6 * HAVE_PINYIN] = 0;
+                                    UI_PrintStringSmall(String, 0, 0, 0);
+                                }
+                            }
+                            if (INPUT_STAGE == 2) {
+
+                                if (PINYIN_SEARCH_MODE == 1)//准确的组合
+                                {
+                                    memcpy(&gFrameBuffer[1][(PINYIN_NUM_SELECT%3)*7*6],BITMAP_ARRAY_UP,5);
+
+                                    uint8_t SHOW_NUM =
+                                            CHN_NOW_NUM - CHN_NOW_PAGE * 6 > 6 ? 6 : CHN_NOW_NUM - CHN_NOW_PAGE * 6;
+                                    EEPROM_ReadBuffer(CHN_NOW_ADD + CHN_NOW_PAGE * 6 * 2, tmp, SHOW_NUM * 2);
+//                                    show_uint32(PINYIN_NOW_INDEX * 128 + 0X20000 + 16 + PINYIN_NUM_SELECT * 16 + 6, 5);
+                                    for (int j = 0; j < SHOW_NUM; ++j) {
+                                        String[j * 3] = '0'+j + 1;
+                                        String[j * 3 + 1] = tmp[j * 2];
+                                        String[j * 3 + 2] = tmp[j * 2 + 1];
+                                    }
+                                    String[SHOW_NUM * 3] = 0;
+                                    show_move_flag = 1;
+
+                                    UI_PrintStringSmall(String, 0, 0, 5);
+                                    if(CHN_NOW_PAGE) memcpy(&gFrameBuffer[5][123],BITMAP_ARRAY_UP,5);
+                                     if((CHN_NOW_PAGE+1)*6<CHN_NOW_NUM)memcpy(&gFrameBuffer[6][123],BITMAP_ARRAY_DOWN,5);
+                                }
                             }
                         } else if (INPUT_MODE == 1) {
                             if (INPUT_STAGE == 1) {
@@ -1000,8 +1052,8 @@ void UI_DisplayMenu(void) {
 
                     }
                 }
-//                sprintf(String,"%d",edit_index);
-//                UI_PrintStringSmall(String, 0, 0, 4);
+                sprintf(String,"%d",edit_index);
+                UI_PrintStringSmall(String, 0, 0, 1);
 //
 //                sprintf(String,"%d",edit[2]);
 //                UI_PrintStringSmall(String, 0, 0, 3);
@@ -1433,7 +1485,17 @@ uint32_t PINYIN_CODE_INDEX = 100000;
 uint8_t PINYIN_SEARCH_INDEX = 0;
 uint8_t PINYIN_SEARCH_FOUND = 0;
 uint8_t PINYIN_SEARCH_NUM = 0;
-uint8_t PINYIN_SEARCH_PAGE = 0;
+uint8_t PINYIN_NOW_INDEX = 0;//当前拼音组合地址
+uint8_t PINYIN_NOW_NUM = 0;
+uint8_t PINYIN_SEARCH_MODE = 0;
+uint8_t PINYIN_START_INDEX = 0;
+uint8_t PINYIN_END_INDEX = 0;
+uint8_t PINYIN_NOW_PAGE = 0;
+uint8_t PINYIN_NUM_SELECT = 0;
+uint32_t CHN_NOW_ADD = 0;
+uint8_t CHN_NOW_NUM = 0;
+uint8_t CHN_NOW_PAGE = 0;
+uint8_t edit_chn[MAX_EDIT_INDEX];
 //英语：0 未选字 1选字
 //数字：0正常模式 1按了上下的轮询模式，需要按MENU确定
 char input1[22];

@@ -22,7 +22,9 @@
   <component name="ChangeListManager">
     <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="新输入法">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/menu.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/menu.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bitmaps.c" beforeDir="false" afterPath="$PROJECT_DIR$/bitmaps.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/menu.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/menu.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/menu.h" beforeDir="false" afterPath="$PROJECT_DIR$/ui/menu.h" afterDir="false" />
     </list>
@@ -349,6 +351,8 @@
       <workItem from="1707882284502" duration="1312000" />
       <workItem from="1707981652965" duration="1172000" />
       <workItem from="1708050279658" duration="27775000" />
+      <workItem from="1708138956832" duration="27670000" />
+      <workItem from="1708171703434" duration="2036000" />
     </task>
     <task id="LOCAL-00129" summary="回档">
       <created>1705576662066</created>

@@ -257,12 +257,10 @@ int UI_MENU_GetCurrentMenuId();
 uint8_t UI_MENU_GetMenuIdx(uint8_t id);
 void UI_ShowChineseMenu(void) ;
 #ifdef ENABLE_PINYIN
-uint32_t formatInt(uint32_t number) ;//数字转拼音编码
 extern char num_excel[8][5] ;
 bool judge_belong(uint32_t a,uint32_t b);//拼音归属判断
 
 uint8_t sear_pinyin_code(uint32_t target,uint8_t *pinyin_num,uint8_t *found);//返回拼音索引0~213，以及是否找到
-uint32_t get_num(const char *a) ;//拼音转数字
 
 
 
@@ -270,8 +268,7 @@ extern uint8_t INPUT_MODE;//0中文 1英文 2数字、符号
 extern uint8_t INPUT_STAGE;//中文：0 还没输入，不显示拼音和汉字 1输入了
 //英语：0 未选字 1选字
 //数字：0正常模式 1按了上下的轮询模式，需要按MENU确定
-extern char input1[22];
-extern char input2[22];
+
 extern uint8_t INPUT_SELECT;//选择的按键
 extern uint8_t INPUT_MODE_LAST;
 extern uint32_t PINYIN_CODE;
@@ -279,6 +276,15 @@ extern uint32_t PINYIN_CODE_INDEX;
 extern uint8_t PINYIN_SEARCH_INDEX;
 extern uint8_t PINYIN_SEARCH_FOUND;
 extern uint8_t PINYIN_SEARCH_NUM;
-extern uint8_t PINYIN_SEARCH_PAGE;
+extern uint8_t PINYIN_NOW_INDEX;//当前拼音组合地址
+extern uint8_t PINYIN_NOW_NUM;//当前拼音组合地址
+extern uint8_t PINYIN_SEARCH_MODE;
+extern uint8_t PINYIN_START_INDEX;
+extern uint8_t PINYIN_NUM_SELECT;
+extern uint32_t CHN_NOW_ADD;
+extern uint8_t CHN_NOW_NUM;
+extern uint8_t CHN_NOW_PAGE;
+extern uint8_t edit_chn[MAX_EDIT_INDEX];
+
 #endif
 #endif

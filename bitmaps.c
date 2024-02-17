@@ -358,6 +358,7 @@ const uint8_t BITMAP_1[6] =
 
         };
 #endif
+#include "ui/helper.h"
 #ifdef ENABLE_PINYIN
 const uint8_t BITMAP_ARRAY_DOWN[5] =
         {
@@ -391,4 +392,6 @@ const uint8_t BITMAP_ARRAY_UP[5] =
 
 
 };
+
+
 #endif
