@@ -1328,11 +1328,11 @@ static void MENU_Key_0_to_9(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
                                 INPUT_SELECT = Key;
                             }
                         } else {
-                            if (Key >= 1 && Key <= 2 * sizeof(num_excel[INPUT_SELECT - 2])) {//Ñ¡Ôñ×ÖÄ¸
+                            if (Key >= 1 && Key <= 2 *num_size[INPUT_SELECT - 2]) {//Ñ¡Ôñ×ÖÄ¸
                                 if (edit_chn[edit_index] == 1) edit[edit_index+1] = '_';
-                                if (Key > sizeof(num_excel[INPUT_SELECT - 2]))
+                                if (Key > num_size[INPUT_SELECT - 2])
                                     edit[edit_index] =
-                                            num_excel[INPUT_SELECT - 2][Key - 1 - sizeof(num_excel[INPUT_SELECT - 2])] -
+                                            num_excel[INPUT_SELECT - 2][Key - 1 - num_size[INPUT_SELECT - 2]] -
                                             32;
                                 else edit[edit_index] = num_excel[INPUT_SELECT - 2][Key - 1];
                                 if (++edit_index >= end_index) {    // exit edit
@@ -1497,7 +1497,7 @@ static void MENU_Key_0_to_9(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
 static void MENU_Key_EXIT(bool bKeyPressed, bool bKeyHeld) {
     if (bKeyHeld || !bKeyPressed)
         return;
-    if (UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME && gIsInSubMenu == true && edit_index >= 0) {
+    if (UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME && gIsInSubMenu == true && edit_index >= 0&&gAskForConfirmation == 0) {
 #ifdef ENABLE_PINYIN
         if (INPUT_MODE == 0) {
 
@@ -1523,6 +1523,7 @@ static void MENU_Key_EXIT(bool bKeyPressed, bool bKeyHeld) {
 
         } else if (INPUT_MODE == 1) {
             if (INPUT_STAGE == 1)INPUT_STAGE = 0;
+            else  edit_index = -1;
         } else
 
 

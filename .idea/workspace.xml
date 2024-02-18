@@ -20,7 +20,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="新版输入法完成">
+    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="说明">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/menu.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/menu.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/menu.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/menu.c" afterDir="false" />
@@ -352,21 +352,7 @@
       <workItem from="1708138956832" duration="27670000" />
       <workItem from="1708171703434" duration="2805000" />
       <workItem from="1708181516233" duration="3840000" />
-      <workItem from="1708222468921" duration="10406000" />
-    </task>
-    <task id="LOCAL-00131" summary="修复MDC 短信显示">
-      <created>1705816281185</created>
-      <option name="number" value="00131" />
-      <option name="presentableId" value="LOCAL-00131" />
-      <option name="project" value="LOCAL" />
-      <updated>1705816281186</updated>
-    </task>
-    <task id="LOCAL-00132" summary="修改字库">
-      <created>1705816329489</created>
-      <option name="number" value="00132" />
-      <option name="presentableId" value="LOCAL-00132" />
-      <option name="project" value="LOCAL" />
-      <updated>1705816329489</updated>
+      <workItem from="1708222468921" duration="13202000" />
     </task>
     <task id="LOCAL-00133" summary="IDE">
       <created>1705817319306</created>
@@ -697,7 +683,21 @@
       <option name="project" value="LOCAL" />
       <updated>1708232858915</updated>
     </task>
-    <option name="localTasksCounter" value="180" />
+    <task id="LOCAL-00180" summary="124">
+      <created>1708243350742</created>
+      <option name="number" value="00180" />
+      <option name="presentableId" value="LOCAL-00180" />
+      <option name="project" value="LOCAL" />
+      <updated>1708243350742</updated>
+    </task>
+    <task id="LOCAL-00181" summary="说明">
+      <created>1708243561672</created>
+      <option name="number" value="00181" />
+      <option name="presentableId" value="LOCAL-00181" />
+      <option name="project" value="LOCAL" />
+      <updated>1708243561672</updated>
+    </task>
+    <option name="localTasksCounter" value="182" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -727,8 +727,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="星图绘制一半" />
-    <MESSAGE value="删除星图" />
     <MESSAGE value="修改多普勒eeprom" />
     <MESSAGE value="修复中断eeprom冲突" />
     <MESSAGE value="IDE赞助" />
@@ -752,7 +750,9 @@
     <MESSAGE value="新输入法" />
     <MESSAGE value="更新输入法" />
     <MESSAGE value="新版输入法完成" />
-    <option name="LAST_COMMIT_MESSAGE" value="新版输入法完成" />
+    <MESSAGE value="124" />
+    <MESSAGE value="说明" />
+    <option name="LAST_COMMIT_MESSAGE" value="说明" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

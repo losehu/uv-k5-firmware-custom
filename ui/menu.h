@@ -249,6 +249,7 @@ extern int32_t           gSubMenuSelection;
 extern char              edit_original[17];
 extern char              edit[17];
 extern int               edit_index;
+extern uint8_t num_size[8];
 
 void UI_DisplayMenu(void);
 uint8_t pinyin_search(uint8_t *target, uint8_t size, uint32_t *add) ;

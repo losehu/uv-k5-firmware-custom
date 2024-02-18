@@ -1056,11 +1056,11 @@ void UI_DisplayMenu(void) {
                         } else if (INPUT_MODE == 1) {
                             if (INPUT_STAGE == 1) {
                                 char tmp[22] = {0};
-                                if (sizeof(num_excel[INPUT_SELECT - 2]) == 3) {
+                                if (num_size[INPUT_SELECT - 2] == 3) {
                                     sprintf(tmp, "1.%c 2.%c 3.%c", num_excel[INPUT_SELECT - 2][0],
                                             num_excel[INPUT_SELECT - 2][1], num_excel[INPUT_SELECT - 2][2]);
                                     UI_PrintStringSmall(tmp, 0, 127, 0);
-                                    tmp[0] = 4, tmp[4] = 5, tmp[8] = 6;//flash?
+                                    tmp[0] = '4', tmp[4] = '5', tmp[8] = '6';//flash?
                                     tmp[2] -= 32, tmp[6] -= 32, tmp[10] -= 32;
 
                                 } else {
@@ -1069,7 +1069,7 @@ void UI_DisplayMenu(void) {
                                             num_excel[INPUT_SELECT - 2][3]);
                                     UI_PrintStringSmall(tmp, 0, 127, 0);
 
-                                    tmp[0] = 5, tmp[4] = 6, tmp[8] = 7, tmp[12] = 8;
+                                    tmp[0] ='5', tmp[4] = '6', tmp[8] = '7', tmp[12] = '8';
                                     tmp[2] -= 32, tmp[6] -= 32, tmp[10] -= 32, tmp[14] -= 32;
                                 }
                                                                     UI_PrintStringSmall(tmp, 0, 127, 1);
@@ -1536,8 +1536,17 @@ uint8_t edit_chn[MAX_EDIT_INDEX];
 char input1[22];
 char input2[22];
 char num_excel[8][4] = {
-        "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"
+        {'a','b','c','\0'},
+        {'d','e','f','\0'},
+        {'g','h','i','\0'},
+        {'j','k','l','\0'},
+        {'m','n','o','\0'},
+        {'p','q','r','s'},
+        {'t','u','v','\0'},
+        {'w','x','y','z'},
+
 };
+uint8_t num_size[8]={3,3,3,3,3,4,3,4};
 
 uint32_t formatInt(uint32_t number) {//数字转拼音编码
     uint32_t formatted = number;
@@ -1563,7 +1572,7 @@ uint32_t get_num(const char *a) {//拼音转数字
     for (int j = 0; j < strlen(a); j++) {
         uint32_t now_num = 0;
         for (int i = 0; i < 8; ++i) {
-            for (int k = 0; k < sizeof(num_excel[i]); ++k) {
+            for (int k = 0; k < num_size[i]; ++k) {
                 if (num_excel[i][k] == a[j]) {
                     now_num = i + 2;
                     goto end_loop;
