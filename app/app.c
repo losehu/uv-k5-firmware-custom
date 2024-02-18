@@ -1052,6 +1052,7 @@ static void CheckKeys(void) {
         {
             gKeyReading1 = Key;
             ProcessKey(Key, true, false);
+
         }
 
         gKeyBeingHeld = false;
@@ -1067,7 +1068,9 @@ static void CheckKeys(void) {
         if (Key != KEY_PTT) {
             gKeyBeingHeld = true;
             ProcessKey(Key, true, true); // key held event
+
         }
+
     } else //subsequent fast key repeats
     {
         if (Key == KEY_UP || Key == KEY_DOWN) // fast key repeats for up/down buttons
@@ -1075,6 +1078,9 @@ static void CheckKeys(void) {
             gKeyBeingHeld = true;
             if ((gDebounceCounter % key_repeat_10ms) == 0)
                 ProcessKey(Key, true, true); // key held event
+
+
+
         }
 
         if (gDebounceCounter < 0xFFFF)
@@ -1082,6 +1088,7 @@ static void CheckKeys(void) {
 
         gDebounceCounter = key_repeat_delay_10ms + 1;
     }
+
 }
 
 void APP_TimeSlice10ms(void) {
@@ -1129,6 +1136,7 @@ void APP_TimeSlice10ms(void) {
         GUI_DisplayScreen();
     }
 
+
     if (gUpdateStatus)
         UI_DisplayStatus();
 
@@ -1148,6 +1156,7 @@ void APP_TimeSlice10ms(void) {
         if (gVoxPauseCountdown > 0)
             gVoxPauseCountdown--;
 #endif
+
 
     if (gCurrentFunction == FUNCTION_TRANSMIT) {
 #ifdef ENABLE_ALARM
@@ -1938,4 +1947,5 @@ static void ProcessKey(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
     gRequestDisplayScreen = DISPLAY_INVALID;
 
     gUpdateDisplay = true;
+
 }

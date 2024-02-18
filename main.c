@@ -252,15 +252,20 @@ void Main(void) {
     RADIO_ConfigureNOAA();
 #endif
 
-
     while (1) {
 
         APP_Update();
+
         if (gNextTimeslice) {
             APP_TimeSlice10ms();
+
+
         }
+
         if (gNextTimeslice_500ms) {
             APP_TimeSlice500ms();
         }
+
+
     }
 }

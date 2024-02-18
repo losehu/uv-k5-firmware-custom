@@ -19,7 +19,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
-#define ENABLE_PINYIN
+//#define ENABLE_PINYIN
 //#define test 0
 void UI_GenerateChannelString(char *pString, const uint8_t Channel);
 

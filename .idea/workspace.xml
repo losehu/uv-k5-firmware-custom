@@ -20,13 +20,15 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="新输入法">
+    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="更新输入法">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/app.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/menu.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/menu.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bitmaps.c" beforeDir="false" afterPath="$PROJECT_DIR$/bitmaps.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/spectrum.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/spectrum.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/helper.h" beforeDir="false" afterPath="$PROJECT_DIR$/ui/helper.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/menu.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/menu.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/menu.h" beforeDir="false" afterPath="$PROJECT_DIR$/ui/menu.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +108,7 @@
       <recent name="C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\MDC_WRITE" />
     </key>
   </component>
-  <component name="RunManager" selected="Makefile 目标.build">
+  <component name="RunManager" selected="Shell Script.win docker">
     <configuration name="uv_k5_firmware_custom_0_17" type="CLionNativeAppRunConfigurationType" nameIsGenerated="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="uv_k5_firmware_custom_0_17" TARGET_NAME="uv_k5_firmware_custom_0_17" CONFIG_NAME="Debug" version="1" RUN_TARGET_PROJECT_NAME="uv_k5_firmware_custom_0_17" RUN_TARGET_NAME="uv_k5_firmware_custom_0_17">
       <method v="2">
         <option name="CLION.COMPOUND.BUILD" enabled="true" />
@@ -352,14 +354,9 @@
       <workItem from="1707981652965" duration="1172000" />
       <workItem from="1708050279658" duration="27775000" />
       <workItem from="1708138956832" duration="27670000" />
-      <workItem from="1708171703434" duration="2036000" />
-    </task>
-    <task id="LOCAL-00129" summary="回档">
-      <created>1705576662066</created>
-      <option name="number" value="00129" />
-      <option name="presentableId" value="LOCAL-00129" />
-      <option name="project" value="LOCAL" />
-      <updated>1705576662066</updated>
+      <workItem from="1708171703434" duration="2805000" />
+      <workItem from="1708181516233" duration="3840000" />
+      <workItem from="1708222468921" duration="7640000" />
     </task>
     <task id="LOCAL-00130" summary="重构显示函数">
       <created>1705577225509</created>
@@ -697,7 +694,14 @@
       <option name="project" value="LOCAL" />
       <updated>1708087021232</updated>
     </task>
-    <option name="localTasksCounter" value="178" />
+    <task id="LOCAL-00178" summary="更新输入法">
+      <created>1708181257180</created>
+      <option name="number" value="00178" />
+      <option name="presentableId" value="LOCAL-00178" />
+      <option name="project" value="LOCAL" />
+      <updated>1708181257180</updated>
+    </task>
+    <option name="localTasksCounter" value="179" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -727,7 +731,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="修复MDC1200编译选项" />
     <MESSAGE value="完善多普勒" />
     <MESSAGE value="星图绘制一半" />
     <MESSAGE value="删除星图" />
@@ -752,7 +755,8 @@
     <MESSAGE value="makefile" />
     <MESSAGE value="删除古早输入法" />
     <MESSAGE value="新输入法" />
-    <option name="LAST_COMMIT_MESSAGE" value="新输入法" />
+    <MESSAGE value="更新输入法" />
+    <option name="LAST_COMMIT_MESSAGE" value="更新输入法" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

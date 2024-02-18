@@ -886,8 +886,10 @@ void UI_DisplayMenu(void) {
             }
 #endif
         case MENU_MEM_NAME: { //输入法显示
-            const bool valid = RADIO_CheckValidChannel(gSubMenuSelection, false, 1);
+//ok
 
+
+            const bool valid = RADIO_CheckValidChannel(gSubMenuSelection, false, 1);
             UI_GenerateChannelStringEx(String, valid, gSubMenuSelection);
             UI_PrintStringSmall(String, menu_item_x1 - 12, menu_item_x2, 2);
 
@@ -930,24 +932,23 @@ void UI_DisplayMenu(void) {
 
 #ifdef ENABLE_PINYIN
                         for (int j = 0; j < MAX_EDIT_INDEX; ++j) {
-                            if(edit[j]>=0xb0&&j!=MAX_EDIT_INDEX-1)
-                            {
-                                edit_chn[j]=1;
+                            if (edit[j] >= 0xb0 && j != MAX_EDIT_INDEX - 1) {
+                                edit_chn[j] = 1;
                                 j++;
-                                edit_chn[j]=2;
-                            }else edit_chn[j]=0;
+                                edit_chn[j] = 2;
+                            } else edit_chn[j] = 0;
                         }
                         uint8_t sum_pxl = 0;
                         uint8_t cnt_chn = 0;
                         for (int j = 0; j < edit_index; j++) {
-                            if (edit_chn[j]==1) {
+                            if (edit_chn[j] == 1) {
                                 sum_pxl += 13;
                                 j++;
                                 cnt_chn++;
                             } else
                                 sum_pxl += 7;
                         }
-                        uint8_t add_point = edit_chn[edit_index]==1? 6 : 3;
+                        uint8_t add_point = edit_chn[edit_index] == 1 ? 6 : 3;
                         gFrameBuffer[4][menu_item_x1 - 12 + sum_pxl +
                                         (((menu_item_x2 - menu_item_x1 + 12) -
                                           (7 * (MAX_EDIT_INDEX - 2 * cnt_chn) + 13 * cnt_chn)) + 1) / 2 + add_point] |=
@@ -969,7 +970,7 @@ void UI_DisplayMenu(void) {
 #endif
 
 #ifdef ENABLE_PINYIN //拼音显示
-
+                        //OK
                         if (INPUT_MODE == 0)memcpy(&gFrameBuffer[3][0], BITMAP_CN, 7);
                         else if (INPUT_MODE == 1) UI_PrintStringSmall("A", 0, 0, 3);
                         else if (INPUT_MODE == 2) UI_PrintStringSmall("1", 0, 0, 3);
@@ -977,7 +978,7 @@ void UI_DisplayMenu(void) {
                         if (INPUT_MODE == 0) {
                             sprintf(String, "%06d", PINYIN_CODE);
 //                            UI_PrintStringSmall(String, 0, 0, 2);
-                            GUI_DisplaySmallest(String,0,18,0,1);
+                            GUI_DisplaySmallest(String, 0, 18, 0, 1);
                             uint8_t tmp[12];
 
 
@@ -988,33 +989,54 @@ void UI_DisplayMenu(void) {
                                 if (PINYIN_SEARCH_MODE == 1)//准确的组合
                                 {
 
+
+
+//OK
                                     uint8_t HAVE_PINYIN =
                                             PINYIN_NOW_NUM - PINYIN_NUM_SELECT / 3 * 3 > 3 ? 3 : PINYIN_NOW_NUM -
                                                                                                  PINYIN_NUM_SELECT / 3 *
                                                                                                  3;//目前有多少个拼音
+
+//OK
+//                                    show_uint32(PINYIN_NOW_NUM,0);
+//                                    sprintf(String,"%d",PINYIN_NUM_SELECT);
+//                                    UI_PrintStringSmall(String, 0, 0, 4);
+//                                    show_uint32(PINYIN_NOW_NUM,1);
+//                                    show_uint32(HAVE_PINYIN,1);
                                     for (int j = 0; j < HAVE_PINYIN; ++j) {
                                         EEPROM_ReadBuffer(
                                                 PINYIN_NOW_INDEX * 128 + 0X20000 + 16 + PINYIN_NUM_SELECT / 3 * 3 * 16 +
-                                                j * 16, tmp, 11);
-                                        memcpy(String + 6 * j, tmp, 6);//0 1 2 3 4 5
+                                                j * 16, tmp, 6);
+                                        memcpy(&String[6 * j], tmp, 6);//0 1 2 3 4 5
                                     }
-
+//#include "ui/menu.h"
+//#include "ui/helper.h"
+//
+//                                    if (PINYIN_CODE == 200000 && test_flag) {
+//                                        show_uint32(edit_index, 0);
+//                                        show_uint32(gIsInSubMenu, 1);
+//                                        show_uint32(1, 2);
+//                                        while (1);
+//                                    }
+                                    //NOT OK
                                     String[6 * HAVE_PINYIN] = 0;
                                     UI_PrintStringSmall(String, 0, 0, 0);
+//NOT OK
+
                                 }
                             }
                             if (INPUT_STAGE == 2) {
 
                                 if (PINYIN_SEARCH_MODE == 1)//准确的组合
                                 {
-                                    memcpy(&gFrameBuffer[1][(PINYIN_NUM_SELECT%3)*7*6],BITMAP_ARRAY_UP,5);
+                                    memcpy(&gFrameBuffer[1][(PINYIN_NUM_SELECT % 3) * 7 * 6], BITMAP_ARRAY_UP, 5);
 
                                     uint8_t SHOW_NUM =
                                             CHN_NOW_NUM - CHN_NOW_PAGE * 6 > 6 ? 6 : CHN_NOW_NUM - CHN_NOW_PAGE * 6;
                                     EEPROM_ReadBuffer(CHN_NOW_ADD + CHN_NOW_PAGE * 6 * 2, tmp, SHOW_NUM * 2);
 //                                    show_uint32(PINYIN_NOW_INDEX * 128 + 0X20000 + 16 + PINYIN_NUM_SELECT * 16 + 6, 5);
                                     for (int j = 0; j < SHOW_NUM; ++j) {
-                                        String[j * 3] = '0'+j + 1;
+                                        String[j * 3] = '0' + j + 1;
                                         String[j * 3 + 1] = tmp[j * 2];
                                         String[j * 3 + 2] = tmp[j * 2 + 1];
                                     }
@@ -1022,10 +1044,14 @@ void UI_DisplayMenu(void) {
                                     show_move_flag = 1;
 
                                     UI_PrintStringSmall(String, 0, 0, 5);
-                                    if(CHN_NOW_PAGE) memcpy(&gFrameBuffer[5][123],BITMAP_ARRAY_UP,5);
-                                     if((CHN_NOW_PAGE+1)*6<CHN_NOW_NUM)memcpy(&gFrameBuffer[6][123],BITMAP_ARRAY_DOWN,5);
+                                    if (CHN_NOW_PAGE) memcpy(&gFrameBuffer[5][123], BITMAP_ARRAY_UP, 5);
+                                    if ((CHN_NOW_PAGE + 1) * 6 < CHN_NOW_NUM)
+                                        memcpy(&gFrameBuffer[6][123], BITMAP_ARRAY_DOWN, 5);
                                 }
                             }
+//NOT OK
+
+
                         } else if (INPUT_MODE == 1) {
                             if (INPUT_STAGE == 1) {
                                 char tmp[22] = {0};
@@ -1052,8 +1078,12 @@ void UI_DisplayMenu(void) {
 
                     }
                 }
-                sprintf(String,"%d",edit_index);
-                UI_PrintStringSmall(String, 0, 0, 1);
+
+//NOT OK
+//                sprintf(String, "%d", edit_index);
+//                UI_PrintStringSmall(String, 0, 0, 1);
+//                sprintf(String, "%d", gIsInSubMenu);
+//                UI_PrintStringSmall(String, 20, 0, 1);
 //
 //                sprintf(String,"%d",edit[2]);
 //                UI_PrintStringSmall(String, 0, 0, 3);
@@ -1061,19 +1091,22 @@ void UI_DisplayMenu(void) {
 
                 if (!gAskForConfirmation) {    // show the frequency so that the user knows the channels frequency
                     sprintf(String, "%u.%05u", frequency / 100000, frequency % 100000);
-#ifdef ENABLE_PINYIN
 
+#ifdef ENABLE_PINYIN
+if(edit_index==MAX_EDIT_INDEX-1&&INPUT_MODE==0)
+    INPUT_MODE=1;
                     if (!(gIsInSubMenu && edit_index >= 0))
 
 #endif
                     {
-                        show_move_flag = 1;
+//                        show_move_flag = 1;
                         UI_PrintStringSmall(String, menu_item_x1 - 12, menu_item_x2, 5);
                     }
                 }
             }
 
             already_printed = true;
+
             break;
         }
 

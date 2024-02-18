@@ -1336,6 +1336,10 @@ static void RenderStill() {
     uint8_t offset = PAD_LEFT;
     uint8_t row = 4;
     uint8_t DATA_LINE;
+    uint8_t SHOW_LINE=4;
+#ifdef ENABLE_DOPPLER
+    if (DOPPLER_MODE)SHOW_LINE = 3;
+#endif
     for (int i = 0, idx = 1; idx <= 4; ++i, ++idx) {
 //        if (idx == 5) {
 //            row += 2;
@@ -1344,8 +1348,8 @@ static void RenderStill() {
         offset = PAD_LEFT + i * CELL_WIDTH;
         if (menuState == idx) {
             for (int j = 0; j < CELL_WIDTH; ++j) {
-                gFrameBuffer[3][j + offset] = 0xFF;
-                gFrameBuffer[3 + 1][j + offset] = 0xFF;
+                gFrameBuffer[SHOW_LINE][j + offset] = 0xFF;
+                gFrameBuffer[SHOW_LINE + 1][j + offset] = 0xFF;
             }
         }
         DATA_LINE = row * 8 + 2;
