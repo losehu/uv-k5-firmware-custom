@@ -1730,7 +1730,8 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld) {
         } else if (edit_index >= 0 && edit_index < MAX_EDIT_INDEX) {    // editing the channel name characters
 
 #ifdef ENABLE_PINYIN
-//            if(PINYIN_MODE==0||(PINYIN_MODE==1&&pinyin_index==0&&PINYIN_INPUT==0))
+            if (edit_chn[edit_index] == 1)
+                    edit_index++;
 #endif
             edit_index++;
 #ifdef ENABLE_PINYIN
@@ -1738,8 +1739,7 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld) {
 #endif
             if (edit_index < MAX_EDIT_INDEX) {
 #ifdef ENABLE_PINYIN
-                if (edit_chn[edit_index - 1] == 1)
-                    edit_index++;
+
 
 
                 if (INPUT_MODE == 0 && edit_index + 1 >= MAX_EDIT_INDEX)
@@ -1752,13 +1752,13 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld) {
             }
             // exit
             if (memcmp(edit_original, edit, sizeof(edit_original)) == 0) {    // no change - drop it
-
+                gFlagAcceptSetting = false;
+                gIsInSubMenu = false;
                 gAskForConfirmation = 0;
             } else {
-
+                gFlagAcceptSetting = false;
+                gAskForConfirmation = 0;
             }
-            gFlagAcceptSetting = false;
-            gAskForConfirmation = 0;
         }
     }
 #ifdef ENABLE_PINYIN //退出输入模式
