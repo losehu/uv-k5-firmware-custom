@@ -257,7 +257,7 @@ int UI_MENU_GetCurrentMenuId();
 uint8_t UI_MENU_GetMenuIdx(uint8_t id);
 void UI_ShowChineseMenu(void) ;
 #ifdef ENABLE_PINYIN
-extern char num_excel[8][5] ;
+extern char num_excel[8][4] ;
 bool judge_belong(uint32_t a,uint32_t b);//拼音归属判断
 
 uint8_t sear_pinyin_code(uint32_t target,uint8_t *pinyin_num,uint8_t *found);//返回拼音索引0~213，以及是否找到

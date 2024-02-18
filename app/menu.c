@@ -1328,11 +1328,11 @@ static void MENU_Key_0_to_9(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
                                 INPUT_SELECT = Key;
                             }
                         } else {
-                            if (Key >= 1 && Key <= 2 * strlen(num_excel[INPUT_SELECT - 2])) {//Ñ¡Ôñ×ÖÄ¸
+                            if (Key >= 1 && Key <= 2 * sizeof(num_excel[INPUT_SELECT - 2])) {//Ñ¡Ôñ×ÖÄ¸
                                 if (edit_chn[edit_index] == 1) edit[edit_index+1] = '_';
-                                if (Key > strlen(num_excel[INPUT_SELECT - 2]))
+                                if (Key > sizeof(num_excel[INPUT_SELECT - 2]))
                                     edit[edit_index] =
-                                            num_excel[INPUT_SELECT - 2][Key - 1 - strlen(num_excel[INPUT_SELECT - 2])] -
+                                            num_excel[INPUT_SELECT - 2][Key - 1 - sizeof(num_excel[INPUT_SELECT - 2])] -
                                             32;
                                 else edit[edit_index] = num_excel[INPUT_SELECT - 2][Key - 1];
                                 if (++edit_index >= end_index) {    // exit edit

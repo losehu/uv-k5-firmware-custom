@@ -565,11 +565,11 @@ void UI_DisplayMenu(void) {
 #ifdef ENABLE_PINYIN //拼音取消显示
     if (!(UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME && gIsInSubMenu && gIsInSubMenu && edit_index >= 0))
 #endif
-        UI_PrintStringSmall(String, 2, 0, 6);
+    UI_PrintStringSmall(String, 2, 0, 6);
 #ifdef ENABLE_PINYIN//拼音取消显示
     if (!(UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME && gIsInSubMenu && edit_index >= 0))
 #endif
-        UI_ShowChineseMenu();
+    UI_ShowChineseMenu();
 
 #else
     {	// new menu layout .. experimental & unfinished
@@ -960,10 +960,10 @@ void UI_DisplayMenu(void) {
                                 3 << 6;
 #else
 
-                        gFrameBuffer[4][menu_item_x1 - 12 + 7*edit_index +
+                        gFrameBuffer[4][menu_item_x1 - 12 + 7 * edit_index +
                                         (((menu_item_x2 - menu_item_x1 + 12) - (7 * MAX_EDIT_INDEX)) + 1) / 2 + 3] |=
                                 3 << 6;
-                        gFrameBuffer[4][menu_item_x1 - 12 + 7*edit_index +
+                        gFrameBuffer[4][menu_item_x1 - 12 + 7 * edit_index +
                                         (((menu_item_x2 - menu_item_x1 + 12) - (7 * MAX_EDIT_INDEX)) + 1) / 2 + 4] |=
                                 3 << 6;
 
@@ -977,14 +977,15 @@ void UI_DisplayMenu(void) {
                         else if (INPUT_MODE == 3) UI_PrintStringSmall("*", 0, 0, 3);
                         if (INPUT_MODE == 0) {
                             sprintf(String, "%06d", PINYIN_CODE);
-//                            UI_PrintStringSmall(String, 0, 0, 2);
                             GUI_DisplaySmallest(String, 0, 18, 0, 1);
                             uint8_t tmp[12];
 
 
                             if (INPUT_STAGE >= 1)//显示拼音
                             {
-
+  uint8_t num=(PINYIN_NUM_SELECT ) / 3;
+                    if ((PINYIN_NOW_NUM + 2) / 3 >1+num )memcpy(&gFrameBuffer[1][123], BITMAP_ARRAY_DOWN, 5);
+                    if (num)memcpy(&gFrameBuffer[0][123], BITMAP_ARRAY_UP, 5);
 
                                 if (PINYIN_SEARCH_MODE == 1)//准确的组合
                                 {
@@ -1055,23 +1056,24 @@ void UI_DisplayMenu(void) {
                         } else if (INPUT_MODE == 1) {
                             if (INPUT_STAGE == 1) {
                                 char tmp[22] = {0};
-                                if (strlen(num_excel[INPUT_SELECT - 2]) == 3) {
+                                if (sizeof(num_excel[INPUT_SELECT - 2]) == 3) {
                                     sprintf(tmp, "1.%c 2.%c 3.%c", num_excel[INPUT_SELECT - 2][0],
                                             num_excel[INPUT_SELECT - 2][1], num_excel[INPUT_SELECT - 2][2]);
                                     UI_PrintStringSmall(tmp, 0, 127, 0);
-                                    tmp[0] += 3, tmp[4] += 3, tmp[8] += 3;//flash?
+                                    tmp[0] = 4, tmp[4] = 5, tmp[8] = 6;//flash?
                                     tmp[2] -= 32, tmp[6] -= 32, tmp[10] -= 32;
-                                    UI_PrintStringSmall(tmp, 0, 127, 1);
 
                                 } else {
                                     sprintf(tmp, "1.%c 2.%c 3.%c 4.%c", num_excel[INPUT_SELECT - 2][0],
                                             num_excel[INPUT_SELECT - 2][1], num_excel[INPUT_SELECT - 2][2],
                                             num_excel[INPUT_SELECT - 2][3]);
                                     UI_PrintStringSmall(tmp, 0, 127, 0);
-                                    tmp[0] += 4, tmp[4] += 4, tmp[8] += 4, tmp[12] += 4;
+
+                                    tmp[0] = 5, tmp[4] = 6, tmp[8] = 7, tmp[12] = 8;
                                     tmp[2] -= 32, tmp[6] -= 32, tmp[10] -= 32, tmp[14] -= 32;
-                                    UI_PrintStringSmall(tmp, 0, 127, 1);
                                 }
+                                                                    UI_PrintStringSmall(tmp, 0, 127, 1);
+
                             }
                         }
 #endif
@@ -1091,10 +1093,10 @@ void UI_DisplayMenu(void) {
 
                 if (!gAskForConfirmation) {    // show the frequency so that the user knows the channels frequency
                     sprintf(String, "%u.%05u", frequency / 100000, frequency % 100000);
-
 #ifdef ENABLE_PINYIN
-if(edit_index==MAX_EDIT_INDEX-1&&INPUT_MODE==0)
-    INPUT_MODE=1;
+
+                    if (edit_index == MAX_EDIT_INDEX - 1 && INPUT_MODE == 0)
+                        INPUT_MODE = 1;
                     if (!(gIsInSubMenu && edit_index >= 0))
 
 #endif
@@ -1533,7 +1535,7 @@ uint8_t edit_chn[MAX_EDIT_INDEX];
 //数字：0正常模式 1按了上下的轮询模式，需要按MENU确定
 char input1[22];
 char input2[22];
-char num_excel[8][5] = {
+char num_excel[8][4] = {
         "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"
 };
 
@@ -1561,7 +1563,7 @@ uint32_t get_num(const char *a) {//拼音转数字
     for (int j = 0; j < strlen(a); j++) {
         uint32_t now_num = 0;
         for (int i = 0; i < 8; ++i) {
-            for (int k = 0; k < strlen(num_excel[i]); ++k) {
+            for (int k = 0; k < sizeof(num_excel[i]); ++k) {
                 if (num_excel[i][k] == a[j]) {
                     now_num = i + 2;
                     goto end_loop;

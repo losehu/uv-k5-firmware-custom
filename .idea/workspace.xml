@@ -20,15 +20,11 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="更新输入法">
+    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="新版输入法完成">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/app.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/menu.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/menu.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/spectrum.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/spectrum.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/helper.h" beforeDir="false" afterPath="$PROJECT_DIR$/ui/helper.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/menu.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/menu.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/menu.h" beforeDir="false" afterPath="$PROJECT_DIR$/ui/menu.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -356,14 +352,7 @@
       <workItem from="1708138956832" duration="27670000" />
       <workItem from="1708171703434" duration="2805000" />
       <workItem from="1708181516233" duration="3840000" />
-      <workItem from="1708222468921" duration="7640000" />
-    </task>
-    <task id="LOCAL-00130" summary="重构显示函数">
-      <created>1705577225509</created>
-      <option name="number" value="00130" />
-      <option name="presentableId" value="LOCAL-00130" />
-      <option name="project" value="LOCAL" />
-      <updated>1705577225509</updated>
+      <workItem from="1708222468921" duration="10406000" />
     </task>
     <task id="LOCAL-00131" summary="修复MDC 短信显示">
       <created>1705816281185</created>
@@ -701,7 +690,14 @@
       <option name="project" value="LOCAL" />
       <updated>1708181257180</updated>
     </task>
-    <option name="localTasksCounter" value="179" />
+    <task id="LOCAL-00179" summary="新版输入法完成">
+      <created>1708232858915</created>
+      <option name="number" value="00179" />
+      <option name="presentableId" value="LOCAL-00179" />
+      <option name="project" value="LOCAL" />
+      <updated>1708232858915</updated>
+    </task>
+    <option name="localTasksCounter" value="180" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -731,7 +727,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="完善多普勒" />
     <MESSAGE value="星图绘制一半" />
     <MESSAGE value="删除星图" />
     <MESSAGE value="修改多普勒eeprom" />
@@ -756,7 +751,8 @@
     <MESSAGE value="删除古早输入法" />
     <MESSAGE value="新输入法" />
     <MESSAGE value="更新输入法" />
-    <option name="LAST_COMMIT_MESSAGE" value="更新输入法" />
+    <MESSAGE value="新版输入法完成" />
+    <option name="LAST_COMMIT_MESSAGE" value="新版输入法完成" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
