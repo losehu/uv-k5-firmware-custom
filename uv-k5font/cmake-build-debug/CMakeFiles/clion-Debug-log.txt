@@ -1,4 +1,0 @@
-"C:\Program Files\JetBrains\CLion 2023.1.1\bin\cmake\win\x64\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/mingw32-make.exe -DCMAKE_C_COMPILER=C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/gcc.exe -DCMAKE_CXX_COMPILER=C:/Qt/Qt5.14.2/Tools/mingw730_64/bin/g++.exe -G "CodeBlocks - MinGW Makefiles" -S C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\uv-k5font -B C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\uv-k5font\cmake-build-debug
--- Configuring done
--- Generating done
--- Build files have been written to: C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/uv-k5font/cmake-build-debug

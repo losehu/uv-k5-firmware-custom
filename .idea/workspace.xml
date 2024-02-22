@@ -20,10 +20,11 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="赞助">
+    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="修复bug">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/menu.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/menu.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/menu.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/menu.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/doc/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/doc/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/doc/输入法Eeprom说明.txt" beforeDir="false" afterPath="$PROJECT_DIR$/doc/输入法Eeprom说明.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -351,14 +352,8 @@
       <workItem from="1708138956832" duration="27670000" />
       <workItem from="1708171703434" duration="2805000" />
       <workItem from="1708181516233" duration="3840000" />
-      <workItem from="1708222468921" duration="17059000" />
-    </task>
-    <task id="LOCAL-00135" summary="修复编译选项">
-      <created>1705819873508</created>
-      <option name="number" value="00135" />
-      <option name="presentableId" value="LOCAL-00135" />
-      <option name="project" value="LOCAL" />
-      <updated>1705819873509</updated>
+      <workItem from="1708222468921" duration="18181000" />
+      <workItem from="1708591398985" duration="318000" />
     </task>
     <task id="LOCAL-00136" summary="精简代码，加入手电筒">
       <created>1705824528954</created>
@@ -696,7 +691,14 @@
       <option name="project" value="LOCAL" />
       <updated>1708251810386</updated>
     </task>
-    <option name="localTasksCounter" value="184" />
+    <task id="LOCAL-00184" summary="修复bug">
+      <created>1708258468248</created>
+      <option name="number" value="00184" />
+      <option name="presentableId" value="LOCAL-00184" />
+      <option name="project" value="LOCAL" />
+      <updated>1708258468248</updated>
+    </task>
+    <option name="localTasksCounter" value="185" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -726,7 +728,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="修复中断eeprom冲突" />
     <MESSAGE value="IDE赞助" />
     <MESSAGE value="增加PTT" />
     <MESSAGE value="增加发射亚音" />
@@ -751,7 +752,8 @@
     <MESSAGE value="说明" />
     <MESSAGE value="修复输入法EXIT" />
     <MESSAGE value="赞助" />
-    <option name="LAST_COMMIT_MESSAGE" value="赞助" />
+    <MESSAGE value="修复bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="修复bug" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

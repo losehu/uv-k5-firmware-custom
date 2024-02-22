@@ -1,3 +1,0 @@
-C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/uv-k5font/font_new/cmake-build-debug/CMakeFiles/font_new.dir
-C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/uv-k5font/font_new/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/RUPC/Desktop/UV-K6/uv-k5-firmware-chinese/uv-k5font/font_new/cmake-build-debug/CMakeFiles/rebuild_cache.dir
