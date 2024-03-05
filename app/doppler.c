@@ -76,7 +76,7 @@ int32_t UNIX_TIME(uint8_t time2[6]) {
 
     // 计算当年之内的秒数差
     for (int month = 1; month < time2[1]; month++) {
-        seconds += days_in_month(time2[1], month) * 24 * 3600;
+        seconds += days_in_month(time2[0], month) * 24 * 3600;
     }
     // 计算当月之内的秒数差
     seconds += (time2[2] - 1) * 24 * 3600;
