@@ -71,7 +71,7 @@ int32_t UNIX_TIME(uint8_t time2[6]) {
     int32_t seconds = 0;
     // 计算年份之间的秒数差
     for (int year = 0; year < time2[0]; year++) {
-        seconds += (is_leap_year(year) ? 366 : 365) * 24 * 3600;
+        seconds += (is_leap_year(year) + 365) * 24 * 3600;
     }
 
     // 计算当年之内的秒数差
