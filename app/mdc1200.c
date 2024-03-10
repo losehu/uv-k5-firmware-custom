@@ -7,7 +7,6 @@
 #include <string.h>
 #include "driver/eeprom.h"
 
-uint16_t MDC_ID = 0X542B;
 
 const uint8_t mdc1200_pre_amble[] = {0x00, 0x00, 0x00};
 const uint8_t mdc1200_sync[5] = {0x07, 0x09, 0x2a, 0x44, 0x6f};
