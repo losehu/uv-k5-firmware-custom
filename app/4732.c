@@ -34,11 +34,13 @@
 #include "ui/helper.h"
 #include "ui/main.h"
 #include "driver/backlight.h"
+
 KeyboardState kbds = {KEY_INVALID, KEY_INVALID, 0};
-uint32_t NOW_STEP=10;
-uint32_t NOW_FREQ = 10760;//93MHZ
-enum SI4732_MODE_T NOW_MODE = FM;//0FM
-uint8_t display_flag=1;
+uint32_t NOW_STEP = 10;
+uint32_t NOW_FREQ = 12120;// 9300 93MHZ 10000 10MHZ
+enum SI4732_MODE_T NOW_MODE = AM;//0FM
+uint8_t display_flag = 1;
+
 void SI4732_Display() {
     memset(gStatusLine, 0, sizeof(gStatusLine));
     UI_DisplayClear();
@@ -46,6 +48,9 @@ void SI4732_Display() {
     if (NOW_MODE == FM) {
 
         sprintf(String, "%3d.%02d", NOW_FREQ / 100, NOW_FREQ % 100);
+        UI_DisplayFrequency(String, 25, 1, false);
+    } else if (NOW_MODE == AM) {
+        sprintf(String, "%3d.%03d", NOW_FREQ / 1000, NOW_FREQ % 1000);
         UI_DisplayFrequency(String, 25, 1, false);
     }
 
@@ -60,9 +65,19 @@ void SI4732_SetFreq(uint32_t freq) {
         uint8_t cmd[5] = {0x20, 0x00, (freq & 0xff00) >> 8, freq & 0x00ff, 0x00};//设置频率
         SI4732_WriteBuffer(cmd, 5);
         SI4732_WAIT_STATUS(0X80);
+
+    } else if (NOW_MODE == AM) {
+
+
+        if (freq < 149 || freq > 23000) return;
+        NOW_FREQ = freq;
+        uint8_t cmd[6] = {0x40, 0x00, (freq & 0xff00) >> 8, freq & 0x00ff, 0x00, 0x00};//设置频率
+        SI4732_WriteBuffer(cmd, 6);
+        SI4732_WAIT_STATUS(0X80);
     }
     SYSTEM_DelayMs(50);
-    display_flag=1;
+
+    display_flag = 1;
 
 
 }
@@ -94,8 +109,8 @@ void SI4732_Main() {
 //        cnt++;
 //        if (cnt == 1000000)cnt = 0;
 
-        if (display_flag ) {
-            display_flag=0;
+        if (display_flag) {
+            display_flag = 0;
             SI4732_Display();
         }
 
@@ -103,27 +118,32 @@ void SI4732_Main() {
 }
 
 
-
-
 void SI4732_PowerUp() {
-    // 发送POWER_UP命令
     uint8_t cmd[3] = {0x01, 0x10, 0x05};
+    if (NOW_MODE == AM) {
+        cmd[1] = 0x11;
+    }
     SI4732_WriteBuffer(cmd, 3);
     SI4732_WAIT_STATUS(0x80);
     SYSTEM_DelayMs(500);
 
 }
-void SI4732_SwitchMode()
-{
+
+void SI4732_PowerDown() {
+    GPIO_ClearBit(&GPIOC->DATA, GPIOC_PIN_AUDIO_PATH);
+    uint8_t cmd[1] = {0x11};
+    SI4732_WriteBuffer(cmd, 1);
+    SI4732_WAIT_STATUS(0x80);
+    SYSTICK_Delay250ns(1);
+    RST_LOW;
+}
+
+void SI4732_SwitchMode() {
+    SI4732_PowerDown();
 
 }
-void SI4732_Init() {
 
-
-    RST_HIGH;
-
-    SI4732_PowerUp();
-    SI4732_SetFreq(10760);
+void SI4732_GET_INT_STATUS() {
     uint8_t state = 0;
     while (state != 0x81) {
         uint8_t cmd3[1] = {0x14};
@@ -131,7 +151,47 @@ void SI4732_Init() {
         SI4732_ReadBuffer((uint8_t *) &state, 1);
     }
     SYSTEM_DelayMs(SI4732_DELAY_MS);
+}
 
+
+void SI4732_Init() {
+
+
+    SI4732_PowerDown();
+
+    RST_HIGH;
+    SYSTEM_DelayMs(SI4732_DELAY_MS);
+
+    SI4732_PowerUp();
+    SYSTEM_DelayMs(SI4732_DELAY_MS);
+
+
+
+//    uint8_t cmd1[6] = {0x12, 0x00, 0x31,0x02,0x00,0x00};
+//    SI4732_WriteBuffer(cmd1, 6);
+//    SI4732_WAIT_STATUS(0x80);
+//    SYSTEM_DelayMs(500);
+
+
+
+
+    SI4732_SetFreq(NOW_FREQ);
+
+
+    SI4732_GET_INT_STATUS();
+
+//        uint8_t cmd[2] = {0x42, 0x01};
+//        SI4732_WriteBuffer(cmd, 2);
+//        SI4732_WAIT_STATUS(0X80);
+//        uint8_t cmd_read[8]={0};
+//        SI4732_ReadBuffer(cmd_read,8);
+//        show_hex(cmd_read[0],0);
+//        show_hex(cmd_read[1],1);
+//        show_hex(cmd_read[2],2);
+//        show_hex(cmd_read[3],3);
+//        show_hex(cmd_read[4],4);
+//        show_hex(cmd_read[5],5);
+//        show_hex(cmd_read[6],6);
     GPIO_SetBit(&GPIOC->DATA, GPIOC_PIN_AUDIO_PATH);
 
 }
@@ -170,13 +230,12 @@ static void HandleUserInput() {
 
 
     if (kbds.counter == 2 || kbds.counter == 16) {
-
-        
         switch (NOW_MODE) {
             case FM:
                 Key_FM(kbds);
                 break;
             case AM:
+                Key_FM(kbds);
                 break;
 
         }
@@ -189,14 +248,26 @@ static void HandleUserInput() {
 static void Key_FM(KeyboardState kbds) {
     switch (kbds.current) {
         case KEY_UP:
-            SI4732_SetFreq(NOW_FREQ+NOW_STEP);
+            SI4732_SetFreq(NOW_FREQ + NOW_STEP);
 
 
             break;
         case KEY_DOWN:
-            SI4732_SetFreq(NOW_FREQ-NOW_STEP);
+            SI4732_SetFreq(NOW_FREQ - NOW_STEP);
             break;
-   
+
+        case KEY_STAR:
+            NOW_STEP /= 10;
+            if (NOW_STEP == 0)NOW_STEP = 1000;
+            break;
+
+        case KEY_F:
+            NOW_MODE = 1 - NOW_MODE;
+            if (NOW_MODE == FM)NOW_FREQ = 10760;
+            else NOW_FREQ = 10000;
+            SI4732_Init();
+            break;
+
         default:
             break;
     }

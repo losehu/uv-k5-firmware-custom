@@ -34,7 +34,7 @@
 #include "frequencies.h"
 #include "ui/helper.h"
 #include "ui/main.h"
-#define SI4732_DELAY_MS 200
+#define SI4732_DELAY_MS 400
 #define RST_HIGH       GPIO_ClearBit(&GPIOB->DATA, GPIOB_PIN_BK1080)
 #define RST_LOW         GPIO_SetBit(&GPIOB->DATA, GPIOB_PIN_BK1080)
 void SI4732_WriteBuffer(uint8_t *buff,uint8_t size) ;
