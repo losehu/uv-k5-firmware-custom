@@ -25,15 +25,12 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="pre">
-      <change afterPath="$PROJECT_DIR$/app/4732.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/4732.h" afterDir="false" />
+    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="SI4732 FM TEST">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/4732.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/4732.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/4732.h" beforeDir="false" afterPath="$PROJECT_DIR$/app/4732.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/board.c" beforeDir="false" afterPath="$PROJECT_DIR$/board.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/helper.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/helper.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/helper.h" beforeDir="false" afterPath="$PROJECT_DIR$/ui/helper.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -439,14 +436,7 @@
       <workItem from="1710076902738" duration="3337000" />
       <workItem from="1710121779356" duration="10222000" />
       <workItem from="1710248393381" duration="1087000" />
-      <workItem from="1710296186262" duration="14195000" />
-    </task>
-    <task id="LOCAL-00143" summary="修复MDC联系人">
-      <created>1706330911634</created>
-      <option name="number" value="00143" />
-      <option name="presentableId" value="LOCAL-00143" />
-      <option name="project" value="LOCAL" />
-      <updated>1706330911634</updated>
+      <workItem from="1710296186262" duration="19969000" />
     </task>
     <task id="LOCAL-00144" summary="定时器计数正常，但无法进入中断服务函数">
       <created>1706538251206</created>
@@ -784,7 +774,14 @@
       <option name="project" value="LOCAL" />
       <updated>1710077833687</updated>
     </task>
-    <option name="localTasksCounter" value="192" />
+    <task id="LOCAL-00192" summary="SI4732 FM TEST">
+      <created>1710314380062</created>
+      <option name="number" value="00192" />
+      <option name="presentableId" value="LOCAL-00192" />
+      <option name="project" value="LOCAL" />
+      <updated>1710314380063</updated>
+    </task>
+    <option name="localTasksCounter" value="193" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -814,7 +811,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="修复编译错误" />
     <MESSAGE value="时间校准" />
     <MESSAGE value="格式化" />
     <MESSAGE value="输入法说明" />
@@ -839,7 +835,8 @@
     <MESSAGE value="赞助" />
     <MESSAGE value="125" />
     <MESSAGE value="pre" />
-    <option name="LAST_COMMIT_MESSAGE" value="pre" />
+    <MESSAGE value="SI4732 FM TEST" />
+    <option name="LAST_COMMIT_MESSAGE" value="SI4732 FM TEST" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

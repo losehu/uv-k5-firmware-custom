@@ -537,8 +537,6 @@ void FM_ProcessKeys(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld)
 {
     uint8_t state = bKeyPressed + 2 * bKeyHeld;
 
-
-
     switch (Key)
     {
         case KEY_0:

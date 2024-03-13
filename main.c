@@ -117,7 +117,6 @@ void Main(void) {
 
     BOARD_Init();
 
-    RST_HIGH;
 
     boot_counter_10ms = 250;   // 2.5 sec
 #ifdef ENABLE_UART
@@ -144,61 +143,47 @@ void Main(void) {
     UI_DisplayClear();
     ST7565_BlitStatusLine();  // blank status line
     ST7565_BlitFullScreen();
-
+SI4732_Main();
     /**********启动***************/
 
 
 
-    uint8_t cmd[4] = {0x22, 0x01, 0x10, 0x05};//设置频率
+    uint8_t cmd[3] = {0x01, 0x10, 0x05};//设置频率
 
     // 发送POWER_UP命令
-    if (SI4732_WriteBuffer(cmd, 4) < 0)
-        show_uint32(9999, 0);
+  SI4732_WriteBuffer(cmd, 3) ;
     uint8_t a = 0;
     while (a != 128) {
-        a = SI4732_Read(1);
+        SI4732_ReadBuffer((uint8_t *) & a, 1);
+
+
         show_uint32((uint32_t) a, 0);
     }
     SYSTEM_DelayMs(100);
-//音量
-    uint8_t cmd_vol[7] = {0x22, 0x12, 0x00, 0x40, 0x00, 0x00, 0x3f};
-    if (SI4732_WriteBuffer(cmd_vol, 7) < 0)
-        show_uint32(8888, 0);
-    uint8_t b = SI4732_Read(1);
-    while (b != 128) {
-        b = SI4732_Read(1);
-        show_uint32((uint32_t) b, 0);
-    }
-    SYSTEM_DelayMs(100);
 
-//声道
-    uint8_t cmd_hear[7] = {0x22, 0x12, 0x00, 0x40, 0x01, 0x00, 0x00};
-    SI4732_WriteBuffer(cmd_hear, 7);
-    b = SI4732_Read(1);
-    while (b != 128) {
-        b = SI4732_Read(1);
-        show_uint32((uint32_t) b, 0);
-    }
-    SYSTEM_DelayMs(100);
+
+
 
 
 
     //设置频率
-    uint8_t cmd1[6] = {0x22, 0x20, 0x00, 0x24, 0x54, 0x00};//设置频率
-    if (SI4732_WriteBuffer(cmd1, 6) < 0)
-        show_uint32(8888, 0);
-    b = SI4732_Read(1);
+    uint8_t cmd1[5] = { 0x20, 0x00, 0x24, 0x54, 0x00};//设置频率
+    SI4732_WriteBuffer(cmd1, 5) ;
+    uint8_t b;
+    SI4732_ReadBuffer((uint8_t *) & b, 1);
+
     while (b != 128) {
-        b = SI4732_Read(1);
+        SI4732_ReadBuffer((uint8_t *) & b, 1);
         show_uint32((uint32_t) b, 0);
     }
     SYSTEM_DelayMs(100);
 //
     uint8_t c = 0;
     while (c != 0x81) {
-        uint8_t cmd3[3] = {0x22, 0x14,};
-        SI4732_WriteBuffer(cmd3, 2);
-        c = SI4732_Read(1);
+        uint8_t cmd3[1] = { 0x14,};
+        SI4732_WriteBuffer(cmd3, 1);
+        SI4732_ReadBuffer((uint8_t *) & c, 1);
+
         show_uint32((uint32_t) c, 0);
     }
     SYSTEM_DelayMs(100);
