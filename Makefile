@@ -66,7 +66,7 @@ ENABLE_WARNING 				  ?= 1
 ENABLE_MESSENGER              			?=0
 ENABLE_MESSENGER_DELIVERY_NOTIFICATION	?= 0
 ENABLE_MESSENGER_NOTIFICATION			?= 0
-
+ENABLE_4732 ?=1
 ENABLE_DOPPLER               =0
 #############################################################
 PACKED_FILE_SUFFIX = LOSEHU125
@@ -142,7 +142,9 @@ endif
 ifeq ($(ENABLE_DOPPLER),1)
     OBJS += driver/rtc.o
 endif
-
+ifeq ($(ENABLE_4732),1)
+    OBJS += app/4732.o
+endif
 ifeq ($(ENABLE_MDC1200),1)
     OBJS += app/mdc1200.o
 endif
@@ -354,6 +356,9 @@ ifeq ($(ENABLE_MESSENGER),1)
 endif
 ifeq ($(ENABLE_DOPPLER),1)
 	CFLAGS  += -DENABLE_DOPPLER
+endif
+ifeq ($(ENABLE_4732),1)
+	CFLAGS  += -DENABLE_4732
 endif
 ifeq ($(ENABLE_MESSENGER_DELIVERY_NOTIFICATION),1)
 	CFLAGS += -DENABLE_MESSENGER_DELIVERY_NOTIFICATION

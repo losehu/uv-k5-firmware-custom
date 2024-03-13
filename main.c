@@ -32,10 +32,14 @@
 #include "app/messenger.h"
 
 #ifdef ENABLE_DOPPLER
+
 #include "app/doppler.h"
+
 #endif
 #ifdef ENABLE_AM_FIX
+
 #include "am_fix.h"
+
 #endif
 
 #include "bsp/dp32g030/rtc.h"
@@ -43,6 +47,11 @@
 #ifdef ENABLE_TIMER
 #include "bsp/dp32g030/uart.h"
 #include "bsp/dp32g030/timer.h"
+#endif
+#ifdef ENABLE_4732
+
+#include "app/4732.h"
+
 #endif
 
 #include "audio.h"
@@ -62,7 +71,9 @@
 #include "driver/systick.h"
 
 #ifdef ENABLE_UART
+
 #include "driver/uart.h"
+
 #endif
 
 #include "app/spectrum.h"
@@ -79,7 +90,7 @@
 void _putchar(__attribute__((unused)) char c) {
 
 #ifdef ENABLE_UART
-    UART_Send((uint8_t *)&c, 1);
+    UART_Send((uint8_t *) &c, 1);
 #endif
 
 }
@@ -106,6 +117,7 @@ void Main(void) {
 
     BOARD_Init();
 
+    RST_HIGH;
 
     boot_counter_10ms = 250;   // 2.5 sec
 #ifdef ENABLE_UART
@@ -117,6 +129,111 @@ void Main(void) {
 
     memset(gDTMF_String, '-', sizeof(gDTMF_String));
     gDTMF_String[sizeof(gDTMF_String) - 1] = 0;
+
+
+#ifdef ENABLE_4732
+
+#include "bsp/dp32g030/gpio.h"
+#include "driver/gpio.h"
+#include "driver/i2c.h"
+#include "driver/system.h"
+#include "frequencies.h"
+#include "misc.h"
+
+    memset(gStatusLine, 0, sizeof(gStatusLine));
+    UI_DisplayClear();
+    ST7565_BlitStatusLine();  // blank status line
+    ST7565_BlitFullScreen();
+
+    /**********启动***************/
+
+
+
+    uint8_t cmd[4] = {0x22, 0x01, 0x10, 0x05};//设置频率
+
+    // 发送POWER_UP命令
+    if (SI4732_WriteBuffer(cmd, 4) < 0)
+        show_uint32(9999, 0);
+    uint8_t a = 0;
+    while (a != 128) {
+        a = SI4732_Read(1);
+        show_uint32((uint32_t) a, 0);
+    }
+    SYSTEM_DelayMs(100);
+//音量
+    uint8_t cmd_vol[7] = {0x22, 0x12, 0x00, 0x40, 0x00, 0x00, 0x3f};
+    if (SI4732_WriteBuffer(cmd_vol, 7) < 0)
+        show_uint32(8888, 0);
+    uint8_t b = SI4732_Read(1);
+    while (b != 128) {
+        b = SI4732_Read(1);
+        show_uint32((uint32_t) b, 0);
+    }
+    SYSTEM_DelayMs(100);
+
+//声道
+    uint8_t cmd_hear[7] = {0x22, 0x12, 0x00, 0x40, 0x01, 0x00, 0x00};
+    SI4732_WriteBuffer(cmd_hear, 7);
+    b = SI4732_Read(1);
+    while (b != 128) {
+        b = SI4732_Read(1);
+        show_uint32((uint32_t) b, 0);
+    }
+    SYSTEM_DelayMs(100);
+
+
+
+    //设置频率
+    uint8_t cmd1[6] = {0x22, 0x20, 0x00, 0x24, 0x54, 0x00};//设置频率
+    if (SI4732_WriteBuffer(cmd1, 6) < 0)
+        show_uint32(8888, 0);
+    b = SI4732_Read(1);
+    while (b != 128) {
+        b = SI4732_Read(1);
+        show_uint32((uint32_t) b, 0);
+    }
+    SYSTEM_DelayMs(100);
+//
+    uint8_t c = 0;
+    while (c != 0x81) {
+        uint8_t cmd3[3] = {0x22, 0x14,};
+        SI4732_WriteBuffer(cmd3, 2);
+        c = SI4732_Read(1);
+        show_uint32((uint32_t) c, 0);
+    }
+    SYSTEM_DelayMs(100);
+
+
+    GPIO_SetBit(&GPIOC->DATA, GPIOC_PIN_AUDIO_PATH);
+
+
+    while (1) {
+//        b = SI4732_Read(1);
+//
+//        while ((b<128)) {
+//            b = SI4732_Read(1);
+//            show_uint32((uint32_t) b, 0);
+//        }
+//        uint8_t cmd4[3] = {0x22, 0x22, 0x01};
+//        SI4732_WriteBuffer(cmd4, 3);
+//        uint8_t read_cmd4[8] = {0};
+//        SI4732_ReadBuffer(read_cmd4, 8);
+
+
+
+//        show_hex((uint32_t) read_cmd4[0], 0);
+//        show_hex((uint32_t) read_cmd4[1], 1);
+//        show_hex((uint32_t) read_cmd4[2], 2);
+//        show_hex((uint32_t) read_cmd4[3], 3);
+//        show_hex((uint32_t) read_cmd4[4], 4);
+//        show_hex((uint32_t) read_cmd4[5], 5);
+//        show_hex((uint32_t) read_cmd4[6], 6);
+        SYSTEM_DelayMs(100);
+
+
+    }
+#endif
+
 
     BK4819_Init();
 
@@ -161,7 +278,7 @@ void Main(void) {
 #if ENABLE_CHINESE_FULL == 0
     gMenuListCount = 52;
 #else
-    gMenuListCount=53;
+    gMenuListCount = 53;
 #endif
     gKeyReading0 = KEY_INVALID;
     gKeyReading1 = KEY_INVALID;
@@ -197,8 +314,8 @@ void Main(void) {
     while (boot_counter_10ms > 0 || (KEYBOARD_Poll() != KEY_INVALID)) {
 
         if (KEYBOARD_Poll() == KEY_EXIT
-#if ENABLE_CHINESE_FULL == 4
-            ||gEeprom.POWER_ON_DISPLAY_MODE == POWER_ON_DISPLAY_MODE_NONE
+            #if ENABLE_CHINESE_FULL == 4
+            || gEeprom.POWER_ON_DISPLAY_MODE == POWER_ON_DISPLAY_MODE_NONE
 #endif
                 ) {    // halt boot beeps
             boot_counter_10ms = 0;
