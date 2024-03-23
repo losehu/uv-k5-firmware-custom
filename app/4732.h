@@ -44,6 +44,9 @@ void SI4732_Main() ;
 void SI4732_WAIT_STATUS(uint8_t state);
 static void Key_FM(KeyboardState kbd) ;
 static void HandleUserInput() ;
+void SI4732_GET_INT_STATUS() ;
+void RSQ_GET();
+void     waitToSend();
 
 enum SI4732_MODE_T{
     FM,AM

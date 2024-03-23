@@ -157,7 +157,7 @@ KEY_Code_t KEYBOARD_Poll(void) {
 
     // Create I2C stop condition since we might have toggled I2C pins
     // This leaves GPIOA_PIN_KEYBOARD_4 and GPIOA_PIN_KEYBOARD_5 high
-    I2C_Stop();
+//    I2C_Stop();
 
     // Reset VOICE pins
     GPIO_ClearBit(&GPIOA->DATA, GPIOA_PIN_KEYBOARD_6);

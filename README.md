@@ -180,11 +180,11 @@
 
 如果这个项目对您有帮助,可以考虑赞助来支持开发工作。
 
-这是：[打赏名单](https://github.com/losehu/uv-k5-firmware-chinese/blob/main/payment/sponsors.md) 非常感谢各位的支持！！！
+这是：[打赏名单](https://losehu.com/sponsors/) 非常感谢各位的支持！！！
 
 打赏码：
 
-[![打赏码](https://github.com/losehu/uv-k5-firmware-chinese/blob/main/payment/show.png)](https://github.com/losehu/uv-k5-firmware-chinese/blob/main/payment/payment-codes.md)
+[![打赏码](https://github.com/losehu/uv-k5-firmware-chinese/blob/main/payment/show.png)](https://losehu.com/payment-codes/)
 
 
 

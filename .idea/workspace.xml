@@ -29,8 +29,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/4732.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/4732.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/4732.h" beforeDir="false" afterPath="$PROJECT_DIR$/app/4732.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/board.c" beforeDir="false" afterPath="$PROJECT_DIR$/board.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/keyboard.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/keyboard.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -437,6 +436,12 @@
       <workItem from="1710121779356" duration="10222000" />
       <workItem from="1710248393381" duration="1087000" />
       <workItem from="1710296186262" duration="19969000" />
+      <workItem from="1710382396405" duration="22085000" />
+      <workItem from="1710478930270" duration="23925000" />
+      <workItem from="1710555304389" duration="1061000" />
+      <workItem from="1710642041877" duration="7137000" />
+      <workItem from="1710658469468" duration="8094000" />
+      <workItem from="1710678673841" duration="50000" />
     </task>
     <task id="LOCAL-00144" summary="定时器计数正常，但无法进入中断服务函数">
       <created>1706538251206</created>
