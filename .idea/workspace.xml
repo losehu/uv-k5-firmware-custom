@@ -25,12 +25,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="SI4732 FM TEST">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/4732.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/4732.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/4732.h" beforeDir="false" afterPath="$PROJECT_DIR$/app/4732.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/driver/keyboard.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/keyboard.c" afterDir="false" />
-    </list>
+    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="SI4732 AM TEST" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -442,13 +437,7 @@
       <workItem from="1710642041877" duration="7137000" />
       <workItem from="1710658469468" duration="8094000" />
       <workItem from="1710678673841" duration="50000" />
-    </task>
-    <task id="LOCAL-00144" summary="定时器计数正常，但无法进入中断服务函数">
-      <created>1706538251206</created>
-      <option name="number" value="00144" />
-      <option name="presentableId" value="LOCAL-00144" />
-      <option name="project" value="LOCAL" />
-      <updated>1706538251206</updated>
+      <workItem from="1711202717491" duration="379000" />
     </task>
     <task id="LOCAL-00145" summary="使能NVIC">
       <created>1706538766420</created>
@@ -786,7 +775,14 @@
       <option name="project" value="LOCAL" />
       <updated>1710314380063</updated>
     </task>
-    <option name="localTasksCounter" value="193" />
+    <task id="LOCAL-00193" summary="SI4732 AM TEST">
+      <created>1711202826966</created>
+      <option name="number" value="00193" />
+      <option name="presentableId" value="LOCAL-00193" />
+      <option name="project" value="LOCAL" />
+      <updated>1711202826966</updated>
+    </task>
+    <option name="localTasksCounter" value="194" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -816,7 +812,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="时间校准" />
     <MESSAGE value="格式化" />
     <MESSAGE value="输入法说明" />
     <MESSAGE value="更新说明" />
@@ -841,7 +836,8 @@
     <MESSAGE value="125" />
     <MESSAGE value="pre" />
     <MESSAGE value="SI4732 FM TEST" />
-    <option name="LAST_COMMIT_MESSAGE" value="SI4732 FM TEST" />
+    <MESSAGE value="SI4732 AM TEST" />
+    <option name="LAST_COMMIT_MESSAGE" value="SI4732 AM TEST" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
