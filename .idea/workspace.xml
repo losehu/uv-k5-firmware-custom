@@ -25,23 +25,17 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="README_en.md">
+    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="english support">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chinese.h" beforeDir="false" afterPath="$PROJECT_DIR$/chinese.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dcs.c" beforeDir="false" afterPath="$PROJECT_DIR$/dcs.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/font.c" beforeDir="false" afterPath="$PROJECT_DIR$/font.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/font.h" beforeDir="false" afterPath="$PROJECT_DIR$/font.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/menu.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/menu.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/menu.h" beforeDir="false" afterPath="$PROJECT_DIR$/app/menu.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/spectrum.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/spectrum.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/uart.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/uart.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/driver/rtc.c" beforeDir="false" afterPath="$PROJECT_DIR$/driver/rtc.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/radio.c" beforeDir="false" afterPath="$PROJECT_DIR$/radio.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.c" beforeDir="false" afterPath="$PROJECT_DIR$/settings.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/helper.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/helper.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/main.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/menu.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/menu.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/menu.h" beforeDir="false" afterPath="$PROJECT_DIR$/ui/menu.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/scanner.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/scanner.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/welcome.c" beforeDir="false" afterPath="$PROJECT_DIR$/ui/welcome.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/font.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/uv-k5font/uv-k5font_full/font.xlsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -153,7 +147,7 @@
       <recent name="C:\Users\RUPC\Desktop\UV-K6\uv-k5-firmware-chinese\uv-k5font" />
     </key>
   </component>
-  <component name="RunManager" selected="Shell Script.win docker">
+  <component name="RunManager" selected="Makefile 目标.full">
     <configuration name="all" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="uv-k5-firmware-chinese" TARGET_NAME="all" CONFIG_NAME="all" version="1">
       <method v="2">
         <option name="CLION.COMPOUND.BUILD" enabled="true" />
@@ -320,6 +314,7 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Makefile 目标.full" />
         <item itemvalue="Makefile 目标.build" />
       </list>
     </recent_temporary>
@@ -455,14 +450,7 @@
       <workItem from="1710658469468" duration="8094000" />
       <workItem from="1710678673841" duration="50000" />
       <workItem from="1711202717491" duration="735000" />
-      <workItem from="1711273451165" duration="9183000" />
-    </task>
-    <task id="LOCAL-00146" summary="修复定时器">
-      <created>1706539065867</created>
-      <option name="number" value="00146" />
-      <option name="presentableId" value="LOCAL-00146" />
-      <option name="project" value="LOCAL" />
-      <updated>1706539065867</updated>
+      <workItem from="1711273451165" duration="11613000" />
     </task>
     <task id="LOCAL-00147" summary="重构多普勒">
       <created>1706969427625</created>
@@ -800,7 +788,14 @@
       <option name="project" value="LOCAL" />
       <updated>1711203181608</updated>
     </task>
-    <option name="localTasksCounter" value="195" />
+    <task id="LOCAL-00195" summary="english support">
+      <created>1711293639703</created>
+      <option name="number" value="00195" />
+      <option name="presentableId" value="LOCAL-00195" />
+      <option name="project" value="LOCAL" />
+      <updated>1711293639703</updated>
+    </task>
+    <option name="localTasksCounter" value="196" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -830,7 +825,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="输入法说明" />
     <MESSAGE value="更新说明" />
     <MESSAGE value="双语readme" />
     <MESSAGE value="README_en" />
@@ -855,7 +849,8 @@
     <MESSAGE value="SI4732 FM TEST" />
     <MESSAGE value="SI4732 AM TEST" />
     <MESSAGE value="README_en.md" />
-    <option name="LAST_COMMIT_MESSAGE" value="README_en.md" />
+    <MESSAGE value="english support" />
+    <option name="LAST_COMMIT_MESSAGE" value="english support" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -58,22 +58,22 @@ int Mid(uint16_t *array, uint8_t n) {
     }
     return sum / n;
 }
-
-static void UpdateBatteryInfo() {
-    for (uint8_t i = 0; i < 4; i++) {
-        BOARD_ADC_GetBatteryInfo(&gBatteryVoltages[i], &gBatteryCurrent);
-    }
-
-    uint16_t voltage = Mid(gBatteryVoltages, ARRAY_SIZE(gBatteryVoltages));
-    gBatteryDisplayLevel = 0;
-
-    for (int i = ARRAY_SIZE(gBatteryCalibration) - 1; i >= 0; --i) {
-        if (gBatteryCalibration[i] < voltage) {
-            gBatteryDisplayLevel = i + 1;
-            break;
-        }
-    }
-}
+//
+//static void UpdateBatteryInfo() {
+//    for (uint8_t i = 0; i < 4; i++) {
+//        BOARD_ADC_GetBatteryInfo(&gBatteryVoltages[i], &gBatteryCurrent);
+//    }
+//
+//    uint16_t voltage = Mid(gBatteryVoltages, ARRAY_SIZE(gBatteryVoltages));
+//    gBatteryDisplayLevel = 0;
+//
+//    for (int i = ARRAY_SIZE(gBatteryCalibration) - 1; i >= 0; --i) {
+//        if (gBatteryCalibration[i] < voltage) {
+//            gBatteryDisplayLevel = i + 1;
+//            break;
+//        }
+//    }
+//}
 
 #define F_MIN frequencyBandTable[0].lower
 #define F_MAX frequencyBandTable[BAND_N_ELEM - 1].upper
@@ -161,6 +161,7 @@ static uint8_t DBm2S(int dbm) {
 }
 
 uint16_t registersVault[128] = {0};
+#ifdef ENABLE_DOPPLER
 
 static void RegBackup() {
     for (int i = 0; i < 128; ++i) {
@@ -168,13 +169,14 @@ static void RegBackup() {
 
     }
 }
-
+#endif
+#ifdef ENABLE_DOPPLER
 static void RegRestore() {
     for (int i = 0; i < 128; ++i) {
         BK4819_WriteRegister(i, registersVault[i]);
     }
 }
-
+#endif
 static void ToggleAudio(bool on) {
 //    if (on == audioState) {
 //        return;

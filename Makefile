@@ -12,7 +12,7 @@ ENABLE_LTO                    ?= 1
 # ---- STOCK QUANSHENG FERATURES ----
 ENABLE_UART                   ?= 1
 ENABLE_AIRCOPY                ?= 0
-ENABLE_FMRADIO                ?= 1
+ENABLE_FMRADIO                ?= 0
 ENABLE_NOAA                   ?= 0
 ENABLE_VOICE                  ?= 0
 ENABLE_VOX                    ?= 1
@@ -52,7 +52,7 @@ ENABLE_UART_RW_BK_REGS 		  ?= 0
 ENABLE_AUDIO_BAR_DEFAULT      ?= 0
 ENABLE_EEPROM_TYPE        	   = 0
 ENABLE_CHINESE_FULL 		   = 0
-ENABLE_ENGLISH				    =1
+ENABLE_ENGLISH				    =0
 ENABLE_DOCK 		          ?= 0
 ENABLE_CUSTOM_SIDEFUNCTIONS   ?= 1
 ENABLE_SIDEFUNCTIONS_SEND     ?= 1
@@ -71,18 +71,21 @@ ENABLE_4732 ?=0
 ENABLE_DOPPLER               =0
 #############################################################
 PACKED_FILE_SUFFIX = LOSEHU125
+
 ifeq ($(ENABLE_CHINESE_FULL),0)
     ifeq ($(ENABLE_ENGLISH),1)
-		$(info E)
-		PACKED_FILE_SUFFIX := $(PACKED_FILE_SUFFIX)E
+        $(info E)
+        PACKED_FILE_SUFFIX := $(PACKED_FILE_SUFFIX)E
     endif
+
+
 endif
 
 ifeq ($(ENABLE_CHINESE_FULL),4)
     ifeq ($(ENABLE_ENGLISH),1)
-		$(info EK)
-		PACKED_FILE_SUFFIX := $(PACKED_FILE_SUFFIX)EK
-    else ifeq($(ENABLE_PINYIN),1)
+        $(info EK)
+        PACKED_FILE_SUFFIX := $(PACKED_FILE_SUFFIX)EK
+    else ifeq ($(ENABLE_PINYIN),1)
         $(info H)
         PACKED_FILE_SUFFIX := $(PACKED_FILE_SUFFIX)H
     else
@@ -90,6 +93,7 @@ ifeq ($(ENABLE_CHINESE_FULL),4)
         PACKED_FILE_SUFFIX := $(PACKED_FILE_SUFFIX)K
     endif
 endif
+
 
 CFLAGS =
 

@@ -534,7 +534,9 @@ void RADIO_SetupRegisters(bool switchToForeground) {
     BK4819_FilterBandwidth_t Bandwidth = gRxVfo->CHANNEL_BANDWIDTH;
     uint16_t InterruptMask;
     uint32_t Frequency;
+#if ENABLE_CHINESE_FULL==4 && !defined(ENABLE_ENGLISH)
     uint8_t read_tmp[2];
+#endif
     AUDIO_AudioPathOff();
 
     gEnableSpeaker = false;
@@ -772,8 +774,10 @@ void RADIO_ConfigureNOAA(void)
 #endif
 
 void RADIO_SetTxParameters(void) {
-    uint8_t read_tmp[2];
+#if ENABLE_CHINESE_FULL==4 && !defined(ENABLE_ENGLISH)
 
+    uint8_t read_tmp[2];
+#endif
     BK4819_FilterBandwidth_t Bandwidth = gCurrentVfo->CHANNEL_BANDWIDTH;
     AUDIO_AudioPathOff();
 

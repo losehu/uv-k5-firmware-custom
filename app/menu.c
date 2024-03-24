@@ -55,7 +55,7 @@
 #define ARRAY_SIZE(x) (sizeof(x) / sizeof(x[0]))
 #endif
 
-uint8_t gUnlockAllTxConfCnt;
+//uint8_t gUnlockAllTxConfCnt;
 
 #ifdef ENABLE_F_CAL_MENU
 void writeXtalFreqCal(const int32_t value, const bool update_eeprom)
@@ -1308,7 +1308,6 @@ static void MENU_Key_0_to_9(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
                             uint8_t SHOW_NUM =
                                     CHN_NOW_NUM - CHN_NOW_PAGE * 6 > 6 ? 6 : CHN_NOW_NUM - CHN_NOW_PAGE * 6;
                             if (Key > 0 && Key <= SHOW_NUM) {
-                                uint8_t tmp[5];
                                 if (edit_chn[edit_index + 1] == 1)edit[edit_index + 2] = '_';
                                 EEPROM_ReadBuffer(CHN_NOW_ADD + CHN_NOW_PAGE * 6 * 2 + 2 * (Key - 1),&edit [ edit_index], 2);
                                 edit_index += 2;
@@ -1909,7 +1908,7 @@ static void MENU_Key_UP_DOWN(bool bKeyPressed, bool bKeyHeld, int8_t Direction) 
                     }
                 }
 
-                if ((INPUT_MODE == 0 || INPUT_MODE == 1) && INPUT_STAGE == 0 || INPUT_MODE == 2 || INPUT_MODE == 3) {
+                if (((INPUT_MODE == 0 || INPUT_MODE == 1) && INPUT_STAGE == 0) || INPUT_MODE == 2 || INPUT_MODE == 3) {
                     INPUT_MODE_LAST = INPUT_MODE;
                     INPUT_MODE = 3;
 
@@ -1920,8 +1919,8 @@ static void MENU_Key_UP_DOWN(bool bKeyPressed, bool bKeyHeld, int8_t Direction) 
                     }
                     char c = edit[edit_index] + Direction;
                     while (c >= 32 && c <= 126) {
-                        if (c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z' ||
-                            c >= '0' && c <= '9') {    // choose next character
+                        if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z' )||
+                           ( c >= '0' && c <= '9')) {    // choose next character
                             c += Direction;
                         } else break;
                     }
@@ -2088,7 +2087,7 @@ void MENU_ProcessKeys(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
 #ifdef ENABLE_PINYIN
 
                     bool flag_space = true;
-                    if (INPUT_MODE == 0 && INPUT_STAGE > 0 || INPUT_MODE == 1 && INPUT_STAGE > 0)flag_space = false;
+                    if ((INPUT_MODE == 0 && INPUT_STAGE > 0 )|| (INPUT_MODE == 1 && INPUT_STAGE > 0))flag_space = false;
 #endif
 
 

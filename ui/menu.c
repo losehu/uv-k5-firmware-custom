@@ -1535,9 +1535,11 @@ void UI_ShowChineseMenu() {
 
     uint8_t size_menu = 0;
     uint8_t cnt_menu = 0;
+
+
+#if ENABLE_CHINESE_FULL == 4 && !defined(ENABLE_ENGLISH)
     uint8_t name[15];
     name[15] = 0;
-#if ENABLE_CHINESE_FULL == 4 && !defined(ENABLE_ENGLISH)
     EEPROM_ReadBuffer(0x028B0 + gMenuCursor * 14, name, 14);
     for (cnt_menu = 0; cnt_menu < 7 && name[cnt_menu]!= 0; cnt_menu++) {
         if (is_chn(/*MenuList[gMenuCursor].name[cnt_menu]*/name[cnt_menu]) != 255)//中文
@@ -1628,7 +1630,7 @@ uint32_t formatInt(uint32_t number) {//数字转拼音编码
 uint32_t get_num(const char *a) {//拼音转数字
     uint32_t num = 0;
     uint32_t bin = 100000;
-    for (int j = 0; j < strlen(a); j++) {
+    for (unsigned int j = 0; j < strlen(a); j++) {
         uint32_t now_num = 0;
         for (int i = 0; i < 8; ++i) {
             for (int k = 0; k < num_size[i]; ++k) {

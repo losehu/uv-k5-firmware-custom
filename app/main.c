@@ -661,13 +661,13 @@ static void MAIN_Key_UP_DOWN(bool bKeyPressed, bool bKeyHeld, int8_t Direction) 
             BACKLIGHT_TurnOn();
             UI_DisplayClear();
 #ifndef ENABLE_ENGLISH
-
-            UI_PrintStringSmall(获取数据, 0, 127, 2);
-            UI_PrintStringSmall(写频网址, 0, 127, 4);
+//获取数据
+            UI_PrintStringSmall("\xD0\xB4\xC8\xEB\xCA\xFD\xBE\xDD:", 0, 127, 2);
 #else
             UI_PrintStringSmall("GET DATA:", 0, 127, 2);
-            UI_PrintStringSmall("k5.vicicode.com", 0, 127, 4);
 #endif
+            UI_PrintStringSmall("k5.vicicode.com", 0, 127, 4);
+
             ST7565_BlitFullScreen();
             uint8_t cnt_i = 200;
             while (cnt_i) {

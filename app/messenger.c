@@ -555,8 +555,10 @@ void solve_sign(const uint16_t interrupt_bits) {
     const bool rx_finished = (interrupt_bits & BK4819_REG_02_FSK_RX_FINISHED) ? true : false;
 
     const uint16_t rx_sync_flags = BK4819_ReadRegister(0x0B);
-    const bool rx_sync_neg = (rx_sync_flags & (1u << 7)) ? true : false;
+#if defined(ENABLE_MDC1200)||defined(ENABLE_MESSENGER)
 
+    const bool rx_sync_neg = (rx_sync_flags & (1u << 7)) ? true : false;
+#endif
     if (rx_sync) {
 #ifdef ENABLE_MESSENGER
 
@@ -578,7 +580,9 @@ void solve_sign(const uint16_t interrupt_bits) {
 
     if (rx_fifo_almost_full) {
         const uint16_t count = BK4819_ReadRegister(BK4819_REG_5E) & (7u << 0);  // almost full threshold
+#if defined(ENABLE_MDC1200)||defined(ENABLE_MESSENGER)
         uint16_t read_reg[count];
+#endif
 #ifdef ENABLE_MDC1200
 
         {
