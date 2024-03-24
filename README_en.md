@@ -21,8 +21,9 @@ functions:
 
 * **Larger EEPROM chip**
 * **Automatic Doppler Shift**
-* **English Support (to be implemented...)**
-* **Chinese Input Method (under implementation...)**
+* **SI4732 Support (under implementation...)**
+* **English Support (under implementation...)**
+* **Chinese Input Method**
 * **GB22312 Chinese Interface, Channels**
 * **Spectrum Analyzer**
 * **MDC1200 Signaling, Contacts**
