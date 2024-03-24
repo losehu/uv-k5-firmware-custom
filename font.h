@@ -22,7 +22,7 @@
 extern const uint8_t gFontChinese_out[2261];
 #define CHN_FONT_WIDTH 11U
 #define CHN_FONT_HIGH 12U
-#if  ENABLE_CHINESE_FULL ==4
+#if  ENABLE_CHINESE_FULL ==4 &&!defined(ENABLE_ENGLISH)
 extern bool audio_keep_flag;
 
 #define MAX_EDIT_INDEX 13
@@ -37,14 +37,6 @@ extern const uint8_t gFontSmall[95 - 1][6];
 extern const uint8_t font4[1814];
 
 
-    #if ENABLE_CHINESE_FULL > 0
-        #if ENABLE_CHINESE_FULL==1
-            extern const uint8_t gFontChinese_out1[40960];
-        #elif ENABLE_CHINESE_FULL==2
-            extern const uint8_t gFontChinese_out2[40960];
-        #elif ENABLE_CHINESE_FULL==3
-            extern const uint8_t gFontChinese_out3[33564];
-        #endif
-    #endif
+
 #endif
 

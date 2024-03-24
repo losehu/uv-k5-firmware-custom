@@ -660,9 +660,14 @@ static void MAIN_Key_UP_DOWN(bool bKeyPressed, bool bKeyHeld, int8_t Direction) 
         if (!DOPPLER_FLAG) {
             BACKLIGHT_TurnOn();
             UI_DisplayClear();
-//            UI_PrintStringSmall(鍗槦鏁版嵁鏃犳晥, 0, 127, 0);
-            UI_PrintStringSmall(鑾峰彇鏁版嵁, 0, 127, 2);
-            UI_PrintStringSmall(鍐欓缃戝潃, 0, 127, 4);
+#ifndef ENABLE_ENGLISH
+
+            UI_PrintStringSmall(获取数据, 0, 127, 2);
+            UI_PrintStringSmall(写频网址, 0, 127, 4);
+#else
+            UI_PrintStringSmall("GET DATA:", 0, 127, 2);
+            UI_PrintStringSmall("k5.vicicode.com", 0, 127, 4);
+#endif
             ST7565_BlitFullScreen();
             uint8_t cnt_i = 200;
             while (cnt_i) {

@@ -17,10 +17,10 @@
 #include "font.h"
 
 bool show_move_flag = false;
-#if  ENABLE_CHINESE_FULL == 4
+#if  ENABLE_CHINESE_FULL == 4 && !defined(ENABLE_ENGLISH)
 bool audio_keep_flag=false;
 #endif
-#if  ENABLE_CHINESE_FULL == 0
+#if  ENABLE_CHINESE_FULL == 0 || defined(ENABLE_ENGLISH)
 
 const uint8_t gFontBigDigits[11][20] =
         {

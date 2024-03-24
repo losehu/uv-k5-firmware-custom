@@ -383,7 +383,7 @@ void SETTINGS_FetchChannelName(char *s, const int channel)
         return;
 //    EEPROM_ReadBuffer(0x0F50 + (channel * 16), s + 0, 8);
 
-#if ENABLE_CHINESE_FULL==4
+#if ENABLE_CHINESE_FULL==4 && !defined(ENABLE_ENGLISH)
 
     EEPROM_ReadBuffer(0x0F50 + (channel * 16), s, 16);
     int i;

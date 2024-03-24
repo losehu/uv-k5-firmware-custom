@@ -163,7 +163,7 @@ void UI_DisplayAudioBar(void) {
     uint8_t bars = 13 * sqrt_level / 124;
 
     uint8_t *p_line = gFrameBuffer[line];
-#if ENABLE_CHINESE_FULL == 4
+#if ENABLE_CHINESE_FULL == 4 &&!defined(ENABLE_ENGLISH)
     if(audio_keep_flag)
         {
 //            audio_keep_flag=false;
@@ -275,7 +275,7 @@ UI_PrintStringSmall(str, 2, 0, line);
 
     uint8_t *pLine = (gEeprom.RX_VFO == 0) ? gFrameBuffer[2] : gFrameBuffer[6];
     if (now)
-#if ENABLE_CHINESE_FULL == 0
+#if ENABLE_CHINESE_FULL == 0 || defined(ENABLE_ENGLISH)
         memset(pLine, 0, 23);
 
     DrawSmallAntennaAndBars(pLine, Level);
@@ -377,8 +377,16 @@ void UI_DisplayMain(void) {
 
         UI_PrintStringSmall("to unlock",    0, LCD_WIDTH, 3);
 #else
+#ifdef ENABLE_ENGLISH
+        UI_PrintStringSmall("press # long", 0, LCD_WIDTH, 1);
+
+
+        UI_PrintStringSmall("to unlock",    0, LCD_WIDTH, 3);
+#else
 //长按 # 键解锁
+
         UI_PrintStringSmall(长按井键解锁, 0, LCD_WIDTH, 1);
+#endif
 
 #endif
 
@@ -583,7 +591,7 @@ if (!gDTMF_InputMode) {
 
                 const ChannelAttributes_t att = gMR_ChannelAttributes[gEeprom.ScreenChannel[vfo_num]];
                 if (att.scanlist1) {
-#if ENABLE_CHINESE_FULL != 4
+#if ENABLE_CHINESE_FULL != 4|| defined(ENABLE_ENGLISH)
                     memcpy(p_line0 + 115, BITMAP_ScanList1, sizeof(BITMAP_ScanList1));
 #else
                     if(IS_MR_CHANNEL(gEeprom.ScreenChannel[vfo_num])      )
@@ -596,7 +604,7 @@ if (!gDTMF_InputMode) {
 
 
                 if (att.scanlist2) {
-#if ENABLE_CHINESE_FULL != 4
+#if ENABLE_CHINESE_FULL != 4 || defined(ENABLE_ENGLISH)
                     memcpy(p_line0 + 121, BITMAP_ScanList2, sizeof(BITMAP_ScanList2));
 #else
                     if(IS_MR_CHANNEL(gEeprom.ScreenChannel[vfo_num])        )
@@ -652,19 +660,19 @@ if (!gDTMF_InputMode) {
                         }
 
                         if (gEeprom.CHANNEL_DISPLAY_MODE == MDF_NAME) {
-#if ENABLE_CHINESE_FULL == 4
+#if ENABLE_CHINESE_FULL == 4&&! defined(ENABLE_ENGLISH)
                             show_move_flag=1;
 #endif
                             UI_PrintStringSmall(String, 32, 0, line);
                         } else {
-#if ENABLE_CHINESE_FULL == 4
+#if ENABLE_CHINESE_FULL == 4 && !defined(ENABLE_ENGLISH)
                             show_move_flag=1;
 #endif
                             UI_PrintStringSmall(String, 32 + 4, 0, line);
 
                             // show the channel frequency below the channel number/name
                             sprintf(String, "%03u.%05u", frequency / 100000, frequency % 100000);
-#if ENABLE_CHINESE_FULL != 4
+#if ENABLE_CHINESE_FULL != 4 || defined(ENABLE_ENGLISH)
                             UI_PrintStringSmall(String, 32 + 4, 0, line + 1);
 #else
                             UI_PrintStringSmall(String, 32 + 4, 0, line + 2);
@@ -731,7 +739,7 @@ if (!gDTMF_InputMode) {
 #endif
             }
             if (Level) {
-#if ENABLE_CHINESE_FULL != 4
+#if ENABLE_CHINESE_FULL != 4 || defined(ENABLE_ENGLISH)
                 DrawSmallAntennaAndBars(p_line1 + LCD_WIDTH, Level);
 #else
                 if(IS_MR_CHANNEL(gEeprom.ScreenChannel[vfo_num]) )
@@ -767,7 +775,7 @@ else
                 s = gModulationStr[mod];
                 break;
         }
-#if ENABLE_CHINESE_FULL != 4
+#if ENABLE_CHINESE_FULL != 4 || defined(ENABLE_ENGLISH)
         UI_PrintStringSmall(s, LCD_WIDTH + 24, 0, line + 1); //中文信道1
 #else
         if(IS_MR_CHANNEL(gEeprom.ScreenChannel[vfo_num])       )
@@ -786,7 +794,7 @@ else
             const unsigned int i = vfoInfo->OUTPUT_POWER % 3;
 
 
-#if ENABLE_CHINESE_FULL != 4
+#if ENABLE_CHINESE_FULL != 4 || defined(ENABLE_ENGLISH)
             UI_PrintStringSmall(pwr_list[i], LCD_WIDTH + 46, 0, line + 1); //中文信道1
 #else
 
@@ -804,7 +812,7 @@ else
             const char dir_list[][2] = {"", "+", "-"};
             const unsigned int i = vfoInfo->TX_OFFSET_FREQUENCY_DIRECTION % 3;
 
-#if ENABLE_CHINESE_FULL != 4
+#if ENABLE_CHINESE_FULL != 4 || defined(ENABLE_ENGLISH)
             UI_PrintStringSmall(dir_list[i], LCD_WIDTH + 54, 0, line + 1);//中文信道1
 #else
             if(IS_MR_CHANNEL(gEeprom.ScreenChannel[vfo_num])   &&!(FUNCTION_IsRx() && gEeprom.RX_VFO == vfo_num  )    &&!( gCurrentFunction == FUNCTION_TRANSMIT&&activeTxVFO == vfo_num)  )
@@ -816,7 +824,7 @@ else
 
         // show the TX/RX reverse symbol
         if (vfoInfo->FrequencyReverse) {
-#if ENABLE_CHINESE_FULL != 4
+#if ENABLE_CHINESE_FULL != 4 || defined(ENABLE_ENGLISH)
             UI_PrintStringSmall("R", LCD_WIDTH + 62, 0, line + 1);//中文信道1
 
 #else
@@ -829,7 +837,7 @@ else
         }
         {    // show the narrow band symbol
             if (vfoInfo->CHANNEL_BANDWIDTH == BANDWIDTH_NARROW) {
-#if ENABLE_CHINESE_FULL != 4
+#if ENABLE_CHINESE_FULL != 4 || defined(ENABLE_ENGLISH)
 
                 UI_PrintStringSmall("N", LCD_WIDTH + 70, 0, line + 1);
 #else
@@ -846,7 +854,7 @@ else
         // show the DTMF decoding symbol
         if (vfoInfo->DTMF_DECODING_ENABLE || gSetting_KILLED)
             {
-#if ENABLE_CHINESE_FULL != 4
+#if ENABLE_CHINESE_FULL != 4 || defined(ENABLE_ENGLISH)
             UI_PrintStringSmall("DTMF", LCD_WIDTH + 78, 0, line + 1);//中文信道1
 #else
 
@@ -861,7 +869,7 @@ else
 #endif
         // show the audio scramble symbol
         if (vfoInfo->SCRAMBLING_TYPE > 0/* && gSetting_ScrambleEnable*/) {
-#if ENABLE_CHINESE_FULL != 4
+#if ENABLE_CHINESE_FULL != 4 || defined(ENABLE_ENGLISH)
             UI_PrintStringSmall("ENC", LCD_WIDTH + 106, 0, line + 1);//中文信道1
 #else
             if(IS_MR_CHANNEL(gEeprom.ScreenChannel[vfo_num])        )

@@ -149,8 +149,14 @@ const t_menu_item MenuList[] =
         };
 
 #ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
-#if ENABLE_CHINESE_FULL==0
+#if ENABLE_CHINESE_FULL==0 || defined(ENABLE_ENGLISH)
+#ifdef ENABLE_ENGLISH
+const char gSubMenu_W_N[][7] =//7
+
+#else
 const char gSubMenu_W_N[][3] =//7
+
+#endif
 #else
         const char gSubMenu_W_N[][5] =//7
 #endif
@@ -168,11 +174,14 @@ const char gSubMenu_PONMSG[][5]={
         信息
 };
 #endif
-#if ENABLE_CHINESE_FULL != 4
-const char gSubMenu_SFT_D[][10] =//4
+#if ENABLE_CHINESE_FULL != 4 || defined(ENABLE_ENGLISH)
+#ifdef ENABLE_ENGLISH
+const char gSubMenu_SFT_D[][4] =
+
 #else
-
-
+const char gSubMenu_SFT_D[][10] =//4
+#endif
+#else
         const char gSubMenu_SFT_D[][16] =//4
 #endif
         {
@@ -186,8 +195,14 @@ const char gSubMenu_SFT_D[][10] =//4
         };
 
 
-#if ENABLE_CHINESE_FULL != 4
+#if ENABLE_CHINESE_FULL != 4 || defined(ENABLE_ENGLISH)
+#ifdef ENABLE_ENGLISH
+const char gSubMenu_OFF_ON[][4] =
+
+#else
 const char gSubMenu_OFF_ON[][3] =//4
+#endif
+
 #else
         const char gSubMenu_OFF_ON[][5] =//4
 #endif
@@ -197,7 +212,8 @@ const char gSubMenu_OFF_ON[][3] =//4
                 关闭,
                 开启
         };
-#if ENABLE_CHINESE_FULL != 4
+#if ENABLE_CHINESE_FULL != 4 || defined(ENABLE_ENGLISH)
+
 const char gSubMenu_SAVE[][4] =//4
 #else
         const char gSubMenu_SAVE[][6] =//4
@@ -216,8 +232,8 @@ const char gSubMenu_SAVE[][4] =//4
                 四级
 
         };
-#if ENABLE_CHINESE_FULL != 4
-const char gSubMenu_TOT[][5] = //7
+#if ENABLE_CHINESE_FULL != 4 || defined(ENABLE_ENGLISH)
+const char gSubMenu_TOT[][7] = //7
 #else
         const char gSubMenu_TOT[][6] = //7
 #endif
@@ -270,8 +286,14 @@ const char gSubMenu_VOICE[][4] =
     "ENG"
 };
 #endif
-#if ENABLE_CHINESE_FULL != 4
+#if ENABLE_CHINESE_FULL != 4 || defined(ENABLE_ENGLISH)
+#ifdef ENABLE_ENGLISH
+const char gSubMenu_SC_REV[][8] =//8
+
+#else
 const char gSubMenu_SC_REV[][10] =//8
+#endif
+
 #else
         const char gSubMenu_SC_REV[][18] =//8
 #endif
@@ -305,8 +327,14 @@ const char gSubMenu_AL_MOD[][5] =
 };
 #endif
 #ifdef ENABLE_DTMF_CALLING
-#if ENABLE_CHINESE_FULL!=4
+#if ENABLE_CHINESE_FULL!=4 || defined(ENABLE_ENGLISH)
+
+#ifdef ENABLE_ENGLISH
+const char gSubMenu_D_RSP[][11] =//11
+
+#else
 const char gSubMenu_D_RSP[][10] =//11
+#endif
 #else
 const char gSubMenu_D_RSP[][18] =//11
 #endif
@@ -337,8 +365,15 @@ const char *const gSubMenu_PTT_ID[] =
         };
 
 
-#if ENABLE_CHINESE_FULL != 4
+#if ENABLE_CHINESE_FULL != 4 || defined(ENABLE_ENGLISH)
+
+
+#ifdef ENABLE_ENGLISH
+const char gSubMenu_ROGER[][15] =
+
+#else
 const char gSubMenu_ROGER[][13] =
+#endif
 #else
         const char gSubMenu_ROGER[][15] =
 #endif
@@ -354,8 +389,15 @@ const char gSubMenu_ROGER[][13] =
                 MDC首尾音,
                 MDC首音加ROGER
         };
-#if ENABLE_CHINESE_FULL != 4
+#if ENABLE_CHINESE_FULL != 4 || defined(ENABLE_ENGLISH)
+
+#ifdef ENABLE_ENGLISH
+const char gSubMenu_RESET[][4] =//4
+
+#else
 const char gSubMenu_RESET[][6] =//4
+#endif
+
 #else
         const char gSubMenu_RESET[][11] =//4
 #endif
@@ -379,8 +421,14 @@ const char *const gSubMenu_F_LOCK[] =
                 禁用全部,
                 解锁全部,
         };
-#if ENABLE_CHINESE_FULL != 4
+#if ENABLE_CHINESE_FULL != 4 || defined(ENABLE_ENGLISH)
+
+#ifdef ENABLE_ENGLISH
+const char gSubMenu_BACKLIGHT[][7] =//7
+
+#else
 const char gSubMenu_BACKLIGHT[][5] =//7
+#endif
 #else
         const char gSubMenu_BACKLIGHT[][6] =//7
 #endif
@@ -403,8 +451,15 @@ const char gSubMenu_BACKLIGHT[][5] =//7
                 开启
 
         };
-#if ENABLE_CHINESE_FULL != 4
+#if ENABLE_CHINESE_FULL != 4 || defined(ENABLE_ENGLISH)
+
+
+#ifdef ENABLE_ENGLISH
+const char gSubMenu_RX_TX[][6] =//6
+
+#else
 const char gSubMenu_RX_TX[][7] =//6
+#endif
 #else
         const char gSubMenu_RX_TX[][12] =//6
 #endif
@@ -673,7 +728,7 @@ void UI_DisplayMenu(void) {
 #endif
 
 
-#if ENABLE_CHINESE_FULL == 0
+#if ENABLE_CHINESE_FULL == 0 || defined(ENABLE_ENGLISH)
             else if (gSubMenuSelection < 105)
                 sprintf(String, "D%03oN", DCS_Options[gSubMenuSelection - 1]);
             else
@@ -712,7 +767,7 @@ void UI_DisplayMenu(void) {
 #endif
 
             else {
-#if ENABLE_CHINESE_FULL == 0
+#if ENABLE_CHINESE_FULL == 0 || defined(ENABLE_ENGLISH)
                 sprintf(String, "%u.%uHz", CTCSS_Options[gSubMenuSelection - 1] / 10,
                         CTCSS_Options[gSubMenuSelection - 1] % 10);
 #else
@@ -848,7 +903,7 @@ void UI_DisplayMenu(void) {
                 UI_PrintStringSmall(String, menu_item_x1 - 12, menu_item_x2, 5);
             }
             SETTINGS_FetchChannelName(String, gSubMenuSelection);
-#if ENABLE_CHINESE_FULL == 4
+#if ENABLE_CHINESE_FULL == 4 && !defined(ENABLE_ENGLISH)
             show_move_flag=1;
 #endif
             UI_PrintStringSmall(String[0] ? String : "--", menu_item_x1 - 12, menu_item_x2, 3);
@@ -902,7 +957,7 @@ void UI_DisplayMenu(void) {
                 if (!gIsInSubMenu || edit_index < 0) {    // show the channel name
                     SETTINGS_FetchChannelName(String, gSubMenuSelection);
                     char *pPrintStr = String[0] ? String : "--";
-#if ENABLE_CHINESE_FULL == 4
+#if ENABLE_CHINESE_FULL == 4 && !defined(ENABLE_ENGLISH)
                     show_move_flag=1;
 #endif
                     UI_PrintStringSmall(pPrintStr, menu_item_x1 - 12, menu_item_x2, 3);
@@ -910,7 +965,7 @@ void UI_DisplayMenu(void) {
                 }
 
 //
-#if ENABLE_CHINESE_FULL == 4 && !defined(ENABLE_PINYIN)
+#if ENABLE_CHINESE_FULL == 4 && !defined(ENABLE_PINYIN) && !defined(ENABLE_ENGLISH)
 
                     else if (CHINESE_JUDGE(tmp_name, strlen(tmp_name))) {
                     edit_index = -1;
@@ -920,7 +975,7 @@ void UI_DisplayMenu(void) {
 #endif
 
 
-#if ENABLE_CHINESE_FULL == 4
+#if ENABLE_CHINESE_FULL == 4 && !defined(ENABLE_ENGLISH)
                     show_move_flag=1;
 #endif
                     UI_PrintStringSmall(edit, menu_item_x1 - 12, menu_item_x2, 3);
@@ -1384,7 +1439,7 @@ void UI_DisplayMenu(void) {
         // channel number
         UI_PrintStringSmall(pPrintStr, menu_item_x1 - 12, menu_item_x2, 2);
 
-#if ENABLE_CHINESE_FULL == 4
+#if ENABLE_CHINESE_FULL == 4 && !defined(ENABLE_ENGLISH)
         show_move_flag=1;
 #endif
         SETTINGS_FetchChannelName(String, gSubMenuSelection);
@@ -1471,15 +1526,19 @@ void UI_DisplayMenu(void) {
 
 
 void UI_ShowChineseMenu() {
+#ifdef ENABLE_ENGLISH
+    uint8_t size_menu = strlen(MenuList[gMenuCursor].name)*7;
 
+    UI_PrintStringSmall(MenuList[gMenuCursor].name, size_menu < 48 ? (48 - size_menu) / 2 : 0, 0, 0);
+
+#else
 
     uint8_t size_menu = 0;
     uint8_t cnt_menu = 0;
     uint8_t name[15];
     name[15] = 0;
+#if ENABLE_CHINESE_FULL == 4 && !defined(ENABLE_ENGLISH)
     EEPROM_ReadBuffer(0x028B0 + gMenuCursor * 14, name, 14);
-#if ENABLE_CHINESE_FULL == 4
-
     for (cnt_menu = 0; cnt_menu < 7 && name[cnt_menu]!= 0; cnt_menu++) {
         if (is_chn(/*MenuList[gMenuCursor].name[cnt_menu]*/name[cnt_menu]) != 255)//中文
 #else
@@ -1507,7 +1566,7 @@ void UI_ShowChineseMenu() {
     UI_PrintStringSmall(MenuList[gMenuCursor].name, size_menu < 48 ? (48 - size_menu) / 2 : 0, 0, 0);
 
 #endif
-
+#endif
 }
 
 #ifdef ENABLE_PINYIN

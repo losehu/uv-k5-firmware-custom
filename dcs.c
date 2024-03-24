@@ -32,7 +32,7 @@ const uint16_t CTCSS_Options[50] = {
 };
 #else
 //CTCSS Hz * 10
-#if ENABLE_CHINESE_FULL == 0
+#if ENABLE_CHINESE_FULL == 0 || defined(ENABLE_ENGLISH)
 const uint16_t CTCSS_Options[50] = {
         670, 693, 719, 744, 770, 797, 825, 854, 885, 915,
         948, 974, 1000, 1035, 1072, 1109, 1148, 1188, 1230, 1273,
@@ -43,7 +43,7 @@ const uint16_t CTCSS_Options[50] = {
 #endif
 #endif
 
-#if ENABLE_CHINESE_FULL == 0
+#if ENABLE_CHINESE_FULL == 0|| defined(ENABLE_ENGLISH)
 
 const uint16_t DCS_Options[104] = {
         0x0013, 0x0015, 0x0016, 0x0019, 0x001A, 0x001E, 0x0023, 0x0027,
@@ -75,7 +75,7 @@ static uint32_t DCS_CalculateGolay(uint32_t CodeWord) {
 
 uint32_t DCS_GetGolayCodeWord(DCS_CodeType_t CodeType, uint8_t Option) {
 
-#if ENABLE_CHINESE_FULL == 0
+#if ENABLE_CHINESE_FULL == 0 || defined(ENABLE_ENGLISH)
     uint32_t Code = DCS_CalculateGolay(DCS_Options[Option] + 0x800U);
 
 #else
@@ -103,7 +103,7 @@ uint8_t DCS_GetCdcssCode(uint32_t Code) {
 
 
             for (j = 0; j < 104; j++) {
-#if ENABLE_CHINESE_FULL == 0
+#if ENABLE_CHINESE_FULL == 0 || defined(ENABLE_ENGLISH)
                 if (DCS_Options[j] == (Code & 0x1FF))
 
 #else
@@ -135,7 +135,7 @@ uint8_t DCS_GetCtcssCode(int Code) {
 
     for (i = 0; i < 50; i++) {
 
-#if ENABLE_CHINESE_FULL == 0
+#if ENABLE_CHINESE_FULL == 0 || defined(ENABLE_ENGLISH)
         int Delta = Code - CTCSS_Options[i];
         if (Delta < 0)
             Delta = -(Code - CTCSS_Options[i]);

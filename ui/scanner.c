@@ -52,7 +52,7 @@ void UI_DisplayScanner(void) {
 
         sprintf(String, 模拟亚音":%u.%uHz", gScanCssResultCode_all/10, gScanCssResultCode_all% 10);
 #else
-#if ENABLE_CHINESE_FULL == 0
+#if ENABLE_CHINESE_FULL == 0 || defined(ENABLE_ENGLISH)
         sprintf(String, 模拟亚音":%u.%uHz", CTCSS_Options[gScanCssResultCode] / 10,
                 CTCSS_Options[gScanCssResultCode] % 10);
 
@@ -68,7 +68,7 @@ void UI_DisplayScanner(void) {
         pPrintStr = String;
     } else {
 //数字亚音
-#if ENABLE_CHINESE_FULL == 0
+#if ENABLE_CHINESE_FULL == 0 || defined(ENABLE_ENGLISH)
         sprintf(String, 数字亚音":D%03oN", DCS_Options[gScanCssResultCode]);
 #else
         uint8_t read_tmp[2];
@@ -93,7 +93,7 @@ void UI_DisplayScanner(void) {
 
 //存置
             strcpy(String, 存置了);
-#if ENABLE_CHINESE_FULL != 4
+#if ENABLE_CHINESE_FULL != 4 || defined(ENABLE_ENGLISH)
 
             UI_GenerateChannelStringEx(String + 3, gShowChPrefix, gScanChannel);
 #else
@@ -106,7 +106,7 @@ void UI_DisplayScanner(void) {
 
             //扫描
             strcpy(String, 扫描);
-#if ENABLE_CHINESE_FULL != 4
+#if ENABLE_CHINESE_FULL != 4 || defined(ENABLE_ENGLISH)
             memset(String + 2, '.', (gScanProgressIndicator & 7) + 1);
 
 #else

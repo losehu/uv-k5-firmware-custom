@@ -630,7 +630,7 @@ void RADIO_SetupRegisters(bool switchToForeground) {
 
                 case CODE_TYPE_CONTINUOUS_TONE:
 
-#if ENABLE_CHINESE_FULL == 0
+#if ENABLE_CHINESE_FULL == 0 ||defined(ENABLE_ENGLISH)
                     BK4819_SetCTCSSFrequency(CTCSS_Options[Code]);
 #else
                     EEPROM_ReadBuffer(0x02C00+(Code)*2, read_tmp, 2);
@@ -823,7 +823,7 @@ void RADIO_SetTxParameters(void) {
             break;
 
         case CODE_TYPE_CONTINUOUS_TONE:
-#if ENABLE_CHINESE_FULL == 0
+#if ENABLE_CHINESE_FULL == 0||defined(ENABLE_ENGLISH)
             BK4819_SetCTCSSFrequency(CTCSS_Options[gCurrentVfo->pTX->Code]);
 #else
 

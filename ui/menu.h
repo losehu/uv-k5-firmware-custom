@@ -26,7 +26,7 @@
 typedef struct {
     VOICE_ID_t  voice_id;
     uint8_t     menu_id;
-#if ENABLE_CHINESE_FULL==0
+#if ENABLE_CHINESE_FULL==0 || defined(ENABLE_ENGLISH)
     const char name[7]; // 使用指针而不是固定长度数组
 
 
@@ -155,22 +155,34 @@ extern const char        gSubMenu_PONMSG[3][5];
 #endif
 
 //extern const char        gSubMenu_TXP[3][2];//5
-#if ENABLE_CHINESE_FULL!=4
+#if ENABLE_CHINESE_FULL!=4 || defined(ENABLE_ENGLISH)
+
+#ifdef ENABLE_ENGLISH
+extern const char        gSubMenu_SFT_D[3][4];//3
+#else
 extern const char        gSubMenu_SFT_D[3][10];//3
+#endif
 #else
 
 extern const char        gSubMenu_SFT_D[3][16];//3
 #endif
 #ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
-#if ENABLE_CHINESE_FULL==0
+#if ENABLE_CHINESE_FULL==0 || defined(ENABLE_ENGLISH)
+#ifdef ENABLE_ENGLISH
+extern const char        gSubMenu_W_N[2][7];//7
+#else
 extern const char        gSubMenu_W_N[2][3];//7
+#endif
 #else
 extern const char        gSubMenu_W_N[2][5];//7
 #endif
 #endif
 #if ENABLE_CHINESE_FULL!=4
+#ifdef ENABLE_ENGLISH
+extern const char        gSubMenu_OFF_ON[2][4];//4
+#else
 extern const char        gSubMenu_OFF_ON[2][3];//4
-
+#endif
 #else
 extern const char        gSubMenu_OFF_ON[2][5];//4
 #endif
@@ -180,7 +192,7 @@ extern const char        gSubMenu_SAVE[5][4];//4
 extern const char        gSubMenu_SAVE[5][6];//4
 #endif
 #if ENABLE_CHINESE_FULL!=4
-extern const char        gSubMenu_TOT[11][5];//7
+extern const char        gSubMenu_TOT[11][7];//7
 #else
 extern const char        gSubMenu_TOT[11][6];//7
 #endif
@@ -190,7 +202,7 @@ extern const char*        const gSubMenu_RXMode[4];
 extern const char    gSubMenu_VOICE[3][4];
 #endif
 #if ENABLE_CHINESE_FULL!=4
-extern const char        gSubMenu_SC_REV[3][10];//8
+extern const char        gSubMenu_SC_REV[3][8];//8
 #else
 extern const char        gSubMenu_SC_REV[3][18];//8
 #endif
@@ -200,7 +212,12 @@ extern const char    gSubMenu_AL_MOD[2][5];
 #endif
 #ifdef ENABLE_DTMF_CALLING
 #if ENABLE_CHINESE_FULL!=4
+
+#ifdef ENABLE_ENGLISH
+extern const char        gSubMenu_D_RSP[4][11];//11
+#else
 extern const char        gSubMenu_D_RSP[4][10];//11
+#endif
 #else
 extern const char        gSubMenu_D_RSP[4][18];//11
 #endif
@@ -208,23 +225,47 @@ extern const char        gSubMenu_D_RSP[4][18];//11
 
 extern const char*    const   gSubMenu_PTT_ID[5];
 #if ENABLE_CHINESE_FULL!=4
+
+#ifdef ENABLE_ENGLISH
+extern const char        gSubMenu_ROGER[6][15];
+#else
 extern const char        gSubMenu_ROGER[6][13];
+#endif
+
 #else
 extern const char        gSubMenu_ROGER[6][15];
 #endif
 #if ENABLE_CHINESE_FULL!=4
+#ifdef ENABLE_ENGLISH
+extern const char        gSubMenu_RESET[2][4];//4
+#else
 extern const char        gSubMenu_RESET[2][6];//4
+#endif
+
 #else
 extern const char        gSubMenu_RESET[2][11];//4
 #endif
 extern const char*   const    gSubMenu_F_LOCK[F_LOCK_LEN];
 #if ENABLE_CHINESE_FULL!=4
+
+
+#ifdef ENABLE_ENGLISH
+extern const char        gSubMenu_BACKLIGHT[8][7];//7
+#else
 extern const char        gSubMenu_BACKLIGHT[8][5];//7
+#endif
 #else
 extern const char        gSubMenu_BACKLIGHT[8][6];//7
 #endif
 #if ENABLE_CHINESE_FULL!=4
+
+#ifdef ENABLE_ENGLISH
+extern const char        gSubMenu_RX_TX[4][6];//6
+
+#else
 extern const char        gSubMenu_RX_TX[4][7];//6
+#endif
+
 #else
 extern const char        gSubMenu_RX_TX[4][12];//6
 #endif
