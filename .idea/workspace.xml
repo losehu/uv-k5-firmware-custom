@@ -13,6 +13,7 @@
     <generated>
       <config projectName="uv-k5-firmware-chinese" targetName="debug" />
       <config projectName="uv-k5-firmware-chinese" targetName="flash" />
+      <config projectName="uv-k5-firmware-chinese" targetName="Makefile" />
       <config projectName="uv-k5-firmware-chinese" targetName="build" />
       <config projectName="uv-k5-firmware-chinese" targetName="full" />
       <config projectName="uv-k5-firmware-chinese" targetName="all" />
@@ -25,7 +26,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="warning fix" />
+    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="doc">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -137,6 +141,16 @@
     </key>
   </component>
   <component name="RunManager" selected="Makefile 目标.full">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Makefile" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="uv-k5-firmware-chinese" TARGET_NAME="Makefile" CONFIG_NAME="Makefile" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="all" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="uv-k5-firmware-chinese" TARGET_NAME="all" CONFIG_NAME="all" version="1">
       <method v="2">
         <option name="CLION.COMPOUND.BUILD" enabled="true" />
@@ -289,6 +303,7 @@
       <item itemvalue="Makefile 应用程序.firmware" />
       <item itemvalue="Makefile 应用程序.flash" />
       <item itemvalue="Makefile 应用程序.full" />
+      <item itemvalue="Makefile 应用程序.Makefile" />
       <item itemvalue="Makefile 目标.Makefile" />
       <item itemvalue="Makefile 目标.both" />
       <item itemvalue="Makefile 目标.all" />
@@ -439,14 +454,7 @@
       <workItem from="1710658469468" duration="8094000" />
       <workItem from="1710678673841" duration="50000" />
       <workItem from="1711202717491" duration="735000" />
-      <workItem from="1711273451165" duration="12130000" />
-    </task>
-    <task id="LOCAL-00148" summary="修复MDC1200编译选项">
-      <created>1707026226958</created>
-      <option name="number" value="00148" />
-      <option name="presentableId" value="LOCAL-00148" />
-      <option name="project" value="LOCAL" />
-      <updated>1707026226958</updated>
+      <workItem from="1711273451165" duration="12940000" />
     </task>
     <task id="LOCAL-00149" summary="完善多普勒">
       <created>1707027794918</created>
@@ -784,7 +792,14 @@
       <option name="project" value="LOCAL" />
       <updated>1711296342388</updated>
     </task>
-    <option name="localTasksCounter" value="197" />
+    <task id="LOCAL-00197" summary="doc">
+      <created>1711296558128</created>
+      <option name="number" value="00197" />
+      <option name="presentableId" value="LOCAL-00197" />
+      <option name="project" value="LOCAL" />
+      <updated>1711296558128</updated>
+    </task>
+    <option name="localTasksCounter" value="198" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -814,7 +829,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="双语readme" />
     <MESSAGE value="README_en" />
     <MESSAGE value="拼音检索" />
     <MESSAGE value="完善输入法" />
@@ -839,7 +853,8 @@
     <MESSAGE value="README_en.md" />
     <MESSAGE value="english support" />
     <MESSAGE value="warning fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="warning fix" />
+    <MESSAGE value="doc" />
+    <option name="LAST_COMMIT_MESSAGE" value="doc" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
