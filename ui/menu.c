@@ -1582,7 +1582,7 @@ void UI_DisplayMenu(void) {
 
 //
 
-#ifdef  ENABLE_ENGLISH
+#ifndef  ENABLE_ENGLISH
 void UI_ShowChineseMenu() {
 
 
