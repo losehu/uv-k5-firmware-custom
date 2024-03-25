@@ -1582,7 +1582,7 @@ void UI_DisplayMenu(void) {
 
 //
 
-
+#ifdef  ENABLE_ENGLISH
 void UI_ShowChineseMenu() {
 
 
@@ -1623,6 +1623,7 @@ void UI_ShowChineseMenu() {
 #endif
 
 }
+#endif
 
 #ifdef ENABLE_PINYIN
 uint8_t INPUT_SELECT = 0;//选择的按键
