@@ -16,12 +16,12 @@
 
 # Version Description
 
-Currently, there are five versions available: **LOSEHUxxx**, **LOSEHUxxxK**, **LOSEHUxxxH**, **LOSEHUxxxE**, and **LOSEHUxxxEK**.
-**LOSEHUxxx**: Chinese firmware, no need for expansion, includes MDC1200, spectrum, radio receiver.
-**LOSEHUxxxK**: Chinese firmware, requires EEPROM of 1Mib or above, includes Doppler mode, MDC1200, spectrum, radio receiver, Chinese channel names.
-**LOSEHUxxxH**: Chinese firmware, requires EEPROM of 2Mib or above, includes Doppler mode, Chinese input method, spectrum, radio receiver, Chinese channel names.
-**LOSEHUxxxE**: English firmware, no need for expansion, includes MDC1200, spectrum, radio receiver, SMS.
-**LOSEHUxxxEK**: English firmware, requires EEPROM of 1Mib or above, includes Doppler mode, MDC1200, spectrum, radio receiver.
+* Currently, there are five versions available: **LOSEHUxxx**, **LOSEHUxxxK**, **LOSEHUxxxH**, **LOSEHUxxxE**, and **LOSEHUxxxEK**.
+* **LOSEHUxxx**: Chinese firmware, no need for expansion, includes MDC1200, spectrum, radio receiver.
+* **LOSEHUxxxK**: Chinese firmware, requires EEPROM of 1Mib or above, includes Doppler mode, MDC1200, spectrum, radio receiver, Chinese channel names.
+* **LOSEHUxxxH**: Chinese firmware, requires EEPROM of 2Mib or above, includes Doppler mode, Chinese input method, spectrum, radio receiver, Chinese channel names.
+* **LOSEHUxxxE**: English firmware, no need for expansion, includes MDC1200, spectrum, radio receiver, SMS.
+* **LOSEHUxxxEK**: English firmware, requires EEPROM of 1Mib or above, includes Doppler mode, MDC1200, spectrum, radio receiver.
 
 
 # Multi-functional K5/6 Firmware

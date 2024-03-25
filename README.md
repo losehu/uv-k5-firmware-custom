@@ -3,12 +3,12 @@
 **语言版本: [English](README_en.md), [中文](README.md).**
 
 # 版本说明
-目前分为五个版本：**LOSEHUxxx**、**LOSEHUxxxK**、**LOSEHUxxxH**、**LOSEHUxxxE**、**LOSEHUxxxEK**
-**LOSEHUxxx**:中文固件，无需扩容，包含MDC1200、频谱、收音机
-**LOSEHUxxxK**:中文固件，需要1Mib以上Eeprom，包含多普勒模式、MDC1200、频谱、收音机、中文信道名
-**LOSEHUxxxH**:中文固件，需要2Mib以上Eeprom，包含多普勒模式、中文输入法、频谱、收音机、中文信道名
-**LOSEHUxxxE**:英文固件，无需扩容，包含MDC1200、频谱、收音机、短信
-**LOSEHUxxxEK**:英文固件，需要1Mib以上Eeprom，包含多普勒模式、MDC1200、频谱、收音机
+* 目前分为五个版本：**LOSEHUxxx**、**LOSEHUxxxK**、**LOSEHUxxxH**、**LOSEHUxxxE**、**LOSEHUxxxEK**
+* **LOSEHUxxx**:中文固件，无需扩容，包含MDC1200、频谱、收音机
+* **LOSEHUxxxK**:中文固件，需要1Mib以上Eeprom，包含多普勒模式、MDC1200、频谱、收音机、中文信道名
+* **LOSEHUxxxH**:中文固件，需要2Mib以上Eeprom，包含多普勒模式、中文输入法、频谱、收音机、中文信道名
+* **LOSEHUxxxE**:英文固件，无需扩容，包含MDC1200、频谱、收音机、短信
+* **LOSEHUxxxEK**:英文固件，需要1Mib以上Eeprom，包含多普勒模式、MDC1200、频谱、收音机
 
 # 多功能的K5/6固件
 该固件基于多个开源固件修改合并，拥有最多样性的功能
