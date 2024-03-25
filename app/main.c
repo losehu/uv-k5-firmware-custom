@@ -440,13 +440,14 @@ static void MAIN_Key_DIGITS(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
 static void MAIN_Key_EXIT(bool bKeyPressed, bool bKeyHeld) {
 
 #include "app/menu.h"
-
+#ifdef ENABLE_TURN
     if (turn_flag) {
         turn_flag = false;
         key_dir *= -1;
         gRequestSaveSettings = true;
         return;
     }
+#endif
     if (!bKeyHeld && bKeyPressed) {    // exit key pressed
 
 

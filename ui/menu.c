@@ -625,7 +625,6 @@ void UI_DisplayMenu(void) {
     if (!(UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME && gIsInSubMenu && edit_index >= 0))
 #endif
 
-#ifdef ENABLE_ENGLISH
 
     // clear the screen buffer
     memset(gFrameBuffer, 0, sizeof(gFrameBuffer));
@@ -677,6 +676,10 @@ void UI_DisplayMenu(void) {
 //			UI_PrintStringSmall(String, 0, 0, 0);
         }
     }
+#ifdef ENABLE_ENGLISH
+    uint8_t size_menu = strlen(MenuList[gMenuCursor].name)*7;
+
+    UI_PrintStringSmall(MenuList[gMenuCursor].name, size_menu < 48 ? (48 - size_menu) / 2 : 0, 0, 0);
 
 
 
@@ -684,6 +687,7 @@ void UI_DisplayMenu(void) {
 
     UI_ShowChineseMenu();
 #endif
+
 #else
     {	// new menu layout .. experimental & unfinished
 
@@ -1582,7 +1586,7 @@ void UI_DisplayMenu(void) {
 
 //
 
-#ifndef  ENABLE_ENGLISH
+
 void UI_ShowChineseMenu() {
 
 
@@ -1623,7 +1627,6 @@ void UI_ShowChineseMenu() {
 #endif
 
 }
-#endif
 
 #ifdef ENABLE_PINYIN
 uint8_t INPUT_SELECT = 0;//选择的按键
