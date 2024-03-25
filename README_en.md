@@ -2,73 +2,121 @@
 
 **语言版本: [English](README_en.md), [中文](README.md).**
 
-# some advice for HAM outside of China who are using the K5
-**In China, about 2000 K5 devices have retained the larger-capacity EEPROM chip, such as the M24M02. We moved many constants to the EEPROM to gain more flash space.It works very well.**
-
-**Replacing the EEPROM is relatively simple, and many people without prior experience have successfully completed the operation. However, please make sure to back up your calibration files!**
-
+# Replacing the bigger EEPROM
+* **2Mbit** or **1Mbit**
 **By replacing it, you may be able to achieve:**
 * Display and input in any language (implemented)
 * Automatic Doppler frequency shift function (implemented)
 * Custom boot-up images (implemented)
 * Custom SSTV images (guess)
+* DOPPLER MODE (implemented)
+* SI4732 FULL SSB SUPPORT
 * ......
 * More available flash allows for additional custom features(about 1.5K?).
+
+# Version Description
+
+Currently, there are five versions available: **LOSEHUxxx**, **LOSEHUxxxK**, **LOSEHUxxxH**, **LOSEHUxxxE**, and **LOSEHUxxxEK**.
+**LOSEHUxxx**: Chinese firmware, no need for expansion, includes MDC1200, spectrum, radio receiver.
+**LOSEHUxxxK**: Chinese firmware, requires EEPROM of 1Mib or above, includes Doppler mode, MDC1200, spectrum, radio receiver, Chinese channel names.
+**LOSEHUxxxH**: Chinese firmware, requires EEPROM of 2Mib or above, includes Doppler mode, Chinese input method, spectrum, radio receiver, Chinese channel names.
+**LOSEHUxxxE**: English firmware, no need for expansion, includes MDC1200, spectrum, radio receiver, SMS.
+**LOSEHUxxxEK**: English firmware, requires EEPROM of 1Mib or above, includes Doppler mode, MDC1200, spectrum, radio receiver.
+
+
 # Multi-functional K5/6 Firmware
 
 This firmware is based on modifications and merges of multiple open-source firmware, featuring the most diverse
 functions:
-
-* **Larger EEPROM chip**
-* **Automatic Doppler Shift**
-* **SI4732 Support (under implementation...)**
-* **English Support (under implementation...)**
-* **Chinese Input Method**
-* **GB22312 Chinese Interface, Channels**
-* **Spectrum Analyzer**
-* **MDC1200 Signaling, Contacts**
+* **Larger EEPROM capacity**
+* **Automatic Doppler frequency shift**
+* Custom boot logo
+* **SI4732 support (in progress...)**
+* **Chinese/English support**
+* **Chinese input method**
+* **GB22312 Chinese interface, channels**
+* **Spectrum graph**
+* **MDC1200 signaling, contacts**
 * **SMS**
-* **Signal Strength Indicator (S-meter)**
-* **One-button Frequency Sweep**
-* **FM Radio**
-* **AM Fix**
-* **SSB Demodulation**
+* **Signal strength indicator (S meter)**
+* **One-touch frequency scanning**
+* **Radio receiver**
+* **AM fix**
+* **SSB demodulation**
 
-# Operating Instructions (Must Read!!)
 
-| Button                       | Function                                                                                                                                          |
-|------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
-| 🐤 **Main Interface**        |                                                                                                                                                   |
-| **Single Press `Up/Down`**   | Adjust frequency (step size is menu 1 item `Frequency Step`)                                                                                      |
-| **Single Press `Number`**    | Quick input frequency in frequency mode                                                                                                           |
-| **Single Press `*`**         | Input DTMF to be sent (`A, B, C, D, *, #` corresponds to `M, Up, Down, *, F` keys respectively, side key 1 is backspace, press PPT key to send)   |
-| **Long Press `F`**           | Lock keyboard                                                                                                                                     |
-| **Long Press `M`**           | Switch modulation mode                                                                                                                            |
-| **Long Press `*`**           | In channel mode, it is a search list, long press multiple times to switch (list 1/2/all); in frequency mode, starts search from current frequency |
-| **Long Press `0`/`F+0`**     | Open/close radio                                                                                                                                  |
-| **Long Press `1`/`F+1`**     | In channel mode, copy current channel to another VFO                                                                                              |
-| **Long Press `2`/`F+2`**     | Switch A/B channels                                                                                                                               |
-| **Long Press `3`/`F+3`**     | Switch frequency/channel                                                                                                                          |
-| **Long Press `4`/`F+4`**     | One-button frequency alignment                                                                                                                    |
-| **Long Press `5`**           | In channel mode, switch search list                                                                                                               |
-| **Long Press `5`**           | In frequency mode, set search frequency range (from channel A to channel B frequency), press * to start search                                    |
-| **`F+5`**                    | Spectrum                                                                                                                                          |
-| **Long Press `6`/`F+6`**     | Switch transmit power                                                                                                                             |
-| **Long Press `7`/`F+7`**     | Voice-activated transmission switch                                                                                                               |
-| **Long Press `8`/`F+8`**     | One-button reverse frequency                                                                                                                      |
-| **Long Press `9`/`F+9`**     | One-button instant call                                                                                                                           |
-| **`F+M`**                    | Open SMS                                                                                                                                          |
-| **`F+UP`**                   | Key tone switch                                                                                                                                   |
-| **`F+Down`**                 | Automatic Doppler                                                                                                                                 |
-| **`F+*`**                    | Scan (Digital/Analog) CTCSS/DCS                                                                                                                   |
-| **Short Press `Side Key 1`** | Monitor                                                                                                                                           |
-| **Long Press `Side Key 1`**  | DTMF decoding switch                                                                                                                              |
-| **Short Press `Side Key 2`** | Set wide/narrow bandwidth                                                                                                                         |
-| **Long Press `Side Key 2`**  | Flashlight                                                                                                                                        |
+# Operating Instructions (Mandatory Reading!!)
 
-# EEPROM Distribution Description
+| Key              | Function                                                   |
+|-----------------|------------------------------------------------------------|
+| 🐤 **Main Interface** |                                                            |
+| **Single Press `Up/Down`** | Adjust frequency (step size is set by menu item `Step Frequency`) |
+| **Single Press `Number`** | Quickly input frequency in frequency mode |
+| **Single Press `*`** | Input DTMF to be sent (`A, B, C, D, *, #` correspond to `M, Up, Down, *, F` respectively. Side Key 1 acts as backspace, press PTT key to send) |
+| **Long Press `F`** | Keyboard Lock |
+| **Long Press `M`** | Switch modulation mode |
+| **Long Press `*`** | In channel mode, activates search list, multiple long presses toggle between lists (1/2/All). In frequency mode, initiates search from current frequency |
+| **Long Press `0`/`F+0`** | Open/Close radio receiver |
+| **Long Press `1`/`F+1`** | In channel mode, copies current channel to another VFO |
+| **Long Press `2`/`F+2`** | Switch between A/B channels |
+| **Long Press `3`/`F+3`** | Switch between frequency/channel |
+| **Long Press `4`/`F+4`** | One-touch frequency alignment |
+| **Long Press `5`** | In channel mode, toggles search list |
+| **Long Press `5`** | In frequency mode, sets search frequency range (from channel A to channel B frequency), press * key to start search |
+| **`F+5`** | Spectrum |
+| **Long Press `6`/`F+6`** | Switch transmit power |
+| **Long Press `7`/`F+7`** | Voice-activated transmission switch |
+| **Long Press `8`/`F+8`** | One-touch reverse frequency |
+| **Long Press `9`/`F+9`** | One-touch call |
+| **`F+M`** | Open SMS |
+| **`F+UP`** | Key tone switch |
+| **`F+Down`** | Automatic Doppler shift |
+| **`F+EXIT`** | Inverts menu navigation (Up/Down) |
+| **`F+*`** | Scan (Digital/Analog) sub-audio |
+| **Short Press Side Key 1** | Monitor |
+| **Long Press Side Key 1** | DTMF decoding switch |
+| **Short Press Side Key 2** | Set wide/narrow band |
+| **Long Press Side Key 2** | Flashlight |
+|**Wide/Narrow Band, DTMF decoding, FM/AM/USB Switching**| Integrated into custom **Side Key and M** |
 
-[EEPROM Distribution Description](https://github.com/losehu/uv-k5-firmware-chinese/blob/main/doc/README.md)
+                                                                                                                           |
+# Eeprom Layout Explanation
+
+| Eeprom Address                          | Description                                          |
+|----------------------------------------|------------------------------------------------------|
+| 😭 **General**                          | Version: LOSEHUxxx                                   |
+| 0X01D00~0x02000                        | Rarely changed                                       |
+| 0X01D00 ~ 0X01E00<br/>0X1F90 ~ 0X01FF0 | **MDC1200** - 22 MDC contacts<br/>Each contact occupies 16B, with the first 2B being MDC ID and the next 14B being contact name |
+| 0X01FFF                                | **MDC1200** - Number of MDC contacts                                      |
+| 0x01FFD~0x01FFE                        | **MDC1200** - MDC ID                                         |
+| 0x01FF8~0x01FFC                        | Side key functions                                  |
+| 0x01FFD~0x01FFE                        | **MDC1200** - MDC ID                                         |
+| 😱 **Expanded Version (K, H)**          | Version: LOSEHUxxxK, LOSEHUxxxH                     |
+| 0x02000~0x02012                        | Boot character 1                                     |
+| 0x02012~0x02024                        | Boot character 2                                     |
+| 0x02024~0x02025                        | Length of boot characters 1 and 2                           |
+| 0x02080~0x02480                        | Boot screen, length 128 (width) * 64/8 = 1024 = 0x400       |
+| 0x01FFD~0x01FFE                        | **MDC1200** - MDC ID                                 |
+| 0x02480~0x0255C                        | gFontBigDigits, length 11 * 20 = 220 = 0XDC          |
+| 0x0255C~0x0267C                        | gFont3x5, length 96 * 3 = 288 = 0X120                |
+| 0x0267C~0x028B0                        | gFontSmall, length 96 * 6 = 564 = 0X234              |
+| 0x028B0~0x02B96                        | Menu encoding, length 53 * 14 = 742 = 0X2E6               |
+| 0x02BA0~0x02BA9                        | **Doppler** - Satellite names, with the first character first, up to 9 English characters, the last one being '\0'            |
+| 0x02BAA~0x02BAF                        | **Doppler** - Year (tens and units), month, day, hour, minute, and second of start transit time        |
+| 0x02BB0~0x2BB5                         | **Doppler** - Year (tens and units), month, day, hour, minute, and second of departure time      |
+| 0x02BB6~0x02BB7                        | **Doppler** - Total transit time (seconds), with the low byte first and the high byte second       |
+| 0x02BB8~0x02BB9                        | **Doppler** - Transmitter sub-audio, with the low byte first and the high byte second            |
+| 0x02BBA~0x02BBB                        | **Doppler** - Receiver sub-audio, with the low byte first and the high byte second               |
+| 0x02C00~0x02C64                        | **Doppler** - CTCSS_Options, length 50 * 2 = 100 = 0x64           |
+| 0x02C64~0x02D34                        | **Doppler** - DCS_Options, length 104 * 2 = 208 = 0xD0            |
+| 0x02BBC~0X02BBF                        | **Doppler** - Difference between start transit time and UNIX timestamp of January 1, 2000, with the low byte first and the high byte second     |
+| 0X02BC0~0X02BC5                        | **Doppler** - Year (tens and units), month, day, hour, minute, and second of current time        |
+| 0x02E00~0x1E1E6                        | GB2312 Chinese font library, total 6763 * 11 * 12/8 = 111590 = 0x1B3E6       |
+| 0x1E200~0x20000(MAX)                   | **Doppler** - 2*n (even) second satellite data, 8B per second, including uplink/downlink frequency/10, with the low byte first and the high byte second |
+| 😰 **2Mib Expanded Version (H)**        | Version: LOSEHUxxxH                                  |
+| 0x20000~0x26B00                        | **Chinese Input Method** - Pinyin index, corresponding number of characters, starting address of characters |
+| 0x26B00~0X2A330                        | **Chinese Input Method** - Pinyin Chinese character table |
+[Doppler Eeprom Layout Explanation](https://github.com/losehu/uv-k5-firmware-chinese/blob/main/doc/多普勒eeprom详细说明.txt)
 
 # Examples
 

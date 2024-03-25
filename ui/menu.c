@@ -626,56 +626,6 @@ void UI_DisplayMenu(void) {
 #endif
 
 
-    // clear the screen buffer
-    memset(gFrameBuffer, 0, sizeof(gFrameBuffer));
-
-    {	// new menu layout .. experimental & unfinished
-
-        const int menu_index = gMenuCursor;  // current selected menu item
-        i = 1;
-
-        if (!gIsInSubMenu)
-        {
-            while (i < 2)
-            {	// leading menu items - small text
-                const int k = menu_index + i - 2;
-                if (k < 0)
-                    UI_PrintStringSmall(MenuList[gMenuListCount + k].name, 0, 0, i);  // wrap-a-round
-                else
-                if (k >= 0 && k < (int)gMenuListCount)
-                    UI_PrintStringSmall(MenuList[k].name, 0, 0, i);
-                i++;
-            }
-
-            // current menu item - keep big n fat
-            if (menu_index >= 0 && menu_index < (int)gMenuListCount)
-                UI_PrintStringSmall(MenuList[menu_index].name, 0, 0, 2);
-            i++;
-
-            while (i < 4)
-            {	// trailing menu item - small text
-                const int k = menu_index + i - 2;
-                if (k >= 0 && k < (int)gMenuListCount)
-                    UI_PrintStringSmall(MenuList[k].name, 0, 0, 1 + i);
-                else
-                if (k >= (int)gMenuListCount)
-                    UI_PrintStringSmall(MenuList[gMenuListCount - k].name, 0, 0, 1 + i);  // wrap-a-round
-                i++;
-            }
-
-            // draw the menu index number/count
-            sprintf(String, "%2u.%u", 1 + gMenuCursor, gMenuListCount);
-            UI_PrintStringSmall(String, 2, 0, 6);
-        }
-        else
-        if (menu_index >= 0 && menu_index < (int)gMenuListCount)
-        {	// current menu item
-            strcpy(String, MenuList[menu_index].name);
-//			strcat(String, ":");
-            UI_PrintStringSmall(String, 0, 0, 0);
-//			UI_PrintStringSmall(String, 0, 0, 0);
-        }
-    }
 #ifdef ENABLE_ENGLISH
     uint8_t size_menu = strlen(MenuList[gMenuCursor].name)*7;
 
