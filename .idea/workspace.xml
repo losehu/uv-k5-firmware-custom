@@ -26,10 +26,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="doc">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-    </list>
+    <list default="true" id="cea36e80-e289-4d69-9030-7186d540ac0e" name="更改" comment="makefile" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -454,21 +451,7 @@
       <workItem from="1710658469468" duration="8094000" />
       <workItem from="1710678673841" duration="50000" />
       <workItem from="1711202717491" duration="735000" />
-      <workItem from="1711273451165" duration="12940000" />
-    </task>
-    <task id="LOCAL-00149" summary="完善多普勒">
-      <created>1707027794918</created>
-      <option name="number" value="00149" />
-      <option name="presentableId" value="LOCAL-00149" />
-      <option name="project" value="LOCAL" />
-      <updated>1707027794918</updated>
-    </task>
-    <task id="LOCAL-00150" summary="星图绘制一半">
-      <created>1707038783515</created>
-      <option name="number" value="00150" />
-      <option name="presentableId" value="LOCAL-00150" />
-      <option name="project" value="LOCAL" />
-      <updated>1707038783515</updated>
+      <workItem from="1711273451165" duration="13272000" />
     </task>
     <task id="LOCAL-00151" summary="删除星图">
       <created>1707039390023</created>
@@ -799,7 +782,21 @@
       <option name="project" value="LOCAL" />
       <updated>1711296558128</updated>
     </task>
-    <option name="localTasksCounter" value="198" />
+    <task id="LOCAL-00198" summary="makefile">
+      <created>1711297239136</created>
+      <option name="number" value="00198" />
+      <option name="presentableId" value="LOCAL-00198" />
+      <option name="project" value="LOCAL" />
+      <updated>1711297239136</updated>
+    </task>
+    <task id="LOCAL-00199" summary="makefile">
+      <created>1711297474823</created>
+      <option name="number" value="00199" />
+      <option name="presentableId" value="LOCAL-00199" />
+      <option name="project" value="LOCAL" />
+      <updated>1711297474823</updated>
+    </task>
+    <option name="localTasksCounter" value="200" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -834,7 +831,6 @@
     <MESSAGE value="完善输入法" />
     <MESSAGE value="修复空格bug" />
     <MESSAGE value="123" />
-    <MESSAGE value="makefile" />
     <MESSAGE value="删除古早输入法" />
     <MESSAGE value="新输入法" />
     <MESSAGE value="更新输入法" />
@@ -854,7 +850,8 @@
     <MESSAGE value="english support" />
     <MESSAGE value="warning fix" />
     <MESSAGE value="doc" />
-    <option name="LAST_COMMIT_MESSAGE" value="doc" />
+    <MESSAGE value="makefile" />
+    <option name="LAST_COMMIT_MESSAGE" value="makefile" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
