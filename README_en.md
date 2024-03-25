@@ -201,12 +201,12 @@ You can customize the firmware by enabling/disabling various compilation options
 
 If this project has been helpful to you, consider sponsoring to support development work.
 
-[Donation List](https://losehu.com/sponsors/) Thank you very much for
+[Donation List](https://losehu.github.io/sponsors/) Thank you very much for
 your support!!!
 
 Donation Codes:
 
-[![Donation Codes](https://github.com/losehu/uv-k5-firmware-chinese/blob/main/payment/show.png)](https://losehu.com/payment-codes/)
+[![Donation Codes](https://github.com/losehu/uv-k5-firmware-chinese/blob/main/payment/show.png)](https://losehu.github.io/payment-codes/)
 
 # Disclaimer:
 
