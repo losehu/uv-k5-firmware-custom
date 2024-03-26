@@ -201,7 +201,7 @@ You can customize the firmware by enabling/disabling various compilation options
 
 If this project has been helpful to you, consider sponsoring to support development work.
 
-[Donation List](https://losehu.github.io/sponsors/) Thank you very much for
+[Donation List](https://losehu.github.io/payment-codes/#%E6%94%B6%E6%AC%BE%E7%A0%81) Thank you very much for
 your support!!!
 
 Donation Codes:

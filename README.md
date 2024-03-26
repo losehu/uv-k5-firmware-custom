@@ -195,7 +195,7 @@
 
 如果这个项目对您有帮助,可以考虑赞助来支持开发工作。
 
-这是：[打赏名单](https://losehu.github.io/sponsors/) 非常感谢各位的支持！！！
+这是：[打赏名单](https://losehu.github.io/payment-codes/#%E6%94%B6%E6%AC%BE%E7%A0%81) 非常感谢各位的支持！！！
 
 打赏码：
 
