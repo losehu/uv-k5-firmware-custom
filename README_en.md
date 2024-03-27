@@ -208,12 +208,3 @@ Donation Codes:
 
 [![Donation Codes](https://github.com/losehu/uv-k5-firmware-chinese/blob/main/payment/show.png)](https://losehu.github.io/payment-codes/)
 
-# Disclaimer:
-
-* The author **does not assume any responsibility** for any illegal activities arising from the use of this firmware,
-  including but not limited to unauthorized modification, use of the firmware for illegal activities, etc.
-* The author **does not assume any legal responsibility** for any losses caused by the use of this firmware.
-* Users who download, install, and use this firmware are deemed to have read, understood, and agreed to all the contents
-  of this disclaimer by default. **If you have any objections, please stop using this firmware immediately**.
-* The author reserves the right to interpret and modify this disclaimer within the scope permitted by law. **Any
-  unauthorized firmware modification or distribution will not be the responsibility of the author**.
