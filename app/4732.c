@@ -73,7 +73,7 @@ void SI4732_SetFreq(uint32_t freq) {
     if (NOW_MODE == FM) {
         if (freq < 6400 || freq > 10800) return;
         NOW_FREQ = freq;
-        uint8_t cmd[5] = {0x20, 0x00, (freq & 0xff00) >> 8, freq & 0x00ff, d};//设置频率
+        uint8_t cmd[5] = {0x20, 0x00, (freq & 0xff00) >> 8, freq & 0x00ff, d};//脡猫脰脙脝碌脗脢
         SI4732_WriteBuffer(cmd, 5);
 
     } else if (NOW_MODE == AM) {
@@ -85,7 +85,7 @@ void SI4732_SetFreq(uint32_t freq) {
 //        if(freq<1000) freq+=45;
 //        else if(freq>1000) freq-=45;
 //int a= 100;//560;
-        uint8_t cmd[6] = {0x40, 0x00, (freq & 0xff00) >> 8, freq & 0x00ff, c >> 8, c & 0xff};//设置频率
+        uint8_t cmd[6] = {0x40, 0x00, (freq & 0xff00) >> 8, freq & 0x00ff, c >> 8, c & 0xff};//脡猫脰脙脝碌脗脢
         SI4732_WriteBuffer(cmd, 6);
 
 //11.66 59 25
@@ -122,7 +122,7 @@ void SI4732_Main() {
     int cnt = 0;
 //    int cnt = 1000000/2+1;
     while (1) {
-        //设置频率
+        //脡猫脰脙脝碌脗脢
 
 //        SI4732_SetFreq(10760);
 
@@ -282,13 +282,13 @@ void setBandwidth(uint8_t AMCHFLT, uint8_t AMPLFLT)
 
 }
 void SI4732_Init() {
-    SYSTEM_DelayMs(SI4732_DELAY_MS);
+    // SYSTEM_DelayMs(SI4732_DELAY_MS);
 
 
-    SI4732_PowerDown();
-    SYSTEM_DelayMs(SI4732_DELAY_MS);
+    // SI4732_PowerDown();
+    // SYSTEM_DelayMs(SI4732_DELAY_MS);
 
-    GPIO_ClearBit(&GPIOC->DATA, GPIOC_PIN_AUDIO_PATH);
+    // GPIO_ClearBit(&GPIOC->DATA, GPIOC_PIN_AUDIO_PATH);
 
     RST_LOW;
     SYSTEM_DelayMs(10);
@@ -370,7 +370,7 @@ waitToSend();
 //    SI4732_WAIT_STATUS(0x80);
 //    SYSTEM_DelayMs(500);
 //
-////音量
+////脪么脕驴
 //    uint8_t cmd_vol[6] = {0x12, 0x00, 0x40, 0x00, 0x00, 0x3f};
 //    SI4732_WriteBuffer(cmd_vol, 6);
 //    SI4732_WAIT_STATUS(0x80);
@@ -384,7 +384,7 @@ waitToSend();
 
 //    SYSTEM_DelayMs(100);
 
-////声道
+////脡霉碌脌
 //    uint8_t cmd_hear[6] = {0x12, 0x00, 0x40, 0x01, 0x00, 0x00};
 //    SI4732_WriteBuffer(cmd_hear, 6);
 //    SI4732_ReadBuffer((uint8_t *) &b, 1);
