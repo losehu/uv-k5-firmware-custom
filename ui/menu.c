@@ -410,12 +410,9 @@ const char gSubMenu_RESET[][6] =//4
 
 const char *const gSubMenu_F_LOCK[] =
         {
-                "DEFAULT+\n137-174\n400-470",
-                "FCC HAM\n144-148\n420-450",
-                "CE HAM\n144-146\n430-440",
-                "GB HAM\n144-148\n430-440",
-                "137-174\n400-430",
-                "137-174\n400-438",
+                "DEFAULT\n137-174\n400-470",
+                "FCC HAM+Pub\n144-148\n420-450",
+                "GB HAM+Pub\n144-148\n430-440,409",
 //                "DISABLE\nALL",
 //                "UNLOCK\nALL",
                 禁用全部,
