@@ -41,32 +41,32 @@ enum ADC_CH_MASK {
 
 typedef enum ADC_CH_MASK ADC_CH_MASK;
 
-typedef struct {
-	uint16_t EXTTRIG_SEL;
-	uint16_t IE_CHx_EOC;
-	ADC_CH_MASK CH_SEL;
-	uint8_t CLK_SEL;
-	uint8_t AVG;
-	uint8_t CONT;
-	uint8_t MEM_MODE;
-	uint8_t SMPL_CLK;
-	uint8_t SMPL_SETUP;
-	uint8_t SMPL_WIN;
-	uint8_t ADC_TRIG;
-	uint8_t DMA_EN;
-	uint8_t IE_FIFO_HFULL;
-	uint8_t IE_FIFO_FULL;
-	bool CALIB_OFFSET_VALID;
-	bool CALIB_KD_VALID;
-	uint8_t _pad[1];
-} ADC_Config_t;
+//typedef struct {
+//	uint16_t EXTTRIG_SEL;
+//	uint16_t IE_CHx_EOC;
+//	ADC_CH_MASK CH_SEL;
+//	uint8_t CLK_SEL;
+//	uint8_t AVG;
+//	uint8_t CONT;
+//	uint8_t MEM_MODE;
+//	uint8_t SMPL_CLK;
+//	uint8_t SMPL_SETUP;
+//	uint8_t SMPL_WIN;
+//	uint8_t ADC_TRIG;
+//	uint8_t DMA_EN;
+//	uint8_t IE_FIFO_HFULL;
+//	uint8_t IE_FIFO_FULL;
+//	bool CALIB_OFFSET_VALID;
+//	bool CALIB_KD_VALID;
+//	uint8_t _pad[1];
+//} ADC_Config_t;
 
 uint8_t ADC_GetChannelNumber(ADC_CH_MASK Mask);
 void ADC_Disable(void);
 void ADC_Enable(void);
 void ADC_SoftReset(void);
 uint32_t ADC_GetClockConfig(void);
-void ADC_Configure(ADC_Config_t *pAdc);
+void ADC_Configure();
 void ADC_Start(void);
 bool ADC_CheckEndOfConversion(ADC_CH_MASK Mask);
 uint16_t ADC_GetValue(ADC_CH_MASK Mask);
