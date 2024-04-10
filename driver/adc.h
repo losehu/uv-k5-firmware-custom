@@ -39,6 +39,7 @@ enum ADC_CH_MASK {
 	ADC_CH15 = 0x8000U,
 };
 
+
 typedef enum ADC_CH_MASK ADC_CH_MASK;
 
 //typedef struct {
