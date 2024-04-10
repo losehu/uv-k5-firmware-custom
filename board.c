@@ -443,7 +443,7 @@ void BOARD_PORTCON_Init(void) {
 
 void BOARD_ADC_Init(void) {
 
-    ADC_Configure(&Config);
+    ADC_Configure();
     ADC_Enable();
     ADC_SoftReset();
 }
