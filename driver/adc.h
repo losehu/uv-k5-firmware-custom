@@ -22,6 +22,7 @@
 
 enum ADC_CH_MASK {
 	ADC_CH0 = 0x0001U,
+
 	ADC_CH1 = 0x0002U,
 	ADC_CH2 = 0x0004U,
 	ADC_CH3 = 0x0008U,
