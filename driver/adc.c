@@ -24,7 +24,7 @@ uint8_t ADC_GetChannelNumber(ADC_CH_MASK Mask) {
 
     uint8_t n = 0;
     // 从右向左逐位检查x中的每一位是否为1，找到对应的左边数
-    while (x >>= 1) {
+    while (Mask >>= 1) {
         n++;
     }
     return n;
