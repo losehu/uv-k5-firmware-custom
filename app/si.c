@@ -10,6 +10,8 @@
 
 #include "driver/si473x.h"
 #include "bsp/dp32g030/gpio.h"
+#include "bsp/dp32g030/syscon.h"
+
 #include "driver/gpio.h"
 #include "driver/i2c.h"
 #include "driver/system.h"
