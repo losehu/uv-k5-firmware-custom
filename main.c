@@ -16,6 +16,8 @@
 
 #include "bsp/dp32g030/gpio.h"
 #include "driver/gpio.h"
+#include "app/si.h"
+
 #include "driver/i2c.h"
 #include "driver/system.h"
 #include "frequencies.h"
