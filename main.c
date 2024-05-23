@@ -13,6 +13,13 @@
  *     See the License for the specific language governing permissions and
  *     limitations under the License.
  */
+
+#include "bsp/dp32g030/gpio.h"
+#include "driver/gpio.h"
+#include "driver/i2c.h"
+#include "driver/system.h"
+#include "frequencies.h"
+#include "misc.h"
 #include "app/doppler.h"
 #include "driver/uart.h"
 #include "string.h"
@@ -50,7 +57,7 @@
 #endif
 #ifdef ENABLE_4732
 
-#include "app/4732.h"
+
 
 #endif
 
@@ -110,8 +117,12 @@ void Main(void) {
                           | SYSCON_DEV_CLK_GATE_CRC_BITS_ENABLE
                           | SYSCON_DEV_CLK_GATE_AES_BITS_ENABLE
                           | SYSCON_DEV_CLK_GATE_PWM_PLUS0_BITS_ENABLE
-                          //                          | (1 << 12)
-                          | (1 << 22);
+        //                          | (1 << 12)
+#ifdef ENABLE_DOPPLER
+
+        | (1 << 22)
+#endif
+            ;
 
     SYSTICK_Init();
 
@@ -129,98 +140,11 @@ void Main(void) {
     memset(gDTMF_String, '-', sizeof(gDTMF_String));
     gDTMF_String[sizeof(gDTMF_String) - 1] = 0;
 
-
-#ifdef ENABLE_4732
-
-#include "bsp/dp32g030/gpio.h"
-#include "driver/gpio.h"
-#include "driver/i2c.h"
-#include "driver/system.h"
-#include "frequencies.h"
-#include "misc.h"
-
-    memset(gStatusLine, 0, sizeof(gStatusLine));
-    UI_DisplayClear();
-    ST7565_BlitStatusLine();  // blank status line
-    ST7565_BlitFullScreen();
-SI4732_Main();
-    /**********启动***************/
-
-
-
-    uint8_t cmd[3] = {0x01, 0x10, 0x05};//设置频率
-
-    // 发送POWER_UP命令
-  SI4732_WriteBuffer(cmd, 3) ;
-    uint8_t a = 0;
-    while (a != 128) {
-        SI4732_ReadBuffer((uint8_t *) & a, 1);
-
-
-        show_uint32((uint32_t) a, 0);
-    }
-    SYSTEM_DelayMs(100);
-
-
-
-
-
-
-    //设置频率
-    uint8_t cmd1[5] = { 0x20, 0x00, 0x24, 0x54, 0x00};//设置频率
-    SI4732_WriteBuffer(cmd1, 5) ;
-    uint8_t b;
-    SI4732_ReadBuffer((uint8_t *) & b, 1);
-
-    while (b != 128) {
-        SI4732_ReadBuffer((uint8_t *) & b, 1);
-        show_uint32((uint32_t) b, 0);
-    }
-    SYSTEM_DelayMs(100);
-//
-    uint8_t c = 0;
-    while (c != 0x81) {
-        uint8_t cmd3[1] = { 0x14,};
-        SI4732_WriteBuffer(cmd3, 1);
-        SI4732_ReadBuffer((uint8_t *) & c, 1);
-
-        show_uint32((uint32_t) c, 0);
-    }
-    SYSTEM_DelayMs(100);
-
-
-    GPIO_SetBit(&GPIOC->DATA, GPIOC_PIN_AUDIO_PATH);
-
-
-    while (1) {
-//        b = SI4732_Read(1);
-//
-//        while ((b<128)) {
-//            b = SI4732_Read(1);
-//            show_uint32((uint32_t) b, 0);
-//        }
-//        uint8_t cmd4[3] = {0x22, 0x22, 0x01};
-//        SI4732_WriteBuffer(cmd4, 3);
-//        uint8_t read_cmd4[8] = {0};
-//        SI4732_ReadBuffer(read_cmd4, 8);
-
-
-
-//        show_hex((uint32_t) read_cmd4[0], 0);
-//        show_hex((uint32_t) read_cmd4[1], 1);
-//        show_hex((uint32_t) read_cmd4[2], 2);
-//        show_hex((uint32_t) read_cmd4[3], 3);
-//        show_hex((uint32_t) read_cmd4[4], 4);
-//        show_hex((uint32_t) read_cmd4[5], 5);
-//        show_hex((uint32_t) read_cmd4[6], 6);
-        SYSTEM_DelayMs(100);
-
-
-    }
-#endif
-
-
     BK4819_Init();
+
+
+
+
 
     BOARD_ADC_GetBatteryInfo(&gBatteryCurrentVoltage, &gBatteryCurrent);
 
@@ -268,7 +192,15 @@ SI4732_Main();
     gKeyReading0 = KEY_INVALID;
     gKeyReading1 = KEY_INVALID;
     gDebounceCounter = 0;
+#ifdef ENABLE_4732
 
+
+    memset(gStatusLine, 0, sizeof(gStatusLine));
+    UI_DisplayClear();
+    ST7565_BlitStatusLine();  // blank status line
+    ST7565_BlitFullScreen();
+SI4732_Main();
+#endif
 #ifdef ENABLE_TIMER
 
 
@@ -299,7 +231,7 @@ SI4732_Main();
     while (boot_counter_10ms > 0 || (KEYBOARD_Poll() != KEY_INVALID)) {
 
         if (KEYBOARD_Poll() == KEY_EXIT
-            #if ENABLE_CHINESE_FULL == 4
+#if ENABLE_CHINESE_FULL == 4
             || gEeprom.POWER_ON_DISPLAY_MODE == POWER_ON_DISPLAY_MODE_NONE
 #endif
                 ) {    // halt boot beeps
