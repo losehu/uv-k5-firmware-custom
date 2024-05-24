@@ -148,6 +148,9 @@ ifeq ($(ENABLE_MESSENGER),1)
 endif
 
 
+ifeq ($(ENABLE_MDC1200),1)
+	OBJS += ui/messenger.o
+endif
 
 ifeq ($(ENABLE_OVERLAY),1)
 	OBJS += sram-overlay.o
