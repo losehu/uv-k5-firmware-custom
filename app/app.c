@@ -88,6 +88,7 @@
 #include "ui/menu.h"
 #include "ui/status.h"
 #include "ui/ui.h"
+#include "messenger.h"
 
 #ifdef ENABLE_MESSENGER_NOTIFICATION
 bool gPlayMSGRing = false;
