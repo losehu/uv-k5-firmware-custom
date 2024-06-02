@@ -130,10 +130,20 @@ typedef struct SpectrumSettings {
     bool backlightState;
 } SpectrumSettings;
 
+typedef enum {
+    KEY_STATE_IDLE,
+    KEY_STATE_PRESSED,
+    KEY_STATE_HELD,
+    KEY_STATE_RELEASED
+} KeyState_t;
+
 typedef struct KeyboardState {
     KEY_Code_t current;
     KEY_Code_t prev;
     uint8_t counter;
+    KeyState_t state;
+    bool gRepeatHeld;
+
 } KeyboardState;
 
 typedef struct ScanInfo {

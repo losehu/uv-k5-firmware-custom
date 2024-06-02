@@ -12,7 +12,7 @@ ENABLE_LTO                    ?= 1
 # ---- STOCK QUANSHENG FERATURES ----
 ENABLE_UART                   ?= 1
 ENABLE_AIRCOPY                ?= 0
-ENABLE_FMRADIO                = 1
+ENABLE_FMRADIO                = 0
 ENABLE_NOAA                   ?= 0
 ENABLE_VOICE                  ?= 0
 ENABLE_VOX                    ?= 1
@@ -68,7 +68,7 @@ ENABLE_WARNING 				  ?= 1
 ENABLE_MESSENGER              			= 0
 ENABLE_MESSENGER_DELIVERY_NOTIFICATION	= 0
 ENABLE_MESSENGER_NOTIFICATION			= 0
-ENABLE_4732 =0
+ENABLE_4732 =1
 ENABLE_DOPPLER               =0
 #############################################################
 PACKED_FILE_SUFFIX = LOSEHU126
@@ -82,13 +82,13 @@ endif
 ifeq ($(ENABLE_4732),1)
 	ENABLE_4732=1
 	ENABLE_FMRADIO=0
+	PACKED_FILE_SUFFIX := $(PACKED_FILE_SUFFIX)HS
+
     $(info SI4732)
 endif
 ifeq ($(ENABLE_CHINESE_FULL),4)
-    ifeq ($(ENABLE_4732),1)
-    	 $(info 4732)
-         PACKED_FILE_SUFFIX := $(PACKED_FILE_SUFFIX)HS
-    else ifeq ($(ENABLE_ENGLISH),1)
+
+    ifeq ($(ENABLE_ENGLISH),1)
         $(info EK)
         PACKED_FILE_SUFFIX := $(PACKED_FILE_SUFFIX)EK
     else ifeq ($(ENABLE_PINYIN),1)
