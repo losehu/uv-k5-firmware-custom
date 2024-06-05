@@ -330,7 +330,7 @@ static void OnKeyDownFreqInput(uint8_t key) {
         case KEY_8:
         case KEY_9:
         case KEY_STAR:
-            tempFreq= UpdateFreqInput(key);
+             UpdateFreqInput(key);
             break;
         case KEY_EXIT:
 
@@ -338,7 +338,7 @@ static void OnKeyDownFreqInput(uint8_t key) {
                 INPUT_STATE = false;
                 break;
             }
-            tempFreq=UpdateFreqInput(key);
+            UpdateFreqInput(key);
 
             break;
         case KEY_MENU:

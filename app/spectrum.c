@@ -711,7 +711,7 @@ static void ToggleStepsCount() {
 }
 
 
- uint32_t UpdateFreqInput(KEY_Code_t key) {
+ void UpdateFreqInput(KEY_Code_t key) {
     if (key != KEY_EXIT && freqInputIndex >= 10) {
         return;
     }
