@@ -361,7 +361,6 @@ static void OnKeyDownFreqInput(uint8_t key) {
 }
 
 
-bool bKeyPressed, bKeyHeld, gRepeatHeld = false;
 
 void HandleUserInput() {
     kbds.prev = kbds.current;
