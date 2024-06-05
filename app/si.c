@@ -332,6 +332,13 @@ static void OnKeyDownFreqInput(uint8_t key) {
             tempFreq= UpdateFreqInput(key);
             break;
         case KEY_EXIT:
+            if(seeking)
+            {
+//                SI47XX_PowerDown();
+                SI47XX_PowerUp();
+                seeking=false;
+                break;
+            }
             if (freqInputIndex == 0) {
                 INPUT_STATE = false;
                 break;
