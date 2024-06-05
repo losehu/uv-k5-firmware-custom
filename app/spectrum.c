@@ -1580,7 +1580,7 @@ static void Tick() {
 }
 
 
-void APP_RunSpectrum() {
+static void APP_RunSpectrum() {
 
     // TX here coz it always? set to active VFO
     vfo = gEeprom.TX_VFO;
