@@ -544,7 +544,7 @@ INPUT_STATE=1;
             case KEY_EXIT:
                 if(seeking)
                 {
-//                    SI47XX_PowerDown();
+                    SI47XX_PowerDown();
                     SI47XX_PowerUp();
                     seeking=false;
                     return ;
