@@ -575,5 +575,6 @@ void SI47XX_SetSsbCapacitor(uint16_t v);
 extern SI47XX_MODE si4732mode;
 extern RSQStatus rsqStatus;
 extern uint16_t siCurrentFreq;
+#define PATCH_SIZE 15832
 
 #endif /* end of include guard: SI473X_H */

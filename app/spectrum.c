@@ -14,10 +14,10 @@
  *     limitations under the License.
  */
 //#define ENABLE_DOPPLER
-
+#include "app/input.h"
 #include "functions.h"
 #include "stdbool.h"
-
+#include "board.h"
 #ifdef ENABLE_DOPPLER
 
 #include "app/doppler.h"
@@ -125,13 +125,10 @@ SpectrumSettings settings = {.stepsCount = STEPS_64,
 };
 
 uint32_t fMeasure = 0;
-uint32_t currentFreq, tempFreq;
+uint32_t currentFreq;
 uint16_t rssiHistory[128];
 int vfo;
-uint8_t freqInputIndex = 0;
-uint8_t freqInputDotIndex = 0;
-KEY_Code_t freqInputArr[10];
-char freqInputString[11];
+
 
 uint8_t menuState = 0;
 uint16_t listenT = 0;
@@ -696,72 +693,10 @@ static void ToggleStepsCount() {
     redrawScreen = true;
 }
 
-static void ResetFreqInput() {
-    tempFreq = 0;
-    for (int i = 0; i < 10; ++i) {
-        freqInputString[i] = '-';
-    }
-}
-
-static void FreqInput() {
-    freqInputIndex = 0;
-    freqInputDotIndex = 0;
-    ResetFreqInput();
-    SetState(FREQ_INPUT);
-}
 
 
-static void UpdateFreqInput(KEY_Code_t key) {
-    if (key != KEY_EXIT && freqInputIndex >= 10) {
-        return;
-    }
-    if (key == KEY_STAR) {
-        if (freqInputIndex == 0 || freqInputDotIndex) {
-            return;
-        }
-        freqInputDotIndex = freqInputIndex;
-    }
-    if (key == KEY_EXIT) {
-        freqInputIndex--;
-        if (freqInputDotIndex == freqInputIndex)
-            freqInputDotIndex = 0;
-    } else {
-        freqInputArr[freqInputIndex++] = key;
-    }
 
-    ResetFreqInput();
 
-    uint8_t dotIndex =
-            freqInputDotIndex == 0 ? freqInputIndex : freqInputDotIndex;
-
-    KEY_Code_t digitKey;
-    for (int i = 0; i < 10; ++i) {
-        if (i < freqInputIndex) {
-            digitKey = freqInputArr[i];
-            freqInputString[i] = digitKey <= KEY_9 ? '0' + digitKey : '.';
-        } else {
-            freqInputString[i] = '-';
-        }
-    }
-
-    uint32_t base = 100000; // 1MHz in BK units
-//#ifdef ENABLE_DOPPLER
-//    if(DOPPLER_MODE)base=1;
-//#endif
-    for (int i = dotIndex - 1; i >= 0; --i) {
-        tempFreq += (freqInputArr[i]) * base;
-        base *= 10;
-    }
-
-    base = 10000; // 0.1MHz in BK units
-    if (dotIndex < freqInputIndex) {
-        for (int i = dotIndex + 1; i < freqInputIndex; ++i) {
-            tempFreq += (freqInputArr[i]) * base;
-            base /= 10;
-        }
-    }
-    redrawScreen = true;
-}
 
 static void Blacklist() {
 #ifdef ENABLE_SCAN_RANGES
@@ -812,31 +747,7 @@ static void DrawSpectrum() {
     }
 }
 
-static void DrawPower() {
-    BOARD_ADC_GetBatteryInfo(&gBatteryVoltages[gBatteryCheckCounter++ % 4],
-                             &gBatteryCurrent);
 
-    uint16_t voltage = (gBatteryVoltages[0] + gBatteryVoltages[1] +
-                        gBatteryVoltages[2] + gBatteryVoltages[3]) /
-                       4 * 760 / gBatteryCalibration[3];
-
-    unsigned perc = BATTERY_VoltsToPercent(voltage);
-
-    // sprintf(String, "%d %d", voltage, perc);
-    // GUI_DisplaySmallest(String, 48, 1, true, true);
-
-    gStatusLine[116] = 0b00011100;
-    gStatusLine[117] = 0b00111110;
-    for (int i = 118; i <= 126; i++) {
-        gStatusLine[i] = 0b00100010;
-    }
-
-    for (unsigned i = 127; i >= 118; i--) {
-        if (127 - i <= (perc + 5) * 9 / 100) {
-            gStatusLine[i] = 0b00111110;
-        }
-    }
-}
 
 static void DrawStatus() {
 
@@ -1013,6 +924,7 @@ static void OnKeyDown(uint8_t key) {
 
 #endif
             FreqInput();
+            SetState(FREQ_INPUT);
 
 
             break;
@@ -1062,14 +974,20 @@ static void OnKeyDownFreqInput(uint8_t key) {
         case KEY_8:
         case KEY_9:
         case KEY_STAR:
-            UpdateFreqInput(key);
+            tempFreq= UpdateFreqInput(key);
+
+            redrawScreen = true;
+
             break;
         case KEY_EXIT:
             if (freqInputIndex == 0) {
                 SetState(previousState);
                 break;
             }
-            UpdateFreqInput(key);
+            tempFreq= UpdateFreqInput(key);
+
+            redrawScreen = true;
+
             break;
         case KEY_MENU:
 #ifdef ENABLE_DOPPLER
@@ -1149,6 +1067,7 @@ void OnKeyDownStill(KEY_Code_t key) {
 
 
             FreqInput();
+            SetState(FREQ_INPUT);
 
 
             break;
@@ -1210,10 +1129,7 @@ void OnKeyDownStill(KEY_Code_t key) {
     }
 }
 
-static void RenderFreqInput() {
-    UI_PrintStringSmall(freqInputString, 2, 127, 0);
-//    show_uint32(tempFreq,3);
-}
+
 
 static void UpdateStill() {
     if (TX_ON)return;

@@ -6,7 +6,8 @@
 //
 // Created by RUPC on 2024/3/10.
 //
-
+#include "input.h"
+#include "board.h"
 
 #include "driver/si473x.h"
 #include "bsp/dp32g030/gpio.h"
@@ -53,7 +54,7 @@ typedef enum {
     SW_BT,
     LW_BT,
 } BandType;
-uint32_t nums1, nums2, nums3 ,nums4,nums5,nums6= 0;
+uint32_t nums1, nums2, nums3, nums4, nums5, nums6 = 0;
 static const char SI47XX_BW_NAMES[5][8] = {
         "6 kHz", "4 kHz", "3 kHz", "2 kHz", "1 kHz",
 };
@@ -69,7 +70,7 @@ static const char SI47XX_MODE_NAMES[5][4] = {
 static SI47XX_FilterBW bw = SI47XX_BW_6_kHz;
 static SI47XX_SsbFilterBW ssbBw = SI47XX_SSB_BW_3_kHz;
 static int8_t currentBandIndex = -1;
-
+bool SI_run = true;
 typedef struct // Band data
 {
     const char *bandName; // Bandname
@@ -165,7 +166,8 @@ static uint32_t lastRdsUpdate = 0;
 static uint32_t lastSeekUpdate = 0;
 static DateTime dt;
 static int16_t bfo = 0;
-static bool showSNR = false;
+static bool showSNR = true;
+bool INPUT_STATE = false;
 
 static void tune(uint32_t f) {
     f /= divider;
@@ -179,8 +181,12 @@ static void tune(uint32_t f) {
 }
 
 void SI_init() {
+    SI_run = true;
+    BK4819_ToggleGpioOut(BK4819_GPIO6_PIN2_GREEN, false);
+    BK4819_Disable();
 
-    BK4819_Idle();
+//    SI47XX_PowerDown();
+
     SI47XX_PowerUp();
 
     SI47XX_SetAutomaticGainControl(1, att);
@@ -210,78 +216,162 @@ void SI_deinit() {
 
 bool display_flag = 0;
 KeyboardState kbds = {KEY_INVALID, KEY_INVALID, 0};
-uint32_t NOW_STEP = 100;
+
 
 void SI4732_Display() {
     memset(gStatusLine, 0, sizeof(gStatusLine));
-    UI_DisplayClear();
+    if (INPUT_STATE) {
+        UI_PrintStringSmall(freqInputString, 2, 127, 1);
+
+    }
+    else {
+        uint8_t String[19];
+
+        //频率显示
+        uint32_t f = siCurrentFreq * divider;
+        uint16_t fp1 = f / 100000;
+        uint16_t fp2 = f / 100 % 1000;
+        sprintf(String, "%3u.%03u", fp1, fp2);
+        UI_DisplayFrequency(String, 64 - strlen(String) * 13 / 2, 2, false);
+        //模式显示
+        const uint8_t BASE = 38;
+        GUI_DisplaySmallest(SI47XX_MODE_NAMES[si4732mode], LCD_WIDTH - 12, BASE - 10 - 8, false, true);
 
 
-    uint8_t String[19];
+        if (SI47XX_IsSSB()) {
+            sprintf(String, "%d", bfo);
+            GUI_DisplaySmallest(String, LCD_WIDTH - strlen(String) * 4, BASE - 8, false, true);
+        }
+
+        if (si4732mode == SI47XX_FM) {
+            if (rds.RDSSignal) {
+                GUI_DisplaySmallest("RDS", LCD_WIDTH - 12, 12 - 8, false, true);
+            }
+
+            char genre[17];
+            const char wd[8][3] = {"SU", "MO", "TU", "WE", "TH", "FR", "SA", "SU"};
+            SI47XX_GetProgramType(genre);
+
+            GUI_DisplaySmallest(genre, 64 - strlen(genre) * 2, 15 - 8, false, true);
 
 
-    uint32_t f = siCurrentFreq * divider;
-    uint16_t fp1 = f / 100000;
-    uint16_t fp2 = f / 100 % 1000;
+            if (SI47XX_GetLocalDateTime(&dt)) {
+                sprintf(String, "%02u.%02u.%04u, %s %02u:%02u", dt.day, dt.month, dt.year, wd[dt.wday], dt.hour,
+                        dt.minute);
+                GUI_DisplaySmallest(String, 64 - strlen(String) * 2, 22 - 8, false, true);
 
-    // PrintSmallEx(0, 12, POS_L, C_FILL, "SNR: %u dB", rsqStatus.resp.SNR);
-    sprintf(String, "%3u.%03u", fp1, fp2);
-    UI_DisplayFrequency(String, 25, 1, false);
+            }
+            GUI_DisplaySmallest(rds.radioText, 0, LCD_HEIGHT - 8 - 8, false, true);
+        }
+
+        if (si4732mode == SI47XX_FM) {
+            sprintf(String, "STP %u ATT %u", step, att);
+        } else if (SI47XX_IsSSB()) {
+            sprintf(String, "STP %u ATT %u BW %s", step, att, SI47XX_SSB_BW_NAMES[ssbBw]);
+        } else {
+            sprintf(String, "STP %u ATT %u BW %s", step, att, SI47XX_SSB_BW_NAMES[bw]);
+        }
+        GUI_DisplaySmallest(String, 64 - strlen(String) * 2, BASE + 6 - 8, false, true);
+        if (si4732mode != SI47XX_FM) {
+            if (currentBandIndex >= 0) {
+                sprintf(String, "%s %d - %dkHz", bands[currentBandIndex].bandName, bands[currentBandIndex].minimumFreq,
+                        bands[currentBandIndex].maximumFreq);
+                GUI_DisplaySmallest(String, 64 - strlen(String) * 2, LCD_HEIGHT - 5 - 9, false, true);
+            }
+        }
+
+        if (showSNR) {
+            uint8_t rssi = rsqStatus.resp.RSSI;
+            if (rssi > 64) {
+                rssi = 64;
+            }
+//        FillRect(0, 8, rssi * 2, 2, C_FILL);
+            for (int i = 0; i < rssi * 2; ++i) {
+                PutPixel(i, 2, true);
+                PutPixel(i, 3, true);
+                PutPixel(i, 4, true);
+                PutPixel(i, 5, true);
+            }
 
 
-    sprintf(String, "%02d %02d ", rsqStatus.resp.RSSI, rsqStatus.resp.SNR);
-    UI_PrintStringSmall(String, 0, 127, 5);
+            sprintf(String, "SNR %u", rsqStatus.resp.SNR);
 
+            GUI_DisplaySmallest(String, 0, 15 - 8, false, true);
 
+        }
+    }
     ST7565_BlitFullScreen();
 }
 
-void SI4732_Main() {
-#ifdef ENABLE_DOPPLER
-
-    SYSCON_DEV_CLK_GATE= SYSCON_DEV_CLK_GATE & ( ~(1 << 22));
-#endif
-
-    SI_init();
-    BACKLIGHT_TurnOn();
-    int cnt = 0;
-    while (1) {
-
-        if (cnt == 400) {
-            RSQ_GET();
-            cnt = 0;
+bool FreqCheck(uint32_t f) {
+    if (si4732mode == SI47XX_FM) {
+        if (f < 6400000 || f > 10800000) {
+            return false;
         }
-        if (cnt % 20 == 0) {
-            HandleUserInput();
-            display_flag = 1;
-
+    } else {
+        if (f < 15000 || f > 3000000) {
+            return false;
         }
+    }
+    return true;
+}
 
-        cnt++;
-        if (display_flag) {
-            display_flag = 0;
-            SI4732_Display();
-        }
-        SYSTEM_DelayMs(1);
+static void OnKeyDownFreqInput(uint8_t key) {
+    switch (key) {
+        case KEY_0:
+        case KEY_1:
+        case KEY_2:
+        case KEY_3:
+        case KEY_4:
+        case KEY_5:
+        case KEY_6:
+        case KEY_7:
+        case KEY_8:
+        case KEY_9:
+        case KEY_STAR:
+            tempFreq= UpdateFreqInput(key);
+            break;
+        case KEY_EXIT:
+            if (freqInputIndex == 0) {
+                INPUT_STATE = false;
+                break;
+            }
+            tempFreq=UpdateFreqInput(key);
+
+            break;
+        case KEY_MENU:
+            if (!FreqCheck(tempFreq)) {
+                break;
+            }
+            INPUT_STATE = false;
+            tune(tempFreq );
+            resetBFO();
+
+            break;
+        default:
+            break;
     }
 }
+
 
 bool bKeyPressed, bKeyHeld, gRepeatHeld = false;
 
 void HandleUserInput() {
     kbds.prev = kbds.current;
     kbds.current = GetKey();
-bool KEY_TYPE1=false,KEY_TYPE2=false,KEY_TYPE3=false;
+    bool KEY_TYPE1 = false, KEY_TYPE2 = false, KEY_TYPE3 = false;
     // 无按键
     if (kbds.current == KEY_INVALID) {
-        if (kbds.counter > 2 && kbds.counter < 16) {
+        if (kbds.counter > 2 && kbds.counter <= 6) {
             // 短按松手
-            KEY_TYPE3=true;
+            KEY_TYPE3 = true;
+            nums3++;
         }
         kbds.counter = 0;
     } else {
-        if (kbds.counter > 2) {
-            KEY_TYPE1=true;
+        if (kbds.counter >= 6 && kbds.counter % 2 == 1) {
+            KEY_TYPE1 = true;
+            nums1++;
         }
         if (kbds.current == kbds.prev) {
             // 持续按下
@@ -289,7 +379,8 @@ bool KEY_TYPE1=false,KEY_TYPE2=false,KEY_TYPE3=false;
                 kbds.counter++;
             } else if (kbds.counter == 14) {
                 // 长按只触发一次
-                KEY_TYPE2=true;
+                KEY_TYPE2 = true;
+                nums2++;
                 kbds.counter++;
             }
         } else {
@@ -298,14 +389,20 @@ bool KEY_TYPE1=false,KEY_TYPE2=false,KEY_TYPE3=false;
         }
         SYSTEM_DelayMs(20);
     }
-    SI_key(kbds.current,KEY_TYPE1,KEY_TYPE2,KEY_TYPE3,kbds.prev);
+
+    SI_key(kbds.current, KEY_TYPE1, KEY_TYPE2, KEY_TYPE3, kbds.prev);
+    if (KEY_TYPE1 || KEY_TYPE2 || KEY_TYPE3) display_flag = 1;
+
 }
 
-bool SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3,KEY_Code_t key_prev) {
+bool SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_Code_t key_prev) {
     // up-down keys
-
+    if (INPUT_STATE && KEY_TYPE3) {
+        OnKeyDownFreqInput(key_prev);
+        return true;
+    }
     if (KEY_TYPE1 || KEY_TYPE3) {
-
+        if (KEY_TYPE3)key = key_prev;
         switch (key) {
             case KEY_UP:
                 tune((siCurrentFreq + step) * divider);
@@ -411,10 +508,10 @@ bool SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3,KEY_C
                 showSNR = !showSNR;
                 return true;
             case KEY_5:
-
+INPUT_STATE=1;
+                FreqInput();
                 return true;
             case KEY_0:
-                nums5++;
                 divider = 100;
                 if (si4732mode == SI47XX_FM) {
                     SI47XX_SwitchMode(SI47XX_AM);
@@ -442,21 +539,22 @@ bool SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3,KEY_C
                 }
                 return false;
             case KEY_STAR:
-                BK4819_Idle();
                 return true;
             case KEY_EXIT:
+                SI_run = false;
                 return true;
-            case KEY_SIDE1:
-                if (currentBandIndex > 0) {
-                    currentBandIndex--;
-                    tune(bands[currentBandIndex].currentFreq * divider);
-                }
-                return true;
-            case KEY_SIDE2:
-                if (currentBandIndex < BANDS_COUNT - 1) {
-                    currentBandIndex++;
-                    tune(bands[currentBandIndex].currentFreq * divider);
-                }
+//            case KEY_SIDE1:
+//                nums4++;
+//                if (currentBandIndex > 0) {
+//                    currentBandIndex--;
+//                    tune(bands[currentBandIndex].currentFreq * divider);
+//                }
+//                return true;
+//            case KEY_SIDE2:
+//                if (currentBandIndex < BANDS_COUNT - 1) {
+//                    currentBandIndex++;
+//                    tune(bands[currentBandIndex].currentFreq * divider);
+//                }
                 return true;
             default:
                 break;
@@ -465,3 +563,53 @@ bool SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3,KEY_C
     return false;
 }
 
+
+void SI4732_Main() {
+#ifdef ENABLE_DOPPLER
+
+    SYSCON_DEV_CLK_GATE= SYSCON_DEV_CLK_GATE & ( ~(1 << 22));
+#endif
+
+
+    SI_init();
+    BACKLIGHT_TurnOn();
+    int cnt = 0;
+    while (SI_run) {
+        if (cnt == 400) {
+            RSQ_GET();
+            cnt = 0;
+            display_flag = 1;
+
+            UI_DisplayClear();
+            DrawPower();
+            UI_PrintStringSmallBuffer("SI4732", gStatusLine);
+            for (int i = 0; i < 128; ++i) {
+                PutPixel(i, 0, true);
+            }
+            ST7565_BlitStatusLine();
+
+
+        }
+        if (cnt % 25 == 0) {
+            HandleUserInput();
+        }
+
+        if (seeking && cnt % 100 == 0) {
+            bool valid = false;
+            siCurrentFreq = SI47XX_getFrequency(&valid);
+            if (valid) {
+                seeking = false;
+            }
+            display_flag = 1;
+        }
+        cnt++;
+        if (display_flag) {
+            display_flag = 0;
+            SI4732_Display();
+        }
+
+        SYSTEM_DelayMs(1);
+    }
+    SI_deinit();
+
+}

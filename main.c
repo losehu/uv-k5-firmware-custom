@@ -194,15 +194,15 @@ void Main(void) {
     gKeyReading0 = KEY_INVALID;
     gKeyReading1 = KEY_INVALID;
     gDebounceCounter = 0;
-#ifdef ENABLE_4732
-
-
-    memset(gStatusLine, 0, sizeof(gStatusLine));
-    UI_DisplayClear();
-    ST7565_BlitStatusLine();  // blank status line
-    ST7565_BlitFullScreen();
-SI4732_Main();
-#endif
+//#ifdef ENABLE_4732
+//
+//
+//    memset(gStatusLine, 0, sizeof(gStatusLine));
+//    UI_DisplayClear();
+//    ST7565_BlitStatusLine();  // blank status line
+//    ST7565_BlitFullScreen();
+//SI4732_Main();
+//#endif
 #ifdef ENABLE_TIMER
 
 
@@ -294,8 +294,6 @@ SI4732_Main();
 
         if (gNextTimeslice) {
             APP_TimeSlice10ms();
-
-
         }
 
         if (gNextTimeslice_500ms) {

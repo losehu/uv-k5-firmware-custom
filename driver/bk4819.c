@@ -1088,11 +1088,7 @@ void BK4819_ResetFSK(void) {
 
     SYSTEM_DelayMs(30);
 
-    BK4819_Idle();
-}
-
-void BK4819_Idle(void) {
-    BK4819_WriteRegister(BK4819_REG_30, 0x0000);
+    BK4819_Disable();
 }
 
 void BK4819_ExitBypass(void) {
@@ -1608,6 +1604,7 @@ void BK4819_SetScanFrequency(uint32_t Frequency) {
 
 void BK4819_Disable(void) {
     BK4819_WriteRegister(BK4819_REG_30, 0);
+
 }
 
 void BK4819_StopScan(void) {

@@ -21,7 +21,9 @@
 #include "app/chFrScanner.h"
 #include "app/common.h"
 #include "chinese.h"
-
+#ifdef ENABLE_SI4732
+#include "app/si.h"
+#endif
 #ifdef ENABLE_FMRADIO
 #include "app/fm.h"
 #endif
@@ -93,9 +95,9 @@ static void processFKeyFunction(const KEY_Code_t Key, const bool beep) {
         case KEY_0:
 #ifdef ENABLE_FMRADIO
             ACTION_FM();
-
-
-
+#endif
+#ifdef ENABLE_4732
+            SI4732_Main();
 #endif
             break;
 

@@ -163,24 +163,39 @@ void SI47XX_SsbSetup(SI47XX_SsbFilterBW AUDIOBW, uint8_t SBCUTFLT,
                (currentSsbMode.raw[1] << 8) | currentSsbMode.raw[0]);
 }
 
-//void SI47XX_PatchPowerUp() {
-//  RST_HIGH;
-//  uint8_t cmd[3] = {CMD_POWER_UP, 0b00110001, OUT_ANALOG};
-//  waitToSend();
-//  SI47XX_WriteBuffer(cmd, 3);
-//  SYSTEM_DelayMs(550);
-//
-//  SI47XX_downloadPatch();
-//
-//  SI47XX_SsbSetup(2, 1, 0, 1, 0, 1);
-//
-//  AUDIO_ToggleSpeaker(true);
-//  setVolume(63);
-//
-//  SI47XX_SetFreq(siCurrentFreq);
-//  sendProperty(PROP_SSB_SOFT_MUTE_MAX_ATTENUATION, 0);
-//  sendProperty(PROP_AM_AUTOMATIC_VOLUME_CONTROL_MAX_GAIN, 0x7800);
-//}
+bool SI47XX_downloadPatch() {
+    uint8_t buf[248];
+//    const uint8_t PAGE_SIZE = SETTINGS_GetPageSize();
+    const uint32_t EEPROM_SIZE = 262144;
+    const uint32_t PATCH_START = EEPROM_SIZE - PATCH_SIZE;
+    for (uint16_t offset = 0; offset < PATCH_SIZE; offset += 248) {
+        uint32_t eepromN = PATCH_SIZE - offset > 248 ? 248 : PATCH_SIZE - offset;
+        EEPROM_ReadBuffer(PATCH_START + offset, buf, eepromN);
+        for (uint8_t i = 0; i < eepromN; i += 8) {
+            waitToSend();
+            SI47XX_WriteBuffer(buf + i, 8);
+        }
+    }
+    return true;
+}
+void SI47XX_PatchPowerUp() {
+    RST_HIGH;
+    uint8_t cmd[3] = {CMD_POWER_UP, 0b00110001, OUT_ANALOG};
+    waitToSend();
+    SI47XX_WriteBuffer(cmd, 3);
+    SYSTEM_DelayMs(550);
+
+    SI47XX_downloadPatch();
+
+    SI47XX_SsbSetup(2, 1, 0, 1, 0, 1);
+
+    AUDIO_AudioPathOn();
+    setVolume(63);
+
+    SI47XX_SetFreq(siCurrentFreq);
+    sendProperty(PROP_SSB_SOFT_MUTE_MAX_ATTENUATION, 0);
+    sendProperty(PROP_AM_AUTOMATIC_VOLUME_CONTROL_MAX_GAIN, 0x7800);
+}
 
 void SI47XX_SetSsbBandwidth(SI47XX_SsbFilterBW bw) {
   SI47XX_SsbSetup(bw, 1, 0, 1, 0, 1);
@@ -229,23 +244,19 @@ void SI47XX_PowerDown() {
 }
 
 void SI47XX_SwitchMode(SI47XX_MODE mode) {
-//  if (si4732mode != mode) {
-//    bool wasSSB = SI47XX_IsSSB();
-//    si4732mode = mode;
-//    if (mode == SI47XX_USB || mode == SI47XX_LSB) {
-//      if (!wasSSB) {
-//        SI47XX_PowerDown();
-//        SI47XX_PatchPowerUp();
-//      }
-//    } else {
-//      SI47XX_PowerDown();
-//      SI47XX_PowerUp();
-//    }
-//  }
-si4732mode=mode;
-
-      SI47XX_PowerDown();
-      SI47XX_PowerUp();
+    if (si4732mode != mode) {
+        bool wasSSB = SI47XX_IsSSB();
+        si4732mode = mode;
+        if (mode == SI47XX_USB || mode == SI47XX_LSB) {
+            if (!wasSSB) {
+                SI47XX_PowerDown();
+                SI47XX_PatchPowerUp();
+            }
+        } else {
+            SI47XX_PowerDown();
+            SI47XX_PowerUp();
+        }
+    }
 }
 
 void SI47XX_SetFreq(uint16_t freq) {
