@@ -334,7 +334,7 @@ static void OnKeyDownFreqInput(uint8_t key) {
         case KEY_EXIT:
             if(seeking)
             {
-//                SI47XX_PowerDown();
+                SI47XX_PowerDown();
                 SI47XX_PowerUp();
                 seeking=false;
                 break;
