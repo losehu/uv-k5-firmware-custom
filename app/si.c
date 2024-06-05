@@ -171,16 +171,21 @@ static bool showSNR = true;
 bool INPUT_STATE = false;
 
 static void tune(uint32_t f) {
-    f /= divider;
-    if (si4732mode == SI47XX_FM) {
-        f -= f % 5;
+    if(si4732mode == SI47XX_FM)
+    {
         if (f < 6400000 || f > 10800000) {
             return;
         }
-    } else {
+    }else {
         if (f < 15000 || f > 3000000) {
             return;
         }
+    }
+    f /= divider;
+    if (si4732mode == SI47XX_FM) {
+
+        f -= f % 5;
+
     }
     SI47XX_ClearRDS();
     SI47XX_SetFreq(f);
