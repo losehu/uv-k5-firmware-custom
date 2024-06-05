@@ -21,7 +21,7 @@
 #include "app/chFrScanner.h"
 #include "app/common.h"
 #include "chinese.h"
-#ifdef ENABLE_SI4732
+#ifdef ENABLE_4732
 #include "app/si.h"
 #endif
 #ifdef ENABLE_FMRADIO
