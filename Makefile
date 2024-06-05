@@ -12,7 +12,7 @@ ENABLE_LTO                    ?= 1
 # ---- STOCK QUANSHENG FERATURES ----
 ENABLE_UART                   ?= 1
 ENABLE_AIRCOPY                ?= 0
-ENABLE_FMRADIO                = 0
+ENABLE_FMRADIO                = 1
 ENABLE_NOAA                   ?= 0
 ENABLE_VOICE                  ?= 0
 ENABLE_VOX                    ?= 1
@@ -71,7 +71,7 @@ ENABLE_MESSENGER_NOTIFICATION			= 0
 ENABLE_4732 =0
 ENABLE_DOPPLER               =0
 #############################################################
-PACKED_FILE_SUFFIX = LOSEHU126
+PACKED_FILE_SUFFIX = LOSEHU127
 
 ifeq ($(ENABLE_CHINESE_FULL),0)
     ifeq ($(ENABLE_ENGLISH),1)
@@ -142,7 +142,6 @@ OBJS =
 OBJS += start.o
 OBJS += init.o
 OBJS += app/messenger.o
-OBJS += app/input.o
 
 ifeq ($(ENABLE_MESSENGER),1)
 	OBJS += ui/messenger.o

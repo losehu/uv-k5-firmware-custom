@@ -160,9 +160,17 @@ typedef struct PeakInfo {
     uint32_t f;
     uint16_t i;
 } PeakInfo;
-
-void APP_RunSpectrum(void);
-
+extern uint32_t tempFreq;
+extern char freqInputString[11];
+extern uint8_t freqInputIndex ;
+extern uint8_t freqInputDotIndex ;
+ void ResetFreqInput() ;
+void UpdateFreqInput(KEY_Code_t key) ;
+ void RenderFreqInput() ;
+ void FreqInput() ;
+extern KEY_Code_t freqInputArr[10];
+ void APP_RunSpectrum(void);
+ void DrawPower();
 #ifdef ENABLE_DOPPLER
 extern bool DOPPLER_MODE;
 void RTCHandler();

@@ -14,10 +14,10 @@
  *     limitations under the License.
  */
 //#define ENABLE_DOPPLER
-#include "app/input.h"
+
 #include "functions.h"
 #include "stdbool.h"
-#include "board.h"
+
 #ifdef ENABLE_DOPPLER
 
 #include "app/doppler.h"
@@ -125,10 +125,13 @@ SpectrumSettings settings = {.stepsCount = STEPS_64,
 };
 
 uint32_t fMeasure = 0;
-uint32_t currentFreq;
+uint32_t currentFreq, tempFreq;
 uint16_t rssiHistory[128];
 int vfo;
-
+uint8_t freqInputIndex = 0;
+uint8_t freqInputDotIndex = 0;
+KEY_Code_t freqInputArr[10];
+char freqInputString[11];
 
 uint8_t menuState = 0;
 uint16_t listenT = 0;
@@ -390,8 +393,8 @@ uint16_t GetScanStep() { return scanStepValues[settings.scanStepIndex]; }
 uint16_t GetStepsCount() {
 #ifdef ENABLE_SCAN_RANGES
     if(gScanRangeStart) {
-    return (gScanRangeStop - gScanRangeStart) / GetScanStep();
-  }
+        return (gScanRangeStop - gScanRangeStart) / GetScanStep();
+    }
 #endif
     return 128 >> settings.stepsCount;
 }
@@ -430,7 +433,7 @@ static uint16_t GetRssi() {
     uint16_t rssi = BK4819_GetRSSI();
 #ifdef ENABLE_AM_FIX
     if(settings.modulationType==MODULATION_AM && gSetting_AM_fix)
-    rssi += AM_fix_get_gain_diff()*2;
+        rssi += AM_fix_get_gain_diff()*2;
 #endif
     return rssi;
 }
@@ -486,7 +489,7 @@ static void ResetBlacklist() {
     }
 #ifdef ENABLE_SCAN_RANGES
     memset(blacklistFreqs, 0, sizeof(blacklistFreqs));
-  blacklistFreqsIdx = 0;
+    blacklistFreqsIdx = 0;
 #endif
 }
 
@@ -537,12 +540,12 @@ static void UpdatePeakInfo() {
 static void SetRssiHistory(uint16_t idx, uint16_t rssi) {
 #ifdef ENABLE_SCAN_RANGES
     if(scanInfo.measurementsCount > 128) {
-    uint8_t i = (uint32_t)ARRAY_SIZE(rssiHistory) * 1000 / scanInfo.measurementsCount * idx / 1000;
-    if(rssiHistory[i] < rssi || isListening)
-      rssiHistory[i] = rssi;
-    rssiHistory[(i+1)%128] = 0;
-    return;
-  }
+        uint8_t i = (uint32_t)ARRAY_SIZE(rssiHistory) * 1000 / scanInfo.measurementsCount * idx / 1000;
+        if(rssiHistory[i] < rssi || isListening)
+            rssiHistory[i] = rssi;
+        rssiHistory[(i+1)%128] = 0;
+        return;
+    }
 #endif
     rssiHistory[idx] = rssi;
 }
@@ -693,10 +696,72 @@ static void ToggleStepsCount() {
     redrawScreen = true;
 }
 
+ void ResetFreqInput() {
+    tempFreq = 0;
+    for (int i = 0; i < 10; ++i) {
+        freqInputString[i] = '-';
+    }
+}
+
+ void FreqInput() {
+    freqInputIndex = 0;
+    freqInputDotIndex = 0;
+    ResetFreqInput();
+    SetState(FREQ_INPUT);
+}
 
 
+ void UpdateFreqInput(KEY_Code_t key) {
+    if (key != KEY_EXIT && freqInputIndex >= 10) {
+        return;
+    }
+    if (key == KEY_STAR) {
+        if (freqInputIndex == 0 || freqInputDotIndex) {
+            return;
+        }
+        freqInputDotIndex = freqInputIndex;
+    }
+    if (key == KEY_EXIT) {
+        freqInputIndex--;
+        if (freqInputDotIndex == freqInputIndex)
+            freqInputDotIndex = 0;
+    } else {
+        freqInputArr[freqInputIndex++] = key;
+    }
 
+    ResetFreqInput();
 
+    uint8_t dotIndex =
+            freqInputDotIndex == 0 ? freqInputIndex : freqInputDotIndex;
+
+    KEY_Code_t digitKey;
+    for (int i = 0; i < 10; ++i) {
+        if (i < freqInputIndex) {
+            digitKey = freqInputArr[i];
+            freqInputString[i] = digitKey <= KEY_9 ? '0' + digitKey : '.';
+        } else {
+            freqInputString[i] = '-';
+        }
+    }
+
+    uint32_t base = 100000; // 1MHz in BK units
+//#ifdef ENABLE_DOPPLER
+//    if(DOPPLER_MODE)base=1;
+//#endif
+    for (int i = dotIndex - 1; i >= 0; --i) {
+        tempFreq += (freqInputArr[i]) * base;
+        base *= 10;
+    }
+
+    base = 10000; // 0.1MHz in BK units
+    if (dotIndex < freqInputIndex) {
+        for (int i = dotIndex + 1; i < freqInputIndex; ++i) {
+            tempFreq += (freqInputArr[i]) * base;
+            base /= 10;
+        }
+    }
+    redrawScreen = true;
+}
 
 static void Blacklist() {
 #ifdef ENABLE_SCAN_RANGES
@@ -712,10 +777,10 @@ static void Blacklist() {
 #ifdef ENABLE_SCAN_RANGES
 static bool IsBlacklisted(uint16_t idx)
 {
-  for(uint8_t i = 0; i < ARRAY_SIZE(blacklistFreqs); i++)
-    if(blacklistFreqs[i] == idx)
-      return true;
-  return false;
+    for(uint8_t i = 0; i < ARRAY_SIZE(blacklistFreqs); i++)
+        if(blacklistFreqs[i] == idx)
+            return true;
+    return false;
 }
 #endif
 
@@ -747,7 +812,31 @@ static void DrawSpectrum() {
     }
 }
 
+  void DrawPower() {
+    BOARD_ADC_GetBatteryInfo(&gBatteryVoltages[gBatteryCheckCounter++ % 4],
+                             &gBatteryCurrent);
 
+    uint16_t voltage = (gBatteryVoltages[0] + gBatteryVoltages[1] +
+                        gBatteryVoltages[2] + gBatteryVoltages[3]) /
+                       4 * 760 / gBatteryCalibration[3];
+
+    unsigned perc = BATTERY_VoltsToPercent(voltage);
+
+    // sprintf(String, "%d %d", voltage, perc);
+    // GUI_DisplaySmallest(String, 48, 1, true, true);
+
+    gStatusLine[116] = 0b00011100;
+    gStatusLine[117] = 0b00111110;
+    for (int i = 118; i <= 126; i++) {
+        gStatusLine[i] = 0b00100010;
+    }
+
+    for (unsigned i = 127; i >= 118; i--) {
+        if (127 - i <= (perc + 5) * 9 / 100) {
+            gStatusLine[i] = 0b00111110;
+        }
+    }
+}
 
 static void DrawStatus() {
 
@@ -901,13 +990,13 @@ static void OnKeyDown(uint8_t key) {
 #ifdef ENABLE_SCAN_RANGES
             if(!gScanRangeStart)
 #endif
-            UpdateCurrentFreq(true);
+                UpdateCurrentFreq(true);
             break;
         case KEY_DOWN:
 #ifdef ENABLE_SCAN_RANGES
             if(!gScanRangeStart)
 #endif
-            UpdateCurrentFreq(false);
+                UpdateCurrentFreq(false);
             break;
         case KEY_SIDE1:
             Blacklist();
@@ -923,8 +1012,7 @@ static void OnKeyDown(uint8_t key) {
             if(!gScanRangeStart)
 
 #endif
-            FreqInput();
-            SetState(FREQ_INPUT);
+                FreqInput();
 
 
             break;
@@ -938,7 +1026,7 @@ static void OnKeyDown(uint8_t key) {
 #ifdef ENABLE_SCAN_RANGES
             if(!gScanRangeStart)
 #endif
-            ToggleStepsCount();
+                ToggleStepsCount();
             break;
         case KEY_SIDE2:
             ToggleBacklight();
@@ -974,20 +1062,14 @@ static void OnKeyDownFreqInput(uint8_t key) {
         case KEY_8:
         case KEY_9:
         case KEY_STAR:
-            tempFreq= UpdateFreqInput(key);
-
-            redrawScreen = true;
-
+            UpdateFreqInput(key);
             break;
         case KEY_EXIT:
             if (freqInputIndex == 0) {
                 SetState(previousState);
                 break;
             }
-            tempFreq= UpdateFreqInput(key);
-
-            redrawScreen = true;
-
+            UpdateFreqInput(key);
             break;
         case KEY_MENU:
 #ifdef ENABLE_DOPPLER
@@ -1067,7 +1149,6 @@ void OnKeyDownStill(KEY_Code_t key) {
 
 
             FreqInput();
-            SetState(FREQ_INPUT);
 
 
             break;
@@ -1129,7 +1210,10 @@ void OnKeyDownStill(KEY_Code_t key) {
     }
 }
 
-
+ void RenderFreqInput() {
+    UI_PrintStringSmall(freqInputString, 2, 127, 0);
+//    show_uint32(tempFreq,3);
+}
 
 static void UpdateStill() {
     if (TX_ON)return;
@@ -1359,7 +1443,7 @@ static void HandleUserInput() {
 
 static void Scan() {
     if (rssiHistory[scanInfo.i] != RSSI_MAX_VALUE
-#ifdef ENABLE_SCAN_RANGES
+        #ifdef ENABLE_SCAN_RANGES
         && !IsBlacklisted(scanInfo.i)
 #endif
             ) {
@@ -1435,31 +1519,31 @@ static void UpdateListening() {
 static void Tick() {
 #ifdef ENABLE_AM_FIX
     if (gNextTimeslice) {
-    gNextTimeslice = false;
-    if(settings.modulationType == MODULATION_AM && !lockAGC) {
-      AM_fix_10ms(vfo); //allow AM_Fix to apply its AGC action
+        gNextTimeslice = false;
+        if(settings.modulationType == MODULATION_AM && !lockAGC) {
+            AM_fix_10ms(vfo); //allow AM_Fix to apply its AGC action
+        }
     }
-  }
 #endif
 
 #ifdef ENABLE_SCAN_RANGES
     if (gNextTimeslice_500ms) {
-    gNextTimeslice_500ms = false;
+        gNextTimeslice_500ms = false;
 
-    // if a lot of steps then it takes long time
-    // we don't want to wait for whole scan
-    // listening has it's own timer
-    if(GetStepsCount()>128 && !isListening) {
-      UpdatePeakInfo();
-      if (IsPeakOverLevel()) {
-        ToggleRX(true);
-        TuneToPeak();
-        return;
-      }
-      redrawScreen = true;
-      preventKeypress = false;
+        // if a lot of steps then it takes long time
+        // we don't want to wait for whole scan
+        // listening has it's own timer
+        if(GetStepsCount()>128 && !isListening) {
+            UpdatePeakInfo();
+            if (IsPeakOverLevel()) {
+                ToggleRX(true);
+                TuneToPeak();
+                return;
+            }
+            redrawScreen = true;
+            preventKeypress = false;
+        }
     }
-  }
 #endif
 
     if (!preventKeypress) {
@@ -1496,23 +1580,23 @@ static void Tick() {
 }
 
 
-void APP_RunSpectrum() {
+ void APP_RunSpectrum() {
 
     // TX here coz it always? set to active VFO
     vfo = gEeprom.TX_VFO;
     // set the current frequency in the middle of the display
 #ifdef ENABLE_SCAN_RANGES
     if(gScanRangeStart) {
-    currentFreq = initialFreq = gScanRangeStart;
-    for(uint8_t i = 0; i < ARRAY_SIZE(scanStepValues); i++) {
-      if(scanStepValues[i] >= gTxVfo->StepFrequency) {
-        settings.scanStepIndex = i;
-        break;
-      }
+        currentFreq = initialFreq = gScanRangeStart;
+        for(uint8_t i = 0; i < ARRAY_SIZE(scanStepValues); i++) {
+            if(scanStepValues[i] >= gTxVfo->StepFrequency) {
+                settings.scanStepIndex = i;
+                break;
+            }
+        }
+        settings.stepsCount = STEPS_128;
     }
-    settings.stepsCount = STEPS_128;
-  }
-  else
+    else
 #endif
     {
         currentFreq = initialFreq = gTxVfo->pRX->Frequency -
@@ -1588,4 +1672,3 @@ void RTCHandler(void) {
 }
 
 #endif
-
