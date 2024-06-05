@@ -4,10 +4,11 @@
 
 # 版本说明
 
-* 目前分为五个版本：**LOSEHUxxx**、**LOSEHUxxxK**、**LOSEHUxxxH**、**LOSEHUxxxE**、**LOSEHUxxxEK**
+* 目前分为如下几个版本：**LOSEHUxxx**、**LOSEHUxxxK**、**LOSEHUxxxH**、**LOSEHUxxxE**、**LOSEHUxxxEK**、**LOSEHUxxxHS**
 * **LOSEHUxxx**:中文固件，无需扩容，包含MDC1200、频谱、收音机
 * **LOSEHUxxxK**:中文固件，需要1Mib以上Eeprom，包含多普勒模式、MDC1200、频谱、收音机、中文信道名、自定义开机中文字符、开机图片
 * **LOSEHUxxxH**:中文固件，需要2Mib以上Eeprom，包含多普勒模式、中文输入法、频谱、收音机、中文信道名、自定义开机中文字符、开机图片
+* **LOSEHUxxxHS**:中文固件，需要2Mib以上Eeprom，包含SI4732收音机、中文输入法、频谱、中文信道名、自定义开机中文字符、开机图片
 * **LOSEHUxxxE**:英文固件，无需扩容，包含MDC1200、频谱、收音机、短信
 * **LOSEHUxxxEK**:英文固件，需要1Mib以上Eeprom，包含多普勒模式、MDC1200、频谱、收音机、自定义开机字符、开机图片
 

@@ -171,9 +171,21 @@ static bool showSNR = true;
 bool INPUT_STATE = false;
 
 static void tune(uint32_t f) {
+    if(si4732mode == SI47XX_FM)
+    {
+        if (f < 6400000 || f > 10800000) {
+            return;
+        }
+    }else {
+        if (f < 15000 || f > 3000000) {
+            return;
+        }
+    }
     f /= divider;
     if (si4732mode == SI47XX_FM) {
+
         f -= f % 5;
+
     }
     SI47XX_ClearRDS();
     SI47XX_SetFreq(f);
@@ -224,8 +236,7 @@ void SI4732_Display() {
     if (INPUT_STATE) {
         UI_PrintStringSmall(freqInputString, 2, 127, 1);
 
-    }
-    else {
+    } else {
         uint8_t String[19];
 
         //∆µ¬ œ‘ æ
@@ -330,7 +341,7 @@ static void OnKeyDownFreqInput(uint8_t key) {
         case KEY_8:
         case KEY_9:
         case KEY_STAR:
-             UpdateFreqInput(key);
+            UpdateFreqInput(key);
             break;
         case KEY_EXIT:
 
@@ -346,7 +357,7 @@ static void OnKeyDownFreqInput(uint8_t key) {
                 break;
             }
             INPUT_STATE = false;
-            tune(tempFreq );
+            tune(tempFreq);
             resetBFO();
 
             break;
@@ -354,7 +365,6 @@ static void OnKeyDownFreqInput(uint8_t key) {
             break;
     }
 }
-
 
 
 void HandleUserInput() {
@@ -396,11 +406,11 @@ void HandleUserInput() {
 
 }
 
- void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_Code_t key_prev) {
+void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_Code_t key_prev) {
     // up-down keys
     if (INPUT_STATE && KEY_TYPE3) {
         OnKeyDownFreqInput(key_prev);
-        return ;
+        return;
     }
     if (KEY_TYPE1 || KEY_TYPE3) {
         if (KEY_TYPE3)key = key_prev;
@@ -408,11 +418,11 @@ void HandleUserInput() {
             case KEY_UP:
                 tune((siCurrentFreq + step) * divider);
                 resetBFO();
-                return ;
+                return;
             case KEY_DOWN:
                 tune((siCurrentFreq - step) * divider);
                 resetBFO();
-                return ;
+                return;
             case KEY_SIDE1:
                 if (SI47XX_IsSSB()) {
                     if (bfo < INT16_MAX - 10) {
@@ -420,7 +430,7 @@ void HandleUserInput() {
                     }
                     SI47XX_SetBFO(bfo);
                 }
-                return ;
+                return;
             case KEY_SIDE2:
                 if (SI47XX_IsSSB()) {
                     if (bfo > INT16_MIN + 10) {
@@ -428,19 +438,19 @@ void HandleUserInput() {
                     }
                     SI47XX_SetBFO(bfo);
                 }
-                return ;
+                return;
             case KEY_2:
                 if (att < 37) {
                     att++;
                     SI47XX_SetAutomaticGainControl(1, att);
                 }
-                return ;
+                return;
             case KEY_8:
                 if (att > 0) {
                     att--;
                     SI47XX_SetAutomaticGainControl(att > 0, att);
                 }
-                return ;
+                return;
             default:
                 break;
         }
@@ -451,7 +461,7 @@ void HandleUserInput() {
         switch (key) {
             case KEY_STAR:
                 if (SI47XX_IsSSB()) {
-                    return ;
+                    return;
                 }
                 if (si4732mode == SI47XX_FM) {
                     SI47XX_SetSeekFmSpacing(step);
@@ -460,7 +470,7 @@ void HandleUserInput() {
                 }
                 SI47XX_Seek(1, 1);
                 seeking = true;
-                return ;
+                return;
             default:
                 break;
         }
@@ -478,7 +488,7 @@ void HandleUserInput() {
                         step *= 2;
                     }
                 }
-                return ;
+                return;
             case KEY_7:
                 if (step > 1) {
                     if (step == 1 || step == 10 || step == 100 || step == 1000) {
@@ -487,7 +497,7 @@ void HandleUserInput() {
                         step /= 5;
                     }
                 }
-                return ;
+                return;
             case KEY_6:
                 if (SI47XX_IsSSB()) {
                     if (ssbBw == SI47XX_SSB_BW_1_0_kHz) {
@@ -504,14 +514,14 @@ void HandleUserInput() {
                     }
                     SI47XX_SetBandwidth(bw, true);
                 }
-                return ;
+                return;
             case KEY_4:
                 showSNR = !showSNR;
-                return ;
+                return;
             case KEY_5:
-INPUT_STATE=1;
+                INPUT_STATE = 1;
                 FreqInput();
-                return ;
+                return;
             case KEY_0:
                 divider = 100;
                 if (si4732mode == SI47XX_FM) {
@@ -531,26 +541,25 @@ INPUT_STATE=1;
                     step = 10;
                 }
                 resetBFO();
-                return ;
+                return;
             case KEY_F:
                 if (SI47XX_IsSSB()) {
                     SI47XX_SwitchMode(si4732mode == SI47XX_LSB ? SI47XX_USB : SI47XX_LSB);
                     tune(siCurrentFreq * divider); // to apply SSB
-                    return ;
+                    return;
                 }
-                return ;
+                return;
 //            case KEY_STAR:
 //                if(!seeking)return ;
             case KEY_EXIT:
-                if(seeking)
-                {
+                if (seeking) {
                     SI47XX_PowerDown();
                     SI47XX_PowerUp();
-                    seeking=false;
-                    return ;
+                    seeking = false;
+                    return;
                 }
                 SI_run = false;
-                return ;
+                return;
 //            case KEY_SIDE1:
 //                nums4++;
 //                if (currentBandIndex > 0) {
@@ -563,7 +572,7 @@ INPUT_STATE=1;
 //                    currentBandIndex++;
 //                    tune(bands[currentBandIndex].currentFreq * divider);
 //                }
-                return ;
+                return;
             default:
                 break;
         }
@@ -599,7 +608,7 @@ void SI4732_Main() {
         }
 
         if (seeking && cnt % 100 == 0) {
-            UI_PrintStringSmallBuffer("*",gStatusLine);
+            UI_PrintStringSmallBuffer("*", gStatusLine);
             bool valid = false;
             siCurrentFreq = SI47XX_getFrequency(&valid);
             if (valid) {
