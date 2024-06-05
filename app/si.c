@@ -543,7 +543,7 @@ INPUT_STATE=1;
             case KEY_EXIT:
                 if(seeking)
                 {
-                    SI47XX_PowerDown();
+//                    SI47XX_PowerDown();
                     SI47XX_PowerUp();
                     seeking=false;
                     return ;
@@ -579,7 +579,7 @@ void SI4732_Main() {
 
     SI_init();
     BACKLIGHT_TurnOn();
-    int cnt = 0;
+    uint16_t cnt = 400;
     while (SI_run) {
         if (cnt == 400) {
             RSQ_GET();
@@ -588,10 +588,7 @@ void SI4732_Main() {
 
             UI_DisplayClear();
             DrawPower();
-            UI_PrintStringSmallBuffer("SI4732", gStatusLine);
-            for (int i = 0; i < 128; ++i) {
-                PutPixel(i, 0, true);
-            }
+
             ST7565_BlitStatusLine();
 
 

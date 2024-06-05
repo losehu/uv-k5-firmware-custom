@@ -8,7 +8,7 @@
 
 void SI_init();
 void SI_update();
-bool SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3,KEY_Code_t key_prev) ;
+void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3,KEY_Code_t key_prev) ;
 
 void SI_render();
 void SI_deinit();
