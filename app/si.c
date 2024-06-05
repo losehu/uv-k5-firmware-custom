@@ -332,13 +332,7 @@ static void OnKeyDownFreqInput(uint8_t key) {
             tempFreq= UpdateFreqInput(key);
             break;
         case KEY_EXIT:
-            if(seeking)
-            {
-                SI47XX_PowerDown();
-                SI47XX_PowerUp();
-                seeking=false;
-                break;
-            }
+
             if (freqInputIndex == 0) {
                 INPUT_STATE = false;
                 break;
@@ -401,11 +395,11 @@ void HandleUserInput() {
 
 }
 
-bool SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_Code_t key_prev) {
+ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_Code_t key_prev) {
     // up-down keys
     if (INPUT_STATE && KEY_TYPE3) {
         OnKeyDownFreqInput(key_prev);
-        return true;
+        return ;
     }
     if (KEY_TYPE1 || KEY_TYPE3) {
         if (KEY_TYPE3)key = key_prev;
@@ -413,11 +407,11 @@ bool SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
             case KEY_UP:
                 tune((siCurrentFreq + step) * divider);
                 resetBFO();
-                return true;
+                return ;
             case KEY_DOWN:
                 tune((siCurrentFreq - step) * divider);
                 resetBFO();
-                return true;
+                return ;
             case KEY_SIDE1:
                 if (SI47XX_IsSSB()) {
                     if (bfo < INT16_MAX - 10) {
@@ -425,7 +419,7 @@ bool SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                     }
                     SI47XX_SetBFO(bfo);
                 }
-                return true;
+                return ;
             case KEY_SIDE2:
                 if (SI47XX_IsSSB()) {
                     if (bfo > INT16_MIN + 10) {
@@ -433,19 +427,19 @@ bool SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                     }
                     SI47XX_SetBFO(bfo);
                 }
-                return true;
+                return ;
             case KEY_2:
                 if (att < 37) {
                     att++;
                     SI47XX_SetAutomaticGainControl(1, att);
                 }
-                return true;
+                return ;
             case KEY_8:
                 if (att > 0) {
                     att--;
                     SI47XX_SetAutomaticGainControl(att > 0, att);
                 }
-                return true;
+                return ;
             default:
                 break;
         }
@@ -456,7 +450,7 @@ bool SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
         switch (key) {
             case KEY_STAR:
                 if (SI47XX_IsSSB()) {
-                    return false;
+                    return ;
                 }
                 if (si4732mode == SI47XX_FM) {
                     SI47XX_SetSeekFmSpacing(step);
@@ -465,7 +459,7 @@ bool SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                 }
                 SI47XX_Seek(1, 1);
                 seeking = true;
-                return true;
+                return ;
             default:
                 break;
         }
@@ -483,7 +477,7 @@ bool SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                         step *= 2;
                     }
                 }
-                return true;
+                return ;
             case KEY_7:
                 if (step > 1) {
                     if (step == 1 || step == 10 || step == 100 || step == 1000) {
@@ -492,7 +486,7 @@ bool SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                         step /= 5;
                     }
                 }
-                return true;
+                return ;
             case KEY_6:
                 if (SI47XX_IsSSB()) {
                     if (ssbBw == SI47XX_SSB_BW_1_0_kHz) {
@@ -509,14 +503,14 @@ bool SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                     }
                     SI47XX_SetBandwidth(bw, true);
                 }
-                return true;
+                return ;
             case KEY_4:
                 showSNR = !showSNR;
-                return true;
+                return ;
             case KEY_5:
 INPUT_STATE=1;
                 FreqInput();
-                return true;
+                return ;
             case KEY_0:
                 divider = 100;
                 if (si4732mode == SI47XX_FM) {
@@ -536,19 +530,26 @@ INPUT_STATE=1;
                     step = 10;
                 }
                 resetBFO();
-                return true;
+                return ;
             case KEY_F:
                 if (SI47XX_IsSSB()) {
                     SI47XX_SwitchMode(si4732mode == SI47XX_LSB ? SI47XX_USB : SI47XX_LSB);
                     tune(siCurrentFreq * divider); // to apply SSB
-                    return true;
+                    return ;
                 }
-                return false;
+                return ;
             case KEY_STAR:
-                return true;
+                if(!seeking)return ;
             case KEY_EXIT:
+                if(seeking)
+                {
+                    SI47XX_PowerDown();
+                    SI47XX_PowerUp();
+                    seeking=false;
+                    return ;
+                }
                 SI_run = false;
-                return true;
+                return ;
 //            case KEY_SIDE1:
 //                nums4++;
 //                if (currentBandIndex > 0) {
@@ -561,12 +562,11 @@ INPUT_STATE=1;
 //                    currentBandIndex++;
 //                    tune(bands[currentBandIndex].currentFreq * divider);
 //                }
-                return true;
+                return ;
             default:
                 break;
         }
     }
-    return false;
 }
 
 
