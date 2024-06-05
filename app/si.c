@@ -174,6 +174,12 @@ static void tune(uint32_t f) {
     f /= divider;
     if (si4732mode == SI47XX_FM) {
         f -= f % 5;
+        if (f < 6400000 || f > 10800000) {
+            return ;
+        }
+    }
+    if (f < 15000 || f > 3000000) {
+        return ;
     }
     SI47XX_ClearRDS();
     SI47XX_SetFreq(f);
