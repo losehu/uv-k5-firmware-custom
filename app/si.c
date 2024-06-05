@@ -539,8 +539,8 @@ INPUT_STATE=1;
                     return ;
                 }
                 return ;
-            case KEY_STAR:
-                if(!seeking)return ;
+//            case KEY_STAR:
+//                if(!seeking)return ;
             case KEY_EXIT:
                 if(seeking)
                 {
@@ -599,6 +599,7 @@ void SI4732_Main() {
         }
 
         if (seeking && cnt % 100 == 0) {
+            UI_PrintStringSmallBuffer("*",gStatusLine);
             bool valid = false;
             siCurrentFreq = SI47XX_getFrequency(&valid);
             if (valid) {
