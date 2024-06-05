@@ -142,7 +142,6 @@ OBJS =
 OBJS += start.o
 OBJS += init.o
 OBJS += app/messenger.o
-OBJS += app/input.o
 
 ifeq ($(ENABLE_MESSENGER),1)
 	OBJS += ui/messenger.o

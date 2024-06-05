@@ -470,28 +470,3 @@ void BOARD_Init(void) {
 #endif
 
 }
- void DrawPower() {
-    BOARD_ADC_GetBatteryInfo(&gBatteryVoltages[gBatteryCheckCounter++ % 4],
-                             &gBatteryCurrent);
-
-    uint16_t voltage = (gBatteryVoltages[0] + gBatteryVoltages[1] +
-                        gBatteryVoltages[2] + gBatteryVoltages[3]) /
-                       4 * 760 / gBatteryCalibration[3];
-
-    unsigned perc = BATTERY_VoltsToPercent(voltage);
-
-    // sprintf(String, "%d %d", voltage, perc);
-    // GUI_DisplaySmallest(String, 48, 1, true, true);
-
-    gStatusLine[116] = 0b00011100;
-    gStatusLine[117] = 0b00111110;
-    for (int i = 118; i <= 126; i++) {
-        gStatusLine[i] = 0b00100010;
-    }
-
-    for (unsigned i = 127; i >= 118; i--) {
-        if (127 - i <= (perc + 5) * 9 / 100) {
-            gStatusLine[i] = 0b00111110;
-        }
-    }
-}
