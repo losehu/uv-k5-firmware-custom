@@ -165,7 +165,7 @@ extern char freqInputString[11];
 extern uint8_t freqInputIndex ;
 extern uint8_t freqInputDotIndex ;
 static void ResetFreqInput() ;
-uint32_t UpdateFreqInput(KEY_Code_t key) ;
+static uint32_t UpdateFreqInput(KEY_Code_t key) ;
 static void RenderFreqInput() ;
 static void FreqInput() ;
 extern KEY_Code_t freqInputArr[10];
