@@ -166,11 +166,11 @@ extern uint8_t freqInputIndex ;
 extern uint8_t freqInputDotIndex ;
 static void ResetFreqInput() ;
 uint32_t UpdateFreqInput(KEY_Code_t key) ;
-void RenderFreqInput() ;
-void FreqInput() ;
+static void RenderFreqInput() ;
+static void FreqInput() ;
 extern KEY_Code_t freqInputArr[10];
-void APP_RunSpectrum(void);
-void DrawPower();
+static void APP_RunSpectrum(void);
+static void DrawPower();
 #ifdef ENABLE_DOPPLER
 extern bool DOPPLER_MODE;
 void RTCHandler();

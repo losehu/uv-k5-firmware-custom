@@ -812,7 +812,7 @@ static void DrawSpectrum() {
     }
 }
 
- void DrawPower() {
+ static void DrawPower() {
     BOARD_ADC_GetBatteryInfo(&gBatteryVoltages[gBatteryCheckCounter++ % 4],
                              &gBatteryCurrent);
 
