@@ -696,14 +696,14 @@ static void ToggleStepsCount() {
     redrawScreen = true;
 }
 
-static void ResetFreqInput() {
+ void ResetFreqInput() {
     tempFreq = 0;
     for (int i = 0; i < 10; ++i) {
         freqInputString[i] = '-';
     }
 }
 
-static void FreqInput() {
+ void FreqInput() {
     freqInputIndex = 0;
     freqInputDotIndex = 0;
     ResetFreqInput();
@@ -711,7 +711,7 @@ static void FreqInput() {
 }
 
 
-static void UpdateFreqInput(KEY_Code_t key) {
+ void UpdateFreqInput(KEY_Code_t key) {
     if (key != KEY_EXIT && freqInputIndex >= 10) {
         return;
     }
@@ -812,7 +812,7 @@ static void DrawSpectrum() {
     }
 }
 
- static void DrawPower() {
+  void DrawPower() {
     BOARD_ADC_GetBatteryInfo(&gBatteryVoltages[gBatteryCheckCounter++ % 4],
                              &gBatteryCurrent);
 
@@ -1210,7 +1210,7 @@ void OnKeyDownStill(KEY_Code_t key) {
     }
 }
 
-static void RenderFreqInput() {
+ void RenderFreqInput() {
     UI_PrintStringSmall(freqInputString, 2, 127, 0);
 //    show_uint32(tempFreq,3);
 }
@@ -1580,7 +1580,7 @@ static void Tick() {
 }
 
 
-static void APP_RunSpectrum() {
+ void APP_RunSpectrum() {
 
     // TX here coz it always? set to active VFO
     vfo = gEeprom.TX_VFO;
