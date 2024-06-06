@@ -152,6 +152,8 @@ static uint16_t step = 10;
 
 static DateTime dt;
 static int16_t bfo = 0;
+ bool light_flag=false;
+uint16_t light_time=0;
 bool INPUT_STATE = false;
 
 static void tune(uint32_t f) {
@@ -380,7 +382,12 @@ void HandleUserInput() {
     }
 
     SI_key(kbds.current, KEY_TYPE1, KEY_TYPE2, KEY_TYPE3, kbds.prev);
-    if (KEY_TYPE1 || KEY_TYPE2 || KEY_TYPE3) display_flag = 1;
+    if (KEY_TYPE1 || KEY_TYPE2 || KEY_TYPE3) {
+         light_flag=true;
+BACKLIGHT_TurnOn();
+    light_time=5000;
+        display_flag = 1;
+    }
 
 }
 
@@ -557,15 +564,16 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
 
 void SI4732_Main() {
 #ifdef ENABLE_DOPPLER
-
     SYSCON_DEV_CLK_GATE= SYSCON_DEV_CLK_GATE & ( ~(1 << 22));
 #endif
-
-
     SI_init();
-    BACKLIGHT_TurnOn();
     uint16_t cnt = 1000;
     while (SI_run) {
+        if(light_time)
+        {
+            light_time--;
+            if(light_time==0)BACKLIGHT_TurnOff();
+        }
         if (cnt == 1000) {
             if (si4732mode == SI47XX_FM) {
                 SI47XX_GetRDS();
@@ -581,8 +589,10 @@ void SI4732_Main() {
             RSQ_GET();
             display_flag = 1;
         }
-        if (cnt % 23 == 0) {
+        if (cnt % 22 == 0) {
             HandleUserInput();
+
+
         }
 
         if (seeking && cnt % 80 == 0) {
