@@ -44,7 +44,7 @@ void SI47XX_ClearRDS() {
   rds.offset = NO_DATE_TIME;
 }
 
-bool SI47XX_GetRDS() {
+void SI47XX_GetRDS() {
 
   bool new_info = false;
   uint8_t segment;
@@ -267,7 +267,6 @@ bool SI47XX_GetRDS() {
       new_info = true;
     }
   }
-  return new_info;
 }
 
 #define DAYS_PER_YEAR 365U

@@ -132,7 +132,7 @@ SIBand bands[] = {
         {"CB"/*,         SW_BT, SI47XX_AM*/,  26100, 28000/*, 27200, 1, 0, 0*/},  // CB band 27
         {"10M Ham"/*,    SW_BT, SI47XX_USB*/, 28000, 29750/*, 28500, 1, 0,0*/},                                                      // Ham   10M   28
         {"10M"/*,        SW_BT, SI47XX_USB*/, 28000, 30000/*, 28500, 1, 0, 0*/}, // Ham   10M   28
-        {"SW" /*,         SW_BT, SI47XX_AM*/,  100,   30000/*, 15500, 5, 0, 0*/}      // Whole SW 29
+        {"SW" /*,         SW_BT, SI47XX_AM*/, 100,   30000/*, 15500, 5, 0, 0*/}      // Whole SW 29
 };
 static const uint8_t BANDS_COUNT = ARRAY_SIZE(bands);
 
@@ -149,20 +149,17 @@ static int8_t getCurrentBandIndex() {
 static uint8_t att = 0;
 static uint16_t divider = 1000;
 static uint16_t step = 10;
-static uint32_t lastUpdate = 0;
-static uint32_t lastRdsUpdate = 0;
-static uint32_t lastSeekUpdate = 0;
+
 static DateTime dt;
 static int16_t bfo = 0;
 bool INPUT_STATE = false;
 
 static void tune(uint32_t f) {
-    if(si4732mode == SI47XX_FM)
-    {
+    if (si4732mode == SI47XX_FM) {
         if (f < 6400000 || f > 10800000) {
             return;
         }
-    }else {
+    } else {
         if (f < 15000 || f > 3000000) {
             return;
         }
@@ -189,7 +186,7 @@ void SI_init() {
     SI47XX_SetAutomaticGainControl(1, att);
 }
 
-static bool hasRDS = false;
+
 static bool seeking = false;
 
 
@@ -276,21 +273,21 @@ void SI4732_Display() {
             }
         }
 
-            uint8_t rssi = rsqStatus.resp.RSSI;
-            if (rssi > 64) {
-                rssi = 64;
-            }
-            for (int i = 0; i < rssi * 2; ++i) {
-                PutPixel(i, 2, true);
-                PutPixel(i, 3, true);
-                PutPixel(i, 4, true);
-                PutPixel(i, 5, true);
-            }
+        uint8_t rssi = rsqStatus.resp.RSSI;
+        if (rssi > 64) {
+            rssi = 64;
+        }
+        for (int i = 0; i < rssi * 2; ++i) {
+            PutPixel(i, 2, true);
+            PutPixel(i, 3, true);
+            PutPixel(i, 4, true);
+            PutPixel(i, 5, true);
+        }
 
 
-            sprintf(String, "SNR %u", rsqStatus.resp.SNR);
+        sprintf(String, "SNR %u", rsqStatus.resp.SNR);
 
-            GUI_DisplaySmallest(String, 0, 15 - 8, false, true);
+        GUI_DisplaySmallest(String, 0, 15 - 8, false, true);
 
 
     }
@@ -567,25 +564,28 @@ void SI4732_Main() {
 
     SI_init();
     BACKLIGHT_TurnOn();
-    uint16_t cnt = 400;
+    uint16_t cnt = 1000;
     while (SI_run) {
-        if (cnt == 400) {
-            RSQ_GET();
+        if (cnt == 1000) {
+            if (si4732mode == SI47XX_FM) {
+                SI47XX_GetRDS();
+            }
             cnt = 0;
-            display_flag = 1;
-
             UI_DisplayClear();
             DrawPower();
-
             ST7565_BlitStatusLine();
-
-
+            display_flag = 1;
         }
-        if (cnt % 25 == 0) {
+        if(cnt%450==0)
+        {
+            RSQ_GET();
+            display_flag = 1;
+        }
+        if (cnt % 23 == 0) {
             HandleUserInput();
         }
 
-        if (seeking && cnt % 100 == 0) {
+        if (seeking && cnt % 80 == 0) {
             UI_PrintStringSmallBuffer("*", gStatusLine);
             bool valid = false;
             siCurrentFreq = SI47XX_getFrequency(&valid);
