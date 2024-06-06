@@ -620,6 +620,7 @@ void SI4732_Main() {
             if (valid) {
                 seeking = false;
                 light_open();
+                tune(siCurrentFreq);
             }
             display_flag = 1;
         }
