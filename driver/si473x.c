@@ -14,6 +14,7 @@ static const uint8_t SI47XX_I2C_ADDR = 0x22;
 
 RSQStatus rsqStatus;
 SsbMode currentSsbMode;
+ uint16_t divider = 1000;
 
 SI47XX_MODE si4732mode = SI47XX_FM;
 uint16_t siCurrentFreq = 10210;
@@ -126,8 +127,39 @@ void SI47XX_SetAutomaticGainControl(uint8_t AGCDIS, uint8_t AGCIDX) {
   uint8_t cmd2[] = {cmd, agc.raw[0], agc.raw[1]};
   SI47XX_WriteBuffer(cmd2, 3);
 }
+
+
+bool FreqCheck(uint32_t f) {
+    if (si4732mode == SI47XX_FM) {
+        if (f < 6400000 || f > 10800000) {
+            return false;
+        }
+    } else {
+        if (f < 15000 || f > 3000000) {
+            return false;
+        }
+    }
+    return true;
+}
+uint32_t Read_FreqSaved()
+{
+    uint32_t tmpF;
+    EEPROM_ReadBuffer(0x3C210 + si4732mode * 4, (uint8_t *) &tmpF, 4);
+    if (!FreqCheck(tmpF)) {
+        if (si4732mode == SI47XX_FM) {
+            tmpF=10210000;
+        } else if (si4732mode == SI47XX_AM) {
+            tmpF=720000;
+        } else {
+            tmpF= 711300;
+        }
+    }
+    return tmpF;
+
+}
 void SI47XX_PowerUp() {
   RST_HIGH;
+
   uint8_t cmd[3] = {CMD_POWER_UP, FLG_XOSCEN | FUNC_FM, OUT_ANALOG};
   if (si4732mode == SI47XX_AM) {
     cmd[1] = FLG_XOSCEN | FUNC_AM;
@@ -147,7 +179,7 @@ void SI47XX_PowerUp() {
     sendProperty(PROP_AM_AUTOMATIC_VOLUME_CONTROL_MAX_GAIN, 0x7800);
     SI47XX_SetSeekAmLimits(1800, 30000);
   }
-  SI47XX_SetFreq(siCurrentFreq);
+  SI47XX_SetFreq(  Read_FreqSaved()/divider);
 }
 
 void SI47XX_SsbSetup(SI47XX_SsbFilterBW AUDIOBW, uint8_t SBCUTFLT,
@@ -180,6 +212,7 @@ bool SI47XX_downloadPatch() {
 }
 void SI47XX_PatchPowerUp() {
     RST_HIGH;
+
     uint8_t cmd[3] = {CMD_POWER_UP, 0b00110001, OUT_ANALOG};
     waitToSend();
     SI47XX_WriteBuffer(cmd, 3);
@@ -192,7 +225,7 @@ void SI47XX_PatchPowerUp() {
     AUDIO_AudioPathOn();
     setVolume(63);
 
-    SI47XX_SetFreq(siCurrentFreq);
+    SI47XX_SetFreq(Read_FreqSaved()/divider);
     sendProperty(PROP_SSB_SOFT_MUTE_MAX_ATTENUATION, 0);
     sendProperty(PROP_AM_AUTOMATIC_VOLUME_CONTROL_MAX_GAIN, 0x7800);
 }

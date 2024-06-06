@@ -55,8 +55,8 @@ typedef enum {
     SW_BT,
     LW_BT,
 } BandType;
-uint32_t nums1, nums2, nums3, nums4, nums5, nums6 = 0;
-static const char SI47XX_BW_NAMES[5][8] = {
+
+static const char SI47XX_BW_NAMES[5][6] = {
         "6 kHz", "4 kHz", "3 kHz", "2 kHz", "1 kHz",
 };
 
@@ -75,77 +75,64 @@ bool SI_run = true;
 typedef struct // Band data
 {
     const char *bandName; // Bandname
-    BandType bandType;    // Band type (FM, MW or SW)
-    SI47XX_MODE prefmod;  // Pref. modulation
+//    BandType bandType;    // Band type (FM, MW or SW)
+//    SI47XX_MODE prefmod;  // Pref. modulation
     uint16_t minimumFreq; // Minimum frequency of the band
     uint16_t maximumFreq; // maximum frequency of the band
-    uint16_t currentFreq; // Default frequency or current frequency
-    uint8_t currentStep;  // Default step (increment and decrement)
-    int lastBFO;          // Last BFO per band
-    int lastmanuBFO;      // Last Manual BFO per band using X-Tal
+//    uint16_t currentFreq; // Default frequency or current frequency
+//    uint8_t currentStep;  // Default step (increment and decrement)
+//    int lastBFO;          // Last BFO per band
+//    int lastmanuBFO;      // Last Manual BFO per band using X-Tal
 
 } SIBand;
 
 SIBand bands[] = {
-        {"LW",         LW_BT, SI47XX_AM,  148,   283,   198,   9, 0, 0},         //  LW          1
-        {"LW",         LW_BT, SI47XX_AM,  100,   514,   198,   9, 0, 0},         //  LW          1
-        {"MW Bcast",   MW_BT, SI47XX_AM,  526,   1606,  1395,  9, 0, 0}, //  MW          2
-        {"MW",         MW_BT, SI47XX_AM,  514,   1800,  1395,  9, 0, 0},       //  MW          2
-        {"BACON Ham",  LW_BT, SI47XX_AM,  280,   470,   284,   1, 0, 0},  // Ham  800M 3
-        {"630M Ham",   SW_BT, SI47XX_LSB, 470,   480,   475,   1, 0, 0},  // Ham  630M 4
-        {"160M Ham",   SW_BT, SI47XX_LSB, 1800,  2000,  1850,  1, 0, 0},  // Ham  160M 5
-        {"120M Bcast", SW_BT, SI47XX_AM,  2300,  2495,  2400,  5, 0, 0}, //      120M 6
-        {"120M",       SW_BT, SI47XX_AM,  2000,  3200,  2400,  5, 0, 0},       //      120M 6
-        {"90M Bcast",  SW_BT, SI47XX_AM,  3200,  3400,  3300,  5, 0, 0},  //       90M 7
-        {"90M",        SW_BT, SI47XX_AM,  3200,  3500,  3300,  5, 0, 0},        //       90M 7
-        {"80M Ham",    SW_BT, SI47XX_LSB, 3500,  3900,  3630,  1, 0, 0},   // Ham   80M 8
-        {"75M Bcast",  SW_BT, SI47XX_AM,  3900,  4000,  3950,  5, 0, 0},  //       75M 9
-        {"75M Bacst",  SW_BT, SI47XX_AM,  4750,  5100,  3950,  5, 0, 0},  //       75M 9
-        {"75M",        SW_BT, SI47XX_AM,  3900,  5300,  3950,  5, 0, 0},        //       75M 9
-        {"60M",        SW_BT, SI47XX_USB, 5300,  5900,  5375,  1, 0, 0}, // Ham   60M   10
-        {"49M Bcast",  SW_BT, SI47XX_AM,  5850,  6350,  6000,  5, 0, 0}, //       49M 11
-        {"49M",        SW_BT, SI47XX_AM,  5900,  7000,  6000,  5, 0, 0},       //       49M 11
-        {"41M Bcast",  SW_BT, SI47XX_AM,  7200,  7500,  7210,  5, 0, 0}, //       41M 13
-        {"40M Ham",    SW_BT, SI47XX_LSB, 7000,  7500,  7074,  1, 0, 0}, // Ham   40M   12
-        {"41M",        SW_BT, SI47XX_AM,  7500,  9000,  7210,  5, 0, 0},      //       41M 13
-        {"31M Bcast",  SW_BT, SI47XX_AM,  9400,  9990,  9600,  5, 0, 0}, //       31M 14
-        {"31M",        SW_BT, SI47XX_AM,  9000,  10000, 9600,  5, 0, 0}, //       31M   14
-        {"30M Ham",    SW_BT, SI47XX_USB, 10000, 10200, 10099, 1, 0,
-                                                                     0}, // Ham   30M   15
-        {"25M Bcast",  SW_BT, SI47XX_AM,  11600, 12100, 11700, 5, 0,
-                                                                     0},                                                     //       25M   16
-        {"25M",        SW_BT, SI47XX_AM,  10200, 13500, 11700, 5, 0, 0}, //       25M   16
-        {"22M  Bcast", SW_BT, SI47XX_AM,  13500, 13870, 13700, 5, 0,
-                                                                     0},                                                     //       22M   17
-        {"22M",        SW_BT, SI47XX_AM,  13500, 14000, 13700, 5, 0, 0}, //       22M   17
-        {"20M Ham",    SW_BT, SI47XX_USB, 14000, 14500, 14074, 1, 0,
-                                                                     0}, // Ham   20M   18
-        {"19M Bcast",  SW_BT, SI47XX_AM,  15100, 15800, 15700, 5, 0,
-                                                                     0}, //       19M   19
-        {"17M Bcast",  SW_BT, SI47XX_AM,  17480, 18050, 17600, 5, 0,
-                                                                     0},                                                     //       17M   20
-        {"19M",        SW_BT, SI47XX_AM,  14500, 17500, 15700, 5, 0, 0}, //       19M   19
-        {"17M",        SW_BT, SI47XX_AM,  17500, 18000, 17600, 5, 0, 0}, //       17M   20
-        {"16M Ham",    SW_BT, SI47XX_USB, 18000, 18500, 18100, 1, 0,
-                                                                     0}, // Ham   16M   21
-        {"15M Bcast",  SW_BT, SI47XX_AM,  18900, 19020, 18950, 5, 0,
-                                                                     0},                                                     //       15M   22
-        {"15M",        SW_BT, SI47XX_AM,  18500, 21000, 18950, 5, 0, 0}, //       15M   22
-        {"14M Ham",    SW_BT, SI47XX_USB, 21000, 21450, 21074, 1, 0,
-                                                                     0}, // Ham   14M   23
-        {"14M Bcast",  SW_BT, SI47XX_USB, 21450, 21850, 21074, 1, 0,
-                                                                     0},                                                     // Ham   14M   23
-        {"13M",        SW_BT, SI47XX_AM,  21500, 24000, 21500, 5, 0, 0}, //       13M   24
-        {"12M Ham",    SW_BT, SI47XX_USB, 24000, 25500, 24940, 1, 0,
-                                                                     0}, // Ham   12M   25
-        {"11M Bcast",  SW_BT, SI47XX_AM,  25600, 26100, 25800, 5, 0,
-                                                                     0},                                                     //       11M   26
-        {"11M",        SW_BT, SI47XX_AM,  25500, 26100, 25800, 5, 0, 0}, //       11M   26
-        {"CB",         SW_BT, SI47XX_AM,  26100, 28000, 27200, 1, 0, 0},  // CB band 27
-        {"10M Ham",    SW_BT, SI47XX_USB, 28000, 29750, 28500, 1, 0,
-                                                                     0},                                                      // Ham   10M   28
-        {"10M",        SW_BT, SI47XX_USB, 28000, 30000, 28500, 1, 0, 0}, // Ham   10M   28
-        {"SW",         SW_BT, SI47XX_AM,  100,   30000, 15500, 5, 0, 0}      // Whole SW 29
+        {"LW"/*,         LW_BT, SI47XX_AM*/,  148,   283/*,   198,   9, 0, 0*/},         //  LW          1
+        {"LW"/*,         LW_BT, SI47XX_AM*/,  100,   514/*,   198,   9, 0, 0*/},         //  LW          1
+        {"MW Bcast"/*,   MW_BT, SI47XX_AM*/,  526,   1606/*,  1395,  9, 0, 0*/}, //  MW          2
+        {"MW"/*,         MW_BT, SI47XX_AM*/,  514,   1800/*,  1395,  9, 0, 0*/},       //  MW          2
+        {"BACON Ham"/*,  LW_BT, SI47XX_AM*/,  280,   470/*,   284,   1, 0, 0*/},  // Ham  800M 3
+        {"630M Ham"/*,   SW_BT, SI47XX_LSB*/, 470,   480/*,   475,   1, 0, 0*/},  // Ham  630M 4
+        {"160M Ham"/*,   SW_BT, SI47XX_LSB*/, 1800,  2000/*,  1850,  1, 0, 0*/},  // Ham  160M 5
+        {"120M Bcast"/*, SW_BT, SI47XX_AM*/,  2300,  2495/*,  2400,  5, 0, 0*/}, //      120M 6
+        {"120M"/*,       SW_BT, SI47XX_AM*/,  2000,  3200/*,  2400,  5, 0, 0*/},       //      120M 6
+        {"90M Bcast"/*,  SW_BT, SI47XX_AM*/,  3200,  3400/*,  3300,  5, 0, 0*/},  //       90M 7
+        {"90M"/*,        SW_BT, SI47XX_AM*/,  3200,  3500/*,  3300,  5, 0, 0*/},        //       90M 7
+        {"80M Ham"/*,    SW_BT, SI47XX_LSB*/, 3500,  3900/*,  3630,  1, 0, 0*/},   // Ham   80M 8
+        {"75M Bcast"/*,  SW_BT, SI47XX_AM*/,  3900,  4000/*,  3950,  5, 0, 0*/},  //       75M 9
+        {"75M Bacst"/*,  SW_BT, SI47XX_AM*/,  4750,  5100/*,  3950,  5, 0, 0*/},  //       75M 9
+        {"75M"/*,        SW_BT, SI47XX_AM*/,  3900,  5300/*,  3950,  5, 0, 0*/},        //       75M 9
+        {"60M"/*,        SW_BT, SI47XX_USB*/, 5300,  5900/*,  5375,  1, 0, 0*/}, // Ham   60M   10
+        {"49M Bcast"/*,  SW_BT, SI47XX_AM*/,  5850,  6350/*,  6000,  5, 0, 0*/}, //       49M 11
+        {"49M"/*,        SW_BT, SI47XX_AM*/,  5900,  7000/*,  6000,  5, 0, 0*/},       //       49M 11
+        {"41M Bcast"/*,  SW_BT, SI47XX_AM*/,  7200,  7500/*,  7210,  5, 0, 0*/}, //       41M 13
+        {"40M Ham"/*,    SW_BT, SI47XX_LSB*/, 7000,  7500/*,  7074,  1, 0, 0*/}, // Ham   40M   12
+        {"41M"/*,        SW_BT, SI47XX_AM*/,  7500,  9000/*,  7210,  5, 0, 0*/},      //       41M 13
+        {"31M Bcast"/*,  SW_BT, SI47XX_AM*/,  9400,  9990/*,  9600,  5, 0, 0*/}, //       31M 14
+        {"31M"/*,        SW_BT, SI47XX_AM*/,  9000,  10000/*, 9600,  5, 0, 0*/}, //       31M   14
+        {"30M Ham"/*,    SW_BT, SI47XX_USB*/, 10000, 10200/*, 10099, 1, 0, 0*/}, // Ham   30M   15
+        {"25M Bcast"/*,  SW_BT, SI47XX_AM*/,  11600, 12100/*, 11700, 5, 0, 0*/},                                                     //       25M   16
+        {"25M"/*,        SW_BT, SI47XX_AM*/,  10200, 13500/*, 11700, 5, 0, 0*/}, //       25M   16
+        {"22M  Bcast"/*, SW_BT, SI47XX_AM*/,  13500, 13870/*, 13700, 5, 0,0*/},                                                     //       22M   17
+        {"22M"/*,        SW_BT, SI47XX_AM*/,  13500, 14000/*, 13700, 5, 0, 0*/}, //       22M   17
+        {"20M Ham"/*,    SW_BT, SI47XX_USB*/, 14000, 14500/*, 14074, 1, 0, 0*/}, // Ham   20M   18
+        {"19M Bcast"/*,  SW_BT, SI47XX_AM*/,  15100, 15800/*, 15700, 5, 0, 0*/}, //       19M   19
+        {"17M Bcast"/*,  SW_BT, SI47XX_AM*/,  17480, 18050/*, 17600, 5, 0, 0*/},                                                     //       17M   20
+        {"19M"/*,        SW_BT, SI47XX_AM*/,  14500, 17500/*, 15700, 5, 0, 0*/}, //       19M   19
+        {"17M"/*,        SW_BT, SI47XX_AM*/,  17500, 18000/*, 17600, 5, 0, 0*/}, //       17M   20
+        {"16M Ham"/*,    SW_BT, SI47XX_USB*/, 18000, 18500/*, 18100, 1, 0, 0*/}, // Ham   16M   21
+        {"15M Bcast"/*,  SW_BT, SI47XX_AM*/,  18900, 19020/*, 18950, 5, 0,0*/},                                                     //       15M   22
+        {"15M"/*,        SW_BT, SI47XX_AM*/,  18500, 21000/*, 18950, 5, 0, 0*/}, //       15M   22
+        {"14M Ham"/*,    SW_BT, SI47XX_USB*/, 21000, 21450/*, 21074, 1, 0,0*/}, // Ham   14M   23
+        {"14M Bcast"/*,  SW_BT, SI47XX_USB*/, 21450, 21850/*, 21074, 1, 0,0*/},                                                     // Ham   14M   23
+        {"13M"/*,        SW_BT, SI47XX_AM*/,  21500, 24000/*, 21500, 5, 0, 0*/}, //       13M   24
+        {"12M Ham"/*,    SW_BT, SI47XX_USB*/, 24000, 25500/*, 24940, 1, 0,0*/}, // Ham   12M   25
+        {"11M Bcast"/*,  SW_BT, SI47XX_AM*/,  25600, 26100/*, 25800, 5, 0,0*/},                                                     //       11M   26
+        {"11M"/*,        SW_BT, SI47XX_AM*/,  25500, 26100/*, 25800, 5, 0, 0*/}, //       11M   26
+        {"CB"/*,         SW_BT, SI47XX_AM*/,  26100, 28000/*, 27200, 1, 0, 0*/},  // CB band 27
+        {"10M Ham"/*,    SW_BT, SI47XX_USB*/, 28000, 29750/*, 28500, 1, 0,0*/},                                                      // Ham   10M   28
+        {"10M"/*,        SW_BT, SI47XX_USB*/, 28000, 30000/*, 28500, 1, 0, 0*/}, // Ham   10M   28
+        {"SW" /*,         SW_BT, SI47XX_AM*/, 100,   30000/*, 15500, 5, 0, 0*/}      // Whole SW 29
 };
 static const uint8_t BANDS_COUNT = ARRAY_SIZE(bands);
 
@@ -159,35 +146,47 @@ static int8_t getCurrentBandIndex() {
     return -1;
 }
 
+uint32_t LIGHT_TIME_SET[] = {0, 5000, 10000, 20000, 60000, 120000, 240000, UINT32_MAX};
 static uint8_t att = 0;
-static uint16_t divider = 1000;
 static uint16_t step = 10;
-static uint32_t lastUpdate = 0;
-static uint32_t lastRdsUpdate = 0;
-static uint32_t lastSeekUpdate = 0;
+
 static DateTime dt;
 static int16_t bfo = 0;
-static bool showSNR = true;
+uint16_t light_time;
 bool INPUT_STATE = false;
 
+static void light_open() {
+    light_time = LIGHT_TIME_SET[gEeprom.BACKLIGHT_TIME];
+    BACKLIGHT_TurnOn();
+}
+void WaitDisplay()
+{
+    UI_DisplayClear();
+    memset(gStatusLine, 0, sizeof(gStatusLine));
+    UI_PrintStringSmall("SI4732 Wait...", 0, 127, 3);
+    ST7565_BlitStatusLine();
+    ST7565_BlitFullScreen();
+
+}
 static void tune(uint32_t f) {
-    if(si4732mode == SI47XX_FM)
-    {
+    if (si4732mode == SI47XX_FM) {
         if (f < 6400000 || f > 10800000) {
             return;
         }
-    }else {
+    } else {
         if (f < 15000 || f > 3000000) {
             return;
         }
     }
+    EEPROM_WriteBuffer(0x3C210 + si4732mode * 4, (uint8_t *) &f, 4);
+
     f /= divider;
     if (si4732mode == SI47XX_FM) {
-
         f -= f % 5;
-
     }
+
     SI47XX_ClearRDS();
+
     SI47XX_SetFreq(f);
 
     currentBandIndex = getCurrentBandIndex();
@@ -198,18 +197,16 @@ void SI_init() {
     BK4819_ToggleGpioOut(BK4819_GPIO6_PIN2_GREEN, false);
     BK4819_Disable();
 
-//    SI47XX_PowerDown();
 
     SI47XX_PowerUp();
 
     SI47XX_SetAutomaticGainControl(1, att);
 }
 
-static bool hasRDS = false;
+
 static bool seeking = false;
+static uint8_t seeking_way = 0;
 
-
-static uint32_t lastFreqChange = 0;
 
 static void resetBFO() {
     if (bfo != 0) {
@@ -281,7 +278,7 @@ void SI4732_Display() {
         } else if (SI47XX_IsSSB()) {
             sprintf(String, "STP %u ATT %u BW %s", step, att, SI47XX_SSB_BW_NAMES[ssbBw]);
         } else {
-            sprintf(String, "STP %u ATT %u BW %s", step, att, SI47XX_SSB_BW_NAMES[bw]);
+            sprintf(String, "STP %u ATT %u BW %s", step, att, SI47XX_BW_NAMES[bw]);
         }
         GUI_DisplaySmallest(String, 64 - strlen(String) * 2, BASE + 6 - 8, false, true);
         if (si4732mode != SI47XX_FM) {
@@ -292,41 +289,25 @@ void SI4732_Display() {
             }
         }
 
-        if (showSNR) {
-            uint8_t rssi = rsqStatus.resp.RSSI;
-            if (rssi > 64) {
-                rssi = 64;
-            }
-//        FillRect(0, 8, rssi * 2, 2, C_FILL);
-            for (int i = 0; i < rssi * 2; ++i) {
-                PutPixel(i, 2, true);
-                PutPixel(i, 3, true);
-                PutPixel(i, 4, true);
-                PutPixel(i, 5, true);
-            }
-
-
-            sprintf(String, "SNR %u", rsqStatus.resp.SNR);
-
-            GUI_DisplaySmallest(String, 0, 15 - 8, false, true);
-
+        uint8_t rssi = rsqStatus.resp.RSSI;
+        if (rssi > 64) {
+            rssi = 64;
         }
+        for (int i = 0; i < rssi * 2; ++i) {
+            gFrameBuffer[0][i] |= 0b00111100;
+        }
+
+
+        sprintf(String, "SNR %u", rsqStatus.resp.SNR);
+
+        GUI_DisplaySmallest(String, 0, 15 - 8, false, true);
+
+
     }
+
     ST7565_BlitFullScreen();
 }
 
-bool FreqCheck(uint32_t f) {
-    if (si4732mode == SI47XX_FM) {
-        if (f < 6400000 || f > 10800000) {
-            return false;
-        }
-    } else {
-        if (f < 15000 || f > 3000000) {
-            return false;
-        }
-    }
-    return true;
-}
 
 static void OnKeyDownFreqInput(uint8_t key) {
     switch (key) {
@@ -344,7 +325,6 @@ static void OnKeyDownFreqInput(uint8_t key) {
             UpdateFreqInput(key);
             break;
         case KEY_EXIT:
-
             if (freqInputIndex == 0) {
                 INPUT_STATE = false;
                 break;
@@ -376,13 +356,11 @@ void HandleUserInput() {
         if (kbds.counter > 2 && kbds.counter <= 6) {
             // 短按松手
             KEY_TYPE3 = true;
-            nums3++;
         }
         kbds.counter = 0;
     } else {
         if (kbds.counter >= 6 && kbds.counter % 2 == 1) {
             KEY_TYPE1 = true;
-            nums1++;
         }
         if (kbds.current == kbds.prev) {
             // 持续按下
@@ -391,7 +369,6 @@ void HandleUserInput() {
             } else if (kbds.counter == 14) {
                 // 长按只触发一次
                 KEY_TYPE2 = true;
-                nums2++;
                 kbds.counter++;
             }
         } else {
@@ -402,7 +379,10 @@ void HandleUserInput() {
     }
 
     SI_key(kbds.current, KEY_TYPE1, KEY_TYPE2, KEY_TYPE3, kbds.prev);
-    if (KEY_TYPE1 || KEY_TYPE2 || KEY_TYPE3) display_flag = 1;
+    if (KEY_TYPE1 || KEY_TYPE2 || KEY_TYPE3) {
+        light_open();
+        display_flag = 1;
+    }
 
 }
 
@@ -431,12 +411,14 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                     SI47XX_SetBFO(bfo);
                 }
                 return;
+
             case KEY_SIDE2:
                 if (SI47XX_IsSSB()) {
                     if (bfo > INT16_MIN + 10) {
                         bfo -= 10;
                     }
                     SI47XX_SetBFO(bfo);
+
                 }
                 return;
             case KEY_2:
@@ -455,26 +437,26 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                 break;
         }
     }
-    // long held
-    if (KEY_TYPE2) {
-
-        switch (key) {
-            case KEY_STAR:
-                if (SI47XX_IsSSB()) {
-                    return;
-                }
-                if (si4732mode == SI47XX_FM) {
-                    SI47XX_SetSeekFmSpacing(step);
-                } else {
-                    SI47XX_SetSeekAmSpacing(step);
-                }
-                SI47XX_Seek(1, 1);
-                seeking = true;
-                return;
-            default:
-                break;
-        }
-    }
+//    // long held
+//    if (KEY_TYPE2) {
+//
+//        switch (key) {
+//            case KEY_STAR:
+//                if (SI47XX_IsSSB()) {
+//                    return;
+//                }
+//                if (si4732mode == SI47XX_FM) {
+//                    SI47XX_SetSeekFmSpacing(step);
+//                } else {
+//                    SI47XX_SetSeekAmSpacing(step);
+//                }
+//                SI47XX_Seek(1, 1);
+//                seeking = true;
+//                return;
+//            default:
+//                break;
+//        }
+//    }
 
     // Simple keypress
     if (KEY_TYPE3) {
@@ -515,42 +497,43 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                     SI47XX_SetBandwidth(bw, true);
                 }
                 return;
-            case KEY_4:
-                showSNR = !showSNR;
-                return;
+
             case KEY_5:
                 INPUT_STATE = 1;
                 FreqInput();
                 return;
             case KEY_0:
                 divider = 100;
+                WaitDisplay();
                 if (si4732mode == SI47XX_FM) {
                     SI47XX_SwitchMode(SI47XX_AM);
                     SI47XX_SetBandwidth(bw, true);
-                    tune(720000);
+//                    tune(720000);
                     step = 5;
                 } else if (si4732mode == SI47XX_AM) {
+
                     SI47XX_SwitchMode(SI47XX_LSB);
                     SI47XX_SetSsbBandwidth(ssbBw);
-                    tune(711300);
+//                    tune(711300);
                     step = 1;
                 } else {
                     divider = 1000;
                     SI47XX_SwitchMode(SI47XX_FM);
-                    tune(10000000);
+//                    tune(10000000);
                     step = 10;
                 }
+                tune(Read_FreqSaved());
                 resetBFO();
                 return;
             case KEY_F:
                 if (SI47XX_IsSSB()) {
+                    uint32_t tmpF;
                     SI47XX_SwitchMode(si4732mode == SI47XX_LSB ? SI47XX_USB : SI47XX_LSB);
-                    tune(siCurrentFreq * divider); // to apply SSB
+                    tune(Read_FreqSaved()); // to apply SSB
                     return;
                 }
                 return;
-//            case KEY_STAR:
-//                if(!seeking)return ;
+
             case KEY_EXIT:
                 if (seeking) {
                     SI47XX_PowerDown();
@@ -560,6 +543,25 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                 }
                 SI_run = false;
                 return;
+            case KEY_3:
+            case KEY_9:
+                if (SI47XX_IsSSB()) {
+                    return;
+                }
+                if (si4732mode == SI47XX_FM) {
+                    SI47XX_SetSeekFmSpacing(step);
+                } else {
+                    SI47XX_SetSeekAmSpacing(step);
+                }
+
+                SI47XX_Seek(key == KEY_3 ? 1 : 0, 1);
+                if (key == KEY_3)seeking_way = 1;
+                else seeking_way = 0;
+
+
+                seeking = true;
+                return;
+
 //            case KEY_SIDE1:
 //                nums4++;
 //                if (currentBandIndex > 0) {
@@ -577,43 +579,55 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                 break;
         }
     }
+
 }
 
 
 void SI4732_Main() {
 #ifdef ENABLE_DOPPLER
-
     SYSCON_DEV_CLK_GATE= SYSCON_DEV_CLK_GATE & ( ~(1 << 22));
 #endif
 
-
+    light_open();
     SI_init();
-    BACKLIGHT_TurnOn();
-    uint16_t cnt = 400;
+
+    uint16_t cnt = 500;
     while (SI_run) {
-        if (cnt == 400) {
+        if (light_time && gEeprom.BACKLIGHT_TIME != 7) {
+            light_time--;
+            if (light_time == 0)BACKLIGHT_TurnOff();
+        }
+        if (cnt == 500) {
+            if (si4732mode == SI47XX_FM) {
+                SI47XX_GetRDS();
+            }
             RSQ_GET();
             cnt = 0;
-            display_flag = 1;
-
             UI_DisplayClear();
             DrawPower();
-
             ST7565_BlitStatusLine();
-
-
+            display_flag = 1;
         }
+
         if (cnt % 25 == 0) {
             HandleUserInput();
+
+
         }
 
         if (seeking && cnt % 100 == 0) {
             UI_PrintStringSmallBuffer("*", gStatusLine);
             bool valid = false;
             siCurrentFreq = SI47XX_getFrequency(&valid);
+            uint32_t f = siCurrentFreq * divider;
+            EEPROM_WriteBuffer(0x3C210 + si4732mode * 4, (uint8_t *) &f, 4);
+
             if (valid) {
                 seeking = false;
+                light_open();
+                tune((siCurrentFreq) * divider);
             }
+
             display_flag = 1;
         }
         cnt++;
