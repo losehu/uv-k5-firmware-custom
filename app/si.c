@@ -155,6 +155,10 @@ static int16_t bfo = 0;
 bool light_flag = false;
 uint16_t light_time = 5000;
 bool INPUT_STATE = false;
+static void light_open() {
+    light_time = 5000;
+    BACKLIGHT_TurnOn();
+}
 
 static void tune(uint32_t f) {
     if (si4732mode == SI47XX_FM) {
@@ -573,10 +577,6 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
     }
 }
 
-void light_open() {
-    light_time = 5000;
-    BACKLIGHT_TurnOn();
-}
 
 void SI4732_Main() {
 #ifdef ENABLE_DOPPLER
