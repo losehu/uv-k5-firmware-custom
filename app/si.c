@@ -410,24 +410,24 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                 tune((siCurrentFreq - step) * divider);
                 resetBFO();
                 return;
-            case KEY_SIDE1:
+            case KEY_3:
                 if (SI47XX_IsSSB()) {
                     if (bfo < INT16_MAX - 10) {
                         bfo += 10;
                     }
                     SI47XX_SetBFO(bfo);
-                    return;
-
                 }
-            case KEY_SIDE2:
+                return;
+
+            case KEY_9:
                 if (SI47XX_IsSSB()) {
                     if (bfo > INT16_MIN + 10) {
                         bfo -= 10;
                     }
                     SI47XX_SetBFO(bfo);
-                    return;
 
                 }
+                return;
             case KEY_2:
                 if (att < 37) {
                     att++;
