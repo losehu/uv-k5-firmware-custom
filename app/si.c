@@ -608,13 +608,16 @@ void SI4732_Main() {
             UI_PrintStringSmallBuffer("*", gStatusLine);
             bool valid = false;
             siCurrentFreq = SI47XX_getFrequency(&valid);
+            uint32_t f = siCurrentFreq * divider;
+
+            EEPROM_WriteBuffer(0x3C210 + si4732mode * 4, (uint8_t *) &f, 4);
+
             if (valid) {
                 seeking = false;
                 light_open();
                 tune((siCurrentFreq) * divider);
-//                resetBFO();
-
             }
+
             display_flag = 1;
         }
         cnt++;
