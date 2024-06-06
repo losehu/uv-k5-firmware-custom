@@ -192,7 +192,6 @@ void SI_init() {
 static bool seeking = false;
 
 
-static uint32_t lastFreqChange = 0;
 
 static void resetBFO() {
     if (bfo != 0) {
@@ -280,10 +279,14 @@ void SI4732_Display() {
             rssi = 64;
         }
         for (int i = 0; i < rssi * 2; ++i) {
-            PutPixel(i, 2, true);
-            PutPixel(i, 3, true);
-            PutPixel(i, 4, true);
-            PutPixel(i, 5, true);
+//            PutPixel(i, 2, true);
+//            PutPixel(i, 3, true);
+//            PutPixel(i, 4, true);
+//            PutPixel(i, 5, true);
+//1<<2 3 4 5
+//
+//            if (black)
+                gFrameBuffer[0][i] |= 0b00111100;
         }
 
 
