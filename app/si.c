@@ -56,12 +56,12 @@ typedef enum {
     LW_BT,
 } BandType;
 uint32_t nums1, nums2, nums3, nums4, nums5, nums6 = 0;
-static const char SI47XX_BW_NAMES[5][8] = {
-        "6 kHz", "4 kHz", "3 kHz", "2 kHz", "1 kHz",
+static const char SI47XX_BW_NAMES[5] = {
+        '6', '4', '3', '2', '1',
 };
 
-static const char SI47XX_SSB_BW_NAMES[6][8] = {
-        "1.2 kHz", "2.2 kHz", "3 kHz", "4 kHz", "0.5 kHz", "1 kHz",
+static const char SI47XX_SSB_BW_NAMES[6][4] = {
+        "1.2", "2.2", "3", "4", "0.5", "1",
 };
 
 static const char SI47XX_MODE_NAMES[5][4] = {
@@ -263,9 +263,9 @@ void SI4732_Display() {
         if (si4732mode == SI47XX_FM) {
             sprintf(String, "STP %u ATT %u", step, att);
         } else if (SI47XX_IsSSB()) {
-            sprintf(String, "STP %u ATT %u BW %s", step, att, SI47XX_SSB_BW_NAMES[ssbBw]);
+            sprintf(String, "STP %u kHz ATT %u BW %s", step, att, SI47XX_SSB_BW_NAMES[ssbBw]);
         } else {
-            sprintf(String, "STP %u ATT %u BW %s", step, att, SI47XX_SSB_BW_NAMES[bw]);
+            sprintf(String, "STP %c kHz ATT %u BW %s", step, att, SI47XX_BW_NAMES[bw]);
         }
         GUI_DisplaySmallest(String, 64 - strlen(String) * 2, BASE + 6 - 8, false, true);
         if (si4732mode != SI47XX_FM) {
