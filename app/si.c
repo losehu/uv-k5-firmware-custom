@@ -55,7 +55,7 @@ typedef enum {
     SW_BT,
     LW_BT,
 } BandType;
-uint32_t nums1, nums2, nums3, nums4, nums5, nums6 = 0;
+
 static const char SI47XX_BW_NAMES[5][6] = {
         "6 kHz", "4 kHz", "3 kHz", "2 kHz", "1 kHz",
 };
@@ -152,8 +152,8 @@ static uint16_t step = 10;
 
 static DateTime dt;
 static int16_t bfo = 0;
- bool light_flag=false;
-uint16_t light_time=0;
+bool light_flag = false;
+uint16_t light_time = 5000;
 bool INPUT_STATE = false;
 
 static void tune(uint32_t f) {
@@ -190,7 +190,6 @@ void SI_init() {
 
 
 static bool seeking = false;
-
 
 
 static void resetBFO() {
@@ -286,7 +285,7 @@ void SI4732_Display() {
 //1<<2 3 4 5
 //
 //            if (black)
-                gFrameBuffer[0][i] |= 0b00111100;
+            gFrameBuffer[0][i] |= 0b00111100;
         }
 
 
@@ -359,13 +358,11 @@ void HandleUserInput() {
         if (kbds.counter > 2 && kbds.counter <= 6) {
             // 短按松手
             KEY_TYPE3 = true;
-            nums3++;
         }
         kbds.counter = 0;
     } else {
         if (kbds.counter >= 6 && kbds.counter % 2 == 1) {
             KEY_TYPE1 = true;
-            nums1++;
         }
         if (kbds.current == kbds.prev) {
             // 持续按下
@@ -374,7 +371,6 @@ void HandleUserInput() {
             } else if (kbds.counter == 14) {
                 // 长按只触发一次
                 KEY_TYPE2 = true;
-                nums2++;
                 kbds.counter++;
             }
         } else {
@@ -386,9 +382,8 @@ void HandleUserInput() {
 
     SI_key(kbds.current, KEY_TYPE1, KEY_TYPE2, KEY_TYPE3, kbds.prev);
     if (KEY_TYPE1 || KEY_TYPE2 || KEY_TYPE3) {
-         light_flag=true;
-BACKLIGHT_TurnOn();
-    light_time=5000;
+        light_flag = true;
+        light_open();
         display_flag = 1;
     }
 
@@ -443,26 +438,26 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                 break;
         }
     }
-    // long held
-    if (KEY_TYPE2) {
-
-        switch (key) {
-            case KEY_STAR:
-                if (SI47XX_IsSSB()) {
-                    return;
-                }
-                if (si4732mode == SI47XX_FM) {
-                    SI47XX_SetSeekFmSpacing(step);
-                } else {
-                    SI47XX_SetSeekAmSpacing(step);
-                }
-                SI47XX_Seek(1, 1);
-                seeking = true;
-                return;
-            default:
-                break;
-        }
-    }
+//    // long held
+//    if (KEY_TYPE2) {
+//
+//        switch (key) {
+//            case KEY_STAR:
+//                if (SI47XX_IsSSB()) {
+//                    return;
+//                }
+//                if (si4732mode == SI47XX_FM) {
+//                    SI47XX_SetSeekFmSpacing(step);
+//                } else {
+//                    SI47XX_SetSeekAmSpacing(step);
+//                }
+//                SI47XX_Seek(1, 1);
+//                seeking = true;
+//                return;
+//            default:
+//                break;
+//        }
+//    }
 
     // Simple keypress
     if (KEY_TYPE3) {
@@ -545,6 +540,20 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                 }
                 SI_run = false;
                 return;
+            case KEY_SIDE1:
+            case KEY_SIDE2:
+                if (SI47XX_IsSSB()) {
+                    return;
+                }
+                if (si4732mode == SI47XX_FM) {
+                    SI47XX_SetSeekFmSpacing(step);
+                } else {
+                    SI47XX_SetSeekAmSpacing(step);
+                }
+                SI47XX_Seek(KEY_SIDE2 - key, 1);
+                seeking = true;
+                return;
+
 //            case KEY_SIDE1:
 //                nums4++;
 //                if (currentBandIndex > 0) {
@@ -564,46 +573,51 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
     }
 }
 
+void light_open() {
+    light_time = 5000;
+    BACKLIGHT_TurnOn();
+}
 
 void SI4732_Main() {
 #ifdef ENABLE_DOPPLER
     SYSCON_DEV_CLK_GATE= SYSCON_DEV_CLK_GATE & ( ~(1 << 22));
 #endif
     SI_init();
-    uint16_t cnt = 1000;
+    uint16_t cnt = 500;
     while (SI_run) {
-        if(light_time)
-        {
+        if (light_time) {
             light_time--;
-            if(light_time==0)BACKLIGHT_TurnOff();
+            if (light_time == 0)BACKLIGHT_TurnOff();
         }
-        if (cnt == 1000) {
+        if (cnt == 500) {
             if (si4732mode == SI47XX_FM) {
                 SI47XX_GetRDS();
             }
+            RSQ_GET();
+
             cnt = 0;
             UI_DisplayClear();
             DrawPower();
             ST7565_BlitStatusLine();
             display_flag = 1;
         }
-        if(cnt%450==0)
-        {
-            RSQ_GET();
-            display_flag = 1;
-        }
-        if (cnt % 22 == 0) {
+//        if(cnt%450==0)
+//        {
+//            display_flag = 1;
+//        }
+        if (cnt % 25 == 0) {
             HandleUserInput();
 
 
         }
 
-        if (seeking && cnt % 80 == 0) {
+        if (seeking && cnt % 100 == 0) {
             UI_PrintStringSmallBuffer("*", gStatusLine);
             bool valid = false;
             siCurrentFreq = SI47XX_getFrequency(&valid);
             if (valid) {
                 seeking = false;
+                light_open();
             }
             display_flag = 1;
         }
