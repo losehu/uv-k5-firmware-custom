@@ -128,7 +128,7 @@
 | 0x20000~0x26B00                        | **中文输入法**-拼音索引、对应字数、字的起始地址                                |
 | 0x26B00~0x2A330                        | **中文输入法**-拼音汉字表                                           |
 | 0x3C228~0x40000                        | **SI4732**-patch，长度为0x3DD8，用于SI4732的固件升级                  |
-| 0x3C210~0x3C21B                        | **SI4732**FM、AM、SSB频率                                     |
+| 0x3C210~0x3C21C                        | **SI4732**FM、AM、SSB频率、模式                                  |
 [多普勒Eeprom分布说明](https://github.com/losehu/uv-k5-firmware-chinese/blob/main/doc/多普勒eeprom详细说明.txt)
 
 # 示例

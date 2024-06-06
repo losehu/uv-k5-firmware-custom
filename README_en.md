@@ -133,8 +133,8 @@ functions:
 | 😰 **2Mib Expanded Version (H)**        | Version: LOSEHUxxxH                                                                                                                                     |
 | 0x20000~0x26B00                        | **Chinese Input Method** - Pinyin index, corresponding number of characters, starting address of characters                                             |
 | 0x26B00~0X2A330                        | **Chinese Input Method** - Pinyin Chinese character table                                                                                               |
-| 0x3C228~0x40000                        | **SI4732**-patch，length 0x3DD8，used to update SI4732 firmware                                                                                           |
-
+| 0x3C228~0x40000                        | **SI4732**-patch，Length 0x3DD8，used to update SI4732 firmware                                                                                           |
+| 0x3C210~0x3C21C                        | **SI4732**FM、AM、SSB Freq、Mode                                                                                                                           |
 [Doppler Eeprom Layout Explanation](https://github.com/losehu/uv-k5-firmware-chinese/blob/main/doc/多普勒eeprom详细说明.txt)
 
 # Examples

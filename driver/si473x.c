@@ -159,6 +159,7 @@ uint32_t Read_FreqSaved()
 }
 void SI47XX_PowerUp() {
   RST_HIGH;
+
   uint8_t cmd[3] = {CMD_POWER_UP, FLG_XOSCEN | FUNC_FM, OUT_ANALOG};
   if (si4732mode == SI47XX_AM) {
     cmd[1] = FLG_XOSCEN | FUNC_AM;
@@ -211,6 +212,7 @@ bool SI47XX_downloadPatch() {
 }
 void SI47XX_PatchPowerUp() {
     RST_HIGH;
+
     uint8_t cmd[3] = {CMD_POWER_UP, 0b00110001, OUT_ANALOG};
     waitToSend();
     SI47XX_WriteBuffer(cmd, 3);

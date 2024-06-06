@@ -145,21 +145,29 @@ static int8_t getCurrentBandIndex() {
     }
     return -1;
 }
-uint32_t LIGHT_TIME_SET[]={0,5000,10000,20000,60000,120000,240000,UINT32_MAX};
+
+uint32_t LIGHT_TIME_SET[] = {0, 5000, 10000, 20000, 60000, 120000, 240000, UINT32_MAX};
 static uint8_t att = 0;
 static uint16_t step = 10;
 
 static DateTime dt;
 static int16_t bfo = 0;
-bool light_flag = false;
-uint16_t light_time ;
+uint16_t light_time;
 bool INPUT_STATE = false;
 
 static void light_open() {
     light_time = LIGHT_TIME_SET[gEeprom.BACKLIGHT_TIME];
     BACKLIGHT_TurnOn();
 }
+void WaitDisplay()
+{
+    UI_DisplayClear();
+    memset(gStatusLine, 0, sizeof(gStatusLine));
+    UI_PrintStringSmall("SI4732 Wait...", 0, 127, 3);
+    ST7565_BlitStatusLine();
+    ST7565_BlitFullScreen();
 
+}
 static void tune(uint32_t f) {
     if (si4732mode == SI47XX_FM) {
         if (f < 6400000 || f > 10800000) {
@@ -197,6 +205,7 @@ void SI_init() {
 
 
 static bool seeking = false;
+static uint8_t seeking_way = 0;
 
 
 static void resetBFO() {
@@ -295,6 +304,7 @@ void SI4732_Display() {
 
 
     }
+
     ST7565_BlitFullScreen();
 }
 
@@ -370,7 +380,6 @@ void HandleUserInput() {
 
     SI_key(kbds.current, KEY_TYPE1, KEY_TYPE2, KEY_TYPE3, kbds.prev);
     if (KEY_TYPE1 || KEY_TYPE2 || KEY_TYPE3) {
-        light_flag = true;
         light_open();
         display_flag = 1;
     }
@@ -495,6 +504,7 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                 return;
             case KEY_0:
                 divider = 100;
+                WaitDisplay();
                 if (si4732mode == SI47XX_FM) {
                     SI47XX_SwitchMode(SI47XX_AM);
                     SI47XX_SetBandwidth(bw, true);
@@ -502,8 +512,6 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                     step = 5;
                 } else if (si4732mode == SI47XX_AM) {
 
-                    GUI_DisplaySmallest("Loading...Wait...", 64 - 34, LCD_HEIGHT - 5 - 9 - 8, false, true);
-                    ST7565_BlitFullScreen();
                     SI47XX_SwitchMode(SI47XX_LSB);
                     SI47XX_SetSsbBandwidth(ssbBw);
 //                    tune(711300);
@@ -545,7 +553,12 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                 } else {
                     SI47XX_SetSeekAmSpacing(step);
                 }
+
                 SI47XX_Seek(key == KEY_3 ? 1 : 0, 1);
+                if (key == KEY_3)seeking_way = 1;
+                else seeking_way = 0;
+
+
                 seeking = true;
                 return;
 
@@ -574,12 +587,13 @@ void SI4732_Main() {
 #ifdef ENABLE_DOPPLER
     SYSCON_DEV_CLK_GATE= SYSCON_DEV_CLK_GATE & ( ~(1 << 22));
 #endif
+
     light_open();
     SI_init();
 
     uint16_t cnt = 500;
     while (SI_run) {
-        if (light_time &&gEeprom.BACKLIGHT_TIME!=7){
+        if (light_time && gEeprom.BACKLIGHT_TIME != 7) {
             light_time--;
             if (light_time == 0)BACKLIGHT_TurnOff();
         }
@@ -594,10 +608,7 @@ void SI4732_Main() {
             ST7565_BlitStatusLine();
             display_flag = 1;
         }
-//        if(cnt%450==0)
-//        {
-//            display_flag = 1;
-//        }
+
         if (cnt % 25 == 0) {
             HandleUserInput();
 
@@ -609,7 +620,6 @@ void SI4732_Main() {
             bool valid = false;
             siCurrentFreq = SI47XX_getFrequency(&valid);
             uint32_t f = siCurrentFreq * divider;
-
             EEPROM_WriteBuffer(0x3C210 + si4732mode * 4, (uint8_t *) &f, 4);
 
             if (valid) {
