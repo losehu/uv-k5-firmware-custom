@@ -571,10 +571,13 @@ void SI47XX_SetSeekFmRssiThreshold(uint16_t value);
 void SI47XX_SetSeekAmRssiThreshold(uint16_t value);
 void SI47XX_SetBFO(int16_t bfo);
 void SI47XX_SetSsbCapacitor(uint16_t v);
-
+uint32_t Read_FreqSaved();
+        bool FreqCheck(uint32_t f) ;
 extern SI47XX_MODE si4732mode;
 extern RSQStatus rsqStatus;
 extern uint16_t siCurrentFreq;
+extern uint16_t divider ;
+
 #define PATCH_SIZE 15832
 
 #endif /* end of include guard: SI473X_H */

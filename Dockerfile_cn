@@ -1,0 +1,20 @@
+# 使用指定平台和最新的 Arch Linux 镜像
+FROM --platform=amd64 archlinux:latest
+
+# 更换镜像源为更快的服务器，并更新系统和安装必要的软件包
+RUN echo 'Server = http://mirrors.ustc.edu.cn/archlinux/$repo/os/$arch' > /etc/pacman.d/mirrorlist
+RUN   pacman -Syyu --noconfirm
+RUN   pacman -S --noconfirm --needed base-devel arm-none-eabi-gcc arm-none-eabi-newlib git python-pip python-crcmod
+RUN   pacman -Scc --noconfirm
+
+# 设置工作目录
+WORKDIR /app
+
+# 复制当前目录内容到工作目录
+COPY . .
+
+# 初始化并更新子模块
+RUN git submodule update --init --recursive
+
+# 如果需要编译固件，取消注释以下行
+# RUN make && cp firmware* compiled-firmware/

@@ -145,18 +145,18 @@ static int8_t getCurrentBandIndex() {
     }
     return -1;
 }
-
+uint32_t LIGHT_TIME_SET[]={0,5000,10000,20000,60000,120000,240000,UINT32_MAX};
 static uint8_t att = 0;
-static uint16_t divider = 1000;
 static uint16_t step = 10;
 
 static DateTime dt;
 static int16_t bfo = 0;
 bool light_flag = false;
-uint16_t light_time = 5000;
+uint16_t light_time ;
 bool INPUT_STATE = false;
+
 static void light_open() {
-    light_time = 5000;
+    light_time = LIGHT_TIME_SET[gEeprom.BACKLIGHT_TIME];
     BACKLIGHT_TurnOn();
 }
 
@@ -170,11 +170,15 @@ static void tune(uint32_t f) {
             return;
         }
     }
+    EEPROM_WriteBuffer(0x3C210 + si4732mode * 4, (uint8_t *) &f, 4);
+
     f /= divider;
     if (si4732mode == SI47XX_FM) {
         f -= f % 5;
     }
+
     SI47XX_ClearRDS();
+
     SI47XX_SetFreq(f);
 
     currentBandIndex = getCurrentBandIndex();
@@ -185,7 +189,6 @@ void SI_init() {
     BK4819_ToggleGpioOut(BK4819_GPIO6_PIN2_GREEN, false);
     BK4819_Disable();
 
-//    SI47XX_PowerDown();
 
     SI47XX_PowerUp();
 
@@ -282,13 +285,6 @@ void SI4732_Display() {
             rssi = 64;
         }
         for (int i = 0; i < rssi * 2; ++i) {
-//            PutPixel(i, 2, true);
-//            PutPixel(i, 3, true);
-//            PutPixel(i, 4, true);
-//            PutPixel(i, 5, true);
-//1<<2 3 4 5
-//
-//            if (black)
             gFrameBuffer[0][i] |= 0b00111100;
         }
 
@@ -302,18 +298,6 @@ void SI4732_Display() {
     ST7565_BlitFullScreen();
 }
 
-bool FreqCheck(uint32_t f) {
-    if (si4732mode == SI47XX_FM) {
-        if (f < 6400000 || f > 10800000) {
-            return false;
-        }
-    } else {
-        if (f < 15000 || f > 3000000) {
-            return false;
-        }
-    }
-    return true;
-}
 
 static void OnKeyDownFreqInput(uint8_t key) {
     switch (key) {
@@ -410,7 +394,7 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                 tune((siCurrentFreq - step) * divider);
                 resetBFO();
                 return;
-            case KEY_3:
+            case KEY_SIDE1:
                 if (SI47XX_IsSSB()) {
                     if (bfo < INT16_MAX - 10) {
                         bfo += 10;
@@ -419,7 +403,7 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                 }
                 return;
 
-            case KEY_9:
+            case KEY_SIDE2:
                 if (SI47XX_IsSSB()) {
                     if (bfo > INT16_MIN + 10) {
                         bfo -= 10;
@@ -514,25 +498,30 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                 if (si4732mode == SI47XX_FM) {
                     SI47XX_SwitchMode(SI47XX_AM);
                     SI47XX_SetBandwidth(bw, true);
-                    tune(720000);
+//                    tune(720000);
                     step = 5;
                 } else if (si4732mode == SI47XX_AM) {
+
+                    GUI_DisplaySmallest("Loading...Wait...", 64 - 34, LCD_HEIGHT - 5 - 9 - 8, false, true);
+                    ST7565_BlitFullScreen();
                     SI47XX_SwitchMode(SI47XX_LSB);
                     SI47XX_SetSsbBandwidth(ssbBw);
-                    tune(711300);
+//                    tune(711300);
                     step = 1;
                 } else {
                     divider = 1000;
                     SI47XX_SwitchMode(SI47XX_FM);
-                    tune(10000000);
+//                    tune(10000000);
                     step = 10;
                 }
+                tune(Read_FreqSaved());
                 resetBFO();
                 return;
             case KEY_F:
                 if (SI47XX_IsSSB()) {
+                    uint32_t tmpF;
                     SI47XX_SwitchMode(si4732mode == SI47XX_LSB ? SI47XX_USB : SI47XX_LSB);
-                    tune(siCurrentFreq * divider); // to apply SSB
+                    tune(Read_FreqSaved()); // to apply SSB
                     return;
                 }
                 return;
@@ -546,8 +535,8 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                 }
                 SI_run = false;
                 return;
-            case KEY_SIDE1:
-            case KEY_SIDE2:
+            case KEY_3:
+            case KEY_9:
                 if (SI47XX_IsSSB()) {
                     return;
                 }
@@ -556,7 +545,7 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                 } else {
                     SI47XX_SetSeekAmSpacing(step);
                 }
-                SI47XX_Seek(KEY_SIDE2 - key, 1);
+                SI47XX_Seek(key == KEY_3 ? 1 : 0, 1);
                 seeking = true;
                 return;
 
@@ -577,6 +566,7 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                 break;
         }
     }
+
 }
 
 
@@ -584,10 +574,12 @@ void SI4732_Main() {
 #ifdef ENABLE_DOPPLER
     SYSCON_DEV_CLK_GATE= SYSCON_DEV_CLK_GATE & ( ~(1 << 22));
 #endif
+    light_open();
     SI_init();
+
     uint16_t cnt = 500;
     while (SI_run) {
-        if (light_time) {
+        if (light_time &&gEeprom.BACKLIGHT_TIME!=7){
             light_time--;
             if (light_time == 0)BACKLIGHT_TurnOff();
         }
@@ -596,7 +588,6 @@ void SI4732_Main() {
                 SI47XX_GetRDS();
             }
             RSQ_GET();
-
             cnt = 0;
             UI_DisplayClear();
             DrawPower();
@@ -620,7 +611,9 @@ void SI4732_Main() {
             if (valid) {
                 seeking = false;
                 light_open();
-                tune(siCurrentFreq);
+                tune((siCurrentFreq) * divider);
+//                resetBFO();
+
             }
             display_flag = 1;
         }
