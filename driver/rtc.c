@@ -11,7 +11,9 @@ uint8_t time[6];
 
 void RTC_INIT() {
 
-    uint32_t correct_freq = 32768 - 1 + ((((RC_FREQ_DELTA & 0x400) >> 10) ? 1 : -1) *( RC_FREQ_DELTA & 0x3ff));
+    uint32_t correct_freq = 32768 - 1 + ((((RC_FREQ_DELTA & 0x400) >> 10) ? 1 : -1) * (RC_FREQ_DELTA & 0x3ff));
+    // 清空PRE_PERIOD, PRE_DECIMAL 和 PRE_ROUND相关位
+    RTC_PRE &= ~((0x7fff << 0) | (0xf << 20) | (0x1 << 24));
     RTC_PRE |= correct_freq//PRE_ROUND=32768HZ-1
                | (0 << 20)//DECIMAL=0
                | (0 << 24);//PRE_PERIOD=8s
