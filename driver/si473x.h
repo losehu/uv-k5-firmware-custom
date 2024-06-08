@@ -602,11 +602,9 @@ extern uint16_t divider;
 
 #define PATCH_SIZE 15832
 
-#if ENABLE_CHINESE_FULL == 4
-#define SI4732_FREQ_ADD 0x1E1F0
-#else
+
 #define SI4732_FREQ_ADD 0X01FE0
-#endif
+
 
 
 
