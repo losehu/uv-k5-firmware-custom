@@ -1,7 +1,7 @@
 
 on: #指定触发 workflow 的事件
   push: #当代码推送时触发
-
+  workflow_dispatch:
 jobs: #定义工作流程
   build: #工作流名称为 build
     runs-on: ubuntu-22.04 #使用 Ubuntu 22.04 环境执行
