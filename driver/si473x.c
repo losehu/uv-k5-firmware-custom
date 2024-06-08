@@ -144,7 +144,7 @@ bool FreqCheck(uint32_t f) {
 uint32_t Read_FreqSaved()
 {
     uint32_t tmpF;
-    EEPROM_ReadBuffer(0x3C210 + si4732mode * 4, (uint8_t *) &tmpF, 4);
+    EEPROM_ReadBuffer(SI4732_FREQ_ADD + si4732mode * 4, (uint8_t *) &tmpF, 4);
     if (!FreqCheck(tmpF)) {
         if (si4732mode == SI47XX_FM) {
             tmpF=10210000;

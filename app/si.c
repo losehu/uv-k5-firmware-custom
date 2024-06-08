@@ -178,7 +178,7 @@ static void tune(uint32_t f) {
             return;
         }
     }
-    EEPROM_WriteBuffer(0x3C210 + si4732mode * 4, (uint8_t *) &f, 4);
+    EEPROM_WriteBuffer(SI4732_FREQ_ADD + si4732mode * 4, (uint8_t *) &f, 4);
 
     f /= divider;
     if (si4732mode == SI47XX_FM) {
@@ -403,6 +403,7 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                 tune((siCurrentFreq - step) * divider);
                 resetBFO();
                 return;
+#ifdef ENABLE_4732SSB
             case KEY_SIDE1:
                 if (SI47XX_IsSSB()) {
                     if (bfo < INT16_MAX - 10) {
@@ -421,6 +422,7 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
 
                 }
                 return;
+#endif
             case KEY_2:
                 if (att < 37) {
                     att++;
@@ -437,26 +439,6 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                 break;
         }
     }
-//    // long held
-//    if (KEY_TYPE2) {
-//
-//        switch (key) {
-//            case KEY_STAR:
-//                if (SI47XX_IsSSB()) {
-//                    return;
-//                }
-//                if (si4732mode == SI47XX_FM) {
-//                    SI47XX_SetSeekFmSpacing(step);
-//                } else {
-//                    SI47XX_SetSeekAmSpacing(step);
-//                }
-//                SI47XX_Seek(1, 1);
-//                seeking = true;
-//                return;
-//            default:
-//                break;
-//        }
-//    }
 
     // Simple keypress
     if (KEY_TYPE3) {
@@ -480,8 +462,11 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                     }
                 }
                 return;
+
             case KEY_6:
-                if (SI47XX_IsSSB()) {
+#ifdef ENABLE_4732SSB
+
+if (SI47XX_IsSSB()) {
                     if (ssbBw == SI47XX_SSB_BW_1_0_kHz) {
                         ssbBw = SI47XX_SSB_BW_1_2_kHz;
                     } else {
@@ -489,13 +474,18 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                     }
                     SI47XX_SetSsbBandwidth(ssbBw);
                 } else {
+#endif
                     if (bw == SI47XX_BW_1_kHz) {
                         bw = SI47XX_BW_6_kHz;
                     } else {
                         bw++;
                     }
                     SI47XX_SetBandwidth(bw, true);
-                }
+#ifdef ENABLE_4732SSB
+
+            }
+#endif
+
                 return;
 
             case KEY_5:
@@ -510,13 +500,20 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                     SI47XX_SetBandwidth(bw, true);
 //                    tune(720000);
                     step = 5;
-                } else if (si4732mode == SI47XX_AM) {
+                }
+#ifdef ENABLE_4732SSB
+
+
+                else if (si4732mode == SI47XX_AM) {
 
                     SI47XX_SwitchMode(SI47XX_LSB);
                     SI47XX_SetSsbBandwidth(ssbBw);
 //                    tune(711300);
                     step = 1;
-                } else {
+                }
+#endif
+
+                else {
                     divider = 1000;
                     SI47XX_SwitchMode(SI47XX_FM);
 //                    tune(10000000);
@@ -525,6 +522,8 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                 tune(Read_FreqSaved());
                 resetBFO();
                 return;
+#ifdef ENABLE_4732SSB
+
             case KEY_F:
                 if (SI47XX_IsSSB()) {
                     uint32_t tmpF;
@@ -533,6 +532,7 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                     return;
                 }
                 return;
+#endif
 
             case KEY_EXIT:
                 if (seeking) {
@@ -545,9 +545,12 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                 return;
             case KEY_3:
             case KEY_9:
-                if (SI47XX_IsSSB()) {
+#ifdef ENABLE_4732SSB
+
+if (SI47XX_IsSSB()) {
                     return;
                 }
+#endif
                 if (si4732mode == SI47XX_FM) {
                     SI47XX_SetSeekFmSpacing(step);
                 } else {
@@ -562,19 +565,7 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                 seeking = true;
                 return;
 
-//            case KEY_SIDE1:
-//                nums4++;
-//                if (currentBandIndex > 0) {
-//                    currentBandIndex--;
-//                    tune(bands[currentBandIndex].currentFreq * divider);
-//                }
-//                return true;
-//            case KEY_SIDE2:
-//                if (currentBandIndex < BANDS_COUNT - 1) {
-//                    currentBandIndex++;
-//                    tune(bands[currentBandIndex].currentFreq * divider);
-//                }
-                return;
+
             default:
                 break;
         }
@@ -620,7 +611,7 @@ void SI4732_Main() {
             bool valid = false;
             siCurrentFreq = SI47XX_getFrequency(&valid);
             uint32_t f = siCurrentFreq * divider;
-            EEPROM_WriteBuffer(0x3C210 + si4732mode * 4, (uint8_t *) &f, 4);
+            EEPROM_WriteBuffer(SI4732_FREQ_ADD + si4732mode * 4, (uint8_t *) &f, 4);
 
             if (valid) {
                 seeking = false;
