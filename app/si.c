@@ -236,13 +236,13 @@ void SI4732_Display() {
     } else {
         uint8_t String[19];
 
-        //ÆµÂÊÏÔÊ¾
+        //é¢‘ç‡æ˜¾ç¤º
         uint32_t f = siCurrentFreq * divider;
         uint16_t fp1 = f / 100000;
         uint16_t fp2 = f / 100 % 1000;
         sprintf(String, "%3u.%03u", fp1, fp2);
         UI_DisplayFrequency(String, 64 - strlen(String) * 13 / 2, 2, false);
-        //Ä£Ê½ÏÔÊ¾
+        //æ¨¡å¼æ˜¾ç¤º
         const uint8_t BASE = 38;
         GUI_DisplaySmallest(SI47XX_MODE_NAMES[si4732mode], LCD_WIDTH - 12, BASE - 10 - 8, false, true);
 
@@ -351,10 +351,10 @@ void HandleUserInput() {
     kbds.prev = kbds.current;
     kbds.current = GetKey();
     bool KEY_TYPE1 = false, KEY_TYPE2 = false, KEY_TYPE3 = false;
-    // ÎŞ°´¼ü
+    // æ— æŒ‰é”®
     if (kbds.current == KEY_INVALID) {
         if (kbds.counter > 2 && kbds.counter <= 6) {
-            // ¶Ì°´ËÉÊÖ
+            // çŸ­æŒ‰æ¾æ‰‹
             KEY_TYPE3 = true;
         }
         kbds.counter = 0;
@@ -363,26 +363,26 @@ void HandleUserInput() {
             KEY_TYPE1 = true;
         }
         if (kbds.current == kbds.prev) {
-            // ³ÖĞø°´ÏÂ
+            // æŒç»­æŒ‰ä¸‹
             if (kbds.counter < 14) {
                 kbds.counter++;
             } else if (kbds.counter == 14) {
-                // ³¤°´Ö»´¥·¢Ò»´Î
+                // é•¿æŒ‰åªè§¦å‘ä¸€æ¬¡
                 KEY_TYPE2 = true;
                 kbds.counter++;
             }
         } else {
-            // °´¼ü±ä»¯£¬ÖØÖÃ¼ÆÊıÆ÷
+            // æŒ‰é”®å˜åŒ–ï¼Œé‡ç½®è®¡æ•°å™¨
             kbds.counter = 1;
         }
         SYSTEM_DelayMs(20);
     }
 
-    SI_key(kbds.current, KEY_TYPE1, KEY_TYPE2, KEY_TYPE3, kbds.prev);
     if (KEY_TYPE1 || KEY_TYPE2 || KEY_TYPE3) {
         light_open();
         display_flag = 1;
     }
+    SI_key(kbds.current, KEY_TYPE1, KEY_TYPE2, KEY_TYPE3, kbds.prev);
 
 }
 
