@@ -12,7 +12,7 @@ ENABLE_LTO                    ?= 1
 # ---- STOCK QUANSHENG FERATURES ----
 ENABLE_UART                   ?= 1
 ENABLE_AIRCOPY                ?= 0
-ENABLE_FMRADIO                = 1
+ENABLE_FMRADIO                = 0
 ENABLE_NOAA                   ?= 0
 ENABLE_VOICE                  ?= 0
 ENABLE_VOX                    ?= 1
@@ -38,16 +38,16 @@ ENABLE_SQUELCH_MORE_SENSITIVE ?= 1
 ENABLE_FASTER_CHANNEL_SCAN    ?= 1
 ENABLE_RSSI_BAR               ?= 1
 ENABLE_COPY_CHAN_TO_VFO       ?= 1
-ENABLE_SPECTRUM               ?= 1
+ENABLE_SPECTRUM               = 0
 ENABLE_REDUCE_LOW_MID_TX_POWER?= 0
 ENABLE_BYP_RAW_DEMODULATORS   ?= 0
 ENABLE_BLMIN_TMP_OFF          ?= 0
 ENABLE_SCAN_RANGES            ?= 1
-ENABLE_MDC1200                = 1
+ENABLE_MDC1200                = 0
 ENABLE_MDC1200_SHOW_OP_ARG    = 0
 ENABLE_MDC1200_SIDE_BEEP      = 0
-ENABLE_MDC1200_CONTACT        = 1
-ENABLE_MDC1200_EDIT			  = 1
+ENABLE_MDC1200_CONTACT        = 0
+ENABLE_MDC1200_EDIT			  = 0
 ENABLE_UART_RW_BK_REGS 		  ?= 0
 ENABLE_AUDIO_BAR_DEFAULT      ?= 0
 ENABLE_EEPROM_TYPE        	   = 0
@@ -73,7 +73,14 @@ ENABLE_4732SSB =0
 
 ENABLE_DOPPLER               =0
 #############################################################
-PACKED_FILE_SUFFIX = LOSEHU128
+PACKED_FILE_SUFFIX = LOSEHU129
+ifeq ($(ENABLE_PINYIN),1)
+	ENABLE_CHINESE_FULL=4
+endif
+
+ifeq ($(ENABLE_DOPPLER),1)
+	ENABLE_SPECTRUM=1
+endif
 
 ifeq ($(ENABLE_CHINESE_FULL),0)
     ifeq ($(ENABLE_ENGLISH),1)
@@ -96,12 +103,16 @@ ifeq ($(ENABLE_CHINESE_FULL),4)
     endif
 endif
 ifeq ($(ENABLE_4732),1)
-	ENABLE_4732=1
 	ENABLE_FMRADIO=0
 	PACKED_FILE_SUFFIX := $(PACKED_FILE_SUFFIX)S
-
     $(info SI4732)
+
 endif
+ifeq ($(ENABLE_FMRADIO),1)
+	ENABLE_4732=0
+endif
+
+
 CFLAGS =
 
 
@@ -112,14 +123,7 @@ ifeq ($(ENABLE_MDC1200),0)
 	ENABLE_MDC1200_EDIT			=0
 endif
 
-ifeq ($(ENABLE_CHINESE_FULL),0)
-	ENABLE_EEPROM_TYPE=0
-	ENABLE_MESSENGER              		=0
-    ENABLE_MESSENGER_DELIVERY_NOTIFICATION	= 0
-    ENABLE_MESSENGER_NOTIFICATION			= 0
 
-    $(info Normal)
-endif
 
 
 OPENOCD = openocd-win/bin/openocd.exe
@@ -190,7 +194,7 @@ ifeq ($(ENABLE_4732),1)
         OBJS += app/si.o
         OBJS += driver/si473x.o
         OBJS += helper/rds.o
-
+        OBJS += app/spectrum.o
 endif
 OBJS += driver/gpio.o
 OBJS += driver/i2c.o
@@ -320,7 +324,7 @@ ifeq ($(ENABLE_OVERLAY),1)
 endif
 
 ifeq ($(ENABLE_CLANG),0)
-	CFLAGS += -Os -Wall -Wno-error -mcpu=cortex-m0 -fno-builtin -fshort-enums -fno-delete-null-pointer-checks -std=c2x -MMD
+	CFLAGS += -Os -Wall -Wno-error -mcpu=cortex-m0 -fno-builtin -fshort-enums -fno-delete-null-pointer-checks -std=c2x -MMD -w
 	#CFLAGS += -Os -Wall -Werror -mcpu=cortex-m0 -fno-builtin -fshort-enums -fno-delete-null-pointer-checks -std=c11 -MMD
 	#CFLAGS += -Os -Wall -Werror -mcpu=cortex-m0 -fno-builtin -fshort-enums -fno-delete-null-pointer-checks -std=c99 -MMD
 	#CFLAGS += -Os -Wall -Werror -mcpu=cortex-m0 -fno-builtin -fshort-enums -fno-delete-null-pointer-checks -std=gnu99 -MMD
@@ -588,37 +592,33 @@ endif
 
 full:
 	$(RM) *.bin
-	$(MAKE) build ENABLE_CHINESE_FULL=0 ENABLE_ENGLISH=1 ENABLE_MESSENGER=1 ENABLE_MESSENGER_DELIVERY_NOTIFICATION=1 ENABLE_MESSENGER_NOTIFICATION=1
-	$(MAKE) build ENABLE_CHINESE_FULL=4 ENABLE_ENGLISH=1 ENABLE_DOPPLER=1
-	$(MAKE) build ENABLE_CHINESE_FULL=0
-	$(MAKE) build ENABLE_CHINESE_FULL=4 ENABLE_DOPPLER=1
-	$(MAKE) build ENABLE_CHINESE_FULL=4 ENABLE_DOPPLER=1 ENABLE_PINYIN=1 ENABLE_MDC1200=0 ENABLE_MDC1200_EDIT=0 ENABLE_MDC1200_CONTACT=0
-	$(MAKE) build ENABLE_CHINESE_FULL=4 ENABLE_PINYIN=1 ENABLE_MDC1200=0 ENABLE_MDC1200_EDIT=0 ENABLE_MDC1200_CONTACT=0 ENABLE_4732=1 ENABLE_4732SSB=1 ENABLE_FMRADIO=0
-	$(MAKE) build ENABLE_CHINESE_FULL=4  ENABLE_FMRADIO=0 ENABLE_4732=1
-	$(MAKE) build ENABLE_CHINESE_FULL=0 ENABLE_FMRADIO=0 ENABLE_4732=1 ENABLE_ENGLISH=1
-	$(MAKE) build ENABLE_CHINESE_FULL=0 ENABLE_FMRADIO=0 ENABLE_4732=1 ENABLE_MDC1200=0 ENABLE_MDC1200_EDIT=0 ENABLE_MDC1200_CONTACT=0
+	$(MAKE) build ENABLE_CHINESE_FULL=0 ENABLE_ENGLISH=1 ENABLE_FMRADIO=1 ENABLE_MESSENGER=1 ENABLE_MESSENGER_DELIVERY_NOTIFICATION=1 ENABLE_MESSENGER_NOTIFICATION=1 ENABLE_SPECTRUM=1 ENABLE_MDC1200=1 ENABLE_MDC1200_EDIT=1 ENABLE_MDC1200_CONTACT=1
+	$(MAKE) build ENABLE_CHINESE_FULL=4 ENABLE_ENGLISH=1 ENABLE_DOPPLER=1 ENABLE_SPECTRUM=1 ENABLE_FMRADIO=1 ENABLE_MDC1200=1 ENABLE_MDC1200_EDIT=1 ENABLE_MDC1200_CONTACT=1
+	$(MAKE) build ENABLE_CHINESE_FULL=0 ENABLE_SPECTRUM=1 ENABLE_FMRADIO=1 ENABLE_MDC1200=1 ENABLE_MDC1200_EDIT=1 ENABLE_MDC1200_CONTACT=1
+	$(MAKE) build ENABLE_CHINESE_FULL=4 ENABLE_DOPPLER=1 ENABLE_SPECTRUM=1 ENABLE_FMRADIO=1 ENABLE_MDC1200=1 ENABLE_MDC1200_EDIT=1 ENABLE_MDC1200_CONTACT=1
+	$(MAKE) build ENABLE_CHINESE_FULL=4 ENABLE_DOPPLER=1 ENABLE_PINYIN=1 ENABLE_SPECTRUM=1 ENABLE_FMRADIO=1
+	$(MAKE) build ENABLE_CHINESE_FULL=4 ENABLE_PINYIN=1 ENABLE_4732=1 ENABLE_4732SSB=1  ENABLE_SPECTRUM=1
 
 test:
 	$(RM) *.bin
-	$(MAKE) build ENABLE_CHINESE_FULL=4  ENABLE_PINYIN=1 ENABLE_MDC1200=0 ENABLE_MDC1200_EDIT=0 ENABLE_MDC1200_CONTACT=0 ENABLE_4732=1 ENABLE_FMRADIO=0
+	$(MAKE) build ENABLE_CHINESE_FULL=0   ENABLE_MDC1200=0 ENABLE_MDC1200_EDIT=0 ENABLE_MDC1200_CONTACT=0 ENABLE_FMRADIO=0 ENABLE_MESSENGER=1 ENABLE_MESSENGER_DELIVERY_NOTIFICATION=1 ENABLE_MESSENGER_NOTIFICATION=1
 
 
 
 build:clean $(TARGET)
-	$(OBJCOPY) -O binary $(TARGET) $(TARGET).bin
+	@$(OBJCOPY) -O binary $(TARGET) $(TARGET).bin
 ifndef MY_PYTHON
 	$(info )
-	$(info !!!!!!!! PYTHON NOT FOUND, *.PACKED.BIN WON'T BE BUILT)
 	$(info )
 else ifneq (,$(HAS_CRCMOD))
 	$(info )
-	$(info !!!!!!!! CRCMOD NOT INSTALLED, *.PACKED.BIN WON'T BE BUILT)
 	$(info !!!!!!!! run: pip install crcmod)
 	$(info )
 else
 	-$(MY_PYTHON) fw-pack.py $(TARGET).bin $(AUTHOR_STRING) $(PACKED_FILE_SUFFIX).bin
 endif
 	$(SIZE) $(TARGET)
+
 
 
 
@@ -636,19 +636,49 @@ flash:
 version.o: .FORCE
 
 $(TARGET): $(OBJS)
-	$(LD) $(LDFLAGS) $^ -o $@ $(LIBS)
+	@$(LD) $(LDFLAGS) $^ -o $@ $(LIBS)
 
 bsp/dp32g030/%.h: hardware/dp32g030/%.def
 
 %.o: %.c | $(BSP_HEADERS)
-	$(CC) $(CFLAGS) $(INC) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
 %.o: %.S
-	$(AS) $(ASFLAGS) $< -o $@
+	@$(AS) $(ASFLAGS) $< -o $@
 
 .FORCE:
 
 -include $(DEPS)
 
+CUSCANSHU ?= NUL
+CUSTOMNAME ?= NUL
+full_all:
+	$(MAKE) build_all $(CUSCANSHU) CUSTOMNAME="$(CUSTOMNAME)"
+
+
+build_all: clean $(TARGET)
+	$(OBJCOPY) -O binary $(TARGET) $(TARGET).bin
+ifndef MY_PYTHON
+
+else ifneq (,$(HAS_CRCMOD))
+	$(info )
+	$(info !!!!!!!! run: pip install crcmod)
+	$(info )
+else
+	-$(MY_PYTHON) fw-pack.py $(TARGET).bin $(AUTHOR_STRING) $(CUSTOMNAME).bin
+endif
+	$(SIZE) $(TARGET)
+
+
+
+
 clean:
-	$(RM) $(call FixPath, $(TARGET).bin $(PACKED_FILE_SUFFIX).bin $(TARGET) $(OBJS) $(DEPS))
+	@$(RM) $(call FixPath, $(TARGET).bin $(PACKED_FILE_SUFFIX).bin $(TARGET) )
+
+ifeq ($(OS), Windows_NT) # Windows 系统
+	@call del_win.bat
+else # 类 Unix 系统（Linux, macOS, 等）
+	chmod +x del_linux.sh
+	./del_linux.sh
+endif
+

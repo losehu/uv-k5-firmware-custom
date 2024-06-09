@@ -627,15 +627,14 @@ void UI_DisplayMenu(void) {
 
 
 #ifdef ENABLE_ENGLISH
+    {
     uint8_t size_menu = strlen(MenuList[gMenuCursor].name)*7;
-
     UI_PrintStringSmall(MenuList[gMenuCursor].name, size_menu < 48 ? (48 - size_menu) / 2 : 0, 0, 0);
-
-
-
+    }
 #else
-
-    UI_ShowChineseMenu();
+    {
+        UI_ShowChineseMenu();
+    }
 #endif
 
 #else

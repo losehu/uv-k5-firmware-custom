@@ -680,7 +680,9 @@ cnt_i--;
             }
 
         }else{
+#ifdef ENABLE_DOPPLER
             DOPPLER_MODE=1;
+#endif
             APP_RunSpectrum();
             gRequestDisplayScreen = DISPLAY_MAIN;
             }

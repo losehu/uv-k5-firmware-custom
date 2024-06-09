@@ -2,6 +2,14 @@
 
 **语言版本: [English](README_en.md), [中文](README.md).**
 
+
+# [K5Web]( https://k5.vicicode.com/)
+* 支持在线固件功能编译，无需安装编译环境！！
+* 多普勒卫星、开机图片文字、SI4732 SSB补丁的写频方式！
+* 支持**创意工坊**，注册后登录可上传自定义固件和开机图片！！！
+
+请访问：[K5Web]( https://k5.vicicode.com/)
+
 # 版本说明
 
 * 目前分为如下几个版本：**LOSEHUxxx**、**LOSEHUxxxK**、**LOSEHUxxxH**、**LOSEHUxxxE**、**LOSEHUxxxEK**、**LOSEHUxxxHS**
@@ -12,13 +20,6 @@
 * **LOSEHUxxxE**:英文固件，无需扩容，包含MDC1200、频谱、收音机、短信
 * **LOSEHUxxxEK**:英文固件，需要1Mib以上Eeprom，包含多普勒模式、MDC1200、频谱、收音机、自定义开机字符、开机图片
 
-# 写频方式
-
-关于多普勒卫星、开机图片文字、SI4732 SSB补丁的写频方式
-
-支持创意工坊，注册后登录可上传自定义固件和开机图片！！！
-
-请参考：[K5Web]( https://k5.vicicode.com/)
 
 # 多功能的K5/6固件
 

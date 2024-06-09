@@ -14,6 +14,14 @@
 * ......
 * More available flash allows for additional custom features(about 1.5K?).
 
+
+# [K5Web](https://k5.vicicode.com/)
+* Supports online firmware compilation, no need to install a compilation environment!!
+* Doppler satellite, boot image text, and SI4732 SSB patch writing method!
+* Supports **Creative Workshop**, where you can upload custom firmware and boot images after registering and logging in!!!
+
+Visit: [K5Web](https://k5.vicicode.com/)
+
 # Version Description
 * Currently, the firmware is available in the following versions: **LOSEHUxxx**, **LOSEHUxxxK**, **LOSEHUxxxH**, **LOSEHUxxxE**, **LOSEHUxxxEK**, **LOSEHUxxxHS**
 * **LOSEHUxxx**: Chinese firmware, no additional EEPROM needed, includes MDC1200, spectrum, and radio.
@@ -23,10 +31,7 @@
 * **LOSEHUxxxE**: English firmware, no additional EEPROM needed, includes MDC1200, spectrum, radio, and messaging.
 * **LOSEHUxxxEK**: English firmware, requires more than 1Mib EEPROM, includes Doppler mode, MDC1200, spectrum, radio, custom boot characters, and boot image.
 
-# Frequency Writing Method
-Regarding Doppler satellites and bootup image text frequency writing method.
 
-Please refer to: [K5Web](https://k5.vicicode.com/)
 
 # Multi-functional K5/6 Firmware
 
