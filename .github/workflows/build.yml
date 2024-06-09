@@ -1,0 +1,38 @@
+on: #指定触发 workflow 的事件
+  push: #当代码推送时触发
+
+jobs: #定义工作流程
+  build: #工作流名称为 build
+    runs-on: ubuntu-22.04 #使用 Ubuntu 22.04 环境执行
+    container: #定义容器
+      image: archlinux:latest #使用 Arch Linux 镜像
+    steps: #定义工作流程中的步骤
+      - name: Install dependencies
+        run: |
+          pacman -Syyu --noconfirm \
+            base-devel \
+            arm-none-eabi-gcc \
+            arm-none-eabi-newlib \
+            git \
+            python-pip \
+            python-crcmod \
+
+      - name: Checkout #拉取代码
+        uses: actions/checkout@v3 #使用 GitHub Actions 提供的 checkout 动作
+
+      - name: safe.directory #设置 git 的 safe.directory 配置
+        run: git config --global --add safe.directory /__w/uv-k5-firmware-custom/uv-k5-firmware-custom
+
+      - name: Make #执行 make 命令
+        run: make full  #编译项目
+
+      - name: size #计算 firmware 大小
+        run: arm-none-eabi-size firmware #使用 arm-none-eabi-size 命令计算固件大小
+
+      - name: Upload Artifact #上传固件文件
+        uses: actions/upload-artifact@v3 #使用 GitHub Actions 提供的 upload-artifact 动作
+        with:
+          name: firmware #设置 artifact 名称为 firmware
+          path: LOSEHU*.bin #上传文件路径为 LOSEHU*.bin
+
+
