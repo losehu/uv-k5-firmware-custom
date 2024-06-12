@@ -1160,6 +1160,33 @@ __STATIC_FORCEINLINE void __set_MSP(uint32_t topOfMainStack)
 {
   __ASM volatile ("MSR msp, %0" : : "r" (topOfMainStack) : );
 }
+#define STACK_SIZE 0x80 // 定义堆栈大小（128字节）
+#define STACK_END  0x20004000 // 堆栈结束地址
+__STATIC_FORCEINLINE void ClearStack(void) {
+    uint32_t *stack_ptr = (uint32_t *)STACK_END; // 堆栈结束地址
+    uint32_t stack_bottom = (uint32_t)stack_ptr - STACK_SIZE; // 堆栈起始地址
+
+    while ((uint32_t)stack_ptr > stack_bottom) {
+        stack_ptr--;
+        *stack_ptr = 0; // 将堆栈内容清零
+    }
+}
+__STATIC_FORCEINLINE uint32_t __get_PC(void) {
+    uint32_t result;
+    __ASM volatile (
+            "MOV %0, r15\n"
+            : "=r" (result)
+            );
+    return result;
+}
+
+__STATIC_FORCEINLINE void __set_PC(uint32_t pc) {
+    __ASM volatile (
+            "MOV r15, %0\n"
+            :
+            : "r" (pc)
+            );
+}
 
 
 #if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
