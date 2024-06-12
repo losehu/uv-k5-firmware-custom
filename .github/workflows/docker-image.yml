@@ -1,5 +1,5 @@
 on: #指定触发 workflow 的事件
-  push: #当代码推送时触发
+  workflow_dispatch: #当代码推送时触发
 
 jobs: #定义工作流程
   build: #工作流名称为 build
