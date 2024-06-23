@@ -19,7 +19,7 @@
 #include "bsp/dp32g030/saradc.h"
 #include "bsp/dp32g030/syscon.h"
 #include "sram-overlay.h"
-
+#include "driver/eeprom.h"
 static volatile uint32_t *pFlash = 0;
 uint32_t                  overlay_FLASH_MainClock;
 uint32_t                  overlay_FLASH_ClockMultiplier;
@@ -41,6 +41,11 @@ bool overlay_FLASH_IsBusy(void)
 bool overlay_FLASH_IsInitComplete(void)
 {
 	return (FLASH_ST & FLASH_ST_INIT_BUSY_MASK) == FLASH_ST_INIT_BUSY_BITS_COMPLETE;
+}
+
+bool overlay_FLASH_IsNotEmpty(void)
+{
+    return (FLASH_ST & 4) != 4;
 }
 
 void overlay_FLASH_Start(void)
@@ -195,4 +200,61 @@ void overlay_FLASH_ConfigureTrimValues(void)
 	SARADC_CALIB_OFFSET = ((Data & 0xFFFF) << SARADC_CALIB_OFFSET_OFFSET_SHIFT) & SARADC_CALIB_OFFSET_OFFSET_MASK;
 	SARADC_CALIB_KD     = (((Data >> 16) & 0xFFFF) << SARADC_CALIB_KD_KD_SHIFT) & SARADC_CALIB_KD_KD_MASK;
 	overlay_FLASH_SetArea(FLASH_AREA_MAIN);
+}
+
+
+void ProgramMoreWords(uint32_t DestAddr, const uint32_t *words,uint32_t num)
+{
+    const uint32_t *pWord = (const uint32_t *)words;
+
+    while (overlay_FLASH_IsBusy()) {}//查询FLASH控制器忙标志，等待控制器处于READY状态；
+    overlay_FLASH_SetMode(FLASH_MODE_PROGRAM); //配置模式为编程操作；
+
+    for (uint32_t  i = 0; i < num; i++) { //若还有待编程数据，则判断 PROG_BUF_EMPTY 位是否为 0，为 0 时则可以写入下一个待编程的字（为 1 时等待，不能写入），直到所有待编程数据全部写入完成；
+        FLASH_ADDR = (DestAddr+i*4)>>2 ; //写入编程地址，以字为单位；
+
+        FLASH_WDATA= *pWord++; //将待编程数据放到数据寄存器中；
+        overlay_FLASH_Start();//配置FLASH解锁，启动START命令；
+       if(i)
+        while(overlay_FLASH_IsNotEmpty()){
+        };
+
+    }
+    while (overlay_FLASH_IsBusy()) {}//查询FLASH控制器忙标志，等待控制器处于READY状态；
+    overlay_FLASH_SetMode(FLASH_CFG_MODE_VALUE_READ_AHB); //配置模式为编程操作；
+    overlay_FLASH_Lock();
+}
+
+void ProgramWords(uint32_t DestAddr,uint32_t words)
+{
+    while (overlay_FLASH_IsBusy()) {}//查询FLASH控制器忙标志，等待控制器处于READY状态；
+
+    overlay_FLASH_SetMode(FLASH_MODE_PROGRAM); //配置模式为编程操作；
+
+    FLASH_ADDR = DestAddr>>2 ; //写入编程地址，以字为单位；
+    FLASH_WDATA= words; //将待编程数据放到数据寄存器中；
+    overlay_FLASH_Start();//配置FLASH解锁，启动START命令；
+    while (overlay_FLASH_IsBusy()) {}//查询FLASH控制器忙标志，等待控制器处于READY状态；
+    overlay_FLASH_SetMode(FLASH_CFG_MODE_VALUE_READ_AHB); //配置模式为编程操作；
+    overlay_FLASH_Lock();
+}
+
+//CP_EEPROM_TO_FLASH(0x5000,0xa000,10*1024);
+
+void CP_EEPROM_TO_FLASH(uint32_t eeprom_add,uint32_t flash_add,uint32_t size)
+{
+    for (int i = 0; i < size/4; ++i) {
+        uint32_t c;
+        EEPROM_ReadBuffer(eeprom_add + i * 4, (uint8_t*)&c, 4);
+        __disable_irq();
+        ProgramWords(i*4+flash_add, c);
+    }
+}
+//JUMP_TO_FLASH(0xa10A,0x20003ff0);
+void JUMP_TO_FLASH(uint32_t flash_add,uint32_t stack_add)
+{
+    __disable_irq();
+    ClearStack();
+    __set_MSP(stack_add);
+    __set_PC(flash_add);
 }
