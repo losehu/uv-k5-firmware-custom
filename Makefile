@@ -679,6 +679,6 @@ ifeq ($(OS), Windows_NT) # Windows 系统
 	@call del_win.bat
 else # 类 Unix 系统（Linux, macOS, 等）
 	chmod +x del_linux.sh
-	./del_linux.sh
+	sh ./del_linux.sh
 endif
 
