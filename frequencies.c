@@ -200,7 +200,7 @@ int32_t TX_freq_check(const uint32_t Frequency)
                 return 0;
             if (Frequency >= 43000000 && Frequency <= 44000000)
                 return 0;
-            for (uint32_t i = 40975000; i <= 40991250; i+=1250)
+            for (uint32_t i = 40975000; i <= 40998750; i+=1250)
                 if (Frequency == i)
                     return 0;
             break;
