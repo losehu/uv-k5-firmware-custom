@@ -219,6 +219,7 @@ static void resetBFO() {
 void SI_deinit() {
     SI47XX_PowerDown();
     BK4819_RX_TurnOn();
+    GPIO_SetBit(&GPIOC->DATA, GPIOC_PIN_AUDIO_PATH);
 #ifdef ENABLE_DOPPLER
     SYSCON_DEV_CLK_GATE|=(1<<22);
 #endif
@@ -626,7 +627,6 @@ void SI4732_Main() {
             display_flag = 0;
             SI4732_Display();
         }
-
         SYSTEM_DelayMs(1);
     }
     SI_deinit();
