@@ -10,6 +10,12 @@
 
 请访问：[K5Web]( https://k5.vicicode.com/)
 
+# [自定义引导](https://github.com/losehu/uv-k5-bootloader-custom)
+* 通过创立一个引导程序加载进RAM实现固件切换
+* 对于每个可切换的固件只需加上80B代码段
+* 可切换多个固件，使用多个功能
+* 目前仅适用于4Mib的Eeprom，通过修改代码可轻松拓展至其他大小Eeprom
+
 # 版本说明
 
 * 目前分为如下几个版本：**LOSEHUxxx**、**LOSEHUxxxK**、**LOSEHUxxxH**、**LOSEHUxxxE**、**LOSEHUxxxEK**、**LOSEHUxxxHS**
