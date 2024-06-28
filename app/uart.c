@@ -581,35 +581,7 @@ bool UART_IsCommandAvailable(void) {
     return judge;
 }
 
-#if ENABLE_CHINESE_FULL == 4
-//
-//static void CMD_052B(const uint8_t *pBuffer)//read
-//{
-//    const CMD_052B_t *pCmd = (const CMD_052B_t *) pBuffer;
-//    REPLY_051B_t Reply;
-//
-//
-//    if (pCmd->Timestamp != Timestamp)
-//        return;
-//
-//    gSerialConfigCountDown_500ms = 12; // 6 sec
-//
-//#ifdef ENABLE_FMRADIO
-//    gFmRadioCountdown_500ms = fm_radio_countdown_500ms;
-//#endif
-//
-////    memset(&Reply, 0, sizeof(Reply));
-//    Reply.Header.ID = 0x051C;
-//    Reply.Header.Size = pCmd->Size + 4;
-//    Reply.Data.Offset = pCmd->Offset;
-//
-//    Reply.Data.Size = pCmd->Size;
-//
-//
-//        EEPROM_ReadBuffer(((pCmd->Offset) << 16) + ((pCmd->ADD[1]) << 8) + (pCmd->ADD[0]), Reply.Data.Data, pCmd->Size);
-//
-//    SendReply(&Reply, pCmd->Size + 8);
-//}
+
 
 static void CMD_0538(const uint8_t *pBuffer)//write
 {
@@ -630,14 +602,7 @@ static void CMD_0538(const uint8_t *pBuffer)//write
 
         for ( int i = 0; i < ((pCmd->Size) - 2) / 8+(add==0?0:1); i++) {
             const uint32_t Offset = ((pCmd->Offset) << 16) + ((pCmd->Data[1]) << 8) + (pCmd->Data[0]) + (i * 8U);
-//#ifdef ENABLE_DOPPLER
-//            if(Offset>=0x90000)
-//                {
-//                memcpy(time,pCmd->Data[i * 8U + 2],6);
-//                RTC_Set(time);
-//                continue;
-//                }
-//#endif
+
                 if(add&&i==((pCmd->Size) - 2) / 8+(add==0?0:1)-1)
                     EEPROM_WriteBuffer(Offset, &pCmd->Data[i * 8U + 2], add);
                 else
@@ -647,7 +612,6 @@ static void CMD_0538(const uint8_t *pBuffer)//write
 
     SendReply(&Reply, sizeof(Reply));
 }
-#endif
 
 #ifdef ENABLE_DOCK
 static void CMD_0801(const uint8_t *pBuffer)
@@ -666,14 +630,13 @@ static void CMD_0801(const uint8_t *pBuffer)
 
 void UART_HandleCommand(void) {
     switch (UART_Command.Header.ID) {
-#if ENABLE_CHINESE_FULL == 4
         case 0x052B://read
             CMD_051B(UART_Command.Buffer);
             break;
         case 0x0538://write
             CMD_0538(UART_Command.Buffer);
             break;
-#endif
+
 #ifdef ENABLE_DOCK
         case 0x0801:
             CMD_0801(UART_Command.Buffer);
