@@ -250,11 +250,3 @@ void CP_EEPROM_TO_FLASH(uint32_t eeprom_add,uint32_t flash_add,uint32_t size)
         ProgramWords(i*4+flash_add, c);
     }
 }
-//JUMP_TO_FLASH(0xa10A,0x20003ff0);
-void JUMP_TO_FLASH(uint32_t flash_add,uint32_t stack_add)
-{
-    __disable_irq();
-    ClearStack();
-    __set_MSP(stack_add);
-    __set_PC(flash_add);
-}

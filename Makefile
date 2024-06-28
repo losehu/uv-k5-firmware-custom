@@ -21,7 +21,7 @@ ENABLE_TX1750                 ?= 0
 ENABLE_PWRON_PASSWORD         ?= 0
 ENABLE_DTMF_CALLING           ?= 1
 ENABLE_FLASHLIGHT             ?= 1
-
+ENABLE_BOOTLOADER			 ?= 1
 # ---- CUSTOM MODS ----
 ENABLE_BIG_FREQ               ?= 1
 ENABLE_KEEP_MEM_NAME          ?= 1
@@ -366,6 +366,10 @@ endif
 ifeq ($(ENABLE_MDC1200),1)
     CFLAGS  += -DENABLE_MDC1200
 endif
+ifeq ($(ENABLE_BOOTLOADER),1)
+    CFLAGS  += -DENABLE_BOOTLOADER
+endif
+
 ifeq ($(ENABLE_WARNING),1)
     CFLAGS  += -DENABLE_WARNING
 endif

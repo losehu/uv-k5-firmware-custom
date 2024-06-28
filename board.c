@@ -27,7 +27,12 @@
 #include "bsp/dp32g030/syscon.h"
 #include "driver/adc.h"
 #include "driver/backlight.h"
-
+#include "ARMCM0.h"
+#include "bsp/dp32g030/pmu.h"
+#include "bsp/dp32g030/saradc.h"
+#include "bsp/dp32g030/syscon.h"
+#include "sram-overlay.h"
+#include "driver/eeprom.h"
 #ifdef ENABLE_FMRADIO
 #include "driver/bk1080.h"
 #endif
@@ -469,4 +474,21 @@ void BOARD_Init(void) {
     CRC_Init();
 #endif
 
+}
+
+void write_to_memory(uint32_t address, uint32_t data) {
+    // 将地址数值转换为指针
+    uint32_t *target_address = (uint32_t *) address;
+    // 向目标地址写入数据
+    *target_address = data;
+    // 为了避免优化，确保代码不会被优化掉
+    volatile uint32_t read_back = *target_address;
+}
+//JUMP_TO_FLASH(0xa10A,0x20003ff0);
+void JUMP_TO_FLASH(uint32_t flash_add,uint32_t stack_add)
+{
+    __disable_irq();
+    ClearStack();
+    __set_MSP(stack_add);
+    __set_PC(flash_add);
 }

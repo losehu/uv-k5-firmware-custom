@@ -26,6 +26,8 @@ void     BOARD_PORTCON_Init(void);
 void     BOARD_ADC_Init(void);
 void     BOARD_ADC_GetBatteryInfo(uint16_t *pVoltage, uint16_t *pCurrent);
 void     BOARD_Init(void);
+void JUMP_TO_FLASH(uint32_t flash_add,uint32_t stack_add);
+        void write_to_memory(uint32_t address, uint32_t data) ;
 
 
 #endif

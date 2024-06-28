@@ -60,7 +60,6 @@
 #ifdef ENABLE_4732
 
 
-
 #endif
 
 #include "audio.h"
@@ -131,21 +130,16 @@ void Main(void) {
     BOARD_Init();
 
 
-    boot_counter_10ms = 250;   // 2.5 sec
+
 #ifdef ENABLE_UART
     UART_Init();
 #endif
-
-    SETTINGS_InitEEPROM();
 
 
     memset(gDTMF_String, '-', sizeof(gDTMF_String));
     gDTMF_String[sizeof(gDTMF_String) - 1] = 0;
 
     BK4819_Init();
-
-
-
 
 
     BOARD_ADC_GetBatteryInfo(&gBatteryCurrentVoltage, &gBatteryCurrent);
@@ -226,6 +220,20 @@ void Main(void) {
     }
 #endif
     UI_DisplayWelcome();
+
+#ifdef ENABLE_BOOTLOADER
+
+
+    if(KEYBOARD_Poll() == KEY_MENU)
+{
+            for (int i = 0; i < 10*1024; i += 4) {
+                uint32_t c;
+                EEPROM_ReadBuffer(0x41000 + i, (uint8_t *) &c, 4);
+                write_to_memory(0x20001000 + i, c);
+            }
+            JUMP_TO_FLASH(0x2000110a, 0x20003ff0);
+}
+#endif
 
 
     boot_counter_10ms = 250;
