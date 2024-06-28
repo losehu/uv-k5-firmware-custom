@@ -50,8 +50,8 @@ void UI_DisplayWelcome(void) {
 
     memset(gStatusLine, 0, sizeof(gStatusLine));
     UI_DisplayClear();
-    ST7565_BlitStatusLine();  // blank status line
-    ST7565_BlitFullScreen();
+//    ST7565_BlitStatusLine();  // blank status line
+//    ST7565_BlitFullScreen();
 #if ENABLE_CHINESE_FULL == 4
 
     if (gEeprom.POWER_ON_DISPLAY_MODE == POWER_ON_DISPLAY_MODE_MESSAGE) {
