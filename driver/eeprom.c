@@ -120,12 +120,13 @@ void EEPROM_ReadBuffer(uint32_t Address, void *pBuffer, uint8_t Size) {
 
 void EEPROM_WriteBuffer(uint32_t Address, const void *pBuffer, uint8_t WRITE_SIZE) {
 
-    if (pBuffer == NULL)
-        return;
+//    if (pBuffer == NULL)
+//        return;
     uint8_t buffer[128];
     EEPROM_ReadBuffer(Address, buffer, WRITE_SIZE);
     if (memcmp(pBuffer, buffer, WRITE_SIZE) != 0) {
-        uint8_t IIC_ADD = 0xA0 | ((Address / 0x10000) << 1);
+        uint8_t IIC_ADD =    0xA0 | Address >> 15 &14;
+
         I2C_Start();
 
         I2C_Write(IIC_ADD);
@@ -140,15 +141,3 @@ void EEPROM_WriteBuffer(uint32_t Address, const void *pBuffer, uint8_t WRITE_SIZ
 }
 
 
-void EEPROM_Buffer_MORE(uint32_t Address, void *pBuffer, uint16_t WRITE_SIZE, uint8_t TYPE) {
-    uint16_t SUM_WRITE = 0;
-    while (WRITE_SIZE) {
-        uint16_t NOW_WRITE_SIZE = (WRITE_SIZE < 128 ? WRITE_SIZE : 128) - (Address & 0x7f);
-        WRITE_SIZE -= NOW_WRITE_SIZE;
-        if (TYPE) EEPROM_WriteBuffer(Address, pBuffer + SUM_WRITE, NOW_WRITE_SIZE);
-        else EEPROM_ReadBuffer(Address, pBuffer + SUM_WRITE, NOW_WRITE_SIZE);
-
-        SUM_WRITE += NOW_WRITE_SIZE;
-        Address += NOW_WRITE_SIZE;
-    }
-}

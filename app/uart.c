@@ -265,7 +265,6 @@ static void CMD_051B(const uint8_t *pBuffer) {
     const CMD_051B_t *pCmd = (const CMD_051B_t *) pBuffer;
     REPLY_051B_t Reply;
 #ifdef ENABLE_BLOCK
-
     bool bLocked = false;
 #endif
     if (pCmd->Timestamp != Timestamp)
@@ -630,9 +629,11 @@ static void CMD_0801(const uint8_t *pBuffer)
 
 void UART_HandleCommand(void) {
     switch (UART_Command.Header.ID) {
+        case 0x051B:
         case 0x052B://read
             CMD_051B(UART_Command.Buffer);
             break;
+        case 0x051D:
         case 0x0538://write
             CMD_0538(UART_Command.Buffer);
             break;
@@ -647,13 +648,7 @@ void UART_HandleCommand(void) {
             CMD_0514(UART_Command.Buffer);
             break;
 
-        case 0x051B:
-            CMD_051B(UART_Command.Buffer);
-            break;
 
-        case 0x051D:
-            CMD_051D(UART_Command.Buffer);
-            break;
 
 
         case 0x0527:
