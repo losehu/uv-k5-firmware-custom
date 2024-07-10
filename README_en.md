@@ -24,10 +24,9 @@ Visit: [K5Web](https://k5.vicicode.com/)
 
 # [Custom Bootloader](https://github.com/losehu/uv-k5-bootloader-custom)
 
-* Create a bootloader to load into RAM to achieve firmware switching.
-* For each switchable firmware, only an 80B code segment needs to be added.
-* Multiple firmware can be switched, using multiple functions.
-* Currently only applicable to 4MiB EEPROM; can be easily extended to other sizes of EEPROM by modifying the code.
+* By creating a bootloader that loads into RAM, firmware switching is achieved.
+* Any firmware can be switched.
+* Currently, it is only suitable for 4Mib EEPROM, but it can be easily extended to other sizes of EEPROM by modifying the code.
 
 # Version Description
 * Currently, the firmware is available in the following versions: **LOSEHUxxx**, **LOSEHUxxxK**, **LOSEHUxxxH**, **LOSEHUxxxE**, **LOSEHUxxxEK**, **LOSEHUxxxHS**
