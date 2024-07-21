@@ -32,7 +32,7 @@
 
 * **更大容量的Eeprom芯片**
 * **自动多普勒频移**
-* 自定义开机图
+* **自定义开机图**
 * **SI4732支持**
 * **中/英文支持**
 * **中文输入法**
@@ -137,14 +137,6 @@
 | 0x3C210~0x3C21C                        | **SI4732**FM、AM、SSB频率、模式                                  |
 [多普勒Eeprom分布说明](https://github.com/losehu/uv-k5-firmware-chinese/blob/main/doc/多普勒eeprom详细说明.txt)
 
-# 示例
-
-<p float="left">
-  <img src="/images/c1.JPG" width=300 />
-  <img src="/images/c2.JPG" width=300 />
-  <img src="/images/c3.JPG" width=300 />
-  <img src="/images/c4.JPG" width=300 />
-</p>
 
 # 用户功能自定义
 
@@ -226,13 +218,4 @@
 ## Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=losehu/uv-k5-firmware-custom&type=Date)](https://star-history.com/#losehu/uv-k5-firmware-custom&Date)
-
-# 免责声明：
-
-* 本固件仅供技术交流和个人学习使用。任何个人或组织在使用本固件时必须**遵守中华人民共和国相关法律法规及无线电管理条例**。
-* 作者对于他人使用本固件所产生的任何违法行为**概不负责**,包括但不限于未经授权擅自修改、使用本固件进行非法活动等行为。
-* 如因使用本固件造成的损失,**作者不承担任何法律责任**。
-* 使用者在下载、安装和使用本固件时,默认已经阅读、理解并同意本免责声明的所有内容。**如有异议,请立即停止使用本固件**。
-* 作者保留在法律允许范围内对本免责声明进行解释和修改的权利。**任何未经授权的固件修改、传播所造成的违法行为,一概与作者无关
-  **。
 
