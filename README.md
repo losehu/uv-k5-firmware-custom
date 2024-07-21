@@ -222,6 +222,11 @@
 
 [![打赏码](https://github.com/losehu/uv-k5-firmware-chinese/blob/main/payment/show.png)](https://losehu.github.io/payment-codes/)
 
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=losehu/uv-k5-firmware-custom&type=Date)](https://star-history.com/#losehu/uv-k5-firmware-custom&Date)
+
 # 免责声明：
 
 * 本固件仅供技术交流和个人学习使用。任何个人或组织在使用本固件时必须**遵守中华人民共和国相关法律法规及无线电管理条例**。
