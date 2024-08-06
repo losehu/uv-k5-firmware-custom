@@ -425,38 +425,63 @@ void RADIO_ConfigureSquelchAndOutputPower(VFO_Info_t *pInfo) {
         EEPROM_ReadBuffer(Base + 0x50, &pInfo->SquelchOpenGlitchThresh, 1);  // 100   100
 
 
-        uint16_t noise_open = pInfo->SquelchOpenNoiseThresh;
-        uint16_t noise_close = pInfo->SquelchCloseNoiseThresh;
+
+
 
 #if ENABLE_SQUELCH_MORE_SENSITIVE
-        uint16_t rssi_open    = pInfo->SquelchOpenRSSIThresh;
-        uint16_t rssi_close   = pInfo->SquelchCloseRSSIThresh;
-        uint16_t glitch_open  = pInfo->SquelchOpenGlitchThresh;
-        uint16_t glitch_close = pInfo->SquelchCloseGlitchThresh;
+
+        uint8_t num=4;
+        uint8_t num_noise=4;
         // make squelch more sensitive
         // note that 'noise' and 'glitch' values are inverted compared to 'rssi' values
-        rssi_open   = (rssi_open   * 1) / 2;
-        noise_open  = (noise_open  * 2) / 1;
-        glitch_open = (glitch_open * 2) / 1;
+        pInfo->SquelchOpenRSSIThresh = (pInfo->SquelchOpenRSSIThresh * 1) / num;
+        pInfo->SquelchOpenNoiseThresh = (pInfo->SquelchOpenNoiseThresh * num_noise) / 1;
+        pInfo->SquelchOpenGlitchThresh = (pInfo->SquelchOpenGlitchThresh * num_noise) / 1;
+
+
+        pInfo->SquelchCloseRSSIThresh = ( pInfo->SquelchCloseRSSIThresh * 1) / num;
+        pInfo->SquelchCloseNoiseThresh = (pInfo->SquelchCloseNoiseThresh * num_noise) / 1;
+        pInfo->SquelchCloseGlitchThresh = (pInfo->SquelchCloseGlitchThresh * num_noise) / 1;
+
+
+        pInfo->SquelchOpenRSSIThresh = (pInfo->SquelchOpenRSSIThresh > 255) ? 255 : pInfo->SquelchOpenRSSIThresh;
+        pInfo->SquelchCloseRSSIThresh = ( pInfo->SquelchCloseRSSIThresh > 255) ? 255 :  pInfo->SquelchCloseRSSIThresh;
+        pInfo->SquelchOpenNoiseThresh = (pInfo->SquelchOpenNoiseThresh > 127) ? 127 : pInfo->SquelchOpenNoiseThresh;
+        pInfo->SquelchCloseNoiseThresh = (pInfo->SquelchCloseNoiseThresh > 127) ? 127 : pInfo->SquelchCloseNoiseThresh;
+        pInfo->SquelchOpenGlitchThresh = (pInfo->SquelchOpenGlitchThresh > 255) ? 255 : pInfo->SquelchOpenGlitchThresh;
+        pInfo->SquelchCloseGlitchThresh = (pInfo->SquelchCloseGlitchThresh > 255) ? 255 : pInfo->SquelchCloseGlitchThresh;
 
 
         // ensure the 'close' threshold is lower than the 'open' threshold
-        if (rssi_close == rssi_open && rssi_close >= 2)
-            rssi_close -= 2;
-        if (noise_close == noise_open && noise_close  <= 125)
-            noise_close += 2;
-        if (glitch_close == glitch_open && glitch_close <= 253)
-            glitch_close += 2;
+        if ( pInfo->SquelchCloseRSSIThresh + 4 >= pInfo->SquelchOpenRSSIThresh)
+            if (pInfo->SquelchOpenRSSIThresh >= 4)
+                 pInfo->SquelchCloseRSSIThresh = pInfo->SquelchOpenRSSIThresh - 4;
+            else
+                pInfo->SquelchOpenRSSIThresh =  pInfo->SquelchCloseRSSIThresh + 4;
+            
+        if (pInfo->SquelchCloseGlitchThresh - 2 <= pInfo->SquelchOpenGlitchThresh)
+            if (pInfo->SquelchOpenGlitchThresh <= 253)
+                pInfo->SquelchCloseGlitchThresh = pInfo->SquelchOpenGlitchThresh + 2;
+            else
+                pInfo->SquelchOpenGlitchThresh = pInfo->SquelchCloseGlitchThresh - 2;
 
-        pInfo->SquelchOpenRSSIThresh    = (rssi_open    > 255) ? 255 : rssi_open;
-        pInfo->SquelchCloseRSSIThresh   = (rssi_close   > 255) ? 255 : rssi_close;
-        pInfo->SquelchOpenGlitchThresh  = (glitch_open  > 255) ? 255 : glitch_open;
-        pInfo->SquelchCloseGlitchThresh = (glitch_close > 255) ? 255 : glitch_close;
+        if (pInfo->SquelchCloseNoiseThresh - 2 <= pInfo->SquelchOpenNoiseThresh)
+            if (pInfo->SquelchOpenNoiseThresh <= 125)
+                pInfo->SquelchCloseNoiseThresh = pInfo->SquelchOpenNoiseThresh + 2;
+            else
+                pInfo->SquelchOpenNoiseThresh = pInfo->SquelchCloseNoiseThresh - 2;
+
+//
+//        pInfo->SquelchOpenRSSIThresh    = (pInfo->SquelchOpenRSSIThresh    > 255) ? 255 : pInfo->SquelchOpenRSSIThresh;
+//        pInfo->SquelchCloseRSSIThresh   = ( pInfo->SquelchCloseRSSIThresh   > 255) ? 255 :  pInfo->SquelchCloseRSSIThresh;
+//
+//        pInfo->SquelchOpenGlitchThresh  = (pInfo->SquelchOpenGlitchThresh  > 255) ? 255 : pInfo->SquelchOpenGlitchThresh;
+//        pInfo->SquelchCloseGlitchThresh = (pInfo->SquelchCloseGlitchThresh > 255) ? 255 : pInfo->SquelchCloseGlitchThresh;
+
+#else
+        pInfo->SquelchOpenNoiseThresh = (pInfo->SquelchOpenNoiseThresh > 127) ? 127 : pInfo->SquelchOpenNoiseThresh;
+        pInfo->SquelchCloseNoiseThresh = (pInfo->SquelchCloseNoiseThresh > 127) ? 127 : pInfo->SquelchCloseNoiseThresh;
 #endif
-
-        pInfo->SquelchOpenNoiseThresh = (noise_open > 127) ? 127 : noise_open;
-        pInfo->SquelchCloseNoiseThresh = (noise_close > 127) ? 127 : noise_close;
-    }
 
     // *******************************
     // output power
