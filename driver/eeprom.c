@@ -98,7 +98,7 @@
 
 void EEPROM_ReadBuffer(uint32_t Address, void *pBuffer, uint8_t Size) {
 
-//    __disable_irq();
+    __disable_irq();
     I2C_Start();
 
     uint8_t IIC_ADD =    0xA0 | Address >> 15 &14;
@@ -114,7 +114,7 @@ void EEPROM_ReadBuffer(uint32_t Address, void *pBuffer, uint8_t Size) {
     I2C_ReadBuffer(pBuffer, Size);
 
     I2C_Stop();
-//    __enable_irq();
+    __enable_irq();
 
 }
 
