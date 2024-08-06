@@ -482,7 +482,7 @@ void RADIO_ConfigureSquelchAndOutputPower(VFO_Info_t *pInfo) {
         pInfo->SquelchOpenNoiseThresh = (pInfo->SquelchOpenNoiseThresh > 127) ? 127 : pInfo->SquelchOpenNoiseThresh;
         pInfo->SquelchCloseNoiseThresh = (pInfo->SquelchCloseNoiseThresh > 127) ? 127 : pInfo->SquelchCloseNoiseThresh;
 #endif
-
+    }
     // *******************************
     // output power
 
