@@ -136,7 +136,7 @@ void EEPROM_WriteBuffer(uint32_t Address, const void *pBuffer, uint8_t WRITE_SIZ
         I2C_WriteBuffer(pBuffer, WRITE_SIZE);
         I2C_Stop();
     }
-    SYSTEM_DelayMs(8);
+    SYSTEM_DelayMs(10);
 
 }
 
