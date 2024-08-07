@@ -47,6 +47,7 @@ jobs: #定义工作流程
           echo "Uploading LOSEHU.zip to ftp"
           lftp -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} ${{ secrets.FTP_SERVER }} <<EOF
           cd losehu
+          set ssl:verify-certificate no
           put output/losehu.zip
           bye
           EOF
