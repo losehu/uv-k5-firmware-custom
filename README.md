@@ -1,6 +1,6 @@
-**Read this in other languages: [English](README_en.md), [中文](README.md).**
+**Read this in other languages: [English](./README_en.md), [中文](./README.md).**
 
-**语言版本: [English](README_en.md), [中文](README.md).**
+**语言版本: [English](./README_en.md), [中文](./README.md).**
 
 
 # [K5Web]( https://k5.vicicode.com/)
