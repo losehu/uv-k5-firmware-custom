@@ -152,7 +152,7 @@ static uint16_t step = 10;
 
 static DateTime dt;
 static int16_t bfo = 0;
-uint16_t light_time;
+uint32_t light_time;
 bool INPUT_STATE = false;
 
 static void light_open() {
