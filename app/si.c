@@ -188,7 +188,7 @@ static void tune(uint32_t f) {
     SI47XX_ClearRDS();
 
     SI47XX_SetFreq(f);
-
+    SI47XX_SetAutomaticGainControl(att>0,att);
     currentBandIndex = getCurrentBandIndex();
 }
 
@@ -200,7 +200,7 @@ void SI_init() {
 
     SI47XX_PowerUp();
 
-    SI47XX_SetAutomaticGainControl(1, att);
+    SI47XX_SetAutomaticGainControl(att>0, att);
 }
 
 
