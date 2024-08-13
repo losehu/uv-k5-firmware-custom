@@ -430,8 +430,8 @@ void RADIO_ConfigureSquelchAndOutputPower(VFO_Info_t *pInfo) {
 
 #if ENABLE_SQUELCH_MORE_SENSITIVE
 
-        uint8_t num=3;
-        uint8_t num_noise=3;
+        uint8_t num=4;
+        uint8_t num_noise=4;
         // make squelch more sensitive
         // note that 'noise' and 'glitch' values are inverted compared to 'rssi' values
         pInfo->SquelchOpenRSSIThresh = (pInfo->SquelchOpenRSSIThresh * 1) / num;
