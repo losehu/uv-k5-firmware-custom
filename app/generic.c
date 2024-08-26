@@ -72,7 +72,7 @@ void GENERIC_Key_F(bool bKeyPressed, bool bKeyHeld) {
             gWasFKeyPressed = !gWasFKeyPressed; // toggle F function
 #ifdef ENABLE_TURN
 
-            turn_flag = 1;
+            turn_flag = gWasFKeyPressed;
 #endif
             if (gWasFKeyPressed)
                 gKeyInputCountdown = key_input_timeout_500ms;
