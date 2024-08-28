@@ -1754,6 +1754,7 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld) {
                 gFlagAcceptSetting = false;
                 gIsInSubMenu = false;
                 gAskForConfirmation = 0;
+                edit_index = -1;
             } else {
                 gFlagAcceptSetting = false;
                 gAskForConfirmation = 0;
@@ -1808,6 +1809,7 @@ UI_MENU_GetCurrentMenuId() == MENU_MDC_ID
                     gFlagAcceptSetting = true;
                     gIsInSubMenu = false;
                     gAskForConfirmation = 0;
+                    edit_index = -1;
             }
         } else {
             gFlagAcceptSetting = true;
