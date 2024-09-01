@@ -1512,6 +1512,12 @@ if (gDTMF_IsTx && gDTMF_TxStopCountdown_500ms > 0 && --gDTMF_TxStopCountdown_500
     gUpdateDisplay = true;
 }
 #endif
+
+#ifdef ENABLE_TURN
+    if(turn_flag && !gWasFKeyPressed){
+        turn_flag = 0;
+    }
+#endif
 }
 
 #if defined(ENABLE_ALARM) || defined(ENABLE_TX1750)
