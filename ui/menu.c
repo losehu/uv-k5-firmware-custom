@@ -964,7 +964,9 @@ void UI_DisplayMenu(void) {
                 char tmp_name[17] = {0};
                 SETTINGS_FetchChannelName(tmp_name, gSubMenuSelection);
 
-                if (!gIsInSubMenu || edit_index < 0) {    // show the channel name
+                if (!gIsInSubMenu)
+                    edit_index = -1;
+                if (edit_index < 0) {    // show the channel name
                     SETTINGS_FetchChannelName(String, gSubMenuSelection);
                     char *pPrintStr = String[0] ? String : "--";
 #if ENABLE_CHINESE_FULL == 4 && !defined(ENABLE_ENGLISH)

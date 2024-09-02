@@ -1335,7 +1335,7 @@ static void MENU_Key_0_to_9(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
                                             32;
                                 else edit[edit_index] = num_excel[INPUT_SELECT - 2][Key - 1];
                                 if (++edit_index >= end_index) {    // exit edit
-                                    gFlagAcceptSetting = false;
+                                    //gFlagAcceptSetting = false;
                                     gAskForConfirmation = 1;
                                 }
                                 INPUT_STAGE = 0;
@@ -1345,14 +1345,14 @@ static void MENU_Key_0_to_9(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
                         if (edit_chn[edit_index])edit[edit_index + 1] = '_';
                         edit[edit_index] = '0' + Key;
                         if (++edit_index >= end_index) {    // exit edit
-                            gFlagAcceptSetting = false;
+                            //gFlagAcceptSetting = false;
                             gAskForConfirmation = 1;
                         }
                     }
 #else
                     edit[edit_index] = '0' + Key ;
                     if (++edit_index >= end_index) {    // exit edit
-                        gFlagAcceptSetting = false;
+                        //gFlagAcceptSetting = false;
                         gAskForConfirmation = 1;
                     }
 #endif
@@ -1700,13 +1700,10 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld) {
 
         // exit
         if (memcmp(edit_original, edit, sizeof(edit_original)) == 0) {    // no change - drop it
-            gFlagAcceptSetting = false;
             gIsInSubMenu = false;
-            gAskForConfirmation = 0;
-        } else {
-            gFlagAcceptSetting = false;
-            gAskForConfirmation = 0;
         }
+        //gFlagAcceptSetting = false;
+        gAskForConfirmation = 0;
 
     }
 #endif
@@ -1751,14 +1748,10 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld) {
             }
             // exit
             if (memcmp(edit_original, edit, sizeof(edit_original)) == 0) {    // no change - drop it
-                gFlagAcceptSetting = false;
                 gIsInSubMenu = false;
-                gAskForConfirmation = 0;
-                edit_index = -1;
-            } else {
-                gFlagAcceptSetting = false;
-                gAskForConfirmation = 0;
             }
+            //gFlagAcceptSetting = false;
+            gAskForConfirmation = 0;
         }
     }
 #ifdef ENABLE_PINYIN //退出输入模式
@@ -1809,7 +1802,6 @@ UI_MENU_GetCurrentMenuId() == MENU_MDC_ID
                     gFlagAcceptSetting = true;
                     gIsInSubMenu = false;
                     gAskForConfirmation = 0;
-                    edit_index = -1;
             }
         } else {
             gFlagAcceptSetting = true;
@@ -1840,7 +1832,7 @@ static void MENU_Key_STAR(const bool bKeyPressed, const bool bKeyHeld) {
 #ifndef ENABLE_PINYIN
             edit[edit_index] = '-';
             if (++edit_index >= MAX_EDIT_INDEX) {    // exit edit
-                gFlagAcceptSetting = false;
+                //gFlagAcceptSetting = false;
                 gAskForConfirmation = 1;
             }
 
@@ -2112,7 +2104,7 @@ void MENU_ProcessKeys(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
 
 
                         if (++edit_index >= MAX_EDIT_INDEX) {    // exit edit
-                            gFlagAcceptSetting = false;
+                            //gFlagAcceptSetting = false;
                             gAskForConfirmation = 1;
                         }
 
