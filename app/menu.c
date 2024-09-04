@@ -103,8 +103,8 @@ void PINYIN_SOLVE(uint32_t tmp) {
     uint8_t tmp_PINYIN_SEARCH_NUM = PINYIN_SEARCH_NUM;
     uint8_t tmp_PINYIN_SEARCH_FOUND = PINYIN_SEARCH_FOUND;
 
-    PINYIN_SEARCH_INDEX = sear_pinyin_code(PINYIN_CODE, &PINYIN_SEARCH_NUM,
-                                           &PINYIN_SEARCH_FOUND);
+    PINYIN_SEARCH_INDEX = sear_pinyin_code(PINYIN_CODE, &PINYIN_SEARCH_NUM, &PINYIN_SEARCH_FOUND);
+
     if (PINYIN_SEARCH_INDEX == 255 && PINYIN_SEARCH_FOUND == 0) {
         PINYIN_CODE = tmp;
         PINYIN_CODE_INDEX *= 10;
@@ -114,15 +114,17 @@ void PINYIN_SOLVE(uint32_t tmp) {
         if (PINYIN_CODE_INDEX == 100000)INPUT_STAGE = 0;
     }
 
-        if (INPUT_STAGE) {//需要选拼音
+    if (INPUT_STAGE) {
+        //需要选拼音
         if (PINYIN_SEARCH_FOUND) {
-            if (PINYIN_SEARCH_INDEX != 255) {//确实存在这个拼音组合
+            if (PINYIN_SEARCH_INDEX != 255) {
+                //确实存在这个拼音组合
                 PINYIN_NOW_INDEX = PINYIN_SEARCH_INDEX;
                 PINYIN_NOW_NUM = PINYIN_SEARCH_NUM;
                 PINYIN_SEARCH_MODE = 1;
             }
-        } else //没有这个拼音组合但是有备选
-        {
+        } else {
+            //没有这个拼音组合但是有备选
 //            PINYIN_SEARCH_MODE = 2;
 //            PINYIN_NOW_INDEX = PINYIN_SEARCH_INDEX;
 //            PINYIN_NOW_NUM = PINYIN_SEARCH_NUM;
@@ -139,7 +141,6 @@ void PINYIN_SOLVE(uint32_t tmp) {
 //            }
         }
     }
-
 }
 #endif
 void MENU_CssScanFound(void) {
@@ -1301,7 +1302,7 @@ static void MENU_Key_0_to_9(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
                             uint32_t tmp = PINYIN_CODE;
                             PINYIN_CODE += Key * PINYIN_CODE_INDEX;
                             PINYIN_CODE_INDEX /= 10;
-                       PINYIN_SOLVE(tmp);
+                            PINYIN_SOLVE(tmp);
 
 //                            if(end_index>100)end_index=0;
                         } else if (INPUT_STAGE == 2) {
@@ -1309,9 +1310,9 @@ static void MENU_Key_0_to_9(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
                                     CHN_NOW_NUM - CHN_NOW_PAGE * 6 > 6 ? 6 : CHN_NOW_NUM - CHN_NOW_PAGE * 6;
                             if (Key > 0 && Key <= SHOW_NUM) {
                                 if (edit_chn[edit_index + 1] == 1)edit[edit_index + 2] = '_';
-                                EEPROM_ReadBuffer(CHN_NOW_ADD + CHN_NOW_PAGE * 6 * 2 + 2 * (Key - 1),&edit [ edit_index], 2);
+                                EEPROM_ReadBuffer(CHN_NOW_ADD + CHN_NOW_PAGE * 6 * 2 + 2 * (Key - 1), &edit[edit_index], 2);
                                 edit_index += 2;
-                                PINYIN_NUM_SELECT=0;
+                                PINYIN_NUM_SELECT = 0;
                                 PINYIN_CODE = 0;
                                 PINYIN_SEARCH_MODE = 0;
                                 INPUT_STAGE = 0;
@@ -1330,10 +1331,9 @@ static void MENU_Key_0_to_9(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
                             if (Key >= 1 && Key <= 2 *num_size[INPUT_SELECT - 2]) {//选择字母
                                 if (edit_chn[edit_index] == 1) edit[edit_index+1] = '_';
                                 if (Key > num_size[INPUT_SELECT - 2])
-                                    edit[edit_index] =
-                                            num_excel[INPUT_SELECT - 2][Key - 1 - num_size[INPUT_SELECT - 2]] -
-                                            32;
-                                else edit[edit_index] = num_excel[INPUT_SELECT - 2][Key - 1];
+                                    edit[edit_index] = num_excel[INPUT_SELECT - 2][Key - 1 - num_size[INPUT_SELECT - 2]] - 32;
+                                else
+                                    edit[edit_index] = num_excel[INPUT_SELECT - 2][Key - 1];
                                 if (++edit_index >= end_index) {    // exit edit
                                     //gFlagAcceptSetting = false;
                                     gAskForConfirmation = 1;
@@ -1512,6 +1512,7 @@ static void MENU_Key_EXIT(bool bKeyPressed, bool bKeyHeld) {
 
                 uint32_t tmp = PINYIN_CODE;
                 PINYIN_SEARCH_MODE=0;
+                PINYIN_NUM_SELECT = 0;
                 PINYIN_SOLVE(tmp);
 
             } else if (INPUT_STAGE == 2) {
@@ -1630,13 +1631,11 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld) {
                         else PINYIN_NUM_SELECT = 0;
                         UPDATE_CHN();
                         return;
-
                     }
                 }
-            }else if(INPUT_MODE==3)
-                {
-                INPUT_MODE=INPUT_MODE_LAST;
-                }
+            } else if (INPUT_MODE == 3) {
+                INPUT_MODE = INPUT_MODE_LAST;
+            }
         }
     }
 
@@ -1681,11 +1680,10 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld) {
         }
 #ifdef ENABLE_MDC1200
 #ifdef ENABLE_MDC1200_EDIT
-        if (UI_MENU_GetCurrentMenuId() == MENU_MDC_ID)
-    {
-                edit_index = 0;
+        if (UI_MENU_GetCurrentMenuId() == MENU_MDC_ID) {
+            edit_index = 0;
             memmove(edit_original, edit, sizeof(edit_original));
-    }
+        }
 #endif
 #endif
         return;
@@ -1735,16 +1733,11 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld) {
 #endif
             if (edit_index < MAX_EDIT_INDEX) {
 #ifdef ENABLE_PINYIN
-
-
-
                 if (INPUT_MODE == 0 && edit_index + 1 >= MAX_EDIT_INDEX)
                     INPUT_MODE = 1;
 #endif
 
                 return;
-
-
             }
             // exit
             if (memcmp(edit_original, edit, sizeof(edit_original)) == 0) {    // no change - drop it
