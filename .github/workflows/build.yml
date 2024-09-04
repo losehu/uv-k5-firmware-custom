@@ -18,7 +18,7 @@ jobs: #定义工作流程
             python-crcmod \
 
       - name: Checkout #拉取代码
-        uses: actions/checkout@v3 #使用 GitHub Actions 提供的 checkout 动作
+        uses: actions/checkout@v4 #使用 GitHub Actions 提供的 checkout 动作
 
       - name: safe.directory #设置 git 的 safe.directory 配置
         run: git config --global --add safe.directory /__w/uv-k5-firmware-custom/uv-k5-firmware-custom
@@ -30,7 +30,7 @@ jobs: #定义工作流程
         run: arm-none-eabi-size firmware #使用 arm-none-eabi-size 命令计算固件大小
 
       - name: Upload Artifact #上传固件文件
-        uses: actions/upload-artifact@v3 #使用 GitHub Actions 提供的 upload-artifact 动作
+        uses: actions/upload-artifact@v4 #使用 GitHub Actions 提供的 upload-artifact 动作
         with:
           name: firmware #设置 artifact 名称为 firmware
           path: LOSEHU*.bin #上传文件路径为 LOSEHU*.bin
