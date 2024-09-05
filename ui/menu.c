@@ -964,7 +964,9 @@ void UI_DisplayMenu(void) {
                 char tmp_name[17] = {0};
                 SETTINGS_FetchChannelName(tmp_name, gSubMenuSelection);
 
-                if (!gIsInSubMenu || edit_index < 0) {    // show the channel name
+                if (!gIsInSubMenu)
+                    edit_index = -1;
+                if (edit_index < 0) {    // show the channel name
                     SETTINGS_FetchChannelName(String, gSubMenuSelection);
                     char *pPrintStr = String[0] ? String : "--";
 #if ENABLE_CHINESE_FULL == 4 && !defined(ENABLE_ENGLISH)
@@ -977,7 +979,7 @@ void UI_DisplayMenu(void) {
 //
 #if ENABLE_CHINESE_FULL == 4 && !defined(ENABLE_PINYIN) && !defined(ENABLE_ENGLISH)
 
-                    else if (CHINESE_JUDGE(tmp_name, strlen(tmp_name))) {
+                else if (CHINESE_JUDGE(tmp_name, strlen(tmp_name))) {
                     edit_index = -1;
                 }else if (!CHINESE_JUDGE(tmp_name, strlen(tmp_name))) {    // show the channel name being edited
 #else
@@ -1014,15 +1016,13 @@ void UI_DisplayMenu(void) {
                                 sum_pxl += 7;
                         }
                         uint8_t add_point = edit_chn[edit_index] == 1 ? 6 : 3;
-                        gFrameBuffer[4][menu_item_x1 - 12 + sum_pxl +
+
+                        uint8_t pointY = menu_item_x1 - 12 + sum_pxl +
                                         (((menu_item_x2 - menu_item_x1 + 12) -
-                                          (7 * (MAX_EDIT_INDEX - 2 * cnt_chn) + 13 * cnt_chn)) + 1) / 2 + add_point] |=
-                                3 << 6;
-                        gFrameBuffer[4][menu_item_x1 - 12 + sum_pxl +
-                                        (((menu_item_x2 - menu_item_x1 + 12) -
-                                          (7 * (MAX_EDIT_INDEX - 2 * cnt_chn) + 13 * cnt_chn)) + 1) / 2 + add_point +
-                                        1] |=
-                                3 << 6;
+                                          (7 * (MAX_EDIT_INDEX - 2 * cnt_chn) + 13 * cnt_chn)) + 1) / 2 + add_point;
+
+                        gFrameBuffer[4][pointY] |= 3 << 6;
+                        gFrameBuffer[4][pointY + 1] |= 3 << 6;
 #else
 
                         gFrameBuffer[4][menu_item_x1 - 12 + 7 * edit_index +
@@ -1048,9 +1048,9 @@ void UI_DisplayMenu(void) {
 
                             if (INPUT_STAGE >= 1)//显示拼音
                             {
-  uint8_t num=(PINYIN_NUM_SELECT ) / 3;
-                    if ((PINYIN_NOW_NUM + 2) / 3 >1+num )memcpy(&gFrameBuffer[1][123], BITMAP_ARRAY_DOWN, 5);
-                    if (num)memcpy(&gFrameBuffer[0][123], BITMAP_ARRAY_UP, 5);
+                                uint8_t num = (PINYIN_NUM_SELECT) / 3;
+                                if ((PINYIN_NOW_NUM + 2) / 3 > 1 + num)memcpy(&gFrameBuffer[1][123], BITMAP_ARRAY_DOWN, 5);
+                                if (num)memcpy(&gFrameBuffer[0][123], BITMAP_ARRAY_UP, 5);
 
                                 if (PINYIN_SEARCH_MODE == 1)//准确的组合
                                 {
@@ -1058,10 +1058,8 @@ void UI_DisplayMenu(void) {
 
 
 //OK
-                                    uint8_t HAVE_PINYIN =
-                                            PINYIN_NOW_NUM - PINYIN_NUM_SELECT / 3 * 3 > 3 ? 3 : PINYIN_NOW_NUM -
-                                                                                                 PINYIN_NUM_SELECT / 3 *
-                                                                                                 3;//目前有多少个拼音
+                                    //目前有多少个拼音
+                                    uint8_t HAVE_PINYIN = PINYIN_NOW_NUM - num * 3 > 3 ? 3 : PINYIN_NOW_NUM - num * 3;
 
 //OK
 //                                    show_uint32(PINYIN_NOW_NUM,0);
