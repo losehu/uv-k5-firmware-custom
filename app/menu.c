@@ -1515,6 +1515,10 @@ static void MENU_Key_EXIT(bool bKeyPressed, bool bKeyHeld) {
                 PINYIN_NUM_SELECT = 0;
                 PINYIN_SOLVE(tmp);
 
+                if (PINYIN_CODE == 0) {
+                    INPUT_STAGE = 0;
+                }
+
             } else if (INPUT_STAGE == 2) {
 
                 INPUT_STAGE = 1;
@@ -1619,10 +1623,7 @@ static void MENU_Key_MENU(const bool bKeyPressed, const bool bKeyHeld) {
                 if (PINYIN_CODE && PINYIN_SEARCH_MODE == 0)return;
                 if (PINYIN_SEARCH_MODE == 1) {
                     if (INPUT_STAGE == 1) {
-                        INPUT_STAGE++;
-
                         PINYIN_NUM_SELECT = 0;
-
                         INPUT_STAGE = 2;
                         UPDATE_CHN();
                         return;
