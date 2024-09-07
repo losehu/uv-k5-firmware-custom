@@ -121,7 +121,7 @@ void RADIO_InitInfo(VFO_Info_t *pInfo, const uint8_t ChannelSave, const uint32_t
     pInfo->STEP_SETTING = STEP_12_5kHz;
     pInfo->StepFrequency = gStepFrequencyTable[pInfo->STEP_SETTING];
     pInfo->CHANNEL_SAVE = ChannelSave;
-    pInfo->FrequencyReverse = false;
+    pInfo->FrequencyReverse = 0;
     pInfo->OUTPUT_POWER = OUTPUT_POWER_LOW;
     pInfo->freq_config_RX.Frequency = Frequency;
     pInfo->freq_config_TX.Frequency = Frequency;
@@ -292,13 +292,13 @@ void RADIO_ConfigureChannel(const unsigned int VFO, const unsigned int configure
         pVfo->freq_config_TX.Code = tmp;
 
         if (data[4] == 0xFF) {
-            pVfo->FrequencyReverse = false;
+            pVfo->FrequencyReverse = 0;
             pVfo->CHANNEL_BANDWIDTH = BK4819_FILTER_BW_WIDE;
             pVfo->OUTPUT_POWER = OUTPUT_POWER_LOW;
             pVfo->BUSY_CHANNEL_LOCK = false;
         } else {
             const uint8_t d4 = data[4];
-            pVfo->FrequencyReverse = !!((d4 >> 0) & 1u);
+            pVfo->FrequencyReverse = d4 >> 5 & 1u ? d4 >> 6 & 3u : d4 & 1u;
             pVfo->CHANNEL_BANDWIDTH = !!((d4 >> 1) & 1u);
             pVfo->OUTPUT_POWER = ((d4 >> 2) & 3u);
             pVfo->BUSY_CHANNEL_LOCK = !!((d4 >> 4) & 1u);
@@ -363,11 +363,14 @@ void RADIO_ConfigureChannel(const unsigned int VFO, const unsigned int configure
         SETTINGS_FetchChannelName(pVfo->Name, channel);
     }
 
-    if (!pVfo->FrequencyReverse) {
+    if (pVfo->FrequencyReverse == 0) {
         pVfo->pRX = &pVfo->freq_config_RX;
         pVfo->pTX = &pVfo->freq_config_TX;
-    } else {
+    } else if (pVfo->FrequencyReverse == 1) {
         pVfo->pRX = &pVfo->freq_config_TX;
+        pVfo->pTX = &pVfo->freq_config_RX;
+    } else {
+        pVfo->pRX = &pVfo->freq_config_RX;
         pVfo->pTX = &pVfo->freq_config_RX;
     }
 

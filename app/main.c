@@ -247,7 +247,7 @@ gBeepToPlay = BEEP_500HZ_60MS_DOUBLE_BEEP_OPTIONAL;
             break;
 
         case KEY_8:
-            gTxVfo->FrequencyReverse = gTxVfo->FrequencyReverse == false;
+            gTxVfo->FrequencyReverse = ++gTxVfo->FrequencyReverse % 3;
             gRequestSaveChannel = 1;
             break;
 

@@ -617,11 +617,12 @@ void UI_DisplayMenu(void) {
 #endif
 
 #ifdef ENABLE_PINYIN //拼音取消显示
-    if (!(UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME && gIsInSubMenu && gIsInSubMenu && edit_index >= 0))
+    const bool isInPinyin = UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME && gIsInSubMenu && edit_index >= 0;
+    if (!isInPinyin)
 #endif
     UI_PrintStringSmall(String, 2, 0, 6);
 #ifdef ENABLE_PINYIN//拼音取消显示
-    if (!(UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME && gIsInSubMenu && edit_index >= 0))
+    if (!isInPinyin)
 #endif
 
 
@@ -921,34 +922,33 @@ void UI_DisplayMenu(void) {
             break;
         }
 #ifdef ENABLE_MDC1200
-            case MENU_MDC_ID:
-            {
+        case MENU_MDC_ID: {
 #ifdef ENABLE_MDC1200_EDIT
-                    if(gIsInSubMenu){    // show the channel name being edited
-                    UI_PrintStringSmall(edit, menu_item_x1, menu_item_x2, 3);
-                    if (edit_index < 4)
-                        UI_PrintStringSmall("^", menu_item_x1+(((menu_item_x2 - menu_item_x1) - (28)) + 1) / 2 + (7 * edit_index), 0, 4);  // show the cursor
-                }else
-                    {
+            if (gIsInSubMenu) {
+                // show the channel name being edited
+                UI_PrintStringSmall(edit, menu_item_x1, menu_item_x2, 3);
+                if (edit_index < 4)
+                    UI_PrintStringSmall("^", menu_item_x1 + (((menu_item_x2 - menu_item_x1) - (28)) + 1) / 2 + (7 * edit_index), 0, 4); // show the cursor
+            } else {
 #endif
-                    sprintf(String, "%04X", gEeprom.MDC1200_ID); // %04X确保输出是4个字符长度的十六进制数
-                    UI_PrintStringSmall(String, menu_item_x1, menu_item_x2, 3);//4
+                sprintf(String, "%04X", gEeprom.MDC1200_ID); // %04X确保输出是4个字符长度的十六进制数
+                UI_PrintStringSmall(String, menu_item_x1, menu_item_x2, 3); //4
 
 #ifdef ENABLE_MDC1200_EDIT
 
-                    edit_index = -1;
-                    edit[0]=String[0];
-                    edit[1]=String[1];
-                    edit[2]=String[2];
-                    edit[3]=String[3];
-                      edit[4]='\0';
+                edit_index = -1;
+                edit[0] = String[0];
+                edit[1] = String[1];
+                edit[2] = String[2];
+                edit[3] = String[3];
+                edit[4] = '\0';
 #endif
 #ifdef ENABLE_MDC1200_EDIT
-                    }
-#endif
-                already_printed = true;
-                break;
             }
+#endif
+            already_printed = true;
+            break;
+        }
 #endif
         case MENU_MEM_NAME: { //输入法显示
 //ok
@@ -1069,7 +1069,7 @@ void UI_DisplayMenu(void) {
 //                                    show_uint32(HAVE_PINYIN,1);
                                     for (int j = 0; j < HAVE_PINYIN; ++j) {
                                         EEPROM_ReadBuffer(
-                                                PINYIN_NOW_INDEX * 128 + 0X20000 + 16 + PINYIN_NUM_SELECT / 3 * 3 * 16 +
+                                                PINYIN_NOW_INDEX * 128 + 0X20000 + 16 + num * 3 * 16 +
                                                 j * 16, tmp, 6);
                                         memcpy(&String[6 * j], tmp, 6);//0 1 2 3 4 5
                                     }
@@ -1135,7 +1135,7 @@ void UI_DisplayMenu(void) {
                                     tmp[0] ='5', tmp[4] = '6', tmp[8] = '7', tmp[12] = '8';
                                     tmp[2] -= 32, tmp[6] -= 32, tmp[10] -= 32, tmp[14] -= 32;
                                 }
-                                                                    UI_PrintStringSmall(tmp, 0, 127, 1);
+                                UI_PrintStringSmall(tmp, 0, 127, 1);
 
                             }
                         }
@@ -1518,8 +1518,8 @@ void UI_DisplayMenu(void) {
          #endif
          UI_MENU_GetCurrentMenuId() == MENU_DEL_CH) && gAskForConfirmation) {    // display confirmation
         char *pPrintStr = (gAskForConfirmation == 1) ? "SURE?" : "WAIT!";
-        if ((UI_MENU_GetCurrentMenuId() == MENU_MEM_CH || UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME ||
-             UI_MENU_GetCurrentMenuId() == MENU_DEL_CH) && gAskForConfirmation)
+        if (UI_MENU_GetCurrentMenuId() == MENU_MEM_CH || UI_MENU_GetCurrentMenuId() == MENU_MEM_NAME ||
+             UI_MENU_GetCurrentMenuId() == MENU_DEL_CH)
             UI_PrintStringSmall(pPrintStr, menu_item_x1 - 12, menu_item_x2, 5);
         else UI_PrintStringSmall(pPrintStr, menu_item_x1, menu_item_x2, 5);
 

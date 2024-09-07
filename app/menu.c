@@ -989,9 +989,9 @@ void MENU_ShowCurrentSetting(void) {
             break;
 #ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
 
-            case MENU_W_N:
-                gSubMenuSelection = gTxVfo->CHANNEL_BANDWIDTH;
-                break;
+        case MENU_W_N:
+            gSubMenuSelection = gTxVfo->CHANNEL_BANDWIDTH;
+            break;
 #endif
         case MENU_SCR:
             gSubMenuSelection = gTxVfo->SCRAMBLING_TYPE;
@@ -1126,13 +1126,13 @@ void MENU_ShowCurrentSetting(void) {
             gSubMenuSelection = gEeprom.DTMF_SIDE_TONE;
             break;
 #ifdef ENABLE_DTMF_CALLING
-            case MENU_D_RSP:
-                gSubMenuSelection = gEeprom.DTMF_DECODE_RESPONSE;
-                break;
+        case MENU_D_RSP:
+            gSubMenuSelection = gEeprom.DTMF_DECODE_RESPONSE;
+            break;
 
-            case MENU_D_HOLD:
-                gSubMenuSelection = gEeprom.DTMF_auto_reset_time;
-                break;
+        case MENU_D_HOLD:
+            gSubMenuSelection = gEeprom.DTMF_auto_reset_time;
+            break;
 #endif
         case MENU_D_PRE:
             gSubMenuSelection = gEeprom.DTMF_PRELOAD_TIME / 10;
@@ -1148,21 +1148,21 @@ void MENU_ShowCurrentSetting(void) {
 #ifdef ENABLE_DTMF_CALLING
 #ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
 
-            case MENU_D_DCD:
-                gSubMenuSelection = gTxVfo->DTMF_DECODING_ENABLE;
-                break;
+        case MENU_D_DCD:
+            gSubMenuSelection = gTxVfo->DTMF_DECODING_ENABLE;
+            break;
 #endif
-            case MENU_D_LIST:
-                gSubMenuSelection = gDTMF_chosen_contact + 1;
-                break;
+        case MENU_D_LIST:
+            gSubMenuSelection = gDTMF_chosen_contact + 1;
+            break;
 #endif
         case MENU_D_LIVE_DEC:
             gSubMenuSelection = gSetting_live_DTMF_decoder;
             break;
 #if ENABLE_CHINESE_FULL == 4
-            case MENU_PONMSG:
-                gSubMenuSelection = gEeprom.POWER_ON_DISPLAY_MODE;
-                break;
+        case MENU_PONMSG:
+            gSubMenuSelection = gEeprom.POWER_ON_DISPLAY_MODE;
+            break;
 #endif
         case MENU_ROGER:
             gSubMenuSelection = gEeprom.ROGER;
@@ -1173,9 +1173,9 @@ void MENU_ShowCurrentSetting(void) {
 //			break;
 
 #ifdef ENABLE_AM_FIX
-            case MENU_AM_FIX:
-                gSubMenuSelection = gSetting_AM_fix;
-                break;
+        case MENU_AM_FIX:
+            gSubMenuSelection = gSetting_AM_fix;
+            break;
 #endif
 
 #ifdef ENABLE_AM_FIX_TEST1
@@ -1237,29 +1237,28 @@ void MENU_ShowCurrentSetting(void) {
             break;
 
 #ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
-            case MENU_F1SHRT:
-            case MENU_F1LONG:
-            case MENU_F2SHRT:
-            case MENU_F2LONG:
-            case MENU_MLONG:
-            {
-                uint8_t * fun[]= {
-                    &gEeprom.KEY_1_SHORT_PRESS_ACTION,
-                    &gEeprom.KEY_1_LONG_PRESS_ACTION,
-                    &gEeprom.KEY_2_SHORT_PRESS_ACTION,
-                    &gEeprom.KEY_2_LONG_PRESS_ACTION,
-                    &gEeprom.KEY_M_LONG_PRESS_ACTION};
-                uint8_t id = *fun[UI_MENU_GetCurrentMenuId()-MENU_F1SHRT];
+        case MENU_F1SHRT:
+        case MENU_F1LONG:
+        case MENU_F2SHRT:
+        case MENU_F2LONG:
+        case MENU_MLONG: {
+            uint8_t *fun[] = {
+                &gEeprom.KEY_1_SHORT_PRESS_ACTION,
+                &gEeprom.KEY_1_LONG_PRESS_ACTION,
+                &gEeprom.KEY_2_SHORT_PRESS_ACTION,
+                &gEeprom.KEY_2_LONG_PRESS_ACTION,
+                &gEeprom.KEY_M_LONG_PRESS_ACTION
+            };
+            uint8_t id = *fun[UI_MENU_GetCurrentMenuId() - MENU_F1SHRT];
 
-                for(int i = 0; i <gSubMenu_SIDEFUNCTIONS_size; i++) {
-                    if(gSubMenu_SIDEFUNCTIONS[i].id==id) {
-                        gSubMenuSelection = i;
-                        break;
-                    }
-
+            for (int i = 0; i < gSubMenu_SIDEFUNCTIONS_size; i++) {
+                if (gSubMenu_SIDEFUNCTIONS[i].id == id) {
+                    gSubMenuSelection = i;
+                    break;
                 }
-                break;
             }
+            break;
+        }
 #endif
 
         default:
@@ -1613,8 +1612,7 @@ void UPDATE_CHN()
 {
     uint8_t tmp[5];
 
-    EEPROM_ReadBuffer(
-            PINYIN_NOW_INDEX * 128 + 0X20000 + 16 + PINYIN_NUM_SELECT * 16 + 6, tmp, 5);
+    EEPROM_ReadBuffer(PINYIN_NOW_INDEX * 128 + 0X20000 + 16 + PINYIN_NUM_SELECT * 16 + 6, tmp, 5);
     CHN_NOW_ADD = tmp[1] | tmp[2] << 8 | tmp[3] << 16 | tmp[4] << 24;
     CHN_NOW_NUM = tmp[0];
     CHN_NOW_PAGE = 0;
@@ -1957,7 +1955,7 @@ static void MENU_Key_UP_DOWN(bool bKeyPressed, bool bKeyHeld, int8_t Direction) 
         }
 #ifdef ENABLE_MDC1200
 #ifdef ENABLE_MDC1200_EDIT
-        else if (UI_MENU_GetCurrentMenuId() == MENU_MDC_ID) {
+        if (UI_MENU_GetCurrentMenuId() == MENU_MDC_ID) {
             if (bKeyPressed && edit_index < 4) {
                 char c = edit[edit_index] + Direction;
                 if (c < '0')c = 'F';
