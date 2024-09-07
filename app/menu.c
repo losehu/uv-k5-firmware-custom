@@ -1296,59 +1296,77 @@ static void MENU_Key_0_to_9(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
             if (Key <= KEY_9) {
                 {
 #ifdef ENABLE_PINYIN
-                    if (INPUT_MODE == 0) {
-//Æ´ÒôÊäÈë
-                        if (Key >= 2 && PINYIN_CODE_INDEX && INPUT_STAGE <= 1) {
-                            uint32_t tmp = PINYIN_CODE;
-                            PINYIN_CODE += Key * PINYIN_CODE_INDEX;
-                            PINYIN_CODE_INDEX /= 10;
-                            PINYIN_SOLVE(tmp);
 
-//                            if(end_index>100)end_index=0;
-                        } else if (INPUT_STAGE == 2) {
-                            uint8_t SHOW_NUM =
-                                    CHN_NOW_NUM - CHN_NOW_PAGE * 6 > 6 ? 6 : CHN_NOW_NUM - CHN_NOW_PAGE * 6;
-                            if (Key > 0 && Key <= SHOW_NUM) {
-                                if (edit_chn[edit_index + 1] == 1)edit[edit_index + 2] = '_';
-                                EEPROM_ReadBuffer(CHN_NOW_ADD + CHN_NOW_PAGE * 6 * 2 + 2 * (Key - 1), &edit[edit_index], 2);
-                                edit_index += 2;
-                                PINYIN_NUM_SELECT = 0;
-                                PINYIN_CODE = 0;
-                                PINYIN_SEARCH_MODE = 0;
-                                INPUT_STAGE = 0;
+#ifdef ENABLE_MDC1200
+#ifdef ENABLE_MDC1200_EDIT
+                    if (now_menu == MENU_MEM_NAME) {
+#endif
+#endif
+                        if (INPUT_MODE == 0) {
+                            //Æ´ÒôÊäÈë
+                            if (Key >= 2 && PINYIN_CODE_INDEX && INPUT_STAGE <= 1) {
+                                uint32_t tmp = PINYIN_CODE;
+                                PINYIN_CODE += Key * PINYIN_CODE_INDEX;
+                                PINYIN_CODE_INDEX /= 10;
+                                PINYIN_SOLVE(tmp);
 
-                                CHN_NOW_PAGE = 0;
-                                PINYIN_CODE_INDEX = 100000;
-                            }
-                        }
-                    } else if (INPUT_MODE == 1) {
-                        if (INPUT_STAGE == 0) {
-                            if (Key <= KEY_9 && Key >= KEY_2) { //Ñ¡Ôñ×ÖÄ¸°´¼ü
-                                INPUT_STAGE = 1;
-                                INPUT_SELECT = Key;
-                            }
-                        } else {
-                            if (Key >= 1 && Key <= 2 *num_size[INPUT_SELECT - 2]) {//Ñ¡Ôñ×ÖÄ¸
-                                if (edit_chn[edit_index] == 1) edit[edit_index+1] = '_';
-                                if (Key > num_size[INPUT_SELECT - 2])
-                                    edit[edit_index] = num_excel[INPUT_SELECT - 2][Key - 1 - num_size[INPUT_SELECT - 2]] - 32;
-                                else
-                                    edit[edit_index] = num_excel[INPUT_SELECT - 2][Key - 1];
-                                if (++edit_index >= end_index) {    // exit edit
-                                    //gFlagAcceptSetting = false;
-                                    gAskForConfirmation = 1;
+                                //                            if(end_index>100)end_index=0;
+                            } else if (INPUT_STAGE == 2) {
+                                uint8_t SHOW_NUM =
+                                        CHN_NOW_NUM - CHN_NOW_PAGE * 6 > 6 ? 6 : CHN_NOW_NUM - CHN_NOW_PAGE * 6;
+                                if (Key > 0 && Key <= SHOW_NUM) {
+                                    if (edit_chn[edit_index + 1] == 1)edit[edit_index + 2] = '_';
+                                    EEPROM_ReadBuffer(CHN_NOW_ADD + CHN_NOW_PAGE * 6 * 2 + 2 * (Key - 1), &edit[edit_index], 2);
+                                    edit_index += 2;
+                                    PINYIN_NUM_SELECT = 0;
+                                    PINYIN_CODE = 0;
+                                    PINYIN_SEARCH_MODE = 0;
+                                    INPUT_STAGE = 0;
+
+                                    CHN_NOW_PAGE = 0;
+                                    PINYIN_CODE_INDEX = 100000;
                                 }
-                                INPUT_STAGE = 0;
+                            }
+                        } else if (INPUT_MODE == 1) {
+                            if (INPUT_STAGE == 0) {
+                                if (Key >= KEY_2) { //Ñ¡Ôñ×ÖÄ¸°´¼ü
+                                    INPUT_STAGE = 1;
+                                    INPUT_SELECT = Key;
+                                }
+                            } else {
+                                if (Key >= 1 && Key <= 2 *num_size[INPUT_SELECT - 2]) {//Ñ¡Ôñ×ÖÄ¸
+                                    if (edit_chn[edit_index] == 1) edit[edit_index+1] = '_';
+                                    if (Key > num_size[INPUT_SELECT - 2])
+                                        edit[edit_index] = num_excel[INPUT_SELECT - 2][Key - 1 - num_size[INPUT_SELECT - 2]] - 32;
+                                    else
+                                        edit[edit_index] = num_excel[INPUT_SELECT - 2][Key - 1];
+                                    if (++edit_index >= end_index) {    // exit edit
+                                        //gFlagAcceptSetting = false;
+                                        gAskForConfirmation = 1;
+                                    }
+                                    INPUT_STAGE = 0;
+                                }
+                            }
+                        } else if (INPUT_MODE == 2) {
+                            if (edit_chn[edit_index])edit[edit_index + 1] = '_';
+                            edit[edit_index] = '0' + Key;
+                            if (++edit_index >= end_index) {    // exit edit
+                                //gFlagAcceptSetting = false;
+                                gAskForConfirmation = 1;
                             }
                         }
-                    } else if (INPUT_MODE == 2) {
-                        if (edit_chn[edit_index])edit[edit_index + 1] = '_';
-                        edit[edit_index] = '0' + Key;
+#ifdef ENABLE_MDC1200
+#ifdef ENABLE_MDC1200_EDIT
+                    } else {
+                        edit[edit_index] = '0' + Key ;
                         if (++edit_index >= end_index) {    // exit edit
                             //gFlagAcceptSetting = false;
                             gAskForConfirmation = 1;
                         }
                     }
+#endif
+#endif
+
 #else
                     edit[edit_index] = '0' + Key ;
                     if (++edit_index >= end_index) {    // exit edit
