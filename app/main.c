@@ -506,8 +506,7 @@ static void MAIN_Key_EXIT(bool bKeyPressed, bool bKeyHeld) {
 
         if (gInputBoxIndex > 0 || gDTMF_InputBox_Index > 0 ||
             gDTMF_InputMode) {    // cancel key input mode (channel/frequency entry)
-            gDTMF_InputMode = false;
-            gDTMF_InputBox_Index = 0;
+            DTMF_clear_input_box();
             memset(gDTMF_String, 0, sizeof(gDTMF_String));
             gInputBoxIndex = 0;
             gRequestDisplayScreen = DISPLAY_MAIN;
