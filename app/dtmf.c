@@ -209,6 +209,7 @@ void DTMF_clear_input_box(void) {
     memset(gDTMF_InputBox, 0, sizeof(gDTMF_InputBox));
     gDTMF_InputBox_Index = 0;
     gDTMF_InputMode = false;
+    gPttWasReleased = false;
 }
 
 void DTMF_Append(const char code) {
