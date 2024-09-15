@@ -113,8 +113,12 @@ bool DTMF_GetContact(const int Index, char *pContact)
 
     EEPROM_ReadBuffer(0x1C00 + (Index * 16), pContact, 16);
 
+#if ENABLE_CHINESE_FULL == 4
+    return pContact[0] != 0xff;
+#else
     // check whether the first character is printable or not
     return (pContact[0] >= ' ' && pContact[0] < 127);
+#endif
 }
 bool DTMF_FindContact(const char *pContact, char *pResult)
 {
