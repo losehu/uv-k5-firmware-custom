@@ -1021,8 +1021,8 @@ void UI_DisplayMenu(void) {
                                         (((menu_item_x2 - menu_item_x1 + 12) -
                                           (7 * (MAX_EDIT_INDEX - 2 * cnt_chn) + 13 * cnt_chn)) + 1) / 2 + add_point;
 
-                        gFrameBuffer[4][pointY] |= 3 << 6;
-                        gFrameBuffer[4][pointY + 1] |= 3 << 6;
+                        gFrameBuffer[4][pointY] |= 3 << 5;
+                        gFrameBuffer[4][pointY + 1] |= 3 << 5;
 #else
 
                         gFrameBuffer[4][menu_item_x1 - 12 + 7 * edit_index +
