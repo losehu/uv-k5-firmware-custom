@@ -998,20 +998,21 @@ void UI_DisplayMenu(void) {
 //#endif
 
 #ifdef ENABLE_PINYIN
+                        uint8_t cnt_chn = 0;
                         for (int j = 0; j < MAX_EDIT_INDEX; ++j) {
                             if (edit[j] >= 0xb0 && j != MAX_EDIT_INDEX - 1) {
                                 edit_chn[j] = 1;
                                 j++;
                                 edit_chn[j] = 2;
+                                cnt_chn++;
                             } else edit_chn[j] = 0;
                         }
+
                         uint8_t sum_pxl = 0;
-                        uint8_t cnt_chn = 0;
                         for (int j = 0; j < edit_index; j++) {
                             if (edit_chn[j] == 1) {
                                 sum_pxl += 13;
                                 j++;
-                                cnt_chn++;
                             } else
                                 sum_pxl += 7;
                         }
