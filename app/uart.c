@@ -426,7 +426,7 @@ static void CMD_052F(const uint8_t *pBuffer) {
     gEeprom.CROSS_BAND_RX_TX = CROSS_BAND_OFF;
     gEeprom.RX_VFO = 0;
     gEeprom.DTMF_SIDE_TONE = false;
-    gEeprom.VfoInfo[0].FrequencyReverse = false;
+    gEeprom.VfoInfo[0].FrequencyReverse = 0;
     gEeprom.VfoInfo[0].pRX = &gEeprom.VfoInfo[0].freq_config_RX;
     gEeprom.VfoInfo[0].pTX = &gEeprom.VfoInfo[0].freq_config_TX;
     gEeprom.VfoInfo[0].TX_OFFSET_FREQUENCY_DIRECTION = TX_OFFSET_FREQUENCY_DIRECTION_OFF;

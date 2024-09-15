@@ -817,13 +817,14 @@ void UI_DisplayMain(void) {
 
         // show the TX/RX reverse symbol
         if (vfoInfo->FrequencyReverse) {
+            char *flag = vfoInfo->FrequencyReverse == 1 ? "R" : "T";
 #if ENABLE_CHINESE_FULL != 4 || defined(ENABLE_ENGLISH)
-            UI_PrintStringSmall("R", LCD_WIDTH + 62, 0, line + 1);//中文信道1
+            UI_PrintStringSmall(flag, LCD_WIDTH + 62, 0, line + 1);//中文信道1
 #else
             if (bFlagMr)
-                UI_PrintStringSmall("R", LCD_WIDTH + 24, 0, line - 1); //中文信道1
+                UI_PrintStringSmall(flag, LCD_WIDTH + 24, 0, line - 1); //中文信道1
             else if (bFlagFreq)
-                UI_PrintStringSmall("R", LCD_WIDTH + 62, 0, line + 1); //中文信道1
+                UI_PrintStringSmall(flag, LCD_WIDTH + 62, 0, line + 1); //中文信道1
 
 #endif
         }
