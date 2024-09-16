@@ -998,20 +998,21 @@ void UI_DisplayMenu(void) {
 //#endif
 
 #ifdef ENABLE_PINYIN
+                        uint8_t cnt_chn = 0;
                         for (int j = 0; j < MAX_EDIT_INDEX; ++j) {
                             if (edit[j] >= 0xb0 && j != MAX_EDIT_INDEX - 1) {
                                 edit_chn[j] = 1;
                                 j++;
                                 edit_chn[j] = 2;
+                                cnt_chn++;
                             } else edit_chn[j] = 0;
                         }
+
                         uint8_t sum_pxl = 0;
-                        uint8_t cnt_chn = 0;
                         for (int j = 0; j < edit_index; j++) {
                             if (edit_chn[j] == 1) {
                                 sum_pxl += 13;
                                 j++;
-                                cnt_chn++;
                             } else
                                 sum_pxl += 7;
                         }
@@ -1021,8 +1022,8 @@ void UI_DisplayMenu(void) {
                                         (((menu_item_x2 - menu_item_x1 + 12) -
                                           (7 * (MAX_EDIT_INDEX - 2 * cnt_chn) + 13 * cnt_chn)) + 1) / 2 + add_point;
 
-                        gFrameBuffer[4][pointY] |= 3 << 6;
-                        gFrameBuffer[4][pointY + 1] |= 3 << 6;
+                        gFrameBuffer[4][pointY] |= 3 << 5;
+                        gFrameBuffer[4][pointY + 1] |= 3 << 5;
 #else
 
                         gFrameBuffer[4][menu_item_x1 - 12 + 7 * edit_index +
