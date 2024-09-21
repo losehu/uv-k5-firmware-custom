@@ -406,31 +406,25 @@ bool SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                 resetBFO();
                 return 1;
 #ifdef ENABLE_4732SSB
-            case KEY_SIDE1:
-            case KEY_SIDE2:
-                if (SI47XX_IsSSB()) {
-                    if (key == KEY_UP ? (bfo < INT16_MAX - 10) : (bfo > INT16_MIN + 10)) {
-                        bfo = bfo + (key == KEY_UP ? 10 : -10);
+                case KEY_SIDE1:
+                case KEY_SIDE2:
+                    if (SI47XX_IsSSB()) {
+                        if (key == KEY_UP ? (bfo < INT16_MAX - 10) : (bfo > INT16_MIN + 10)) {
+                            bfo = bfo + (key == KEY_UP ? 10 : -10);
+                        }
+                        SI47XX_SetBFO(bfo);
                     }
-                    SI47XX_SetBFO(bfo);
-
-                }
-
-                          return 1;
+                    return 1;
 
 #endif
             case KEY_2:
-                if (att < 37) {
-                    att++;
-                    SI47XX_SetAutomaticGainControl(1, att);
-                }
-                return 1;
             case KEY_8:
-                if (att > 0) {
-                    att--;
-                    SI47XX_SetAutomaticGainControl(att > 0, att);
+                if (key == KEY_2 ? att < 37 : att > 0) {
+                    key == KEY_2 ? att++ : att--;
+                    SI47XX_SetAutomaticGainControl(key == KEY_2 ? 1 : att > 0, att);
                 }
                 return 1;
+
             default:
                 break;
         }
@@ -440,20 +434,23 @@ bool SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
     if (KEY_TYPE3) {
 
         switch (key_prev) {
+            case KEY_4:
+                SNR_flag = !SNR_flag;
+                return 1;
             case KEY_1:
                 if (step < 1000) {
-                    if (step == 1 || step == 10 || step == 100 || step == 1000) {
+                    if (step == 1 || step == 10 || step == 100 ) {
                         step *= 5;
                     } else {
                         step *= 2;
                     }
                 }
                 return 1;
-            case KEY_4:
-                SNR_flag = !SNR_flag;
+
+
             case KEY_7:
                 if (step > 1) {
-                    if (step == 1 || step == 10 || step == 100 || step == 1000) {
+                    if ( step == 10 || step == 100 || step == 1000) {
                         step /= 2;
                     } else {
                         step /= 5;
