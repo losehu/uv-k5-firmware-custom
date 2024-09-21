@@ -414,7 +414,7 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                     }
                     SI47XX_SetBFO(bfo);
                 }
-                return;
+                break;
             case KEY_9:
             case KEY_SIDE2:
                 if (SI47XX_IsSSB()) {
@@ -424,7 +424,7 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                     SI47XX_SetBFO(bfo);
 
                 }
-                return;
+                break;
 #endif
             case KEY_2:
                 if (att < 37) {
