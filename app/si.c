@@ -406,7 +406,6 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                 resetBFO();
                 return;
 #ifdef ENABLE_4732SSB
-            case KEY_3:
             case KEY_SIDE1:
                 if (SI47XX_IsSSB()) {
                     if (bfo < INT16_MAX - 10) {
@@ -414,8 +413,7 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                     }
                     SI47XX_SetBFO(bfo);
                 }
-                break;
-            case KEY_9:
+                return;
             case KEY_SIDE2:
                 if (SI47XX_IsSSB()) {
                     if (bfo > INT16_MIN + 10) {
@@ -424,7 +422,7 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                     SI47XX_SetBFO(bfo);
 
                 }
-                break;
+                return;
 #endif
             case KEY_2:
                 if (att < 37) {
@@ -597,11 +595,13 @@ void SI4732_Main() {
             if (si4732mode == SI47XX_FM) {
                 SI47XX_GetRDS();
             }
-            if(SNR_flag)            RSQ_GET();
-            cnt = 0;
+            if(SNR_flag)    {       
+            RSQ_GET();
             UI_DisplayClear();
             DrawPower();
             ST7565_BlitStatusLine();
+                            }
+            cnt = 0;
             display_flag = 1;
         }
 
