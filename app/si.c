@@ -401,11 +401,8 @@ bool SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
         if (KEY_TYPE3)key = key_prev;
         switch (key) {
             case KEY_UP:
-                tune((siCurrentFreq + step) * divider);
-                resetBFO();
-                return 1;
             case KEY_DOWN:
-                tune((siCurrentFreq - step) * divider);
+                tune((siCurrentFreq +key== KEY_UP?step:-step) * divider);
                 resetBFO();
                 return 1;
 #ifdef ENABLE_4732SSB
@@ -583,13 +580,13 @@ void SI4732_Main() {
     light_open();
     SI_init();
 
-    uint16_t cnt = 500;
+    uint16_t cnt = 1000;
     while (SI_run) {
         if (light_time && gEeprom.BACKLIGHT_TIME != 7) {
             light_time--;
             if (light_time == 0)BACKLIGHT_TurnOff();
         }
-        if (cnt == 500) {
+        if (cnt == 1000) {
             DrawPower();
             ST7565_BlitStatusLine();
             cnt = 0;
