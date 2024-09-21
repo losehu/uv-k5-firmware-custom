@@ -402,27 +402,22 @@ bool SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
         switch (key) {
             case KEY_UP:
             case KEY_DOWN:
-                tune((siCurrentFreq +(key== KEY_UP?step:-step)) * divider);
+                tune((siCurrentFreq + (key == KEY_UP ? step : -step)) * divider);
                 resetBFO();
                 return 1;
 #ifdef ENABLE_4732SSB
-                case KEY_SIDE1:
-                    if (SI47XX_IsSSB()) {
-                        if (bfo < INT16_MAX - 10) {
-                            bfo += 10;
-                        }
-                        SI47XX_SetBFO(bfo);
+            case KEY_SIDE1:
+            case KEY_SIDE2:
+                if (SI47XX_IsSSB()) {
+                    if (key == KEY_UP ? (bfo < INT16_MAX - 10) : (bfo > INT16_MIN + 10)) {
+                        bfo = bfo + (key == KEY_UP ? 10 : -10);
                     }
-                    return 1;
-                case KEY_SIDE2:
-                    if (SI47XX_IsSSB()) {
-                        if (bfo > INT16_MIN + 10) {
-                            bfo -= 10;
-                        }
-                        SI47XX_SetBFO(bfo);
+                    SI47XX_SetBFO(bfo);
 
-                    }
-                    return 1;
+                }
+
+                          return 1;
+
 #endif
             case KEY_2:
                 if (att < 37) {
@@ -592,7 +587,7 @@ void SI4732_Main() {
             cnt = 0;
 
             if (si4732mode == SI47XX_FM) {
-                if(SI47XX_GetRDS())             display_flag = 1;
+                if (SI47XX_GetRDS()) display_flag = 1;
             }
             if (SNR_flag) {
                 RSQ_GET();
