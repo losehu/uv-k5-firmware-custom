@@ -402,7 +402,7 @@ bool SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
         switch (key) {
             case KEY_UP:
             case KEY_DOWN:
-                tune((siCurrentFreq +key== KEY_UP?step:-step) * divider);
+                tune((siCurrentFreq +(key== KEY_UP?step:-step)) * divider);
                 resetBFO();
                 return 1;
 #ifdef ENABLE_4732SSB
