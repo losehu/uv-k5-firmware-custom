@@ -489,10 +489,10 @@ void UI_DisplayMain(void) {
             }
         } else {    // receiving .. show the RX symbol
             mode = VFO_MODE_RX;
-            if (FUNCTION_IsRx() && gEeprom.RX_VFO == vfo_num) {
-                last_rx_vfo = vfo_num;
-                memcpy(gFrameBuffer[line + 0] + 14, BITMAP_RECV, sizeof(BITMAP_RECV));
-
+            if (FUNCTION_IsRx()) {
+                last_rx_vfo = gEeprom.RX_VFO;
+                if (gEeprom.RX_VFO == vfo_num)
+                    memcpy(gFrameBuffer[line + 0] + 14, BITMAP_RECV, sizeof(BITMAP_RECV));
             }
         }
 
