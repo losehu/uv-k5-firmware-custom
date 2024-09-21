@@ -71,6 +71,7 @@ static const char SI47XX_MODE_NAMES[5][4] = {
 static SI47XX_FilterBW bw = SI47XX_BW_6_kHz;
 static SI47XX_SsbFilterBW ssbBw = SI47XX_SSB_BW_3_kHz;
 static int8_t currentBandIndex = -1;
+bool SNR_flag=true;
 bool SI_run = true;
 typedef struct // Band data
 {
@@ -289,7 +290,7 @@ void SI4732_Display() {
                 GUI_DisplaySmallest(String, 64 - strlen(String) * 2, LCD_HEIGHT - 5 - 9, false, true);
             }
         }
-
+if(SNR_flag){
         uint8_t rssi = rsqStatus.resp.RSSI;
         if (rssi > 64) {
             rssi = 64;
@@ -302,7 +303,7 @@ void SI4732_Display() {
         sprintf(String, "SNR %u", rsqStatus.resp.SNR);
 
         GUI_DisplaySmallest(String, 0, 15 - 8, false, true);
-
+}
 
     }
 
@@ -455,6 +456,8 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                     }
                 }
                 return;
+            case KEY_4:
+                SNR_flag=!SNR_flag;
             case KEY_7:
                 if (step > 1) {
                     if (step == 1 || step == 10 || step == 100 || step == 1000) {
@@ -594,7 +597,7 @@ void SI4732_Main() {
             if (si4732mode == SI47XX_FM) {
                 SI47XX_GetRDS();
             }
-            RSQ_GET();
+            if(SNR_flag)            RSQ_GET();
             cnt = 0;
             UI_DisplayClear();
             DrawPower();
