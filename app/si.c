@@ -30,22 +30,12 @@
 #include "ui/fmradio.h"
 #include "ui/helper.h"
 #include "ui/inputbox.h"
-#include "ui/ui.h"
-#include "chinese.h"
-#include "si.h"
-#include "helper/rds.h"
-#include "functions.h"
+
 #include "stdbool.h"
-#include "app/spectrum.h"
-#include "am_fix.h"
-#include "audio.h"
-#include "misc.h"
+
 #include "driver/eeprom.h"
 #include "driver/backlight.h"
-#include "frequencies.h"
 #include "ui/helper.h"
-#include "ui/main.h"
-#include "driver/backlight.h"
 
 #include <stdint.h>
 
@@ -71,6 +61,7 @@ static const char SI47XX_MODE_NAMES[5][4] = {
 static SI47XX_FilterBW bw = SI47XX_BW_6_kHz;
 static SI47XX_SsbFilterBW ssbBw = SI47XX_SSB_BW_3_kHz;
 static int8_t currentBandIndex = -1;
+bool SNR_flag = true;
 bool SI_run = true;
 typedef struct // Band data
 {
@@ -146,7 +137,6 @@ static int8_t getCurrentBandIndex() {
     return -1;
 }
 
-uint32_t LIGHT_TIME_SET[] = {0, 5000, 10000, 20000, 60000, 120000, 240000, UINT32_MAX};
 static uint8_t att = 0;
 static uint16_t step = 10;
 
@@ -156,11 +146,15 @@ uint32_t light_time;
 bool INPUT_STATE = false;
 
 static void light_open() {
-    light_time = LIGHT_TIME_SET[gEeprom.BACKLIGHT_TIME];
-    BACKLIGHT_TurnOn();
+    if(gEeprom.BACKLIGHT_TIME) {
+        light_time = (BACKLIGHT_MAP[gEeprom.BACKLIGHT_TIME-1]-1>=0?BACKLIGHT_MAP[gEeprom.BACKLIGHT_TIME-1]-1:0)*500;
+        BACKLIGHT_TurnOn();
+    }else
+        BACKLIGHT_TurnOff();
+
 }
-void WaitDisplay()
-{
+
+void WaitDisplay() {
     UI_DisplayClear();
     memset(gStatusLine, 0, sizeof(gStatusLine));
     UI_PrintStringSmall("SI4732 Wait...", 0, 127, 3);
@@ -168,6 +162,7 @@ void WaitDisplay()
     ST7565_BlitFullScreen();
 
 }
+
 static void tune(uint32_t f) {
     if (si4732mode == SI47XX_FM) {
         if (f < 6400000 || f > 10800000) {
@@ -178,7 +173,7 @@ static void tune(uint32_t f) {
             return;
         }
     }
-    EEPROM_WriteBuffer(SI4732_FREQ_ADD + si4732mode * 4, (uint8_t *) &f, 4);
+    EEPROM_WriteBuffer(SI4732_FREQ_ADD + si4732mode * 4, (uint8_t * ) & f, 4);
 
     f /= divider;
     if (si4732mode == SI47XX_FM) {
@@ -188,7 +183,7 @@ static void tune(uint32_t f) {
     SI47XX_ClearRDS();
 
     SI47XX_SetFreq(f);
-    SI47XX_SetAutomaticGainControl(att>0,att);
+    SI47XX_SetAutomaticGainControl(att > 0, att);
     currentBandIndex = getCurrentBandIndex();
 }
 
@@ -200,7 +195,7 @@ void SI_init() {
 
     SI47XX_PowerUp();
 
-    SI47XX_SetAutomaticGainControl(att>0, att);
+    SI47XX_SetAutomaticGainControl(att > 0, att);
 }
 
 
@@ -230,6 +225,8 @@ KeyboardState kbds = {KEY_INVALID, KEY_INVALID, 0};
 
 
 void SI4732_Display() {
+    UI_DisplayClear();
+
     memset(gStatusLine, 0, sizeof(gStatusLine));
     if (INPUT_STATE) {
         UI_PrintStringSmall(freqInputString, 2, 127, 1);
@@ -289,20 +286,20 @@ void SI4732_Display() {
                 GUI_DisplaySmallest(String, 64 - strlen(String) * 2, LCD_HEIGHT - 5 - 9, false, true);
             }
         }
+        if (SNR_flag) {
+            uint8_t rssi = rsqStatus.resp.RSSI;
+            if (rssi > 64) {
+                rssi = 64;
+            }
+            for (int i = 0; i < rssi * 2; ++i) {
+                gFrameBuffer[0][i] |= 0b00111100;
+            }
 
-        uint8_t rssi = rsqStatus.resp.RSSI;
-        if (rssi > 64) {
-            rssi = 64;
+
+            sprintf(String, "SNR %u", rsqStatus.resp.SNR);
+
+            GUI_DisplaySmallest(String, 0, 15 - 8, false, true);
         }
-        for (int i = 0; i < rssi * 2; ++i) {
-            gFrameBuffer[0][i] |= 0b00111100;
-        }
-
-
-        sprintf(String, "SNR %u", rsqStatus.resp.SNR);
-
-        GUI_DisplaySmallest(String, 0, 15 - 8, false, true);
-
 
     }
 
@@ -383,7 +380,7 @@ void HandleUserInput() {
         light_open();
         display_flag = 1;
     }
-    SI_key(kbds.current, KEY_TYPE1, KEY_TYPE2, KEY_TYPE3, kbds.prev);
+     SI_key(kbds.current, KEY_TYPE1, KEY_TYPE2, KEY_TYPE3, kbds.prev);
 
 }
 
@@ -391,51 +388,36 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
     // up-down keys
     if (INPUT_STATE && KEY_TYPE3) {
         OnKeyDownFreqInput(key_prev);
-        return;
+        return ;
     }
     if (KEY_TYPE1 || KEY_TYPE3) {
         if (KEY_TYPE3)key = key_prev;
         switch (key) {
             case KEY_UP:
-                tune((siCurrentFreq + step) * divider);
-                resetBFO();
-                return;
             case KEY_DOWN:
-                tune((siCurrentFreq - step) * divider);
+                tune((siCurrentFreq + (key == KEY_UP ? step : -step)) * divider);
                 resetBFO();
-                return;
+                return ;
 #ifdef ENABLE_4732SSB
-            case KEY_SIDE1:
-                if (SI47XX_IsSSB()) {
-                    if (bfo < INT16_MAX - 10) {
-                        bfo += 10;
+                case KEY_SIDE1:
+                case KEY_SIDE2:
+                    if (SI47XX_IsSSB()) {
+                        if (key == KEY_UP ? (bfo < INT16_MAX - 10) : (bfo > INT16_MIN + 10)) {
+                            bfo = bfo + (key == KEY_UP ? 10 : -10);
+                        }
+                        SI47XX_SetBFO(bfo);
                     }
-                    SI47XX_SetBFO(bfo);
-                }
-                return;
+                    return ;
 
-            case KEY_SIDE2:
-                if (SI47XX_IsSSB()) {
-                    if (bfo > INT16_MIN + 10) {
-                        bfo -= 10;
-                    }
-                    SI47XX_SetBFO(bfo);
-
-                }
-                return;
 #endif
             case KEY_2:
-                if (att < 37) {
-                    att++;
-                    SI47XX_SetAutomaticGainControl(1, att);
-                }
-                return;
             case KEY_8:
-                if (att > 0) {
-                    att--;
-                    SI47XX_SetAutomaticGainControl(att > 0, att);
+                if (key == KEY_2 ? att < 37 : att > 0) {
+                    key == KEY_2 ? att++ : att--;
+                    SI47XX_SetAutomaticGainControl(key == KEY_2 ? 1 : att > 0, att);
                 }
-                return;
+                return ;
+
             default:
                 break;
         }
@@ -445,54 +427,59 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
     if (KEY_TYPE3) {
 
         switch (key_prev) {
+            case KEY_4:
+                SNR_flag = !SNR_flag;
+                return ;
             case KEY_1:
                 if (step < 1000) {
-                    if (step == 1 || step == 10 || step == 100 || step == 1000) {
+                    if (step == 1 || step == 10 || step == 100 ) {
                         step *= 5;
                     } else {
                         step *= 2;
                     }
                 }
-                return;
+                return ;
+
+
             case KEY_7:
                 if (step > 1) {
-                    if (step == 1 || step == 10 || step == 100 || step == 1000) {
+                    if ( step == 10 || step == 100 || step == 1000) {
                         step /= 2;
                     } else {
                         step /= 5;
                     }
                 }
-                return;
+                return ;
 
             case KEY_6:
 #ifdef ENABLE_4732SSB
 
-if (SI47XX_IsSSB()) {
-                    if (ssbBw == SI47XX_SSB_BW_1_0_kHz) {
-                        ssbBw = SI47XX_SSB_BW_1_2_kHz;
-                    } else {
-                        ssbBw++;
-                    }
-                    SI47XX_SetSsbBandwidth(ssbBw);
-                } else {
+                if (SI47XX_IsSSB()) {
+                                    if (ssbBw == SI47XX_SSB_BW_1_0_kHz) {
+                                        ssbBw = SI47XX_SSB_BW_1_2_kHz;
+                                    } else {
+                                        ssbBw++;
+                                    }
+                                    SI47XX_SetSsbBandwidth(ssbBw);
+                                } else {
 #endif
-                    if (bw == SI47XX_BW_1_kHz) {
-                        bw = SI47XX_BW_6_kHz;
-                    } else {
-                        bw++;
-                    }
-                    SI47XX_SetBandwidth(bw, true);
+                if (bw == SI47XX_BW_1_kHz) {
+                    bw = SI47XX_BW_6_kHz;
+                } else {
+                    bw++;
+                }
+                SI47XX_SetBandwidth(bw, true);
 #ifdef ENABLE_4732SSB
 
-            }
+                }
 #endif
 
-                return;
+                return ;
 
             case KEY_5:
                 INPUT_STATE = 1;
                 FreqInput();
-                return;
+                return ;
             case KEY_0:
                 divider = 100;
                 WaitDisplay();
@@ -505,13 +492,13 @@ if (SI47XX_IsSSB()) {
 #ifdef ENABLE_4732SSB
 
 
-                else if (si4732mode == SI47XX_AM) {
+                    else if (si4732mode == SI47XX_AM) {
 
-                    SI47XX_SwitchMode(SI47XX_LSB);
-                    SI47XX_SetSsbBandwidth(ssbBw);
-//                    tune(711300);
-                    step = 1;
-                }
+                        SI47XX_SwitchMode(SI47XX_LSB);
+                        SI47XX_SetSsbBandwidth(ssbBw);
+    //                    tune(711300);
+                        step = 1;
+                    }
 #endif
 
                 else {
@@ -522,17 +509,16 @@ if (SI47XX_IsSSB()) {
                 }
                 tune(Read_FreqSaved());
                 resetBFO();
-                return;
+                return ;
 #ifdef ENABLE_4732SSB
 
-            case KEY_F:
-                if (SI47XX_IsSSB()) {
-                    uint32_t tmpF;
-                    SI47XX_SwitchMode(si4732mode == SI47XX_LSB ? SI47XX_USB : SI47XX_LSB);
-                    tune(Read_FreqSaved()); // to apply SSB
-                    return;
-                }
-                return;
+                case KEY_F:
+                    if (SI47XX_IsSSB()) {
+                        uint32_t tmpF;
+                        SI47XX_SwitchMode(si4732mode == SI47XX_LSB ? SI47XX_USB : SI47XX_LSB);
+                        tune(Read_FreqSaved()); // to apply SSB
+                        return ;
+                    }
 #endif
 
             case KEY_EXIT:
@@ -540,17 +526,15 @@ if (SI47XX_IsSSB()) {
                     SI47XX_PowerDown();
                     SI47XX_PowerUp();
                     seeking = false;
-                    return;
-                }
-                SI_run = false;
-                return;
+                } else SI_run = false;
+                return ;
             case KEY_3:
             case KEY_9:
 #ifdef ENABLE_4732SSB
 
-if (SI47XX_IsSSB()) {
-                    return;
-                }
+                if (SI47XX_IsSSB()) {
+                                    return ;
+                                }
 #endif
                 if (si4732mode == SI47XX_FM) {
                     SI47XX_SetSeekFmSpacing(step);
@@ -564,14 +548,12 @@ if (SI47XX_IsSSB()) {
 
 
                 seeking = true;
-                return;
-
-
+                return ;
             default:
                 break;
         }
     }
-
+    return ;
 }
 
 
@@ -590,21 +572,21 @@ void SI4732_Main() {
             if (light_time == 0)BACKLIGHT_TurnOff();
         }
         if (cnt == 500) {
-            if (si4732mode == SI47XX_FM) {
-                SI47XX_GetRDS();
-            }
-            RSQ_GET();
-            cnt = 0;
-            UI_DisplayClear();
             DrawPower();
             ST7565_BlitStatusLine();
-            display_flag = 1;
+            cnt = 0;
+
+            if (si4732mode == SI47XX_FM) {
+                if (SI47XX_GetRDS()) display_flag = 1;
+            }
+            if (SNR_flag) {
+                RSQ_GET();
+                display_flag = 1;
+            }
         }
 
         if (cnt % 25 == 0) {
-            HandleUserInput();
-
-
+          HandleUserInput();
         }
 
         if (seeking && cnt % 100 == 0) {
@@ -612,7 +594,7 @@ void SI4732_Main() {
             bool valid = false;
             siCurrentFreq = SI47XX_getFrequency(&valid);
             uint32_t f = siCurrentFreq * divider;
-            EEPROM_WriteBuffer(SI4732_FREQ_ADD + si4732mode * 4, (uint8_t *) &f, 4);
+            EEPROM_WriteBuffer(SI4732_FREQ_ADD + si4732mode * 4, (uint8_t * ) & f, 4);
 
             if (valid) {
                 seeking = false;

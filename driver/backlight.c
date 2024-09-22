@@ -49,6 +49,7 @@ void BACKLIGHT_InitHardware() {
             PWMPLUS_CFG_COUNTER_EN_BITS_ENABLE |
             0;
 }
+unsigned short BACKLIGHT_MAP[7]={11,21,41,121,241,481,0};
 
 void BACKLIGHT_TurnOn(void) {
     if (gEeprom.BACKLIGHT_TIME == 0) {
@@ -58,23 +59,8 @@ void BACKLIGHT_TurnOn(void) {
 
     backlightOn = true;
     BACKLIGHT_SetBrightness(gEeprom.BACKLIGHT_MAX);
+    gBacklightCountdown_500ms = BACKLIGHT_MAP[gEeprom.BACKLIGHT_TIME-1];
 
-    switch (gEeprom.BACKLIGHT_TIME) {
-        default:
-        case 1:    // 5 sec
-        case 2:    // 10 sec
-        case 3:    // 20 sec
-            gBacklightCountdown_500ms = 1 + (2 << (gEeprom.BACKLIGHT_TIME - 1)) * 5;
-            break;
-        case 4:    // 1 min
-        case 5:    // 2 min
-        case 6:    // 4 min
-            gBacklightCountdown_500ms = 1 + (2 << (gEeprom.BACKLIGHT_TIME - 4)) * 60;
-            break;
-        case 7:    // always on
-            gBacklightCountdown_500ms = 0;
-            break;
-    }
 }
 
 void BACKLIGHT_TurnOff() {
