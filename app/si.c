@@ -478,7 +478,7 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                 return ;
             case KEY_0:
                 divider = 100;
-//                WaitDisplay();
+                WaitDisplay();
                 if (si4732mode == SI47XX_FM) {
                     SI47XX_SwitchMode(SI47XX_AM);
                     SI47XX_SetBandwidth(bw, true);
