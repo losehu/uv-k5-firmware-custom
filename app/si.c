@@ -155,9 +155,7 @@ static void light_open() {
 
 void WaitDisplay() {
     UI_DisplayClear();
-    memset(gStatusLine, 0, sizeof(gStatusLine));
     UI_PrintStringSmall("SI4732 Wait...", 0, 127, 3);
-    ST7565_BlitStatusLine();
     ST7565_BlitFullScreen();
 
 }
