@@ -155,9 +155,9 @@ static void light_open() {
 
 void WaitDisplay() {
     UI_DisplayClear();
-//    memset(gStatusLine, 0, sizeof(gStatusLine));
-//    UI_PrintStringSmall("SI4732 Wait...", 0, 127, 3);
-//    ST7565_BlitStatusLine();
+    memset(gStatusLine, 0, sizeof(gStatusLine));
+    UI_PrintStringSmall("SI4732 Wait...", 0, 127, 3);
+    ST7565_BlitStatusLine();
     ST7565_BlitFullScreen();
 
 }
@@ -203,10 +203,9 @@ static uint8_t seeking_way = 0;
 
 
 static void resetBFO() {
-    if (bfo != 0) {
         bfo = 0;
         SI47XX_SetBFO(bfo);
-    }
+
 }
 
 
@@ -479,7 +478,7 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                 return ;
             case KEY_0:
                 divider = 100;
-                WaitDisplay();
+//                WaitDisplay();
                 if (si4732mode == SI47XX_FM) {
                     SI47XX_SwitchMode(SI47XX_AM);
                     SI47XX_SetBandwidth(bw, true);
