@@ -149,16 +149,15 @@ static void light_open() {
     if(gEeprom.BACKLIGHT_TIME) {
         light_time = (BACKLIGHT_MAP[gEeprom.BACKLIGHT_TIME-1]-1>=0?BACKLIGHT_MAP[gEeprom.BACKLIGHT_TIME-1]-1:0)*500;
         BACKLIGHT_TurnOn();
-    }else
-        BACKLIGHT_TurnOff();
+    }
 
 }
 
 void WaitDisplay() {
     UI_DisplayClear();
-    memset(gStatusLine, 0, sizeof(gStatusLine));
-    UI_PrintStringSmall("SI4732 Wait...", 0, 127, 3);
-    ST7565_BlitStatusLine();
+//    memset(gStatusLine, 0, sizeof(gStatusLine));
+//    UI_PrintStringSmall("SI4732 Wait...", 0, 127, 3);
+//    ST7565_BlitStatusLine();
     ST7565_BlitFullScreen();
 
 }
@@ -482,7 +481,7 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                 return ;
             case KEY_0:
                 divider = 100;
-//                WaitDisplay();
+                WaitDisplay();
                 if (si4732mode == SI47XX_FM) {
                     SI47XX_SwitchMode(SI47XX_AM);
                     SI47XX_SetBandwidth(bw, true);
