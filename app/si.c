@@ -402,8 +402,8 @@ void SI_key(KEY_Code_t key, bool KEY_TYPE1, bool KEY_TYPE2, bool KEY_TYPE3, KEY_
                 case KEY_SIDE1:
                 case KEY_SIDE2:
                     if (SI47XX_IsSSB()) {
-                        if (key == KEY_UP ? (bfo < INT16_MAX - 10) : (bfo > INT16_MIN + 10)) {
-                            bfo = bfo + (key == KEY_UP ? 10 : -10);
+                        if (key == KEY_SIDE1 ? (bfo < INT16_MAX - 10) : (bfo > INT16_MIN + 10)) {
+                            bfo = bfo + (key == KEY_SIDE1 ? 10 : -10);
                         }
                         SI47XX_SetBFO(bfo);
                     }
