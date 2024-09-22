@@ -149,16 +149,13 @@ static void light_open() {
     if(gEeprom.BACKLIGHT_TIME) {
         light_time = (BACKLIGHT_MAP[gEeprom.BACKLIGHT_TIME-1]-1>=0?BACKLIGHT_MAP[gEeprom.BACKLIGHT_TIME-1]-1:0)*500;
         BACKLIGHT_TurnOn();
-    }else
-        BACKLIGHT_TurnOff();
+    }
 
 }
 
 void WaitDisplay() {
     UI_DisplayClear();
-    memset(gStatusLine, 0, sizeof(gStatusLine));
     UI_PrintStringSmall("SI4732 Wait...", 0, 127, 3);
-    ST7565_BlitStatusLine();
     ST7565_BlitFullScreen();
 
 }
@@ -204,10 +201,9 @@ static uint8_t seeking_way = 0;
 
 
 static void resetBFO() {
-    if (bfo != 0) {
         bfo = 0;
         SI47XX_SetBFO(bfo);
-    }
+
 }
 
 
@@ -362,10 +358,8 @@ void HandleUserInput() {
         }
         if (kbds.current == kbds.prev) {
             // 持续按下
-            if (kbds.counter < 14) {
-                kbds.counter++;
-            } else if (kbds.counter == 14) {
-                // 长按只触发一次
+            if (kbds.counter <= 14) {
+
                 KEY_TYPE2 = true;
                 kbds.counter++;
             }
