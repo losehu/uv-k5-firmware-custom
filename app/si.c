@@ -147,7 +147,6 @@ static int8_t getCurrentBandIndex() {
     return -1;
 }
 
-//uint32_t LIGHT_TIME_SET[] = {0, 5000, 10000, 20000, 60000, 120000, 240000, UINT32_MAX};
 static uint8_t att = 0;
 static uint16_t step = 10;
 
@@ -157,8 +156,10 @@ uint32_t light_time;
 bool INPUT_STATE = false;
 
 static void light_open() {
-    light_time =20000;// LIGHT_TIME_SET[gEeprom.BACKLIGHT_TIME];
-    BACKLIGHT_TurnOn();
+    if(gEeprom.BACKLIGHT_TIME) {
+        light_time = (BACKLIGHT_MAP[gEeprom.BACKLIGHT_TIME-1]-1>=0?BACKLIGHT_MAP[gEeprom.BACKLIGHT_TIME-1]-1:0)*500;
+        BACKLIGHT_TurnOn();
+    }
 }
 
 void WaitDisplay() {
