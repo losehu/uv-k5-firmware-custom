@@ -362,6 +362,8 @@ void HandleUserInput() {
         if (kbds.current == kbds.prev) {
             // 持续按下
             if (kbds.counter <= 14) {
+
+                KEY_TYPE2 = true;
                 kbds.counter++;
             }
         } else {
