@@ -30,22 +30,12 @@
 #include "ui/fmradio.h"
 #include "ui/helper.h"
 #include "ui/inputbox.h"
-#include "ui/ui.h"
-#include "chinese.h"
-#include "si.h"
-#include "helper/rds.h"
-#include "functions.h"
+
 #include "stdbool.h"
-#include "app/spectrum.h"
-#include "am_fix.h"
-#include "audio.h"
-#include "misc.h"
+
 #include "driver/eeprom.h"
 #include "driver/backlight.h"
-#include "frequencies.h"
 #include "ui/helper.h"
-#include "ui/main.h"
-#include "driver/backlight.h"
 
 #include <stdint.h>
 
@@ -573,13 +563,13 @@ void SI4732_Main() {
     light_open();
     SI_init();
 
-    uint16_t cnt = 1000;
+    uint16_t cnt = 500;
     while (SI_run) {
         if (light_time && gEeprom.BACKLIGHT_TIME != 7) {
             light_time--;
             if (light_time == 0)BACKLIGHT_TurnOff();
         }
-        if (cnt == 1000) {
+        if (cnt == 500) {
             DrawPower();
             ST7565_BlitStatusLine();
             cnt = 0;

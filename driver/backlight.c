@@ -49,7 +49,7 @@ void BACKLIGHT_InitHardware() {
             PWMPLUS_CFG_COUNTER_EN_BITS_ENABLE |
             0;
 }
-unsigned short BACKLIGHT_MAP[]={1,11,21,41,121,241,481,0};
+unsigned short BACKLIGHT_MAP[8]={1,11,21,41,121,241,481,0};
 
 void BACKLIGHT_TurnOn(void) {
     if (gEeprom.BACKLIGHT_TIME == 0) {
