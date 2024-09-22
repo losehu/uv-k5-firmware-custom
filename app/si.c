@@ -149,7 +149,9 @@ static void light_open() {
     if(gEeprom.BACKLIGHT_TIME) {
         light_time = (BACKLIGHT_MAP[gEeprom.BACKLIGHT_TIME-1]-1>=0?BACKLIGHT_MAP[gEeprom.BACKLIGHT_TIME-1]-1:0)*500;
         BACKLIGHT_TurnOn();
-    }
+    }else
+        BACKLIGHT_TurnOff();
+
 }
 
 void WaitDisplay() {
