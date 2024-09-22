@@ -361,11 +361,7 @@ void HandleUserInput() {
         }
         if (kbds.current == kbds.prev) {
             // 持续按下
-            if (kbds.counter < 14) {
-                kbds.counter++;
-            } else if (kbds.counter == 14) {
-                // 长按只触发一次
-                KEY_TYPE2 = true;
+            if (kbds.counter <= 14) {
                 kbds.counter++;
             }
         } else {
