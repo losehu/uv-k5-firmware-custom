@@ -587,7 +587,7 @@ void MENU_AcceptSetting(void) {
             for (int i = MAX_EDIT_INDEX - 1; i >= 0; i--) {
                 if (edit[i] != ' ' && edit[i] != '_' && edit[i] != 0x00 && edit[i] != 0xff)
                     break;
-                edit[i] = ' ';
+                edit[i] = 0;
             }
 
             SETTINGS_SaveChannelName(gSubMenuSelection, edit);
@@ -1324,6 +1324,11 @@ static void MENU_Key_0_to_9(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
 
                                     CHN_NOW_PAGE = 0;
                                     PINYIN_CODE_INDEX = 100000;
+
+                                    if (edit_index >= end_index) {    // exit edit
+                                        //gFlagAcceptSetting = false;
+                                        gAskForConfirmation = 1;
+                                    }
                                 }
                             }
                         } else if (INPUT_MODE == 1) {
