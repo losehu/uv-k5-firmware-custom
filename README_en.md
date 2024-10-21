@@ -49,7 +49,7 @@ functions:
 * **SI4732 support**
 * **Chinese/English support**
 * **Chinese input method**
-* **GB22312 Chinese interface, channels**
+* **GB2312 Chinese interface, channels**
 * **Spectrum graph**
 * **MDC1200 signaling, contacts**
 * **SMS**
