@@ -779,7 +779,8 @@ cnt_i--;
 }
 
 void MAIN_ProcessKeys(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
-    last_rx_vfo = -1;
+    if (bKeyPressed)
+        last_rx_vfo = -1;
 #ifdef ENABLE_FMRADIO
     if (gFmRadioMode && Key != KEY_PTT && Key != KEY_EXIT)
     {

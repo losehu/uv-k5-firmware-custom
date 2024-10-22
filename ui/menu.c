@@ -999,24 +999,26 @@ void UI_DisplayMenu(void) {
 
 #ifdef ENABLE_PINYIN
                         uint8_t cnt_chn = 0;
+                        uint8_t sum_pxl = 0;
+
                         for (int j = 0; j < MAX_EDIT_INDEX; ++j) {
                             if (edit[j] >= 0xb0 && j != MAX_EDIT_INDEX - 1) {
+                                if (j < edit_index) {
+                                    sum_pxl += 13;
+                                }
                                 edit_chn[j] = 1;
                                 j++;
                                 edit_chn[j] = 2;
                                 cnt_chn++;
-                            } else edit_chn[j] = 0;
+                            } else {
+                                if (j < edit_index) {
+                                    sum_pxl += 7;
+                                }
+                                edit_chn[j] = 0;
+                            }
                         }
 
-                        uint8_t sum_pxl = 0;
-                        for (int j = 0; j < edit_index; j++) {
-                            if (edit_chn[j] == 1) {
-                                sum_pxl += 13;
-                                j++;
-                            } else
-                                sum_pxl += 7;
-                        }
-                        uint8_t add_point = edit_chn[edit_index] == 1 ? 6 : 3;
+                        uint8_t add_point = 3 << edit_chn[edit_index];
 
                         uint8_t pointY = menu_item_x1 - 12 + sum_pxl +
                                         (((menu_item_x2 - menu_item_x1 + 12) -
