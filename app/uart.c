@@ -260,6 +260,43 @@ static void CMD_0514(const uint8_t *pBuffer) {
 
     SendVersion();
 }
+#ifdef  ENABLE_MESSENGER
+static void CMD_0566(const uint8_t *pBuffer)//发短信
+{
+    typedef struct {//接收头0x0566、内容长度(2B），内容(最大192B)
+        Header_t Header;
+        uint8_t Data[192];
+    } CMD_0566_t;
+    const CMD_0566_t *pCmd = (const CMD_0566_t *) pBuffer;
+    gSerialConfigCountDown_500ms = 12; // 6 sec
+    send_message(pCmd->Data,pCmd->Header.Size);//发送短信
+    MSG_Send(pCmd->Data, false);
+
+    typedef struct {
+        Header_t Header;
+    } REPLY_0566_t;
+    REPLY_0566_t Reply;
+    Reply.Header.ID = 0x0567;
+    Reply.Header.Size = pCmd->Header.Size;
+    SendReply(&Reply, sizeof(Reply));//回应0x0567，短信长度
+}
+
+static void CMD_0588(const uint8_t *pBuffer,uint8_t p_size) {//收短信
+    typedef struct {//发送头0x0588、接受内容长度(2B），内容(最大192B)
+        Header_t Header;
+        struct {
+            uint8_t Data[192];
+        } Data;
+    } REPLY_0588_t;
+    REPLY_0588_t Reply;
+    Reply.Header.ID = 0x0588;
+    Reply.Header.Size =p_size;
+    memcpy( Reply.Data.Data,pBuffer,p_size);
+    SendReply(&Reply, p_size + 4);
+
+}
+
+#endif
 
 static void CMD_051B(const uint8_t *pBuffer) {
     const CMD_051B_t *pCmd = (const CMD_051B_t *) pBuffer;

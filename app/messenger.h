@@ -6,6 +6,7 @@
 #include <string.h>
 #include "driver/keyboard.h"
 
+#define ENABLE_MESSENGER
 #ifdef ENABLE_MESSENGER
 
 
@@ -21,7 +22,7 @@ typedef enum MsgStatus {
       RECEIVING,
 } MsgStatus;
 enum {
-    TX_MSG_LENGTH = 30,
+    TX_MSG_LENGTH = 192,
     MSG_HEADER_LENGTH = 20,
     MAX_RX_MSG_LENGTH = TX_MSG_LENGTH + 2
 };
