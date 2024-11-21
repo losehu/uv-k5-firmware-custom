@@ -895,7 +895,7 @@ void UI_DisplayMain(void) {
                 print_col = 29;
             } else {
 #endif
-                sprintf(String, "ID %04X", mdc1200_unit_id);
+                sprintf(String, "MDC %04X", mdc1200_unit_id);
 #ifdef ENABLE_MDC1200_CONTACT
             }
 #endif
