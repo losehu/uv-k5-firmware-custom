@@ -70,6 +70,7 @@ ENABLE_MESSENGER_DELIVERY_NOTIFICATION	= 0
 ENABLE_MESSENGER_NOTIFICATION			= 0
 ENABLE_4732 =0
 ENABLE_4732SSB =0
+ENABLE_PMES =1
 
 ENABLE_DOPPLER               =0
 #############################################################

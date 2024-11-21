@@ -261,6 +261,7 @@ static void CMD_0514(const uint8_t *pBuffer) {
     SendVersion();
 }
 #ifdef  ENABLE_MESSENGER
+#ifdef ENABLE_MES
 static void CMD_0566(const uint8_t *pBuffer)//发短信
 {
     typedef struct {//接收头0x0566、内容长度(2B），内容(最大192B)
@@ -281,7 +282,7 @@ static void CMD_0566(const uint8_t *pBuffer)//发短信
     SendReply(&Reply, sizeof(Reply));//回应0x0567，短信长度
 }
 
-static void CMD_0588(const uint8_t *pBuffer,uint8_t p_size) {//收短信
+void CMD_0588(const uint8_t *pBuffer,uint8_t p_size) {//收短信
     typedef struct {//发送头0x0588、接受内容长度(2B），内容(最大192B)
         Header_t Header;
         struct {
@@ -295,7 +296,7 @@ static void CMD_0588(const uint8_t *pBuffer,uint8_t p_size) {//收短信
     SendReply(&Reply, p_size + 4);
 
 }
-
+#endif
 #endif
 
 static void CMD_051B(const uint8_t *pBuffer) {

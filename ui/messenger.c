@@ -16,7 +16,13 @@
 #ifdef ENABLE_DOCK
 #include "app/uart.h"
 #endif
+#ifdef ENABLE_PMES
+void UI_DisplayMSG(void){
+        UI_DisplayClear();
+    ST7565_BlitFullScreen();
 
+}
+#else
 void UI_DisplayMSG(void) {
 
 
@@ -56,5 +62,6 @@ const uint8_t *p;
 
     ST7565_BlitFullScreen();
 }
+#endif
 
 #endif

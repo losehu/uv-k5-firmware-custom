@@ -24,6 +24,7 @@ extern uint8_t UART_DMA_Buffer[256];
 
 void UART_Init(void);
 void UART_Send(const void *pBuffer, uint32_t Size);
+void CMD_0588(const uint8_t *pBuffer,uint8_t p_size) ;//收短信
 
 #endif
 

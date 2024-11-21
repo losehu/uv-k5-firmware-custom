@@ -16,7 +16,7 @@
 #include "ui/ui.h"
 #include "driver/uart.h"
 #include "stdbool.h"
-
+#include "driver/uart.h"
 #if defined(ENABLE_UART)
 #include "driver/uart.h"
 #endif
@@ -376,8 +376,12 @@ void MSG_Send(const char *txMessage, bool bServiceMessage) {
 
         enable_msg_rx(true);
         if (!bServiceMessage) {
+#ifndef ENABLE_PMES
+
             moveUP(rxMessage);
+
             sprintf(rxMessage[3], "> %s", txMessage);
+#endif
 //			memset(lastcMessage, 0, sizeof(lastcMessage));
             memcpy(lastcMessage, txMessage, TX_MSG_LENGTH);
             lastcMessage[TX_MSG_LENGTH]=0;
@@ -479,6 +483,7 @@ void processBackspace() {
     prevKey = 0;
     prevLetter = 0;
 }
+#ifndef ENABLE_PMES
 
 void  MSG_ProcessKeys(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
     uint8_t state = bKeyPressed + 2 * bKeyHeld;
@@ -541,8 +546,43 @@ void  MSG_ProcessKeys(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
     }
 
 }
+#else
 
+void  MSG_ProcessKeys(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
+    uint8_t state = bKeyPressed + 2 * bKeyHeld;
 
+    if (state == MSG_BUTTON_EVENT_SHORT) {
+
+        switch (Key)
+        {
+
+            case KEY_EXIT:
+                gRequestDisplayScreen = DISPLAY_MAIN;
+                break;
+
+            default:
+#ifdef    ENABLE_WARNING
+
+                AUDIO_PlayBeep(BEEP_500HZ_60MS_DOUBLE_BEEP_OPTIONAL);
+#endif
+                break;
+        }
+
+    } else if (state == MSG_BUTTON_EVENT_LONG) {
+
+        switch (Key)
+        {
+
+            default:
+#ifdef    ENABLE_WARNING
+                AUDIO_PlayBeep(BEEP_500HZ_60MS_DOUBLE_BEEP_OPTIONAL);
+#endif
+                break;
+        }
+    }
+
+}
+#endif
 #endif
 
 void solve_sign(const uint16_t interrupt_bits) {
@@ -651,7 +691,9 @@ void solve_sign(const uint16_t interrupt_bits) {
 #ifdef ENABLE_MESSENGER_DELIVERY_NOTIFICATION
                 // If the next 4 bytes are "RCVD", then it's a delivery notification
                 if (msgFSKBuffer[5] == 'R' && msgFSKBuffer[6] == 'C' && msgFSKBuffer[7] == 'V' && msgFSKBuffer[8] == 'D') {
+#ifndef ENABLE_PMSG
                     rxMessage[3][strlen(rxMessage[3])] = '+';
+#endif
                     gUpdateStatus = true;
                     gUpdateDisplay = true;
                 }
@@ -660,11 +702,20 @@ void solve_sign(const uint16_t interrupt_bits) {
                 bool show_flag=0;
                 if (msgFSKBuffer[0] == 'M' && msgFSKBuffer[1] == 'S')
                 {
+#ifndef ENABLE_PMES
+
                     moveUP(rxMessage);
-                    show_flag=1;
                     snprintf(rxMessage[3], TX_MSG_LENGTH + 2, "< %s", &msgFSKBuffer[2]);
+#endif
+
+                    show_flag=1;
                     MSG_Send("\x1b\x1b\x1bRCVD", true);
 
+#ifdef ENABLE_PMES
+
+                    CMD_0588(msgFSKBuffer[2],strlen(msgFSKBuffer));
+
+#endif
                 }
 
                 if(show_flag){
