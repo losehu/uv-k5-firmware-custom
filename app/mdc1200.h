@@ -118,5 +118,7 @@ uint16_t extractHex(const char *str);
 #define MDC_NUM_ADD 0X1FFF
 #define MAX_CONTACT_NUM 21
 extern uint8_t contact_num;
+extern char ham[7];
+extern uint8_t ham_flag;
 
 #endif

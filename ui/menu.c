@@ -1495,7 +1495,7 @@ void UI_DisplayMenu(void) {
 
         Contact[11] = 0;
         memcpy(&gDTMF_ID, Contact + 8, 4);
-        sprintf(String, "ID:%4s", gDTMF_ID);
+        sprintf(String, "MDC:%4s", gDTMF_ID);
         UI_PrintStringSmall(String, menu_item_x1, menu_item_x2, 5);
     }
 #endif

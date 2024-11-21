@@ -6,7 +6,7 @@
 #include <string.h>
 #include "driver/keyboard.h"
 
-#define ENABLE_MESSENGER
+
 #ifdef ENABLE_MESSENGER
 
 

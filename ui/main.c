@@ -879,7 +879,12 @@ void UI_DisplayMain(void) {
         if (mdc1200_rx_ready_tick_500ms > 0) {
             char mdc1200_contact[14];
             center_line = CENTER_LINE_MDC1200;
-            uint8_t print_col = 0;
+            uint8_t print_col = 30;
+            if(ham_flag==1)
+            {
+                sprintf(String, "HAM %s", ham);
+            }
+            else{
 #ifdef ENABLE_MDC1200_CONTACT
 
             if (mdc1200_contact_find(mdc1200_unit_id, mdc1200_contact))//
@@ -891,11 +896,10 @@ void UI_DisplayMain(void) {
             } else {
 #endif
                 sprintf(String, "ID %04X", mdc1200_unit_id);
-                print_col = 40;
 #ifdef ENABLE_MDC1200_CONTACT
             }
 #endif
-
+}
 
 //#ifdef ENABLE_MDC1200_SHOW_OP_ARG
 //                sprintf(String, "MDC1200 %02X %02X %04X", mdc1200_op, mdc1200_arg, mdc1200_unit_id);

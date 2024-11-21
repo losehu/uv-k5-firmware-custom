@@ -6,8 +6,10 @@
 #include "misc.h"
 #include <string.h>
 #include "driver/eeprom.h"
+char ham[7]={0};
+uint8_t ham_flag=0;
 
-
+uint8_t new_mdc_switch = 1;
 const uint8_t mdc1200_pre_amble[] = {0x00, 0x00, 0x00};
 const uint8_t mdc1200_sync[5] = {0x07, 0x09, 0x2a, 0x44, 0x6f};
 
@@ -215,6 +217,41 @@ uint8_t *encode_data(void *data) {
     return data8 + (MDC1200_FEC_K * 2);
 }
 
+uint32_t get_bits_at_position(uint32_t b, uint8_t n, uint8_t k) {
+    uint32_t mask = ((1U << k) - 1) << n;
+    return (b & mask) >> n;
+}
+
+void set_bit_at_position(uint32_t *b, uint32_t a, uint8_t n) {
+    *b &= ~(1U << n);
+    *b |= (a << n);
+}
+
+uint8_t change_mat[6] = {24, 19, 15, 10, 5, 0};
+
+uint32_t HamToCode(char *ham) //呼号转uint32_t编码
+{
+    uint32_t result = 0xa0000000;
+    for (int i = 0; i < 6; ++i) {
+        uint8_t tmp;
+        if (i == 2)tmp = ham[i] - '0';
+        else if (ham[i] == ' ') tmp = 26;
+        else tmp = ham[i] - 'A';
+        set_bit_at_position(&result, tmp, change_mat[i]);
+    }
+    return result;
+}
+
+void CodeToHam(char *ham, uint32_t code) {
+    for (int i = 0; i < 6; ++i) {
+        uint16_t tmp;
+        tmp = get_bits_at_position(code, change_mat[i], i == 2 ? 4 : 5);
+        if (i == 2)ham[i] = tmp + '0';
+        else if (tmp == 26) ham[i] = ' ';
+        else ham[i] = tmp + 'A';
+    }
+}
+
 unsigned int MDC1200_encode_single_packet(void *data, const uint8_t op, const uint8_t arg, const uint16_t unit_id) {
     unsigned int size;
     uint16_t crc;
@@ -225,10 +262,20 @@ unsigned int MDC1200_encode_single_packet(void *data, const uint8_t op, const ui
     memcpy(p, mdc1200_sync, sizeof(mdc1200_sync));
     p += sizeof(mdc1200_sync);
 
-    p[0] = op;
-    p[1] = arg;
-    p[2] = (unit_id >> 8) & 0x00ff;
-    p[3] = (unit_id >> 0) & 0x00ff;
+    if (new_mdc_switch) {
+        char name[6] = {'B', 'G', '2', 'F', 'Z', 'V'};
+        uint32_t code = HamToCode(name);
+        p[0] = code >> 24;
+        p[1] = 0xff & (code >> 16);
+        p[2] = 0xff & (code >> 8);
+        p[3] = 0xff & (code);
+    } else {
+        p[0] = op;
+        p[1] = arg;
+        p[2] = (unit_id >> 8) & 0x00ff;
+        p[3] = (unit_id >> 0) & 0x00ff;
+    }
+    new_mdc_switch=1-new_mdc_switch;
     crc = compute_crc(p, 4);
     p[4] = (crc >> 0) & 0x00ff;
     p[5] = (crc >> 8) & 0x00ff;
@@ -351,11 +398,18 @@ bool MDC1200_process_rx_data(
             }
 
             // extract the info from the packet
-            *op = rx.data[0];
-            *arg = rx.data[1];
-            *unit_id = ((uint16_t) rx.data[2] << 8) | (rx.data[3] << 0);
 
+            if((rx.data[0]&0xa0)==0xa0) {
+                CodeToHam(ham, (rx.data[0] << 24) | (rx.data[1] << 16) | (rx.data[2] << 8) | (rx.data[3]));
+                ham_flag=1;
+            }else
+            {
+                *op = rx.data[0];
+                *arg = rx.data[1];
+                *unit_id = ((uint16_t) rx.data[2] << 8) | (rx.data[3] << 0);
+                ham_flag=0;
 
+            }
             // reset the detector
             MDC1200_reset_rx();
 
