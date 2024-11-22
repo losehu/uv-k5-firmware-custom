@@ -6,10 +6,10 @@
 #include "misc.h"
 #include <string.h>
 #include "driver/eeprom.h"
+#include "settings.h"
 char ham[7]={0};
 uint8_t ham_flag=0;
 
-uint8_t new_mdc_switch = 1;
 const uint8_t mdc1200_pre_amble[] = {0x00, 0x00, 0x00};
 const uint8_t mdc1200_sync[5] = {0x07, 0x09, 0x2a, 0x44, 0x6f};
 
@@ -262,10 +262,10 @@ unsigned int MDC1200_encode_single_packet(void *data, const uint8_t op, const ui
     memcpy(p, mdc1200_sync, sizeof(mdc1200_sync));
     p += sizeof(mdc1200_sync);
 
-    if (new_mdc_switch) {
-        char name[6] = {'B', 'G', '2', 'F', 'Z', 'V'};
-        uint32_t code = HamToCode(name);
-        p[0] = code >> 24;
+    if (gEeprom.HAM_SWITCH) {
+        //char name[6] = {'B', 'G', '2', 'F', 'Z', 'V'};
+        uint32_t code = gEeprom.HAM_ID;// HamToCode(name)
+        p[0] = (code >> 24)|0xa0;
         p[1] = 0xff & (code >> 16);
         p[2] = 0xff & (code >> 8);
         p[3] = 0xff & (code);
@@ -275,7 +275,6 @@ unsigned int MDC1200_encode_single_packet(void *data, const uint8_t op, const ui
         p[2] = (unit_id >> 8) & 0x00ff;
         p[3] = (unit_id >> 0) & 0x00ff;
     }
-    new_mdc_switch=1-new_mdc_switch;
     crc = compute_crc(p, 4);
     p[4] = (crc >> 0) & 0x00ff;
     p[5] = (crc >> 8) & 0x00ff;
@@ -444,7 +443,6 @@ uint16_t extractHex(const char *str) {
         char c = *str++;
         if (c >= '0' && c <= '9') {
             result = (result << 4) | (c - '0');
-
         } else if (c >= 'A' && c <= 'F') {
             result = (result << 4) | (c - 'A' + 10);
         } else {

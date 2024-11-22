@@ -923,6 +923,10 @@ void UI_DisplayMenu(void) {
         }
 #ifdef ENABLE_MDC1200
         case MENU_MDC_ID: {
+            sprintf(String, "%s", CodeToHam(String,gEeprom.HAM_ID)); // %04X确保输出是4个字符长度的十六进制数
+            UI_PrintStringSmall(String, menu_item_x1, menu_item_x2, 5);
+
+
 #ifdef ENABLE_MDC1200_EDIT
             if (gIsInSubMenu) {
                 // show the channel name being edited
@@ -931,11 +935,10 @@ void UI_DisplayMenu(void) {
                     UI_PrintStringSmall("^", menu_item_x1 + (((menu_item_x2 - menu_item_x1) - (28)) + 1) / 2 + (7 * edit_index), 0, 4); // show the cursor
             } else {
 #endif
+
                 sprintf(String, "%04X", gEeprom.MDC1200_ID); // %04X确保输出是4个字符长度的十六进制数
                 UI_PrintStringSmall(String, menu_item_x1, menu_item_x2, 3); //4
-
 #ifdef ENABLE_MDC1200_EDIT
-
                 edit_index = -1;
                 edit[0] = String[0];
                 edit[1] = String[1];
@@ -946,6 +949,11 @@ void UI_DisplayMenu(void) {
 #ifdef ENABLE_MDC1200_EDIT
             }
 #endif
+            if (gEeprom.HAM_SWITCH==0)
+                UI_PrintStringSmall("MDC", 105, 127, 1);
+            else
+                UI_PrintStringSmall("HAM", 105, 127, 1);
+
             already_printed = true;
             break;
         }

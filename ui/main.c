@@ -906,10 +906,7 @@ void UI_DisplayMain(void) {
 //#else
 //                sprintf(String, "MDC1200 ID %04X", mdc1200_unit_id);
 //#endif
-
             UI_PrintStringSmall(String, print_col, 0, 3);
-
-
         } else
 #endif
 

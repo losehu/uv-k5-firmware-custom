@@ -297,7 +297,6 @@ void Main(void) {
 #endif
 
     while (1) {
-
         APP_Update();
 
         if (gNextTimeslice) {

@@ -270,6 +270,9 @@ typedef struct {
 	uint8_t               S9_LEVEL;
 #endif
     uint32_t MDC1200_ID;
+    uint32_t HAM_ID;
+    uint8_t HAM_SWITCH;
+
 } EEPROM_Config_t;
 
 extern EEPROM_Config_t gEeprom;

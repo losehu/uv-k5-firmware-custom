@@ -1547,6 +1547,7 @@ if (gAlarmState == ALARM_STATE_TXALARM || gAlarmState == ALARM_STATE_TX1750) {
 
 
 static void ProcessKey(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
+
     if (Key == KEY_EXIT && !BACKLIGHT_IsOn() &&
         gEeprom.BACKLIGHT_TIME > 0) {    // just turn the light on for now so the user can see what's what
         BACKLIGHT_TurnOn();

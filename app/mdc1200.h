@@ -120,5 +120,6 @@ uint16_t extractHex(const char *str);
 extern uint8_t contact_num;
 extern char ham[7];
 extern uint8_t ham_flag;
+void CodeToHam(char *ham, uint32_t code) ;
 
 #endif

@@ -288,6 +288,7 @@ void ACTION_Handle(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
         case KEY_SIDE1:
             funcShort = gEeprom.KEY_1_SHORT_PRESS_ACTION;
             funcLong  = gEeprom.KEY_1_LONG_PRESS_ACTION;
+
             break;
         case KEY_SIDE2:
             funcShort = gEeprom.KEY_2_SHORT_PRESS_ACTION;
