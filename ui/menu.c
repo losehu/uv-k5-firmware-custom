@@ -35,7 +35,9 @@
 #include "ui/menu.h"
 #include "ui/ui.h"
 #include "chinese.h"
-
+#ifdef ENABLE_MDC1200
+#include "app/mdc1200.h"
+#endif
 void insertNewline(char a[], int index, int len) {
 
     if (index < 0 || index >= len || len >= 63) {
