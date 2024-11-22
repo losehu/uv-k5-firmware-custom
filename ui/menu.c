@@ -923,7 +923,8 @@ void UI_DisplayMenu(void) {
         }
 #ifdef ENABLE_MDC1200
         case MENU_MDC_ID: {
-            sprintf(String, "%s", CodeToHam(String,gEeprom.HAM_ID)); // %04X确保输出是4个字符长度的十六进制数
+            CodeToHam(String,gEeprom.HAM_ID);
+            String[6]='\0';
             UI_PrintStringSmall(String, menu_item_x1, menu_item_x2, 5);
 
 
