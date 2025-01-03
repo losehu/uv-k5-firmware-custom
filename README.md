@@ -13,18 +13,25 @@
 # [自定义引导](https://github.com/losehu/uv-k5-bootloader-custom)
 * 通过创立一个引导程序加载进RAM实现固件切换
 * 可切换任意固件
-* 目前仅适用于4Mib的Eeprom，通过修改代码可轻松拓展至其他大小Eeprom
+* 目前仅适用于4Mib的EEPROM，通过修改代码可轻松拓展至其他大小EEPROM
 
 # 版本说明
 
 * 目前分为如下几个版本：**LOSEHUxxx**、**LOSEHUxxxK**、**LOSEHUxxxH**、**LOSEHUxxxE**、**LOSEHUxxxEK**、**LOSEHUxxxHS**
-* **LOSEHUxxx**:中文固件，无需扩容，包含MDC1200、频谱、收音机
-* **LOSEHUxxxK**:中文固件，需要1Mib以上Eeprom，包含多普勒模式、MDC1200、频谱、收音机、中文信道名、自定义开机中文字符、开机图片
-* **LOSEHUxxxH**:中文固件，需要2Mib以上Eeprom，包含多普勒模式、中文输入法、频谱、收音机、中文信道名、自定义开机中文字符、开机图片
-* **LOSEHUxxxHS**:中文固件，需要2Mib以上Eeprom，包含SI4732收音机、中文输入法、频谱、中文信道名、自定义开机中文字符、开机图片
-* **LOSEHUxxxE**:英文固件，无需扩容，包含MDC1200、频谱、收音机、短信
-* **LOSEHUxxxEK**:英文固件，需要1Mib以上Eeprom，包含多普勒模式、MDC1200、频谱、收音机、自定义开机字符、开机图片
+* 
+| 版本         | 语言 | EEPROM 需求 | MDC1200 | 多普勒模式 | 频谱 | 收音机 | 中文信道名 | 自定义开机中文字符 | 开机图片 | 中文输入法 | 短信 |
+|--------------|------|-------------|---------|------------|------|--------|------------|--------------------|----------|------------|------|
+| LOSEHUxxx    | 中文 | 无需扩容    | ✅      | ❌         | ✅   | ✅     | ❌         | ❌                 | ❌       | ❌         | ❌   |
+| LOSEHUxxxK   | 中文 | 1Mib 以上   | ✅      | ✅         | ✅   | ✅     | ✅         | ✅                 | ✅       | ❌         | ❌   |
+| LOSEHUxxxH   | 中文 | 2Mib 以上   | ✅      | ✅         | ✅   | ✅     | ✅         | ✅                 | ✅       | ✅         | ❌   |
+| LOSEHUxxxHS  | 中文 | 2Mib 以上   | ❌      | ❌         | ✅   | ✅     | ✅         | ✅                 | ✅       | ✅         | ❌   |
+| LOSEHUxxxE   | 英文 | 无需扩容    | ✅      | ❌         | ✅   | ✅     | ❌         | ❌                 | ❌       | ❌         | ✅   |
+| LOSEHUxxxEK  | 英文 | 1Mib 以上   | ✅      | ✅         | ✅   | ✅     | ❌         | ✅                 | ✅       | ❌         | ❌   |
 
+### 说明：
+- ✅ 表示支持该功能
+- ❌ 表示不支持该功能
+- 表格中的“收音机”功能在 LOSEHUxxxHS 版本中特指 SI4732 收音机
 
 # 多功能的K5/6固件
 
@@ -97,9 +104,9 @@
 
 
 
-# Eeprom分布说明
+# EEPROM分布说明
 
-| Eeprom地址                               | 描述                                                        |
+| EEPROM地址                               | 描述                                                        |
 |----------------------------------------|-----------------------------------------------------------|
 | 😭 **通用**                              | 版本号：LOSEHUxxx                                             |
 | 0X01D00~0x02000                        | 基本不变                                                      |
@@ -135,7 +142,7 @@
 | 0x26B00~0x2A330                        | **中文输入法**-拼音汉字表                                           |
 | 0x3C228~0x40000                        | **SI4732**-patch，长度为0x3DD8，用于SI4732的固件升级                  |
 | 0x3C210~0x3C21C                        | **SI4732**FM、AM、SSB频率、模式                                  |
-[多普勒Eeprom分布说明](https://github.com/losehu/uv-k5-firmware-chinese/blob/main/doc/多普勒eeprom详细说明.txt)
+[多普勒EEPROM分布说明](https://github.com/losehu/uv-k5-firmware-chinese/blob/main/doc/多普勒eeprom详细说明.txt)
 
 
 # 用户功能自定义
@@ -176,7 +183,7 @@
 | ENABLE_REDUCE_LOW_MID_TX_POWER         | 使中等和低功率设置更低                                                                   |
 | ENABLE_BYP_RAW_DEMODULATORS            | 额外的BYP（旁路？）和RAW解调选项，被证明并不十分有用，但如果你想实验的话，它是存在的                                 |
 | ENABLE_SCAN_RANGES                     | 频率扫描的扫描范围模式                                                                   |
-| ENABLE_BLOCK                           | Eeprom上锁                                                                      |
+| ENABLE_BLOCK                           | EEPROM上锁                                                                      |
 | ENABLE_WARNING                         | 	    BEEP提示音                                                                  |
 | ENABLE_CUSTOM_SIDEFUNCTIONS            | 自定义侧键功能                                                                       |
 | ENABLE_SIDEFUNCTIONS_SEND              | 自定义侧键功能（侧键发射功能）                                                               |
