@@ -610,5 +610,5 @@ void SI4732_Main() {
     SI_deinit();
     // fix a bug when in SI mode using key 5 to input a frequency , after that can not go to spectrum
   if (currentState==FREQ_INPUT )
-		SetState(previousState);
+		SetState(SPECTRUM);
 }
