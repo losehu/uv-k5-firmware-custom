@@ -57,7 +57,7 @@ static const char SI47XX_SSB_BW_NAMES[6][8] = {
 static const char SI47XX_MODE_NAMES[5][4] = {
         "FM", "AM", "LSB", "USB", "CW",
 };
-
+extern State previousState,currentState ;
 static SI47XX_FilterBW bw = SI47XX_BW_6_kHz;
 static SI47XX_SsbFilterBW ssbBw = SI47XX_SSB_BW_3_kHz;
 static int8_t currentBandIndex = -1;
@@ -606,5 +606,7 @@ void SI4732_Main() {
         SYSTEM_DelayMs(1);
     }
     SI_deinit();
-
+    // fix a bug when in SI mode using key 5 to input a frequency , after that can not go to spectrum
+  if (currentState==FREQ_INPUT )
+		SetState(previousState);
 }
