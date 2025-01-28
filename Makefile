@@ -9,40 +9,40 @@ ENABLE_SWD                    ?= 1
 ENABLE_OVERLAY                ?= 0
 ENABLE_LTO                    ?= 1
 
-# ---- STOCK QUANSHENG FERATURES ----
+# ---- STOCK QUANSHENG FERATURfvzES ----
 ENABLE_UART                   ?= 1
 ENABLE_AIRCOPY                ?= 0
 ENABLE_FMRADIO                = 0
 ENABLE_NOAA                   ?= 0
 ENABLE_VOICE                  ?= 0
-ENABLE_VOX                    ?= 1
+ENABLE_VOX                    ?= 0
 ENABLE_ALARM                  ?= 0
 ENABLE_TX1750                 ?= 0
 ENABLE_PWRON_PASSWORD         ?= 0
 ENABLE_DTMF_CALLING           ?= 1
-ENABLE_FLASHLIGHT             ?= 1
+ENABLE_FLASHLIGHT             ?= 0
 ENABLE_BOOTLOADER			 ?= 0
 # ---- CUSTOM MODS ----
 ENABLE_BIG_FREQ               ?= 1
-ENABLE_KEEP_MEM_NAME          ?= 1
-ENABLE_WIDE_RX                ?= 1
+ENABLE_KEEP_MEM_NAME          ?= 0
+ENABLE_WIDE_RX                ?= 0
 ENABLE_TX_WHEN_AM             ?= 0
 ENABLE_F_CAL_MENU             ?= 0
 ENABLE_CTCSS_TAIL_PHASE_SHIFT ?= 0
 ENABLE_BOOT_BEEPS             ?= 0
 ENABLE_SHOW_CHARGE_LEVEL      ?= 0
 ENABLE_REVERSE_BAT_SYMBOL     ?= 0
-ENABLE_NO_CODE_SCAN_TIMEOUT   ?= 1
-ENABLE_AM_FIX                 ?= 1
-ENABLE_SQUELCH_MORE_SENSITIVE ?= 1
-ENABLE_FASTER_CHANNEL_SCAN    ?= 1
-ENABLE_RSSI_BAR               ?= 1
-ENABLE_COPY_CHAN_TO_VFO       ?= 1
+ENABLE_NO_CODE_SCAN_TIMEOUT   ?= 0
+ENABLE_AM_FIX                 ?= 0
+ENABLE_SQUELCH_MORE_SENSITIVE ?= 0
+ENABLE_FASTER_CHANNEL_SCAN    ?= 0
+ENABLE_RSSI_BAR               ?= 0
+ENABLE_COPY_CHAN_TO_VFO       ?= 0
 ENABLE_SPECTRUM               = 0
 ENABLE_REDUCE_LOW_MID_TX_POWER?= 0
 ENABLE_BYP_RAW_DEMODULATORS   ?= 0
 ENABLE_BLMIN_TMP_OFF          ?= 0
-ENABLE_SCAN_RANGES            ?= 1
+ENABLE_SCAN_RANGES            ?= 0
 ENABLE_MDC1200                = 0
 ENABLE_MDC1200_SHOW_OP_ARG    = 0
 ENABLE_MDC1200_SIDE_BEEP      = 0
@@ -54,8 +54,8 @@ ENABLE_EEPROM_TYPE        	   = 0
 ENABLE_CHINESE_FULL 		   = 0
 ENABLE_ENGLISH				    =0
 ENABLE_DOCK 		          ?= 0
-ENABLE_CUSTOM_SIDEFUNCTIONS   ?= 1
-ENABLE_SIDEFUNCTIONS_SEND     ?= 1
+ENABLE_CUSTOM_SIDEFUNCTIONS   ?= 0
+ENABLE_SIDEFUNCTIONS_SEND     ?= 0
 ENABLE_BLOCK                  ?= 0
 ENABLE_PINYIN 				   =0
 ENABLE_TURN ?=1
@@ -64,7 +64,7 @@ ENABLE_AM_FIX_SHOW_DATA       ?= 0
 ENABLE_AGC_SHOW_DATA          ?= 0
 ENABLE_TIMER		          ?= 0
 
-ENABLE_WARNING 				  ?= 1
+ENABLE_WARNING 				  ?= 0
 ENABLE_MESSENGER              			= 0
 ENABLE_MESSENGER_DELIVERY_NOTIFICATION	= 0
 ENABLE_MESSENGER_NOTIFICATION			= 0
@@ -72,6 +72,7 @@ ENABLE_4732 =0
 ENABLE_4732SSB =0
 
 ENABLE_DOPPLER               =0
+ENABLE_TLE = 1
 #############################################################
 PACKED_FILE_SUFFIX = LOSEHU132
 ifeq ($(ENABLE_PINYIN),1)
@@ -166,7 +167,15 @@ endif
 ifeq ($(ENABLE_DOPPLER),1)
     OBJS += driver/rtc.o
 endif
+ifeq ($(ENABLE_TLE),1)
+    OBJS += tle/eci.o
+    OBJS += tle/sgp.o
+    OBJS += tle/vec.o
+    OBJS += tle/tle.o
+    OBJS += tle/astrotime.o
+    OBJS += tle/util.o
 
+endif
 ifeq ($(ENABLE_MDC1200),1)
     OBJS += app/mdc1200.o
 endif
@@ -288,7 +297,7 @@ AS = arm-none-eabi-gcc
 LD = arm-none-eabi-gcc
 
 ifeq ($(ENABLE_CLANG),0)
-	CC = arm-none-eabi-gcc
+	CC =arm-none-eabi-gcc
 # Use GCC's linker to avoid undefined symbol errors
 #	LD += arm-none-eabi-gcc
 else
@@ -298,7 +307,7 @@ else
 #	LD = ld.lld
 endif
 
-OBJCOPY = arm-none-eabi-objcopy
+OBJCOPY =arm-none-eabi-objcopy
 SIZE = arm-none-eabi-size
 
 AUTHOR_STRING ?= LOSEHU
@@ -345,7 +354,7 @@ endif
 #CFLAGS += -Wpadded
 
 # catch any and all warnings
-CFLAGS += -Wextra
+CFLAGS += -Wextra -fno-strict-aliasing
 #CFLAGS += -Wpedantic
 
 # 设置PACKED_FILE_SUFFIX，根据ENABLE_CHINESE_FULL的值设置不同的后缀
@@ -396,6 +405,10 @@ ifeq ($(ENABLE_MESSENGER),1)
 endif
 ifeq ($(ENABLE_DOPPLER),1)
 	CFLAGS  += -DENABLE_DOPPLER
+endif
+ifeq ($(ENABLE_TLE),1)
+   	CFLAGS  += -DENABLE_TLE
+
 endif
 ifeq ($(ENABLE_4732),1)
 	CFLAGS  += -DENABLE_4732
@@ -596,12 +609,7 @@ endif
 
 full:
 	$(RM) *.bin
-	$(MAKE) build ENABLE_CHINESE_FULL=0 ENABLE_ENGLISH=1 ENABLE_FMRADIO=1 ENABLE_MESSENGER=1 ENABLE_MESSENGER_DELIVERY_NOTIFICATION=1 ENABLE_MESSENGER_NOTIFICATION=1 ENABLE_SPECTRUM=1 ENABLE_MDC1200=1 ENABLE_MDC1200_EDIT=1 ENABLE_MDC1200_CONTACT=1
-	$(MAKE) build ENABLE_CHINESE_FULL=4 ENABLE_ENGLISH=1 ENABLE_DOPPLER=1 ENABLE_SPECTRUM=1 ENABLE_FMRADIO=1 ENABLE_MDC1200=1 ENABLE_MDC1200_EDIT=1 ENABLE_MDC1200_CONTACT=1
-	$(MAKE) build ENABLE_CHINESE_FULL=0 ENABLE_SPECTRUM=1 ENABLE_FMRADIO=1 ENABLE_MDC1200=1 ENABLE_MDC1200_EDIT=1 ENABLE_MDC1200_CONTACT=1
-	$(MAKE) build ENABLE_CHINESE_FULL=4 ENABLE_DOPPLER=1 ENABLE_SPECTRUM=1 ENABLE_FMRADIO=1 ENABLE_MDC1200=1 ENABLE_MDC1200_EDIT=1 ENABLE_MDC1200_CONTACT=1
-	$(MAKE) build ENABLE_CHINESE_FULL=4 ENABLE_DOPPLER=1 ENABLE_PINYIN=1 ENABLE_SPECTRUM=1 ENABLE_FMRADIO=1
-	$(MAKE) build ENABLE_CHINESE_FULL=4 ENABLE_PINYIN=1 ENABLE_4732=1 ENABLE_4732SSB=1  ENABLE_SPECTRUM=1
+	$(MAKE) build ENABLE_CHINESE_FULL=4 ENABLE_DOPPLER=0 ENABLE_PINYIN=0 ENABLE_SPECTRUM=0 ENABLE_FMRADIO=0
 
 test:
 	$(RM) *.bin
@@ -640,15 +648,18 @@ flash:
 version.o: .FORCE
 
 $(TARGET): $(OBJS)
-	@$(LD) $(LDFLAGS) $^ -o $@ $(LIBS)
+	@$(LD) $(LDFLAGS) $^ -o $@ $(LIBS) -lc -g -lm
+
 
 bsp/dp32g030/%.h: hardware/dp32g030/%.def
 
 %.o: %.c | $(BSP_HEADERS)
-	@$(CC) $(CFLAGS) $(INC) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INC) -c $< -o $@ -lc -g -lm
+
 
 %.o: %.S
-	@$(AS) $(ASFLAGS) $< -o $@
+	@$(AS) $(ASFLAGS) $< -o $@ -lc -g -lm
+
 
 .FORCE:
 

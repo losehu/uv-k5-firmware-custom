@@ -39,6 +39,6 @@ void RTC_INIT(void);
 void RTC_Set( );
 void RTC_Get();
 
-extern uint8_t time[6];
+extern uint8_t my_time[6];
 
 #endif

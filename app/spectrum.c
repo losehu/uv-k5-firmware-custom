@@ -1077,9 +1077,9 @@ static void OnKeyDownFreqInput(uint8_t key) {
            {
 
 
-        time[3]=tempFreq/100000;
-        time[4]=(tempFreq/1000)%100;
-        time[5]=(tempFreq/10)%100;
+        my_time[3]=tempFreq/100000;
+        my_time[4]=(tempFreq/1000)%100;
+        my_time[5]=(tempFreq/10)%100;
                         RTC_Set();
                      SetState(previousState);
 
@@ -1278,7 +1278,7 @@ static void Draw_DOPPLER_Process(uint8_t DATA_LINE) {
         else
             gFrameBuffer[6][i + 80] = 0b00100010;
     }
-    sprintf(String, "20%02d-%02d-%02d %02d:%02d:%02d", time[0], time[1], time[2], time[3], time[4], time[5]);
+    sprintf(String, "20%02d-%02d-%02d %02d:%02d:%02d", my_time[0], my_time[1], my_time[2], my_time[3], my_time[4], my_time[5]);
     GUI_DisplaySmallest(String, 1, DATA_LINE + 23, false, true);
 }
 
@@ -1530,7 +1530,7 @@ static void Tick() {
     if (gNextTimeslice_500ms) {
         gNextTimeslice_500ms = false;
 
-        // if a lot of steps then it takes long time
+        // if a lot of steps then it takes long my_time
         // we don't want to wait for whole scan
         // listening has it's own timer
         if(GetStepsCount()>128 && !isListening) {
@@ -1660,7 +1660,7 @@ void RTCHandler(void) {
 
 
     RTC_Get();
-    int32_t NOW_UNIX_TIME = UNIX_TIME(time);
+    int32_t NOW_UNIX_TIME = UNIX_TIME(my_time);
     time_diff = satellite.START_TIME_UNIX - NOW_UNIX_TIME; //卫星开始时间-现在时间
     time_diff1 = satellite.sum_time + time_diff;//结束-开始+开始-现在
 

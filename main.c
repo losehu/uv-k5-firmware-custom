@@ -13,7 +13,13 @@
  *     See the License for the specific language governing permissions and
  *     limitations under the License.
  */
-
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <unistd.h>
+#include "tle/eci.h"
 #include "bsp/dp32g030/gpio.h"
 #include "driver/gpio.h"
 #include "app/si.h"
@@ -39,9 +45,8 @@
 #include "app/uart.h"
 #include "string.h"
 #include "app/messenger.h"
-
+#include "time.h"
 #ifdef ENABLE_DOPPLER
-
 #include "app/doppler.h"
 
 #endif
@@ -94,7 +99,12 @@
 #include "ui/menu.h"
 #include "driver/eeprom.h"
 #include "driver/st7565.h"
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <unistd.h>
+#include "tle/eci.h"
 void _putchar(__attribute__((unused)) char c) {
 
 #ifdef ENABLE_UART
@@ -105,9 +115,8 @@ void _putchar(__attribute__((unused)) char c) {
 
 
 void Main(void) {
-    //BOOT_Mode_t  BootMode;
 
-    // Enable clock gating of blocks we need
+
     SYSCON_DEV_CLK_GATE = 0
                           | SYSCON_DEV_CLK_GATE_GPIOA_BITS_ENABLE
                           | SYSCON_DEV_CLK_GATE_GPIOB_BITS_ENABLE
@@ -117,197 +126,85 @@ void Main(void) {
                           | SYSCON_DEV_CLK_GATE_SARADC_BITS_ENABLE
                           | SYSCON_DEV_CLK_GATE_CRC_BITS_ENABLE
                           | SYSCON_DEV_CLK_GATE_AES_BITS_ENABLE
-                          | SYSCON_DEV_CLK_GATE_PWM_PLUS0_BITS_ENABLE
-        //                          | (1 << 12)
-#ifdef ENABLE_DOPPLER
-
-        | (1 << 22)
-#endif
-            ;
-
+                          | SYSCON_DEV_CLK_GATE_PWM_PLUS0_BITS_ENABLE;
     SYSTICK_Init();
-
     BOARD_Init();
-
-
-
-#ifdef ENABLE_UART
     UART_Init();
-#endif
 
-
-    memset(gDTMF_String, '-', sizeof(gDTMF_String));
-    gDTMF_String[sizeof(gDTMF_String) - 1] = 0;
-
-    BK4819_Init();
-
-
-    BOARD_ADC_GetBatteryInfo(&gBatteryCurrentVoltage, &gBatteryCurrent);
-
-
-    SETTINGS_InitEEPROM();
-
-
-    SETTINGS_LoadCalibration();
-#ifdef ENABLE_MESSENGER
-    MSG_Init();
-#endif
-#ifdef ENABLE_MDC1200
-    MDC1200_init();
-#endif
-//    char name[10]="START6789";
-//    EEPROM_WriteBuffer(0x02BA0,name,10);
-#ifdef ENABLE_DOPPLER
-
-    RTC_INIT();
-    INIT_DOPPLER_DATA();
-#endif
-
-    RADIO_ConfigureChannel(0, VFO_CONFIGURE_RELOAD);
-    RADIO_ConfigureChannel(1, VFO_CONFIGURE_RELOAD);
-
-
-    RADIO_SelectVfos();
-
-    RADIO_SetupRegisters(true);
-
-    for (uint32_t i = 0; i < ARRAY_SIZE(gBatteryVoltages); i++) {
-        BOARD_ADC_GetBatteryInfo(&gBatteryVoltages[i], &gBatteryCurrent);
-    }
-    BATTERY_GetReadings(false);
-
-#ifdef ENABLE_AM_FIX
-    AM_fix_init();
-#endif
-
-#if ENABLE_CHINESE_FULL == 0
-    gMenuListCount = 52;
-#else
-    gMenuListCount = 53;
-#endif
-    gKeyReading0 = KEY_INVALID;
-    gKeyReading1 = KEY_INVALID;
-    gDebounceCounter = 0;
-//#ifdef ENABLE_4732
-//
-//
-//    memset(gStatusLine, 0, sizeof(gStatusLine));
-//    UI_DisplayClear();
-//    ST7565_BlitStatusLine();  // blank status line
-//    ST7565_BlitFullScreen();
-//SI4732_Main();
-//#endif
-#ifdef ENABLE_TIMER
-
-
-    BOARD_PORTCON_Init();
-    BOARD_GPIO_Init();
-    ST7565_Init();
-    TIM0_INIT();
     memset(gStatusLine, 0, sizeof(gStatusLine));
-    UI_DisplayClear();
-    ST7565_BlitStatusLine();  // blank status line
+    memset(gFrameBuffer, 0, sizeof(gFrameBuffer));
+    ST7565_BlitStatusLine();
     ST7565_BlitFullScreen();
-    char str[20]={0}; // 分配一个足够大的字符串数组来存储转换后的字符串
-    while(1)
-    {
-        char str[6];
-        show_uint32(TIM0_CNT,0);
-        show_uint32(TIMERBASE0_LOW_CNT,1);
-        show_uint32(TIMERBASE0_HIGH_CNT,2);
-        show_uint32(TIMERBASE0_IF,3);
-        show_uint32(TIMERBASE0_IE,4);
-    }
-#endif
-    UI_DisplayWelcome();
-
-#ifdef ENABLE_BOOTLOADER
 
 
-    if(KEYBOARD_Poll() == KEY_MENU)
-{
-            for (int i = 0; i < 10*1024; i += 4) {
-                uint32_t c;
-                EEPROM_ReadBuffer(0x41000 + i, (uint8_t *) &c, 4);
-                write_to_memory(0x20001000 + i, c);
-            }
-            JUMP_TO_FLASH(0x2000110a, 0x20003ff0);
-}
-#endif
 
 
-    boot_counter_10ms = 250;
-
-    while (boot_counter_10ms > 0 || (KEYBOARD_Poll() != KEY_INVALID)) {
-
-        if (KEYBOARD_Poll() == KEY_EXIT
-#if ENABLE_CHINESE_FULL == 4
-            || gEeprom.POWER_ON_DISPLAY_MODE == POWER_ON_DISPLAY_MODE_NONE
-#endif
-                ) {    // halt boot beeps
-            boot_counter_10ms = 0;
-            break;
-        }
-#ifdef ENABLE_BOOT_BEEPS
-
-        if ((boot_counter_10ms % 25) == 0)
-                    AUDIO_PlayBeep(BEEP_880HZ_40MS_OPTIONAL);
-#endif
-
-    }
+        GPIO_SetBit(&GPIOB->DATA, GPIOB_PIN_BACKLIGHT);
+        UI_PrintStringSmall("Boot OK", 0, 127, 2);
+        UI_PrintStringSmall("Release Key", 0, 127, 6);
+        ST7565_BlitStatusLine();
+        ST7565_BlitFullScreen();
 
 
-#ifdef ENABLE_PWRON_PASSWORD
-    if (gEeprom.POWER_ON_PASSWORD < 1000000)
-    {
-        bIsInLockScreen = true;
-        UI_DisplayLock();
-        bIsInLockScreen = false;
-    }
-#endif
-
-    //	BOOT_ProcessMode();
-    GUI_SelectNextDisplay(DISPLAY_MAIN);
-
-    GPIO_ClearBit(&GPIOA->DATA, GPIOA_PIN_VOICE_0);
-
-    gUpdateStatus = true;
-
-#ifdef ENABLE_VOICE
-    {
-        uint8_t Channel;
-
-        AUDIO_SetVoiceID(0, VOICE_ID_WELCOME);
-
-        Channel = gEeprom.ScreenChannel[gEeprom.TX_VFO];
-        if (IS_MR_CHANNEL(Channel))
-        {
-            AUDIO_SetVoiceID(1, VOICE_ID_CHANNEL_MODE);
-            AUDIO_SetDigitVoice(2, Channel + 1);
-        }
-        else if (IS_FREQ_CHANNEL(Channel))
-            AUDIO_SetVoiceID(1, VOICE_ID_FREQUENCY_MODE);
-
-        AUDIO_PlaySingleVoice(0);
-    }
-#endif
-
-#ifdef ENABLE_NOAA
-    RADIO_ConfigureNOAA();
-#endif
+    const char *line0 = "ISS (ZARYA)";
+    const char *line1 = "1 25544U 98067A   25026.23381182  .00024447  00000+0  42619-3 0  9998";
+    const char *line2 = "2 25544  51.6395 290.1622 0002159 133.7357  10.9595 15.50580823493146";
+    // 解析TLE数据
+tle_data data;  // 直接在栈上创建一个tle_data
+            struct tm utc ;
+      utc.tm_isdst=0;
+            utc.tm_yday=26;
+            utc.tm_wday=1;
+            utc.tm_year=125;
+            utc.tm_mon =0;
+            utc.tm_mday=27;
+            utc.tm_hour=8;
+            utc.tm_min=28;
+            utc.tm_sec=42;
+        memset(gFrameBuffer,0,sizeof(gFrameBuffer));
+    ST7565_BlitFullScreen();
+ show_uint32(456,3) ;
+     SYSTEM_DelayMs(3000);
 
     while (1) {
 
-        APP_Update();
+//125 0 27 7 39 3Look: 57.454126 -18.469256
+//Pos: 51.546400, 125.533706
+//
+//125 0 27 7 39 4Look: 57.403762 -18.499665
+//Pos: 51.553088, 125.632517
+//
+//125 0 27 7 39 5Look: 57.353492 -18.530080
+//Pos: 51.559686, 125.731359
 
-        if (gNextTimeslice) {
-            APP_TimeSlice10ms();
-        }
+    if (tle_parse(line0, line1, line2, &data) == 0) {  // 修改为传递指针
+    } else {
+        lat_lon observer = { 50, 50, 50 }; // 设定观察者的经纬度和海拔
 
-        if (gNextTimeslice_500ms) {
-            APP_TimeSlice500ms();
-        }
+            jd target = to_jd(utc.tm_year + 1900, utc.tm_mon + 1, utc.tm_mday, utc.tm_hour, utc.tm_min, utc.tm_sec);
 
+            look_result look = eci_to_look(&data, observer, target);
 
+int line=0;
+    memset(gFrameBuffer[line],0,256);
+    char str[20] = {0};
+    sprintf(str, "%d.%d", (int)(look.azimuth), (int)(look.azimuth*100)%100);
+    UI_PrintStringSmall(str, 0, 127, line);
+        sprintf(str, "%d.%d", (int)(look.altitude), (int)(-look.altitude*100)%100);
+    UI_PrintStringSmall(str, 1, 127, line);
+    ST7565_BlitFullScreen();
+    SYSTEM_DelayMs(1000);
+ utc.tm_sec+=1;
+ if(utc.tm_sec >= 60) {
+   utc.tm_sec=0;
+ utc.tm_min+=1;
+
+ }
+ if(utc.tm_min >= 60) {
+   utc.tm_min=0;
+   utc.tm_hour+=1;
+ }
+    }
     }
 }
+

@@ -7,7 +7,7 @@
 #include "driver/system.h"
 #include "ui/helper.h"
 
-uint8_t time[6];
+uint8_t my_time[6];
 
 void RTC_INIT() {
 
@@ -19,7 +19,7 @@ void RTC_INIT() {
                | (0 << 24);//PRE_PERIOD=8s
 
 
-    EEPROM_ReadBuffer(0X2BC0, time, 6);
+    EEPROM_ReadBuffer(0X2BC0, my_time, 6);
 
     RTC_Set();
 

@@ -466,9 +466,7 @@ void BOARD_Init(void) {
     BACKLIGHT_InitHardware();
     BOARD_ADC_Init();
     ST7565_Init();
-#ifdef ENABLE_FMRADIO
-    BK1080_Init(0, false);
-#endif
+
 
 #if defined(ENABLE_UART) || defined(ENABLED_AIRCOPY)
     CRC_Init();
@@ -477,11 +475,11 @@ void BOARD_Init(void) {
 }
 
 void write_to_memory(uint32_t address, uint32_t data) {
-    // ½«µØÖ·ÊýÖµ×ª»»ÎªÖ¸Õë
+    // ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½Öµ×ªï¿½ï¿½ÎªÖ¸ï¿½ï¿½
     uint32_t *target_address = (uint32_t *) address;
-    // ÏòÄ¿±êµØÖ·Ð´ÈëÊý¾Ý
+    // ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½Ö·Ð´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     *target_address = data;
-    // ÎªÁË±ÜÃâÓÅ»¯£¬È·±£´úÂë²»»á±»ÓÅ»¯µô
+    // Îªï¿½Ë±ï¿½ï¿½ï¿½ï¿½Å»ï¿½ï¿½ï¿½È·ï¿½ï¿½ï¿½ï¿½ï¿½ë²»ï¿½á±»ï¿½Å»ï¿½ï¿½ï¿½
     volatile uint32_t read_back = *target_address;
 }
 //JUMP_TO_FLASH(0xa10A,0x20003ff0);

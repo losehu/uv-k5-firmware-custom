@@ -21,7 +21,7 @@
 #include "app/dtmf.h"
 #include "font.h"
 #include "app/chFrScanner.h"
-
+int vfo_num=0;
 #ifdef ENABLE_AM_FIX
 #include "am_fix.h"
 #endif

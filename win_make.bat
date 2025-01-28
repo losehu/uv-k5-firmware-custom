@@ -22,9 +22,9 @@
 ::
 :: Temporarily add the compiler and make program directories to the system PATH ..
 ::
-@set PATH="C:\Program Files (x86)\GNU Arm Embedded Toolchain\10 2021.10\bin";%PATH%
-@set PATH="C:\Program Files (x86)\GNU Arm Embedded Toolchain\10 2021.10\arm-none-eabi\bin";%PATH%
-@set PATH="C:\Program Files (x86)\GnuWin32\bin\";%PATH%
+@set PATH="C:\gcc-arm-none-eabi-10.3-2021.10\bin";%PATH%
+@set PATH="C:\gcc-arm-none-eabi-10.3-2021.10\arm-none-eabi\bin";%PATH%
+@set PATH="D:\Program Files (x86)\GnuWin32\bin\";%PATH%
 
 :: Do the compile
 ::
