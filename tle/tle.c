@@ -95,7 +95,7 @@ Mode before_mode;
 
 uint8_t local_selected=1;
 uint8_t local_inflag=0;
-
+uint8_t BACK_ON=1;
 uint8_t switch_mode=0;
 Mode mode=SELECT;
 satlist sate_info;
@@ -1333,7 +1333,12 @@ void LOCAL_KEY()
 }
 void TLE_KEY()
 {
-
+    if(my_kbd.current==KEY_SIDE2) {
+        if(BACK_ON)
+            PWM_PLUS0_CH0_COMP = 0<<2;
+        else         PWM_PLUS0_CH0_COMP = 255<<2;
+        BACK_ON=1-BACK_ON;
+    }
     if(mode==SATE||mode==SELECT
 #ifdef ENABLE_PIC
             ||  mode==PIC
