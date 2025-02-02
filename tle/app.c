@@ -501,10 +501,10 @@ void ToggleTX(bool on) {
         BK4819_WriteRegister(BK4819_REG_51, 0x9033);
 
         //亚音
-        if (sat_get.RX_TONE == 0)
+        if (sat_get.TX_TONE == 0)
             BK4819_ExitSubAu();
         else
-            BK4819_SetCTCSSFrequency(885);//sat_get.RX_TONE);
+            BK4819_SetCTCSSFrequency(sat_get.TX_TONE);//sat_get.RX_TONE);
 
         //功率
         FREQUENCY_Band_t Band = FREQUENCY_GetBand(fMeasure);
