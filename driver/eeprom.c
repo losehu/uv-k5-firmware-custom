@@ -122,8 +122,11 @@ void EEPROM_WriteBuffer(uint32_t Address, const void *pBuffer, uint8_t WRITE_SIZ
 
 //    if (pBuffer == NULL)
 //        return;
+
     uint8_t buffer[128];
     EEPROM_ReadBuffer(Address, buffer, WRITE_SIZE);
+        __disable_irq();
+
     if (memcmp(pBuffer, buffer, WRITE_SIZE) != 0) {
         uint8_t IIC_ADD =    0xA0 | Address >> 15 &14;
 
@@ -137,6 +140,7 @@ void EEPROM_WriteBuffer(uint32_t Address, const void *pBuffer, uint8_t WRITE_SIZ
         I2C_Stop();
     }
     SYSTEM_DelayMs(10);
+    __enable_irq();
 
 }
 

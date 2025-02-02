@@ -3,6 +3,8 @@
 #include "vec.h"
 #include "sgp.h"
 #include "util.h"
+#include "tle.h"
+
 
 const double f = 0.003352810665;
 const double esq = 0.006694379991;
@@ -86,7 +88,7 @@ look_result eci_to_look(tle_data *tle, lat_lon observer, jd time) {
     double rg = sqrt(rx * rx + ry * ry + rz * rz);
     double el = asin(top_z / rg);
 
-    look_result result = {to_degrees(az), to_degrees(el), rg};
+    look_result result = {to_degrees(az), to_degrees(el), rg, observer_eci};
     return result;
 }
 
@@ -112,6 +114,6 @@ lat_lon eci_to_lat_lon(tle_data *tle, gmst time) {
     } while (dphi > 1E-6 && --rounds > 0);
     double lon = atan2(sgp_eci.r.y, sgp_eci.r.x) - theta;
 
-    lat_lon result = { clamp(phi, 90), clamp(lon, 180) };
+    lat_lon result = { clamp(phi, 90), clamp(lon, 180),0,sgp_eci.r ,0,sgp_eci.r_dot};
     return result;
 }

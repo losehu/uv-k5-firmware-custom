@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <memory.h>
 #include <stdbool.h>
-
+#include "util.h"
 char substr(const char *str, int start, int len, char *buf) {
 
 

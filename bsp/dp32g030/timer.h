@@ -5,6 +5,8 @@
 #ifndef HARDWARE_DP32G030_TIMER_H
 #define HARDWARE_DP32G030_TIMER_H
 #include <stdint.h>
+#include "driver/keyboard.h"
+#include "app/spectrum.h"
 
 #define TIMERBASE0_ADD 0x40064000
 //TIMER0
@@ -29,8 +31,8 @@
 
 
 
-extern uint32_t TIM0_CNT;
 
 void TIM0_INIT();
+extern KeyboardState my_kbd ;
 
 #endif //UV_K5_FIRMWARE_CUSTOM_0_17_TIMER_H

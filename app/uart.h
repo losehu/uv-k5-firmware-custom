@@ -22,6 +22,7 @@
 bool UART_IsCommandAvailable(void);
 
 void UART_HandleCommand(void);
+void UART_READ() ;
 
 #endif
 

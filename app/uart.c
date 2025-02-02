@@ -256,7 +256,7 @@ static void CMD_0514(const uint8_t *pBuffer) {
     gSerialConfigCountDown_500ms = 12; // 6 sec
 
     // turn the LCD backlight off
-    BACKLIGHT_TurnOff();
+    // BACKLIGHT_TurnOff();
 
     SendVersion();
 }
@@ -289,9 +289,9 @@ static void CMD_051B(const uint8_t *pBuffer) {
 
     if (!bLocked)
 #endif
-    if (pCmd->Header.ID == 0x051B)
-        EEPROM_ReadBuffer(pCmd->Offset, Reply.Data.Data, pCmd->Size);
-    else
+    // if (pCmd->Header.ID == 0x051B)
+    //     EEPROM_ReadBuffer(pCmd->Offset, Reply.Data.Data, pCmd->Size);
+    // else
         EEPROM_ReadBuffer(((pCmd->Offset) << 16) + ((pCmd->ADD[1]) << 8) + (pCmd->ADD[0]), Reply.Data.Data, pCmd->Size);
     SendReply(&Reply, pCmd->Size + 8);
 }
@@ -666,49 +666,37 @@ static void CMD_0801(const uint8_t *pBuffer)
 
 void UART_HandleCommand(void) {
     switch (UART_Command.Header.ID) {
-#if ENABLE_CHINESE_FULL == 4
+// #if ENABLE_CHINESE_FULL == 4
         case 0x052B://read
             CMD_051B(UART_Command.Buffer);
             break;
         case 0x0538://write
             CMD_0538(UART_Command.Buffer);
             break;
-#endif
-#ifdef ENABLE_DOCK
-        case 0x0801:
-            CMD_0801(UART_Command.Buffer);
-            break;
+// #endif
 
-#endif
         case 0x0514:
             CMD_0514(UART_Command.Buffer);
             break;
 
-        case 0x051B:
-            CMD_051B(UART_Command.Buffer);
-            break;
+        // case 0x051B:
+        //     CMD_051B(UART_Command.Buffer);
+        //     break;
 
-        case 0x051D:
-            CMD_051D(UART_Command.Buffer);
-            break;
+        // case 0x051D:
+        //     CMD_051D(UART_Command.Buffer);
+        //     break;
 
 
-        case 0x0527:
-            CMD_0527();
-            break;
+//        case 0x0527:
+//            CMD_0527();
+//            break;
 
-        case 0x0529:
-            CMD_0529();
-            break;
-#ifdef ENABLE_BLOCK
+//        case 0x0529:
+//            CMD_0529();
+//            break;
 
-            case 0x052D:
-                CMD_052D(UART_Command.Buffer);
-                break;
-#endif
-        case 0x052F:
-            CMD_052F(UART_Command.Buffer);
-            break;
+
 
         case 0x05DD:
 #if defined(ENABLE_OVERLAY)
@@ -717,14 +705,14 @@ void UART_HandleCommand(void) {
             NVIC_SystemReset();
 #endif
             break;
-#ifdef ENABLE_UART_RW_BK_REGS
-            case 0x0601:
-            CMD_0601_ReadBK4819Reg(UART_Command.Buffer);
-            break;
 
-        case 0x0602:
-            CMD_0602_WriteBK4819Reg(UART_Command.Buffer);
-            break;
-#endif
+    }
+}
+void UART_READ() {
+    if (UART_IsCommandAvailable()) {
+        __disable_irq();
+        UART_HandleCommand();
+       __enable_irq();
+
     }
 }

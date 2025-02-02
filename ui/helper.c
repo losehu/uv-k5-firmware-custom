@@ -13,7 +13,7 @@
  *     See the License for the specific language governing permissions and
  *     limitations under the License.
  */
-
+#include "driver/system.h"
 #include <string.h>
 #include "driver/uart.h"
 #include "driver/st7565.h"
@@ -420,7 +420,12 @@ void PutPixelStatus(uint8_t x, uint8_t y, bool fill) {
     UI_DrawPixelBuffer(&gStatusLine, x, y, fill);
 }
 
+void DrawPoint(uint8_t x, uint8_t y)
+{
+    if(y<8)     UI_DrawPixelBuffer(&gStatusLine, x, y, 1);
+else     UI_DrawPixelBuffer(gFrameBuffer, x, y-8, 1);
 
+}
 void DrawVLine(int sy, int ey, int nx, bool fill) {
     for (int i = sy; i <= ey; i++) {
         if (i < 56 && nx < 128) {
@@ -463,9 +468,11 @@ void GUI_DisplaySmallest(const char *pString, uint8_t x, uint8_t y,
 void show_uint32(uint32_t num, uint8_t line) {
     memset(gFrameBuffer[line],0,128);
     char str[20] = {0};
-    sprintf(str, "%d", num);
+    sprintf(str, "%u", num);
     UI_PrintStringSmall(str, 0, 127, line);
     ST7565_BlitFullScreen();
+    SYSTEM_DelayMs(20);
+
 }
 
 void show_hex(uint32_t num, uint8_t line) {

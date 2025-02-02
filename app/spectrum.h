@@ -161,16 +161,45 @@ typedef struct PeakInfo {
     uint16_t i;
 } PeakInfo;
 extern uint32_t tempFreq;
-extern char freqInputString[11];
+extern char freqInputString[13];
 extern uint8_t freqInputIndex ;
 extern uint8_t freqInputDotIndex ;
  void ResetFreqInput() ;
 void UpdateFreqInput(KEY_Code_t key) ;
  void RenderFreqInput() ;
  void FreqInput() ;
-extern KEY_Code_t freqInputArr[10];
+extern KEY_Code_t freqInputArr[12];
  void APP_RunSpectrum(void);
  void DrawPower();
+
+
+uint8_t Rssi2PX(uint16_t rssi, uint8_t pxMin, uint8_t pxMax) ;
+ int Rssi2DBm(uint16_t rssi) ;
+ uint8_t DBm2S(int dbm) ;
+ int Rssi2DBm(uint16_t rssi) ;
+ uint16_t GetRegMenuValue(uint8_t st) ;
+ void SetRegMenuValue(uint8_t st, bool add) ;
+ void ToggleRX(bool on) ;
+ void RelaunchScan() ;
+ void TuneToPeak() ;
+ void SetF(uint32_t f) ;
+ void ToggleTX(bool on) ;
+ extern ScanInfo scanInfo;
+ extern SpectrumSettings settings;
+ extern uint8_t menuState ;
+ extern RegisterSpec registerSpecs[5] ;
+extern  bool isTransmitting ;
+ extern bool isListening ;
+extern bool monitorMode ;
+extern bool lockAGC ;
+ void UpdateListening() ;
+void UpdateStill() ;
+void DeInitSpectrum() ;
+bool IsPeakOverLevel() ;
+void ClampRssiTriggerLevel() ;
+ void UpdateRssiTriggerLevel(bool inc) ;
+void beijingToUtcTime(uint8_t *datetime) ;
+void utcToBeijingTime(uint8_t *datetime) ;
 #ifdef ENABLE_DOPPLER
 extern bool DOPPLER_MODE;
 void RTCHandler();

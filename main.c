@@ -46,27 +46,10 @@
 #include "string.h"
 #include "app/messenger.h"
 #include "time.h"
-#ifdef ENABLE_DOPPLER
 #include "app/doppler.h"
-
-#endif
-#ifdef ENABLE_AM_FIX
-
-#include "am_fix.h"
-
-#endif
-
 #include "bsp/dp32g030/rtc.h"
-
-#ifdef ENABLE_TIMER
 #include "bsp/dp32g030/uart.h"
 #include "bsp/dp32g030/timer.h"
-#endif
-#ifdef ENABLE_4732
-
-
-#endif
-
 #include "audio.h"
 #include "board.h"
 #include "misc.h"
@@ -82,18 +65,11 @@
 #include "driver/gpio.h"
 #include "driver/system.h"
 #include "driver/systick.h"
-
-#ifdef ENABLE_UART
-
+#include "bsp/dp32g030/pwmplus.h"
 #include "driver/uart.h"
-
-#endif
-
 #include "app/spectrum.h"
-
 #include "helper/battery.h"
 #include "helper/boot.h"
-
 #include "ui/lock.h"
 #include "ui/welcome.h"
 #include "ui/menu.h"
@@ -113,10 +89,10 @@ void _putchar(__attribute__((unused)) char c) {
 
 }
 
-
 void Main(void) {
+    //BOOT_Mode_t  BootMode;
 
-
+    // Enable clock gating of blocks we need
     SYSCON_DEV_CLK_GATE = 0
                           | SYSCON_DEV_CLK_GATE_GPIOA_BITS_ENABLE
                           | SYSCON_DEV_CLK_GATE_GPIOB_BITS_ENABLE
@@ -126,85 +102,172 @@ void Main(void) {
                           | SYSCON_DEV_CLK_GATE_SARADC_BITS_ENABLE
                           | SYSCON_DEV_CLK_GATE_CRC_BITS_ENABLE
                           | SYSCON_DEV_CLK_GATE_AES_BITS_ENABLE
-                          | SYSCON_DEV_CLK_GATE_PWM_PLUS0_BITS_ENABLE;
+                          | SYSCON_DEV_CLK_GATE_PWM_PLUS0_BITS_ENABLE
+                          | (1 << 12)
+
+                          | (1 << 22)
+                          ;
+
     SYSTICK_Init();
     BOARD_Init();
     UART_Init();
+    BK4819_Init();
 
-    memset(gStatusLine, 0, sizeof(gStatusLine));
-    memset(gFrameBuffer, 0, sizeof(gFrameBuffer));
-    ST7565_BlitStatusLine();
+    // BOARD_ADC_GetBatteryInfo(&gBatteryCurrentVoltage, &gBatteryCurrent);
+
+
+    SETTINGS_InitEEPROM();
+
+
+    SETTINGS_LoadCalibration();
+
+
+    RTC_INIT();
+    // INIT_DOPPLER_DATA();
+    // RADIO_ConfigureChannel(0, VFO_CONFIGURE_RELOAD);
+    // RADIO_ConfigureChannel(1, VFO_CONFIGURE_RELOAD);
+    // RADIO_SelectVfos();
+    RADIO_SetupRegisters(true);
+
+    // for (uint32_t i = 0; i < ARRAY_SIZE(gBatteryVoltages); i++)
+    //     BOARD_ADC_GetBatteryInfo(&gBatteryVoltages[i], &gBatteryCurrent);
+
+    // BATTERY_GetReadings(false);
+    TIM0_INIT();
+    memset(gStatusLine,0,sizeof(gStatusLine));
+    memset(gFrameBuffer,0,sizeof(gFrameBuffer));
+    ST7565_BlitStatusLine();  // blank status line
     ST7565_BlitFullScreen();
+    PWM_PLUS0_CH0_COMP = 255<<2;
+    GPIO_ClearBit(&GPIOA->DATA, GPIOA_PIN_VOICE_0);
 
+    //  if(tle_check()==0)
+    // {
 
+    //     show_uint32(888,0);
 
+    //     // if(sate_info.num>45 | sate_info.num==0) {
+    //     //     ERROR_DISPLAY();
+    //     //     NVIC_SystemReset();
+    //     // }
+    // }
+    // show_uint32(456,0);
+  TLE_Main();
 
-        GPIO_SetBit(&GPIOB->DATA, GPIOB_PIN_BACKLIGHT);
-        UI_PrintStringSmall("Boot OK", 0, 127, 2);
-        UI_PrintStringSmall("Release Key", 0, 127, 6);
-        ST7565_BlitStatusLine();
-        ST7565_BlitFullScreen();
-
-
-    const char *line0 = "ISS (ZARYA)";
-    const char *line1 = "1 25544U 98067A   25026.23381182  .00024447  00000+0  42619-3 0  9998";
-    const char *line2 = "2 25544  51.6395 290.1622 0002159 133.7357  10.9595 15.50580823493146";
-    // 解析TLE数据
-tle_data data;  // 直接在栈上创建一个tle_data
-            struct tm utc ;
-      utc.tm_isdst=0;
-            utc.tm_yday=26;
-            utc.tm_wday=1;
-            utc.tm_year=125;
-            utc.tm_mon =0;
-            utc.tm_mday=27;
-            utc.tm_hour=8;
-            utc.tm_min=28;
-            utc.tm_sec=42;
-        memset(gFrameBuffer,0,sizeof(gFrameBuffer));
-    ST7565_BlitFullScreen();
- show_uint32(456,3) ;
-     SYSTEM_DelayMs(3000);
+    // show_uint32((uint32_t)((int)a*1000),1);
 
     while (1) {
 
-//125 0 27 7 39 3Look: 57.454126 -18.469256
-//Pos: 51.546400, 125.533706
-//
-//125 0 27 7 39 4Look: 57.403762 -18.499665
-//Pos: 51.553088, 125.632517
-//
-//125 0 27 7 39 5Look: 57.353492 -18.530080
-//Pos: 51.559686, 125.731359
 
-    if (tle_parse(line0, line1, line2, &data) == 0) {  // 修改为传递指针
-    } else {
-        lat_lon observer = { 50, 50, 50 }; // 设定观察者的经纬度和海拔
+// for (int i = 0; i < 24; i+=num)
+// {
+//        EEPROM_ReadBuffer(0x2c00+i,byte_array+i,num);
 
-            jd target = to_jd(utc.tm_year + 1900, utc.tm_mon + 1, utc.tm_mday, utc.tm_hour, utc.tm_min, utc.tm_sec);
+// }
+    //    EEPROM_ReadBuffer(0x2c00,byte_array,24);
 
-            look_result look = eci_to_look(&data, observer, target);
 
-int line=0;
-    memset(gFrameBuffer[line],0,256);
-    char str[20] = {0};
-    sprintf(str, "%d.%d", (int)(look.azimuth), (int)(look.azimuth*100)%100);
-    UI_PrintStringSmall(str, 0, 127, line);
-        sprintf(str, "%d.%d", (int)(look.altitude), (int)(-look.altitude*100)%100);
-    UI_PrintStringSmall(str, 1, 127, line);
-    ST7565_BlitFullScreen();
-    SYSTEM_DelayMs(1000);
- utc.tm_sec+=1;
- if(utc.tm_sec >= 60) {
-   utc.tm_sec=0;
- utc.tm_min+=1;
+    // memcpy(&a,byte_array, 8);
+    // char aaa[25];
+    // floatToString(a,aaa);
+    // UI_PrintStringSmall(aaa,0,127,5);
 
- }
- if(utc.tm_min >= 60) {
-   utc.tm_min=0;
-   utc.tm_hour+=1;
- }
+    // ST7565_BlitFullScreen();
+// #define R 30
+// #define center_X 37
+// #define center_Y 32
+//          for (int y = center_Y - 3 * R; y <= center_Y + 3 * R; y++) {  // y方向按3倍步长计算
+//         int dy = (y - center_Y) / 3;  // 还原到圆的标准坐标系
+//         int dx_squared = R * R - dy * dy;  // 计算 (x - center_X)^2
+//         if (dx_squared >= 0) {
+//             int dx = (int)sqrt(dx_squared) * 2;  // 计算dx并按2倍进行扩展
+//             DrawPoint(center_X + dx, y);
+//             DrawPoint(center_X - dx, y);
+//         }
+//     }
+
+        // ST7565_BlitStatusLine();  // blank status line
+        // ST7565_BlitFullScreen();
+        // SYSTEM_DelayMs(20);
+
+
     }
-    }
+
 }
 
+//char c[170]={0};
+//char d[170]={0};
+//
+//char line0[10]="1233";
+//char line1[70]="1 25544U 98067A   25026.23381182  .00024447  00000+0  42619-3 0  9998";
+//char line2[70]="2 25544  51.6395 290.1622 0002159 133.7357  10.9595 15.50580823493146";
+//memcpy(c,line0,9);memcpy(c+9,line1,69);memcpy(c+9+69,line2,69);
+//c[9+69+69]=0xc4;
+//c[9+69+69+1]=9;
+//c[9+69+69+2]=0xc4;
+//c[9+69+69+3]=9;
+//
+//c[9+69+69+4]=0xc0;
+//c[9+69+69+5]=0x20;
+//c[9+69+69+6]=0x90;
+//c[9+69+69+7]=2;
+//
+//c[9+69+69+8]=0xc0;
+//c[9+69+69+9]=0x20;
+//c[9+69+69+10]=0x90;
+//c[9+69+69+11]=2;
+////    memcpy(c+9+69+69,2500,2);
+////    memcpy(c+9+69+69+2,2500,2);
+////    memcpy(c+9+69+69+2+2,43000000,4);
+////    memcpy(c+9+69+69+2+2+4,43000000,4);
+//
+//int cnts=0;
+//int mmmm=160;
+//for(int num=0;num<45;num++){
+//    uint32_t base_add  =0x1E200+num*mmmm;
+//    //    uint32_t name_add  =base_add;//
+//    //    uint32_t line1_add =base_add+9;//line1
+//    //    uint32_t line2_add =base_add+9+69;//line2
+//    //    uint32_t TT_add    =base_add+9+69+69;//发射亚音
+//    //    uint32_t RT_add    =base_add+9+69+69+2;//接收亚音
+//    //    uint32_t TF_add    =base_add+9+69+69+2+2;//发射频率
+//    //    uint32_t RF_add    =base_add+9+69+69+2+2+4;//接收频率
+//    int www=32;
+//    for(int i=0;i<160;i+=www){
+//        EEPROM_WriteBuffer(base_add+i, c+i,www) ;
+//    }
+//
+//
+//    //    EEPROM_WriteBuffer(base_add,"123456789",9) ;
+//    //    EEPROM_WriteBuffer(line1_add,line1,70) ;
+//    //    EEPROM_WriteBuffer(line2_add,line2,70) ;
+//    //    EEPROM_WriteBuffer(TT_add, 2500,2);
+//    //    EEPROM_WriteBuffer(RT_add,2500,2);
+//    //    EEPROM_WriteBuffer(TF_add, 43000000,4);
+//    //    EEPROM_WriteBuffer(RF_add,43000000,4);
+//}
+
+
+
+//
+////            show_uint32(now_sat.RX_FREQ,5);
+//        memset(gFrameBuffer[5],0,0);
+//        UI_PrintStringSmall(now_sat.RX_FREQ, 0, 127, 5);
+//        ST7565_BlitFullScreen();
+//                show_uint32(now_sat.TX_TONE,5);
+
+
+//        uint8_t my_time[6]={25,1,27,8,28,42};
+//        look_result look;
+//        lat_lon sub_point;
+//        lat_lon observer = { 50, 50, 50 };
+//int cnt=0;
+//        show_uint32(cal_sat(line0,line1,line2,observer,&look,&sub_point,my_time),0);
+//        for(int i=0;i<69;i++)
+//          {
+//          if(line2[i]!=now_sat.line2[i])
+//            {
+//            cnt++;
+//            }
+//          }
+//        show_uint32(cnt,1);

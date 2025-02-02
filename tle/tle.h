@@ -2,11 +2,44 @@
 #define FATE_TLE_H
 
 #include <stdio.h>
-
+#include "vec.h"
+#include "stdint.h"
+// typedef unsigned char uint8_t;
+// typedef unsigned short uint16_t;
+// typedef unsigned int uint32_t;
+//#include "eci.h"
 /**
  * A year represented as a 2-digit number
  */
 typedef char *year;
+/**
+ * Represents the result of calculating the look position
+ * for an observer to a satellite, where azimuth is the
+ * clockwise rotation from true north and the altitude is
+ * the degrees inclination above the observation plane.
+ * Units are in degrees.
+ */
+typedef struct {
+    double azimuth;
+    double altitude;
+    double range;
+    vec observer_eci;
+} look_result;
+
+/**
+ * Represents a location on the Earth with latitude and
+ * longitude coordinates. Positive north and east. Units
+ * are in degrees.
+ */
+typedef struct {
+    double lat;
+    double lon;
+    double height;
+    vec sate_eci; /* position */
+    double distance ;
+        vec r_dot; /* position */
+
+} lat_lon;
 
 typedef struct {
     /* TITLE LINE */
@@ -19,7 +52,7 @@ typedef struct {
     char class;
 
     char launch_yr[40];
-    short launch_num;
+    long launch_num;
     char launch_piece[20];
     unsigned char launch_piece_len;
 
@@ -32,7 +65,7 @@ typedef struct {
     double drag;
 
     unsigned char ephemeris;
-    short element_num;
+    long  element_num;
     /* checksum */
 
     /* LINE 2 */
@@ -46,7 +79,21 @@ typedef struct {
     int rev_num;
     /* checksum */
 } tle_data;
-
+typedef struct {
+    uint8_t num;//总数
+    uint8_t list[45];//第几个可用
+} satlist;
+typedef struct {
+    char name[10];
+    char line1[70];
+    char line2[70];
+    uint16_t TX_TONE;
+    uint16_t RX_TONE;
+    uint32_t TX_FREQ;
+    uint32_t RX_FREQ;
+    uint32_t UP_LINK;
+    uint32_t DOWN_LINK;
+} sat_parm;
 /**
  * Parses and TLE-formatted data using the 3 line format
  * that includes the title line.
@@ -70,6 +117,18 @@ void tle_print(FILE *stream, tle_data *data);
  *
  * @param data the data struct to free
  */
+uint8_t tle_check();
+void Read_TLE(uint8_t num,sat_parm *now_sat);
+
 void tle_free(tle_data *data);
+uint8_t cal_sat(char line0[25],char line1[70],char line2[70], lat_lon observer,look_result *look,lat_lon *sub_point,uint8_t my_time[6]);
+extern satlist sate_info;
+void TLE_Main();
+ void TLE_KEY();
+extern uint8_t is_PTT;
+extern sat_parm sat_get;
+extern uint8_t off_PTT;
+extern sat_parm sat_get;
+void floatToString(double num, char *str) ;
 
 #endif /* FATE_TLE_H */

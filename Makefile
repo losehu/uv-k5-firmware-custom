@@ -62,7 +62,7 @@ ENABLE_TURN ?=1
 # ---- DEBUGGING ----
 ENABLE_AM_FIX_SHOW_DATA       ?= 0
 ENABLE_AGC_SHOW_DATA          ?= 0
-ENABLE_TIMER		          ?= 0
+ENABLE_TIMER		          ?= 1
 
 ENABLE_WARNING 				  ?= 0
 ENABLE_MESSENGER              			= 0
@@ -71,10 +71,10 @@ ENABLE_MESSENGER_NOTIFICATION			= 0
 ENABLE_4732 =0
 ENABLE_4732SSB =0
 
-ENABLE_DOPPLER               =0
+ENABLE_DOPPLER               =1
 ENABLE_TLE = 1
 #############################################################
-PACKED_FILE_SUFFIX = LOSEHU132
+PACKED_FILE_SUFFIX = LOSEHU01D
 ifeq ($(ENABLE_PINYIN),1)
 	ENABLE_CHINESE_FULL=4
 endif
@@ -83,26 +83,7 @@ ifeq ($(ENABLE_DOPPLER),1)
 	ENABLE_SPECTRUM=1
 endif
 
-ifeq ($(ENABLE_CHINESE_FULL),0)
-    ifeq ($(ENABLE_ENGLISH),1)
-        $(info E)
-        PACKED_FILE_SUFFIX := $(PACKED_FILE_SUFFIX)E
-    endif
-endif
 
-ifeq ($(ENABLE_CHINESE_FULL),4)
-
-    ifeq ($(ENABLE_ENGLISH),1)
-        $(info EK)
-        PACKED_FILE_SUFFIX := $(PACKED_FILE_SUFFIX)EK
-    else ifeq ($(ENABLE_PINYIN),1)
-        $(info H)
-        PACKED_FILE_SUFFIX := $(PACKED_FILE_SUFFIX)H
-    else
-        $(info K)
-        PACKED_FILE_SUFFIX := $(PACKED_FILE_SUFFIX)K
-    endif
-endif
 ifeq ($(ENABLE_4732),1)
 	ENABLE_FMRADIO=0
 	PACKED_FILE_SUFFIX := $(PACKED_FILE_SUFFIX)S
@@ -163,9 +144,13 @@ endif
 OBJS += external/printf/printf.o
 ifeq ($(ENABLE_TIMER),1)
     OBJS += driver/rtc.o
+    OBJS += driver/timer.o
+
 endif
 ifeq ($(ENABLE_DOPPLER),1)
     OBJS += driver/rtc.o
+    OBJS += app/doppler.o
+
 endif
 ifeq ($(ENABLE_TLE),1)
     OBJS += tle/eci.o
@@ -174,6 +159,9 @@ ifeq ($(ENABLE_TLE),1)
     OBJS += tle/tle.o
     OBJS += tle/astrotime.o
     OBJS += tle/util.o
+
+    OBJS += tle/app.o
+
 
 endif
 ifeq ($(ENABLE_MDC1200),1)
@@ -203,7 +191,6 @@ ifeq ($(ENABLE_4732),1)
         OBJS += app/si.o
         OBJS += driver/si473x.o
         OBJS += helper/rds.o
-        OBJS += app/spectrum.o
 endif
 OBJS += driver/gpio.o
 OBJS += driver/i2c.o
@@ -234,9 +221,7 @@ endif
 OBJS += app/generic.o
 OBJS += app/main.o
 OBJS += app/menu.o
-ifeq ($(ENABLE_SPECTRUM), 1)
-OBJS += app/spectrum.o
-endif
+
 OBJS += app/scanner.o
 ifeq ($(ENABLE_UART),1)
 	OBJS += app/uart.o
@@ -609,7 +594,7 @@ endif
 
 full:
 	$(RM) *.bin
-	$(MAKE) build ENABLE_CHINESE_FULL=4 ENABLE_DOPPLER=0 ENABLE_PINYIN=0 ENABLE_SPECTRUM=0 ENABLE_FMRADIO=0
+	$(MAKE) build ENABLE_CHINESE_FULL=4 ENABLE_DOPPLER=1 ENABLE_TIMER=1
 
 test:
 	$(RM) *.bin

@@ -549,7 +549,7 @@ static void RADIO_SelectCurrentVfo(void) {
 
 void RADIO_SelectVfos(void) {
     // if crossband without DW is used then RX_VFO is the opposite to the TX_VFO
-    gEeprom.RX_VFO = (gEeprom.CROSS_BAND_RX_TX == CROSS_BAND_OFF || gEeprom.DUAL_WATCH != DUAL_WATCH_OFF)
+    gEeprom.RX_VFO =0; (gEeprom.CROSS_BAND_RX_TX == CROSS_BAND_OFF || gEeprom.DUAL_WATCH != DUAL_WATCH_OFF)
                      ? gEeprom.TX_VFO : !gEeprom.TX_VFO;
 
     gTxVfo = &gEeprom.VfoInfo[gEeprom.TX_VFO];
@@ -875,28 +875,27 @@ void RADIO_SetTxParameters(void) {
 }
 
 void RADIO_SetModulation(ModulationMode_t modulation) {
-    BK4819_AF_Type_t mod;
-    switch (modulation) {
-        default:
-        case MODULATION_FM:
-            mod = BK4819_AF_FM;
-            break;
-        case MODULATION_AM:
-            mod = BK4819_AF_AM;
-            break;
-        case MODULATION_USB:
-            mod = BK4819_AF_BASEBAND2;
-            break;
+    // switch (modulation) {
+    //     default:
+    //     case MODULATION_FM:
+ BK4819_AF_Type_t   mod = BK4819_AF_FM;
+//             break;
+//         case MODULATION_AM:
+//             mod = BK4819_AF_AM;
+//             break;
+//         case MODULATION_USB:
+//             mod = BK4819_AF_BASEBAND2;
+//             break;
 
-#ifdef ENABLE_BYP_RAW_DEMODULATORS
-            case MODULATION_BYP:
-            mod = BK4819_AF_UNKNOWN3;
-            break;
-        case MODULATION_RAW:
-            mod = BK4819_AF_BASEBAND1;
-            break;
-#endif
-    }
+// #ifdef ENABLE_BYP_RAW_DEMODULATORS
+//             case MODULATION_BYP:
+//             mod = BK4819_AF_UNKNOWN3;
+//             break;
+//         case MODULATION_RAW:
+//             mod = BK4819_AF_BASEBAND1;
+//             break;
+// #endif
+//     }
 
     BK4819_SetAF(mod);
 

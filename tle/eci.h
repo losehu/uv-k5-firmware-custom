@@ -1,33 +1,10 @@
 #ifndef FATE_ECI_H
 #define FATE_ECI_H
-
-#include "tle.h"
 #include "astrotime.h"
 #include <string.h>
+#include "tle.h"
 
-/**
- * Represents the result of calculating the look position
- * for an observer to a satellite, where azimuth is the
- * clockwise rotation from true north and the altitude is
- * the degrees inclination above the observation plane.
- * Units are in degrees.
- */
-typedef struct {
-    double azimuth;
-    double altitude;
-    double range;
-} look_result;
 
-/**
- * Represents a location on the Earth with latitude and
- * longitude coordinates. Positive north and east. Units
- * are in degrees.
- */
-typedef struct {
-    double lat;
-    double lon;
-    double height;
-} lat_lon;
 
 /**
  * Calculates the look position of the satellite from its
