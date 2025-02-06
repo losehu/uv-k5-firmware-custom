@@ -642,10 +642,8 @@ void Read_TLE(uint8_t num,sat_parm *now_sat)
 {
     uint32_t base_add  =0x1E200+num*160;
     char c[160];
-    int www=32;
-    for(int i=0; i<160; i+=www) {
-        EEPROM_ReadBuffer(base_add+i,c+i,www) ;
-    }
+    EEPROM_ReadBuffer(base_add,c,160) ;
+
 
     memcpy(now_sat->name,c,9);//卫星名字9B不包含结束0
     memcpy( now_sat->line1,c+9,69);//卫星TLE第一行 69B不包含结束0
@@ -911,17 +909,17 @@ int countIntegerDigits(int num) {
 void Write_LOCAL()
 {
 
-    if(observer.lat>=-90&&observer.lat<=90)        EEPROM_WriteBuffer(0x2c00, (uint8_t *)&observer.lat,8);
-    if(observer.lon>=-180&&observer.lon<=180)           EEPROM_WriteBuffer(0x2c00+8,(uint8_t *)&observer.lon,8);
-    if(observer.height>=-999999&& observer.height<=999999)              EEPROM_WriteBuffer(0x2c00+16,(uint8_t *)&observer.height,8);
+    if(observer.lat>=-90&&observer.lat<=90)        EEPROM_WriteBuffer(0x2BB0, (uint8_t *)&observer.lat,8);
+    if(observer.lon>=-180&&observer.lon<=180)           EEPROM_WriteBuffer(0x2BB0+8,(uint8_t *)&observer.lon,8);
+    if(observer.height>=-999999&& observer.height<=999999)              EEPROM_WriteBuffer(0x2BB0+16,(uint8_t *)&observer.height,8);
 }
 void Read_LOCAL()
 {
-    uint8_t byte_array[24];
+    EEPROM_ReadBuffer(0x2BB0, (uint8_t *)&observer,24);
 
-    EEPROM_ReadBuffer(0x2c00, (uint8_t *)&observer.lat,8);
-    EEPROM_ReadBuffer(0x2c00+8,(uint8_t *)&observer.lon,8);
-    EEPROM_ReadBuffer(0x2c00+16,(uint8_t *)&observer.height,8);
+    // EEPROM_ReadBuffer(0x2BB0, (uint8_t *)&observer.lat,8);
+    // EEPROM_ReadBuffer(0x2BB0+8,(uint8_t *)&observer.lon,8);
+    // EEPROM_ReadBuffer(0x2BB0+16,(uint8_t *)&observer.height,8);
 
     if(!(observer.lat>=-90&&observer.lat<=90))  observer.lat=85;
     if(!(observer.lon>=-180&&observer.lon<=180))observer.lon=130;

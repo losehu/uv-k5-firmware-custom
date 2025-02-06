@@ -326,7 +326,7 @@ void SETTINGS_LoadCalibration(void)
 
     //EEPROM_ReadBuffer(0x1F80 + gEeprom.MIC_SENSITIVITY, &Mic, 1);
     //gEeprom.MIC_SENSITIVITY_TUNING = (Mic < 32) ? Mic : 15;
-    gEeprom.MIC_SENSITIVITY_TUNING = gMicGain_dB2[gEeprom.MIC_SENSITIVITY];
+    gEeprom.MIC_SENSITIVITY_TUNING = 31;//gMicGain_dB2[gEeprom.MIC_SENSITIVITY];
 
     {
         struct

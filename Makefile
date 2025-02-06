@@ -74,7 +74,7 @@ ENABLE_4732SSB =0
 ENABLE_DOPPLER               =1
 ENABLE_TLE = 1
 #############################################################
-PACKED_FILE_SUFFIX = LOSEHU132K
+PACKED_FILE_SUFFIX = LOSEHU01D
 ifeq ($(ENABLE_PINYIN),1)
 	ENABLE_CHINESE_FULL=4
 endif
