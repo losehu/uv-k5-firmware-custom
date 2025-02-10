@@ -85,7 +85,6 @@ uint32_t fMeasure = 0;
 uint8_t freqInputIndex = 0;
 KEY_Code_t freqInputArr[12];
 
-uint16_t listenT = 0;
 const uint16_t RSSI_MAX_VALUE = 65535;
 char freqInputString[13];
 PeakInfo peak;
@@ -227,20 +226,14 @@ uint16_t GetRegMenuValue(uint8_t st) {
 
  void UpdateListening() {
     // preventKeypress = false;
-        listenT = 0;
-    
-    if (listenT) {
-        listenT--;
-        SYSTEM_DelayMs(1);
-        return;
-    }
+
+
 
 
     Measure();
     peak.rssi = scanInfo.rssi;
 
     if (IsPeakOverLevel() || monitorMode) {
-        listenT = 1000;
         return;
     }
 
@@ -356,12 +349,8 @@ void ToggleRX(bool on) {
     ToggleAFDAC(on);
     ToggleAFBit(on);
 
-    if (on) {
-        listenT = 1000;
-        BK4819_WriteRegister(0x43, listenBWRegValues[settings.listenBw]);
-    } else {
-        BK4819_WriteRegister(0x43, GetBWRegValueForScan());
-    }
+    BK4819_WriteRegister(0x43, listenBWRegValues[settings.listenBw]);
+
 }
 
 
