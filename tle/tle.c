@@ -889,8 +889,8 @@ void PIC_DISPLAY() {
 
     for (int i = 0; i < 39; i++) {
         //填充卫星
-        uint8_t x = fill_point[i][0] - 4 + center_x;
-        uint8_t y = center_y + fill_point[i][1] - 4;
+        int x = fill_point[i][0] - 4 + center_x;
+        int y = center_y + fill_point[i][1] - 4;
         if (x >= 0 && y >= 0 && x < 128 && y < 64) {
             if (y < 8) UI_DrawPixelBuffer(&gStatusLine, x, y, look.altitude >= 0);
             else UI_DrawPixelBuffer(gFrameBuffer, x, y - 8, look.altitude >= 0);
