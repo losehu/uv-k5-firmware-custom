@@ -104,8 +104,10 @@ void Main(void) {
                           | SYSCON_DEV_CLK_GATE_AES_BITS_ENABLE
                           | SYSCON_DEV_CLK_GATE_PWM_PLUS0_BITS_ENABLE
                           | (1 << 12)
-
+#ifndef ENABLE_RTC
                           | (1 << 22)
+#endif
+
                           ;
 
     SYSTICK_Init();
@@ -121,8 +123,11 @@ void Main(void) {
 
     SETTINGS_LoadCalibration();
 
+#ifndef ENABLE_RTC
 
     RTC_INIT();
+#endif
+
     // INIT_DOPPLER_DATA();
     // RADIO_ConfigureChannel(0, VFO_CONFIGURE_RELOAD);
     // RADIO_ConfigureChannel(1, VFO_CONFIGURE_RELOAD);

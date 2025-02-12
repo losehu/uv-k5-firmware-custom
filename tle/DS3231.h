@@ -1,0 +1,31 @@
+//
+// Created by losehu on 2025/2/10.
+//
+
+#ifndef DS3231_H
+#define DS3231_H
+#include <stdint.h>
+
+#define DS3231_I2C_ADDRESS_WR		0xD0
+#define DS3231_I2C_ADDRESS_RD		0xD1
+//寄存器宏定义
+#define DS3231_ADDRESS_SECOND		0x00
+#define DS3231_ADDRESS_MINUTE		0x01
+#define DS3231_ADDRESS_HOUR			0x02
+#define DS3231_ADDRESS_DAY			0x03
+#define DS3231_ADDRESS_DATE			0x04
+#define DS3231_ADDRESS_MOUTH		0x05
+#define DS3231_ADDRESS_YEAR			0x06
+#define DS3231_ADDRESS_A1_SECOND	0x07
+#define DS3231_ADDRESS_A1_MINUTE	0x08
+#define DS3231_ADDRESS_A1_HOUR		0x09
+#define DS3231_ADDRESS_A1_DAY       0x0A
+#define DS3231_ADDRESS_A2_MINUTE	0x0B
+#define DS3231_ADDRESS_A2_HOUR		0x0C
+#define DS3231_ADDRESS_A2_DAY		0x0D
+#define DS3231_ADDRESS_CONTROL		0x0E
+#define DS3231_ADDRESS_STATUS		0x0F
+void DS3231_GetTime(uint8_t get_time[6]);
+void DS3231_SetTime(uint8_t times_set[6]);
+
+#endif //DS3231_H

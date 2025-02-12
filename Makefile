@@ -70,11 +70,13 @@ ENABLE_MESSENGER_DELIVERY_NOTIFICATION	= 0
 ENABLE_MESSENGER_NOTIFICATION			= 0
 ENABLE_4732 =0
 ENABLE_4732SSB =0
-
+ENABLE_RTC =1
 ENABLE_DOPPLER               =1
 ENABLE_TLE = 1
+ENABLE_PIC =1
+
 #############################################################
-PACKED_FILE_SUFFIX = LOSEHU01D
+PACKED_FILE_SUFFIX = LOSEHU02
 ifeq ($(ENABLE_PINYIN),1)
 	ENABLE_CHINESE_FULL=4
 endif
@@ -82,8 +84,14 @@ endif
 ifeq ($(ENABLE_DOPPLER),1)
 	ENABLE_SPECTRUM=1
 endif
-
-
+ifeq ($(ENABLE_RTC),1)
+	PACKED_FILE_SUFFIX := $(PACKED_FILE_SUFFIX)R
+    $(info R)
+endif
+ifeq ($(ENABLE_TLE),1)
+	PACKED_FILE_SUFFIX := $(PACKED_FILE_SUFFIX)D
+    $(info D)
+endif
 ifeq ($(ENABLE_4732),1)
 	ENABLE_FMRADIO=0
 	PACKED_FILE_SUFFIX := $(PACKED_FILE_SUFFIX)S
@@ -150,7 +158,9 @@ endif
 ifeq ($(ENABLE_DOPPLER),1)
     OBJS += driver/rtc.o
     OBJS += app/doppler.o
-
+endif
+ifeq ($(ENABLE_RTC),1)
+    OBJS += tle/DS3231.o
 endif
 ifeq ($(ENABLE_TLE),1)
     OBJS += tle/eci.o
@@ -357,6 +367,9 @@ endif
 ifeq ($(ENABLE_SPECTRUM),1)
 CFLAGS += -DENABLE_SPECTRUM
 endif
+ifeq ($(ENABLE_PIC),1)
+CFLAGS += -DENABLE_PIC
+endif
 ifeq ($(ENABLE_MDC1200),1)
     CFLAGS  += -DENABLE_MDC1200
 endif
@@ -390,6 +403,9 @@ ifeq ($(ENABLE_MESSENGER),1)
 endif
 ifeq ($(ENABLE_DOPPLER),1)
 	CFLAGS  += -DENABLE_DOPPLER
+endif
+ifeq ($(ENABLE_RTC),1)
+	CFLAGS  += -DENABLE_RTC
 endif
 ifeq ($(ENABLE_TLE),1)
    	CFLAGS  += -DENABLE_TLE
@@ -594,7 +610,9 @@ endif
 
 full:
 	$(RM) *.bin
-	$(MAKE) build ENABLE_CHINESE_FULL=4 ENABLE_DOPPLER=1 ENABLE_TIMER=1
+	$(MAKE) build ENABLE_CHINESE_FULL=4 ENABLE_DOPPLER=1 ENABLE_TIMER=1 ENABLE_RTC=0 ENABLE_PIC=1
+	#$(MAKE) build ENABLE_CHINESE_FULL=4 ENABLE_DOPPLER=1 ENABLE_TIMER=1 ENABLE_RTC=1 ENABLE_PIC=1
+
 
 test:
 	$(RM) *.bin
