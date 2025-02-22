@@ -1,0 +1,29 @@
+{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    
+        "version": "0.2.0",
+        "configurations": [
+          {
+            "name": "K5 Debug (ST-Link)",
+            "cwd": "${workspaceRoot}",
+            "executable": "${workspaceRoot}/firmware", 
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "openocd",
+            "serverpath": "C:/OpenOCD-20240916-0.12.0/bin/openocd.exe", //OPENOCD PATH
+            "device": "dp32g030", 
+            "configFiles": [
+              "interface/stlink.cfg", //OPENOCD STLINK CFG PATH
+              "${workspaceRoot}/dp32g030.cfg" 
+            ],
+            "svdFile": "${workspaceRoot}/dp32g030.svd", 
+            "interface": "swd", 
+            "openOCDPreConfigLaunchCommands": [
+              "adapter speed 24000" 
+            ]
+          }
+        ]
+      
+}
