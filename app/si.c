@@ -204,9 +204,7 @@ void SI_init() {
 
 
     SI47XX_PowerUp();
-	// In FM mode need to reduce volume because audio output from SI in  FM mode is higher another mode
-    if (si4732mode == SI47XX_FM)
-	setVolume(55); 
+
     SI47XX_SetAutomaticGainControl(att > 0, att);
 }
 
