@@ -57,12 +57,22 @@ static const char SI47XX_SSB_BW_NAMES[6][8] = {
 static const char SI47XX_MODE_NAMES[5][4] = {
         "FM", "AM", "LSB", "USB", "CW",
 };
-extern State previousState,currentState ;
+typedef enum State {
+    SPECTRUM,
+    FREQ_INPUT,
+    STILL,
+} State;
+State previousState,currentState ;
 static SI47XX_FilterBW bw = SI47XX_BW_6_kHz;
 static SI47XX_SsbFilterBW ssbBw = SI47XX_SSB_BW_3_kHz;
 static int8_t currentBandIndex = -1;
 bool SNR_flag = true;
 bool SI_run = true;
+void SetState(State state) {
+    previousState = currentState;
+    currentState = state;
+
+}
 typedef struct // Band data
 {
     const char *bandName; // Bandname

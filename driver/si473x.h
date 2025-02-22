@@ -594,6 +594,7 @@ void SI47XX_SetSsbCapacitor(uint16_t v);
 uint32_t Read_FreqSaved();
 
 bool FreqCheck(uint32_t f);
+void setVolume(uint8_t volume) ;
 
 extern SI47XX_MODE si4732mode;
 extern RSQStatus rsqStatus;
