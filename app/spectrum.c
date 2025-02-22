@@ -96,7 +96,7 @@ bool preventKeypress = true;
 bool audioState = true;
 bool lockAGC = false;
 
-State currentState = SPECTRUM, previousState = SPECTRUM;
+State currentState ,previousState ;
 
 PeakInfo peak;
 ScanInfo scanInfo;
@@ -1581,7 +1581,8 @@ static void Tick() {
 
 
  void APP_RunSpectrum() {
-
+    currentState = SPECTRUM;
+    previousState=SPECTRUM;
     // TX here coz it always? set to active VFO
     vfo = gEeprom.TX_VFO;
     // set the current frequency in the middle of the display

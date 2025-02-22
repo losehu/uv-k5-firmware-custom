@@ -62,20 +62,8 @@ static SI47XX_SsbFilterBW ssbBw = SI47XX_SSB_BW_3_kHz;
 static int8_t currentBandIndex = -1;
 bool SNR_flag = true;
 bool SI_run = true;
-#ifndef ENABLE_SPECTRUM
-typedef enum State {
-    SPECTRUM,
-    FREQ_INPUT,
-    STILL,
-} State;
-State previousState,currentState ;
-void SetState(State state) {
-    previousState = currentState;
-    currentState = state;
-}
-#else
+
 #include "app/spectrum.h"
-#endif
 typedef struct // Band data
 {
     const char *bandName; // Bandname
@@ -619,7 +607,5 @@ void SI4732_Main() {
         SYSTEM_DelayMs(1);
     }
     SI_deinit();
-    // fix a bug when in SI mode using key 5 to input a frequency , after that can not go to spectrum
-  if (currentState==FREQ_INPUT )
-		SetState(SPECTRUM);
+
 }
