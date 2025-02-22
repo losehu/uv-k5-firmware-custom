@@ -3,7 +3,6 @@
 #include "../driver/si473x.h"
 #include "../helper/rds.h"
 #include "../misc.h"
-#include "app/spectrum.h"
 
 //
 // Created by RUPC on 2024/3/10.
@@ -74,6 +73,8 @@ void SetState(State state) {
     previousState = currentState;
     currentState = state;
 }
+#else
+#include "app/spectrum.h"
 #endif
 typedef struct // Band data
 {
