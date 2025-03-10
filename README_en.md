@@ -2,42 +2,40 @@
 
 **语言版本: [English](./README_en.md), [中文](./README.md).**
 
-# Replacing the bigger EEPROM
-* **2Mbit** or **1Mbit**
-**By replacing it, you may be able to achieve:**
-* Display and input in any language (implemented)
-* Automatic Doppler frequency shift function (implemented)
-* Custom boot-up images (implemented)
-* Custom SSTV images (guess)
-* DOPPLER MODE (implemented)
-* SI4732 FULL SSB SUPPORT
-* ......
-* More available flash allows for additional custom features(about 1.5K?).
+# [K5Web]( https://k5.vicicode.com/)
+* Supports online firmware functionality compilation, no need to install the compilation environment!!
+* Doppler satellite, boot image text, SI4732 SSB patch frequency writing method!
+* Supports **Workshop**, register and log in to upload custom firmware and boot images!!!
 
-
-# [K5Web](https://k5.vicicode.com/)
-* Supports online firmware compilation, no need to install a compilation environment!!
-* Doppler satellite, boot image text, and SI4732 SSB patch writing method!
-* Supports **Creative Workshop**, where you can upload custom firmware and boot images after registering and logging in!!!
-
-Visit: [K5Web](https://k5.vicicode.com/)
+Please visit: [K5Web]( https://k5.vicicode.com/)
 
 # [Custom Bootloader](https://github.com/losehu/uv-k5-bootloader-custom)
-
-* By creating a bootloader that loads into RAM, firmware switching is achieved.
-* Any firmware can be switched.
-* Currently, it is only suitable for 4Mib EEPROM, but it can be easily extended to other sizes of EEPROM by modifying the code.
+* Achieves firmware switching by creating a bootloader loaded into RAM
+* Can switch any firmware
+* Currently only applicable to 4Mib EEPROM, can be easily expanded to other EEPROM sizes by modifying the code
+  
+# [Standalone Doppler Satellite Firmware](https://github.com/losehu/uv-k5-firmware-custom/tree/doppler)
+* Can independently calculate up to 40 satellites’ angles, altitudes, speeds, distances, and frequency offsets
+* Requires expansion of 2Mit or larger EEPROM
+* Can display satellite positions with azimuth map
 
 # Version Description
-* Currently, the firmware is available in the following versions: **LOSEHUxxx**, **LOSEHUxxxK**, **LOSEHUxxxH**, **LOSEHUxxxE**, **LOSEHUxxxEK**, **LOSEHUxxxHS**
-* **LOSEHUxxx**: Chinese firmware, no additional EEPROM needed, includes MDC1200, spectrum, and radio.
-* **LOSEHUxxxK**: Chinese firmware, requires more than 1Mib EEPROM, includes Doppler mode, MDC1200, spectrum, radio, Chinese channel names, custom Chinese boot characters, and boot image.
-* **LOSEHUxxxH**: Chinese firmware, requires more than 2Mib EEPROM, includes Doppler mode, Chinese input method, spectrum, radio, Chinese channel names, custom Chinese boot characters, and boot image.
-* **LOSEHUxxxHS**: Chinese firmware, requires more than 2Mib EEPROM, includes SI4732 radio, Chinese input method, spectrum, Chinese channel names, custom Chinese boot characters, and boot image.
-* **LOSEHUxxxE**: English firmware, no additional EEPROM needed, includes MDC1200, spectrum, radio, and messaging.
-* **LOSEHUxxxEK**: English firmware, requires more than 1Mib EEPROM, includes Doppler mode, MDC1200, spectrum, radio, custom boot characters, and boot image.
 
+* The current versions are: **LOSEHUxxx**, **LOSEHUxxxK**, **LOSEHUxxxH**, **LOSEHUxxxE**, **LOSEHUxxxEK**, **LOSEHUxxxHS**
+* 
+| Version       | Language | EEPROM Requirement | MDC1200 | Doppler Mode | Spectrum | Radio | Chinese Channel Name | Custom Boot Image | Boot Image | Chinese Input Method | SMS |
+|---------------|----------|---------------------|---------|--------------|----------|-------|----------------------|-------------------|------------|----------------------|-----|
+| LOSEHUxxx     | Chinese | No expansion needed  | ✅      | ❌           | ✅       | ✅    | ❌                   | ❌                | ❌         | ❌                   | ❌  |
+| LOSEHUxxxK    | Chinese | 1Mib or above       | ✅      | ✅           | ✅       | ✅    | ✅                   | ✅                | ✅         | ❌                   | ❌  |
+| LOSEHUxxxH    | Chinese | 2Mib or above       | ✅      | ✅           | ✅       | ✅    | ✅                   | ✅                | ✅         | ✅                   | ❌  |
+| LOSEHUxxxHS   | Chinese | 2Mib or above       | ❌      | ❌           | ✅       | ✅    | ✅                   | ✅                | ✅         | ✅                   | ❌  |
+| LOSEHUxxxE    | English | No expansion needed  | ✅      | ❌           | ✅       | ✅    | ❌                   | ❌                | ❌         | ❌                   | ✅  |
+| LOSEHUxxxEK   | English | 1Mib or above       | ✅      | ✅           | ✅       | ✅    | ❌                   | ✅                | ✅         | ❌                   | ❌  |
 
+### Explanation:
+- ✅ means the feature is supported
+- ❌ means the feature is not supported
+- The "Radio" feature in the LOSEHUxxxHS version specifically refers to the SI4732 radio
 
 # Multi-functional K5/6 Firmware
 
