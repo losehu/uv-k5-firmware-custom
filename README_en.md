@@ -18,6 +18,11 @@ Please visit: [K5Web]( https://k5.vicicode.com/)
 * Can independently calculate up to 40 satellites’ angles, altitudes, speeds, distances, and frequency offsets
 * Requires expansion of 2Mit or larger EEPROM
 * Can display satellite positions with azimuth map
+  
+# [Larger Firmware System](https://github.com/losehu/uv-k5-system-custom/)
+* Allows UVK5 to load firmware larger than 64KB, up to 512MB
+* A larger firmware can implement all functions in a single firmware!!!
+* In development... Stay tuned
 
 # Version Description
 
