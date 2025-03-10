@@ -20,6 +20,11 @@
 * 需要扩容2Mit及以上的EEprom
 * 可以显示卫星位置，带方位图
 
+# [更大固件系统](https://github.com/losehu/uv-k5-system-custom/)
+* 可以让UVK5加载超过64KB大小的固件，最高512MB
+* 更大的固件可以在一个固件中实现所有功能！！！
+* 开发中。。。敬请期待
+
 # 版本说明
 
 * 目前分为如下几个版本：**LOSEHUxxx**、**LOSEHUxxxK**、**LOSEHUxxxH**、**LOSEHUxxxE**、**LOSEHUxxxEK**、**LOSEHUxxxHS**
