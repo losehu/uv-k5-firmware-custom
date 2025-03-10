@@ -14,6 +14,11 @@
 * 通过创立一个引导程序加载进RAM实现固件切换
 * 可切换任意固件
 * 目前仅适用于4Mib的EEPROM，通过修改代码可轻松拓展至其他大小EEPROM
+  
+# [独立的多普勒卫星固件](https://github.com/losehu/uv-k5-firmware-custom/tree/doppler)
+* 可以独立解算最多40个卫星的角度，高度，速度，距离，频偏
+* 需要扩容2Mit及以上的EEprom
+* 可以显示卫星位置，带方位图
 
 # 版本说明
 
