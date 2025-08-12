@@ -437,6 +437,13 @@ void RADIO_ConfigureSquelchAndOutputPower(VFO_Info_t *pInfo) {
         uint8_t num_noise=4;
         // make squelch more sensitive
         // note that 'noise' and 'glitch' values are inverted compared to 'rssi' values
+
+        if (Band < BAND4_174MHz && pInfo->CHANNEL_BANDWIDTH == BK4819_FILTER_BW_NARROW && gEeprom.SQUELCH_LEVEL <= 2)
+        {
+            num = 4;        // lower num to avoid always on
+            num_noise = 2;  // lower num_noise to avoid always on
+        }
+
         pInfo->SquelchOpenRSSIThresh = (pInfo->SquelchOpenRSSIThresh * 1) / num;
         pInfo->SquelchOpenNoiseThresh = (pInfo->SquelchOpenNoiseThresh * num_noise) / 1;
         pInfo->SquelchOpenGlitchThresh = (pInfo->SquelchOpenGlitchThresh * num_noise) / 1;
