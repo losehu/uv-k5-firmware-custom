@@ -10,7 +10,7 @@ static const double THREE_HALVES = 3.0 / 2.0;
 static const double TWO_THIRDS = 2.0 / 3.0;
 
 static const double a_E = 1.0;
-static const double Q_0 = 1.88027916E-9;
+static const double Q_0_MINUS_S_POW_4 = 1.88027916E-9;
 
 static const double k_e = 0.0743669161;
 static const double k_2 = 5.413080E-4;
@@ -46,13 +46,14 @@ sgp_result sgp4(tle_data *data, double minutes_since_epoch) {
 
     double perigee = (d_d_a_0 * (1 - data->eccentricity) - a_E) * XKMPER;
     double s = S;
-    double q_0_minus_s_pow_4 = Q_0;
+    double q_0_minus_s_pow_4 = Q_0_MINUS_S_POW_4;
+    const double q_0 = 120.0 / XKMPER + a_E;
     if (perigee >= 98 && perigee <= 156) {
         s = (d_d_a_0 * (1 - data->eccentricity)) - S + a_E; /* s_star */
-        q_0_minus_s_pow_4 = pow(Q_0 - s, 4.0);
+        q_0_minus_s_pow_4 = pow(q_0 - s, 4.0);
     } else if (perigee < 98) {
         s = 20.0 / XKMPER + a_E; /* s_star */
-        q_0_minus_s_pow_4 = pow(Q_0 - s, 4.0);
+        q_0_minus_s_pow_4 = pow(q_0 - s, 4.0);
     }
 
     double theta = cos(i_0);
@@ -67,7 +68,7 @@ sgp_result sgp4(tle_data *data, double minutes_since_epoch) {
              (8 + 24 * square(eta) + 3 * pow(eta, 4.0)));
     double C_1 = data->drag * C_2;
     double C_3 = (q_0_minus_s_pow_4 * pow(xi, 5.0) * A_3_COMMA_0 * d_d_n_0 * a_E * sin(i_0)) /
-                 (k_2 / data->eccentricity);
+                 (k_2 * data->eccentricity);
     double C_4 = 2 * d_d_n_0 * q_0_minus_s_pow_4 * pow(xi, 4.0) * d_d_a_0 * square(beta_0) * pow(1 - square(eta), -7.0 / 2.0) *
                  ((2 * eta * (1 + data->eccentricity * eta) + ONE_HALF * data->eccentricity + ONE_HALF * cube(eta)) -
                   ((2 * k_2 * xi) / (d_d_a_0 * (1 - square(eta)))) *

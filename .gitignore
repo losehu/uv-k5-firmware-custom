@@ -4,5 +4,6 @@ firmware
 /firmware.packed.bin
 /firmware.bin
 /compiled-firmware
+/tests/test_sgp4
 .vscode/
 .idea/

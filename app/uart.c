@@ -666,14 +666,14 @@ static void CMD_0801(const uint8_t *pBuffer)
 
 void UART_HandleCommand(void) {
     switch (UART_Command.Header.ID) {
-// #if ENABLE_CHINESE_FULL == 4
+#if ENABLE_CHINESE_FULL == 4
         case 0x052B://read
             CMD_051B(UART_Command.Buffer);
             break;
         case 0x0538://write
             CMD_0538(UART_Command.Buffer);
             break;
-// #endif
+#endif
 
         case 0x0514:
             CMD_0514(UART_Command.Buffer);

@@ -1,9 +1,12 @@
 #ifndef FATE_UTIL_H
 #define FATE_UTIL_H
-#define M_PI 3.14159265358979323846
 #include <stdlib.h>
 #include <math.h>
 #include <assert.h>
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
 
 /**
  * Multiplies the given number by itself.

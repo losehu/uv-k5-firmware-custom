@@ -304,6 +304,7 @@ endif
 
 OBJCOPY =arm-none-eabi-objcopy
 SIZE = arm-none-eabi-size
+HOST_CC ?= cc
 
 AUTHOR_STRING ?= LOSEHU
 # the user might not have/want git installed
@@ -617,6 +618,12 @@ full:
 test:
 	$(RM) *.bin
 	$(MAKE) build ENABLE_CHINESE_FULL=0   ENABLE_MDC1200=0 ENABLE_MDC1200_EDIT=0 ENABLE_MDC1200_CONTACT=0 ENABLE_FMRADIO=0 ENABLE_MESSENGER=1 ENABLE_MESSENGER_DELIVERY_NOTIFICATION=1 ENABLE_MESSENGER_NOTIFICATION=1
+
+test-sgp4: tests/test_sgp4
+	./tests/test_sgp4
+
+tests/test_sgp4: tests/test_sgp4.c tle/sgp.c tle/sgp.h tle/tle.h tle/vec.c tle/vec.h tle/util.h
+	$(HOST_CC) -std=c11 -Wall -Wextra -I. tests/test_sgp4.c tle/sgp.c tle/vec.c -lm -o $@
 
 
 
