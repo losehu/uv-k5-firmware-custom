@@ -432,54 +432,50 @@ void RADIO_ConfigureSquelchAndOutputPower(VFO_Info_t *pInfo) {
 
 
 #if ENABLE_SQUELCH_MORE_SENSITIVE
+        // Do the scaling in a wider type.  These fields are uint8_t, so storing
+        // the multiplied values before clamping used to wrap (for example,
+        // 65 * 4 became 4) and could leave the squelch permanently open.
+        uint16_t openRssi = pInfo->SquelchOpenRSSIThresh / 4u;
+        uint16_t closeRssi = pInfo->SquelchCloseRSSIThresh / 4u;
+        uint16_t openNoise = pInfo->SquelchOpenNoiseThresh * 4u;
+        uint16_t closeNoise = pInfo->SquelchCloseNoiseThresh * 4u;
+        uint16_t openGlitch = pInfo->SquelchOpenGlitchThresh * 4u;
+        uint16_t closeGlitch = pInfo->SquelchCloseGlitchThresh * 4u;
 
-        uint8_t num=4;
-        uint8_t num_noise=4;
-        // make squelch more sensitive
-        // note that 'noise' and 'glitch' values are inverted compared to 'rssi' values
-        pInfo->SquelchOpenRSSIThresh = (pInfo->SquelchOpenRSSIThresh * 1) / num;
-        pInfo->SquelchOpenNoiseThresh = (pInfo->SquelchOpenNoiseThresh * num_noise) / 1;
-        pInfo->SquelchOpenGlitchThresh = (pInfo->SquelchOpenGlitchThresh * num_noise) / 1;
+        openNoise = openNoise > 127u ? 127u : openNoise;
+        closeNoise = closeNoise > 127u ? 127u : closeNoise;
+        openGlitch = openGlitch > 255u ? 255u : openGlitch;
+        closeGlitch = closeGlitch > 255u ? 255u : closeGlitch;
 
-
-        pInfo->SquelchCloseRSSIThresh = ( pInfo->SquelchCloseRSSIThresh * 1) / num;
-        pInfo->SquelchCloseNoiseThresh = (pInfo->SquelchCloseNoiseThresh * num_noise) / 1;
-        pInfo->SquelchCloseGlitchThresh = (pInfo->SquelchCloseGlitchThresh * num_noise) / 1;
-
-
-        pInfo->SquelchOpenRSSIThresh = (pInfo->SquelchOpenRSSIThresh > 255) ? 255 : pInfo->SquelchOpenRSSIThresh;
-        pInfo->SquelchCloseRSSIThresh = ( pInfo->SquelchCloseRSSIThresh > 255) ? 255 :  pInfo->SquelchCloseRSSIThresh;
-        pInfo->SquelchOpenNoiseThresh = (pInfo->SquelchOpenNoiseThresh > 127) ? 127 : pInfo->SquelchOpenNoiseThresh;
-        pInfo->SquelchCloseNoiseThresh = (pInfo->SquelchCloseNoiseThresh > 127) ? 127 : pInfo->SquelchCloseNoiseThresh;
-        pInfo->SquelchOpenGlitchThresh = (pInfo->SquelchOpenGlitchThresh > 255) ? 255 : pInfo->SquelchOpenGlitchThresh;
-        pInfo->SquelchCloseGlitchThresh = (pInfo->SquelchCloseGlitchThresh > 255) ? 255 : pInfo->SquelchCloseGlitchThresh;
-
-
-        // ensure the 'close' threshold is lower than the 'open' threshold
-        if ( pInfo->SquelchCloseRSSIThresh + 4 >= pInfo->SquelchOpenRSSIThresh)
-            if (pInfo->SquelchOpenRSSIThresh >= 4)
-                 pInfo->SquelchCloseRSSIThresh = pInfo->SquelchOpenRSSIThresh - 4;
+        // Preserve hysteresis after saturation.  Noise and glitch thresholds
+        // have the opposite sense to RSSI thresholds.
+        if (closeRssi + 4u >= openRssi) {
+            if (openRssi >= 4u)
+                closeRssi = openRssi - 4u;
             else
-                pInfo->SquelchOpenRSSIThresh =  pInfo->SquelchCloseRSSIThresh + 4;
-            
-        if (pInfo->SquelchCloseGlitchThresh - 2 <= pInfo->SquelchOpenGlitchThresh)
-            if (pInfo->SquelchOpenGlitchThresh <= 253)
-                pInfo->SquelchCloseGlitchThresh = pInfo->SquelchOpenGlitchThresh + 2;
-            else
-                pInfo->SquelchOpenGlitchThresh = pInfo->SquelchCloseGlitchThresh - 2;
+                openRssi = closeRssi + 4u;
+        }
 
-        if (pInfo->SquelchCloseNoiseThresh - 2 <= pInfo->SquelchOpenNoiseThresh)
-            if (pInfo->SquelchOpenNoiseThresh <= 125)
-                pInfo->SquelchCloseNoiseThresh = pInfo->SquelchOpenNoiseThresh + 2;
+        if (closeGlitch <= openGlitch + 2u) {
+            if (openGlitch <= 253u)
+                closeGlitch = openGlitch + 2u;
             else
-                pInfo->SquelchOpenNoiseThresh = pInfo->SquelchCloseNoiseThresh - 2;
+                openGlitch = closeGlitch - 2u;
+        }
 
-//
-//        pInfo->SquelchOpenRSSIThresh    = (pInfo->SquelchOpenRSSIThresh    > 255) ? 255 : pInfo->SquelchOpenRSSIThresh;
-//        pInfo->SquelchCloseRSSIThresh   = ( pInfo->SquelchCloseRSSIThresh   > 255) ? 255 :  pInfo->SquelchCloseRSSIThresh;
-//
-//        pInfo->SquelchOpenGlitchThresh  = (pInfo->SquelchOpenGlitchThresh  > 255) ? 255 : pInfo->SquelchOpenGlitchThresh;
-//        pInfo->SquelchCloseGlitchThresh = (pInfo->SquelchCloseGlitchThresh > 255) ? 255 : pInfo->SquelchCloseGlitchThresh;
+        if (closeNoise <= openNoise + 2u) {
+            if (openNoise <= 125u)
+                closeNoise = openNoise + 2u;
+            else
+                openNoise = closeNoise - 2u;
+        }
+
+        pInfo->SquelchOpenRSSIThresh = openRssi;
+        pInfo->SquelchCloseRSSIThresh = closeRssi;
+        pInfo->SquelchOpenNoiseThresh = openNoise;
+        pInfo->SquelchCloseNoiseThresh = closeNoise;
+        pInfo->SquelchOpenGlitchThresh = openGlitch;
+        pInfo->SquelchCloseGlitchThresh = closeGlitch;
 
 #else
         pInfo->SquelchOpenNoiseThresh = (pInfo->SquelchOpenNoiseThresh > 127) ? 127 : pInfo->SquelchOpenNoiseThresh;

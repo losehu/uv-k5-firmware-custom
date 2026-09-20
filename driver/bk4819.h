@@ -69,6 +69,14 @@ void     BK4819_Init(void);
 
 uint16_t BK4819_ReadRegister(BK4819_REGISTER_t Register);
 void     BK4819_WriteRegister(BK4819_REGISTER_t Register, uint16_t Data);
+
+// Compact representation for constant register-write sequences.  Keeping the
+// pair in one aligned word avoids padding and lets repeated setup code share a
+// single loop instead of emitting one call sequence per register.
+typedef uint32_t BK4819_RegisterValue_t;
+#define BK4819_REGISTER_VALUE(Register, Value) \
+    ((((uint32_t)(Register)) << 16) | ((uint16_t)(Value)))
+void     BK4819_WriteRegisterGroup(const BK4819_RegisterValue_t *Group, uint8_t Count);
 void     BK4819_SetRegValue(RegisterSpec s, uint16_t v);
 void     BK4819_WriteU8(uint8_t Data);
 void     BK4819_WriteU16(uint16_t Data);

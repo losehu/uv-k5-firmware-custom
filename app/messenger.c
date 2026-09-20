@@ -44,8 +44,8 @@ unsigned char numberOfLettersAssignedToKey[9] = { 4, 3, 3, 3, 3, 3, 4, 3, 4 };
 char T9TableNum[9][4] = { {'1', '\0', '\0', '\0'}, {'2', '\0', '\0', '\0'}, {'3', '\0', '\0', '\0'}, {'4', '\0', '\0', '\0'}, {'5', '\0', '\0', '\0'}, {'6', '\0', '\0', '\0'}, {'7', '\0', '\0', '\0'}, {'8', '\0', '\0', '\0'}, {'9', '\0', '\0', '\0'} };
 unsigned char numberOfNumsAssignedToKey[9] = { 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 
-char cMessage[TX_MSG_LENGTH];
-char lastcMessage[TX_MSG_LENGTH];
+char cMessage[TX_MSG_LENGTH + 1];
+char lastcMessage[TX_MSG_LENGTH + 1];
 char rxMessage[4][MAX_RX_MSG_LENGTH + 2];
 unsigned char cIndex = 0;
 unsigned char prevKey = 0, prevLetter = 0;
@@ -53,7 +53,8 @@ KeyboardType keyboardType = UPPERCASE;
 
 MsgStatus msgStatus = READY;
 
-uint8_t msgFSKBuffer[MSG_HEADER_LENGTH + MAX_RX_MSG_LENGTH];
+// The extra byte is a local string terminator and is never sent over the air.
+uint8_t msgFSKBuffer[MSG_PACKET_LENGTH + 1];
 
 uint16_t gErrorsDuringMSG;
 
@@ -64,6 +65,18 @@ uint8_t keyTickCounter = 0;
 // -----------------------------------------------------
 
 void MSG_FSKSendData() {
+    static const BK4819_RegisterValue_t setupRegisters[] = {
+        BK4819_REGISTER_VALUE(BK4819_REG_2B, 0x0005),
+        BK4819_REGISTER_VALUE(BK4819_REG_58, 0x3C03),
+        BK4819_REGISTER_VALUE(BK4819_REG_72, TONE2_FREQ),
+        BK4819_REGISTER_VALUE(BK4819_REG_70, 0x00E0),
+        BK4819_REGISTER_VALUE(BK4819_REG_5D, MSG_PACKET_LENGTH << 8),
+        BK4819_REGISTER_VALUE(BK4819_REG_5A, 0x7240),
+        BK4819_REGISTER_VALUE(BK4819_REG_5B, 0x99A7),
+        BK4819_REGISTER_VALUE(BK4819_REG_5C, 0x5625),
+        BK4819_REGISTER_VALUE(BK4819_REG_59, 0xC0F8),
+        BK4819_REGISTER_VALUE(BK4819_REG_59, 0x00F8),
+    };
 
     uint16_t fsk_reg59;
 
@@ -104,59 +117,12 @@ void MSG_FSKSendData() {
     // disable the 300Hz HPF and FM pre-emphasis filter
     //
     const uint16_t filt_val = BK4819_ReadRegister(BK4819_REG_2B);
-    BK4819_WriteRegister(BK4819_REG_2B, (1u << 2) | (1u << 0));
 
     // *******************************************
     // setup the FFSK modem as best we can
 
     // Uses 1200/1800 Hz FSK tone frequencies 1200 bits/s
     //
-    BK4819_WriteRegister(BK4819_REG_58, // 0x37C3);   // 001 101 11 11 00 001 1
-        (1u << 13) |		// 1 FSK TX mode selection
-                            //   0 = FSK 1.2K and FSK 2.4K TX .. no tones, direct FM
-                            //   1 = FFSK 1200/1800 TX
-                            //   2 = ???
-                            //   3 = FFSK 1200/2400 TX
-                            //   4 = ???
-                            //   5 = NOAA SAME TX
-                            //   6 = ???
-                            //   7 = ???
-                            //
-        (7u << 10) |		// 0 FSK RX mode selection
-                            //   0 = FSK 1.2K, FSK 2.4K RX and NOAA SAME RX .. no tones, direct FM
-                            //   1 = ???
-                            //   2 = ???
-                            //   3 = ???
-                            //   4 = FFSK 1200/2400 RX
-                            //   5 = ???
-                            //   6 = ???
-                            //   7 = FFSK 1200/1800 RX
-                            //
-        (0u << 8) |			// 0 FSK RX gain
-                            //   0 ~ 3
-                            //
-        (0u << 6) |			// 0 ???
-                            //   0 ~ 3
-                            //
-        (0u << 4) |			// 0 FSK preamble type selection
-                            //   0 = 0xAA or 0x55 due to the MSB of FSK sync byte 0
-                            //   1 = ???
-                            //   2 = 0x55
-                            //   3 = 0xAA
-                            //
-        (1u << 1) |			// 1 FSK RX bandwidth setting
-                            //   0 = FSK 1.2K .. no tones, direct FM
-                            //   1 = FFSK 1200/1800
-                            //   2 = NOAA SAME RX
-                            //   3 = ???
-                            //   4 = FSK 2.4K and FFSK 1200/2400
-                            //   5 = ???
-                            //   6 = ???
-                            //   7 = ???
-                            //
-        (1u << 0));			// 1 FSK enable
-                            //   0 = disable
-                            //   1 = enable
 
     // REG_72
     //
@@ -166,7 +132,6 @@ void MSG_FSKSendData() {
     //
     // tone-2 = 1200Hz
     // 18583,92
-    BK4819_WriteRegister(BK4819_REG_72, TONE2_FREQ);
 
     // REG_70
     //
@@ -185,11 +150,6 @@ void MSG_FSKSendData() {
     //
     // enable tone-2, set gain
     //
-    BK4819_WriteRegister(BK4819_REG_70,   // 0 0000000 1 1100000
-        ( 0u << 15) |    // 0
-        ( 0u <<  8) |    // 0
-        ( 1u <<  7) |    // 1
-        (96u <<  0));    // 96
 
     // REG_59
     //
@@ -226,22 +186,18 @@ void MSG_FSKSendData() {
                 (1u <<  3) |   // 0/1     sync length
                 (0u <<  0);    // 0 ~ 7   ???
 
-    // Set packet length (not including pre-amble and sync bytes that we can't seem to disable)
-    BK4819_WriteRegister(BK4819_REG_5D, ((MSG_HEADER_LENGTH + MAX_RX_MSG_LENGTH) << 8));
 
     // REG_5A
     //
     // <15:8> 0x55 FSK Sync Byte 0 (Sync Byte 0 first, then 1,2,3)
     // <7:0>  0x55 FSK Sync Byte 1
     //
-    BK4819_WriteRegister(BK4819_REG_5A, 0x7240);                   // bytes 1 & 2
 
     // REG_5B
     //
     // <15:8> 0x55 FSK Sync Byte 2 (Sync Byte 0 first, then 1,2,3)
     // <7:0>  0xAA FSK Sync Byte 3
     //
-    BK4819_WriteRegister(BK4819_REG_5B, 0x99a7);                   // bytes 2 & 3
 
     // CRC setting (plus other stuff we don't know what)
     //
@@ -257,17 +213,15 @@ void MSG_FSKSendData() {
     //
     // NB, this also affects TX pre-amble in some way
     //
-    BK4819_WriteRegister(BK4819_REG_5C, 0x5625);   // 010101100 0 100101
 //		BK4819_WriteRegister(0x5C, 0xAA30);   // 101010100 0 110000
 //		BK4819_WriteRegister(0x5C, 0x0030);   // 000000000 0 110000
 
-    BK4819_WriteRegister(BK4819_REG_59, (1u << 15) | (1u << 14) | fsk_reg59);   // clear FIFO's
-    BK4819_WriteRegister(BK4819_REG_59, fsk_reg59);
+    BK4819_WriteRegisterGroup(setupRegisters, ARRAY_SIZE(setupRegisters));
 
     SYSTEM_DelayMs(100);
 
     {	// load the entire packet data into the TX FIFO buffer
-        const uint16_t len_buff = (MSG_HEADER_LENGTH + MAX_RX_MSG_LENGTH);
+        const uint16_t len_buff = MSG_PACKET_LENGTH;
         for (size_t i = 0, j = 0; i < len_buff; i += 2, j++) {
             BK4819_WriteRegister(BK4819_REG_5F, (msgFSKBuffer[i + 1] << 8) | msgFSKBuffer[i]);
         }
@@ -351,8 +305,8 @@ void MSG_Send(const char *txMessage, bool bServiceMessage) {
         msgFSKBuffer[MAX_RX_MSG_LENGTH + 0] = 'I';
         msgFSKBuffer[MAX_RX_MSG_LENGTH + 1] = 'D';
         msgFSKBuffer[MAX_RX_MSG_LENGTH + 2] = '0';
-        msgFSKBuffer[(MSG_HEADER_LENGTH + MAX_RX_MSG_LENGTH) - 1] = '#';
-        msgFSKBuffer[(MSG_HEADER_LENGTH + MAX_RX_MSG_LENGTH) ] = '\0';
+        msgFSKBuffer[MSG_PACKET_LENGTH - 1] = '#';
+        msgFSKBuffer[MSG_PACKET_LENGTH] = '\0';
 
         BK4819_DisableDTMF();
 
@@ -600,9 +554,9 @@ void solve_sign(const uint16_t interrupt_bits) {
                     mdc1200_rx_buffer[mdc1200_rx_buffer_index++] = (word >> 8) & 0xff;
 #ifdef ENABLE_MESSENGER
 
-                  if (gFSKWriteIndex < sizeof(msgFSKBuffer))
+                  if (gFSKWriteIndex < MSG_PACKET_LENGTH)
                     msgFSKBuffer[gFSKWriteIndex++] = validate_char((read_reg[i]  >> 0) & 0xff);
-                if (gFSKWriteIndex < sizeof(msgFSKBuffer))
+                if (gFSKWriteIndex < MSG_PACKET_LENGTH)
                     msgFSKBuffer[gFSKWriteIndex++] = validate_char((read_reg[i]  >> 8) & 0xff);
 #endif
             }
