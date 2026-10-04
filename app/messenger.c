@@ -27,8 +27,6 @@ bool stop_mdc_flag=0;
 
 //bool stop_mdc_rx=0;
 enum {
-    MSG_BUTTON_EVENT_SHORT = 0,
-    MSG_BUTTON_EVENT_LONG = 1 << 1,
     MAX_MSG_LENGTH = TX_MSG_LENGTH - 1,
     TONE2_FREQ = 0x3065
 };
@@ -446,9 +444,9 @@ void processBackspace() {
 }
 
 void  MSG_ProcessKeys(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
-    uint8_t state = bKeyPressed + 2 * bKeyHeld;
-
-    if (state == MSG_BUTTON_EVENT_SHORT) {
+    // Handle short actions on the initial press so MENU does not depend on
+    // release timing. Long actions still run once, when a held key is released.
+    if (bKeyPressed && !bKeyHeld) {
 
         if (!msgComposeMode) {
             switch (Key) {
@@ -513,7 +511,7 @@ void  MSG_ProcessKeys(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
                 break;
         }
 
-    } else if (state == MSG_BUTTON_EVENT_LONG) {
+    } else if (!bKeyPressed && bKeyHeld) {
 
         switch (Key)
         {
