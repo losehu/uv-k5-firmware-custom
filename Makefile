@@ -86,6 +86,8 @@ ifeq ($(ENABLE_CHINESE_FULL),0)
     ifeq ($(ENABLE_ENGLISH),1)
         $(info E)
         PACKED_FILE_SUFFIX := $(PACKED_FILE_SUFFIX)E
+        ENABLE_CUSTOM_SIDEFUNCTIONS := 0
+        ENABLE_SIDEFUNCTIONS_SEND := 0
     endif
 endif
 

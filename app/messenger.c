@@ -26,30 +26,29 @@ bool stop_mdc_flag=0;
 
 
 //bool stop_mdc_rx=0;
-const uint8_t MSG_BUTTON_STATE_HELD = 1 << 1;
-
-const uint8_t MSG_BUTTON_EVENT_SHORT =  0;
-const uint8_t MSG_BUTTON_EVENT_LONG =  MSG_BUTTON_STATE_HELD;
-
-const uint8_t MAX_MSG_LENGTH = TX_MSG_LENGTH - 1;
-
-const uint16_t TONE2_FREQ = 0x3065; // 0x2854
+enum {
+    MSG_BUTTON_EVENT_SHORT = 0,
+    MSG_BUTTON_EVENT_LONG = 1 << 1,
+    MAX_MSG_LENGTH = TX_MSG_LENGTH - 1,
+    TONE2_FREQ = 0x3065
+};
 
 #define NEXT_CHAR_DELAY 100 // 10ms tick
 
-char T9TableLow[9][4] = { {',', '.', '?', '!'}, {'a', 'b', 'c', '\0'}, {'d', 'e', 'f', '\0'}, {'g', 'h', 'i', '\0'}, {'j', 'k', 'l', '\0'}, {'m', 'n', 'o', '\0'}, {'p', 'q', 'r', 's'}, {'t', 'u', 'v', '\0'}, {'w', 'x', 'y', 'z'} };
-char T9TableUp[9][4] = { {',', '.', '?', '!'}, {'A', 'B', 'C', '\0'}, {'D', 'E', 'F', '\0'}, {'G', 'H', 'I', '\0'}, {'J', 'K', 'L', '\0'}, {'M', 'N', 'O', '\0'}, {'P', 'Q', 'R', 'S'}, {'T', 'U', 'V', '\0'}, {'W', 'X', 'Y', 'Z'} };
-unsigned char numberOfLettersAssignedToKey[9] = { 4, 3, 3, 3, 3, 3, 4, 3, 4 };
-
-char T9TableNum[9][4] = { {'1', '\0', '\0', '\0'}, {'2', '\0', '\0', '\0'}, {'3', '\0', '\0', '\0'}, {'4', '\0', '\0', '\0'}, {'5', '\0', '\0', '\0'}, {'6', '\0', '\0', '\0'}, {'7', '\0', '\0', '\0'}, {'8', '\0', '\0', '\0'}, {'9', '\0', '\0', '\0'} };
-unsigned char numberOfNumsAssignedToKey[9] = { 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+static const char T9Table[9][4] = {
+    {',', '.', '?', '!'}, {'a', 'b', 'c', 0}, {'d', 'e', 'f', 0},
+    {'g', 'h', 'i', 0}, {'j', 'k', 'l', 0}, {'m', 'n', 'o', 0},
+    {'p', 'q', 'r', 's'}, {'t', 'u', 'v', 0}, {'w', 'x', 'y', 'z'}
+};
 
 char cMessage[TX_MSG_LENGTH + 1];
 char lastcMessage[TX_MSG_LENGTH + 1];
-char rxMessage[4][MAX_RX_MSG_LENGTH + 2];
+char rxMessage[MSG_HISTORY_COUNT][MAX_RX_MSG_LENGTH + 2];
 unsigned char cIndex = 0;
 unsigned char prevKey = 0, prevLetter = 0;
 KeyboardType keyboardType = UPPERCASE;
+uint8_t msgHistoryCount = 0;
+bool msgComposeMode = false;
 
 MsgStatus msgStatus = READY;
 
@@ -268,14 +267,25 @@ void MSG_FSKSendData() {
 
 // -----------------------------------------------------
 
-void moveUP(char (*rxMessages)[MAX_RX_MSG_LENGTH + 2]) {
-    // Shift existing lines up
-    strcpy(rxMessages[0], rxMessages[1]);
-    strcpy(rxMessages[1], rxMessages[2]);
-    strcpy(rxMessages[2], rxMessages[3]);
+static char *MSG_NewHistoryLine(void) {
+    if (msgHistoryCount < MSG_HISTORY_COUNT)
+        return rxMessage[msgHistoryCount++];
 
-    // Insert the new line at the last position
-    memset(rxMessages[3], 0, sizeof(rxMessages[3]));
+    memmove(rxMessage[0], rxMessage[1],
+            (MSG_HISTORY_COUNT - 1) * sizeof(rxMessage[0]));
+    return rxMessage[MSG_HISTORY_COUNT - 1];
+}
+
+static void MSG_AddHistory(char prefix, const char *text) {
+    char *line = MSG_NewHistoryLine();
+    size_t length = strlen(text);
+    if (length > MAX_MSG_LENGTH)
+        length = MAX_MSG_LENGTH;
+
+    line[0] = prefix;
+    line[1] = ' ';
+    memcpy(line + 2, text, length);
+    line[length + 2] = '\0';
 }
 
 void MSG_Send(const char *txMessage, bool bServiceMessage) {
@@ -291,13 +301,18 @@ void MSG_Send(const char *txMessage, bool bServiceMessage) {
 
 //		memset(msgFSKBuffer, 0, sizeof(msgFSKBuffer));
 
+        memset(msgFSKBuffer, 0, sizeof(msgFSKBuffer));
+
         // ? ToDo
         // first 20 byte sync, msg type and ID
         msgFSKBuffer[0] = 'M';
         msgFSKBuffer[1] = 'S';
 
         // next 20 for msg
-        memcpy(msgFSKBuffer + 2, txMessage, TX_MSG_LENGTH);
+        size_t txLength = strlen(txMessage);
+        if (txLength > MAX_MSG_LENGTH)
+            txLength = MAX_MSG_LENGTH;
+        memcpy(msgFSKBuffer + 2, txMessage, txLength);
 
         // CRC ? ToDo
 
@@ -330,8 +345,7 @@ void MSG_Send(const char *txMessage, bool bServiceMessage) {
 
         enable_msg_rx(true);
         if (!bServiceMessage) {
-            moveUP(rxMessage);
-            sprintf(rxMessage[3], "> %s", txMessage);
+            MSG_AddHistory('>', txMessage);
 //			memset(lastcMessage, 0, sizeof(lastcMessage));
             memcpy(lastcMessage, txMessage, TX_MSG_LENGTH);
             lastcMessage[TX_MSG_LENGTH]=0;
@@ -372,30 +386,33 @@ void MSG_Init() {
     prevKey = 0;
     prevLetter = 0;
     cIndex = 0;
+    msgHistoryCount = 0;
+    msgComposeMode = false;
 }
 
 // ---------------------------------------------------------------------------------
 
+static char MSG_GetKeyChar(uint8_t key, uint8_t letter) {
+    if (keyboardType == NUMERIC)
+        return '0' + key;
+
+    const uint8_t count = (key == KEY_1 || key == KEY_7 || key == KEY_9) ? 4 : 3;
+    char character = T9Table[key - 1][letter % count];
+    if (keyboardType == UPPERCASE && character >= 'a')
+        character -= 'a' - 'A';
+    return character;
+}
+
 void insertCharInMessage(uint8_t key) {
     if ( key == KEY_0 ) {
-        if ( keyboardType == NUMERIC ) {
-            cMessage[cIndex] = '0';
-        } else {
-            cMessage[cIndex] = ' ';
-        }
+        cMessage[cIndex] = keyboardType == NUMERIC ? '0' : ' ';
         if ( cIndex < MAX_MSG_LENGTH ) {
             cIndex++;
         }
     } else if (prevKey == key)
     {
         cIndex = (cIndex > 0) ? cIndex - 1 : 0;
-        if ( keyboardType == NUMERIC ) {
-            cMessage[cIndex] = T9TableNum[key - 1][(++prevLetter) % numberOfNumsAssignedToKey[key - 1]];
-        } else if ( keyboardType == LOWERCASE ) {
-            cMessage[cIndex] = T9TableLow[key - 1][(++prevLetter) % numberOfLettersAssignedToKey[key - 1]];
-        } else {
-            cMessage[cIndex] = T9TableUp[key - 1][(++prevLetter) % numberOfLettersAssignedToKey[key - 1]];
-        }
+        cMessage[cIndex] = MSG_GetKeyChar(key, ++prevLetter);
         if ( cIndex < MAX_MSG_LENGTH ) {
             cIndex++;
         }
@@ -406,13 +423,7 @@ void insertCharInMessage(uint8_t key) {
         if ( cIndex >= MAX_MSG_LENGTH ) {
             cIndex = (cIndex > 0) ? cIndex - 1 : 0;
         }
-        if ( keyboardType == NUMERIC ) {
-            cMessage[cIndex] = T9TableNum[key - 1][prevLetter];
-        } else if ( keyboardType == LOWERCASE ) {
-            cMessage[cIndex] = T9TableLow[key - 1][prevLetter];
-        } else {
-            cMessage[cIndex] = T9TableUp[key - 1][prevLetter];
-        }
+        cMessage[cIndex] = MSG_GetKeyChar(key, prevLetter);
         if ( cIndex < MAX_MSG_LENGTH ) {
             cIndex++;
         }
@@ -438,6 +449,26 @@ void  MSG_ProcessKeys(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
     uint8_t state = bKeyPressed + 2 * bKeyHeld;
 
     if (state == MSG_BUTTON_EVENT_SHORT) {
+
+        if (!msgComposeMode) {
+            switch (Key) {
+                case KEY_0...KEY_9:
+                    msgComposeMode = true;
+                    insertCharInMessage(Key);
+                    keyTickCounter = 0;
+                    break;
+                case KEY_MENU:
+                    msgComposeMode = true;
+                    break;
+                case KEY_EXIT:
+                    gRequestDisplayScreen = DISPLAY_MAIN;
+                    break;
+                default:
+                    break;
+            }
+            gUpdateDisplay = true;
+            return;
+        }
 
         switch (Key)
         {
@@ -465,10 +496,13 @@ void  MSG_ProcessKeys(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
                 break;*/
             case KEY_MENU:
                 // Send message
-                MSG_Send(cMessage, false);
+                if (cIndex > 0) {
+                    MSG_Send(cMessage, false);
+                    msgComposeMode = false;
+                }
                 break;
             case KEY_EXIT:
-                gRequestDisplayScreen = DISPLAY_MAIN;
+                msgComposeMode = false;
                 break;
 
             default:
@@ -484,7 +518,15 @@ void  MSG_ProcessKeys(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
         switch (Key)
         {
             case KEY_F:
-                MSG_Init();
+                if (msgComposeMode) {
+                    cIndex = 0;
+                    cMessage[0] = '\0';
+                    prevKey = 0;
+                    prevLetter = 0;
+                } else {
+                    memset(rxMessage, 0, sizeof(rxMessage));
+                    msgHistoryCount = 0;
+                }
                 break;
             default:
 #ifdef    ENABLE_WARNING
@@ -605,7 +647,11 @@ void solve_sign(const uint16_t interrupt_bits) {
 #ifdef ENABLE_MESSENGER_DELIVERY_NOTIFICATION
                 // If the next 4 bytes are "RCVD", then it's a delivery notification
                 if (msgFSKBuffer[5] == 'R' && msgFSKBuffer[6] == 'C' && msgFSKBuffer[7] == 'V' && msgFSKBuffer[8] == 'D') {
-                    rxMessage[3][strlen(rxMessage[3])] = '+';
+                    if (msgHistoryCount > 0) {
+                        char *line = rxMessage[msgHistoryCount - 1];
+                        if (line[0] == '>')
+                            line[0] = '+';
+                    }
                     gUpdateStatus = true;
                     gUpdateDisplay = true;
                 }
@@ -614,9 +660,8 @@ void solve_sign(const uint16_t interrupt_bits) {
                 bool show_flag=0;
                 if (msgFSKBuffer[0] == 'M' && msgFSKBuffer[1] == 'S')
                 {
-                    moveUP(rxMessage);
                     show_flag=1;
-                    snprintf(rxMessage[3], TX_MSG_LENGTH + 2, "< %s", &msgFSKBuffer[2]);
+                    MSG_AddHistory('<', (char *)&msgFSKBuffer[2]);
                     MSG_Send("\x1b\x1b\x1bRCVD", true);
 
                 }
@@ -633,6 +678,9 @@ void solve_sign(const uint16_t interrupt_bits) {
                     else {
                         gUpdateDisplay = true;
                     }
+                    msgComposeMode = false;
+                    hasNewMessage = 0;
+                    gRequestDisplayScreen = DISPLAY_MSG;
                 }
             }
 //        }

@@ -24,7 +24,8 @@ enum {
     TX_MSG_LENGTH = 30,
     MSG_HEADER_LENGTH = 20,
     MAX_RX_MSG_LENGTH = TX_MSG_LENGTH + 2,
-    MSG_PACKET_LENGTH = MSG_HEADER_LENGTH + MAX_RX_MSG_LENGTH
+    MSG_PACKET_LENGTH = MSG_HEADER_LENGTH + MAX_RX_MSG_LENGTH,
+    MSG_HISTORY_COUNT = 10
 };
 //const uint8_t TX_MSG_LENGTH = 30;
 //const uint8_t MAX_RX_MSG_LENGTH = TX_MSG_LENGTH + 2;
@@ -33,7 +34,9 @@ uint8_t validate_char( uint8_t rchar ) ;
 extern KeyboardType keyboardType;
 extern uint16_t gErrorsDuringMSG;
 extern char cMessage[TX_MSG_LENGTH + 1];
-extern char rxMessage[4][MAX_RX_MSG_LENGTH + 2];
+extern char rxMessage[MSG_HISTORY_COUNT][MAX_RX_MSG_LENGTH + 2];
+extern uint8_t msgHistoryCount;
+extern bool msgComposeMode;
 extern uint8_t hasNewMessage;
 extern uint8_t keyTickCounter;
 
@@ -43,7 +46,6 @@ void MSG_Send(const char *txMessage, bool bServiceMessage);
 extern unsigned char cIndex ;
 //extern bool stop_mdc_rx;
 extern uint8_t msgFSKBuffer[MSG_PACKET_LENGTH + 1];
-void moveUP(char (*rxMessages)[MAX_RX_MSG_LENGTH + 2]) ;
 
 extern MsgStatus msgStatus ;
 extern bool stop_mdc_flag;

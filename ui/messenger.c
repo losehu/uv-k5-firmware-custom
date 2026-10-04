@@ -2,57 +2,42 @@
 #ifdef ENABLE_MESSENGER
 
 #include <string.h>
-#include "app/spectrum.h"
-#include <string.h>
 #include "app/messenger.h"
 #include "driver/st7565.h"
-#include "external/printf/printf.h"
-#include "misc.h"
-#include "settings.h"
 #include "ui/messenger.h"
 #include "ui/helper.h"
-#include "ui/inputbox.h"
-#include "ui/ui.h"
-#ifdef ENABLE_DOCK
-#include "app/uart.h"
-#endif
 
 void UI_DisplayMSG(void) {
-
-
     UI_DisplayClear();
-    UI_PrintStringSmall("MES", 1, 127, 0);
 
-
-
-    uint8_t mPos = 8;
-    const uint8_t mLine = 7;
-    for (int i = 0; i < 4; ++i) {
-        GUI_DisplaySmallest(rxMessage[i], 2, mPos, false, true);
-        mPos += mLine;
-    }
-
-
-const uint8_t *p;
-    if (keyboardType == NUMERIC) {
-        p= BITMAP_1;
-    } else if (keyboardType == UPPERCASE) {
-        p= BITMAP_TX;
+    if (!msgComposeMode) {
+        if (msgHistoryCount == 0) {
+            UI_PrintStringSmall("NO MESSAGE", 0, 127, 3);
+            GUI_DisplaySmallest("MENU:NEW  EXIT:BACK", 26, 50, false, true);
+        } else {
+            uint8_t y = 62 - msgHistoryCount * 6;
+            for (uint8_t i = 0; i < msgHistoryCount; ++i, y += 6)
+                GUI_DisplaySmallest(rxMessage[i], 1, y, false, true);
+        }
     } else {
-        p= BITMAP_t;
+        const char *mode = keyboardType == NUMERIC ? "123" :
+                           keyboardType == UPPERCASE ? "ABC" : "abc";
+
+        UI_PrintStringSmall("BROADCAST", 0, 127, 0);
+        GUI_DisplaySmallest(mode, 114, 1, false, true);
+        GUI_DisplaySmallest("TO: ALL ON FREQUENCY", 24, 10, false, true);
+
+        cMessage[cIndex] = '_';
+        const char split = cMessage[18];
+        cMessage[18] = '\0';
+        UI_PrintStringSmall(cMessage, 1, 0, 3);
+        cMessage[18] = split;
+        if (cIndex >= 18)
+            UI_PrintStringSmall(cMessage + 18, 1, 0, 4);
+        cMessage[cIndex] = '\0';
+        GUI_DisplaySmallest("MENU:SEND  F:DELETE", 26, 49, false, true);
+        GUI_DisplaySmallest("*:ABC/abc/123  EXIT:LIST", 14, 57, false, true);
     }
-    memcpy(gFrameBuffer[0], p, 6);
-
-
-    cMessage[cIndex]='_';
-    cMessage[cIndex+1]='\0';
-
-    GUI_DisplaySmallest(cMessage, 5, 48, false, true);
-    cMessage[cIndex]='\0';
-
-
-
-
 
     ST7565_BlitFullScreen();
 }
