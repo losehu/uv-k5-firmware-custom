@@ -31,8 +31,6 @@ enum {
     TONE2_FREQ = 0x3065
 };
 
-#define NEXT_CHAR_DELAY 100 // 10ms tick
-
 static const char T9Table[9][4] = {
     {',', '.', '?', '!'}, {'a', 'b', 'c', 0}, {'d', 'e', 'f', 0},
     {'g', 'h', 'i', 0}, {'j', 'k', 'l', 0}, {'m', 'n', 'o', 0},
@@ -444,8 +442,9 @@ void processBackspace() {
 }
 
 void  MSG_ProcessKeys(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
-    // Handle short actions on the initial press so MENU does not depend on
-    // release timing. Long actions still run once, when a held key is released.
+    // Handle short actions on the initial press. Some key-release events can be
+    // consumed by the display transition, so waiting for release makes NEW
+    // appear unresponsive on the radio.
     if (bKeyPressed && !bKeyHeld) {
 
         if (!msgComposeMode) {
@@ -471,7 +470,7 @@ void  MSG_ProcessKeys(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
         switch (Key)
         {
             case KEY_0...KEY_9:
-                if ( keyTickCounter > NEXT_CHAR_DELAY) {
+                if ( keyTickCounter > MSG_KEY_TIMEOUT_TICKS) {
                     prevKey = 0;
                     prevLetter = 0;
                 }
@@ -575,56 +574,51 @@ void solve_sign(const uint16_t interrupt_bits) {
     if (rx_fifo_almost_full) {
         const uint16_t count = BK4819_ReadRegister(BK4819_REG_5E) & (7u << 0);  // almost full threshold
 #if defined(ENABLE_MDC1200)||defined(ENABLE_MESSENGER)
-        uint16_t read_reg[count];
-#endif
+        // Fetch the FIFO once and pass each word to the enabled decoders.
+        for (uint16_t i = 0; i < count; i++) {
+            const uint16_t reg = BK4819_ReadRegister(0x5F);
 #ifdef ENABLE_MDC1200
-
-        {
-
-            // fetch received packet data
-            for (int i = 0; i < count; i++) {
-                read_reg[i]=BK4819_ReadRegister(0x5F);
-                const uint16_t word =read_reg[i] ^ (rx_sync_neg ? 0xFFFF : 0x0000);
+            const uint16_t word = reg ^ (rx_sync_neg ? 0xFFFF : 0x0000);
 
 
-                if (mdc1200_rx_buffer_index < sizeof(mdc1200_rx_buffer))
-                    mdc1200_rx_buffer[mdc1200_rx_buffer_index++] = (word >> 0) & 0xff;
+            if (mdc1200_rx_buffer_index < sizeof(mdc1200_rx_buffer))
+                mdc1200_rx_buffer[mdc1200_rx_buffer_index++] = (word >> 0) & 0xff;
 
-                if (mdc1200_rx_buffer_index < sizeof(mdc1200_rx_buffer))
-                    mdc1200_rx_buffer[mdc1200_rx_buffer_index++] = (word >> 8) & 0xff;
+            if (mdc1200_rx_buffer_index < sizeof(mdc1200_rx_buffer))
+                mdc1200_rx_buffer[mdc1200_rx_buffer_index++] = (word >> 8) & 0xff;
+#endif
 #ifdef ENABLE_MESSENGER
 
-                  if (gFSKWriteIndex < MSG_PACKET_LENGTH)
-                    msgFSKBuffer[gFSKWriteIndex++] = validate_char((read_reg[i]  >> 0) & 0xff);
-                if (gFSKWriteIndex < MSG_PACKET_LENGTH)
-                    msgFSKBuffer[gFSKWriteIndex++] = validate_char((read_reg[i]  >> 8) & 0xff);
+            if (gFSKWriteIndex < MSG_PACKET_LENGTH)
+                msgFSKBuffer[gFSKWriteIndex++] = validate_char((reg >> 0) & 0xff);
+            if (gFSKWriteIndex < MSG_PACKET_LENGTH)
+                msgFSKBuffer[gFSKWriteIndex++] = validate_char((reg >> 8) & 0xff);
 #endif
-            }
+        }
 #ifdef ENABLE_MESSENGER
 
-            msgFSKBuffer[gFSKWriteIndex]='\0';
+        msgFSKBuffer[gFSKWriteIndex]='\0';
 #endif
 
-            if (mdc1200_rx_buffer_index >= sizeof(mdc1200_rx_buffer)) {
+#ifdef ENABLE_MDC1200
+        if (mdc1200_rx_buffer_index >= sizeof(mdc1200_rx_buffer)) {
 
 
-                if (MDC1200_process_rx_data(
-                        mdc1200_rx_buffer,
-                        mdc1200_rx_buffer_index,
-                        &mdc1200_op,
-                        &mdc1200_arg,
-                        &mdc1200_unit_id)) {
-                    mdc1200_rx_ready_tick_500ms = 2 * 5;  // 6 second MDC display time
-                    gUpdateDisplay = true;
+            if (MDC1200_process_rx_data(
+                    mdc1200_rx_buffer,
+                    mdc1200_rx_buffer_index,
+                    &mdc1200_op,
+                    &mdc1200_arg,
+                    &mdc1200_unit_id)) {
+                mdc1200_rx_ready_tick_500ms = 2 * 5;  // 6 second MDC display time
+                gUpdateDisplay = true;
 
-                }
-
-                mdc1200_rx_buffer_index = 0;
             }
 
+            mdc1200_rx_buffer_index = 0;
         }
 #endif
-
+#endif
     }
 
     if (rx_finished) {
@@ -678,7 +672,7 @@ void solve_sign(const uint16_t interrupt_bits) {
                     }
                     msgComposeMode = false;
                     hasNewMessage = 0;
-                    gRequestDisplayScreen = DISPLAY_MSG;
+                    GUI_SelectNextDisplay(DISPLAY_MSG);
                 }
             }
 //        }

@@ -180,11 +180,7 @@ void Main(void) {
     AM_fix_init();
 #endif
 
-#if ENABLE_CHINESE_FULL == 0
-    gMenuListCount = 52;
-#else
-    gMenuListCount = 53;
-#endif
+    gMenuListCount = UI_MENU_GetMenuCount();
     gKeyReading0 = KEY_INVALID;
     gKeyReading1 = KEY_INVALID;
     gDebounceCounter = 0;

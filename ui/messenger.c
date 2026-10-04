@@ -15,8 +15,8 @@ void UI_DisplayMSG(void) {
             UI_PrintStringSmall("NO MESSAGE", 0, 127, 3);
             GUI_DisplaySmallest("MENU:NEW  EXIT:BACK", 26, 50, false, true);
         } else {
-            uint8_t y = 62 - msgHistoryCount * 6;
-            for (uint8_t i = 0; i < msgHistoryCount; ++i, y += 6)
+            uint8_t y = 55 - msgHistoryCount * 5;
+            for (uint8_t i = 0; i < msgHistoryCount; ++i, y += 5)
                 GUI_DisplaySmallest(rxMessage[i], 1, y, false, true);
         }
     } else {
@@ -26,6 +26,7 @@ void UI_DisplayMSG(void) {
         UI_PrintStringSmall("BROADCAST", 0, 127, 0);
         GUI_DisplaySmallest(mode, 114, 1, false, true);
         GUI_DisplaySmallest("TO: ALL ON FREQUENCY", 24, 10, false, true);
+        GUI_DisplaySmallest("EXIT:LIST", 48, 17, false, true);
 
         cMessage[cIndex] = '_';
         const char split = cMessage[18];
@@ -35,8 +36,7 @@ void UI_DisplayMSG(void) {
         if (cIndex >= 18)
             UI_PrintStringSmall(cMessage + 18, 1, 0, 4);
         cMessage[cIndex] = '\0';
-        GUI_DisplaySmallest("MENU:SEND  F:DELETE", 26, 49, false, true);
-        GUI_DisplaySmallest("*:ABC/abc/123  EXIT:LIST", 14, 57, false, true);
+        GUI_DisplaySmallest("MENU:SEND F:DEL *=MODE", 20, 49, false, true);
     }
 
     ST7565_BlitFullScreen();
