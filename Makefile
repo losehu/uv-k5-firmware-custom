@@ -155,6 +155,7 @@ OBJS += init.o
 OBJS += app/messenger.o
 
 ifeq ($(ENABLE_MESSENGER),1)
+	OBJS += app/aprs.o
 	OBJS += ui/messenger.o
 endif
 

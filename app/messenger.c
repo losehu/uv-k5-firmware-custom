@@ -12,6 +12,7 @@
 #include "functions.h"
 #include "frequencies.h"
 #include "driver/system.h"
+#include "app/aprs.h"
 #include "app/messenger.h"
 #include "ui/ui.h"
 #include "driver/uart.h"
@@ -28,7 +29,10 @@ bool stop_mdc_flag=0;
 //bool stop_mdc_rx=0;
 enum {
     MAX_MSG_LENGTH = TX_MSG_LENGTH - 1,
-    TONE2_FREQ = 0x3065
+    TONE2_FREQ = 0x3065,
+    MSG_TX_USER,
+    MSG_TX_SERVICE,
+    MSG_TX_APRS
 };
 
 static const char T9Table[9][4] = {
@@ -38,13 +42,13 @@ static const char T9Table[9][4] = {
 };
 
 char cMessage[TX_MSG_LENGTH + 1];
-char lastcMessage[TX_MSG_LENGTH + 1];
 char rxMessage[MSG_HISTORY_COUNT][MAX_RX_MSG_LENGTH + 2];
 unsigned char cIndex = 0;
 unsigned char prevKey = 0, prevLetter = 0;
 KeyboardType keyboardType = UPPERCASE;
 uint8_t msgHistoryCount = 0;
-bool msgComposeMode = false;
+uint8_t msgHistoryOffset = 0;
+uint8_t msgComposeMode = MSG_VIEW_HOME;
 
 MsgStatus msgStatus = READY;
 
@@ -59,7 +63,7 @@ uint8_t keyTickCounter = 0;
 
 // -----------------------------------------------------
 
-void MSG_FSKSendData() {
+void MSG_FSKSendData(const uint8_t *data, uint8_t length, bool aprs) {
     static const BK4819_RegisterValue_t setupRegisters[] = {
         BK4819_REGISTER_VALUE(BK4819_REG_2B, 0x0005),
         BK4819_REGISTER_VALUE(BK4819_REG_58, 0x3C03),
@@ -73,7 +77,7 @@ void MSG_FSKSendData() {
         BK4819_REGISTER_VALUE(BK4819_REG_59, 0x00F8),
     };
 
-    uint16_t fsk_reg59;
+    uint16_t fsk_reg59 = aprs ? 0x0068 : 0x00f8;
 
     // REG_51
     //
@@ -87,12 +91,15 @@ void MSG_FSKSendData() {
     const uint16_t dev_val = BK4819_ReadRegister(BK4819_REG_40);
     //UART_printf("\n BANDWIDTH : 0x%.4X", dev_val);
     {
-        uint16_t deviation = 850;
-        switch (gEeprom.VfoInfo[gEeprom.TX_VFO].CHANNEL_BANDWIDTH)
-        {
-            case BK4819_FILTER_BW_WIDE:     deviation = 1050; break;
-            case BK4819_FILTER_BW_NARROW:   deviation =  850; break;
-            case BK4819_FILTER_BW_NARROWER: deviation =  750; break;
+        uint16_t deviation = 1200;
+        if (!aprs) {
+            deviation = 850;
+            switch (gEeprom.VfoInfo[gEeprom.TX_VFO].CHANNEL_BANDWIDTH)
+            {
+                case BK4819_FILTER_BW_WIDE:     deviation = 1050; break;
+                case BK4819_FILTER_BW_NARROW:   deviation =  850; break;
+                case BK4819_FILTER_BW_NARROWER: deviation =  750; break;
+            }
         }
         //BK4819_WriteRegister(0x40, (3u << 12) | (deviation & 0xfff));
         BK4819_WriteRegister(BK4819_REG_40, (dev_val & 0xf000) | (deviation & 0xfff));
@@ -169,19 +176,6 @@ void MSG_FSKSendData() {
     //
     // <2:0> 0 ???
     //
-    fsk_reg59 = (0u << 15) |   // 0/1     1 = clear TX FIFO
-                (0u << 14) |   // 0/1     1 = clear RX FIFO
-                (0u << 13) |   // 0/1     1 = scramble
-                (0u << 12) |   // 0/1     1 = enable RX
-                (0u << 11) |   // 0/1     1 = enable TX
-                (0u << 10) |   // 0/1     1 = invert data when RX
-                (0u <<  9) |   // 0/1     1 = invert data when TX
-                (0u <<  8) |   // 0/1     ???
-                (15u <<  4) |   // 0 ~ 15  preamble length .. bit toggling
-                (1u <<  3) |   // 0/1     sync length
-                (0u <<  0);    // 0 ~ 7   ???
-
-
     // REG_5A
     //
     // <15:8> 0x55 FSK Sync Byte 0 (Sync Byte 0 first, then 1,2,3)
@@ -211,14 +205,27 @@ void MSG_FSKSendData() {
 //		BK4819_WriteRegister(0x5C, 0xAA30);   // 101010100 0 110000
 //		BK4819_WriteRegister(0x5C, 0x0030);   // 000000000 0 110000
 
-    BK4819_WriteRegisterGroup(setupRegisters, ARRAY_SIZE(setupRegisters));
+    if (aprs) {
+        BK4819_WriteRegister(BK4819_REG_2B, 0x0005);
+        BK4819_WriteRegister(BK4819_REG_70, 0x80e0);
+        BK4819_WriteRegister(BK4819_REG_71, 22714);
+        BK4819_WriteRegister(BK4819_REG_72, 12389);
+        BK4819_WriteRegister(BK4819_REG_58, 0x3fc3);
+        BK4819_WriteRegister(BK4819_REG_5A, 0xaaaa);
+        BK4819_WriteRegister(BK4819_REG_5B, 0xaaaa);
+        BK4819_WriteRegister(BK4819_REG_5C, 0xaa30);
+        BK4819_WriteRegister(BK4819_REG_5D, (uint16_t)(length - 1u) << 8);
+        BK4819_WriteRegister(BK4819_REG_59, 0x8068);
+        BK4819_WriteRegister(BK4819_REG_59, 0x0068);
+    } else {
+        BK4819_WriteRegisterGroup(setupRegisters, ARRAY_SIZE(setupRegisters));
+    }
 
     SYSTEM_DelayMs(100);
 
     {	// load the entire packet data into the TX FIFO buffer
-        const uint16_t len_buff = MSG_PACKET_LENGTH;
-        for (size_t i = 0, j = 0; i < len_buff; i += 2, j++) {
-            BK4819_WriteRegister(BK4819_REG_5F, (msgFSKBuffer[i + 1] << 8) | msgFSKBuffer[i]);
+        for (uint8_t i = 0; i < length; i += 2) {
+            BK4819_WriteRegister(BK4819_REG_5F, (data[i + 1] << 8) | data[i]);
         }
     }
 
@@ -282,54 +289,53 @@ static void MSG_AddHistory(char prefix, const char *text) {
     line[1] = ' ';
     memcpy(line + 2, text, length);
     line[length + 2] = '\0';
+#ifdef ENABLE_ENGLISH
+    msgHistoryOffset = msgHistoryCount > MSG_HISTORY_VISIBLE
+        ? msgHistoryCount - MSG_HISTORY_VISIBLE : 0;
+#endif
 }
 
-void MSG_Send(const char *txMessage, bool bServiceMessage) {
+static bool MSG_Send(const char *txMessage, uint8_t txLength, uint8_t txMode) {
+    const bool aprs = txMode == MSG_TX_APRS;
 
-    if ( msgStatus != READY ) return;
+    if (msgStatus != READY)
+        return false;
     stop_mdc_flag=1;
-    if ( strlen(txMessage) > 0 && (TX_freq_check(gCurrentVfo->pTX->Frequency) == 0) ) {
+    if (TX_freq_check(gCurrentVfo->pTX->Frequency) == 0) {
 
         msgStatus = SENDING;
 
         RADIO_SetVfoState(VFO_STATE_NORMAL);
         BK4819_ToggleGpioOut(BK4819_GPIO5_PIN1_RED, true);
 
-//		memset(msgFSKBuffer, 0, sizeof(msgFSKBuffer));
+        if (!aprs) {
+            memset(msgFSKBuffer, 0, sizeof(msgFSKBuffer));
+            msgFSKBuffer[0] = 'M';
+            msgFSKBuffer[1] = 'S';
 
-        memset(msgFSKBuffer, 0, sizeof(msgFSKBuffer));
+            memcpy(msgFSKBuffer + 2, txMessage, txLength);
 
-        // ? ToDo
-        // first 20 byte sync, msg type and ID
-        msgFSKBuffer[0] = 'M';
-        msgFSKBuffer[1] = 'S';
-
-        // next 20 for msg
-        size_t txLength = strlen(txMessage);
-        if (txLength > MAX_MSG_LENGTH)
-            txLength = MAX_MSG_LENGTH;
-        memcpy(msgFSKBuffer + 2, txMessage, txLength);
-
-        // CRC ? ToDo
-
-        msgFSKBuffer[MAX_RX_MSG_LENGTH - 1] = '\0';
-        msgFSKBuffer[MAX_RX_MSG_LENGTH + 0] = 'I';
-        msgFSKBuffer[MAX_RX_MSG_LENGTH + 1] = 'D';
-        msgFSKBuffer[MAX_RX_MSG_LENGTH + 2] = '0';
-        msgFSKBuffer[MSG_PACKET_LENGTH - 1] = '#';
-        msgFSKBuffer[MSG_PACKET_LENGTH] = '\0';
+            msgFSKBuffer[MAX_RX_MSG_LENGTH + 0] = 'I';
+            msgFSKBuffer[MAX_RX_MSG_LENGTH + 1] = 'D';
+            msgFSKBuffer[MAX_RX_MSG_LENGTH + 2] = '0';
+            msgFSKBuffer[MSG_PACKET_LENGTH - 1] = '#';
+        }
 
         BK4819_DisableDTMF();
 
         //RADIO_SetTxParameters();
         FUNCTION_Select(FUNCTION_TRANSMIT);
         //SYSTEM_DelayMs(500);
-        BK4819_PlayRogerNormal();
+        if (!aprs)
+            BK4819_PlayRogerNormal();
         SYSTEM_DelayMs(100);
 
         BK4819_ExitTxMute();
 
-        MSG_FSKSendData();
+        if (aprs)
+            APRS_Transmit(txMessage);
+        else
+            MSG_FSKSendData(msgFSKBuffer, MSG_PACKET_LENGTH, false);
 
         //SYSTEM_DelayMs(100);
 
@@ -340,18 +346,16 @@ void MSG_Send(const char *txMessage, bool bServiceMessage) {
         BK4819_ToggleGpioOut(BK4819_GPIO5_PIN1_RED, false);
 
         enable_msg_rx(true);
-        if (!bServiceMessage) {
+        if (txMode != MSG_TX_SERVICE) {
             MSG_AddHistory('>', txMessage);
-//			memset(lastcMessage, 0, sizeof(lastcMessage));
-            memcpy(lastcMessage, txMessage, TX_MSG_LENGTH);
-            lastcMessage[TX_MSG_LENGTH]=0;
             cIndex = 0;
             prevKey = 0;
             prevLetter = 0;
-            memset(cMessage, 0, sizeof(cMessage));
-//            cMessage[0]='\0';
+            cMessage[0] = '\0';
         }
         msgStatus = READY;
+        stop_mdc_flag=0;
+        return true;
 
     }
 #ifdef    ENABLE_WARNING
@@ -361,6 +365,7 @@ void MSG_Send(const char *txMessage, bool bServiceMessage) {
     }
 #endif
     stop_mdc_flag=0;
+    return false;
 }
 
 uint8_t validate_char( uint8_t rchar ) {
@@ -375,15 +380,15 @@ uint8_t validate_char( uint8_t rchar ) {
 void MSG_Init() {
     memset(rxMessage, 0, sizeof(rxMessage));
 //	memset(cMessage, 0, sizeof(cMessage));
-//	memset(lastcMessage, 0, sizeof(lastcMessage));
-    lastcMessage[0]=0;cMessage[0]=0;
+    cMessage[0]=0;
     hasNewMessage = 0;
     msgStatus = READY;
     prevKey = 0;
     prevLetter = 0;
     cIndex = 0;
     msgHistoryCount = 0;
-    msgComposeMode = false;
+    msgHistoryOffset = 0;
+    msgComposeMode = MSG_VIEW_HOME;
 }
 
 // ---------------------------------------------------------------------------------
@@ -400,6 +405,11 @@ static char MSG_GetKeyChar(uint8_t key, uint8_t letter) {
 }
 
 void insertCharInMessage(uint8_t key) {
+    const uint8_t length = msgComposeMode == MSG_VIEW_APRS ? APRS_EDIT_LENGTH : strlen(cMessage);
+
+    if (msgComposeMode == MSG_VIEW_APRS && cIndex >= length && prevKey != key)
+        return;
+
     if ( key == KEY_0 ) {
         cMessage[cIndex] = keyboardType == NUMERIC ? '0' : ' ';
         if ( cIndex < MAX_MSG_LENGTH ) {
@@ -425,7 +435,7 @@ void insertCharInMessage(uint8_t key) {
         }
 
     }
-    cMessage[cIndex] = '\0';
+    cMessage[cIndex < length ? length : cIndex] = '\0';
     if ( keyboardType == NUMERIC ) {
         prevKey = 0;
         prevLetter = 0;
@@ -441,21 +451,37 @@ void processBackspace() {
     prevLetter = 0;
 }
 
+static void MSG_StartAPRS(void) {
+    memcpy(cMessage, APRS_MESSAGE_TEMPLATE, sizeof(APRS_MESSAGE_TEMPLATE));
+    cMessage[APRS_EDIT_LENGTH + 1] = '\0';
+    cIndex = 0;
+    prevKey = 0;
+    prevLetter = 0;
+    msgComposeMode = MSG_VIEW_APRS;
+}
+
 void  MSG_ProcessKeys(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
     // Handle short actions on the initial press. Some key-release events can be
     // consumed by the display transition, so waiting for release makes NEW
     // appear unresponsive on the radio.
     if (bKeyPressed && !bKeyHeld) {
 
-        if (!msgComposeMode) {
+        if (msgComposeMode == MSG_VIEW_HOME) {
             switch (Key) {
-                case KEY_0...KEY_9:
-                    msgComposeMode = true;
-                    insertCharInMessage(Key);
-                    keyTickCounter = 0;
-                    break;
                 case KEY_MENU:
-                    msgComposeMode = true;
+                    cIndex = 0;
+                    cMessage[0] = '\0';
+                    prevKey = 0;
+                    prevLetter = 0;
+                    msgComposeMode = MSG_VIEW_COMPOSE;
+                    break;
+                case KEY_UP:
+                    msgHistoryOffset = msgHistoryCount > MSG_HISTORY_VISIBLE
+                        ? msgHistoryCount - MSG_HISTORY_VISIBLE : 0;
+                    msgComposeMode = MSG_VIEW_HISTORY;
+                    break;
+                case KEY_DOWN:
+                    MSG_StartAPRS();
                     break;
                 case KEY_EXIT:
                     gRequestDisplayScreen = DISPLAY_MAIN;
@@ -463,6 +489,20 @@ void  MSG_ProcessKeys(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
                 default:
                     break;
             }
+            gUpdateDisplay = true;
+            return;
+        }
+
+        if (msgComposeMode == MSG_VIEW_HISTORY) {
+#ifdef ENABLE_ENGLISH
+            if (Key == KEY_UP && msgHistoryOffset > 0)
+                msgHistoryOffset--;
+            else if (Key == KEY_DOWN && msgHistoryOffset + MSG_HISTORY_VISIBLE < msgHistoryCount)
+                msgHistoryOffset++;
+            else
+#endif
+            if (Key == KEY_EXIT)
+                msgComposeMode = MSG_VIEW_HOME;
             gUpdateDisplay = true;
             return;
         }
@@ -481,25 +521,37 @@ void  MSG_ProcessKeys(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
                 keyboardType = (KeyboardType)((keyboardType + 1) % END_TYPE_KBRD);
                 break;
             case KEY_F:
-                processBackspace();
+                if (msgComposeMode == MSG_VIEW_APRS) {
+                    if (cIndex > 0)
+                        cIndex--;
+                    prevKey = 0;
+                    prevLetter = 0;
+                } else {
+                    processBackspace();
+                }
                 break;
             case KEY_UP:
-//				memset(cMessage, 0, sizeof(cMessage));
-                memcpy(cMessage, lastcMessage, TX_MSG_LENGTH);
-                cMessage[TX_MSG_LENGTH]='\0';
-                cIndex = strlen(cMessage);
+                if (cIndex > 0)
+                    cIndex--;
+                prevKey = 0;
+                prevLetter = 0;
                 break;
-            /*case KEY_DOWN:
-                break;*/
-            case KEY_MENU:
-                // Send message
-                if (cIndex > 0) {
-                    MSG_Send(cMessage, false);
-                    msgComposeMode = false;
+            case KEY_DOWN:
+                if (cIndex < (msgComposeMode == MSG_VIEW_APRS ? APRS_EDIT_LENGTH - 1 : strlen(cMessage)))
+                    cIndex++;
+                prevKey = 0;
+                prevLetter = 0;
+                break;
+            case KEY_PTT:
+                if (cMessage[0] != '\0') {
+                    const bool aprs = msgComposeMode == MSG_VIEW_APRS;
+                    if (MSG_Send(cMessage, aprs ? APRS_EDIT_LENGTH : strlen(cMessage),
+                                 aprs ? MSG_TX_APRS : MSG_TX_USER))
+                        msgComposeMode = MSG_VIEW_HOME;
                 }
                 break;
             case KEY_EXIT:
-                msgComposeMode = false;
+                msgComposeMode = MSG_VIEW_HOME;
                 break;
 
             default:
@@ -515,14 +567,16 @@ void  MSG_ProcessKeys(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
         switch (Key)
         {
             case KEY_F:
-                if (msgComposeMode) {
+                if (msgComposeMode == MSG_VIEW_COMPOSE || msgComposeMode == MSG_VIEW_APRS) {
                     cIndex = 0;
-                    cMessage[0] = '\0';
+                    if (msgComposeMode != MSG_VIEW_APRS)
+                        cMessage[0] = '\0';
                     prevKey = 0;
                     prevLetter = 0;
                 } else {
                     memset(rxMessage, 0, sizeof(rxMessage));
                     msgHistoryCount = 0;
+                    msgHistoryOffset = 0;
                 }
                 break;
             default:
@@ -654,7 +708,7 @@ void solve_sign(const uint16_t interrupt_bits) {
                 {
                     show_flag=1;
                     MSG_AddHistory('<', (char *)&msgFSKBuffer[2]);
-                    MSG_Send("\x1b\x1b\x1bRCVD", true);
+                    MSG_Send("\x1b\x1b\x1bRCVD", 7, MSG_TX_SERVICE);
 
                 }
 
@@ -670,7 +724,7 @@ void solve_sign(const uint16_t interrupt_bits) {
                     else {
                         gUpdateDisplay = true;
                     }
-                    msgComposeMode = false;
+                    msgComposeMode = MSG_VIEW_HISTORY;
                     hasNewMessage = 0;
                     GUI_SelectNextDisplay(DISPLAY_MSG);
                 }
