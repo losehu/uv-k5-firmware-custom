@@ -58,10 +58,7 @@ const t_menu_item MenuList[] =
                 {/*"TxCTCS",*/ VOICE_ID_CTCSS, MENU_T_CTCS, 发送模拟亚音}, // was "T_CTCS"
                 {/*"TxODir",*/ VOICE_ID_TX_OFFSET_FREQUENCY_DIRECTION, MENU_SFT_D, 频差方向}, // was "SFT_D"
                 {/*"TxOffs",*/ VOICE_ID_TX_OFFSET_FREQUENCY, MENU_OFFSET, 频差频率}, // was "OFFSET"
-#ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
-
                 {/*"W/N",*/    VOICE_ID_CHANNEL_BANDWIDTH,             MENU_W_N           ,宽窄带},
-#endif
 
                 {/*"Scramb",*/ VOICE_ID_SCRAMBLER_ON, MENU_SCR, 加密}, // was "SCR"
                 {/*"BusyCL",*/ VOICE_ID_BUSY_LOCKOUT, MENU_BCL, 遇忙禁发}, // was "BCL"
@@ -113,10 +110,7 @@ const t_menu_item MenuList[] =
 #endif
                 {/*"D Prel",*/ VOICE_ID_INVALID, MENU_D_PRE, DTMF预载波},
 #ifdef ENABLE_DTMF_CALLING
-#ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
-
                 {/*"D Decd",*/ VOICE_ID_INVALID,                       MENU_D_DCD         ,DTMF解码},
-#endif
                 {/*"D List",*/ VOICE_ID_INVALID,                       MENU_D_LIST        ,DTMF联系人},
 #endif
                 {/*"D Live",*/ VOICE_ID_INVALID, MENU_D_LIVE_DEC, DTMF显示}, // live DTMF decoder
@@ -148,7 +142,6 @@ const t_menu_item MenuList[] =
                 {/*"",*/       VOICE_ID_INVALID, 0xff, "\x00"}  // end of list - DO NOT delete or move this this
         };
 
-#ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
 #if ENABLE_CHINESE_FULL==0 || defined(ENABLE_ENGLISH)
 #ifdef ENABLE_ENGLISH
 const char gSubMenu_W_N[][7] =//7
@@ -166,7 +159,6 @@ const char gSubMenu_W_N[][3] =//7
                 宽带,
                窄带
         };
-#endif
 #if ENABLE_CHINESE_FULL == 4
 const char gSubMenu_PONMSG[][5]={
         关闭,
@@ -558,6 +550,10 @@ int UI_MENU_GetCurrentMenuId() {
         return MenuList[ARRAY_SIZE(MenuList) - 1].menu_id;
 }
 
+uint8_t UI_MENU_GetMenuCount(void) {
+    return ARRAY_SIZE(MenuList) - 1;
+}
+
 uint8_t UI_MENU_GetMenuIdx(uint8_t id) {
     for (uint8_t i = 0; i < ARRAY_SIZE(MenuList); i++)
         if (MenuList[i].menu_id == id)
@@ -812,13 +808,10 @@ void UI_DisplayMenu(void) {
 
             already_printed = true;
             break;
-#ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
-
             case MENU_W_N:
 
                 strcpy(String, gSubMenu_W_N[gSubMenuSelection]);
                 break;
-#endif
 
         case MENU_SCR:
             strcpy(String, gSubMenu_SCRAMBLER[gSubMenuSelection]);
@@ -878,10 +871,7 @@ void UI_DisplayMenu(void) {
         case MENU_STE:
         case MENU_D_ST:
 #ifdef ENABLE_DTMF_CALLING
-#ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
-
             case MENU_D_DCD:
-#endif
 #endif
         case MENU_D_LIVE_DEC:
 #ifdef ENABLE_NOAA

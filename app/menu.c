@@ -257,13 +257,10 @@ int MENU_GetLimits(uint8_t menu_id, int32_t *pMin, int32_t *pMax) {
             *pMin = 0;
             *pMax = 50;
             break;
-#ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
-
             case MENU_W_N:
                 *pMin = 0;
                 *pMax = ARRAY_SIZE(gSubMenu_W_N) - 1;
                 break;
-#endif
 #ifdef ENABLE_ALARM
             case MENU_AL_MOD:
                 *pMin = 0;
@@ -303,10 +300,7 @@ int MENU_GetLimits(uint8_t menu_id, int32_t *pMin, int32_t *pMax) {
         case MENU_STE:
         case MENU_D_ST:
 #ifdef ENABLE_DTMF_CALLING
-#ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
-
             case MENU_D_DCD:
-#endif
 #endif
         case MENU_D_LIVE_DEC:
 #ifdef ENABLE_NOAA
@@ -540,13 +534,10 @@ void MENU_AcceptSetting(void) {
             gTxVfo->TX_OFFSET_FREQUENCY = gSubMenuSelection;
             gRequestSaveChannel = 1;
             return;
-#ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
-
             case MENU_W_N:
                 gTxVfo->CHANNEL_BANDWIDTH = gSubMenuSelection;
                 gRequestSaveChannel       = 1;
                 return;
-#endif
         case MENU_SCR:
             gTxVfo->SCRAMBLING_TYPE = gSubMenuSelection;
 #if 0
@@ -742,14 +733,11 @@ void MENU_AcceptSetting(void) {
 //			gSetting_battery_text = gSubMenuSelection;
 //			break;
 #ifdef ENABLE_DTMF_CALLING
-#ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
-
             case MENU_D_DCD:
                 gTxVfo->DTMF_DECODING_ENABLE = gSubMenuSelection;
                 DTMF_clear_RX();
                 gRequestSaveChannel = 1;
                 return;
-#endif
 #endif
         case MENU_D_LIVE_DEC:
             gSetting_live_DTMF_decoder = gSubMenuSelection;
@@ -987,12 +975,9 @@ void MENU_ShowCurrentSetting(void) {
         case MENU_OFFSET:
             gSubMenuSelection = gTxVfo->TX_OFFSET_FREQUENCY;
             break;
-#ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
-
         case MENU_W_N:
             gSubMenuSelection = gTxVfo->CHANNEL_BANDWIDTH;
             break;
-#endif
         case MENU_SCR:
             gSubMenuSelection = gTxVfo->SCRAMBLING_TYPE;
             break;
@@ -1146,12 +1131,9 @@ void MENU_ShowCurrentSetting(void) {
 //			gSubMenuSelection = gSetting_battery_text;
 //			return;
 #ifdef ENABLE_DTMF_CALLING
-#ifdef ENABLE_CUSTOM_SIDEFUNCTIONS
-
         case MENU_D_DCD:
             gSubMenuSelection = gTxVfo->DTMF_DECODING_ENABLE;
             break;
-#endif
         case MENU_D_LIST:
             gSubMenuSelection = gDTMF_chosen_contact + 1;
             break;

@@ -24,7 +24,20 @@ enum {
     TX_MSG_LENGTH = 30,
     MSG_HEADER_LENGTH = 20,
     MAX_RX_MSG_LENGTH = TX_MSG_LENGTH + 2,
-    MSG_PACKET_LENGTH = MSG_HEADER_LENGTH + MAX_RX_MSG_LENGTH
+    MSG_PACKET_LENGTH = MSG_HEADER_LENGTH + MAX_RX_MSG_LENGTH,
+    MSG_HISTORY_VISIBLE = 10,
+#ifdef ENABLE_ENGLISH
+    MSG_HISTORY_COUNT = 20,
+#else
+    MSG_HISTORY_COUNT = 10,
+#endif
+    MSG_KEY_TIMEOUT_TICKS = 100
+};
+enum {
+    MSG_VIEW_HOME,
+    MSG_VIEW_COMPOSE,
+    MSG_VIEW_APRS,
+    MSG_VIEW_HISTORY
 };
 //const uint8_t TX_MSG_LENGTH = 30;
 //const uint8_t MAX_RX_MSG_LENGTH = TX_MSG_LENGTH + 2;
@@ -33,20 +46,23 @@ uint8_t validate_char( uint8_t rchar ) ;
 extern KeyboardType keyboardType;
 extern uint16_t gErrorsDuringMSG;
 extern char cMessage[TX_MSG_LENGTH + 1];
-extern char rxMessage[4][MAX_RX_MSG_LENGTH + 2];
+extern char rxMessage[MSG_HISTORY_COUNT][MAX_RX_MSG_LENGTH + 2];
+extern uint8_t msgHistoryCount;
+extern uint8_t msgHistoryOffset;
+extern uint8_t msgComposeMode;
 extern uint8_t hasNewMessage;
 extern uint8_t keyTickCounter;
 
 void MSG_Init();
 void MSG_ProcessKeys(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld);
-void MSG_Send(const char *txMessage, bool bServiceMessage);
 extern unsigned char cIndex ;
 //extern bool stop_mdc_rx;
 extern uint8_t msgFSKBuffer[MSG_PACKET_LENGTH + 1];
-void moveUP(char (*rxMessages)[MAX_RX_MSG_LENGTH + 2]) ;
 
 extern MsgStatus msgStatus ;
 extern bool stop_mdc_flag;
+
+void MSG_FSKSendData(const uint8_t *data, uint8_t length, bool aprs);
 
 #endif
 

@@ -1096,7 +1096,8 @@ void APP_TimeSlice10ms(void) {
     gNextTimeslice = false;
     gFlashLightBlinkCounter++;
 #ifdef ENABLE_MESSENGER
-    keyTickCounter++;
+    if (keyTickCounter <= MSG_KEY_TIMEOUT_TICKS)
+        keyTickCounter++;
 #endif
 #ifdef ENABLE_BOOT_BEEPS
     if (boot_counter_10ms > 0 && (boot_counter_10ms % 25) == 0) {

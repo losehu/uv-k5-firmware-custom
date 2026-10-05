@@ -30,7 +30,7 @@ Please visit: [K5Web]( https://k5.vicicode.com/)
 * 
 | Version       | Language | EEPROM Requirement | MDC1200 | Doppler Mode | Spectrum | Radio | Chinese Channel Name | Custom Boot Image | Boot Image | Chinese Input Method | SMS |
 |---------------|----------|---------------------|---------|--------------|----------|-------|----------------------|-------------------|------------|----------------------|-----|
-| LOSEHUxxx     | Chinese | No expansion needed  | ✅      | ❌           | ✅       | ✅    | ❌                   | ❌                | ❌         | ❌                   | ❌  |
+| LOSEHUxxx     | Chinese | No expansion needed  | ✅      | ❌           | ✅       | ✅    | ❌                   | ❌                | ❌         | ❌                   | ✅  |
 | LOSEHUxxxK    | Chinese | 1Mib or above       | ✅      | ✅           | ✅       | ✅    | ✅                   | ✅                | ✅         | ❌                   | ❌  |
 | LOSEHUxxxH    | Chinese | 2Mib or above       | ✅      | ✅           | ✅       | ✅    | ✅                   | ✅                | ✅         | ✅                   | ❌  |
 | LOSEHUxxxHS   | Chinese | 2Mib or above       | ❌      | ❌           | ✅       | ✅    | ✅                   | ✅                | ✅         | ✅                   | ❌  |
